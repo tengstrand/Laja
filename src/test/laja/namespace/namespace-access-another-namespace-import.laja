@@ -1,0 +1,7 @@
+#namespace x
+
+#macro print(namespace)
+Namespace = {namespace}##
+#end
+
+#set (xx = "123abc")

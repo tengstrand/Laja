@@ -1,0 +1,11 @@
+
+#set (directory = "target/test-output/abc")
+
+#set (directoryExistsBefore = directoryExists(directory))
+#createDirectory(directory)
+#set (directoryExistsAfter = directoryExists(directory))
+
+#write "target/test-output/system-create-directory.out"
+  Directory exists before: {directoryExistsBefore}
+  Directory exists after: {directoryExistsAfter}
+#end

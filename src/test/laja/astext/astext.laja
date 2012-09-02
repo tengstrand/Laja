@@ -1,0 +1,8 @@
+#write "target/test-output/astext.out"
+  #set (a = 123)
+  #set (begin = "#>")
+  #set (end = "<#")
+#> #set (b = <#{a})
+{begin}some text{end}
+b = {b}
+#end

@@ -1,0 +1,6 @@
+
+#write "target/test-output/call-list-method.out"
+  #set (list = [])
+  #list.add("A")
+list = {list}
+#end

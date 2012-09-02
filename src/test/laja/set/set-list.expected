@@ -1,0 +1,5 @@
+list = [1, 2, 3]
+nestedList = [[1, 2], [3, 4]]
+list123[1] = 2
+nestedList[1] = [3, 4]
+emptyList = []

@@ -1,0 +1,21 @@
+
+#macro testlocal()
+  #local (x = 123)
+  #set (x1 = "{x}-outer")
+  #set (x2 = x)
+  #local (localx1 = "{x}-local")
+  #local (localx2 = x)
+local x = {x}
+local x1 = {localx1}
+local x2 = {localx2}
+#end
+
+#write "target/test-output/local-macro.out"
+  #set (x = 5)
+  #set (y = 77)
+  #testlocal()
+outer x = {x}
+outer y = {y}
+outer x1 = {x1}
+outer x2 = {x2}
+#end

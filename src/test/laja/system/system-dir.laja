@@ -1,0 +1,5 @@
+
+#write "target/test-output/system-dir.out"
+  #import "{.}/system-load-class.expected"
+  #import "{..}/set/set-float.expected"
+#end

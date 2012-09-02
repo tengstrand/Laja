@@ -1,0 +1,4 @@
+#namespace parser
+
+#set (domSuffix = "Impl")
+#set (inputFile = "dummyInputFile")

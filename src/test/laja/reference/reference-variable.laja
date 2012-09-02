@@ -1,0 +1,4 @@
+#write "target/test-output/reference-variable.out"
+  #set (x = "123")
+The value of x is: {x}!
+#end

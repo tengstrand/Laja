@@ -1,0 +1,7 @@
+
+#set (list = new java.util.ArrayList())
+
+#write "target/test-output/foreach-array-list.out"
+  #foreach (element in list)
+  #end
+#end

@@ -1,0 +1,13 @@
+
+#macro three()
+2##
+#end
+
+#write "target/test-output/reference-list.out"
+  #set (list1 = [ "first element of list1" ])
+  #set (list2 = [ "middle", "begin {list2[0]} end", "Three" ])
+  #set (one = "1")
+The value of list1 is: {list1[0]}
+list2[one] = {list2[one]}
+list2[three()] = {list2[three()]}
+#end

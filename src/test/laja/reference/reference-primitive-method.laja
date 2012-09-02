@@ -1,0 +1,5 @@
+#write "target/test-output/reference-primitive-method.out"
+  "abc".length = {"abc".length}
+  1.toBinaryString(255) = {1.toBinaryString(255)}
+  1.0.MAX_VALUE = {1.0.MAX_VALUE}
+#end

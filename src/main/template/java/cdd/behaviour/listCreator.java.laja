@@ -1,0 +1,67 @@
+
+#macro class()
+public class {listCreatorClass} implements Iterable<{encapsulatorClass}> {
+    public {stateListBuilder} stateList = new {stateListBuilder}();
+    private List<{encapsulatorClass}> encapsulators = new ArrayList<{encapsulatorClass}>();
+
+    public void add({encapsulatorClass} encapsulator) {
+        encapsulators.add(encapsulator);
+        stateList.add(encapsulator.builder);
+    }
+
+    public {listCreatorClass}({encapsulatorClass}... encapsulators) {
+        this.encapsulators.addAll(Arrays.asList(encapsulators));
+
+        for ({encapsulatorClass} encapsulator : encapsulators) {
+            stateList.add(encapsulator.builder);
+        }
+    }
+
+    public Iterator<{encapsulatorClass}> iterator() {
+        return encapsulators.iterator();
+    }
+  #foreach (method in behaviour.asMethods where method.isFactory && method.generateList)
+
+    #setArgumentsAndParameters(method, false)
+    public {method.listClass} {method.methodName}List({parameters}) {
+        List<{method.returnclass}> result = new ArrayList<{method.returnclass}>();
+
+        for ({encapsulatorClass} encapsulator : encapsulators) {
+            result.add(encapsulator.{method.methodName}({arguments}));
+        }
+        return new {method.listClass}(result);
+    }
+  #end
+
+    public boolean isValid() {
+        for ({encapsulatorClass} encapsulator : encapsulators) {
+            if (!encapsulator.isValid()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+#end
+
+#macro importsList()
+  #foreach (method in behaviour.asMethods where method.isFactory && method.generateList)
+    #foreach (import in behaviour.imports where import.endsWithType(method.returnclass))
+import {import.fullclassname}List;
+     #end
+  #end
+#end
+
+#if (behaviour.isFactory && generateList())
+  #set (filename = "{outputDir}/{listCreatorClass}.java")
+  #generateFile(filename)
+  #write "{filename}"
+package {behaviour.packagename};
+
+import java.util.*;
+    #importsBegin()
+    #importsList()
+    #importsEnd()
+    #class()
+  #end
+#end

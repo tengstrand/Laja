@@ -1,0 +1,9 @@
+#write "target/test-output/set-new-instance.out"
+  ## "java.lang." is automatically added to the class name if the class is not found in empty package.
+  #set (hello1 = new String("Hello"))
+  #set (hello2 = new java.lang.String("Hello again!"))
+  #set (createme = new net.sf.laja.integrationtest.SetTest$CreateMe("Hello", { name: "Bill" length: 175 }))
+hello1 = {hello1}
+hello2 = {hello2}
+createme = {createme}
+#end

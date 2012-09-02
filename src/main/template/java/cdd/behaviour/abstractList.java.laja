@@ -1,0 +1,308 @@
+
+#function isUnsupported()
+  #return template.isEntity && asBehaviour.isValue
+#end
+
+#macro throwUnsupportedException(operation)
+        throw new UnsupportedOperationException("The state can only be mutated via an entity based list ({entryClass} is value based and {stateClass} is entity based). Try switch the list to an entity based list before performing the '{operation}' operation");
+#end
+
+#foreach (method in behaviour.asMethods where method.generateList)
+  #prepareList(outputDir, outDir)
+
+  #if (!processedAbstractLists.contains(abstractListClass))
+    #processedAbstractLists.add(abstractListClass)
+    #if (!directoryExists(listOutputDir))
+      #createDirectoryPath(listOutputDir)
+    #end
+    #set (filename = "{listOutputDir}/{abstractListClass}.java")
+    #generateFile(filename)
+    #write "{filename}"
+package {packagename};
+
+import {template.packagename}.*;
+      #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName && m.generateList && !m.isFactory)
+        #set (behaviourRef = behaviours.get(m.returnclass))
+        #if (behaviourRef == null)
+          #error ("Could not find behaviour class {m.returnclass}")
+        #end
+        #if (behaviourRef.packagename != packagename)
+
+import {behaviourRef.packagename}.{m.returnclass};
+import {behaviourRef.packagename}.{m.listClass};
+        #end
+      #end
+      #if (!method.isFactory)
+        #set (first = true)
+        #foreach (m in behaviour.asMethods where m.isFactory && first)
+          #set (behaviourRef = behaviours.get(m.returnclass))
+          #if (behaviourRef.packagename != packagename)
+
+import {behaviourRef.packagename}.{m.returnclass};
+import {behaviourRef.packagename}.{m.returnclass}Factory;
+          #end
+          #set (first = false)
+        #end
+      #end
+
+import java.util.*;
+
+      #header()
+public abstract class {abstractListClass} implements List<{entryClass}> {
+    protected final {stateListBuilder} stateListBuilder;
+    protected final List<{entryClass}> list = new ArrayList<{entryClass}>();
+
+    public {abstractListClass}({entryClass}... list) {
+        this.list.addAll(Arrays.asList(list));
+
+        stateListBuilder = new {stateListBuilder}();
+        for ({entryClass} entry : list) {
+            entry.addToList(stateListBuilder);
+        }
+    }
+
+    public {abstractListClass}(List<{entryClass}> list) {
+        this.list.addAll(list);
+
+        stateListBuilder = new {stateListBuilder}();
+        for ({entryClass} entry : list) {
+            entry.addToList(stateListBuilder);
+        }
+    }
+
+    public {abstractListClass}(List<{entryClass}> list, {stateListBuilder} stateListBuilder) {
+        this.list.addAll(list);
+        this.stateListBuilder = stateListBuilder;
+    }
+      #if (method.isFactory)
+
+        #setArgumentsAndParameters(method, true)
+    public {abstractListClass}({stateListClass} stateList{parameters}) {
+        stateListBuilder = new {stateListBuilder}(stateList);
+
+        for ({stateClass} state : stateList) {
+            {stateBuilderClass} builder = new {stateBuilderImplClass}(state);
+            {entryClass} entry = ({entryClass}) builder.as(new {factoryClass}.{entryClass}Factory_(builder){arguments});
+            list.add(entry);
+        }
+    }
+      #end
+      #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName && m.generateList && !m.isFactory)
+        #setArgumentsAndParameters(m, false)
+
+    public {m.listClass} {m.methodName}List({parameters}) {
+        List<{m.returnclass}> result = new ArrayList<{m.returnclass}>();
+        for ({entryClass} entry : list) {
+            result.add(entry.{m.methodName}({arguments}));
+        }
+        return new {m.listClass}(result, stateListBuilder);
+    }
+      #end
+      #if (method.isFactory)
+        #setArgumentsAndParameters(method, false)
+
+    public void syncState({parameters}) {
+        list.clear();
+        for ({stateBuilderClass} builder : stateListBuilder.getStateBuilders()) {
+        #setArgumentsAndParameters(method, true)
+            {entryClass} entry = ({entryClass}) builder.as(new {factoryClass}.{entryClass}Factory_(builder){arguments});
+            list.add(entry);
+        }
+        stateListBuilder.syncState();
+    }
+      #else
+        #set (factory = null)
+        #foreach (m in behaviour.asMethods where m.isFactory && factory == null)
+          #set (factory = m.returnclass)
+          #setArgumentsAndParameters(m, false)
+          #set (factoryParameters = parameters)
+          #set (first = true)
+          #foreach (m2 in behaviour.asMethods where m2.returnclass == entryClass && first)
+            #set (hasParameters = factoryParameters.isEmpty() == false)
+            #setArgumentsAndParametersWithExclusion(m2, hasParameters, m.parameters)
+
+    public void syncState({factoryParameters}{parameters}) {
+        list.clear();
+        for ({stateBuilderClass} builder : stateListBuilder.getStateBuilders()) {
+            #setArgumentsAndParameters(m, true)
+            #set (factoryArguments = arguments)
+            #setArgumentsAndParameters(m2, false)
+            {entryClass} entry = (({factory}) builder.as(new {factoryClass}.{factoryClass}_(builder){factoryArguments})).{m2.methodName}({arguments});
+            list.add(entry);
+        }
+    }
+            #set (first = false)
+          #end
+        #end
+      #end
+
+    public int size() {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.size();
+    }
+
+    public boolean isEmpty() {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.isEmpty();
+    }
+
+    public boolean contains(Object element) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.contains(element);
+    }
+
+    public Iterator<{entryClass}> iterator() {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.iterator();
+    }
+
+    public Object[] toArray() {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.toArray();
+    }
+
+    public <{entryClass}> {entryClass}[] toArray({entryClass}[] array) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.toArray(array);
+    }
+
+    public boolean add({entryClass} element) {
+        element.addToList(stateListBuilder, this);
+        return list.add(element);
+    }
+
+    public void add(int index, {entryClass} element) {
+        element.addToList(index, stateListBuilder, this);
+        list.add(index, element);
+    }
+
+    public boolean addAll(Collection<? extends {entryClass}> collection) {
+        for ({entryClass} element : collection) {
+            element.addToList(stateListBuilder, this);
+        }
+        return list.addAll(collection);
+    }
+
+    public boolean addAll(int index, Collection<? extends {entryClass}> collection) {
+        {stateListBuilder} statesToAdd = new {stateListBuilder}();
+
+        for ({entryClass} element : collection) {
+            element.addToList(statesToAdd, this);
+        }
+        stateListBuilder.addAll(index, statesToAdd, this);
+        return list.addAll(index, collection);
+    }
+
+    public boolean remove(Object element) {
+      #if (isUnsupported())
+        #throwUnsupportedException("remove")
+      #else
+        if (!(element instanceof {entryClass})) {
+            return false;
+        }
+        (({entryClass})element).removeFromList(stateListBuilder, this);
+        return list.remove(element);
+      #end
+    }
+
+    public boolean containsAll(Collection<?> collection) {
+      #if (isUnsupported())
+        #throwUnsupportedException("containsAll")
+      #else
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.containsAll(collection);
+      #end
+    }
+
+    public boolean removeAll(Collection<?> collection) {
+      #if (isUnsupported())
+        #throwUnsupportedException("removeAll")
+      #else
+        for (Object element : collection) {
+            if (element instanceof {entryClass}) {
+                (({entryClass})element).removeFromList(stateListBuilder, this);
+            }
+        }
+        return list.removeAll(collection);
+      #end
+    }
+
+    public boolean retainAll(Collection<?> collection) {
+      #if (isUnsupported())
+        #throwUnsupportedException("retainAll")
+      #else
+        {stateListBuilder} retainStates = new {stateListBuilder}();
+
+        for (Object element : collection) {
+            if (element instanceof {entryClass}) {
+                (({entryClass})element).addToList(retainStates, this);
+            }
+        }
+        stateListBuilder.retainAll(retainStates, this);
+        return list.retainAll(collection);
+      #end
+    }
+
+    public void clear() {
+        stateListBuilder.clear(this);
+        list.clear();
+    }
+
+    public {entryClass} get(int index) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.get(index);
+    }
+
+    public {entryClass} set(int index, {entryClass} element) {
+        element.setInList(index, stateListBuilder, this);
+        return list.set(index, element);
+    }
+
+    public {entryClass} remove(int index) {
+        stateListBuilder.remove(index, this);
+        return list.remove(index);
+    }
+
+    public int indexOf(Object element) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.indexOf(element);
+    }
+
+    public int lastIndexOf(Object element) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.lastIndexOf(element);
+    }
+
+    public ListIterator<{entryClass}> listIterator() {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.listIterator();
+    }
+
+    public ListIterator<{entryClass}> listIterator(int index) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.listIterator(index);
+    }
+
+    public List<{entryClass}> subList(int fromIndex, int toIndex) {
+        stateListBuilder.throwExceptionIfOutOfSync(this);
+        return list.subList(fromIndex, toIndex);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return list.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return list.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+    }
+}
+    #end
+  #end
+#end

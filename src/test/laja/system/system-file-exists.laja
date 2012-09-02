@@ -1,0 +1,16 @@
+
+#write "target/test-output/system-file-exists.out"
+  #if (fileExists("{.}/system-file-exists.laja"))
+    This template exists!
+  #end
+  #if (fileExists("{.}/aaa"))
+    The file aaa exists!
+  #else
+    The file aaa does not exists!
+  #end
+  #if (fileExists("{.}"))
+    Current directory is not a file
+  #else
+    Current directory does not exist, it's a file
+  #end
+#end

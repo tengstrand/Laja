@@ -1,0 +1,129 @@
+
+#set (srcDir = behaviour.srcDir)
+#set (sourceDir = behaviour.sourceDir)
+#set (outDir = behaviour.outDir)
+#set (outputDir = behaviour.outputDir)
+#set (behaviourFile = behaviour.srcFilename)
+#set (behaviourClass = behaviour.classname)
+#set (builderClass = behaviour.builderClass)
+#set (factoryClass = behaviour.factoryClass)
+#set (constructorClass = "{behaviourClass}Constructor")
+#set (creatorClass = "{behaviour.classname}Creator")
+#set (encapsulatorClass = "{behaviour.classname}Encapsulator")
+#set (listCreatorClass = "{behaviour.classname}ListCreator")
+
+#set (stateClass = behaviour.stateClass)
+#set (stateImplClass = behaviour.stateImplClass)
+#set (stateListClass = "{stateClass}List")
+#set (stateListImplClass = "{stateListClass}Impl")
+
+#set (stateBuilderClass = "{stateClass}Builder")
+#set (stateBuilderImplClass = "{stateBuilderClass}Impl")
+#set (valueClass = "{behaviour.cleanedStateClass}Value")
+#set (entityClass = "{behaviour.cleanedStateClass}Entity")
+#set (stateListBuilder = "{stateClass}ListBuilder")
+
+#set (template = templates.get(behaviour.cleanedStateClass))
+#if (template == null)
+  #error ("Could not find the state object '{behaviour.cleanedStateClass}' referenced from '{behaviourClass}'. Valid state classes are: {templates.keySet()}")
+#end
+
+#function generateList()
+  #foreach (method in behaviour.asMethods where method.generateList)
+    #return true
+  #end
+  #foreach (t3 in templates.values())
+    #foreach (attribute in t3.attributes where attribute.isStateList && attribute.type == "{behaviour.stateClass}List")
+      #return true
+    #end
+  #end
+  #return false
+#end
+
+#macro setArgumentsAndParameters(m, isNextArgument)
+  #setArgumentsAndParametersWithExclusion(m, isNextArgument, null)
+#end
+
+#macro setArgumentsAndParametersWithExclusion(m, isNextArgument, excludedParameters)
+  #set (parameters = "")
+  #set (arguments = "")
+  #set (extraArguments = "")
+  #set (delimiter = "")
+  #foreach (parameter in m.parameters)
+    #set (exclude = false)
+    #if (excludedParameters != null)
+      #foreach (ep in excludedParameters where !exclude && ep.type == parameter.type && ep.variable == ep.variable)
+        #set (exclude = true)
+      #end
+    #end
+    #if (!exclude)
+      #set (parameters = "{parameters}{delimiter}{parameter.type} {parameter.variable}")
+      #set (arguments = "{arguments}{delimiter}{parameter.variable}")
+      #set (delimiter = ", ")
+      #set (extraArguments = "{extraArguments}{delimiter}{parameter.variable}")
+    #end
+  #end
+  #if (isNextArgument)
+    #if (parameters.length > 0)
+      #set (parameters = ", {parameters}")
+      #set (arguments = ", {arguments}")
+    #end
+  #end
+#end
+
+#macro prepareList(outputDirArg, outDirArg)
+  #set (entryClass = method.returnclass)
+  #set (listClass = method.listClass)
+  #set (abstractListClass = method.abstractListClass)
+  #set (packagename = behaviour.packagename)
+  #set (listOutputDir = outputDirArg)
+  #set (asBehaviour = behaviours.get(entryClass))
+  #if (asBehaviour == null)
+    #set (asBehaviour = behaviour)
+  #end
+  #foreach (import in behaviour.imports where import.endsWithType(method.returnclass))
+    #set (packagename = statementConverter.asPackageName(import.fullclassname))
+    #set (listOutputDir = directoryConverter.asDirectory(outDirArg, import.fullclassname))
+  #end
+#end
+
+#macro importsBegin()
+import {template.packagename}.*;
+  #foreach (import in behaviour.imports)
+{import.statement}
+  #end
+  #foreach (import in template.imports)
+{import.statement}
+  #end
+#end
+
+#macro importsEncapsulator()
+  #set (imports = new java.util.HashSet())
+  #foreach (attribute in template.attributes where attribute.isOptional && attribute.isBuilderMethod)
+    #if (behaviours.containsKey(attribute.cleanedStateType))
+      #set (packagename = behaviours.get(attribute.cleanedStateType).packagename)
+      #if (packagename != behaviour.packagename)
+        #imports.add("{packagename}.{attribute.encapsulator}")
+      #end
+    #end
+  #end
+  #foreach (import in imports)
+import {import};
+  #end
+#end
+
+#macro importsListCreator()
+  #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateList)
+    #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
+    #if (behaviourRef == null)
+      #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
+    #end
+    #if (behaviour.packagename != behaviourRef.packagename)
+import {behaviourRef.packagename}.{attribute.listCreator};
+    #end
+  #end
+#end
+
+#macro importsEnd()
+
+#end

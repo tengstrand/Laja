@@ -1,0 +1,4 @@
+#write "target/test-output/set-integer.out"
+  #set (x = -123)
+x = {x}
+#end

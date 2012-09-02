@@ -1,0 +1,7 @@
+
+#generateParser(
+  forwardRef: false
+  package: "net.sf.laja.parser.engine2"
+  grammarFile: "{.}/defaultsyntaxerror.grammar"
+  outputDir: "{..}/../../../../target"
+)

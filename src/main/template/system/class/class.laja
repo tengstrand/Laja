@@ -1,0 +1,73 @@
+
+#macro lazyImportClassService()
+  #if ($laja.classService == null)
+    #import "{.}/ClassService.groovy"
+    #set ($laja.classService = new ClassService())
+  #end
+#end
+
+#function loadClass(className)
+  #lazyImportClassService()
+  #return ($laja.classService.loadClass(className))
+#end
+
+#function type(typeName)
+  #lazyImportClassService()
+  #return ($laja.classService.type(typeName))
+#end
+
+#function instanceof(a, b)
+  #lazyImportClassService()
+  #return ($laja.classService.isInstanceof(a,b))
+#end
+
+#set (reflectModifier = loadClass("java.lang.reflect.Modifier"))
+
+#function modifiers(method)
+  #local (result = "")
+  #if (reflectModifier.isPublic(method.modifiers))
+    #local (result = "public")
+  #end
+  #return (result)
+#end
+
+#function parameterTypes(method)
+  #local (result = "")
+  #local (separator = "")
+  #foreach (parameter in method.parameterTypes)
+    #local (result = "{result}{separator}{parameter.name}")
+    #local (separator = ", ")
+  #end
+  #return (result)
+#end
+
+#macro viewClass(class)
+  #if (!class.class().name == "java.lang.Class")
+    #set (class = class.class)
+  #end
+
+  #set (interfaces = "")
+  #set (separator = " implements ")
+  #if (class.interfaces.length > 0)
+    #foreach (interface in class.interfaces)
+      #set (interfaces = "{separator}{interface.name}")
+      #set (separator = ", ")
+    #end
+  #end
+  #if (class.superclass == null)
+Class: {class.name}{interfaces}
+  #else
+Class: {class.name} extends {class.superclass.name}{interfaces}
+  #end
+  Fields:
+  #foreach (field in class.fields)
+     {field}
+  #end
+  Methods:
+  #foreach (method in class.methods)
+     {modifiers(method)} {method.returnType.name} {method.name}({parameterTypes(method)})
+  #end
+  #if (class.superclass != null)
+{viewClass(class.superclass)}
+  #end
+#end

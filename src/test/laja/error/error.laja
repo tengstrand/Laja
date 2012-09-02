@@ -1,0 +1,5 @@
+#write "target/test-output/error.out"
+  Start
+  #error ("Stop the execution")
+  End
+#end

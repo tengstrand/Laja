@@ -1,0 +1,5 @@
+
+#write "target/test-output/parameter-set-integer.out"
+  value = {value}
+  value.class.name = {value.class.name}
+#end

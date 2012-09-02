@@ -1,0 +1,4 @@
+#write "target/test-output/set-string.out"
+  #set (x = "3.141592653589793")
+pi = {x}...
+#end

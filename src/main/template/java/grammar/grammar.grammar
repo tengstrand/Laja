@@ -1,0 +1,150 @@
+
+grammar grammar {
+   newline = "\r\n" | "\n";
+   comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END);
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+   digit = "0".."9";
+   integer = digit+;
+   lower = "a".."z";
+   upper = "A".."Z";
+   xname = [lower|upper|digit]+;
+   lname = lower xname;
+   uname = upper xname;
+   ff = "\"";
+   str = ff (("\\\"" | !(ff|newline))+):strval ff;
+   reference = lname;
+   variable = "$" lname:name;
+   range1 = integer|str;
+   range = range1 ".." range1;
+   end = "END";
+   complete = "*";
+   repeats = "#" integer:min [".." (integer|"*"):max];
+   valx = [":" lname:varname] ["+":repeat|repeats [":" lname:repeatName]];
+   marker = ":" lname:name;
+   valprim = s ["!":not s] range|integer|str|reference|variable|complete|end valx;
+   valpar = s ["!":not s] ["CS":cs|"CI":ci s] "(" s val s ")" valx;
+   valor = s valprim|valpar [s "|" s valprim|valpar]+;
+   valopt = s "[" s val s "]" valx;
+   valand = valor:mainAnd s "&" s valor|valopt [s "&" s valor|valopt]+;
+   valstmt = (s valand|valor|valopt|marker)+;
+   val = valstmt [s 92 s valstmt:followedby];
+   
+   def = lname:var s "=" s val s ";";
+   classvar = uname:class ws lname:var;
+   constructor = "(" s classvar s ["," s classvar s]+ ")";
+   outputclass = uname:class [constructor] ws lname:var s ";";
+   omarg = s "," s "String":str | "Index":index ws lname:arg;
+   outputmethod = [uname:class [constructor] ws] ["$":setter ws] lname:ref "." lname:method s "(" s
+                  (("void":void ws) | ("String":str ws) | ("Index":index ws) | (uname:argclass ws) 
+                  [lname:carg "."] (lname|"*"):arg)
+                  [omarg+] s ")" s ";";
+   outputvar = "$" lname:variable ws "boolean":bool | "String":str ws
+               lname:ref "." lname:method s "()" s ";";
+
+   grammar = s "grammar" ws lname:grammarname s "{" s (def|outputclass|outputmethod|outputvar s)+ "}" s;
+
+  /* Output */
+   Grammar grammar.setGrammarName(String grammarname);
+   grammar.setDef(Def def);
+   grammar.setOutputclass(Outputclass outputclass);
+   grammar.setOutputmethod(Outputmethod outputmethod);
+   grammar.setOutputvar(Outputvar outputvar);
+   grammar.addRow(Index newline.*);
+
+   Valstmt valstmt.addValand(Valand valand);
+   valstmt.addValor(Valor valor);
+   valstmt.addValopt(Valopt valopt);
+   valstmt.addMarker(Marker marker);
+
+   Val val.setValstmt(Valstmt valstmt);
+   val.setFollowedby(Valstmt followedby);
+
+   Valprim valprim.setNot(void not);
+   valprim.setRange(Range range);
+   valprim.setInteger(Integer integer);
+   valprim.setStr(Str str);
+   valprim.setReference(Reference reference);
+   valprim.setVariable(Variable variable);
+   valprim.setEnd(End end);
+   valprim.setComplete(Complete complete);
+   valprim.setValx(Valx valx);
+
+   Valpar valpar.setNot(void not);
+   valpar.setCs(void cs);
+   valpar.setCi(void ci);
+   valpar.setVal(Val val);
+   valpar.setValx(Valx valx);
+
+   Valor valor.addValprim(Valprim valprim);
+   valor.addValpar(Valpar valpar);
+
+   Valopt valopt.setVal(Val val);
+   valopt.setValx(Valx valx);
+
+   Valand valand.setMainAnd(Valor mainAnd);
+   valand.addAndValor(Valor valor);
+   valand.addAndValopt(Valopt valopt);
+
+   Range1 range1.setInteger(String integer);
+   range1.setStr(Str str);
+
+   Range range.setRange1(Range1 range1);
+
+   Str str.setStrval(String strval);
+
+   Integer integer.setInt(String *);
+
+   Reference(Grammar grammar) reference.setName(String *);
+
+   Variable variable.setName(String name);
+
+   End end;
+
+   Complete complete;
+
+   Marker marker.setName(String name);
+
+   Repeats repeats.setMin(String min);
+   repeats.setMax(String max);
+
+   Valx valx.setVarname(String varname);
+   valx.setRepeat(void repeat);
+   valx.setRepeats(Repeats repeats);
+   valx.setRepeatName(String repeatName);
+   
+   Def def.setVar(String var);
+   def.setVal(Val val, String sval);
+
+   Classvar classvar.setClass(String class);
+   classvar.setVar(String var);
+
+   Constructor constructor.addClassvar(Classvar classvar);
+
+   Outputclass outputclass.setClass(String class);
+   outputclass.setConstructor(Constructor constructor);
+   outputclass.setVar(String var);
+
+   Omarg omarg.setStr(void str);
+   omarg.setIndex(void index);
+   omarg.setArg(String arg);
+
+   Outputvar outputvar.setVariable(String variable);
+   outputvar.setDatatypeBool(void bool);
+   outputvar.setDatatypeString(void str);
+   outputvar.setRef(String ref);
+   outputvar.setMethod(String method);
+
+   Outputmethod(Grammar grammar) outputmethod.setClass(String class);
+   outputmethod.setConstructor(Constructor constructor);
+   outputmethod.setVariableSetter(void setter);
+   outputmethod.setRef(String ref);
+   outputmethod.setMethod(String method);
+   outputmethod.setStr(void str);
+   outputmethod.setIndex(void index);
+   outputmethod.setArgClass(String argclass);
+   outputmethod.setCarg(String carg);
+   outputmethod.setArg(String arg);
+   outputmethod.setVoid(void void);
+   outputmethod.setOmarg(Omarg omarg);
+}

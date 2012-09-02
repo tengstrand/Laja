@@ -1,0 +1,15 @@
+
+#import "src/test/laja/function/Incrementer.groovy"
+
+#set (incrementer = new Incrementer())
+
+#function increment(x)
+  #return (incrementer.increment(x))
+#end
+
+#write "target/test-output/function.out"
+  #set (a = increment(1))
+  #increment(10) into value
+a = {a}
+value = {value}
+#end

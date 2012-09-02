@@ -1,0 +1,8 @@
+
+#set (a = 1 < 2)
+#set (b = 1 > 2)
+
+#write "target/test-output/set-comparition.out"
+a = {a}
+b = {b}
+#end

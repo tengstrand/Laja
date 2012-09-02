@@ -1,0 +1,6 @@
+
+#write "target/test-output/reader-properties-into-namespace.out"
+  #read ("src/test/laja/reader/values.properties") into $
+a = {a}
+b = {b}
+#end

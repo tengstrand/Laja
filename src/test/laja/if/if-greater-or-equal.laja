@@ -1,0 +1,11 @@
+#write "target/test-output/if-greater-or-equal.out"
+  #set (x = 1)
+  #if (x >= 1)
+x is greater or equal to 1
+  #end
+  #if (x >= 2)
+x is greater or equal to 2
+  #else
+x is not greater or equal to 2
+  #end
+#end

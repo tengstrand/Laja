@@ -1,0 +1,160 @@
+
+#macro imports()
+  #set (imports = new java.util.HashSet())
+  #foreach (importstatement in behaviour.imports)
+    #imports.add(importstatement.statement)
+  #end
+  #imports.add("import {template.packagename}.*;")
+  #if (generateList())
+    #imports.add("import java.util.ArrayList;")
+    #imports.add("import java.util.Arrays;")
+    #imports.add("import java.util.Iterator;")
+    #imports.add("import java.util.List;")
+  #end
+  #foreach (importstatement in imports)
+{importstatement}
+  #end
+
+#end
+
+#macro class(factoryClass, parentClass)
+public class {factoryClass} extends {parentClass} {
+
+    public {factoryClass}({stateClass} state) {
+        super(state);
+    }
+
+    public {factoryClass}({stateClass} state, {stateBuilderClass} stateBuilder) {
+        super(state, stateBuilder);
+    }
+
+  #initChainedCreator(template, true)
+  #if (firstChainedAttribute == null)
+    public static {encapsulatorClass} create() {
+        return new {creatorClass}().create();
+    }
+  #else
+    #if (chainedReturnClass == null)
+    public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.type} {firstChainedAttribute.variable}) {
+        return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
+    }
+    #else
+    public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.type} {firstChainedAttribute.variable}) {
+        return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
+    }
+    #end
+    #if (firstChainedIsConverter)
+
+      #foreach (method in template.convertMethods where method.variable == firstChainedAttribute.variable)
+        #if (chainedReturnClass == null)
+    public static {encapsulatorClass} {method.variable}({method.type} {method.variable}) {
+        #else
+    public static {creatorClass}.{chainedReturnClass} {method.variable}({method.type} {method.variable}) {
+        #end
+        return new {creatorClass}().new {firstChainedParameterClass}().{method.variable}({method.variable});
+    }
+      #end
+    #end
+  #end
+
+    public static {builderClass} build() {
+        return new {builderClass}();
+    }
+  #if (generateList())
+
+    public static {listCreatorClass} createList({encapsulatorClass}... encapsulators) {
+        return new {listCreatorClass}(encapsulators);
+    }
+  #end
+  #foreach (method in behaviour.asMethods where method.isFactory)
+    #set (innerFactoryClass = "{method.returnclass}Factory_")
+
+    public static class {innerFactoryClass} implements {template.classname}StateBehaviourFactory {
+        private final {stateBuilderClass} builder;
+
+        public {innerFactoryClass}({stateBuilderClass} builder) {
+            this.builder = builder;
+        }
+
+        public Object create({template.stateClass} state, Object... args) {
+    #if (!behaviour.isStateBuilderConstructor)
+            Object result = create_(state, args);
+    #else
+            Object result = create_(state, builder, args);
+    #end
+
+            if (!state.isValidAsEncapsulated()) {
+                throw new IllegalStateException("Illegal state, could not create behaviour class '{method.returnclass}'");
+            }
+            state.encapsulate();
+
+            return result;
+        }
+
+    #if (!behaviour.isStateBuilderConstructor)
+      private Object create_({template.stateClass} state, Object... args) {
+    #else
+      private Object create_({template.stateClass} state, {stateBuilderClass} stateBuilder, Object... args) {
+    #end
+    #if (method.parameters.size > 0)
+      #set (counter = counter(0))
+      #foreach (parameter in method.parameters)
+        {parameter.type} {parameter.variable} = ({parameter.typeAsObject})args[{counter.increase}];
+      #end
+
+    #end
+        {method.statement}
+      }
+    }
+  #end
+}
+#end
+
+#macro createBasicFactory(parentClass)
+  #set (factoryClass = behaviour.factoryClass)
+
+  #set (filename = "{outputDir}/{factoryClass}.java")
+  #generateFile(filename)
+  #write "{filename}"
+package {behaviour.packagename};
+
+import {template.packagename}.{stateClass};
+import {template.packagename}.{stateBuilderClass};
+
+public class {factoryClass} extends {parentClass} {
+    public {factoryClass}({stateClass} state) {
+        super(state);
+    }
+
+    public {factoryClass}({stateClass} state, {stateBuilderClass} stateBuilder) {
+        super(state, stateBuilder);
+    }
+}
+  #end
+#end
+
+#macro createFactory(factoryClass, parentClass)
+  #set (filename = "{outputDir}/{factoryClass}.java")
+  #generateFile(filename)
+  #write "{filename}"
+package {behaviour.packagename};
+
+    #imports()
+    #class(factoryClass, parentClass)
+  #end
+#end
+
+#if (behaviour.isFactory)
+  #set (valueFactory = "{behaviour.classname}ValueFactory")
+  #set (entityFactory = "{behaviour.classname}EntityFactory")
+
+  #if (template.isEntity)
+    #set (parentFactory = entityFactory)
+    #createFactory(entityFactory, entityClass)
+  #else
+    #set (parentFactory = valueFactory)
+  #end
+
+  #createBasicFactory(parentFactory)
+  #createFactory(valueFactory, valueClass)
+#end

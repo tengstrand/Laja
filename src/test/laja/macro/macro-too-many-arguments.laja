@@ -1,0 +1,7 @@
+
+#macro callme(a,b)
+a={a}
+...
+#end
+
+{callme(1,2,3)}

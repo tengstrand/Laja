@@ -1,0 +1,25 @@
+package net.sf.laja.example.car.behaviour;
+
+import net.sf.laja.example.car.state.*;
+import net.sf.laja.example.car.state.BusState;
+
+public class BusEncapsulator {
+    public final BusStateBuilder builder;
+
+    public BusEncapsulator(BusStateBuilder builder) {
+        this.builder = builder;
+    }
+
+    public Bus asBus() {
+        return (Bus)builder.as(new BusFactory.BusFactory_(builder));
+    }
+
+    public BusEncapsulator withWeightInKilograms(int weightInKilograms) {
+        builder.withWeightInKilograms(weightInKilograms);
+        return this;
+    }
+
+    public boolean isValid() {
+         return builder.isValid();
+    }
+}

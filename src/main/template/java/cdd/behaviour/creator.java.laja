@@ -1,0 +1,106 @@
+
+#set (mandatoryAttributes = new java.util.ArrayList())
+#foreach (attribute in template.attributes where attribute.isMandatory && !attribute.isHidden)
+  #mandatoryAttributes.add(attribute)
+#end
+
+#macro class()
+public class {creatorClass} {
+    private final {stateBuilderClass} builder = {stateImplClass}.build();
+  #set (iterator = mandatoryAttributes.iterator())
+  #set (hasNext = iterator.hasNext)
+  #if (hasNext)
+    #set (attribute = iterator.next)
+    #set (currentClass = "{strings.capitalize(attribute.variable)}_")
+  #end
+  #while (hasNext)
+    #set (hasNext = iterator.hasNext)
+    #if (hasNext)
+      #set (nextAttribute = iterator.next)
+      #set (nextClass = "{strings.capitalize(nextAttribute.variable)}_")
+
+    public class {currentClass} {
+      #if (attribute.isStateList)
+        public {nextClass} {attribute.variable}({attribute.listCreator} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable}.stateList);
+            return new {nextClass}();
+        }
+      #else if (attribute.isState)
+        public {nextClass} {attribute.variable}({attribute.encapsulator} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable}.builder);
+            return new {nextClass}();
+        }
+      #else
+        public {nextClass} {attribute.variable}({attribute.type} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable});
+            return new {nextClass}();
+        }
+      #end
+      #foreach (method in template.convertMethods where method.variable == attribute.variable)
+
+        public {nextClass} {attribute.variable}({method.type} {method.variable}) {
+            builder.{attribute.withMethod}({attribute.variable});
+            return new {nextClass}();
+        }
+      #end
+      #set (attribute = nextAttribute)
+      #set (currentClass = nextClass)
+    #else
+
+    public class {currentClass} {
+      #if (attribute.isStateList)
+        public {encapsulatorClass} {attribute.variable}({attribute.listCreator} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable}.stateList);
+            return create();
+        }
+      #else if (attribute.isState)
+        public {encapsulatorClass} {attribute.variable}({attribute.encapsulator} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable}.builder);
+            return create();
+        }
+      #else
+        public {encapsulatorClass} {attribute.variable}({attribute.type} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable});
+            return create();
+        }
+      #end
+      #foreach (method in template.convertMethods where method.variable == attribute.variable)
+
+        public {encapsulatorClass} {attribute.variable}({method.type} {method.variable}) {
+            builder.{attribute.withMethod}({method.statement});
+            return create();
+        }
+      #end
+    #end
+    }
+  #end
+
+    public {encapsulatorClass} create() {
+        return new {encapsulatorClass}(builder);
+     }
+}
+#end
+
+#macro importsEncapsulatorRef()
+  #foreach (attribute in template.attributes where attribute.isMandatory && attribute.isState && !attribute.isHidden)
+    #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
+    #if (behaviour.packagename != behaviourRef.packagename)
+import {behaviourRef.packagename}.{attribute.getEncapsulator};
+    #end
+  #end
+#end
+
+#if (behaviour.isFactory)
+  #set (filename = "{outputDir}/{creatorClass}.java")
+  #generateFile(filename)
+  #write "{filename}"
+package {behaviour.packagename};
+
+    #importsBegin()
+    #importsEncapsulator()
+    #importsEncapsulatorRef()
+    #importsListCreator()
+    #importsEnd()
+    #class()
+  #end
+#end

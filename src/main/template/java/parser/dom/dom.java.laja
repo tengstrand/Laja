@@ -1,0 +1,58 @@
+#namespace parser
+
+#import "{homedir}/dom/dom-defaults.java.laja"
+#import "{homedir}/dom/dom-macros.java.laja"
+
+#function replaceFile(settings, filename)
+  #if (settings.replaceExistingFile || !fileExists(filename))
+    #return true
+  #end
+  #return false
+#end
+
+#macro generateParserDom(settings)
+
+  #$parser.parse(settings)
+
+  #set (x = tab)
+  #set (xx = "")
+  #set (staticClass = "")
+  #set (classname = "{grammar.grammarClass}DomApp")
+
+  1. Create the main class.
+
+#if (replaceFile(settings, "{outputDir}/{classname}.java"))
+  #write "{outputDir}/{classname}.java"
+package {package};
+
+import java.util.ArrayList;
+import java.util.List;
+    #import "{homedir}/parser-header.java.laja"
+public class {classname} {
+    #import "{homedir}/dom/dom-main.java.laja"
+}
+  #end
+#end
+
+  2. Generate the Factory class
+  #if (replaceFile(settings, "{outputDir}/{grammar.grammarClass}Factory.java"))
+    #write "{outputDir}/{grammar.grammarClass}Factory.java"
+      #import "{homedir}/dom/dom-factory.java.laja"
+    #end
+  #end
+
+  3. Create the building block classes.
+
+  #foreach (ref in refList)
+    #set (classname = rename(class(ref.className)))
+    
+    #if (replaceFile(settings, "{outputDir}/{classname}.java"))
+      #write "{outputDir}/{classname}.java"
+package {package};
+
+        #import "{homedir}/dom/dom-class.java.laja"
+
+      #end
+    #end
+  #end
+#end

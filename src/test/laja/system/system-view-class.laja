@@ -1,0 +1,6 @@
+
+#set (result = viewClass(1.class))
+
+#write "target/test-output/system-view-class.out"
+  {result.contains("public static final int java.lang.Integer.MIN_VALUE")}
+#end

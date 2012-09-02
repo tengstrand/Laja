@@ -1,0 +1,4 @@
+
+#write "target/test-output/reader-unsupported-source.out"
+  #read ("x")
+#end

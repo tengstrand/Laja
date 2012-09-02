@@ -1,0 +1,10 @@
+
+#set (a = null)
+#set (b = "")
+#set (c = "abc")
+
+#write "target/test-output/system-strings.out"
+  strings.isEmpty(a) = {strings.isEmpty(a)}
+  strings.isEmpty(b) = {strings.isEmpty(b)}
+  strings.isEmpty(c) = {strings.isEmpty(c)}
+#end

@@ -1,0 +1,294 @@
+
+/*
+ * Grammar for Laja templates.
+ */
+grammar template {
+   newline = "\r\n" | "\n";
+   comment = [spaces] ("#*" [(comment | !"*#")+] "*#") | ("##" [!newline+] newline|END) skip;
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+   ff = "\"";
+   spaces = (" " | "\t")+;
+
+   digit = "0".."9";
+   booleanData = "true":true | "false":false \ !(letter|digit);
+   unsignedInt = digit+;
+   integerData = ["-"] unsignedInt;
+   floatData = ["-"] unsignedInt "." unsignedInt;
+   letter = "a".."z" | "A".."Z" | "_";
+   varname = letter [letter|digit]+;
+   skip = [[spaces] newline];
+   nullData = "null" \ !(letter|digit);
+
+   stringExp = ff [stringref | (("\\\"" | !(ff|stringref))+):text]+ ff;
+
+   classOrPackageName = letter|"$" [letter|digit|"$"]+;
+   newStatement = "new" ws classOrPackageName ["." classOrPackageName]+ s args;
+
+   data = newStatement | stringExp | listData | mapDataRef | nullData | booleanData | reference | floatData | integerData;
+   listData = "[" s [data [s "," s data]+ s] "]" [s "as array":array];
+
+   mapMember = varname:name s ":" s data;
+   mapDataRef = "{" [mapData] "}";
+   mapData = (s mapMember)+ s;
+
+   indexItem = unsignedInt | reference;
+   listIndex = ("[" indexItem "]")+;
+   args = "(" s mapData|([data [s "," s data]+]) s ")";
+
+   namespaceRef = "$" [varname]:namespace;
+   
+   variableRef = varname:variableName;
+
+   methodRef = varname:methodName s args;
+
+   attributeRef = methodRef|variableRef [listIndex];
+
+   attributeVariableRef = variableRef [listIndex];
+
+   attributeMethodRef = methodRef [listIndex];
+
+   reference = :begin (([namespaceRef "."] attributeRef)|namespaceRef ["." attributeRef:nextAttributeRef]+) |
+                      (floatData|integerData|stringExp ("." attributeRef:nextAttributeRef)+);
+
+   callReference = :begin (([namespaceRef "."](attributeMethodRef)|(attributeVariableRef ("." attributeRef:nextAttributeRef)+)) 
+                   ["." attributeRef:nextAttributeRef]+);
+   
+   stringref = :begin "{" "..":parentDir | ".":currentDir | reference "}";
+
+   end = [spaces] "#end" skip;
+   write = :begin "#write" ws stringExp:filename skip block end;
+   set = :begin "#set" s "(" s reference:target s "=" s comparition|data s ")" skip;
+   local = "#local" s "(" s reference:target s "=" s comparition|data s ")" skip;
+
+   operator = "==":equals | "!=":notEquals | "<=":lessOrEqual | "<":lessThan | ">=":greaterOrEqual | ">":greaterThan;
+   comparition = data:leftOperand s operator s data:rightOperand;
+   conditionElement = ["!":not] s (comparition | (reference & (!booleanData *)) | booleanData:booleanCondition);
+   
+   conditionBase = conditionElement | (s "(" s condition s ")");
+   conditionAnd = conditionBase [s "&&" s conditionBase]+;
+   condition = conditionAnd [s "||" s conditionAnd]+;
+
+   ifcmd = "#if" s "(" s condition s ")" skip [block] [elseif]+ [else] end;
+
+   elseif = [spaces] "#else if" s "(" s condition s ")" skip [block];
+
+   else = [spaces] "#else" skip [block];
+
+   whilecmd = "#while" s "(" s condition s ")" skip [block] end;
+
+   call = :begin "#" callReference [ws "into" ws ("$" [varname]:targetNamespace)|varname:targetVariable] skip;
+
+   foreach = :begin "#foreach" s "(" varname:variable ws "in" ws listData|mapDataRef|reference s
+             ["where" s condition s] ")" skip block end;
+
+   importcmd = :begin "#import" ws stringExp:filename [ws "as text":asText] skip;
+
+   macro = :begin "#macro" ws varname:name s "(" s [varname:parameter [s "," s varname:parameter]+] s ")" skip [block] end;
+
+   returncmd = [spaces] "#return" s ("(" s data s ")") | comparition|data skip;
+
+   function = :begin "#function" ws varname:name s "(" s [varname:parameter [s "," s varname:parameter]+] s ")" skip [block] end;
+
+   namespace = "#namespace" ws varname:name skip;
+
+   error = :begin "#error" s "(" s stringExp:message s ")" skip;
+
+   command = [spaces] local|set|write|ifcmd|whilecmd|foreach|importcmd|error|macro|function|call;
+
+   astext = "#>" [!"<#"+]:text "<#";
+
+   text = !(([spaces] "##"|"#*"|"#>"|("#" (letter | "$"))) | stringref)+;
+//  text = !(astext|returncmd|command|stringref|comment)+;
+
+   block = [astext|returncmd|command|stringref|comment|text]+;
+
+   template = [namespace|(:defaultNamespace)] block|END;
+
+
+   StringExp stringExp.addText(String text);
+   stringExp.addStringref(Stringref stringref);
+
+   ListData listData.addData(Data data);
+   listData.setArray(void array);
+
+   MapMember mapMember.setName(String name);
+   mapMember.setData(Data data);
+
+   MapDataRef mapDataRef.setMapData(MapData mapData);
+
+   MapData mapData.addMember(MapMember mapMember);
+
+   NewStatement newStatement.addClassOrPackageName(String classOrPackageName);
+   newStatement.setArguments(Args args);
+
+   Data data.setContent(String *);
+   data.setNewStatement(NewStatement newStatement);
+   data.setStringExp(StringExp stringExp);
+   data.setListData(ListData listData);
+   data.setMapDataRef(MapDataRef mapDataRef);
+   data.setReference(Reference reference);
+   data.setNullData(NullData nullData);
+   data.setBooleanData(BooleanData booleanData);
+   data.setIntegerData(IntegerData integerData);
+   data.setFloatData(FloatData floatData);
+
+   IndexItem indexItem.setNumber(String unsignedInt);
+   indexItem.setReference(Reference reference);
+
+   ListIndex listIndex.addIndexItem(IndexItem indexItem);
+
+   Args args.addData(Data data, String stringData);
+   args.setMapData(MapData mapData);
+
+   NamespaceRef namespaceRef.setNamespace(String namespace);
+
+   VariableRef variableRef.setVariableName(String variableName);
+
+   MethodRef methodRef.setMethodName(String methodName);
+   methodRef.setArgs(Args args);
+
+   AttributeRef attributeRef.setMethodRef(MethodRef methodRef);
+   attributeRef.setVariableRef(VariableRef variableRef);
+   attributeRef.setListIndex(ListIndex listIndex);
+
+   AttributeMethodRef attributeMethodRef.setMethodRef(MethodRef methodRef);
+   attributeMethodRef.setListIndex(ListIndex listIndex);
+
+   AttributeVariableRef attributeVariableRef.setVariableRef(VariableRef variableRef);
+   attributeVariableRef.setListIndex(ListIndex listIndex);
+
+   Reference(Template template, Macro macro, Function function) reference.setBegin(Index begin);
+   reference.setNamespaceRef(NamespaceRef namespaceRef);
+   reference.setAttributeRef(AttributeRef attributeRef);
+   reference.setFloatData(FloatData floatData, String name);
+   reference.setIntegerData(IntegerData integerData, String name);
+   reference.setStringExp(StringExp stringExp, String name);
+   reference.addNextAttributeRef(AttributeRef nextAttributeRef);
+
+   CallReference(Template template, Macro macro, Function function) callReference.setBegin(Index begin);
+   callReference.setNamespaceRef(NamespaceRef namespaceRef);
+   callReference.setAttributeRef(AttributeMethodRef attributeMethodRef);
+   callReference.setAttributeRef(AttributeVariableRef attributeVariableRef);
+   callReference.addNextAttributeRef(AttributeRef nextAttributeRef);
+
+   Stringref stringref.setBegin(Index begin); 
+   stringref.setCurrentdir(void currentDir);
+   stringref.setParentDir(void parentDir);
+   stringref.setReference(Reference reference);
+
+   FloatData floatData.setNumber(String *);
+
+   IntegerData integerData.setNumber(String *);
+
+   NullData nullData;
+
+   BooleanData booleanData.setBoolean(String *);
+
+   Text text.setContent(String *);
+
+   Write write.setBegin(Index begin);
+   write.setFilename(StringExp filename);
+   write.setBlock(Block block);
+   
+   Local(Template template, Macro macro, Function function) local.setTarget(Reference target);   
+   local.setData(Data data);
+   local.setComparition(Comparition comparition);
+   
+   Set(Template template, Macro macro) set.setBegin(Index begin);
+   set.setTarget(Reference target);
+   set.setData(Data data);
+   set.setComparition(Comparition comparition);
+
+   Operator operator.setEquals(void equals);
+   operator.setNotEquals(void notEquals);
+   operator.setLessThan(void lessThan);
+   operator.setLessOrEqual(void lessOrEqual);
+   operator.setGreaterThan(void greaterThan);
+   operator.setGreaterOrEqual(void greaterOrEqual);
+
+   Comparition comparition.setLeftOperand(Data leftOperand);
+   comparition.setOperator(Operator operator);
+   comparition.setRightOperand(Data rightOperand);
+
+   ConditionElement conditionElement.setNot(void not);
+   conditionElement.setComparition(Comparition comparition);
+   conditionElement.setBoolean(BooleanData booleanCondition);
+   conditionElement.setReference(Reference reference);
+
+   ConditionBase conditionBase.setConditionElement(ConditionElement conditionElement);
+   conditionBase.setCondition(Condition condition);
+   
+   ConditionAnd conditionAnd.addConditionBase(ConditionBase conditionBase);
+   
+   Condition condition.addConditionAnd(ConditionAnd conditionAnd);
+
+   Ifcmd ifcmd.setCondition(Condition condition);
+   ifcmd.setBlock(Block block);
+   ifcmd.addElseif(Elseif elseif);
+   ifcmd.setElse(Else else);
+   
+   Elseif elseif.setCondition(Condition condition);
+   elseif.setBlock(Block block);
+
+   Else else.setBlock(Block block);
+
+   Whilecmd whilecmd.setCondition(Condition condition);
+   whilecmd.setBlock(Block block);
+
+   Call(Template template) call.setBegin(Index begin);
+   call.setReference(CallReference callReference);
+   call.setTargetNamespace(String targetNamespace);
+   call.setTargetVariable(String targetVariable);
+
+   Foreach(Template template) foreach.setBegin(Index begin);
+   foreach.setVariable(String variable);
+   foreach.setListData(ListData listData);
+   foreach.setMapDataRef(MapDataRef mapDataRef);
+   foreach.setReference(Reference reference);
+   foreach.setCondition(Condition condition);
+   foreach.setBlock(Block block);
+
+   Importcmd(Template template) importcmd.setBegin(Index begin);
+   importcmd.setFilename(StringExp filename);
+   importcmd.setAsText(void asText);
+
+   Macro(Template template) macro.setBegin(Index begin);
+   macro.setName(String name);
+   macro.addParameter(String parameter);
+   macro.setBlock(Block block);
+
+   Command command.setLocal(Local local);
+   command.setSet(Set set);
+   command.setWrite(Write write);
+   command.setIfcmd(Ifcmd ifcmd);
+   command.setWhilecmd(Whilecmd whilecmd);
+   command.setForeach(Foreach foreach);
+   command.setImport(Importcmd importcmd);
+   command.setMacro(Macro macro);
+   command.setFunction(Function function);
+   command.setCall(Call call);
+   command.setError(Error error);
+
+   Namespace namespace.setName(String name);
+
+   Error error.setBegin(Index begin);
+   error.setMessage(StringExp message);
+
+   Returncmd(Function function) returncmd.setReturnedData(Data data);
+   returncmd.setReturnedComparition(Comparition comparition);
+   
+   Function(Template template) function.setName(String name);
+   function.addParameter(String parameter);
+   function.setBlock(Block block);
+
+   Block block.addText(String astext.text);
+   block.addCommand(Command command);
+   block.addReturncmd(Returncmd returncmd);
+   block.addStringref(Stringref stringref);
+   block.addText(Text text);
+
+   Template template.setNamespace(Namespace namespace);
+   template.setDefaultNamespace(void defaultNamespace);
+   template.setBlock(Block block);
+}

@@ -1,0 +1,240 @@
+
+grammar testcase {
+	cr = ("\r" ["\n"]) | "\n";
+    comment = ("/*" [!"*/"+] "*/") | ("//" [!(cr|END)+] cr|END);
+  	ws = (cr | " " | "\t" | comment)+;
+  	s = [ws];
+
+	a = "a";
+	b = "b";
+	c = "c";
+	d = "d";
+    ab = "ab";
+    cd = "cd";
+    
+	ar = "a"+;
+	br = "b"+;
+	dr = "d"+;
+	er = "e"+;
+    
+    Testcase testcase;
+    
+    t111 = ab;
+    testcase.setT111ab(String t111.ab);
+    testcase.setT111all(String t111);
+
+    t112 = !ab;
+    testcase.setT112notab(String t112.ab);
+    testcase.setT112all(String t112);
+    
+    t113 = ab+;
+    testcase.setT113ab(String t113.ab);
+    testcase.setT113all(String t113);
+    
+    t114 = !ab:notab+ ab;
+    testcase.setT114notab(String t114.notab);
+    testcase.setT114all(String t114);
+
+    t121 = (ab);
+    testcase.setT121ab(String t121.ab);
+    testcase.setT121all(String t121);
+
+    t122 = (!ab);
+    testcase.setT122notab(String t122.ab);
+    testcase.setT122all(String t122);
+
+    t123 = (ab+);
+    testcase.setT123ab(String t123.ab);
+    testcase.setT123all(String t123);
+
+    t124 = (!ab:notab+) ab;
+    testcase.setT124notab(String t124.notab);
+    testcase.setT124all(String t124);
+
+    t131 = !(ab):x;
+    testcase.setT131ab(String t131.ab);
+    testcase.setT131x(String t131.x);
+
+    t132 = !(!a):x;
+    testcase.setT132a(String t132.a);
+    testcase.setT132x(String t132.x);
+
+    t133 = !(ab+):x;
+    testcase.setT133x(String t133.x);
+    testcase.setT133all(String t133);
+
+    t134 = !(!a+):x;
+    testcase.setT134x(String t134.x);
+    testcase.setT134all(String t134);
+
+    t141 = !(ab:notab):x+ ab;
+	testcase.setT141notab(String t141.notab);
+	testcase.setT141x(String t141.x);
+	testcase.setT141ab(String t141.ab);
+	testcase.setT141all(String t141);
+
+    t142 = !(!a):x+;
+    testcase.setT142a(String t142.a);
+    testcase.setT142x(String t142.x);
+    testcase.setT142all(String t142);
+
+    t143 = !(ab:notab+):x+ ab;
+    testcase.setT143notab(String t143.notab);
+    testcase.setT143x(String t143.x);
+    testcase.setT143ab(String t143.ab);
+    testcase.setT143all(String t143);
+
+    t144 = !(!a+):x+;
+    testcase.setT144a(String t144.a);
+    testcase.setT144x(String t144.x);
+    testcase.setT144all(String t144);
+
+    t151 = [ab];
+    testcase.setT151empty(String t151empty);
+    testcase.setT151ab(String t151.ab);
+    testcase.setT151all(String t151);
+
+    t152 = [!ab:notab] ab;
+    testcase.setT152empty(String t152empty);
+    testcase.setT152notab(String t152.notab);
+    testcase.setT152all(String t152);
+
+    t153 = [ab+];
+    testcase.setT153ab(String t153.ab);
+    testcase.setT153empty(String t153empty);
+    testcase.setT153all(String t153);
+
+    t154 = [!ab:notab+] ab;
+    testcase.setT154empty(String t154empty);
+    testcase.setT154notab(String t154.notab);
+    testcase.setT154all(String t154);
+    
+    t161 = [ab]+;
+    testcase.setT161ab(String t161.ab);
+    testcase.setT161empty(String t161empty);
+    testcase.setT161all(String t161);
+
+    t162 = [!ab:notab]+ ab;
+    testcase.setT162empty(String t162empty);
+    testcase.setT162notab(String t162.notab);
+    testcase.setT162all(String t162);
+
+    t163 = [ab+]+;
+    testcase.setT163empty(String t163empty);
+    testcase.setT163ab(String t163.ab);
+    testcase.setT163all(String t163);
+
+    t164 = [!ab:notab+]+ ab;
+    testcase.setT164empty(String t164empty);
+    testcase.setT164notab(String t164.notab);
+    testcase.setT164all(String t164);
+
+    t165 = [ab]:x;
+    testcase.setT165(String t165.x);
+    
+    t211 = ab cd;
+    testcase.setT211ab(String t211.ab);
+    testcase.setT211cd(String t211.cd);
+    testcase.setT211all(String t211);
+
+    t212 = (ab cd);
+    testcase.setT212ab(String t212.ab);
+    testcase.setT212cd(String t212.cd);
+    testcase.setT212all(String t212);
+
+    t213 = [ab cd];
+    testcase.setT213empty(String t213empty);
+    testcase.setT213ab(String t213.ab);
+    testcase.setT213cd(String t213.cd);
+    testcase.setT213all(String t213);
+
+    t214 = [ab cd]+;
+    testcase.setT214empty(String t214empty);
+    testcase.setT214ab(String t214.ab);
+    testcase.setT214cd(String t214.cd);
+    testcase.setT214all(String t214);
+
+	t311 = a#3;
+    testcase.setT311(String t311.a);
+
+	t312 = a#3..5;
+    testcase.setT312(String t312.a);
+
+	t313a = a;
+	t313 = t313a#2;
+	testcase.setT313(String t313.t313a);
+
+	t411 = :x a :y;
+	testcase.setT411x(String t411.x);
+	testcase.setT411a(String t411.a);
+	testcase.setT411y(String t411.y);
+
+	t511a = a+;
+	t511 = t511a "." $x;
+	$ testcase.setT511a(String t511.t511a);
+	$x String testcase.getT511a();
+
+	t512 = a $true !$false;
+	$true boolean testcase.getTrue();
+	$false boolean testcase.getFalse();
+
+    testcase.setEnd(void end);
+    
+    testcase = "111. " t111 cr
+               "112. " t112 cr
+               "113. " t113 cr
+               "114. " t114 cr
+
+               "121. " t121 cr
+               "122. " t122 cr
+               "123. " t123 cr
+               "124. " t124 cr
+
+               "131. " t131 cr
+               "132. " t132 cr
+               "133. " t133 cr
+               "134. " t134 cr
+
+               "141. " t141 cr
+               "142. " t142 cr
+               "143. " t143 cr
+               "144. " t144 cr
+
+               "151a. " t151:t151empty cr
+               "151b. " t151 cr
+               "152a. " t152:t152empty cr
+               "152b. " t152 cr
+               "153a. " t153:t153empty cr
+               "153b. " t153 cr
+               "154a. " t154:t154empty cr
+               "154b. " t154 cr
+
+               "161a. " t161:t161empty cr
+               "161b. " t161 cr
+               "162a. " t162:t162empty cr
+               "162b. " t162 cr
+               "163a. " t163:t163empty cr
+               "163b. " t163 cr
+               "164a. " t164:t164empty cr
+               "164b. " t164 cr
+               "165. " t165 cr
+               
+               "211. " t211 cr
+               "212. " t212 cr
+               "213a. " t213:t213empty cr
+               "213b. " t213 cr
+               "214a. " t214:t214empty cr
+               "214b. " t214 cr
+               
+               "311. " t311 cr
+               "312. " t312 cr
+               "313. " t313 cr
+               
+               "411. " t411 cr
+
+               "511. " t511 cr
+               "512. " t512 cr
+               
+               ".":end
+               ;
+} 

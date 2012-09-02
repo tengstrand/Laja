@@ -1,0 +1,7 @@
+#namespace cdd
+
+#generateParser(
+  package: "net.sf.laja.parser.cdd.behaviour"
+  grammarFile: "{.}/behaviour.grammar"
+  outputDir: "{..}/../../../../../target"
+)

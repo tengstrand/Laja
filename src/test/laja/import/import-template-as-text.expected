@@ -1,0 +1,5 @@
+My message to you is:
+#set (hello = "Hello")
+#set (name = "Bill")
+{hello}
+ NULL

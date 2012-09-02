@@ -1,0 +1,9 @@
+
+#set (list = null)
+
+#write "target/test-output/foreach-null.out"
+-- start --
+  #foreach (element in list)
+  #end
+-- end --
+#end

@@ -1,0 +1,12 @@
+a1 = a1
+a2 = a1
+
+list = [1, 2]
+list2 = [1, 2]
+
+map = {a=a, b=b, c=[c0, c1]}
+list = [c0, c1]
+element = c1
+nullable = true
+truex = false
+false1 = false

@@ -1,0 +1,7 @@
+local x = 123
+local x1 = 123-local
+local x2 = 123
+outer x = 5
+outer y = 77
+outer x1 = 123-outer
+outer x2 = 123

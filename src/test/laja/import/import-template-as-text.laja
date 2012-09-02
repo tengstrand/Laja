@@ -1,0 +1,5 @@
+#write "target/test-output/import-template-as-text.out"
+My message to you is:
+  #import "src/test/laja/import/file1.laja" as text
+ {name}
+#end

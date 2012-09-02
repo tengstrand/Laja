@@ -1,0 +1,12 @@
+
+#macro macroA(x)
+a:{macroB(x)}##
+#end
+
+#macro macroB(x)
+b:{x}##
+#end
+
+#write "target/test-output/macro-pass-arguments-between-macros.out"
+{macroA(123)}
+#end

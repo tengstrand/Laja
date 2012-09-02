@@ -1,0 +1,16 @@
+
+#set (x = 1)
+
+#macro x ()
+2##
+#end
+
+#macro y()
+3##
+#end
+
+#write "target/test-output/macro-access-with-same-name.out"
+  x = {x}
+  x() = {x()}
+  y = {y}
+#end

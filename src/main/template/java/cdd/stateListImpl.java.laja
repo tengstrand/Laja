@@ -1,0 +1,40 @@
+#macro class()
+  #header()
+public class {stateListImplClass} extends ArrayList<{stateClass}> implements {stateListClass} {
+    private boolean _encapsulated = false;
+
+    {stateListImplClass}() {
+    }
+
+    public static {stateListClass} emptyList(Certificate certificate) {
+        return new {stateListImplClass}();
+    }
+
+    public boolean isValid() {
+        for ({stateClass} state : this) {
+            if (!state.isValid()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+
+        for ({stateClass} state : this) {
+            state.encapsulate();
+        }
+    }
+}
+#end
+
+#set (filename = "{outputDir}/{stateListImplClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+import java.util.*;
+  #importCertificate()
+
+  #class()
+#end

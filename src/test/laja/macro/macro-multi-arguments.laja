@@ -1,0 +1,10 @@
+
+#macro multi(a,b,c)
+a = {a}
+b = {b}
+c = {c}##
+#end
+
+#write "target/test-output/macro-multi-arguments.out"
+{multi("abc",123,456)}
+#end

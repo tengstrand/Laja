@@ -1,0 +1,20 @@
+#write "target/test-output/elseif.out"
+  #set (x = 3)
+  #if (x == 1)
+x is 1
+  #else if (x == 2)
+x is 2
+  #else if (x == 3)
+x is 3
+  #end
+
+  #set (y = 99)
+  #if (y == 1)
+This row is ignored.
+  #end
+
+  #set (a = { x1:"xx1" x2:"xx2" })
+  #if (a.x1 == "xx1")
+a.x1 is xx1
+  #end
+#end

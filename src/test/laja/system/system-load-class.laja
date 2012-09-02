@@ -1,0 +1,4 @@
+
+#write "target/test-output/system-load-class.out"
+Class of java.lang.Number = {loadClass("java.lang.Number")}
+#end

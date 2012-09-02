@@ -1,0 +1,10 @@
+
+#set (numbers = ["one", "two", "three"] as array)
+#set (separator = "")
+
+#write "target/test-output/foreach-reference-array.out"
+  #foreach (x in numbers)
+{separator}{x}##
+    #set (separator=", ")
+  #end
+#end

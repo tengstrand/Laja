@@ -1,0 +1,7 @@
+
+#generateParser(
+  forwardRef: false
+  package: "net.sf.laja.parser.testcase"
+  grammarFile: "{.}/testcase.grammar"
+  outputDir: "{.}/../../../../../target"
+)

@@ -1,0 +1,3 @@
+ #set (b = 123)
+#>some text<#
+b = NULL

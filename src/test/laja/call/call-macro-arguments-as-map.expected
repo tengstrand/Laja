@@ -1,0 +1,3 @@
+  map.class().name = java.util.LinkedHashMap
+  map.name = Homer
+  map.age = 45

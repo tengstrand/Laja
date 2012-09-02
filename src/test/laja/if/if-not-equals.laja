@@ -1,0 +1,6 @@
+#write "target/test-output/if-equals.out"
+  #set (x = 1)
+  #if (x != 2)
+x is not 2
+  #end
+#end

@@ -1,0 +1,17 @@
+#namespace abc
+
+#macro outer(x)
+Value = {x}##
+#end
+
+#set (aaa = 111)
+
+#import "src/test/laja/namespace/namespace-access-another-namespace-import.laja"
+
+#write "target/test-output/namespace-access-another-namespace.out"
+{outer(1)}
+## The content of a namespace is stored in a java.util.Map.
+Namespace $x = {$x}
+
+{$x.print($abc)}
+#end

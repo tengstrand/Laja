@@ -1,0 +1,81 @@
+grammar stateTemplate {
+   newline = "\r\n" | "\n";
+   comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END);
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+   ff = "\"";
+   str = ff (("\\\"" | !(ff|newline))+):strval ff;
+
+   letter = "a".."z" | "A".."Z" | "_" | "$";
+   digit = "0".."9";
+   name = letter [letter | digit]+;
+
+   public = ["public" ws];
+   packagestatement = "package" ws packagename s ";";
+   packagename = name ["." name]+;
+   fullclassname = packagename;
+
+   importstatement = "import" ws ["static":static ws] fullclassname s ";";
+   imports = [s importstatement]+;
+
+   type = name [s "<" s type s ">"] [ s "," s type ];
+   initialValue = "=" s !";"+:value;
+   attribute = type ws name:variable s [initialValue s] ";" attributeComment|s;
+   attributeComment = ([" " | "\t"]+ "//" [!newline+]):comment newline|END;
+
+   statement = "{" s [(statement | str | !"}")+]:innerStatement "}";
+
+   isvalid = s public "boolean" ws "isValid()" s statement;
+
+   uname = "A".."Z" [letter | digit]+;
+   getter = "get" uname s "(" s ")";
+
+   parameters = s [!")"+];
+   argument = getter | name:variable [s "." s argument];
+   method = s "." s name:variable s "(" s argument s ")";
+   stateMethod = public name:returnclass ws "state" uname s "(" parameters ")" s "{" s  "return" ws name:implclass s method+ s ";" s "}";
+
+   convertMethod = public name ws "convert" [uname] s "(" s name:type ws name:variable s ")" s "{" s "return" ws !";"+:statement ";" s "}";
+
+   classStatement = public "class" ws name:classname s ["extends" ws name s] "{" [s attribute | isvalid | convertMethod | stateMethod]+ s "}";
+
+   stateTemplate = s packagestatement s imports s classStatement s;
+
+   Statement statement.setInnerStatement(String innerStatement);
+   statement.setStatement(Statement statement);
+
+   IsValid isvalid.setStatement(Statement statement);
+
+   Importstatement importstatement.setStatement(String *);
+   importstatement.setStatic(void static);
+   importstatement.setFullclassname(String fullclassname);
+
+   Imports imports.addImportstatement(Importstatement importstatement);
+
+   Attribute attribute.setType(String type);
+   attribute.setVariable(String variable);
+   attribute.setInitialValue(String initialValue.value);
+   attribute.setComment(String attributeComment.comment);
+
+   Method method.setVariable(String variable);
+
+   StateMethod stateMethod.setReturnclass(String returnclass);
+   stateMethod.setUname(String uname);
+   stateMethod.setParameters(String parameters);
+   stateMethod.setImplClass(String implclass);
+   stateMethod.addMethod(Method method, String statement);
+
+   ConvertMethod convertMethod.setType(String type);
+   convertMethod.setVariable(String variable);
+   convertMethod.setStatement(String statement);
+
+   ClassStatement classStatement.setClassname(String classname);
+   classStatement.addAttribute(Attribute attribute);
+   classStatement.setIsValid(IsValid isvalid);
+   classStatement.addStateMethod(StateMethod stateMethod);
+   classStatement.addConvertMethod(ConvertMethod convertMethod);
+
+   StateTemplate stateTemplate.setPackagename(String packagestatement.packagename);
+   stateTemplate.setImports(Imports imports);
+   stateTemplate.setClassStatement(ClassStatement classStatement);
+}

@@ -1,0 +1,32 @@
+
+#macro lazyImportFileService()
+  #if ($laja.fileService == null)
+    #import "{.}/FileService.groovy"
+    #set ($laja.fileService = new FileService())
+  #end
+#end
+
+#function fileExists(path)
+  #lazyImportFileService()
+  #return ($laja.fileService.fileExists(path))
+#end
+
+#function directoryExists(path)
+  #lazyImportFileService()
+  #return ($laja.fileService.directoryExists(path))
+#end
+
+#function pathExists(path)
+  #lazyImportFileService()
+  #return ($laja.fileService.pathExists(path))
+#end
+
+#function createDirectory(path)
+  #lazyImportFileService()
+  #return ($laja.fileService.createDirectory(path))
+#end
+
+#function createDirectoryPath(path)
+  #lazyImportFileService()
+  #return ($laja.fileService.createDirectoryPath(path))
+#end

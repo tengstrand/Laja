@@ -1,0 +1,7 @@
+The value of x.valid = true
+The value of x.stringValue is: a string value
+abc.charAt(2) = c
+x.stringValue.length = 14
+x.array(1)[2] = 6
+x.list[1] = two
+x.method(123, "b", { a:"a1" b:"b1"}) = b1:123

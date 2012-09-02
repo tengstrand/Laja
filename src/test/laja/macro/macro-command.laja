@@ -1,0 +1,13 @@
+
+#import "src/main/groovy/PropertiesReader.groovy"
+
+#macro read(filename)
+  #if (filename.toString.endsWith(".properties"))
+{propertiesReader.readProperties(filename)}##
+  #end
+#end
+
+#write "target/test-output/macro-command.out"
+  #read("src/test/laja/macro/values.properties") into value
+{value}
+#end

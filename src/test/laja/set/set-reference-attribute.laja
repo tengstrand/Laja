@@ -1,0 +1,11 @@
+#write "target/test-output/set-reference-attribute.out"
+  #set (myclass = new net.sf.laja.integrationtest.SetTest$Myclass())
+  #set (map = { a:"a" b: { c: "hello" } })
+  #set (map.a = "new value")
+  #set (myclass.value = "hello")
+map.a = {map.a}
+myclass.value = {myclass.value}
+map.b.c = {map.b.c}
+  #set (map.b.c = "there")
+map.b.c = {map.b.c}
+#end

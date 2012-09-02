@@ -1,0 +1,17 @@
+#write "target/test-output/if-less-than.out"
+  #set (x = 1)
+  #if (x < 2)
+x is less than 2
+  #end
+  #if (x < 1.1)
+x is less than 1.1
+  #end
+  #if (x < "2")
+x is less than "2"
+  #end
+  #if (x < 1)
+x is less than 1
+  #else
+x is not less than 1
+  #end
+#end

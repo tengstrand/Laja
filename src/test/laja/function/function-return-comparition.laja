@@ -1,0 +1,9 @@
+
+#function isLessThan(x,y)
+  #return x < y
+#end
+
+#write "target/test-output/function-return-comparition.out"
+  #set (result = isLessThan(1, 2))
+  1 is less than 2: {result}
+#end

@@ -1,0 +1,18 @@
+
+This scrip shows an example of how to define macros dynamically.
+A macro definition can any time be replaced by another macro definition.
+
+#write "target/test-output/macro-dynamic.out"
+  #foreach (x in [1,2])
+    #if (x == 1)
+      #macro print()
+A
+      #end
+    #else
+      #macro print()
+B
+      #end
+    #end
+    #print()
+  #end
+#end

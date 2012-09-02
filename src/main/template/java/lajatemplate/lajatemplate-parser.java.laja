@@ -1,0 +1,6 @@
+
+#generateParser(
+  package: "net.sf.laja"
+  grammarFile: "{.}/lajatemplate.grammar"
+  outputDir: "{..}/../../../../target"
+)

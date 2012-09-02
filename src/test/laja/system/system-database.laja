@@ -1,0 +1,41 @@
+
+#connectToDatabase (
+   driver: "org.hsqldb.jdbcDriver"
+   connection: "jdbc:hsqldb:file:src/test/laja/system/hsqldb/test;ifexists=true"
+   user: "sa"
+   password: ""
+) into con
+
+#con.readMetadata() into $
+#con.executeSql("select * from person") into persons
+#con.executeSql("select street_name, city from address") into addresses
+
+#write "target/test-output/system-database.out"
+
+Database: {con.metadata.databaseProductName} ({con.metadata.databaseProductVersion})
+
+Tables:
+  #foreach (table in tables where table.schema == "public")
+    {table.name}
+    #foreach (column in table.columns)
+       {column.name}
+    #end
+  #end
+
+Relations:
+  #foreach (relation in relations where relation.pkTableSchema == "public")
+     {relation.fkTableName}.{relation.fkColumnName} -> {relation.pkTableName}.{relation.pkColumnName}
+  #end
+
+Rows in table person:
+  #foreach (person in persons)
+    {person}
+  #end
+
+Rows in table address:
+  #foreach (address in addresses)
+    {address.street_name}, {address.city}
+  #end
+#end
+
+#con.close()

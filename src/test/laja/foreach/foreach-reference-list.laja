@@ -1,0 +1,6 @@
+#write "target/test-output/foreach-reference-list.out"
+  #set (list = [ "A", "B", "C" ])
+  #foreach (x in list)
+value = {x}
+  #end
+#end

@@ -1,0 +1,8 @@
+
+#write "target/test-output/call-map-method.out"
+  ## Put the variable 'b' into the default ($) namespace (that is a java.util.Map)
+  #$.putAll({ b: "value" })
+  #$.putAll( c: "123" )
+$.b = {$.b}
+$.c = {$.c}
+#end

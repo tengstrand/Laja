@@ -1,0 +1,11 @@
+
+#set (path = "target/test-output/abc/a/b/c")
+
+#set (directoryExistsBefore = directoryExists(path))
+#createDirectoryPath(path)
+#set (directoryExistsAfter = directoryExists(path))
+
+#write "target/test-output/system-create-directory-path.out"
+  Directory path exists before: {directoryExistsBefore}
+  Directory path exists after: {directoryExistsAfter}
+#end

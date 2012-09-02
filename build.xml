@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ====================================================================== -->
+<!-- Ant build file (http://ant.apache.org/) for Ant 1.6.2 or above.        -->
+<!-- ====================================================================== -->
+
+<project name="laja" default="dist" basedir=".">
+
+  <import file="maven-build.xml"/>
+	
+  <target name="dist" depends="jar">
+  	<delete file="src/main/template/java/examples/expression/ExpressionParser.java" />
+  	
+  	<zip destfile="${project.build.directory}/${maven.build.finalName}.zip" update="false">
+  		<zipfileset file="src/main/template/java/lajatemplate/lajatemplate.grammar" prefix="doc"/>
+  	    <zipfileset dir="." includes="LICENCE.txt" />
+  	    <zipfileset dir="src/delivery/bin" prefix="bin"/>
+  	    <zipfileset dir="src/delivery/lib" prefix="lib"/>
+  	    <zipfileset dir="src/example" prefix="example" excludes=".svn java/build/**"/>
+  		<zipfileset file="src/main/template/system-imports.laja" prefix="template" excludes=".svn"/>
+  		<zipfileset dir="src/main/template/system" prefix="template/system" excludes=".svn"/>
+  		<zipfileset dir="src/main/template/java/parser" prefix="template/java/parser" excludes=".svn"/>
+        <zipfileset dir="src/main/template/java/cdd" prefix="template/java/cdd" excludes=".svn"/>
+  		<zipfileset dir="src/test/laja" prefix="template/java/examples/code-generator-intregration-tests" excludes=".svn"/>
+  		<zipfileset dir="src/main/template/java/examples" prefix="template/java/examples" excludes=".svn"/>
+  		<zipfileset dir="target" includes="laja.jar" prefix="system-lib"/>
+  		<zipfileset dir="${maven.repo.local}/commons-lang/commons-lang/2.4" includes="commons-lang-2.4.jar" prefix="system-lib"/>
+  		<zipfileset dir="${maven.repo.local}/groovy/groovy-all-1.0-jsr/05" includes="groovy-all-1.0-jsr-05.jar" prefix="system-lib"/>
+	</zip>
+  </target>
+
+  <target name="dist-and-copy" depends="dist">
+    <property environment="env"/>
+      <unzip src="${project.build.directory}/${maven.build.finalName}.zip" dest="${env.LAJA_HOME}"/>
+      <echo file="${env.LAJA_HOME}/template/system-imports.laja">#import "C:/Source/IDEA/Laja/src/main/template/system-imports.laja"</echo>
+  </target>
+
+  <target name="help">
+    <echo message="Please run: $ant -projecthelp"/>
+  </target>
+
+</project>

@@ -1,0 +1,4 @@
+  integer.MAX_VALUE = 2147483647
+  myAttributes.x = 123
+  myAttributes.y = abc
+  myAttributes.z.length = 1

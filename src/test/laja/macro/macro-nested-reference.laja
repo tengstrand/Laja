@@ -1,0 +1,15 @@
+
+#macro one(argument)
+1{argument}##
+#end
+
+#macro two(argument)
+2{argument}##
+#end
+
+#write "target/test-output/macro-nested-reference.out"
+  #set (aaa = "AAA")
+{one(two(aaa))}
+{one(two(aaa.class.name))}
+{one(two("3{aaa}"))}
+#end

@@ -1,0 +1,13 @@
+
+#macro lazyImportDatabasReader()
+  #if ($laja.databaseReader == null)
+    #import "{.}/DatabaseConnection.groovy"
+    #import "{.}/DatabaseReader.groovy"
+    #set ($laja.databaseReader = new DatabaseReader())
+  #end
+#end
+
+#function connectToDatabase(settings)
+  #lazyImportDatabasReader()
+  #return ($laja.databaseReader.connect(settings))
+#end

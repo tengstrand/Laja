@@ -1,0 +1,117 @@
+#namespace parser
+#set (importList = false)
+#foreach (om in ref.outputmethodList)
+  #if (strings.left(om.methodName,3) == "add")
+    #set (importList = true)
+  #end  
+#end
+#if (importList)
+import java.util.ArrayList;
+import java.util.List;
+
+#end
+#set (x = "{tab}")
+#set (parserClass = "{parserPrefix}{grammar.grammarClass}{parserSuffix}")
+#set (innerclass = rename(class(ref.className)))
+{xx}public {staticClass}class {innerclass} implements {parserClass}.{interface(ref.className)} {
+#foreach (om in ref.outputmethodList)
+  #set (type = "{strings.left(om.methodName,3)}")
+  #if (om.isClass())
+    #if (type == "set")
+{xx}{x}private {class(om.argClass)} {rename(om.argName)};
+    #else if (type == "add")
+{xx}{x}private List<{class(om.argClass)}> {rename("{om.argName}s")} = new ArrayList<{class(om.argClass)}>();
+    #end
+    #else if (om.isStr())
+    #if (type == "set")
+{xx}{x}private String {rename(om.outputArgName)};
+    #else if (type == "add")
+{xx}{x}private List<String> {rename("{om.outputArgName}s")} = new ArrayList<String>();
+    #end
+  #end
+#end
+#foreach (om in ref.outputmethodList)
+
+{xx}{x}/**
+{xx}{x} * Generated from {grammarFile}:
+{xx}{x} *   {om.statement}
+{xx}{x} */
+  #set (args = "")
+  #if (om.isVoid)
+    #set (comma = "")
+  #else
+    #set (comma = ", ")
+  #end
+  #foreach (omarg in om.omargList)
+    #if (omarg.isStr())
+      #set (args = "{args}{comma}String {rename(omarg.arg)}")
+    #else
+      #set (args = "{args}{comma}{enginePackage}.Index {rename(omarg.arg)}")
+    #end
+  #end
+  #set (type = strings.left(om.methodName,3))
+  #if (om.isVoid())
+{xx}{x}public void {om.methodName}({args}) {
+{xx}{x}}
+  #else if (om.isStr())
+{xx}{x}public void {om.methodName}(String {rename(om.outputArgName)}{args}) {
+    #if (type == "set")
+{xx}{x}{x}this.{rename(om.outputArgName)} = {rename(om.outputArgName)};
+{xx}{x}}
+    #else if (type == "add")
+{xx}{x}{x}this.{rename("{om.outputArgName}s")}.add({rename("{om.outputArgName}")});
+{xx}{x}}
+
+{xx}{x}public List<String> get{strings.mid(om.methodName,3,999)}s() {
+{xx}{x}{x}return {rename("{om.outputArgName}s")};
+{xx}{x}}
+  #end
+  #else if (om.isIndex())
+{xx}{x}public void {om.methodName}({enginePackage}.Index {rename(om.outputArgName)}{args}) {
+{xx}{x}}
+  #else if (om.isClass())
+{xx}{x}public void {om.methodName}({parserClass}.{interface(om.argClass)} {interfaceVar(om.outputArgName)}{args}) {
+    #if (type == "set")
+{xx}{x}{x}this.{rename(om.argName)} = ({class(om.argClass)}){interfaceVar(om.outputArgName)};
+{xx}{x}}
+
+{xx}{x}public {class(om.argClass)} {renameMethod("get{strings.mid(om.methodName,3,999)}")}() {
+{xx}{x}{x}return {rename(om.argName)};
+{xx}{x}}
+    #else if (type == "add")
+{xx}{x}{x}this.{rename("{om.argName}s")}.add(({class(om.argClass)}){interfaceVar(om.outputArgName)});
+{xx}{x}}
+    #end
+  #else if (om.isConst())
+{xx}{x}public void {om.methodName}(int {rename(om.outputArgName)}{args}) {
+{xx}{x}}
+  #end
+#end
+
+{xx}{x}public String toString() {
+{xx}{x}{x}return "{innerclass}{" +
+#set (sep = "")
+#foreach (om in ref.outputmethodList)
+  #set (type = "{strings.left(om.methodName,3)}")
+  #if (om.isClass())
+    #if (type == "set")
+      #set (var = "{rename(om.argName)}")
+    #else if (type == "add")
+      #set (arg = "{om.argName}s")
+      #set (var = "{rename(arg)}")
+    #end
+{xx}{x}{x}{x}"{sep}{var}=" + {var} +
+  #else if (om.isStr())
+    #if (type == "set")
+      #set (var = "{rename(om.outputArgName)}")
+    #else if (type == "add")
+      #set (arg = "{om.outputArgName}s")
+      #set (var = "{rename(arg)}")
+    #end
+{xx}{x}{x}{x}"{sep}{var}=" + {var} +
+  #end
+  #set (sep = ", ")
+#end
+{xx}{x}{x}{x}"}";
+{xx}{x}}
+{xx}}

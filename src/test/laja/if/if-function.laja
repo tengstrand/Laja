@@ -1,0 +1,19 @@
+
+#function thisIsTrue()
+  #return (true)
+#end
+
+#function booleanToInt()
+  #if (true)
+    #return (1)
+  #else
+    #return (2)
+  #end
+#end
+
+#write "target/test-output/if-function.out"
+  #if (thisIsTrue())
+This is true!
+  #end
+{booleanToInt()}
+#end

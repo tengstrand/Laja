@@ -1,0 +1,32 @@
+#macro imports()
+  #foreach (import in behaviour.imports)
+{import.statement}
+  #end
+#end
+
+#macro class()
+package {behaviour.packagename};
+
+  #imports()
+
+public class {behaviourClass} extends {factoryClass} {
+    public {behaviourClass}({stateClass} state) {
+        super(state);
+    }
+
+    // (factory)
+    public {behaviourClass} as{behaviourClass}() {
+        return new {behaviourClass}(state);
+    }
+}
+#end
+
+#if (!behaviour.exists)
+  #set (filename = "{sourceDir}/{behaviourClass}.java")
+  #if (!fileExists(filename))
+    #generateFile(filename)
+    #write "{filename}"
+      #class()
+    #end
+  #end
+#end

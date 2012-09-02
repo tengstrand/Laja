@@ -1,0 +1,16 @@
+#namespace parser
+
+#macro class(class)
+  #set (classname = "{classPrefix}{class}{classSuffix}")
+  #rename(classname)##
+#end
+
+#macro renameMethod(method)
+  #set (return = method)
+  #foreach(m in reservedMethods)
+    #if (method == m)
+      #set (return = "{renamePrefix}{method}{renameSuffix}")
+    #end
+  #end
+{return}##
+#end

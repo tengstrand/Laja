@@ -1,0 +1,14 @@
+
+#set (number = loadClass("java.lang.Number"))
+
+#write "target/test-output/system-instanceof.out"
+  #if (instanceof(1, number))
+    1 is instanceof java.lang.Number
+  #end
+  #if (instanceof(number, 1))
+    This is not true!
+  #end
+  #if (instanceof(1, 2))
+    1 is instanceof 2
+  #end
+#end

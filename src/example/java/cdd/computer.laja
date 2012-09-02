@@ -1,0 +1,9 @@
+
+#println("*** Computer example ***")
+
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/../java-gen/cdd/main"
+  statePackage: "net.sf.laja.example.computer.state"
+  behaviourPackage: "net.sf.laja.example.computer.behaviour" }]
+)

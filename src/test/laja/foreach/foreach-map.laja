@@ -1,0 +1,5 @@
+#write "target/test-output/foreach-map.out"
+  #foreach (x in {a:"a1" b:"b2" c:"c3"})
+value = {x}
+  #end
+#end

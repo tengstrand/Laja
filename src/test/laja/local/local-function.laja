@@ -1,0 +1,11 @@
+
+#function myfunc()
+  #local (x = 2)
+  #return (x)
+#end
+
+#write "target/test-output/local-function.out"
+  #set (x = 1)
+  {myfunc()}
+  {x}
+#end

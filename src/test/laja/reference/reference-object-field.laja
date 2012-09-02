@@ -1,0 +1,10 @@
+
+#set (integer = 1)
+#set (myAttributes = new net.sf.laja.integrationtest.ReferenceTest$MyAttributes())
+
+#write "target/test-output/reference-object-field.out"
+  integer.MAX_VALUE = {integer.MAX_VALUE}
+  myAttributes.x = {myAttributes.x}
+  myAttributes.y = {myAttributes.y}
+  myAttributes.z.length = {myAttributes.z.length}
+#end

@@ -1,0 +1,11 @@
+
+#function value()
+  #return 123
+#end
+
+#write "target/test-output/set-function.out"
+  #set (x = value())
+  #set (compare = value().compareTo(2))
+x = {x}
+compare = {compare}
+#end

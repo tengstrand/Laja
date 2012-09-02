@@ -1,0 +1,5 @@
+
+#write "target/test-output/parameter-set-string.out"
+  message1 = {message1}
+  message2 = {message2}
+#end

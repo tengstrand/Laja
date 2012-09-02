@@ -1,0 +1,29 @@
+package net.sf.laja.cdd.behaviour.other;
+
+import net.sf.laja.cdd.state.terrestrial.*;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
+import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
+
+public class OtherTerrestrialCreator {
+    private final TerrestrialStateBuilder builder = TerrestrialStateImpl.build();
+
+    public class NumberOfLegs_ {
+        public LeftEye_ numberOfLegs(int numberOfLegs) {
+            builder.withNumberOfLegs(numberOfLegs);
+            return new LeftEye_();
+        }
+    }
+
+    public class LeftEye_ {
+        public OtherTerrestrialEncapsulator leftEye(EyeEncapsulator leftEye) {
+            builder.withLeftEye(leftEye.builder);
+            return create();
+        }
+    }
+
+    public OtherTerrestrialEncapsulator create() {
+        return new OtherTerrestrialEncapsulator(builder);
+     }
+}

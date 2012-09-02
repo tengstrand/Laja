@@ -1,0 +1,6 @@
+
+#write "target/test-output/system-home.out"
+  #if (home.length > 0)
+    Laja home is set!
+  #end
+#end

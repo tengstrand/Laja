@@ -1,0 +1,8 @@
+
+#set (pi = 3.14159)
+#set (num = -1.23)
+
+#write "target/test-output/set-float.out"  
+pi = {pi}...
+num = {num}
+#end

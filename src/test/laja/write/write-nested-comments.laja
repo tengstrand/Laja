@@ -1,0 +1,12 @@
+#write "target/test-output/write-nested-comments.out"
+  Hello
+  #*
+    Nested comment
+    #*
+       A comment
+    *#
+  #write "target/test-output/do-noda.out"
+    ............
+  #end
+  *#
+#end

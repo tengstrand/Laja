@@ -1,0 +1,28 @@
+
+#generateParser(
+  forwardRef: true
+  package: "net.sf.laja.parser"
+  grammarFile: "{.}/grammar/grammar.grammar"
+  outputDir: "{..}/../java/net/sf/laja/parser"
+)
+
+#generateParser(
+  forwardRef: false
+  package: "{enginePackage}"
+  grammarFile: "{.}/defaultsyntaxerror/defaultsyntaxerror.grammar"
+  outputDir: "{..}/../java/net/sf/laja/parser/engine2"
+)
+
+#generateParser(
+  forwardRef: false
+  package: "net.sf.laja.parser.examples.expression"
+  grammarFile: "{.}/expression/expression.grammar"
+  outputDir: "{..}/../java/net/sf/laja/parser/examples/expression"
+)
+
+#generateParser(
+  forwardRef: false
+  package: "net.sf.laja.parser.testcase"
+  grammarFile: "{.}/testcase/testcase.grammar"
+  outputDir: "{..}/../../test/java/net/sf/laja/parser/testcase"
+)

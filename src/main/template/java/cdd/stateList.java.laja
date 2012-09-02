@@ -1,0 +1,13 @@
+
+#set (filename = "{outputDir}/{stateListClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+import java.util.List;
+
+  #header()
+public interface {stateListClass} extends List<{stateClass}> {
+    boolean isValid();
+    void encapsulate();
+}
+#end

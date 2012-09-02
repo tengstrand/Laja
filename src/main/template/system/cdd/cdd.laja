@@ -1,0 +1,282 @@
+
+#macro lazyDefineCdd()
+  #if ($laja.isCddImported == null)
+    #set ($laja.isCddImported = true)
+    #set (cddParser = new net.sf.laja.parser.cdd.CddParser())
+    #set (stateTemplateFileReader = new net.sf.laja.parser.cdd.StateTemplateFileReader())
+    #set (behaviourFileReader = new net.sf.laja.parser.cdd.BehaviourFileReader())
+    #set (behaviourCreator = new net.sf.laja.parser.cdd.BehaviourCreator())
+    #set (statementConverter = new net.sf.laja.parser.cdd.StatementConverter())
+    #set (directoryConverter = new net.sf.laja.parser.cdd.DirectoryConverter())
+  #end
+#end
+
+#macro cleanupInputParameters()
+  #set (srcDir = null)
+  #set (outDir = null)
+  #set (stateOutDir = null)
+  #set (behaviourOutDir = null)
+  #set (defaultStateOutDir = null)
+  #set (defaultBehaviourOutDir = null)
+  #set (certificatePackage = null)
+  #set (certificatePath = null)
+#end
+
+#macro addBehaviour(classname)
+  #behaviours.put(classname, behaviour)
+  #if (behaviour.isFactory)
+    #behavioursFactories.put(behaviour.cleanedStateClass, behaviour)
+  #end
+#end
+
+#macro generateCdd(parameters)
+  #lazyDefineCdd()
+
+  #if (parameters.class().simpleName != "ArrayList")
+    #error("The argument must be a list of maps, e.g: #generateCdd([{ srcDir: \"/src\" outDir: \"/out\" statePackage: \"com.a.state\" behaviourPackage: \"com.a.behaviour\" }])")
+  #end
+
+  #set (behaviours = new java.util.LinkedHashMap())
+  #set (behavioursFactories = new java.util.HashMap())
+
+  #set (certificateAssigned = false)
+  #set (templateFiles = new java.util.ArrayList())
+  #set (behaviourFiles = new java.util.ArrayList())
+
+  #set (parserError = false)
+  #set (templates = new java.util.HashMap())
+  #set (expander = new net.sf.laja.parser.cdd.statetemplate.Expander())
+  #set (errors = new net.sf.laja.parser.cdd.statetemplate.StateTemplateErrors())
+
+  #set (newFiles = new java.util.ArrayList())
+
+  #foreach (parameterMap in parameters)
+    #set (templateFilesInDir = new java.util.ArrayList())
+    #set (behaviourFilesInDir = new java.util.ArrayList())
+
+    #$.putAll(parameterMap)
+
+    #if (parameterMap.srcDir == null)
+      #error("Missing parameter: 'srcDir'")
+    #end
+    #if (parameterMap.outDir == null)
+      #error("Missing parameter: 'outDir'")
+    #end
+    #if (defaultStatePackage == null)
+      #if (parameterMap.statePackage == null)
+        #error("Missing parameter: 'statePackage'")
+      #else
+        #set (defaultStatePackage = statePackage)
+      #end
+    #end
+    #if (defaultBehaviourPackage == null)
+      #if (parameterMap.behaviourPackage == null)
+        #error("Missing parameter: 'behaviourPackage'")
+      #else
+        #set (defaultBehaviourPackage = behaviourPackage)
+      #end
+    #end
+
+    #set (stateSrcDir = directoryConverter.asDirectoryPath(srcDir, statePackage))
+    #set (behaviourSrcDir = directoryConverter.asDirectoryPath(srcDir, behaviourPackage))
+
+    #set (stateOutDir = directoryConverter.asDirectoryPath(outDir, statePackage))
+    #set (behaviourOutDir = directoryConverter.asDirectoryPath(outDir, behaviourPackage))
+
+    #if (!certificateAssigned)
+      #if (certificatePath == null)
+        #set (certificatePath = stateOutDir)
+      #end
+
+      #if (certificatePackage == null)
+        #set (certificatePackage = statePackage)
+        #set (certificatePath = stateOutDir)
+      #else
+        #set (certificatePath = directoryConverter.asDirectoryPath(outDir, certificatePackage))
+      #end
+
+      #set (certificateAssigned = true)
+    #end
+
+    #stateTemplateFileReader.populateFiles(stateSrcDir, templateFilesInDir)
+    #behaviourFileReader.populateFiles(behaviourSrcDir, behaviourFilesInDir)
+
+    #templateFiles.addAll(templateFilesInDir)
+    #behaviourFiles.addAll(behaviourFilesInDir)
+
+    #foreach (templateFile in templateFilesInDir)
+      #set (file = new java.io.File(templateFile))
+      #set (template = cddParser.parseStateTemplate(templateFile))
+
+      #if (template != null)
+        #if (!template.errors.hasErrors)
+          #set (template.rootSrcDir = srcDir)
+          #set (template.rootOutDir = outDir)
+          #set (template.rootStatePackage = statePackage)
+          #set (template.rootBehaviourPackage = behaviourPackage)
+          #set (template.sourceDir = file.parent)
+          #set (template.outputDir = directoryConverter.convertSourceDirToOutputDir(template.sourceDir, stateSrcDir, stateOutDir, errors))
+          #if (errors.hasErrors)
+            #set (parserError = true)
+          #end
+          #templates.put(template.classname, template)
+          #expander.add(template))
+        #else
+          #errors.addMessages(template.errors)
+          #set (parserError = true)
+        #end
+      #else
+        #set (parserError = true)
+      #end
+    #end
+
+    #foreach (behaviourFile in behaviourFilesInDir)
+      #set (behaviour = cddParser.parseBehaviour(behaviourFile))
+      #if (behaviour != null)
+        #if (behaviour.cleanedStateClass != null)
+          #set (behaviour.srcFilename = behaviourFile)
+          #set (file = new java.io.File(behaviourFile))
+          #set (behaviour.srcDir = srcDir)
+          #set (behaviour.sourceDir = file.parent)
+          #set (behaviour.outDir = outDir)
+          #set (behaviour.outputDir = directoryConverter.convertSourceDirToOutputDir(behaviour.sourceDir, behaviourSrcDir, behaviourOutDir, errors))
+          #set (behaviourClass = statementConverter.asClassname(file))
+          #set (behaviour.classname = behaviourClass)
+          #addBehaviour(behaviourClass)
+        #end
+      #else
+        #set (parserError = true)
+      #end
+    #end
+  #end
+
+  #macro attributeError(errorMessage)
+    #errors.addMessage("{errorMessage}, error in {template.classname}StateTemplate, attribute {attribute.variable}.")
+  #end
+
+  #foreach (template in templates.values())
+    #set (cnt = counter(0))
+    #foreach (attribute in template.attributes)
+      #if (attribute.isId)
+        #cnt.increase()
+      #end
+      #if (attribute.isExpand && attribute.isStateList)
+        #attributeError("Not possible to expanded a state list")
+      #end
+      #if (attribute.isOptional && attribute.isExpand)
+        #attributeError("Not possible to expand an optional attribute")
+      #end
+    #end
+    #if (cnt.isGreaterThan(1))
+      #errors.addMessage("Max one attribute can be marked as surrogate key (id). Error in {template.classname}StateTemplate.")
+    #end
+  #end
+
+  #if (!parserError && !errors.hasErrors)
+    #checkMissingBehaviour()
+
+    #import "{..}/../java/cdd/shared.java.laja"
+    #import "{..}/../java/cdd/certificate.java.laja"
+
+    #expander.expand(errors)
+    #if (!errors.hasErrors)
+      #println ("  Generate state classes: {templates.keySet()}")
+      #generateState()
+      #println ("  Generate behaviour classes: {behaviours.keySet()}")
+      #generateBehaviour()
+    #end
+
+    #if (errors.hasErrors)
+      #errors.printMessages()
+    #end
+  #else
+    #errors.printMessages()
+  #end
+  #cleanupInputParameters()
+  #if (newFiles.isEmpty)
+    #println("No new files was generated.")
+  #else
+    #println("Generated {newFiles.size} new files:")
+    #foreach (file in newFiles)
+      #println("  {file}")
+    #end
+  #end
+#end
+
+#macro generateState()
+  #foreach (stateTemplate in templates.values())
+    #set (sourceDir = stateTemplate.sourceDir)
+    #set (outputDir = stateTemplate.outputDir)
+    #set (classname = stateTemplate.classname)
+    #set (classvariable = stateTemplate.classvariable)
+    #set (stateClass = stateTemplate.stateClass)
+    #set (stateImplClass = stateTemplate.stateImplClass)
+    #set (package = stateTemplate.packagename)
+    #set (imports = stateTemplate.imports)
+    #set (allImports = stateTemplate.allImports)
+    #set (attributes = stateTemplate.attributes)
+    #set (isValidStatement = stateTemplate.isValidStatement)
+    #set (asMethods = stateTemplate.asMethods)
+    #set (stateMethods = stateTemplate.stateMethods)
+    #set (convertMethods = stateTemplate.convertMethods)
+    #set (allConvertMethods = stateTemplate.allConvertMethods)
+    #set (expandedTypes = stateTemplate.expandedTypes)
+    #set (allExpandedTypes = stateTemplate.allExpandedTypes)
+    #set (expandedTypeImports = stateTemplate.expandedTypeImports)
+    #set (errors = stateTemplate.errors)
+
+    #if (!directoryExists(outputDir))
+      #createDirectoryPath(outputDir)
+    #end
+
+    #import "{..}/../java/cdd/shared.java.laja"
+    #import "{..}/../java/cdd/stateImpl.java.laja"
+    #import "{..}/../java/cdd/stateListImpl.java.laja"
+    #import "{..}/../java/cdd/stateBuilder.java.laja"
+    #import "{..}/../java/cdd/stateBuilderImpl.java.laja"
+    #import "{..}/../java/cdd/stateProjection.java.laja"
+    #import "{..}/../java/cdd/stateListBuilder.java.laja"
+    #import "{..}/../java/cdd/state.java.laja"
+    #import "{..}/../java/cdd/stateList.java.laja"
+    #import "{..}/../java/cdd/value.java.laja"
+    #import "{..}/../java/cdd/entity.java.laja"
+    #import "{..}/../java/cdd/element.java.laja"
+    #import "{..}/../java/cdd/stateBehaviourFactory.java.laja"
+  #end
+#end
+
+#macro generateBehaviour()
+  #set (processedLists = new java.util.HashSet())
+  #set (processedAbstractLists = new java.util.HashSet())
+  #foreach (behaviour in behaviours.values())
+    #if (!directoryExists(behaviour.outputDir))
+      #createDirectoryPath(behaviour.outputDir)
+    #end
+    #import "{..}/../java/cdd/behaviour/shared-behaviour.java.laja"
+    #import "{..}/../java/cdd/behaviour/behaviour.java.laja"
+    #import "{..}/../java/cdd/behaviour/factory.java.laja"
+    #import "{..}/../java/cdd/behaviour/builder.java.laja"
+    #import "{..}/../java/cdd/behaviour/creator.java.laja"
+    #import "{..}/../java/cdd/behaviour/encapsulator.java.laja"
+    #import "{..}/../java/cdd/behaviour/abstractList.java.laja"
+    #import "{..}/../java/cdd/behaviour/list.java.laja"
+    #import "{..}/../java/cdd/behaviour/listCreator.java.laja"
+  #end
+#end
+
+#macro checkMissingBehaviour()
+  #foreach (template in templates.values())
+    #set (found = false)
+    #foreach (behaviour in behaviours.values() where !found && behaviour.cleanedStateClass == template.classname)
+      #set (found = true);
+    #end
+    #if (!found)
+      ## Create missing behaviour!
+      #set (behaviour = behaviourCreator.asBehaviour(template))
+      #if (!directoryExists(behaviour.sourceDir))
+        #createDirectoryPath(behaviour.sourceDir)
+      #end
+      #addBehaviour(template.classname)
+    #end
+  #end
+#end

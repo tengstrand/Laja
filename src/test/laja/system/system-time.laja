@@ -1,0 +1,9 @@
+
+#set ($laja.timeService.dateFormat = "yyyy")
+#set (year = date())
+
+#write "target/test-output/system-time.out"
+  #if (year.length == 4)
+    The formatting works!
+  #end
+#end

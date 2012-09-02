@@ -1,0 +1,8 @@
+#write "target/test-output/call-static-method.out"
+  #set (map = {})
+  #loadClass("net.sf.laja.integrationtest.CallTest$MyClass") into MyClass
+  #MyClass.staticMethod(map, "x")
+  #MyClass.staticMethod(22) into y
+map.x = {map.x}
+y = {y}
+#end

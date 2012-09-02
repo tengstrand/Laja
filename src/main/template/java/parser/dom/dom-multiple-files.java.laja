@@ -1,0 +1,38 @@
+#namespace parser
+
+#import "{homedir}/dom/dom-macros.java.laja"
+
+#macro generateMultiDom(settings)
+  #$parser.parse(settings)
+
+  #set (x = tab)
+  #set (xx = "")
+  #set (staticClass = "")
+  #set (classname = "{grammar.grammarClass}DomApp")
+
+  1. Create the main class.
+
+  #write "{outputDir}/{classname}.java"
+package {package};
+
+import java.util.ArrayList;
+import java.util.List;
+    #import "{homedir}/parser-header.java.laja"
+public class {classname} {
+    #import "{homedir}/dom/dom-main.java.laja"
+}
+  #end
+
+  2. Create the building block classes.
+
+  #foreach (ref in refList)
+    #set (classname = rename(class(ref.className)))
+    
+    #write "{outputDir}/{classname}.java"
+package {package};
+
+      #import "{homedir}/dom/dom-class.java.laja"
+
+    #end
+  #end
+#end

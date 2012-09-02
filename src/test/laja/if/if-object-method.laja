@@ -1,0 +1,8 @@
+
+#set (value = true)
+
+#write "target/test-output/if-object-method.out"
+  #if (value.booleanValue())
+This is true!
+  #end
+#end

@@ -1,0 +1,9 @@
+#write "target/test-output/if-null.out"
+  #set (x = null)
+  #if (x == null)
+x is null
+  #end
+  #if (null == x)
+null is x
+  #end
+#end

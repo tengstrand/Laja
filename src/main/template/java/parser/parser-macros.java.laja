@@ -1,0 +1,139 @@
+#namespace parser
+
+#macro rename(variable)
+  #set (return = variable)
+  #foreach (word in reservedWords)
+    #if (variable == word)
+      #set (return = "{renamePrefix}{variable}{renameSuffix}")
+    #end
+  #end
+{return}##
+#end
+
+#macro interface(class)
+{rename("{interfacePrefix}{class}{interfaceSuffix}")}##
+#end
+
+#macro interfaceVar(name)
+{rename("{interfaceVarPrefix}{strings.uncapitalize(name)}{interfaceVarSuffix}")}##
+#end
+
+#macro setFlags(phase, statement)
+  #set (flags = "")
+  #set (concat1 = "")
+  #set (concat2 = "")
+  #set (concat3 = "")
+  #if (statement.not)
+    #set (flags = "NOT")
+    #set (concat1 = "|")
+    #set (concat2 = ", ")
+    #set (concat3 = ", ")
+  #end
+  #if (statement.caseSensitive)
+    #set (flags = "{flags}{concat1}CS")
+    #set (concat2 = ", ")
+    #set (concat3 = ", ")
+  #else if (statement.caseInsensitive)
+    #set (flags = "{flags}{concat1}CI")
+    #set (concat2 = ", ")
+    #set (concat3 = ", ")
+  #end
+  #if (statement.repeats == null)
+    #set (repeats = "")
+  #else
+    #if (statement.repeats.maxDefined)
+      #set (flags = "{flags}{concat2}new {classes.get("Repeats")}({statement.repeats.min},{statement.repeats.max})")
+    #else
+      #set (flags = "{flags}{concat2}new {classes.get("Repeats")}({statement.repeats.min})")
+    #end
+    #set (concat3 = ", ")
+  #end
+  #if (statement.isOutputDefined())
+    #set (flags = "{flags}{concat3}{statement.getOutput()}")
+  #end
+  #if (flags != "")
+    #set (flags = ", {flags}")
+  #end
+#end
+
+#macro statement(phase, baseDecl, genStat)
+  #foreach (s in statementList)
+    #if (s.phase == phase)
+      #if (genStat && s.comments != null)
+
+        #foreach (comment in s.comments.commentList)
+          #set (commentTab = "")
+          #if (comment.tab)
+            #set (commentTab = "  ")
+          #end
+{x}{x}// {commentTab}{comment.comment}
+        #end
+      #end
+      #if ((baseDecl && s.baseDeclaration) || (genStat && s.statDeclaration))
+        ##### Declarations ####
+        #set (n = "")
+        #set (n = s.newStatement)
+        #set (args = "")
+        #setFlags(phase, n)
+        #if (n.rangeDefined)
+          #if (n.range.limit1.stringDefined)
+            #set (range1 = "{f}{n.range.limit1.string}{f}")
+          #else
+            #set (range1 = "(char){n.range.limit1.integer}")
+          #end
+          #if (n.range.limit2.stringDefined)
+            #set (range2 = "{f}{n.range.limit2.string}{f}")
+          #else
+            #set (range2 = "(char){n.range.limit2.integer}")
+          #end
+          #set (args = "{f}{n.variableName}{f}, {range1}, {range2}")
+        #else if (n.chrDefined)
+          #set (args = "(char){n.chr.integer}")
+        #else
+          #set (args = "{f}{n.variableName}{f}")
+        #end
+{x}{x}{classes.get(s.className)} {rename(s.variableName)} = new {classes.get(s.className)}({n.id}, {args}{flags});
+      #end
+      #if (genStat && !s.statDeclaration && s.addStatement != null)
+        #### Statement ####
+        #set (a = s.addStatement)
+        #if (a.newStatementDefined)
+          #### New Statement ####
+          #set (arg = "")
+          #set (n = a.newStatement)
+          #setFlags(phase, n)
+          #if (n.variableRefDefined)
+            #set (add = "new {classes.get(n.className)}({n.id}, {f}{a.elementId}{f}, {rename(n.variableRef)}{flags})")
+          #else if (n.rangeDefined)
+            #set (add = n.range.fullStatement)
+            #if (n.range.limit1.stringDefined)
+              #set (range1 = "{f}{n.range.limit1.string}{f}")
+            #else
+              #set (range1 = "(char){n.range.limit1.integer}")
+            #end
+            #if (n.range.limit2.stringDefined)
+              #set (range2 = "{f}{n.range.limit2.string}{f}")
+            #else
+              #set (range2 = "(char){n.range.limit2.integer}")
+            #end
+            #set (add = "new {classes.get(n.className)}({n.id}, {f}{n.variableName}{f}, {range1}, {range2}{flags})")
+          #else if (n.chrDefined)
+            #set (add = "new {classes.get(n.className)}({n.id}, (char){n.chr.integer}{flags})")
+          #else
+            #set (add = "new {classes.get(n.className)}({n.id}, {f}{a.elementId}{f}{flags})")
+          #end
+        #else if (a.refStatement != null)
+          #### Ref Statement ####
+          #set (r = a.refStatement)
+          #setFlags(phase, r)
+          #set (add = "{rename(r.refName)}{flags}")
+        #end
+        #set (class="")
+        #if (s.className != null)
+          #set (class = "{classes.get(s.className)} ")
+        #end
+{x}{x}{class}{rename(s.variableName)}.{a.method}({a.id}, {add});
+      #end
+    #end
+  #end
+#end

@@ -1,0 +1,46 @@
+111. ab
+112. b
+113. ababab
+114. axbab
+121. ab
+122. b
+123. ababab
+124. axbab
+131. b
+132. a
+133. b
+134. a
+141. xxxab
+142. aaa
+143. xxxab
+144. aaa
+151a. 
+151b. ab
+152a. ab
+152b. bab
+153a. 
+153b. ababab
+154a. ab
+154b. axbab
+161a. 
+161b. ababab
+162a. ab
+162b. bbbab
+163a. 
+163b. ababab
+164a. ab
+164b. bbbab
+165. ab
+211. abcd
+212. abcd
+213a. 
+213b. abcd
+214a. 
+214b. abcdabcd
+311. aaa
+312. aaaa
+313. aa
+411. a
+511. aaa.aaa
+512. a
+.

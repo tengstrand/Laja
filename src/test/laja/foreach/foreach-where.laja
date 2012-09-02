@@ -1,0 +1,8 @@
+
+#set (even = [ true, false, true, false, true ])
+
+#write "target/test-output/foreach-where.out"
+  #foreach (x in [1,2,3,4] where even[x])
+value = {x}
+  #end
+#end

@@ -1,0 +1,9 @@
+#write "target/test-output/if-expression.out"
+  #set (flag1 = false)
+  #set (flag2 = true)
+  #if (true && flag2 && (flag1 || flag2))
+expression is true
+  #else
+expression is false
+  #end
+#end

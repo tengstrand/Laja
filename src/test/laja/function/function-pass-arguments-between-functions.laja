@@ -1,0 +1,12 @@
+
+#function functionA(x)
+  #return (functionB(x))
+#end
+
+#function functionB(x)
+  #return (x)
+#end
+
+#write "target/test-output/function-pass-arguments-between-functions.out"
+  value: {functionA(123)}
+#end

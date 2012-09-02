@@ -1,0 +1,9 @@
+
+#macro hello()
+hello##
+#end
+
+#write "target/test-output/call-macro-into-variable.out"
+  #hello() into message
+message = {message}
+#end

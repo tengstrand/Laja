@@ -1,0 +1,11 @@
+#write "target/test-output/if-boolean.out"
+  #set (flag = false)
+  #if (true)
+true is true
+  #end
+  #if (flag)
+flag is true
+  #else
+flag is false
+  #end
+#end

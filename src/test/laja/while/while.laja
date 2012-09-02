@@ -1,0 +1,9 @@
+
+#set (message = "")
+
+#write "target/test-output/while.out"
+  #while (message.length < 10)
+    #set (message = "x{message}")
+{message}
+  #end
+#end

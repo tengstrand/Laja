@@ -1,0 +1,6 @@
+#write "target/test-output/reference-map.out"
+#set (map1 = { avalue: "value of a"})
+#set (map2 = { a: "a" b: { c: "ccc" } })
+The value of map1.avalue is: {map1.avalue}
+map2.b.c = {map2.b.c}
+#end

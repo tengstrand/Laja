@@ -1,0 +1,8 @@
+
+grammar parser {
+	a = "a";
+	parser = a+;
+	
+	A a.setContent(String *);
+	Parser parser.addA(A a);
+} 

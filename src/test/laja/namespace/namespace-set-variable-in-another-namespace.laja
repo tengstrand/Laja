@@ -1,0 +1,6 @@
+
+#set ($x.value = 10)
+
+#write "target/test-output/namespace-set-variable-in-another-namespace.out"
+  $x.value = {$x.value}
+#end

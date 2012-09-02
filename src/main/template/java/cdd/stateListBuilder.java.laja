@@ -1,0 +1,117 @@
+#macro class()
+  #header()
+public final class {stateListBuilder} {
+    private Object lastMutator;
+    private final Certificate certificate;
+    private final {stateListClass} states;
+
+    public {stateListBuilder}() {
+        certificate = Certificate.get(new {stateImplClass}());
+        states = {stateListImplClass}.emptyList(certificate);
+    }
+
+    public {stateListBuilder}({stateListClass} states) {
+        this.states = states;
+        certificate = Certificate.get(new {stateImplClass}());
+    }
+
+    public {stateListClass} getStateList({certificateClass} certificate) {
+        return states;
+    }
+
+    public List<{builderClass}> getStateBuilders() {
+        List<{builderClass}> builders = new ArrayList<{builderClass}>(states.size());
+
+        for ({stateClass} state : states) {
+            builders.add(new {builderImplClass}(state));
+        }
+        return builders;
+    }
+
+    public void throwExceptionIfOutOfSync(Object accessor) {
+        if (lastMutator != null && lastMutator != accessor) {
+            throw new IllegalStateException("The state has been changed by another list. Call syncState() to synchronize the internal state with the enclosing list.");
+        }
+    }
+
+    private void prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(Object mutator) {
+        throwExceptionIfOutOfSync(mutator);
+        this.lastMutator = mutator;
+    }
+
+    public void syncState() {
+        this.lastMutator = null;
+    }
+
+    public int size() {
+        return states.size();
+    }
+
+    public void clear(Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        states.clear();
+    }
+
+    public void add({builderClass} builder) {
+        ## Only accessed from list creators, do not check if state is out of sync
+        states.add(builder.get{stateClass}(certificate));
+    }
+
+    public void add({stateClass} state) {
+        ## Only accessed from list creators, do not check if state is out of sync
+        states.add(state);
+    }
+
+    public void add({stateClass} state, Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        states.add(state);
+    }
+
+    public void add(int index, {stateClass} state, Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        states.add(index, state);
+    }
+
+    public void addAll(int index, {stateListBuilder} listBuilder, Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        states.addAll(index, listBuilder.states);
+    }
+
+    public void set(int index, {stateClass} state, Object accessor) {
+        throwExceptionIfOutOfSync(accessor);
+        states.set(index, state);
+    }
+
+    public boolean remove({stateClass} state, Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        return states.remove(state);
+    }
+
+    public void remove(int index, Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        states.remove(index);
+    }
+
+    public void retainAll({stateListBuilder} retainStates, Object mutator) {
+        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+        states.retainAll(retainStates.states);
+    }
+
+    @Override
+    public String toString() {
+        return "{stateListBuilder}{states=" + states + ", lastMutator.hashCode()=" + (lastMutator == null ? null : lastMutator.hashCode()) + "}";
+    }
+}
+#end
+
+#set (filename = "{outputDir}/{stateListBuilder}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #importCertificate()
+
+import java.util.ArrayList;
+import java.util.List;
+
+  #class()
+#end

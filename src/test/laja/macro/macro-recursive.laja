@@ -1,0 +1,12 @@
+
+#macro recursive(string)
+string = {string}
+  #if (string.length < 10)
+    #set (string = "x{string}")
+{recursive(string)}##
+  #end
+#end
+
+#write "target/test-output/macro-recursive.out"
+{recursive("")}##
+#end

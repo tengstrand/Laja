@@ -1,0 +1,32 @@
+package net.sf.laja.cdd.behaviour;
+
+import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
+import net.sf.laja.cdd.behaviour.brow.BrowListCreator;
+
+public class TestForeheadBuilder {
+    public final ForeheadStateBuilder builder;
+
+    public TestForeheadBuilder() {
+        builder = ForeheadStateImpl.build();
+    }
+
+    public TestForeheadBuilder(ForeheadState state) {
+        builder = ForeheadStateImpl.build(state);
+    }
+
+    public TestForeheadBuilder withBrows(BrowListCreator brows) {
+        builder.withBrows(brows.stateList);
+        return this;
+    }
+
+    public boolean isValid() {
+        return builder.isValid();
+    }
+
+    public TestForehead asTestForehead() {
+        return (TestForehead)builder.as(new TestForeheadFactory.TestForeheadFactory_(builder));
+    }
+}

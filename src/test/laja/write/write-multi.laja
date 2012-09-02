@@ -1,0 +1,16 @@
+
+The following expected behavior is tested:
+  - All rows inside the outer write, including the lines inside
+    the inner write statement is written to the outer file "write-multi-outer.out".
+  - The lines inside the inner write statement is written to "write-multi-inner.out".
+
+#write "target/test-output/write-multi-outer.out"
+outer1
+  #write "target/test-output/write-multi-inner.out"
+    inner1
+    inner2
+  #end
+outer2
+#end
+
+Ignored row!

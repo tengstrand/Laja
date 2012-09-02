@@ -1,0 +1,16 @@
+
+#write "target/test-output/system-directory-exists.out"
+  #if (directoryExists("{.}"))
+    This directory exists!
+  #end
+  #if (directoryExists("{.}/x"))
+    The directory x exists
+  #else
+    The directory x does not exist
+  #end
+  #if (directoryExists("{.}/system-directory-exists.laja"))
+    This is a file, not a directory
+  #else
+    The directory does not exist (it's a file)
+  #end
+#end

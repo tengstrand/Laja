@@ -1,0 +1,41 @@
+#namespace parser
+#macro factoryBody()
+  #if (ref.refname == grammar.grammarName)
+{x}{x}if ({grammar.grammarName} != null) {
+{x}{x}{x}return new {ref.className}();
+{x}{x}}
+{x}{x}{grammar.grammarName} = new {ref.className}();
+{x}{x}return {grammar.grammarName};
+  #else
+{x}{x}return new {ref.className}();
+  #end
+{x}}##
+#end
+package {package};
+
+/**
+ * The factory for the DOM objects.
+ */
+public class {grammar.grammarClass}Factory implements {parserClass}.{factoryInterface} {
+{x}private {grammar.grammarClass} {grammar.grammarName};
+
+{x}public {grammar.grammarClass} get{grammar.grammarClass}() {
+{x}{x}return {grammar.grammarName};
+{x}}
+#foreach (ref in refList)
+
+  #if (ref.constructorDefined)
+    #set (comma = "")
+    #set (args = "")
+    #foreach (classvar in ref.constructor.classvarList)
+      #set (args = "{args}{comma}{parserClass}.{interface(classvar.className)} {classvar.varName}")
+      #set (comma = ", ")
+    #end
+{x}public {parserClass}.{interface(ref.className)} create{ref.className}({args}) {
+{factoryBody()}
+  #else
+{x}public {parserClass}.{interface(ref.className)} create{ref.className}() {
+{factoryBody()}
+  #end
+#end
+}

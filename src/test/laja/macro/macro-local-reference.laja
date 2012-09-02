@@ -1,0 +1,14 @@
+
+#macro loop(a)
+  #foreach (element in [1,2,3])
+{a}
+  #end
+#end
+
+#macro inner()
+element = {element}##
+#end
+
+#write "target/test-output/macro-local-reference.out"
+{loop(inner())}##
+#end

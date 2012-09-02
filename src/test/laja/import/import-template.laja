@@ -1,0 +1,5 @@
+#write "target/test-output/import-template.out"
+My message to you is:
+  #import "src/test/laja/import/file1.laja"
+ {name}
+#end

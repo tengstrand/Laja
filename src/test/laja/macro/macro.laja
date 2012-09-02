@@ -1,0 +1,22 @@
+
+#macro mymacro(a)
+Input parameter a = {a}
+Variable b = {b}##
+#end
+
+#macro empty()
+abc##
+#end
+
+#macro for(expression)
+  #foreach (i in [1,2,3])
+{expression}
+  #end
+#end
+
+#write "target/test-output/macro.out"
+  #set (b = "bbb")
+{mymacro(123)}
+{for("i = {i}")}##
+{empty()} {empty()}
+#end

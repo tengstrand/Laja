@@ -1,0 +1,24 @@
+
+#import "{.}/system/cdd/cdd.laja"
+#import "{.}/system/class/class.laja"
+#import "{.}/system/common/common.laja"
+#import "{.}/system/env/env.laja"
+#import "{.}/system/file/file.laja"
+#import "{.}/system/print/print.laja"
+#import "{.}/system/reader/reader.laja"
+#import "{.}/system/time/time.laja"
+#import "{.}/system/version/version.laja"
+#import "{.}/system/parser/parser.laja"
+
+#set (home = env().LAJA_HOME)
+
+#set (strings = loadClass("org.apache.commons.lang.StringUtils"))
+#set (math = loadClass("java.lang.Math"))
+
+#set ($laja.timeService.timeFormat = "hh:mm:ss")
+#set ($laja.timeService.dateFormat = "yyyy-MM-dd")
+#set ($laja.timeService.datetimeFormat = "yyyy-MM-dd hh:mm")
+
+#if (fileExists("{.}/imports.laja"))
+  #import "{.}/imports.laja"
+#end

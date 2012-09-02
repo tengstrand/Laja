@@ -1,0 +1,11 @@
+
+The following expected behavior is tested:
+  - That it is possible to have references to variables in the write statement.
+  - Special characters, like ÅÄÖ is handled correctly.
+
+#set (filename = "write-expression")
+
+#write "target/test-output/{filename}.out"
+123 
+Abc##
+#end

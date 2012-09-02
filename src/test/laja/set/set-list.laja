@@ -1,0 +1,10 @@
+#write "target/test-output/set-list.out"
+#set (list123 = ["1", "2", "3"])
+#set (nestedList = [["1","2"], ["3","4"]])
+#set (emptyList = [])
+list = {list123}
+nestedList = {nestedList}
+list123[1] = {list123[1]}
+nestedList[1] = {nestedList[1]}
+emptyList = {emptyList}
+#end

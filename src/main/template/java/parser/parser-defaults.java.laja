@@ -1,0 +1,39 @@
+#namespace parser
+
+#import "{homedir}/parser-macros.java.laja"
+
+#loadClass("net.sf.laja.parser.Parser") into parser
+#loadClass("org.apache.commons.lang.StringUtils") into strings
+
+#set (forwardRef = true)
+#set (package = "change_to_another_package")
+
+#set (tab = "    ")
+#set (date = datetime())
+#set (enginePackage = "net.sf.laja.parser.engine2")
+#set (reservedWords = ["abstract",   "continue",   "for",          "new",         "switch",
+			           "assert",     "default",    "if",           "package",     "synchronized",
+			           "boolean",    "do",         "goto",         "private",     "this",
+					   "break",      "double",     "implements",   "protected",   "throw",
+					   "byte",       "else",       "import",       "public",      "throws",
+					   "case",       "enum",       "instanceof",   "return",      "transient",
+					   "catch",      "extends",    "int",          "short",       "try",
+					   "char",       "final",      "interface",    "static",      "void", 
+					   "class",      "finally",    "long",         "strictfp",    "volatile",
+					   "const",      "float",      "native",       "super",       "while",
+					   "String",     "Index",      "Enum",         "null",        "true",
+                       "false" ])
+#set (reservedMethods = ["getClass"])
+#set (renamePrefix = "_")
+#set (renameSuffix = "")
+#set (classPrefix = "")
+#set (classSuffix = "")
+#set (parserPrefix = "")
+#set (parserSuffix = "Parser")
+#set (interfacePrefix = "I")
+#set (interfaceSuffix = "")
+#set (interfaceVarPrefix = "i")
+#set (interfaceVarSuffix = "")
+
+#set (x = tab)
+#set (f = "\"")

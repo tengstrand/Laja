@@ -1,0 +1,20 @@
+
+#macro class()
+public interface {elementClass} {
+    public void addToList({stateListClass} stateList);
+    public void addToList({stateListBuilder} listBuilder);
+    public void addToList({stateListBuilder} listBuilder, Object mutator);
+    public void addToList(int index, {stateListBuilder} listBuilder, Object mutator);
+    public void setInList(int index, {stateListBuilder} listBuilder, Object accessor);
+    public boolean removeFromList({stateListBuilder} listBuilder, Object mutator);
+}
+#end
+
+#if (isFactory(classname))
+  #set (filename = "{outputDir}/{elementClass}.java")
+  #generateFile(filename)
+  #write "{filename}"
+    #package()
+    #class()
+  #end
+#end

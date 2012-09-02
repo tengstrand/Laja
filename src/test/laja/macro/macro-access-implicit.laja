@@ -1,0 +1,7 @@
+#namespace x
+
+#import "{.}/macro-access-implicit-import.laja"
+
+#write "target/test-output/macro-access-implicit.out"
+  #callme()
+#end

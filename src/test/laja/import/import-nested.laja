@@ -1,0 +1,8 @@
+
+#set (dir = "src/test/laja/import/")
+
+#write "target/test-output/import-nested.out"
+Start base file
+  #import "{dir}/file-level1.laja"
+End of base file
+#end

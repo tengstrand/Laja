@@ -1,0 +1,4 @@
+#write "target/test-output/reference-default-namespace.out"
+ #set (x = "some value")
+$.x = {$.x}
+#end

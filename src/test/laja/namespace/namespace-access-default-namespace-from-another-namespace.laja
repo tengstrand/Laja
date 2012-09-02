@@ -1,0 +1,6 @@
+
+#set (value = 123)
+
+#write "target/test-output/namespace-access-default-namespace-from-another-namespace.out"
+  #import "src/test/laja/namespace/namespace-access-default-namespace-from-another-namespace-import.laja"
+#end

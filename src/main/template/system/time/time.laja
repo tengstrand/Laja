@@ -1,0 +1,20 @@
+
+#import "{.}/TimeService.groovy"
+
+#set ($laja.timeService = new TimeService())
+
+#function time()
+  #return ($laja.timeService.time())
+#end
+
+#function date()
+  #return ($laja.timeService.date())
+#end
+
+#function datetime()
+  #return ($laja.timeService.datetime())
+#end
+
+#function format(formatting)
+  #return ($laja.timeService.format(formatting))
+#end

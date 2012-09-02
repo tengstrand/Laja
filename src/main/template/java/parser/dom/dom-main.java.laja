@@ -1,0 +1,22 @@
+#namespace parser
+{x}/**
+{x} * Example of how to parse a file.
+{x} * 
+{x} * @param args
+{x} */
+{x}public static void main(String[] args) {
+{x}{x}String filename = "{inputFile}";
+{x}{x}{parserClass} parser = new {parserClass}(factoryFactory);
+{x}{x}{enginePackage}.ParsingResult result = parser.parseFile(filename);
+
+{x}{x}if (result.success()) {
+{x}{x}{x}System.out.println("Result: " + (({grammar.grammarClass}Factory)parser.getFactory()).get{grammar.grammarClass}());
+{x}{x}}
+{x}}
+
+{x}// factoryFactory
+{x}private static {parserClass}.{factoryFactoryInterface} factoryFactory = new {parserClass}.{factoryFactoryInterface}() {
+{x}{x}public {parserClass}.{factoryInterface} getFactory(int phase) {
+{x}{x}{x}return new {grammar.grammarClass}Factory();
+{x}{x}}
+{x}};

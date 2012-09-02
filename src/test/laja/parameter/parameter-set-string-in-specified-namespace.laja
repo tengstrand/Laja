@@ -1,0 +1,5 @@
+
+#write "target/test-output/parameter-set-string-in-specified-namespace.out"
+  message = {message}
+  $x.message = {$x.message}
+#end

@@ -1,0 +1,4 @@
+
+#write "target/test-output/system-class-type.out"
+  Type of Long: {type("Long").name}
+#end

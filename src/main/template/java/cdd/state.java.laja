@@ -1,0 +1,37 @@
+#set (extends = interfaceImports("State"))
+
+#set (filename = "{outputDir}/{stateClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #importBegin(false)
+  #importExpandedType("State")
+  #importState()
+  #importEnd()
+  #header()
+public interface {stateClass}{extends} {
+  #set (first = true)
+  #foreach (attribute in attributes)
+    #if (!first)
+
+    #end
+    {attribute.type} {attribute.getter}();{attribute.comment}
+    void {setter(attribute)};
+    #set (first = false)
+  #end
+  #foreach (method in stateMethods)
+
+    #foreach (template in templates.values() where template.classname == method.classname)
+    {method.returnclass} {method.classVariable}();
+    #end
+  #end
+  #if (extends.length == 0)
+
+    boolean isValid();
+    boolean isValidAsEncapsulated();
+    boolean valueEquals(Object o);
+    int valueHashCode();
+    void encapsulate();
+  #end
+}
+#end

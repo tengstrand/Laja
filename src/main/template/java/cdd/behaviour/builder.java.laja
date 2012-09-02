@@ -1,0 +1,82 @@
+#macro class()
+public class {builderClass} {
+    public final {stateBuilderClass} builder;
+
+    public {builderClass}() {
+        builder = {stateImplClass}.build();
+    }
+
+    public {builderClass}({stateClass} state) {
+        builder = {stateImplClass}.build(state);
+    }
+  #foreach (attribute in template.attributes where attribute.isBuilderMethod)
+
+    #if (attribute.isStateList)
+    public {builderClass} {attribute.withMethod}({attribute.listCreator} {attribute.variable}) {
+        builder.{attribute.withMethod}({attribute.variable}.stateList);
+        return this;
+    }
+    #else if (attribute.isState)
+      #if (!behaviours.containsKey(attribute.cleanedStateType))
+        #errors.addMessage("Missing behaviour class: {attribute.cleanedStateType}")
+      #end
+    public {builderClass} {attribute.withMethod}({attribute.builder} {attribute.variable}) {
+        builder.{attribute.withMethod}({attribute.variable}.builder);
+        return this;
+    }
+    #else
+    public {builderClass} {attribute.withMethod}({attribute.type} {attribute.variable}) {
+        builder.{attribute.withMethod}({attribute.variable});
+        return this;
+    }
+    #end
+    #foreach (method in template.convertMethods where method.variable == attribute.variable)
+
+    public {builderClass} {attribute.withMethod}({method.type} {method.variable}) {
+        builder.{attribute.withMethod}({attribute.variable});
+        return this;
+    }
+    #end
+  #end
+
+    public boolean isValid() {
+        return builder.isValid();
+    }
+  #foreach (method in behaviour.asMethods where method.isFactory)
+    #setArgumentsAndParameters(method, false)
+
+    public {method.returnclass} {method.methodName}({parameters}) {
+        return ({method.returnclass})builder.as(new {factoryClass}.{method.returnclass}Factory_(builder){extraArguments});
+    }
+  #end
+}
+#end
+
+#macro importsBuilder()
+  #set (imports = new java.util.HashSet())
+  #foreach (attribute in template.attributes where attribute.isBuilderMethod)
+    #if (behaviours.containsKey(attribute.cleanedStateType))
+      #set (packagename = behaviours.get(attribute.cleanedStateType).packagename)
+      #if (packagename != behaviour.packagename)
+        #imports.add("{packagename}.{attribute.builder}")
+      #end
+    #end
+  #end
+  #foreach (import in imports)
+import {import};
+  #end
+#end
+
+#if (behaviour.isFactory)
+  #set (filename = "{outputDir}/{builderClass}.java")
+  #generateFile(filename)
+  #write "{filename}"
+package {behaviour.packagename};
+
+    #importsBegin()
+    #importsBuilder()
+    #importsListCreator()
+    #importsEnd()
+    #class()
+  #end
+#end

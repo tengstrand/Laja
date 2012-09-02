@@ -1,0 +1,43 @@
+
+#foreach (method in behaviour.asMethods where method.generateList)
+  #prepareList(sourceDir, srcDir)
+  #setArgumentsAndParameters(method, true)
+
+  #set (filename = "{listOutputDir}/{listClass}.java")
+  #if (!processedLists.contains(listClass))
+    #processedLists.add(listClass)
+    #if (!fileExists(filename))
+      #if (!directoryExists(listOutputDir))
+        #createDirectoryPath(listOutputDir)
+      #end
+      #generateFile(filename)
+      #write "{filename}"
+package {packagename};
+
+import java.util.List;
+import {template.packagename}.{stateListClass};
+import {template.packagename}.{stateListBuilder};
+
+public class {listClass} extends {abstractListClass} {
+    public {listClass}({entryClass}... list) {
+        super(list);
+    }
+
+    public {listClass}(List<{entryClass}> list) {
+        super(list);
+    }
+
+    public {listClass}(List<{entryClass}> list, {stateListBuilder} stateListBuilder) {
+        super(list, stateListBuilder);
+    }
+        #if (method.isFactory)
+
+    public {listClass}({stateListClass} stateList{parameters}) {
+        super(stateList{arguments});
+    }
+        #end
+}
+      #end
+    #end
+  #end
+#end

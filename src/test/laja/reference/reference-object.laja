@@ -1,0 +1,4 @@
+#write "target/test-output/reference-object.out"
+  #set (x = new net.sf.laja.integrationtest.ReferenceTest$Data())
+The value of x is: {x}
+#end

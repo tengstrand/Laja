@@ -1,0 +1,11 @@
+
+#macro value()
+Hi!##
+#end
+
+#write "target/test-output/set-macro.out"
+  #set (x = value())
+  #set (length = value().length())
+x = {x}
+length = {length}
+#end

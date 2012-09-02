@@ -1,0 +1,102 @@
+#macro class()
+  #header()
+public class {builderImplClass} implements {builderClass} {
+    private boolean encapsulated;
+    private {stateClass} state;
+    private final {certificateClass} certificate;
+    private boolean trusted;
+
+    {builderImplClass}() {
+        state = new {stateImplClass}();
+        certificate = Certificate.get(this);
+    }
+
+    public {builderImplClass}({stateClass} state) {
+        this.state = state;
+        certificate = Certificate.get(this);
+        trusted = true;
+    }
+  #foreach (method in stateMethods)
+
+    public {method.stateBuilderClass} {method.stateBuilderVariable}() {
+        return new {method.stateBuilderImplClass}(state.{method.classVariable}());
+    }
+  #end
+  #foreach (attribute in attributes)
+
+    #if (attribute.isStateList)
+      #set (template = templates.get(attribute.cleanedStateType))
+    public void {attribute.withMethod}({template.packagename}.{attribute.stateListBuilder} listBuilder) {
+        if (!trusted && encapsulated) throwEncapsulationException();
+        state.{attribute.setter}(listBuilder.getStateList(certificate));
+    #else if (attribute.isState)
+    public void {attribute.withMethod}({attribute.stateBuilder} {attribute.variable}) {
+        if (!trusted && encapsulated) throwEncapsulationException();
+        state.{attribute.setter}({attribute.variable}.{attribute.stateMethod}(certificate));
+    #else
+    public void {attribute.withMethod}({attribute.type} {attribute.variable}) {
+        if (!trusted && encapsulated) throwEncapsulationException();
+        state.{attribute.setter}({attribute.variable});
+    #end
+    }
+    #foreach (method in allConvertMethods where method.variable == attribute.variable)
+
+    public void {attribute.withMethod}({method.type} {method.variable}) {
+        if (!trusted && encapsulated) throwEncapsulationException();
+        state.{attribute.setter}({method.statement});
+    }
+    #end
+  #end
+
+    private void throwEncapsulationException() {
+        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"{classname}\"");
+    }
+
+    public boolean isValid() {
+        return state.isValid();
+    }
+
+    public Object as({stateBehaviourFactoryClass} factory, Object... args) {
+        Object encapsulatedObject = factory.create(state, args);
+        if (!trusted) {
+            encapsulated = true;
+        }
+        return encapsulatedObject;
+    }
+  #foreach (expandedType in allExpandedTypes)
+
+    public Object as({expandedType.type}StateBehaviourFactory factory, Object... args) {
+        Object encapsulatedObject = factory.create(state, args);
+        if (!trusted) {
+            encapsulated = true;
+        }
+        return encapsulatedObject;
+    }
+  #end
+
+    public {stateClass} get{stateClass}({certificatePackage}.{certificateClass} certificate) {
+        return state;
+    }
+  #foreach (expandedType in allExpandedTypes)
+    #set (type = expandedType.type)
+
+    public {type}State get{type}State(Certificate certificate) {
+        return state;
+    }
+  #end
+}
+#end
+
+#set (filename = "{outputDir}/{builderImplClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #importBegin(true)
+  #importExpandedType("StateBehaviourFactory,State")
+  #importStateBuilder()
+  #importStateBuilderImpl()
+  #importProjectedStateBuilder()
+  #importCertificate()
+  #importEnd()
+  #class()
+#end

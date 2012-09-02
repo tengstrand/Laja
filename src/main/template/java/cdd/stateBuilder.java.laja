@@ -1,0 +1,40 @@
+#set (prefix = "StateBuilder")
+#set (extends = interfaceImports(prefix))
+
+#macro interface()
+  #header()
+public interface {builderClass}{extends} {
+  #foreach (method in stateMethods)
+    {method.stateBuilderClass} {method.stateBuilderVariable}();
+  #end
+  #foreach (attribute in attributes)
+    #if (attribute.isStateList)
+      #set (template = templates.get(attribute.cleanedStateType))
+    void {attribute.withMethod}({template.packagename}.{attribute.stateListBuilder} listBuilder);
+    #else if (attribute.isState)
+    void {attribute.withMethod}({attribute.stateBuilder} {attribute.variable});
+    #else
+    void {attribute.withMethod}({attribute.type} {attribute.variable});
+    #end
+    #foreach (method in convertMethods where method.variable == attribute.variable)
+    void {attribute.withMethod}({method.type} {method.variable});
+    #end
+  #end
+    boolean isValid();
+    Object as({stateBehaviourFactoryClass} factory, Object... args);
+    {stateClass} get{stateClass}({certificatePackage}.{certificateClass} certificate);
+}
+#end
+
+#set (filename = "{outputDir}/{builderClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #importBegin(false)
+  #importExpandedType(prefix)
+  #importStateBuilder()
+  #importProjectedStateBuilder()
+  #importCertificate()
+  #importEnd()
+  #interface()
+#end

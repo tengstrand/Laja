@@ -1,0 +1,4 @@
+
+#write "target/test-output/macro-not-found.out"
+  #mymacro(123)     ## Call macro that does not exist.
+#end

@@ -1,0 +1,6 @@
+#write "target/test-output/if-equals.out"
+  #set (x = 1)
+  #if (x == 1)
+x is 1
+  #end
+#end

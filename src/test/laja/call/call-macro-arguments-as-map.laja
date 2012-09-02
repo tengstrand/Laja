@@ -1,0 +1,11 @@
+
+#macro person(map)
+  map.class().name = {map.class().name}
+  map.name = {map.name}
+  map.age = {map.age}
+#end
+
+
+#write "target/test-output/call-macro-arguments-as-map.out"
+  #person (name: "Homer" age: 45)
+#end

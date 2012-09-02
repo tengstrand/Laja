@@ -1,0 +1,9 @@
+
+#println("*** Person example ***")
+
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/../java-gen/cdd/main"
+  statePackage: "net.sf.laja.example.person.state"
+  behaviourPackage: "net.sf.laja.example.person.behaviour" }]
+)

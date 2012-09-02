@@ -1,0 +1,3 @@
+  strings.isEmpty(a) = true
+  strings.isEmpty(b) = true
+  strings.isEmpty(c) = false

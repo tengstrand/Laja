@@ -1,0 +1,48 @@
+#macro class()
+
+  #header()
+#if (isFactory(classname))
+public class {valueClass} implements {elementClass} {
+#else
+public class {valueClass} {
+#end
+    protected final {stateClass} state;
+    protected {builderClass} stateBuilder;
+
+    public {valueClass}({stateClass} state) {
+        this.state = state;
+    }
+
+    public {valueClass}({stateClass} state, {builderClass} stateBuilder) {
+        this.state = state;
+        this.stateBuilder = stateBuilder;
+    }
+
+    #elementMethods()
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        return state.valueEquals((({valueClass})o).state);
+    }
+
+    @Override
+    public int hashCode() {
+        return state.valueHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + state;
+    }
+}
+#end
+
+#set (filename = "{outputDir}/{valueClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #importCertificate()
+  #class()
+#end

@@ -1,0 +1,9 @@
+  x = {a=123, b=[h, i], c=[{x1=value, x2={a1=123, a2=name}}, {y1=age}], d={}, e=[]}
+  x.b = [h, i]
+  x.b[0] = h
+  x.b[1] = i
+  x.c[0] = {x1=value, x2={a1=123, a2=name}}
+  x.c[0].x1 = value
+  x.c[0].x2.a1 = 123
+  x.c[0].x2.a2 = name
+  x.c[1].y1 = age

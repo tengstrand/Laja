@@ -1,0 +1,6 @@
+
+#write "target/test-output/reader-properties-into-variable.out"
+  #read ("src/test/laja/reader/values.properties") into values
+values.a = {values.a}
+values.b = {values.b}
+#end

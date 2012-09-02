@@ -1,0 +1,11 @@
+#macro loop(list)
+  #set (separator = "")
+  #foreach(element in list)
+{separator}{element}##
+    #set (separator = ", ")
+  #end
+#end
+
+#write "target/test-output/macro-loop-list.out"
+{loop([1,2,"hi"])}
+#end

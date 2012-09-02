@@ -1,0 +1,11 @@
+#write "target/test-output/set-expression.out"
+  #set (name = "Mike")
+  ## " must be escaped with \"
+  #set (x = 
+"Your name is:
+  \"{name}\"")
+{x}
+  #set (age = "18")
+Age:
+  {age} years## This comment will remove the <newline> character(s).
+#end

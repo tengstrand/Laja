@@ -1,0 +1,13 @@
+#macro class()
+  #header()
+public interface {stateBehaviourFactoryClass} {
+    Object create({stateClass} state, Object... args);
+}
+#end
+
+#set (filename = "{outputDir}/{stateBehaviourFactoryClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #class()
+#end

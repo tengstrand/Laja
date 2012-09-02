@@ -1,0 +1,44 @@
+
+The following expected behavior is tested:
+  - All text outside any valid write command block (like this) is ignored and
+    will not be written to any file.
+  - The content inside a write statement is written to a file with a
+    name specified between "" direct after the write command.
+  - Commands like write with wrong syntax (like missing "filename" in this example)
+    are ignored.
+  - If a write statement ends with spaces, tabs and finally
+    a <new line> "character" ("\r\n" on Windows, "\n" on Unix/Linux)
+    then they are ignored. The text "target/test-output/write-single.out" in this
+    template is followed by two tabs, two spaces and a <new line>.  Those white
+    spaces are all ignored.
+  - The space after "row1" is included (not ignored).
+  - The spaces before "row2" and tabs and spaces after "row2" is included.
+  - The tab before "row3" is included.
+  - The two "empty" lines after "row3" with only spaces and tabs is included.
+  - Lines with only spaces and/or tabs is included (the lines between row4 and row5).
+  - The <new line> character after "row5" is included.
+  - A ## will comment out (ignore) all characters after ## and all preceding characters on the line 
+    if they consists of only spaces and tabs ("\t").
+  - A comment block starts with a #* and ends with a *#. Comment blocks can be nested.
+    All content within this block is ignored.
+  - Comments (line comments and block comments) have this behavior:
+    - Characters before the comment are ignored if they consists of only spaces and/or tabs ("\t").
+    - Characters after the comment are ignored if they consists of only spaces and/or tabs.
+    
+#write "target/test-output/write-single.out"		  
+row1 
+  row2	 
+	    	## A comment on a single row is ignored including preceding spaces and tabs (if only spaces and tabs).
+##
+	row3
+  #*
+    Comment block.
+    All text within this comment block is ignored.
+  *#
+row4
+   
+	
+row5
+#end
+
+This row is outside the write block and is ignored!

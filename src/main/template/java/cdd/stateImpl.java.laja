@@ -1,0 +1,400 @@
+#macro declareStates()
+  #foreach (method in stateMethods)
+    #foreach (template in templates.values() where template.classname == method.classname)
+
+    public {method.returnclass} {method.classVariable}() {
+        return new {method.returnclass}() {
+      #foreach (attribute in template.attributes)
+        #set (statement = method.statements.get(attribute.variable))
+        #if (statement == null)
+          #set (msg = "/* missing attribute '{attribute.variable}' */")
+          #if (attribute.isPrimitive)
+            #if (attribute.type == "boolean")
+              #set (getStatement = "false; {msg}")
+            #else if (attribute.type == "char")
+              #set (getStatement = "' '; {msg}")
+            #else
+              #set (getStatement = "0; {msg}")
+            #end
+          #else
+            #set (getStatement = "null; {msg}")
+          #end
+          #set (setStatement = msg)
+        #else
+          #set (getStatement = "{stateImplClass}.this.{statement};")
+          #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
+          #set (setStatement = "{stateImplClass}.this.{setStatement};")
+        #end
+            public {attribute.type} {attribute.getter}() { return {getStatement} }
+            public void {attribute.setter}({attribute.type} {attribute.variable}) { {setStatement} }
+
+      #end
+            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
+      #isValid(template, true, "            ")
+      #equals(template, true, "            ")
+      #valueEquals(template, true, "            ")
+      #hashCode(template, true, "            ")
+      #valueHashCode(template, true, "            ")
+      #toString(template, true, "            ")
+        };
+    }
+    #end
+  #end
+#end
+
+#macro gettersAndSetters()
+
+    // Getters
+  #foreach (attribute in attributes)
+    public {attribute.type} {attribute.getter}() { return {attribute.variable}; }
+  #end
+
+    // Setters
+  #foreach (attribute in attributes)
+    #if (attribute.isStateList)
+    public void {setter(attribute)} { this.{attribute.variable}.clear(); this.{attribute.variable}.addAll({attribute.variable}); }
+    #else
+    public void {setter(attribute)} { this.{attribute.variable} = {attribute.variable}; }
+    #end
+  #end
+#end
+
+#macro encapsulate()
+
+    public void encapsulate() {
+        _encapsulated = true;
+  #foreach (attribute in attributes where attribute.isState)
+    #if (attribute.isOptional)
+        if ({attribute.variable} != null) {attribute.variable}.encapsulate();
+    #else
+        {attribute.variable}.encapsulate();
+    #end
+  #end
+    }
+#end
+
+#macro isValid(t, useGetter, tab)
+
+{tab}public boolean isValid() {
+{tab}    return isValid(_encapsulated);
+{tab}}
+
+{tab}public boolean isValidAsEncapsulated() {
+{tab}{tab}return isValid(true);
+{tab}}
+
+{tab}private boolean isValid(boolean encapsulated) {
+  #set (hasMandatoryOrStateAttributes = false)
+  #foreach (attribute in t.attributes where attribute.isMandatory && !attribute.isPrimitive)
+    #set (hasMandatoryOrStateAttributes = true)
+  #end
+  #if (hasMandatoryOrStateAttributes)
+    #set (delimiter = "")
+    #set (nextDelimiter = "
+           || ")
+{tab}    if (##
+    #foreach (attribute in t.attributes where !attribute.isPrimitive)
+      #if (attribute.isMandatory)
+        #if (attribute.isState)
+          #if (useGetter)
+            #if (attribute.isHidden)
+{delimiter}(encapsulated && ({attribute.getter}() == null || !{attribute.getter}().isValid()))##
+            #else
+{delimiter}({attribute.getter}() == null || !{attribute.getter}().isValid())##
+            #end
+          #else
+            #if (attribute.isHidden)
+{delimiter}(encapsulated && ({attribute.variable} == null || !{attribute.variable}.isValid()))##
+            #else
+{delimiter}({attribute.variable} == null || !{attribute.variable}.isValid())##
+            #end
+          #end
+          #set (delimiter = nextDelimiter)
+        #else
+          #if (useGetter)
+            #if (attribute.isHidden)
+{delimiter}(encapsulated && {attribute.getter}() == null)##
+            #else
+{delimiter}{attribute.getter}() == null##
+            #end
+          #else
+            #if (attribute.isHidden)
+## If the attribute is hidden, the attribute is supposed to be set by the behaviour constructor
+## and if isValid() is called before the state has been encapsulated then we don't check for null.
+{delimiter}(encapsulated && {attribute.variable} == null)##
+            #else
+{delimiter}{attribute.variable} == null##
+            #end
+          #end
+          #set (delimiter = nextDelimiter)
+        #end
+      #else if (attribute.isState)
+        #if (useGetter)
+{delimiter}({attribute.getter}() != null && !{attribute.getter}().isValid())##
+        #else
+{delimiter}({attribute.variable} != null && !{attribute.variable}.isValid())##
+        #end
+        #set (delimiter = nextDelimiter)
+      #end
+    #end
+) {
+{tab}        return false;
+{tab}    }
+  #end
+  #foreach (expandedType in expandedTypes)
+    #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type && t2.isValidStatement != null)
+        if (!is{expandedType.type}Valid()) {
+            return false;
+        }
+    #end
+  #end
+  #if (t.isValidStatement == null)
+{tab}    return true;
+  #else
+    #set (statement = t.isValidStatement)
+    #if (statements != null)
+      #foreach (s in statements.values())
+        #set (statement = statementConverter.prefixAttribute("", statement, key, s))
+        #foreach (attribute in t.attributes)
+          #set (statement = statementConverter.prefixAttribute("", statement, attribute.variable, "{attribute.getter}()"))
+        #end
+      #end
+    #end
+    ## Replace references to expanded types, e.g: a.b -> b
+    #foreach (expandedType in expandedTypes)
+      #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type)
+        #foreach (attribute in t2.attributes)
+          #set (statement = statementConverter.prefixAttribute("", statement, "{expandedType.variable}.{attribute.variable}", attribute.variable))
+        #end
+      #end
+    #end
+{tab}    {statement}
+  #end
+{tab}}
+  #if (expandedTypes.size() > 0)
+    #foreach (expandedType in expandedTypes)
+      #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type && t2.isValidStatement != null)
+
+    private boolean is{expandedType.type}Valid() {
+        {t2.isValidStatement}
+    }
+      #end
+    #end
+  #end
+#end
+
+#function valueAttributes(t)
+  #set (keys = new java.util.ArrayList())
+  #foreach (attribute in t.attributes where !attribute.isExclude)
+    #keys.add(attribute)
+  #end
+  #return keys
+#end
+
+#function entityAttributes(t)
+  #set (keys = new java.util.ArrayList())
+  #foreach (attribute in t.attributes where attribute.isKey)
+    #keys.add(attribute)
+  #end
+  #if (keys.size == 0)
+    #return valueAttributes(t)
+  #end
+  #return keys
+#end
+
+#macro equals(t, useGetter, tab)
+
+{tab}@Override
+{tab}public boolean equals(Object o) {
+  #equalsBody(t, entityAttributes(t), useGetter, tab)
+#end
+
+#macro valueEquals(t, useGetter, tab)
+
+{tab}public boolean valueEquals(Object o) {
+  #equalsBody(t, valueAttributes(t), useGetter, tab)
+#end
+
+#macro equalsBody(t, attributes, useGetter, tab)
+{tab}    if (this == o) return true;
+{tab}    if (o == null || getClass() != o.getClass()) return false;
+
+  #if (useGetter)
+{tab}    {t.packagename}.{t.stateClass} state = ({t.packagename}.{t.stateClass})o;
+  #else
+{tab}    {t.stateImplClass} state = ({t.stateImplClass})o;
+  #end
+
+  #set (errorMessage = "")
+  #foreach (attribute in attributes)
+    #set (variable = variable(useGetter))
+    #if (attribute.isPrimitive)
+{tab}    if ({variable} != state.{attribute.getter}()) return false;
+    #else
+      #if (useGetter)
+{tab}    if ({variable} != null ? !{variable}.equals(state.{attribute.getter}()) : state.{attribute.getter}() != null) return false;
+      #else
+{tab}    if ({variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
+      #end
+    #end
+  #end
+
+{tab}    return true;
+{tab}}
+#end
+
+#macro variable(useGetter)
+  #if (useGetter)
+    #set (statement = method.statements.get(attribute.variable))
+    #if (statement != null)
+{statement}##
+    #else
+{attribute.variable}##
+    #end
+  #else
+{attribute.variable}##
+  #end
+#end
+
+#macro hashCode(t, useGetter, tab)
+
+{tab}@Override
+{tab}public int hashCode() {
+  #hashCodeBody(t, entityAttributes(t), useGetter, tab)
+#end
+
+#macro valueHashCode(t, useGetter, tab)
+
+{tab}public int valueHashCode() {
+  #hashCodeBody(t, valueAttributes(t), useGetter, tab)
+#end
+
+#macro hashCodeBody(t, attributes, useGetter, tab)
+  #set (first = true)
+  #set (intTypes = ["byte", "char", "short", "int"])
+  #set (castTypes = ["long", "float", "double"])
+  #foreach (attribute in attributes)
+    #set (variable = variable(useGetter))
+    #if (first)
+      #if (intTypes.contains(attribute.type))
+{tab}    int result = {variable};
+      #else if (castTypes.contains(attribute.type))
+{tab}    int result = (int){variable};
+      #else if (attribute.type == "boolean")
+{tab}    int result = {variable} ? 1 : 0;
+      #else
+{tab}    int result = {variable} != null ? {variable}.hashCode() : 0;
+      #end
+    #else
+      #if (intTypes.contains(attribute.type))
+{tab}    result = 31 * result + {variable};
+      #else if (castTypes.contains(attribute.type))
+{tab}    result = 31 * result + (int){variable};
+      #else if (attribute.type == "boolean")
+{tab}    result = 31 * result + ({variable} ? 1 : 0);
+      #else
+        #if (useGetter)
+{tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
+        #else
+{tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
+        #end
+      #end
+    #end
+    #set (first = false)
+  #end
+
+{tab}    return result;
+{tab}}
+#end
+
+#macro toString(t, useGetter, tab)
+
+{tab}@Override
+{tab}public String toString() {
+  #set (iterator = t.attributes.iterator())
+  #set (hasNext = iterator.hasNext)
+  #set (first = true)
+  #if (hasNext)
+    #set (attribute = iterator.next)
+  #end
+  #while (hasNext)
+    #set (hasNext = iterator.hasNext)
+    #if (useGetter)
+      #set (value = "{attribute.getter}()")
+    #else
+      #set (value = attribute.variable)
+    #end
+    #if (hasNext)
+      #if (first)
+        #if (attribute.type == "String")
+{tab}    return "{{attribute.variable}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+        #else
+{tab}    return "{{attribute.variable}=" + {value} +
+        #end
+      #else
+        #if (attribute.type == "String")
+{tab}            ", {attribute.variable}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+        #else
+{tab}            ", {attribute.variable}=" + {value} +
+        #end
+      #end
+      #set (attribute = iterator.next)
+    #else
+      #if (first)
+{tab}    return "{{attribute.variable}=" + {value} + "}";
+      #else
+        #if (attribute.type == "String")
+{tab}            ", {attribute.variable}='" + {value} + '\'' + "}";
+        #else
+{tab}            ", {attribute.variable}=" + {value} + "}";
+        #end
+      #end
+    #end
+    #set (first = false)
+  #end
+{tab}}
+#end
+
+#macro class()
+  #header()
+public class {stateImplClass} implements {stateClass} {
+  #declareAttributes()
+
+    private boolean _encapsulated = false;
+  #declareStates()
+
+    {stateImplClass}() {
+  #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
+        {attribute.variable} = {attribute.typeAsStateImpl}.emptyList(Certificate.get(this));
+  #end
+    }
+
+    public static {builderClass} build() {
+        return new {builderImplClass}();
+    }
+
+    public static {builderClass} build({stateClass} state) {
+        return new {builderImplClass}(state);
+    }
+  #isValid($, false, "    ")
+  #gettersAndSetters()
+  #encapsulate()
+  #equals($, false, "    ")
+  #valueEquals($, false, "    ")
+  #hashCode($, false, "    ")
+  #valueHashCode($, false, "    ")
+  #toString($, false, "    ")
+}
+#end
+
+#set (filename = "{outputDir}/{stateImplClass}.java")
+#generateFile(filename)
+#write "{filename}"
+  #package()
+  #importBegin(false)
+  #importState()
+  #importStateListImpl()
+  #importCertificate()
+  #importEnd()
+  #class()
+#end

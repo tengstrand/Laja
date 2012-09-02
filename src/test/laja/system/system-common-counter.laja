@@ -1,0 +1,7 @@
+
+#write "target/test-output/system-common-counter.out"
+  #set (counter = counter(10))
+  {counter.get}
+  {counter.increase}
+  {counter}
+#end

@@ -1,0 +1,6 @@
+#write "target/test-output/call-object-method.out"
+  #set (map = {})
+  #set (myClass = new net.sf.laja.integrationtest.CallTest$MyClass())
+  #myClass.value(map, "x")
+map.x = {map.x}
+#end

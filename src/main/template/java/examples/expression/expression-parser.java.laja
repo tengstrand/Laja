@@ -1,0 +1,6 @@
+
+#generateParser(
+  package: "net.sf.laja.parser.examples.expression"
+  grammarFile: "{.}/expression.grammar"
+  outputDir: "{.}"
+)

@@ -1,0 +1,4 @@
+Value = 1
+Namespace $x = {xx=123abc}
+
+Namespace = {aaa=111}

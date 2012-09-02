@@ -1,0 +1,8 @@
+
+#function hello(x)
+  #return "Hello {x}"
+#end
+
+#write "target/test-output/function-method-reference.out"
+  length = {hello("my friend").length()}
+#end

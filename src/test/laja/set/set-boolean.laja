@@ -1,0 +1,7 @@
+#write "target/test-output/set-boolean.out"
+  #set (a = true)
+  #set (b = false)
+a = {a}
+b = {b}
+The variable a is hold by the Java class = {a.class.name}
+#end

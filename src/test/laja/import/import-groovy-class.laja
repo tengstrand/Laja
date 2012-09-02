@@ -1,0 +1,8 @@
+
+#import "src/test/laja/import/TestClass.groovy"
+
+#set (testClass = new TestClass())
+
+#write "target/test-output/import-groovy-class.out"
+increment(1) = {testClass.increment(1)}
+#end

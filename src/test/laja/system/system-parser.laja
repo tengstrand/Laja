@@ -1,0 +1,12 @@
+
+#generateParser(
+  package: "net.sf.parser"
+  grammarFile: "{.}/system-parser.grammar"
+  outputDir: "target/test-output"
+)
+
+#write "target/test-output/system-parser.out"
+  #if (fileExists("target/test-output/ParserParser.java"))
+    The parser was generated!
+  #end
+#end

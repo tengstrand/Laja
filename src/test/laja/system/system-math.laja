@@ -1,0 +1,4 @@
+
+#write "target/test-output/system-math.out"
+  math.round(3.14) = {math.round(3.14)}
+#end

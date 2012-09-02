@@ -1,0 +1,12 @@
+
+#import "{.}/properties/properties-reader.laja"
+#import "{.}/database/database-reader.laja"
+
+#function read(source)
+  #lazyImportPropertiesReader()
+  #if (source != null && source.toString().endsWith(".properties"))
+    #return ($laja.propertiesReader.read(source))
+  #else
+    #error ("The command #read does not support this source: {source}")
+  #end
+#end

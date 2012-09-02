@@ -1,0 +1,6 @@
+#namespace x
+
+#write "target/test-output/function-reference-default-namespace.out"
+  #loadClass("java.lang.Number") into number
+  number.name = {number.name}
+#end

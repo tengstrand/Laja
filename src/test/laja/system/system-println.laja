@@ -1,0 +1,4 @@
+
+#write "target/test-output/system-println.out"
+  #println("This is my message")
+#end

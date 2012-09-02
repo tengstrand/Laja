@@ -1,0 +1,18 @@
+
+#macro lazyImportParser()
+  #if ($laja.isParserImported == null)
+    #set ($laja.isParserImported = true)
+    #import "{..}/../java/parser/parser.java.laja"
+    #import "{..}/../java/parser/dom/dom.java.laja"
+  #end
+#end
+
+#macro generateParser(settings)
+  #lazyImportParser()
+  #$parser.generateParser(settings)
+#end
+
+#macro generateParserDom(settings)
+  #lazyImportParser()
+  #$parser.generateParserDom(settings)
+#end

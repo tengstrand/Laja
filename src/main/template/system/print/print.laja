@@ -1,0 +1,17 @@
+
+#macro lazyImportPrintService()
+  #if ($laja.printService == null)
+    #import "{.}/PrintService.groovy"
+    #set ($laja.printService = new PrintService())
+  #end
+#end
+
+#macro print(message)
+  #lazyImportPrintService()
+  #$laja.printService.print(message)
+#end
+
+#macro println(message)
+  #lazyImportPrintService()
+  #$laja.printService.println(message)
+#end

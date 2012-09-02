@@ -1,0 +1,412 @@
+#namespace parser
+
+#set (homedir = "{.}")
+
+#import "{homedir}/parser-defaults.java.laja"
+
+#macro initClassesAndImports(classPackageMap)
+  #set (imports = new java.util.TreeSet())
+  #set (classes = {})
+  #foreach (class in classPackageMap.keySet())
+    #set (classpackage = classPackageMap.get(class))
+    #set (reserved = false)
+
+    #foreach (ref in refList)
+      #if (interface(ref.className) == class)
+        #set (reserved = true)
+      #end
+    #end
+    
+    #if (reserved)
+      #classes.put(class, "{classpackage}.{class}")
+    #else
+      #classes.put(class, class)
+      #imports.add("{classpackage}.{class}")
+    #end
+  #end
+#end
+
+#macro parse(settings)
+  #$parser.putAll(settings)
+
+  #parser.parseGrammar($parser, grammarFile, forwardRef)
+
+  #set (dataClass = "Data")
+  #set (parserClass = "{parserPrefix}{grammar.grammarClass}{parserSuffix}")
+  #set (topElementClass = "TopElement")
+  #set (factoryInterface = "{interfacePrefix}{grammar.grammarClass}Factory{interfaceSuffix}")
+  #set (factoryFactoryInterface = "{interfacePrefix}{grammar.grammarClass}FactoryFactory{interfaceSuffix}")
+
+  #initClassesAndImports(
+  	Stack: "java.util"
+  	Index: enginePackage
+  	Output: enginePackage
+  	ParsingResult: enginePackage
+  	AndList: "{enginePackage}.element"
+  	Chr: "{enginePackage}.element"
+  	Element: "{enginePackage}.element"
+  	ElementList: "{enginePackage}.element"
+  	End: "{enginePackage}.element"
+  	FollowedBy: "{enginePackage}.element"
+  	Complete: "{enginePackage}.element"
+  	Marker: "{enginePackage}.element"
+  	Optional: "{enginePackage}.element"
+  	OrList: "{enginePackage}.element"
+  	Range: "{enginePackage}.element"
+  	Repeat: "{enginePackage}.element"
+  	Repeats: "{enginePackage}"
+  	Str: "{enginePackage}.element"
+  	Variable: "{enginePackage}.element"
+  	ParserException: "{enginePackage}.exception"
+  	DefaultSyntaxErrorHandler: "{enginePackage}.inspector"
+  	SyntaxErrorHandler: "{enginePackage}.inspector"
+  	FileSource: "{enginePackage}.source"  	
+  	Source: "{enginePackage}.source"
+  	StringSource: "{enginePackage}.source"
+  	URLSource: "{enginePackage}.source"
+  )
+#end
+
+#macro generateParser(settings)
+  #parse(settings)
+
+  #write "{outputDir}/{parserClass}.java"
+    ########################################################
+    ## 1. Parser class
+    ########################################################
+package {package};
+    #if (!imports.isEmpty)
+
+      #foreach (import in imports)
+import {import};
+      #end  
+    #end
+
+    #import "{homedir}/parser-header.java.laja"
+public final class {parserClass} implements {enginePackage}.Parser {
+{x}private static int NOT = {enginePackage}.element.Element.NOT;
+{x}private static int CS = {enginePackage}.element.Element.CS;
+{x}private static int CI = {enginePackage}.element.Element.CI;
+
+{x}private {dataClass} data1;
+{x}private {dataClass} data2;
+{x}private {factoryInterface} factory1;
+{x}private {factoryInterface} factory2;
+{x}private {enginePackage}.Writer sourceRecorderLogWriter;
+{x}private {classes.SyntaxErrorHandler} syntaxErrorHandler;
+
+{x}public static final int PHASE1 = 1;
+{x}public static final int PHASE2 = 2;
+
+{x}public {parserClass}({factoryFactoryInterface} factoryFactory) {
+{x}{x}init(factoryFactory);
+{x}}
+
+{x}public void init({factoryFactoryInterface} factoryFactory) {
+{x}{x}syntaxErrorHandler = new {classes.DefaultSyntaxErrorHandler}();
+{x}{x}factory1 = factoryFactory.getFactory(PHASE1);
+{x}{x}factory2 = factoryFactory.getFactory(PHASE2);
+{x}{x}data1 = new {dataClass}(factory1);
+{x}{x}data2 = new {dataClass}(factory2);
+{x}}
+
+{x}public {parserClass} setSourceRecorderLogging({enginePackage}.Writer writer) {
+{x}{x}sourceRecorderLogWriter = writer;
+{x}{x}return this;
+{x}}
+
+{x}public {parserClass} setSyntaxErrorHandler({classes.SyntaxErrorHandler} syntaxErrorHandler) {
+{x}{x}this.syntaxErrorHandler = syntaxErrorHandler;
+{x}{x}return this;
+{x}}
+
+{x}public {factoryInterface} getFactory1() {
+{x}{x}return factory1;
+{x}}
+
+{x}public {factoryInterface} getFactory() {
+{x}{x}return factory2;
+{x}}
+
+{x}// parse string
+{x}public {classes.ParsingResult} parseString(String string) throws {classes.ParserException} {
+{x}{x}return parse(new {classes.StringSource}(string));
+{x}}
+
+{x}// parse file
+{x}public {classes.ParsingResult} parseFile(String filename) throws {classes.ParserException} {
+{x}{x}return parse(new {classes.FileSource}(filename));
+{x}}
+
+{x}// parse URL
+{x}public {classes.ParsingResult} parseURL(String url) throws {classes.ParserException} {
+{x}{x}return parse(new {classes.URLSource}(url));
+{x}}
+
+{x}// parse
+{x}public {classes.ParsingResult} parse({classes.Source} source) throws {classes.ParserException} {
+{x}{x}{enginePackage}.element.Element element = getGrammar1();
+
+{x}{x}boolean match = element.parse(0, source, false, true, false);
+{x}{x}int bestIndex = source.getBestIndex();
+
+{x}{x}if (match && source.reachedEnd()) {
+{x}{x}{x}source.reset();
+{x}{x}{x}element = getGrammar2();
+{x}{x}{x}match = element.parse(0, source, false, true, true);
+{x}{x}{x}if (!match) {
+{x}{x}{x}{x}throw new IllegalStateException("The parsing result was true in phase 1, but false in phase 2.");
+{x}{x}{x}}
+{x}{x}{x}return new {classes.ParsingResult}(true, source, syntaxErrorHandler);
+{x}{x}} else if (sourceRecorderLogWriter != null) {
+{x}{x}{x}source.reset();
+{x}{x}{x}source.getRecorder().setLogging(sourceRecorderLogWriter, bestIndex);
+{x}{x}{x}element.parse(0, source, false, true, false);
+{x}{x}}
+
+{x}{x}return new {classes.ParsingResult}(false, source, element, syntaxErrorHandler);
+{x}}
+    ########################################################
+    ## 2. Grammar definition.
+    ########################################################
+    #foreach (phase in [2, 1])
+
+{x}private {enginePackage}.element.Element getGrammar{phase}() {
+{x}{x}// *** Output classes ***
+      #foreach (output in outputList)
+        #if (output.isOutputClass(phase))
+{x}{x}{dataClass}.{output.getClassName(phase)} {output.getVariableName(phase)} = data{phase}.new {output.getClassName(phase)}("{output.getVariableName(phase)}");
+        #end
+      #end
+      #foreach (ov in outputvarList)
+{x}{x}{dataClass}.{ov.classname} {ov.classVariableName} = data{phase}.new {ov.classname}();
+      #end
+
+      #grammar.resetId()
+      #if (forwardRef)
+{x}{x}// *** Declarations ***
+{statement(phase, true, false)}
+{x}{x}// *** Statements ***
+{statement(phase, false, true)}
+      #else
+{x}{x}// *** Declarations and Statements ***
+{statement(phase, true, true)}
+
+      #end
+{x}{x}return new {topElementClass}(data{phase}, {rename(grammar.grammarName)});
+{x}}
+    #end
+
+    ########################################################
+    ## 3. TopElement
+    ########################################################
+{x}// *** {topElementClass} ***
+{x}public static class {topElementClass} implements {enginePackage}.element.Element {
+{x}{x}private {dataClass} data;
+{x}{x}private {enginePackage}.element.Element element;
+
+{x}{x}public {topElementClass}({dataClass} data, {enginePackage}.element.Element element) {
+{x}{x}{x}this.data = data;
+{x}{x}{x}this.element = element;
+{x}{x}}
+{x}{x}public int getId() { return element.getId(); }
+{x}{x}public String getName() { return element.getName(); }
+{x}{x}public String getString() { return element.getString(); }
+{x}{x}public String getIdName() { return element.getIdName(); }
+{x}{x}public boolean isTerminal() { return element.isTerminal(); }
+{x}{x}public boolean isOptional() { return false; }
+{x}{x}public boolean parse(int level, {classes.Source} source, boolean parentNot, boolean caseSensitive, boolean receive) {
+{x}{x}{x}data.push{grammar.grammarClass}();
+{x}{x}{x}boolean match = element.parse(level, source, parentNot, caseSensitive, receive);
+{x}{x}{x}data.pop{grammar.grammarClass}();
+{x}{x}{x}return match;
+{x}{x}}
+{x}}
+
+    ########################################################
+    ## 4. FactoryFactory interface.
+    ########################################################
+{x}// *** {factoryFactoryInterface}
+{x}public interface {factoryFactoryInterface} {
+{x}{x}public {factoryInterface} getFactory(int phase);
+{x}}
+
+    ########################################################
+    ## 5. Factory interface.
+    ########################################################
+{x}// *** {factoryInterface} ***
+{x}public interface {factoryInterface} {
+    #foreach (ref in refList)
+      #if (ref.constructorDefined)
+        #set (comma = "")
+        #set (args = "")
+        #foreach (classvar in ref.constructor.classvarList)
+          #set (args = "{args}{comma}{interface(classvar.className)} {classvar.varName}")
+          #set (comma = ", ")
+        #end
+{x}{x}{parserClass}.{interface(ref.className)} create{ref.className}({args});
+      #else
+{x}{x}{parserClass}.{interface(ref.className)} create{ref.className}();
+      #end
+    #end
+{x}}
+
+    ########################################################
+    ## 6. Interfaces.
+    ########################################################
+{x}// *** Interfaces ***
+    #foreach (ref in refList)
+{x}// {ref.className}
+{x}public interface {interface(ref.className)} {
+      #foreach (om in ref.outputmethodList)
+        #set (args = "")
+        #if (om.isVoid)
+          #set (comma = "")
+        #else
+          #set (comma = ", ")
+        #end
+        #foreach (omarg in om.omargList)
+          #if (omarg.isStr())
+            #set (args = "{args}{comma}String {rename(omarg.arg)}")
+          #else
+            #set (args = "{args}{comma}{classes.Index} {rename(omarg.arg)}")
+          #end
+        #end
+        #if (om.isVoid())
+{x}{x}public void {om.methodName}({args});
+        #else if (om.isStr())
+{x}{x}public void {om.methodName}(String {rename(om.outputArgName)}{args});
+        #else if (om.isIndex())
+{x}{x}public void {om.methodName}({classes.Index} {rename(om.outputArgName)}{args});
+        #else if (om.isClass())
+{x}{x}public void {om.methodName}({interface(om.argClass)} {interfaceVar(om.outputArgName)}{args});
+        #else if (om.isConst())
+{x}{x}public void {om.methodName}(int {rename(om.outputArgName)}{args});
+        #end
+      #end
+      #foreach (ov in outputvarList)
+        #if (ov.ref.equals(ref.refname))
+          #if (ov.isBoolean())
+{x}{x}public boolean {ov.method}();
+          #else
+{x}{x}public String {ov.method}();
+          #end
+        #end
+      #end
+{x}}
+
+    #end
+    ########################################################
+    ## 7. Data-class.
+    ########################################################
+{x}// *** Data ***
+{x}public static final class {dataClass} {
+{x}{x}private {parserClass}.{factoryInterface} factory;
+    #foreach (ref in refList)
+{x}{x}private {classes.Stack}<{interface(ref.className)}> {ref.stackName} = new {classes.Stack}<{interface(ref.className)}>();
+    #end
+
+{x}{x}public {dataClass}({parserClass}.{factoryInterface} factory) {
+{x}{x}{x}this.factory = factory;
+{x}{x}}
+    ########################################################
+    ## 8. Push, pop and peek methods.
+    ########################################################
+    #foreach (ref in refList)
+
+{x}{x}// {ref.className}
+      #set (constructor = "")
+      #if (ref.constructor != null)
+        #set (comma = "")
+        #foreach (classvar in ref.constructor.classvarList)
+          #set (constructor = "{constructor}{comma}peek{classvar.className}()")
+          #set (comma = ", ")
+        #end
+      #end
+{x}{x}public void push{ref.className}() { {ref.stackName}.push(factory.create{ref.className}({constructor})); }
+      #set (fullClassName = "{grammar.className}.{interface(ref.className)}")
+{x}{x}public {fullClassName} pop{ref.className}() { return ({fullClassName}){ref.stackName}.pop(); }
+{x}{x}public {fullClassName} peek{ref.className}() {
+{x}{x}{x}if ({ref.stackName}.empty()) { return null; }
+{x}{x}{x}return {ref.stackName}.peek();
+{x}{x}}
+    #end
+    ########################################################
+    ## 9. Output implementations.
+    ########################################################
+    #foreach (out in outList)
+
+      #foreach (comment in out.commentList)
+{x}{x}// {comment}
+      #end
+      #set (push = "")
+      #if (out.isPushPop)
+        #set (push = "push{out.argClass}(); ")
+      #end
+{x}{x}public class {out.className} implements {classes.Output} {
+{x}{x}{x}private String name;
+{x}{x}{x}public {out.className}(String name) { this.name = name; }
+{x}{x}{x}public boolean receive() { return {out.isReceive}; }
+{x}{x}{x}public void init({classes.Source} source) { {push}}
+{x}{x}{x}public void set({classes.Source} source, int bookmark) {
+      #foreach (s in out.statementList)
+        #if (s.peekStatement != null)
+          #set (args = "")
+          #if (s.isDatatypeVoid)
+            #set (comma = "")
+          #else
+            #set (comma = ", ")
+          #end
+          #foreach (omarg in s.omargList)
+            #if (omarg.isStr)
+              #set (args = "{comma}source.get(bookmark)")
+            #else if (omarg.isIndex)
+              #set (args = "{comma}source.getIndex(bookmark)")
+            #end
+            #set (comma = ", ")
+          #end
+          #if (s.isDatatypeClass)
+{x}{x}{x}{x}peek{s.className}().{s.methodName}(pop{s.argClass}(){args});
+          #else if (s.isDatatypeString)
+{x}{x}{x}{x}peek{s.className}().{s.methodName}(source.get(bookmark){args});
+          #else if (s.isDatatypeIndex)
+{x}{x}{x}{x}peek{s.className}().{s.methodName}(source.getIndex(bookmark){args});
+          #else if (s.isDatatypeVoid)
+{x}{x}{x}{x}peek{s.className}().{s.methodName}({args});
+          #else if (s.isDatatypeConst)
+{x}{x}{x}{x}peek{s.className}().{s.methodName}({s.constInterface}.{s.constName});
+          #else if (s.isDatatypeVariable)
+{x}{x}{x}{x}peek{s.className}().{s.methodName}({s.variableName});
+          #end
+        #else if (s.popDeclStatement != null)
+{x}{x}{x}{x}{interface(s.className)} {s.variableName} = pop{s.argClassName}();
+        #else if (s.popStatement != null)
+{x}{x}{x}{x}pop{s.className}();
+        #end
+      #end
+{x}{x}{x}}
+{x}{x}}
+    #end
+    ########################################################
+    ## 10. Generate "variable" classes.
+    ########################################################
+    #foreach (vc in varclassList)
+
+      #if (vc.statement != null)
+{x}{x}// {vc.statement}
+      #end
+      #if (vc.isBoolean)
+{x}{x}public class {vc.className} implements {enginePackage}.element.Variable.Condition {
+{x}{x}{x}public boolean isTrue() {
+      #else
+{x}{x}public class {vc.className} implements {enginePackage}.element.Variable.Value {
+{x}{x}{x}public String getValue() {
+      #end
+{x}{x}{x}{x}return peek{vc.returnInterface}().{vc.returnMethod}();
+{x}{x}{x}}
+{x}{x}}
+    #end
+{x}}
+}
+  #end
+#end

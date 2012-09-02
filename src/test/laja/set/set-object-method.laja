@@ -1,0 +1,5 @@
+#write "target/test-output/set-object-method.out"
+  #set (setTest = new net.sf.laja.integrationtest.SetTest$Myclass())
+  #set (result = setTest.getValue("A"))
+result = {result}
+#end

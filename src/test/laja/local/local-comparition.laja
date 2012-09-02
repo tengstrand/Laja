@@ -1,0 +1,9 @@
+
+#macro isLessThanTwo(y)
+  #set (x = y < 2)
+  {x}
+#end
+
+#write "target/test-output/local-comparition.out"
+  #isLessThanTwo(1)
+#end

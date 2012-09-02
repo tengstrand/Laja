@@ -1,0 +1,24 @@
+
+Database: HSQL Database Engine (1.8.0)
+
+Tables:
+    address
+       id
+       city
+       street_name
+    person
+       id
+       name
+       age
+       address_id
+
+Relations:
+     person.address_id -> address.id
+
+Rows in table person:
+    {id=1, name=Adam, age=25, address_id=1}
+    {id=2, name=Eve, age=20, address_id=null}
+
+Rows in table address:
+    First street, Stockholm
+    Second street, Uppsala

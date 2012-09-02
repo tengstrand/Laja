@@ -1,0 +1,24 @@
+#write "target/test-output/set-reference.out"
+#set (nullable = true)  ## Test that variables can start with 
+#set (truex = false)    ## the reserved words null, true and false
+#set (false1 = false)
+#set (a1 = "a1")
+#set (a2 = a1)
+a1 = {a1}
+a2 = {a2}
+
+#set (list = [ "1", "2" ])
+#set (list2 = list)
+list = {list}
+list2 = {list2}
+
+#set (map = { a: "a" b: "b" c: [ "c0", "c1" ] })
+#set (list = map.c)
+#set (element = list[1])
+map = {map}
+list = {list}
+element = {element}
+nullable = {nullable}
+truex = {truex}
+false1 = {false1}
+#end

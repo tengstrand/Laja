@@ -1,0 +1,9 @@
+
+#function hello()
+  #return "hello"
+#end
+
+#write "target/test-output/call-function-into-variable.out"
+  #hello() into message
+message = {message}
+#end

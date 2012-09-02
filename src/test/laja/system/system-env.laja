@@ -1,0 +1,6 @@
+
+#write "target/test-output/system-env.out"
+  #if (env() != null)
+You have environment variables!
+  #end
+#end

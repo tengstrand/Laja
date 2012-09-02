@@ -1,0 +1,23 @@
+#write "target/test-output/set-map.out"
+  #set (x = {
+    a: 123
+    b: ["h", "i"]
+    c: [{ x1: "value" 
+          x2: { 
+	        a1: x.a 
+		    a2: "name" 
+          }
+        }, {y1: "age"}]
+    d: {}
+    e: []
+  })
+  x = {x}
+  x.b = {x.b}
+  x.b[0] = {x.b[0]}
+  x.b[1] = {x.b[1]}
+  x.c[0] = {x.c[0]}
+  x.c[0].x1 = {x.c[0].x1}
+  x.c[0].x2.a1 = {x.c[0].x2.a1}
+  x.c[0].x2.a2 = {x.c[0].x2.a2}
+  x.c[1].y1 = {x.c[1].y1}
+#end

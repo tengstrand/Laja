@@ -1,0 +1,12 @@
+#write "target/test-output/reference-object-method.out"
+  #set (x = new net.sf.laja.integrationtest.ReferenceTest$Data())
+  #set (list = [1,2,3])
+  #set (abc = "abc")
+The value of x.valid = {x.valid}
+The value of x.stringValue is: {x.stringValue}
+abc.charAt(2) = {abc.charAt(2)}
+x.stringValue.length = {x.stringValue.length}
+x.array(1)[2] = {x.array(1)[2]}
+x.list[1] = {x.list[1]}
+x.method(123, "b", { a:"a1" b:"b1"}) = {x.method(123, "b", { a:"a1" b:"b1"} )}
+#end

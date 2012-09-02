@@ -1,0 +1,9 @@
+
+#macro getResult()
+result##
+#end
+
+#write "target/test-output/macro-set-returned-value.out"
+  #set (value = getResult())
+value = {value}
+#end

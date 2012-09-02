@@ -1,0 +1,8 @@
+
+#macro write()
+  #write "target/test-output/macro-write.out"
+Hello!
+  #end
+#end
+
+#write()

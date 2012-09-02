@@ -1,0 +1,9 @@
+#write "target/test-output/call-object-method-varargs.out"
+  #set (map = {})
+  #set (myClass = new net.sf.laja.integrationtest.CallTest$MyClass())
+  #myClass.setLength(map, "a")
+length = {map.length}
+  #set (map = {})
+  #myClass.setLength(map, 1, "Hi there", "a", "b")
+length = {map.length}
+#end

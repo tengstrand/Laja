@@ -1,0 +1,4 @@
+map.a = new value
+myclass.value = hello
+map.b.c = hello
+map.b.c = there

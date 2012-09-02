@@ -1,0 +1,8 @@
+
+#macro x()
+abc##
+#end
+
+#write "target/test-output/macro-method-reference.out"
+  x().lenth() = {x().length()}
+#end

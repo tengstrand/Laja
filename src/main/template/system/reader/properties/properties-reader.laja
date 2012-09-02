@@ -1,0 +1,12 @@
+
+#macro lazyImportPropertiesReader()
+  #if ($laja.propertiesReader == null)
+    #import "{.}/PropertiesReader.groovy"
+    #set ($laja.propertiesReader = new PropertiesReader())
+  #end
+#end
+
+#function readProperties(path)
+  #lazyImportPropertiesReader()
+  #return ($laja.propertiesReader.read(path))
+#end

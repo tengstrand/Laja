@@ -1,0 +1,9 @@
+
+grammar defaultSyntaxError {
+	cr = "\r\n" | "\n";
+    row = [!cr+]:content cr;
+  	defaultSyntaxError = [row+] [!END+]:line END;
+
+  	DefaultSyntaxError defaultSyntaxError.setRow(String row.content, Index idx);
+  	defaultSyntaxError.setLine(String line, Index idx);
+}    
