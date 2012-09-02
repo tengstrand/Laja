@@ -1,0 +1,16 @@
+
+How to deploy Laja
+==================
+- Change version number in laja.properties + pom.xml (in Laja + Laja/laja-parser-engine).
+If any jar files has been added:
+> mvn ant:ant                // Only if any libraries has been added to the project
+
+> cd Laja
+> mvn clean install          // Generates target/laja1-001-alpha.jar + target/laja1-001-alpha-sources.jar
+> mvn source:jar             // Generates target/laja1-001-alpha-sources.jar
+> ant                        // Generates target/laja1-001-alpha.zip
+> mvn javadoc:javadoc        // Generates target/site/apidocs
+                                zip to laja1-001-alpha-javadoc.
+
+> cd laja-parser-engine
+> mvn clean install

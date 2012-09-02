@@ -1,0 +1,109 @@
+The binary distribution of Laja consists of the following directory layout:
+
+<pre>
+laja
++--- LICENCE.txt  // GNU General Publi License version 3.0.
++--- bin  // contains launcher scripts
+|
++--- lib  // add your own jar libraries here, empty by default
+|
++--- system-lib  // contains the Laja jar plus necessary dependencies
+|
++--- doc/lajatemplate.grammar  // grammar for the Laja template files
+|
++--- template/java/system-imports.laja // this file is always imported when running Laja.
++--- template/java/examples/code-generator-integration-tests  // contains the templates used by Laja in the Maven integration-test phase.
++--- template/java/examples/expression  // contains an example of a parser used to calculate expressions.
++--- template/java/parser    // contains templates used to generate a parser giving a grammar file (.grammar).
++--- template/system    // contains functions and Groovy code imported by system-imports.laja.
+</pre>
+
+[https://sourceforge.net/projects/laja Download] the latest binary distribution of Laja, for example ''laja2-005-beta.zip''.
+Unzip and rename the directory to ''laja'' (or create the link ''laja'' to ''laja2-005-beta''), this directory will be known as LAJA_HOME.
+It's recommended to always have the same name of the Laja home directory. It will facilitate future upgrades and the integration with [http://ant.apache.org Ant].
+
+Before you can run Laja there is some additional set up you will need to do:
+* Add the bin directory (LAJA_HOME) to your path.
+* Set the LAJA_HOME environment variable to the directory where you installed Laja.
+* Set the JAVA_HOME environment variable (this is optional), see the ''Set Environment variables'' section below. This should be set to the directory where your JDK is installed.
+
+Windows Note:
+  The laja.bat script makes use of two environment variables: LAJA_HOME and JAVA_HOME.
+  Ensure that LAJA_HOME (and optinally JAVA_HOME) variables are set, and that they do not
+  have quotes (either ' or ") and they do not end with \ or with /.
+
+Unix/Linux, set the file ''LAJA_HOME/bin/laja'' to executable:
+  $> chmod +x $LAJA_HOME/bin/laja
+
+=== Set Environment variables ===
+Assume Laja is installed in c:\laja\. The following sets up the environment:
+
+* Windows:
+
+<pre>
+set LAJA_HOME=c:\laja
+set JAVA_HOME=c:\jdk1.6.0_06
+set PATH=%PATH%;%LAJA_HOME%\bin
+</pre>
+
+* Linux/Unix (bash):
+
+Assume Laja is installed in /usr/local/laja. The following sets up the environment:
+
+<pre>
+export LAJA_HOME=/usr/local/laja
+export JAVA_HOME=/usr/local/jdk1.6.0_06
+export PATH=${PATH}:${LAJA_HOME}/bin
+</pre>
+
+* Linux/Unix (csh):
+
+<pre>
+setenv LAJA_HOME /usr/local/laja
+setenv JAVA_HOME /usr/local/jdk/jdk1.6.0_06
+set path=( $path $LAJA_HOME/bin )
+</pre>
+
+Having a symbolic link set up to point to the JVM/JDK version makes updates more seamless.
+
+The supplied laja shell scripts all support a LAJA_OPTS environment variable which can be used to supply extra options to laja. Look at the source for your platform's invocation script for details.
+
+=== Check Installation ===
+You can check the basic installation with opening a new shell and typing ''laja''. You should get a message like this:
+
+  Could not find default template file 'generate.laja'. Type 'laja -help' for instructions
+
+This message is there because you haven't specified a file and the default template file 'generate.laja' is missing in current directory. This means that the installation is complete! Continue with  [[Code generator|parser generator -> getting started]].
+
+=== Problems ===
+If you get an error similar to the below when you start Laja, then you need to change to Java 1.5 or higher:
+
+<pre>
+Exception in thread "main" java.lang.UnsupportedClassVersionError: Bad version number in .class file
+        at java.lang.ClassLoader.defineClass1(Native Method)
+        at java.lang.ClassLoader.defineClass(ClassLoader.java:621)
+        at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:124)
+        at java.net.URLClassLoader.defineClass(URLClassLoader.java:260)
+        at java.net.URLClassLoader.access$100(URLClassLoader.java:56)
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:195)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:188)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:307)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:268)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:252)
+        at java.lang.ClassLoader.loadClassInternal(ClassLoader.java:320)
+</pre>
+
+Check if environment variable JAVA_HOME is set with:
+  $> set
+
+If it wasn't set, you can do one of three things:
+* Set JAVA_HOME to to point to your Java 1.5 installation
+* Include the Java 1.5 (or higher) executable in your path.
+* If it's not possible to change to Java 1.5 or higher, then you need to edit the starting script in the LAJA_HOME/bin directory manually:
+** If running Unix/Linux, edit the file ''laja'' and change the row that starts with ''exec "$JAVACMD"'' and hardcode the path to the ''java.exe'' (>= Java 1.5) file.
+** If running Windows, edit the file ''laja.bat'' and change the row that starts with ''%LAJA_JAVA_EXE%'' and hardcode the path to the ''java.exe'' (>= Java 1.5) file.
+
+
+Check which Java version you are running with:
+  $> java -version

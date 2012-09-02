@@ -1,0 +1,46 @@
+== Getting started ==
+Laja is used to generate files with varied content. To make this work you need to do three things:
+# [[Install|Installa Laja]]
+# Create a template file (text file) in your favourite text editor
+# Execute Laja
+
+The Hello World example will show how it works.
+
+== Hello World ==
+This example will produce the file ''hello.txt'' with the row ''Hello World!'':
+
+{| class="nogridtable"
+! generate.laja !! hello.txt
+|-
+|
+<pre>
+#write "hello.txt"
+Hello World!
+#end
+</pre>
+|
+<pre>
+Hello World!
+
+</pre>
+|}
+
+* Make sure Laja is [[Install|installed]].
+* Create the directory ''helloworld'', e.g. ''C:\helloworld'' (Windows) or ''/usr/local/helloworld'' (Unix/Linux/Mac).
+* Create the file ''generate.laja'' in the newly created directory ''helloworld''.
+* Edit ''generate.laja'' in a text editor to look like this:
+<pre>
+#write "hello.txt"
+Hello World!
+#end
+</pre>
+* In a shell or DOS prompt:
+** Go to directory ''helloworld''
+** Type (followed by enter): laja
+
+
+If everything works as expected, the following is printed out:
+<pre>
+Reading file "generate.laja"
+  Writing to file "C:/helloworld/hello.txt" - OK
+</pre>

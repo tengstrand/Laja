@@ -1,0 +1,1704 @@
+== Overview ==
+Laja includes a two phase [[http://en.wikipedia.org/wiki/Scannerless_parsing scannerless parser]] generator. No [[http://en.wikipedia.org/wiki/Lexical_analysis lexical analyze]] is perfomed.
+It doesn't follow any standard (like [http://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_Form EBNF]) but has a couple of nice features.
+It is well suitet for creating Domain Specific Languages ([http://en.wikipedia.org/wiki/Domain-specific_language DSL]s). The Laja parser generator has successfully been used by Laja itself (when parsing ''.laja'' and ''.grammar'' files)
+and in one more project (parsing a DSL used by a statistics engine).
+
+One of the ideas of Laja is that it should be simple and intuitive to use by developers.
+All characters, even white spaces and comments, must be defined in the grammar.
+A consequence of this is that you do not need any special handling in order to extract white spaces and comments.
+The grammar can be defined in any order, either top down, bottom up or a mix of both.
+
+Laja can parse various sources such as files, strings or URLs.
+In most cases you also want to organize the output into an object structure. With Laja you are allowed to specify
+how the grammar should be organized (mapped) into objects. It can be a flat structure, an object hierarchy or a combination of both.
+Laja separates the generated parser code from the code that use the parser, whitch is a good thing!
+
+It's recommended to read the [[Parser generator - Architecture | architecture]] of the parser generator before proceeding.
+
+== Example ==
+
+You need to start with the section [[Parser_generator_-_Getting_started|Getting Started]] before continuing.
+
+We will extend this example step by step to explain how the parser generator works.
+
+When starting to work with Laja for real,
+you may want to generate the output classes once but after that you want to ''manually'' maintain these classes. We don't want to lose the ''business logic'' we have in these classes! But for the examples here it is easier to let Laja do that job for us!
+
+Here are the example explained in the [[Parser_generator_-_Getting_started|Getting Started]] section:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "5";                      // row 2
+   example = digit;                  // row 3
+
+   Example example;                  // row 5
+   example.setDigit(String digit);   // row 6
+}
+</pre>
+||
+<pre>
+5
+</pre>
+||
+<pre>
+Result: Example{digit=5}
+</pre>
+|}
+
+== Grammar ==
+To produce a parser, Laja needs a [http://en.wikipedia.org/wiki/Parsing_expression_grammar grammar definition]. The naming convention
+is to add the file extension ''.grammar'' to the grammar file.
+
+=== Comments ===
+Comments on a single row starts with ''//'' and will comment out the rest of the row. A block comment can span over several rows and can be nested:
+<pre>
+  // Line comment
+
+  /*
+      Nested block comment
+
+      /* Block comment */
+
+  */
+</pre>
+
+=== String ===
+The operator "" defines a string (''java.lang.String''). You must put one or more characters between the quotation marks.
+The parsed text is matched against this string (case sensitive by default).
+
+As you can see in the ''output'', "Result: Example{digit=5}", our main node ''Example'', instance ''example'', has now been populated with the value "5", by first creating the instance ''example'' via the ''ExampleFactory'' followed by executing ''example.setDigit("5")''.´
+
+{| class="wikitable"
+! Row !! Description
+|-
+| 2 || ''"5"'' means ''match against the string 5''.
+|-
+| 3 || Defines ''example'' to contain a digit.
+|-
+| 5 || Declares ''element'' to be handled by the object ''Element''.
+|-
+| 6 || Defines that the method ''setDigit(String digit)'' should be called when finding a matching ''digit''.
+|}
+
+Row 5 and 6 can be merged into one row:
+<pre>
+grammar example {
+   digit = "5";
+   example = digit;
+
+   Example example.setDigit(String digit);  // row 5
+}
+</pre>
+
+=== Controling the output ===
+The grammar file defines both the grammar rules (row 2-3) and how we want our output (row 5-6):
+<pre>
+grammar example {
+   digit = "5";                      // row 2
+   example = digit;                  // row 3
+
+   Example example;                  // row 5
+   example.setDigit(String digit);   // row 6
+}
+</pre>
+
+* Row 2 and 3 defines the ''grammar rules'' of the parser where the top element ''example'' on row 3 is the element that the source (e.g. text file) is matched against.
+* Row 5 declares that when ''example'' is correctly matched, we want our factory to create an instance of object ''Example''.
+* Row 6 defines that when the element ''digit'' in ''example'' is correctly matched, we want to execute the method ''setDigit'' with the content of ''digit'' as a string.
+
+
+We could also have written ''setDigit(String example.digit)'' which is equivalent with ''setDigit(String digit):
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "5";
+   example = digit;
+
+   Example example;
+   example.setDigit(String example.digit);
+}
+</pre>
+||
+<pre>
+5
+</pre>
+||
+<pre>
+Result: Example{digit=5}
+</pre>
+|}
+
+Lets take another example:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "5";
+   twice = digit digit;
+   example = twice;
+
+   Example example;
+   example.addDigit(String twice.digit);   // row 6
+   example.setTwice(String twice);         // row 7
+}
+</pre>
+||
+<pre>
+55
+</pre>
+||
+<pre>
+Result: Example{digits=[5, 5], twice=55}
+</pre>
+|}
+
+* On row 6 we tell the parser to execute the method ''addDigit("5")'' on object instance ''example'' when finding a matching ''digit'' in definition ''twice''.
+* On row 7 we tell the parser to execute the method ''setTwice("55")'' on object instance ''example'' when finding a matching ''twice'' in definition ''example''
+
+The ''add'' in the method name ''addDigit'' is an instruction to the code generator to store the numbers in a list (java.util.List) in the generated class Example.
+
+=== Naming ===
+In a previous example we had this grammar:
+<pre>
+grammar example {
+   digit = "5";
+   example = digit;
+
+   Example example.setDigit(String digit);
+}
+</pre>
+
+An alternative to define ''digit'' is to set the name of the expression ''"5"'' to ''digit'' (so it can be referenced from ''example.setDigit''):
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   example = "5":digit;
+
+   Example example.setDigit(String digit);
+}
+</pre>
+||
+<pre>
+5
+</pre>
+||
+<pre>
+Result: Example{digit=5}
+</pre>
+|}
+
+Sometimes you have to separate two expressions within a definition:
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   letter = "a".."z";
+   example = letter letter:secondLetter;
+
+   Example example.setFirstLetter(String letter);
+   example.setSecondLetter(String secondLetter);
+}
+</pre>
+||
+<pre>
+ab
+</pre>
+||
+<pre>
+Result: Example{letter=a, secondLetter=b}
+</pre>
+|}
+
+The name of the objects (''AnExample'' in this case) does not need to follow the naming of the definition (''example''):
+<pre>
+grammar example {
+   example = "5":digit;
+
+   AnExample example.setDigit(String digit);
+}
+</pre>
+
+Name of definitions, like ''letter'' and ''example'', must begin with a lower case letter 'a'..'z' and can contain any of
+the letters 'a'..'z', 'A'..'Z' and '_' (underscore).
+
+Name of objects, like ''Example'', must begin with an upper case letter 'A'..'Z' and can contain any of the letters
+'a'..'z', 'A'..'Z' and '_'.
+
+=== Range ===
+We can modify our grammar to support any character in the range ''0'' to ''9'' (0 and 9 included).
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "0".."9";
+   example = digit;
+
+   Example example.setDigit(String digit);
+}
+</pre>
+||
+<pre>
+1
+</pre>
+||
+<pre>
+Result: Example{digit=1}
+</pre>
+|}
+
+=== Repeat ===
+Grammar elements can be repeated. The operator ''+'' is used to specify that something shall exist one or more times.
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "0".."9";
+   number = digit+;
+   example = number;
+
+   Example example.setNumber(String number);
+}
+</pre>
+||
+<pre>
+12345
+</pre>
+||
+<pre>
+Result: Example{number=12345}
+</pre>
+|}
+
+Lets add support for a comma separated list:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "0".."9";
+   number = digit+;
+   example = number ("," number)+;
+
+   Example example.addNumber(String number);
+}
+</pre>
+||
+<pre>
+1,23,45,777
+</pre>
+||
+<pre>
+Result: Example{numbers=[1, 23, 45, 777]}
+</pre>
+|}
+
+Notice that we have changed the method name to ''addNumber''.
+The ''add'' in the method name is an instruction to the code generator to store the numbers in a list (''java.util.List'') in the generated class ''Example''.
+
+=== Parentheses ===
+Expressions can be surrounded by any number of of parentheses, ''()''.
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   number = "0".."9"+;
+   listWithOneElementOrMore = (number ("," number)+) | "empty";
+   example = listWithOneElementOrMore;
+
+   Example example.setList(String listWithOneElementOrMore);
+}
+</pre>
+||
+<pre>
+1,2,3,4,5
+</pre>
+||
+<pre>
+Result: Example{listWithOneElementOrMore=1,2,3,4,5}
+</pre>
+|}
+
+=== Optional ===
+To specify that something should occure ''one ore zero times'' we use square brackets, ''[ ]''. This is the optional operator:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "A".."Z" "a".."z"+;
+   number = "0".."9"+;
+   example = name [number];
+
+   Example example.setName(String name);
+   example.setNumber(String number);
+}
+</pre>
+||
+<pre>
+James
+</pre>
+||
+<pre>
+Result: Example{name=James, number=null}
+</pre>
+|}
+
+The method  ''setNumber'' was never executed and ''number'' remains null.
+If we set the name outside the ''[]'' then the method ''setNumber'' will always be executed (with an empty string in this case):
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "A".."Z" "a".."z"+;
+   example = name ["0".."9"+]:number;
+
+   Example example.setName(String name);
+   example.setNumber(String number);
+}
+</pre>
+||
+<pre>
+James
+</pre>
+||
+<pre>
+Result: Example{name=James, number=}
+</pre>
+|}
+
+The last example used in [[#Repeat|Repeat]] only accept two or more numbers:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "0".."9";
+   number = digit+;
+   example = number ("," number)+;
+
+   Example example.addNumber(String number);
+}
+</pre>
+||
+<pre>
+1
+</pre>
+||
+<pre>
+Syntax error in file "Example/src/main/laja/example.txt", row 1, column 2 (character index: 1):
+1
+ ^
+</pre>
+|}
+
+If something shall exist ''zero or more times'', use ''[ ]+'':
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   digit = "0".."9";
+   number = digit+;
+   example = number ["," number]+;  // Changed () to []
+
+   Example example.addNumber(String number);
+}
+</pre>
+||
+<pre>
+1
+</pre>
+||
+<pre>
+Result: Example{numbers=[1]}
+</pre>
+|}
+
+=== Comments and white spaces ===
+Our grammar does not have support for white spaces and comments. To add this we need to modify the grammar:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   newline = "\r\n" | "\n";
+   comment = ("/*" [!"*/"+] "*/") |
+             ("//" [!newline+] newline|END);
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+
+   digit = "0".."9";
+   number = digit+;
+   example = s number [s "," s number]+ s;
+
+   Example example.addNumber(String number);
+}
+</pre>
+||
+<pre>
+// This is our data
+1 /* odd */, 2 /* even */, 3
+</pre>
+||
+<pre>
+Result: Example{numbers=[1, 2, 3]}
+</pre>
+|}
+
+{| class="wikitable"
+! Definition !! Description
+|-
+| newline || Defined as Windows style ''\r\n'' (new line + carriage return) or Unix style ''\n'' (new line), see [http://en.wikipedia.org/wiki/Newline new line].
+|-
+| comment || Defines a comment to start with ''/*'' and end with ''*/'' or to start with ''//'' and end with a new line or the end of the souce.
+|-
+| ws || Defines ''white space'' to be one or more ''newline'' character, space, tab or comment.
+|-
+| s || Optionally a white space or comment.
+|}
+
+=== END ===
+The symbol ''END'', used by ''comment'', is evaluated to true only if we have reached the end of the souce (''example.txt'' in this case).
+We have reached the end if the last character in the source has been successfully parsed and the ''current character'' in the source
+is pointing at the ''character index'' after the last character. When the parsing begins the ''current character index'' is always set to zero.
+If for example the source is ''ab'' (two characters), they represents index 0 and 1 in the source. When both those characters has
+been successfylly parsed then the ''current character index'' is 2 and the expression ''END'' will be evaluated to ''true''.
+
+When the ''current character index'' is pointing at the ''END'' index, then only the [[#Optional|Optional]], ''END'' and [[#Complete|Complete]]
+operators is evaluated to true. Even the [[#Not|Not]] operator is evaluated to false as it always represents one character.
+
+=== Not ===
+In the previous example we introduced the ''!'' operator. This is the ''not'' operator and is placed in front of an
+expression. If the expression does not match the souce, the ''current character'' from the source is returned and the parser will continue
+with the next character. The result from a successful ''not operation'' is always a string with the length of 1. The not operator has higher precedence
+than the [[#Repeat|Repeat]] operator. The statement ''!a+'' is equivalent to ''(!a)+''.
+
+The not operator is used when defining ''newline'' in our example. The expression ''"/*" [!"*/"+] "*/"'' means: match against the string "/*"
+followed by zero or more characters that does not match the string "*/" followed by "*/".
+
+=== Or ===
+We also introduced the ''|'' operator. This is the ''or'' operator used when we want to match against several alternatives.
+The ''newline'' definition has the expression ''newline | " " | "\t" | comment'' which means: we expect to find a ''newline''
+or a ''space'' or a ''tab'' or a ''comment''. The parser chooses the first correct alternative and does not continue with the rest of the
+alternatives in the list. If none of the alternatives is true, the expression is evaluated to ''false''.
+
+
+Lets see whats happen if we try to parse a nested comment:
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   newline = "\r\n" | "\n";
+   comment = ("/*" [!"*/"+] "*/") |
+             ("//" [!newline+] newline|END);
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+
+   digit = "0".."9";
+   number = digit+;
+   example = s number [s "," s number]+ s;
+
+   Example example.addNumber(String number);
+}
+</pre>
+||
+<pre>
+/*
+
+// This is our data
+1 /* odd */, 2 /* even */, 3
+
+*/
+
+5, 6
+</pre>
+||
+<pre>
+Syntax error in file "Example/src/main/laja/example.txt", row 5, column 12 (character index: 40):
+1 /* odd */, 2 /* even */, 3
+           ^
+</pre>
+|}
+
+Our grammar does not have support for nested comments, lets add that:
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   newline = "\r\n" | "\n";
+   comment = ("/*" [(comment | !"*/")+] "*/") |
+             ("//" [!newline+] newline|END);
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+
+   digit = "0".."9";
+   number = digit+;
+   example = s number [s "," s number]+ s;
+
+   Example example.addNumber(String number);
+}
+</pre>
+||
+<pre>
+/*
+
+// This is our data
+1 /* odd */, 2 /* even */, 3
+
+*/
+
+5, 6
+</pre>
+||
+<pre>
+Output: Example{numbers=[5, 6]}
+</pre>
+|}
+
+=== Character ===
+Special characters can be added by writing the [http://www.asciitable.com ascii] value as an integer number:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   slash = "/";
+   backslash = 92;
+   example = slash backslash;
+
+   Example example.setSlash(String slash);
+   example.setBackslash(String backslash);
+}
+</pre>
+||
+<pre>
+/\
+</pre>
+||
+<pre>
+Result: Example{slash=/, backslash=\}
+</pre>
+|}
+
+=== Receive: * ===
+We can receive the whole definition by specifying a ''*'' instead of a name. This will grab the whole definition.
+This should only be used in combination with the type ''String'':
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   slash = "/";
+   backslash = 92;
+   example = slash backslash;
+
+   Example example.setContent(String *);
+}
+</pre>
+||
+<pre>
+/\
+</pre>
+||
+<pre>
+Result: Example{example=/\}
+</pre>
+|}
+
+=== Receive: void ===
+Sometimes you are not interested in the value that is matched. Here for example we know that the ''slash'' and ''backslash''
+definitions contains the strings "/" and "\" so we can ignore them:
+
+<pre>
+grammar example {
+   slash = "/";
+   backslash = 92;
+   example = slash backslash;
+
+   Example example.setSlash(void slash);
+   example.setBackslash(void backslash);
+}
+</pre>
+
+The generated ''Example'' class looks like this. The methods ''setSlash'' and ''setBackslash'' do not have any parameters:
+
+<pre>
+package example;
+
+public class Example implements ExampleParser.IExample {
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Example example.setSlash(void slash);
+     */
+    public void setSlash() {
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   example.setBackslash(void backslash);
+     */
+    public void setBackslash() {
+    }
+
+    public String toString() {
+        return "Example{" +
+            "}";
+    }
+}
+</pre>
+
+=== Receive: Index ===
+Sometimes you need to know what possition (index) in the source an element has.
+''Index'' is a reserved word and can not be used for an ''object'' name.
+
+''example.grammar'':
+<pre>
+grammar example {
+   abc = "abc";
+   example = abc;
+
+   Example example.setAbc(Index abc);
+}
+</pre>
+
+''example.txt''
+<pre>
+abc
+</pre>
+
+Regenerate the source and edit the method ''setAbc'' in ''Example.java'':
+<pre>
+package example;
+
+public class Example implements ExampleParser.IExample {
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Example example.setAbc(Index abc);
+     */
+    public void setAbc(net.sf.laja.parser.engine1.Index abc) {
+    	System.out.println("abc index=" + abc);
+    }
+
+    public String toString() {
+        return "Example{" +
+            "}";
+    }
+}
+</pre>
+
+Execute the application again and we will get:
+<pre>
+abc index=(0,3)
+Result: Example{}
+</pre>
+
+=== Case insensitive ===
+The ''CI'' operator marks an expression to be parsed as case insensitive:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "a".."z"+;
+   hello = CI("hello");
+   example = hello;
+
+   Example example.setHello(String hello);
+}
+</pre>
+||
+<pre>
+Hello
+</pre>
+||
+<pre>
+Result: Example{hello=Hello}
+</pre>
+|}
+
+The ''CI'' is ignored by the [[#Range|Range]] and [[#Character|Character]] expression, this will not work:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "a".."z"+;
+   example = CI(name);
+
+   Example example.setName(String name);
+}
+</pre>
+||
+<pre>
+Hello
+</pre>
+||
+<pre>
+Syntax error in file "Example/src/main/laja/example.txt"
+</pre>
+|}
+
+To make this work, change to:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = ("a".."z" | "A".."Z")+;
+   example = name;
+
+   Example example.setName(String name);
+}
+</pre>
+||
+<pre>
+Hello
+</pre>
+||
+<pre>
+Result: Example{name=Hello}
+</pre>
+|}
+
+The ''CS'' is the case sensitive operator and is active by default when the parsing begins.
+If ''CI'' and ''CS'' is used on different levels, the case of the lower level overrides the higher levels. In this example
+the ''CS'' in ''a'' overrides the ''CI'' in ''example'':
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   a =CS("a");
+   b = "b";
+   example = CI(a b);
+
+   Example example.setContent(String *);
+}
+</pre>
+||
+<pre>
+aB
+</pre>
+||
+<pre>
+Result: Example{example=aB}
+</pre>
+|}
+
+Change the source to ''AB'' and it will not parse:
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   a =CS("a");
+   b = "b";
+   example = CI(a b);
+
+   Example example.setContent(String *);
+}
+</pre>
+||
+<pre>
+AB
+</pre>
+||
+<pre>
+Syntax error in file "Example/src/main/laja/example.txt"
+</pre>
+|}
+
+=== Marker ===
+It is possible to receive a specific possition from the source. Sometimes we want to receive an event when the parsing of a ''definition'' begins.
+Other times we need more specific information about exact possition in the source:
+
+''example.grammar'':
+<pre>
+grammar example {
+   example = :begin "abc" :middle "def" :end;
+
+   Example example;
+   example.setBegin(void begin);
+   example.setMiddle(Index middle);
+   example.setEnd(Index end);
+}
+</pre>
+
+''example.txt'':
+<pre>
+abcdef
+</pre>
+
+Regenerate and edit ''Example.java'':
+
+<pre>
+package example;
+
+public class Example implements ExampleParser.IExample {
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   example.setBegin(void begin);
+     */
+    public void setBegin() {
+    	System.out.println("begin");
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   example.setMiddle(Index middle);
+     */
+    public void setMiddle(net.sf.laja.parser.engine1.Index middle) {
+    	System.out.println("middle: " + middle.getStartIndex());
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   example.setEnd(Index end);
+     */
+    public void setEnd(net.sf.laja.parser.engine1.Index end) {
+    	System.out.println("end: " + end.getStartIndex());
+    }
+
+    public String toString() {
+        return "Example{" +
+            "}";
+    }
+}
+</pre>
+
+Execute:
+<pre>
+begin
+middle: 3
+end: 6
+Result: Example{}
+</pre>
+
+=== Complete: * ===
+The character ''*'' is the ''complete'' operator. It moves the ''current character index'' to the end of the source.
+After the ''*'' operator has been applied, the [[#END|END]] operator will be true and there will be no more characters to parse:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   text = "abc";
+   example = text *:theRest;
+
+   Example example.setText(String text);
+   example.setTheRest(String theRest);
+}
+</pre>
+||
+<pre>
+abcdefghijk
+</pre>
+||
+<pre>
+Result: Example{text=abc,
+        theRest=defghijk
+</pre>
+|}
+
+=== Variable ===
+Sometimes we want to match agains content that is not known before the parsing begins or when conditions is added at execution time.
+Variables are used in these cases.
+
+Change the grammar:
+<pre>
+grammar example {
+   name = "a".."z"+;
+   example = name "-" $name;
+
+   Example example;                  // Row 5
+   $ example.setName(String name);   // Row 6
+   $name String example.getName();
+}
+</pre>
+
+Generate and edit ''Example.java'', add method ''getName'':
+<pre>
+@Override
+public String getName() {
+    return name;
+}
+</pre>
+
+Execute:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "a".."z"+;
+   example = name "-" $name;
+
+   Example example;                  // Row 5
+   $ example.setName(String name);   // Row 6
+   $name String example.getName();
+}
+</pre>
+||
+<pre>
+jane-jane
+</pre>
+||
+<pre>
+Result: Example{name=jane}
+</pre>
+|}
+
+What is happening here is that the result from ''name'' is used when matching against ''$name'' via the method ''getName()''.
+When no methods is marked with a ''$'' sign then no other objects than the base instance (''example'' in this case) is created in ''phase 1''
+and no methods is executed on those methods. To force Laja to execute a method in ''phase 1''
+(which is needed to successfully parse this exemple in ''phase 1'') we need to mark this method with a dollar sign in the way we have done in row 6.
+
+When working with variables, it can be a good idea to use the longer form used on row 5 and 6 (the dollar signs will always start the row). The shorter form is also supported, row 5 and 6 can be merged into one row:
+<pre>
+grammar example {
+   name = "a".."z"+;
+   example = name "-" $name;
+
+   Example example $ example.setName(String name);
+   $name String example.getName();
+}
+</pre>
+
+It's possible to add ''boolean'' expressions to the grammar. Edit the grammar:
+<pre>
+grammar example {
+   name = "a".."z"+;
+   example = $myflag name;
+
+   Example example.setName(String name);
+   $myflag boolean example.isItTrue();
+}
+</pre>
+
+Regenerate and add the method ''isItTrue'' to ''Example.java'':
+<pre>
+@Override
+public boolean isItTrue() {
+    return true;
+}
+</pre>
+
+Change ''example.txt'' and execute:
+
+{| class="wikitable"
+! example.txt !! Output
+|-
+|
+<pre>
+jane
+</pre>
+||
+<pre>
+Result: Example{name=jane}
+</pre>
+|}
+
+=== Followed by: \ ===
+Sometimes we need to make sure that an expression is followed by some pattern. In these cases we use the ''\'' operator.
+If we have an expression ''x \ y'', when parsing this expression we match against ''x'', and if true we also match against ''y''.
+If ''y'' also was true then ''current character index'' is moved back to where it was before we matched against ''y''
+(it's like only matching against ''x'').
+
+Take ''x \ y z'' as an example. This is the same as writing ''x \ (y z)''. Use paranthesis if needed ''(x \ y) z'', otherwise
+the parser will interpret the expression to be followed by everything after the ''\'' operator.
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   true = "true";
+   variable = ("a".."z" | "A".."Z")+;
+   example = (true \ !variable) | variable;
+
+   Example example.setVariable(String variable);
+   example.setTrue(String true);
+}
+</pre>
+||
+<pre>
+trueValue
+</pre>
+||
+<pre>
+Result: Example{variable=trueValue, _true=null}
+</pre>
+|}
+
+If we change the data we get:
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   true = "true";
+   variable = ("a".."z" | "A".."Z")+;
+   example = (true \ !variable) | variable;
+
+   Example example.setVariable(String variable);
+   example.setTrue(String true);
+}
+</pre>
+||
+<pre>
+true
+</pre>
+||
+<pre>
+Result: Example{variable=, _true=true}
+</pre>
+|}
+
+The variable ''_true'' is prefixed with an underscore because ''true'' is a reserved word in Java an can not be used as a variable name.
+
+=== Repeat: # ===
+The operator ''#'' is used to repeat an expression a specific number of times. Put the ''#'' after an element followed by an integer number
+that specifies the number of times that element should be repeated.
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   a = "a";
+   example = a#3:aaa ":" "b"#2:bb;
+
+   Example example.addA(String a);
+   example.setAaa(String aaa);
+   example.setBb(String bb);
+}
+</pre>
+||
+<pre>
+aaa:bb
+</pre>
+||
+<pre>
+Result: Example{as=[a, a, a], aaa=aaa, bb=bb}
+</pre>
+|}
+
+The number of times the element should be repeated can be specified in a range. The first number is the minimun number of
+repeats and the second number is the maximum number of repeats, use ''*'' if there is no upper limit:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   a = "a";
+   b = "b";
+   example = (a#5..8):name ":" (b#2..*):name;
+
+   Example example.addName(String name);
+}
+</pre>
+||
+<pre>
+aaaaaa:bbb
+</pre>
+||
+<pre>
+Result: Example{names=[aaaaaa, bbb]}
+</pre>
+|}
+
+=== And ===
+The operator ''&'' is the ''and'' operator and is used when we want to match against two or more expressions. A typical case is when you want to
+split up sections, like lines or comment blocks, and handle these text blocks separately.
+This operator can sometimes simplify the grammar, but in most cases we don't need to use it.
+
+If we have the statement ''a & b & c'' the parser first match against ''a'' and if matched, the parser creates a new source that contains only
+the matched characters from ''a''. After that it tries to match against ''b'' using the section in the source that matched ''a'', and if that was true
+it tries to match against ''c'' using the same section as for ''b''. Note that if the expression ''a'' matches the text ''hello'' then
+''b'' and ''c'' must match all characters in ''hello''. The ''and'' operator has lower precedence than the ''or'' operator.
+The expression ''a | b | c & d | e & f'' is treated as ''(a | b | c) & (d | e) & f''.
+
+The following example use the ''&'' operator in the ''phrase'' definition. It first matches the row ''I want to say hello now'' with the element ''row'',
+and then match the expression that follows the ''&'' operator with the text ''I want to say hello now'', and continues with the second row.
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   newline = "\r\n" | "\n";
+   hello = "hello";
+   row = !newline+;
+
+   phrase = row & ([!hello+]:before hello *:after);
+   example = phrase:phrase1 newline phrase:phrase2;
+
+   Phrase phrase.setBefore(String before);
+   phrase.setAfter(String after);
+
+   Example example.setPhrase1(Phrase phrase1);
+   example.setPhrase2(Phrase phrase2);
+}
+</pre>
+||
+<pre>
+I want to say hello now
+And hello once again
+</pre>
+||
+<pre>
+Result: Example{
+  phrase1=Phrase{before=I want to say , after= now},
+  phrase2=Phrase{before=And , after= once again}}
+</pre>
+|}
+
+== Dependencies ==
+If we have dependencies between our nodes or need to inject instances to be used by our concrete classes, this is managed by the factory.
+
+=== Factory ===
+The ''factory class'' gives you full control over how objects are created. Lets start with an example:
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "a".."z"+;
+   example = name;
+
+   Example example.setName(String name);
+}
+</pre>
+||
+<pre>
+abc
+</pre>
+||
+<pre>
+Result: Example{name=abc}
+</pre>
+|}
+
+Let's say we want to add an underscore if ''name'' match the string ''abc''. We can pass the string "abc" to the ''Example'' class via our factory.
+
+Modify the method ''getFactory(int phase)'' in ''ExampleDomApp.java'':
+<pre>
+// factoryFactory
+private static ExampleParser.IExampleFactoryFactory factoryFactory = new ExampleParser.IExampleFactoryFactory() {
+    public ExampleParser.IExampleFactory getFactory(int phase) {
+        return new ExampleFactory("abc");
+    }
+};
+</pre>
+
+Modify ''ExampleFactory.java'':
+<pre>
+package example;
+
+public class ExampleFactory implements ExampleParser.IExampleFactory {
+    private String prefixName;
+    private Example example;
+
+    public ExampleFactory(String prefixName)  {
+    	this.prefixName = prefixName;
+    }
+
+    public Example getExample() {
+        return example;
+    }
+
+    public ExampleParser.IExample createExample() {
+        // We will only have one instance of Example
+        example = new Example(prefixName);
+        return example;
+    }
+}</pre>
+
+Modify ''Example.java'':
+<pre>
+package example;
+
+public class Example implements ExampleParser.IExample {
+    private String name;
+    private String prefixName;
+
+    public Example(String prefixName) {
+    	this.prefixName = prefixName;
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Example example.setName(String name);
+     */
+    public void setName(String name) {
+    	if (name.equals(prefixName)) {
+    		this.name = "_" + name;
+    	} else {
+            this.name = name;
+    	}
+    }
+
+    public String toString() {
+        return "Example{" +
+            "name=" + name +
+            "}";
+    }
+}
+</pre>
+
+Execute ''ExampleDomApp'' again:
+<pre>
+Result: Example{name=_abc}
+</pre>
+
+=== Reference other objects ===
+Sometimes you want to reference other objects in the object hierarchy. You can only reference object higher up in the object hierarchy.
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "a".."z"+;
+   number = "0".."9"+;
+   value = number ":" name;
+   example = value ["," value]+;
+
+   Example example.addValue(Value value);
+
+   Value value.setNumber(String number);
+   value.setName(Name name);
+
+   Name name.setContent(String *);  // Row 12
+}
+</pre>
+||
+<pre>
+1:abc,2:def,3:x
+</pre>
+||
+<pre>
+Result: Example{values=[
+          Value{number=1, name=Name{name=abc}},
+          Value{number=2, name=Name{name=def}},
+          Value{number=3, name=Name{name=x}}]}
+</pre>
+|}
+
+Change ''row 12'' and regenerate the code:
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   name = "a".."z"+;
+   number = "0".."9"+;
+   value = number ":" name;
+   example = value ["," value]+;
+
+   Example example.addValue(Value value);
+
+   Value value.setNumber(String number);
+   value.setName(Name name);
+
+   Name(Value value) name.setContent(String *);
+}
+</pre>
+||
+<pre>
+1:abc,2:def,3:x
+</pre>
+||
+<pre>
+Result: Example{values=[
+          Value{number=1, name=Name{name=abc}},
+          Value{number=2, name=Name{name=def}},
+          Value{number=3, name=Name{name=x}}]}
+</pre>
+|}
+
+Open ''ExampleFactory.java'' and look at method ''createName'':
+<pre>
+public ExampleParser.IName createName(ExampleParser.IValue value) {
+    return new Name();
+}
+</pre>
+
+The parser sends the current instance of ''Value''. The definition of ''value'' is ''number ":" name''. The element ''name'' is only
+referenced from ''value'', so we know that the instance ''value'' is populated with ''number''. Lets use that value in ''Name''.
+Add this method to the class ''Value'':
+<pre>
+public int getNumber() {
+    return Integer.parseInt(number);
+}
+</pre>
+
+Modify the class ''Name'':
+<pre>
+package example;
+
+public class Name implements ExampleParser.IName {
+    private boolean isOdd;
+    private String name;
+
+    public Name(boolean isOdd) {
+    	this.isOdd = isOdd;
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Name name.setContent(String *);
+     */
+    public void setContent(String name) {
+        if (isOdd) {
+            this.name = name + " (odd)";
+        } else {
+            this.name = name;
+        }
+    }
+
+    public String toString() {
+        return "Name{" +
+            "name=" + name +
+            "}";
+    }
+}
+</pre>
+
+Modify the method ''createName'' in class ''ExampleFactory'':
+<pre>
+public ExampleParser.IName createName(ExampleParser.IValue value) {
+    int number = ((Value)value).getNumber();
+    return new Name(number % 2 == 1);
+}
+</pre>
+
+Execute the class ''ExampleDomApp'' again and we will get the result:
+<pre>
+Result: Example{values=[
+          Value{number=1, name=Name{name=abc (odd)}},
+          Value{number=2, name=Name{name=def}},
+          Value{number=3, name=Name{name=x (odd)}}]}
+</pre>
+
+We can reference nodes higher up in the structure. If ''row 12'' is changed in ''example.grammar''...
+<pre>
+   Name(Example example) name.setContent(String *);
+</pre>
+
+...then the you will get access to the current instance of ''Example'' in class ''ExampleFactory'':
+<pre>
+public ExampleParser.IName createName(ExampleParser.IExample example, ExampleParser.IValue value) {
+    return new Name();
+}
+</pre>
+
+More than one node can be referenced, change ''example.grammar''...
+<pre>
+   Name(Example example, Value value) name.setContent(String *);
+</pre>
+
+...and method ''createName'' in ''ExampleFactory'' will be changed to:
+<pre>
+public ExampleParser.IName createName(ExampleParser.IExample example, ExampleParser.IValue value) {
+    return new Name();
+}
+</pre>
+
+=== Recursion ===
+
+{| class="wikitable"
+! example.grammar !! example.txt !! Output
+|-
+|
+<pre>
+grammar example {
+   operator = "+":addition | "-":minus;
+   number = "0".."9"+;
+   complex = "(" example ")";
+   example = number|complex [operator number|complex]+;
+
+   Operator operator.setAddition(void addition);
+   operator.setMinus(void minus);
+
+   Complex complex.setExample(Example example);
+
+   Example example.setNumber(String number);
+   example.setComplex(Complex complex);
+   example.setOperator(Operator operator);
+}
+</pre>
+||
+<pre>
+4+(30+222)+1000-22
+</pre>
+||
+<pre>
+Result: Example{
+          number=22,
+          complex=Complex{
+            example=Example{
+              number=222,
+              complex=null,
+              operator=Operator{}
+            }
+          },
+          operator=Operator{}
+        }
+</pre>
+|}
+
+Lets modify our classes to be a simple calculator. Modify the class ''Complex'':
+<pre>
+package example;
+
+public class Complex implements ExampleParser.IComplex {
+    private Example example;
+
+    public int getResult() {
+        return example.getResult();
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Complex complex.setExample(Example example);
+     */
+    public void setExample(ExampleParser.IExample iexample) {
+        this.example = (Example)iexample;
+    }
+
+    public Example getExample() {
+        return example;
+    }
+
+    public String toString() {
+        return "Complex{" +
+            "example=" + example +
+            "}";
+    }
+}
+</pre>
+
+Modify the class ''Example'':
+<pre>
+package example;
+
+public class Example implements ExampleParser.IExample {
+    private int number = 0;
+    private boolean isAddition = true;
+    private int result = 0;
+
+    public int getResult() {
+        return result;
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Example example.setNumber(String number);
+     */
+    public void setNumber(String number) {
+        setNumber(Integer.parseInt(number));
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   example.setComplex(Complex complex);
+     */
+    public void setComplex(ExampleParser.IComplex icomplex) {
+        Complex complex = (Complex)icomplex;
+        setNumber(complex.getResult());
+    }
+
+    private void setNumber(int number) {
+        if (isAddition) {
+            result += number;
+        } else {
+            result -= number;
+        }
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   example.setOperator(Operator operator);
+     */
+    public void setOperator(ExampleParser.IOperator ioperator) {
+        this.isAddition = ((Operator)ioperator).isAddition();
+    }
+
+    public String toString() {
+        return "Example{" +
+            "number=" + number +
+            "}";
+    }
+}
+</pre>
+
+Modify the class ''Operator'':
+<pre>
+package example;
+
+public class Operator implements ExampleParser.IOperator {
+    private boolean isAddition = true;
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   Operator operator.setAddition(void addition);
+     */
+    public void setAddition() {
+        isAddition = true;
+    }
+
+    /**
+     * Generated from Example/src/main/laja/example.grammar:
+     *   operator.setMinus(void minus);
+     */
+    public void setMinus() {
+        isAddition = false;
+    }
+
+    public boolean isAddition() {
+        return isAddition;
+    }
+
+    public String toString() {
+        return "Operator{" + isAddition + "=" + isAddition +
+            "}";
+    }
+}
+</pre>
+
+Modify the class ''ExampleDomApp'':
+<pre>
+package example;
+
+public class ExampleDomApp {
+
+    public static void main(String[] args) {
+        String filename = "C:/Source/Eclipse/Galileo/Example/src/main/laja/example.txt";
+        ExampleParser parser = new ExampleParser(factoryFactory);
+        net.sf.laja.parser.engine2.ParsingResult result = parser.parseFile(filename);
+
+        if (result.success()) {
+            Example example = ((ExampleFactory)parser.getFactory()).getExample();
+            System.out.println("Result: " + example.getResult());
+        }
+    }
+
+    // factoryFactory
+    private static ExampleParser.IExampleFactoryFactory factoryFactory = new ExampleParser.IExampleFactoryFactory() {
+        public ExampleParser.IExampleFactory getFactory(int phase) {
+            return new ExampleFactory();
+        }
+    };
+}
+</pre>
+
+Execute ''ExampleDomApp'':
+<pre>
+Result: 1234
+</pre>
+
+== Versioning ==
+Different versions of Laja can be downloaded from [https://sourceforge.net/projects/laja/files here] and have the following structure:
+<pre>
+Laja2
+  laja2-005-beta
+    laja2-005-beta.zip
+    laja-parser-engine2-005-beta.jar
+    laja2-005-beta-source
+    laja2-005-beta-javadoc.zip
+Laja1
+  laja1-004-alpha
+    laja1-004-alpha.zip
+    laja-parser-engine1-004-alpha.jar
+    laja1-004-alpha-source
+    laja1-004-alpha-javadoc.zip
+  laja1-003-alpha
+     ...
+  laja1-002-alpha
+     ...
+  laja1-001-alpha
+     ...
+</pre>
+
+Parsers generated by Laja1 must be shipped with a jar file from any of the versions under Laja1, e.g:
+* ''system-lib/laja1-004-alpha.jar'' found in ''laja1-004-alpha.zip''
+* laja-parser-engine1-004-beta.jar
+The same is true for Laja2 and any future version of Laja. If a parser is generated by Laja2 then the parser must be shipped with one of the following jars:
+* ''system-lib/laja.jar'' (632 Kb) found in ''laja2-005-beta.zip''
+* laja-parser-engine2-005-beta.jar (75 Kb)
+
+The parser engine is included in ''laja.jar'' and you can choose any of these two jars (you just need one of them).

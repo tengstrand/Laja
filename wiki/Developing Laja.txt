@@ -1,0 +1,31 @@
+== Set up the development environment ==
+
+These steps is only required if you are a developer of the Laja tool itself. Laja is currently developed by Joakim Tengstrand, so if you are not a new member of the team, you should skip this part!
+
+
+Laja is a Java project that uses Maven. In this example we will set up a development environment from scratch on Ubuntu using Eclipse. Laja can run in any IDE, like IDEA, NetBeans, Eclipse or a text editor in combination with Maven.
+
+* Download and install the latest Java JDK.
+* Download and install the latest version of Eclipse development environment for Java.
+* Install JavaHL (if installing on Windows, you can skip this step):
+  $> sudo su -
+  $> apt-get install libsvn-java
+* Install the Maven plugin (Help > Install software) from site: http://m2eclipse.sonatype.org/sites/m2e
+* Setup Subversion, choose Window > Show view > SVN Repositories > New > Repository Location > Url:
+  https://laja.svn.sourceforge.net/svnroot/laja
+* Checkout the project, choose File > New > Other > Svn > Checkout Projects from SVN
+** Select: laja.cvs.sourceforge.net + click ''Next''
+** Expand the node ''trunk'' and select ''Laja'' + click ''Next''
+** Click ''Finish''
+* New project wizard: select Java > Java Project + click ''Next''
+* Creata a Java project:
+** Project name: Laja
+** Jre: JavaSE1.6 or higher + click ''Next''
+* Java Settings:
+** Default output folder: Laja/target/classes + ''Finish''
+* Switch from current perspective ''SVN Repository Exploring perspective'' to ''Java''.
+* Wait for Eclipse to finishing ''Build project''
+* Right click on the top node ''Laja [trunk/Laja]'' and choose Maven -> Enable Dependency Management
+* Right click on the top node again and choose Maven > Install
+* If you have compilation errors in TypelistEvaluatorTest, swith to Java 1.6 compiler (or higher):
+** Right click on the top node ''Laja [trunk/Laja]'' and choose Properties > Java Compiler > Compile compliance level: 1.6

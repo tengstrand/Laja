@@ -1,0 +1,147 @@
+Lets start with the simplest possible example by parsing a digit.
+We will generate the code that receives the parsing result and print out the result.
+
+* Make sure Laja is [[Install|installed]].
+* Create a Java project in your favourite IDE, for example Eclipse, with the name ''Example''.
+* Select JDK 1.5 or higher.
+* Create this directory structure in the project directory ''Example'':
+  +--- src/main/java/example      // java source code, package 'example'
+  +--- src/main/laja              // Laja source code
+* Use ''src/main/java'' as Java source directory.
+* Add these two jar files to the project class path (where LAJA_HOME is the path to Laja home directory):
+** LAJA_HOME/system-lib/laja.jar
+** LAJA_HOME/system-lib/commons-lang-2.4.jar
+* Create the files ''example.laja'', ''example.grammar'' and ''example.txt'' in directory ''src/main/laja'':
+  +--- src/main/java/example          // java source code, package 'example'
+  +--- src/main/laja/example.laja     // the Laja template
+  +--- src/main/laja/example.grammar  // defines the grammar rules and the mapping information
+  +--- src/main/laja/example.txt      // the text information we want to parse
+
+
+''example.laja'':
+<pre>
+#generateParser(
+  package: "example"
+  grammarFile: "{.}/example.grammar"
+  outputDir: "{..}/java/example"
+)
+
+#generateParserDom(
+  replaceExistingFile: true
+  package: "example"
+  grammarFile: "{.}/example.grammar"
+  inputFile: "{.}/example.txt"
+  outputDir: "{..}/java/example"
+)
+</pre>
+
+''example.grammar'':
+<pre>
+grammar example {
+   example = "5";
+}
+</pre>
+
+''example.txt'':
+<pre>
+5
+</pre>
+
+
+To generate the source code, go to directory ''Example/src/main/laja'' and write ''laja example'' (''$>'' is the prompt):
+<pre>
+$> laja example
+</pre>
+
+This will generate the files:
+<pre>
++--- src/main/java/example/ExampleParser.java    // the parser
++--- src/main/java/example/ExampleDomApp.java    // the application that calls the parser and prints out the result
++--- src/main/java/example/ExampleFactory.java   // responsible for creating the 'Example' instance
++--- src/main/java/example/Example.java          // the result from the parsing
+</pre>
+
+If using Eclipse, refresh the project by pressing <F5> on the project ''Example''.
+Expand the package ''example'' and execute the file ExampleDomApp.java, this will print out:
+<pre>
+Result: Example{}
+</pre>
+
+(If it didn't work, check that the text file ''example.txt'' only contains the character ''5'')
+
+The result was empty. That is because we haven't specified any receivers of the parsed information. Lets do that,
+but first take a look at the parsing settings.
+
+=== Parser generation settings ===
+
+Laja generates the class ''ExampleParser.java'' based on the grammar file ''example.grammar'' and the settings in the
+system function call ''#generateParser'' in ''example.laja'':
+
+<pre>
+#generateParser(
+  forwardRef: true
+  package: "example"
+  grammarFile: "{.}/example.grammar"
+  outputDir: "{..}/java/example"
+)
+</pre>
+
+{| class="wikitable"
+! Attribute !! Description
+|-
+| forwardRef || This parameter is optional and the default value is ''true'' so we can leave this out if we want. If the definitions in the grammar only references already defined definitions, then we can set this to ''false'' which will generate a little more readable parser source.
+|-
+| package || name of the package. All generated java classes will belong to this package.
+|-
+| grammarFile || path to the grammar file, ''{.}'' means "same directory as the template ''example.laja''".
+|-
+| outputDir || path to output directory of generated files, e.g. ''ExampleParser.java'', ''{..}'' means "parent directory relative to directory of ''example.laja''".
+|}
+
+=== Output classes generation settings ===
+
+In this example we also generate the implementation/output classes ''Example.java'', ''ExampleDomApp.java'' and ''ExampleFactory.java'' based on ''example.grammar''
+and the settings in the system function call ''#generateParserDom'' in ''example.laja'':
+
+<pre>
+#generateParserDom(
+  replaceExistingFile: true
+  package: "example"
+  grammarFile: "{.}/example.grammar"
+  inputFile: "{.}/example.txt"
+  outputDir: "{..}/java/example"
+)
+</pre>
+
+{| class="wikitable"
+! Attribute !! Description
+|-
+| replaceExistingFile || if true, all existing files will be replaced with the generated files.
+|-
+| package || name of the package. All generated java classes will belong to this package.
+|-
+| grammarFile || path to the grammar file.
+|-
+| inputFile || path to the file that we want to read/parse, ''example.txt'' in this example
+|-
+| outputDir || path to output directory for the generated classes
+|}
+
+Edit the file ''example.grammar'':
+<pre>
+grammar example {
+   digit = "5";
+   example = digit;
+
+   Example example;
+   example.setDigit(String digit);
+}
+</pre>
+
+Generate the source again (go to directory ''Example/src/main/laja'' and write ''laja example'') and execute ExampleDomApp.java, this will print out:
+<pre>
+Result: Example{digit=5}
+</pre>
+
+
+This example is explained more in detail in [[Parser_generator_-_Documentation|Parser Generator - Documentation]].

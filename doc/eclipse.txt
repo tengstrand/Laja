@@ -1,0 +1,27 @@
+
+Eclipse
+=======
+How to set up a develop environment using Eclipse IDE (2008-12-20).
+
+- Download Java JDK 1.6.0_10 or higher (the Maven plugin doesn't run with the JRE):
+  http://java.sun.com/javase/downloads/index.jsp
+- Download and install the latest "Eclipse IDE for Java Developers" (3.4 or higher):
+  http://www.eclipse.org/downloads/
+- Configure Eclipse to run with JDK 1.6.0_10:
+  In Windows:
+  - Create a shortcut to <ECLIPSE_HOME>/eclipse.exe with the name "ecipse".
+  - Change the properties for the shortcut, set the property "Target" to (e.g):
+    C:\Program\eclipse\eclipse.exe -vm C:\Java\jdk1.6.0_10\bin
+  - Use this shortcut to open Eclipse (the Maven2 plugin needs the JDK to be specified).
+- Download and install the Eclpse plugin Subclipse http://subclipse.tigris.org/:
+  - Open Eclipse, choose the menu "Help > Software Updates > Available Software > Add Site":
+    http://subclipse.tigris.org/update_1.4.x
+  - Complete the wizard.
+- Install the Maven2 plugin http://m2eclipse.codehaus.org/
+  - Open Eclipse, choose the menu "Help > Software Updates > Available Software > Add Site":
+    http://m2eclipse.sonatype.org/update/
+  - Complete the wizard.
+- Check out the source code from Sourceforge:
+  - Open Eclipse, choose "New > Other... > Maven > Checkout Maven projects from SCM":
+    SCM URL: svn
+             https://laja.svn.sourceforge.net/svnroot/laja

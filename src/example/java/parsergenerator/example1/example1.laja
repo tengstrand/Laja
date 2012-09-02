@@ -1,0 +1,19 @@
+
+#set (outputDir = "{..}/../src/net/sf/laja/example/parsergenerator/example1")
+
+#createDirectoryPath(outputDir)
+
+#generateParser(
+  forwardRef: false
+  package: "net.sf.laja.example.parsergenerator.example1"
+  grammarFile: "{.}/example1.grammar"
+  outputDir: "{outputDir}"
+)
+
+#generateParserDom(
+  replaceExistingFile: true
+  package: "net.sf.laja.example.parsergenerator.example1"
+  grammarFile: "{.}/example1.grammar"
+  inputFile: "{.}/example1.txt"
+  outputDir: "{outputDir}"
+)

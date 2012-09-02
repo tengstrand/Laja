@@ -1,0 +1,7 @@
+
+grammar example1 {
+   name = "A".."Z" "a".."z"+;
+   example1 = "My name is " name;
+  
+   Example1 example1.setName(String name);
+}

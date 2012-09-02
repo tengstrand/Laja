@@ -1,0 +1,937 @@
+== system-imports.laja ==
+
+If we for example generates the template ''generate.laja'', it's content is "executed" (and possible some
+file(s) are generated).
+Before it does that Laja inserts an import statement before the first line (only in memory, not in the actual file).
+By doing that, all templates gets access to the system variables, functions and macros described in this section.
+LAJA_HOME in this example is substituted with the environment variable LAJA_HOME (the directory where you installed Laja), example:
+
+{| class="nogridtable"
+! generate.laja !! generate.laja (with import statement inserted by Laja) !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+{loadClass("java.lang.System")}
+#end
+</pre>
+|
+<pre>
+#import "LAJA_HOME/template/system_imports.laja"
+#write "out.txt"
+{loadClass("java.lang.System")}
+#end
+</pre>
+|
+<pre>
+class java.lang.System
+
+</pre>
+|}
+
+It's possible to extend Laja with own data, functions and macros. This is solved by creating the file ''imports.laja''.
+If the file ''LAJA_HOME/template/imports.laja'' exists (it's not included in the binary distribution) then it will be
+imported, via ''LAJA_HOME/template/system-imports.laja'', into the first template you generate.
+All content in the file ''imports.laja'' will be implicitly available from all templates, example:
+
+{| class="nogridtable"
+! generate.laja !! imports.laja !! out.txt
+|-
+|
+<pre>
+The macro testing() is implicitly imported via
+system-imports.laja -> imports.laja.
+
+#write "out.txt"
+  #testing()
+#end
+</pre>
+|
+<pre>
+#macro testing()
+This is the testing macro.
+#end
+</pre>
+|
+<pre>
+This is the testing macro.
+
+</pre>
+|}
+
+The file ''system-imports.laja'' looks like this:
+
+<pre>
+#import "{.}/system/print/print.laja"
+#import "{.}/system/class/class.laja"
+#import "{.}/system/env/env.laja"
+#import "{.}/system/file/file.laja"
+#import "{.}/system/reader/reader.laja"
+#import "{.}/system/time/time.laja"
+#import "{.}/system/parser/parser.laja"
+
+#set (home = env().LAJA_HOME)
+
+#set (strings = loadClass("org.apache.commons.lang.StringUtils"))
+#set (math = loadClass("java.lang.Math"))
+
+#set ($laja.timeService.timeFormat = "hh:mm:ss")
+#set ($laja.timeService.dateFormat = "yyyy-MM-dd")
+#set ($laja.timeService.datetimeFormat = "yyyy-MM-dd hh:mm")
+
+#if (fileExists("{.}/imports.laja"))
+  #import "{.}/imports.laja"
+#end
+</pre>
+
+You can override the default import of ''system-imports.laja'', type ''laja -help'' for instructions.
+
+== System variables ==
+Laja have a number of variables that you have direct access to.
+
+=== home ===
+The ''home'' variable refer to the environment variable LAJA_HOME (the home directory of Laja). Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  home = {home}
+#end
+</pre>
+|
+<pre>
+  home = C:\Java\laja
+
+</pre>
+|}
+
+=== math ===
+The ''math'' variable refer to the class [http://download.oracle.com/javase/6/docs/api/java/lang/Math.html java.lang.Math].
+Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#write "target/test-output/system-math.out"
+  math.round(3.14) = {math.round(3.14)}
+#end
+</pre>
+|
+<pre>
+  math.round(3.14) = 3
+
+</pre>
+|}
+
+=== strings ===
+
+The ''strings'' variable refer to the class [http://commons.apache.org/lang/api-2.4/org/apache/commons/lang/StringUtils.html org.apache.commons.lang.StringUtils].
+Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (a = null)
+#set (b = "")
+#set (c = "abc")
+
+#write "target/test-output/system-strings.out"
+  strings.isEmpty(a) = {strings.isEmpty(a)}
+  strings.isEmpty(b) = {strings.isEmpty(b)}
+  strings.isEmpty(c) = {strings.isEmpty(c)}
+#end
+</pre>
+|
+<pre>
+  strings.isEmpty(a) = true
+  strings.isEmpty(b) = true
+  strings.isEmpty(c) = false
+
+</pre>
+|}
+
+== System functions and macros ==
+
+The following functions and macros are imported from ''system-import.laja'':
+
+=== connectToDatabase ===
+
+Connects to a database and enables reading metadata (schemas, tables, colummns and relations) and get results from sql statements.
+To be able to connect to a database you need to add the JDBC driver jar file for that RDBMS (database) to the directory LAJA_HOME/lib
+where LAJA_HOME is the directory where you installed Laja.
+As you can see, all data retrieved from the system tables is converted to lower case for example table "PERSON" is changed to "person".
+
+In this example we use the in-memory database HSQLDB. Before you can run this example you need to:
+
+* Download and install the latest stable version of [http://hsqldb.org HSQLDB], e.g. version 1.8.
+* Copy HSQLDB_HOME/lib/hsqldb.jar to LAJA_HOME/lib.
+* Create a text file ''test.script'' and put it in directory YOUR_PATH, with this content:
+<pre>
+CREATE SCHEMA PUBLIC AUTHORIZATION DBA
+CREATE MEMORY TABLE PERSON(ID INTEGER NOT NULL,NAME VARCHAR(30) NOT NULL,AGE INTEGER,ADDRESS_ID INTEGER,CONSTRAINT PK_PERSON PRIMARY KEY(ID))
+CREATE MEMORY TABLE ADDRESS(ID INTEGER NOT NULL,CITY VARCHAR(20) NOT NULL,STREET_NAME VARCHAR(30) NOT NULL,CONSTRAINT PK_ADDRESS PRIMARY KEY(ID))
+ALTER TABLE PERSON ADD CONSTRAINT FK_ADDRESS FOREIGN KEY(ADDRESS_ID) REFERENCES ADDRESS(ID)
+CREATE USER SA PASSWORD ""
+GRANT DBA TO SA
+SET WRITE_DELAY 10
+SET SCHEMA PUBLIC
+INSERT INTO PERSON VALUES(1,'Adam',25,1)
+INSERT INTO PERSON VALUES(2,'Eve',20,NULL)
+INSERT INTO ADDRESS VALUES(1,'Stockholm','First street')
+INSERT INTO ADDRESS VALUES(2,'Uppsala','Second street')
+</pre>
+
+* Start the database engine (see HSQLDB documentation)
+* Change ''YOUR_PATH'' in the following example to the real path of the file ''test.script'':
+
+{| class="nogridtable"
+! Syntax
+|-
+| connectToDatabase(settings)
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+
+#connectToDatabase (
+   driver: "org.hsqldb.jdbcDriver"
+   connection: "jdbc:hsqldb:file:YOUR_PATH/test;ifexists=true"
+   user: "sa"
+   password: ""
+) into con
+
+#con.readMetadata() into $
+#con.executeSql("select * from person") into persons
+#con.executeSql("select street_name, city from address") into addresses
+
+#write "out.txt"
+
+Database: {con.metadata.databaseProductName} ({con.metadata.databaseProductVersion})
+
+Tables:
+  #foreach (table in tables where table.schema == "public")
+    {table.name}
+    #foreach (column in table.columns)
+       {column.name}
+    #end
+  #end
+
+Relations:
+  #foreach (relation in relations where relation.pkTableSchema == "public")
+     {relation.fkTableName}.{relation.fkColumnName} -> {relation.pkTableName}.{relation.pkColumnName}
+  #end
+
+Rows in table person:
+  #foreach (person in persons)
+    {person}
+  #end
+
+Rows in table address:
+  #foreach (address in addresses)
+    {address.street_name}, {address.city}
+  #end
+#end
+
+#con.close()
+</pre>
+|
+<pre>
+Database: HSQL Database Engine (1.8.0)
+
+Tables:
+    address
+       id
+       city
+       street_name
+    person
+       id
+       name
+       age
+       address_id
+
+Relations:
+     person.address_id -> address.id
+
+Rows in table person:
+    {id=1, name=Adam, age=25, address_id=1}
+    {id=2, name=Eve, age=20, address_id=null}
+
+Rows in table address:
+    First street, Stockholm
+    Second street, Uppsala
+</pre>
+|}
+
+This example shows how to connect to an Oracle database (schema). You need to set correct values for ''connection'', ''user'', ''password'' and ''schema''.
+Also change "person" to an existing table. If you are the schema owner you can put the same value in ''user'' as for ''schema''.
+If the ''schema'' (attribute + value) is lefte out, all schemas will be retrieved.
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#connectToDatabase (
+   driver: "oracle.jdbc.driver.OracleDriver"
+   connection: "jdbc:oracle:thin:@serverName:portNumber:sid"
+   user: "set user name here"
+   password: "set password here"
+   schema: "set schema name here"
+) into con
+
+#con.readMetadata() into $
+
+#write "out.txt"
+  schemas:
+  #foreach (schema in schemas)
+    {schema}
+  #end
+
+  #foreach (table in tables where table.name == "person")
+    {table.schema}.{table.name}
+    #foreach (column in table.columns)
+       {column.name}
+    #end
+  #end
+#end
+
+#con.close()
+</pre>
+|
+<pre>
+  schemas:
+    shemaname
+
+    schemaname.person
+       id
+       name
+       age
+       address_id
+</pre>
+|}
+
+=== createDirectory ===
+Creates a directory if possible. You can get the returned flag that says if the directory was created. The command
+is calling [http://download.oracle.com/javase/1.4.2/docs/api/java/io/File.html#mkdir() mkdir] in ''java.io.File''.
+Due to a bug in laja1-004-alpha the ''createDirectory'' is working exaktly as ''createDirectoryPath''.
+
+{| class="nogridtable"
+! Syntax
+|-
+| createDirectory(path)
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+  #createDirectory("mydir")
+  #createDirectory("dir2") into created
+  Was created: {created}
+</pre>
+|
+<pre>
+  Was created: true
+</pre>
+|}
+
+=== createDirectoryPath ===
+Creates a directory including any necessary but nonexistent parent directories. You can get the returned flag that says if the directory
+was created. The command is calling [http://download.oracle.com/javase/1.4.2/docs/api/java/io/File.html#mkdirs() mkdirs] in ''java.io.File''.
+
+{| class="nogridtable"
+! Syntax
+|-
+| createDirectoryPath(path)
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+  #createDirectory("x/y/mydir")
+  #createDirectory("a/b/c/dir2") into created
+  Was created: {created}
+</pre>
+|
+<pre>
+  Was created: true
+</pre>
+|}
+
+=== date ===
+
+Shows the date of today in the format yyyy-MM-dd where yyyy is year, MM is the month (1-12) and dd is the date of month.
+
+To override the default formatting, create the file ''LAJA_HOME/template/imports.laja'' and add (e.g):
+  #set ($laja.timeService.dateFormat = "yyyy-MM-dd")
+
+{| class="nogridtable"
+! Syntax
+|-
+| date()
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  {date()}
+#end
+</pre>
+|
+<pre>
+  2010-06-08
+</pre>
+|}
+
+=== datetime ===
+
+Shows the current date and time in the format: yyyy-MM-dd hh:mm
+
+To override the default formatting, create the file ''LAJA_HOME/template/imports.laja'' and add (e.g):
+  #set ($laja.timeService.datetimeFormat = "yyyy-MM-dd hh:mm")
+
+{| class="nogridtable"
+! Syntax
+|-
+| datetime()
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  {datetime()}
+#end
+</pre>
+|
+<pre>
+  2010-06-08 08:47
+</pre>
+|}
+
+=== directoryExists ===
+
+Returns true if the given directory exists and is recognized as a directory.
+
+{| class="nogridtable"
+! Syntax
+|-
+| directoryExists(path)
+|}
+
+Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (env = env())
+
+#write "out.txt"
+  #if (directoryExists("{.}"))
+    This directory exists!
+  #end
+#end
+</pre>
+|
+<pre>
+    This directory exists!
+</pre>
+|}
+
+=== env ===
+
+Returns a map with all environment variables.
+
+{| class="nogridtable"
+! Syntax
+|-
+| env()
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  number of processors: {env().NUMBER_OF_PROCESSORS}
+  Java home: {env().JAVA_HOME}
+#end
+</pre>
+|
+<pre>
+  number of processors: 2
+  Java home: C:\Java\jdk1.6.0_06
+</pre>
+|}
+
+View all variables:
+
+{| class="nogridtable"
+! Syntax
+|-
+|
+<pre>
+#env() into env
+
+#write "out.txt"
+  #foreach (variable in env)
+    {variable}
+  #end
+#end
+</pre>
+|}
+
+=== fileExists ===
+
+Returns true if the given file exists and is recognized as a file.
+
+{| class="nogridtable"
+! Syntax
+|-
+| fileExists(path)
+|}
+
+Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (env = env())
+
+#write "out.txt"
+  #if (fileExists("{env.LAJA_HOME}/LICENCE.txt"))
+    The licence file exists!
+  #end
+#end
+</pre>
+|
+<pre>
+    The licence file exists!
+</pre>
+|}
+
+=== generateParser ===
+
+The command ''generateParser'' is used to generate parsers in Java. The parser [[Parser generator - Documentation|generator documentation]] has not been written yet!
+If you want to try it out, you can go to the [[Parser generator|getting started]] section.
+
+=== instanceof ===
+
+The [[#function|function]] ''instanceof(a,b)'' tests if ''b'' is assignable from ''a''. The arguments can be either
+instances of a class or a class.
+
+{| class="nogridtable"
+! Syntax
+|-
+| instanceof(a,b)
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (numberClass = loadClass("java.lang.Number"))
+
+#write "out.txt"
+  #if (instanceof(1, numberClass))
+    java.lang.Integer is instanceof java.lang.Number
+  #end
+  #if (instanceof(numberClass, 1))
+    java.lang.Number is not instanceof java.lang.Integer
+  #end
+  #if (instanceof(1, 2))
+    java.lang.Integer is instanceof java.lang.Integer
+  #end
+#end
+</pre>
+|
+<pre>
+    java.lang.Integer is instanceof java.lang.Number
+    java.lang.Integer is instanceof java.lang.Integer
+</pre>
+|}
+
+=== loadClass ===
+
+This [[#function|function]] loads a class using current class loader.
+
+{| class="nogridtable"
+! Syntax
+|-
+| loadClass(className)
+|}
+
+Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#loadClass("java.lang.System") into system
+
+#write "out.txt"
+Class of java.lang.Number = {loadClass("java.lang.Number")}
+system = {system}
+#end
+</pre>
+|
+<pre>
+Class of java.lang.Number = class java.lang.Number
+system = class java.lang.System
+
+</pre>
+|}
+
+=== pathExists ===
+
+Returns true if the given directory or file exists. Works the same way as fileExists and directoryExists except
+that it accepts both files and directories.
+
+{| class="nogridtable"
+! Syntax
+|-
+| directoryOrFileExists(path)
+|}
+
+=== print ===
+
+Prints a message to System.out (a ''System.out.print(message.toString())'' is performed).
+
+{| class="nogridtable"
+! Syntax
+|-
+| print(message)
+|}
+
+Due to a bug, "Hello" is printed out twice! Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#println ("Hello!")
+</pre>
+|
+<pre>
+Hello!Hello!
+</pre>
+|}
+
+=== println ===
+
+Prints a message and a ''new line'' to System.out (a ''System.out.println(message.toString())'' is performed).
+
+{| class="nogridtable"
+! Syntax
+|-
+| println(message)
+|}
+
+Ddue to a bug, "Hello" is printed out twice! Example:
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#println ("Hello")
+</pre>
+|
+<pre>
+Hello
+Hello
+</pre>
+|}
+
+=== read ===
+
+The idea of the read command is that it should be able to read all sorts of different formats. At the moment it can only read
+properties files and is almost an alias for ''readProperties''. The only difference is that if the argument does not
+end with ".properties" then an error message is shown and the execution is stopped.
+
+=== readProperties ===
+
+Read properties from a file.
+
+{| class="nogridtable"
+! Syntax
+|-
+| readProperties(path)
+|}
+
+Example:
+
+{| class="nogridtable"
+! generate.laja !! values.properties !! out.txt
+|-
+|
+<pre>
+#readProperties ("{.}/values.properties") into properties
+
+#write "out.txt"
+  #foreach (property in properties)
+    {property}
+  #end
+#end
+</pre>
+|
+<pre>
+a = abc
+b = 123
+</pre>
+|
+<pre>
+    {key=b, value=123}
+    {key=a, value=abc}
+</pre>
+|}
+
+{| class="nogridtable"
+! generate.laja !! values.properties !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  #readProperties ("{.}/values.properties") into $
+  a = {a}
+  b = {b}
+#end
+</pre>
+|
+<pre>
+a = abc
+b = 123
+</pre>
+|
+<pre>
+  a = abc
+  b = 123
+</pre>
+|}
+
+=== time ===
+
+Shows the current time in the format hh:mm:ss where hh is hour of day, mm is minute (0-59, and ss is seconds of hour (0-59).
+
+To override the default formatting, create the file ''LAJA_HOME/template/imports.laja'' and add (e.g):
+  #set ($laja.timeService.timeFormat = "hh:mm:ss")
+
+{| class="nogridtable"
+! Syntax
+|-
+| time()
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  {time()}
+#end
+</pre>
+|
+<pre>
+  08:47:25
+</pre>
+|}
+
+=== type ===
+
+This [[#function|function]] returns the type (Java class) for the given type:
+
+{| class="wikitable"
+! Command !! Returns
+|-
+| type("Double") || Double.class
+|-
+| type("Float") || Float.class
+|-
+| type("Long") || Long.class
+|-
+| type("Integer") || Integer.class
+|-
+| type("Short") || Short.class
+|-
+| type("Character") || Character.class
+|-
+| type("Byte") || Byte.class
+|-
+| type("Boolean") || Boolean.class
+|-
+| type("double") || double.class
+|-
+| type("float") || float.class
+|-
+| type("long") || long.class
+|-
+| type("int") || int.class
+|-
+| type("short") || short.class
+|-
+| type("char") || char.class
+|-
+| type("byte") || byte.class
+|-
+| type("boolean") || boolean.class
+|}
+
+{| class="nogridtable"
+! Syntax
+|-
+| type(typeName)
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (integerClass = type("Integer"))
+#type("double") into double
+
+#write "out.txt"
+  Integer: {integerClass.name}
+  double: {double.name}
+#end
+</pre>
+|
+<pre>
+  Integer: java.lang.Integer
+  double: double
+
+</pre>
+|}
+
+=== viewClass ===
+
+The macro viewClass is used to view the public memebers of a class or an instance.
+
+{| class="nogridtable"
+! Syntax
+|-
+| viewClass(class)
+|}
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (int = 1)
+
+#write "out.txt"
+  #viewClass(1) ## 1.class is also valid
+#end
+</pre>
+|
+<pre>
+Class: java.lang.Integer extends java.lang.Number implements java.lang.Comparable
+  Fields:
+     public static final int java.lang.Integer.MIN_VALUE
+     public static final int java.lang.Integer.MAX_VALUE
+     public static final java.lang.Class java.lang.Integer.TYPE
+     public static final int java.lang.Integer.SIZE
+  Methods:
+     public int hashCode()
+     public int reverseBytes(int)
+     public int compareTo(java.lang.Object)
+     public int compareTo(java.lang.Integer)
+     public boolean equals(java.lang.Object)
+     public java.lang.String toString(int, int)
+     public java.lang.String toString(int)
+     public java.lang.String toString()
+     public java.lang.String toHexString(int)
+     public java.lang.Integer decode(java.lang.String)
+     public java.lang.Integer valueOf(java.lang.String)
+     public java.lang.Integer valueOf(java.lang.String, int)
+     public java.lang.Integer valueOf(int)
+     public int reverse(int)
+     public byte byteValue()
+     public double doubleValue()
+     public float floatValue()
+     public int intValue()
+     public long longValue()
+     public short shortValue()
+     public int parseInt(java.lang.String)
+     public int parseInt(java.lang.String, int)
+     public int bitCount(int)
+     public java.lang.Integer getInteger(java.lang.String)
+     public java.lang.Integer getInteger(java.lang.String, int)
+     public java.lang.Integer getInteger(java.lang.String, java.lang.Integer)
+     public int highestOneBit(int)
+     public int lowestOneBit(int)
+     public int numberOfLeadingZeros(int)
+     public int numberOfTrailingZeros(int)
+     public int rotateLeft(int, int)
+     public int rotateRight(int, int)
+     public int signum(int)
+     public java.lang.String toBinaryString(int)
+     public java.lang.String toOctalString(int)
+     public void wait()
+     public void wait(long, int)
+     public void wait(long)
+     public java.lang.Class getClass()
+     public void notify()
+     public void notifyAll()
+
+Class: java.lang.Number extends java.lang.Object implements java.io.Serializable
+  Fields:
+  Methods:
+     public byte byteValue()
+     public double doubleValue()
+     public float floatValue()
+     public int intValue()
+     public long longValue()
+     public short shortValue()
+     public void wait()
+     public void wait(long, int)
+     public void wait(long)
+     public int hashCode()
+     public java.lang.Class getClass()
+     public boolean equals(java.lang.Object)
+     public java.lang.String toString()
+     public void notify()
+     public void notifyAll()
+
+Class: java.lang.Object
+  Fields:
+  Methods:
+     public void wait()
+     public void wait(long, int)
+     public void wait(long)
+     public int hashCode()
+     public java.lang.Class getClass()
+     public boolean equals(java.lang.Object)
+     public java.lang.String toString()
+     public void notify()
+     public void notifyAll()
+</pre>
+|}

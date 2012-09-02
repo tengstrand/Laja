@@ -1,0 +1,1984 @@
+== General purpose ==
+The goal of Laja is to be your first choice when it comes to generating text files. Reasons why you should use Laja:
+* Laja has an intuitive syntax.
+* It has support for indentations and comments.
+* It can be modularized by using macros and import statements.
+* It is seamless integrated with [http://groovy.codehaus.org Groovy].
+
+
+Example of tasks that Laja could be used for:
+* Produce all kind of documentation, like HTML, and other text formats.
+* Generate source code and specialized text formats.
+* Transform between different file formats.
+* Read the metadata from a database and generate a persistence layer, an example of a tools that does this (but is not using Laja) are [http://db.apache.org/torque Torque] and [http://sql2java.sourceforge.net/ SQL2JAVA]
+
+== Running Laja ==
+If you don't pass any arguments when executing laja, then it will look for ''generate.laja'' in current directory. To read and process the file ''generate.laja'' in current directory, type ''laja'':
+<pre>
+$> laja
+</pre>
+
+You can specify one or more files as argument to Laja. To read and process the file ''myfile.laja'', type ''laja myfile'' or ''laja myfile.laja''.
+Laja template files should end with ''.laja'':
+<pre>
+$> laja myfile
+</pre>
+
+To read the files ''template1.laja'' and ''template2.laja'', type:
+<pre>
+$> laja template1 template2
+</pre>
+
+Variables, used in Laja, can also be set.
+To show how to set variables and others, type:
+
+<pre>
+$> laja -help
+</pre>
+
+This will print out:
+
+<pre>
+Usage: laja [option(s)] [templatefile(s)]
+
+where option include:
+   -help | -?             display this help.
+   -version               display version information.
+   <variable>=<value>     sets a value to default ($) namespace
+   <namespace>.<variable>=<value>
+                          sets a value to specified namespace.
+Example:
+   laja                   reads default template 'generate.laja'.
+   laja mytemplate        reads template file 'mytemplate.laja'.
+   laja t1 t2             reads template files 't1.laja' and 't2.laja'.
+   laja var=123           set the value 123 (datatype=java.lang.Integer) for
+                          variable 'var' in the default namespace and reads 'generate.laja'.
+   laja a='A' $x.b="B" t1 t2
+                          sets the variable 'a' to A in default namespace and 'b' to B
+                          in namespace x and generates 't1.laja' and 't2.laja'
+   laja sysimp=./system-imports.laja
+                          overrides the location of LAJA_HOME/template/system-imports.laja.
+   laja sysimp="c:\Program Files\mytemplates\my-system-imports.laja"
+                          surround with " if the path contains spaces.
+
+Project: http://laja.sf.net
+</pre>
+
+== Run Laja from Ant ==
+To execute Laja using [http://ant.apache.org/ Apache Ant] you need to do the following:
+
+* Make sure Laja and Ant is installed.
+* Add these two lines to your ''build.xml'':
+<pre>
+<property environment="env" />
+<taskdef name="laja" className="net.sf.laja.ant.LajaTask" classpath="${env.LAJA_HOME}/laja.jar" />
+</pre>
+* To run Laja from Ant, use this syntax in ''build.xml'':
+<pre>
+<laja>
+    <template file="${basedir}/mytemplate.laja" />
+</laja>
+</pre>
+* To override the default import of LAJA_HOME/template/system-imports.laja, write:
+<pre>
+<laja>
+    <systemimports file="${basedir}/my-system-imports.laja"/>
+    <template file="${basedir}/mytemplate.laja" />
+</laja>
+</pre>
+* Values can be set (which will result in #set statement(s) to be included in the template):
+<pre>
+<laja>
+    <value name="small" intvalue="123"/>
+    <value name="big" longvalue="1234567890123"/>
+    <value name="pi" doublevalue="3.14"/>
+    <value name="hi" stringvalue="Hello"/>
+    <template file="${basedir}/mytemplate.laja" />
+</laja>
+</pre>
+
+Example, build.xml:
+<pre>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Laja example" default="generate" basedir=".">
+
+  <property environment="env"/>
+
+  <taskdef name="laja" className="net.sf.laja.ant.LajaTask" classpath="${env.LAJA_HOME}/system-lib/laja.jar" />
+
+  <target name="generate" >
+    <laja>
+    	<template file="${basedir}/test.laja" />
+    </laja>
+  </target>
+</project>
+</pre>
+
+== Debug Laja ==
+Debug Laja in Windows:
+
+  set LAJA_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
+
+Debug Laja in Unix/Linux:
+  export LAJA_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
+
+Example:
+
+<pre>
+$> export LAJA_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
+$> laja
+Listening for transport dt_socket at address: 8000
+</pre>
+
+* Start remote debugging session from your favourite IDE, listening on port 8000
+* Set break points and debug!
+
+== Text ==
+Text within a [[#write|#write]] block is written to that file. An exception are comments, and white spaces used for indentation, which are ignored.
+Laja uses the platform's default charset.
+
+=== Plain text ===
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+Everything before the #write statement is ignored
+Actually, this first write statement is also ignored because
+it doesn't follow the correct syntax of a write statement!
+
+#write "out.txt"
+This line is written to the file out.txt!
+#end
+
+Now the file out.txt is closed, and this line is also ignored
+
+</pre>
+|
+<pre>
+This line is written to the file out.txt!
+
+</pre>
+|}
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+
+Laja supports indentaion of the commands in order
+to improve readability. A consequence of this is
+if the command is preceded by white spaces (space or tab),
+they are ignored.
+
+White spaces after a command, like spaces and tabs after
+"out.txt" in this example, are also ignored.
+
+Lines that consist only of white spaces is written to the output,
+as row 2 in this example.
+
+Note that the last line break after "row 3" is included in the result
+(in the next section shows how this line break can be removed).
+
+#write "out.txt"
+  #if (true)
+row 1
+
+  row 3
+  #end
+#end
+
+</pre>
+|
+<pre>
+row 1
+
+  row 3
+
+</pre>
+|}
+
+If you want to handle commands as plain text then you can enclose them with ''#>'' and ''<#''.
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (a = 10)
+
+#write "out.txt"
+  #if (a == 10)
+    a is ten
+  #end
+#>  #if (a == 10)
+    a is ten
+  #end<#
+end of file
+#end
+</pre>
+|
+<pre>
+    a is ten
+  #if (a == 10)
+    a is ten
+  #end
+end of file
+</pre>
+|}
+
+Another possibility is to import them as plain text, see [[#import|#import]].
+
+=== Comments ===
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+Comments on a line starts with ##.
+
+Block comments starts with #* and ends with *#.
+Nested block comments are not supported (at the moment).
+
+If you put a comment (like after "this is " and
+"fun!" in this example), then the new line character(s)
+("\r\n" on Windows, "\n" on Unix) for the row is ignored.
+
+#write "out.txt"    ## Comments after commands are ignored.
+row 1
+	   ## A comment on a single row is ignored including
+	   ## preceding spaces and tabs (if only spaces and tabs).
+  row 2
+  #*
+    Comment block.
+    All text within this comment block is ignored.
+  *#
+    row 3, this is ##
+fun!##
+#end
+</pre>
+|
+<pre>
+row 1
+  row 2
+    row 3, this is fun!
+</pre>
+|}
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+Comments on a line starts with ##.
+
+Block comments starts with #* and ends with *#.
+Nested block comments are not supported (at the moment).
+
+If you put a comment (like after "this is " and
+"fun!" in this example), then the new line character(s)
+("\r\n" on Windows, "\n" on Unix) for the row is ignored.
+
+#write "out.txt"    ## Comments after commands are ignored.
+row 1
+	   ## A comment on a single row is ignored including
+	   ## preceding spaces and tabs (if only spaces and tabs).
+  row 2
+  #*
+    Comment block.
+    All text within this comment block is ignored.
+  *#
+    row 3, this is ##
+fun!##
+#end
+</pre>
+|
+<pre>
+row 1
+  row 2
+    row 3, this is fun!
+</pre>
+|}
+
+== Data ==
+To be useful, the template files (e.g. ''generate.laja'') need data to produce files. Data is created or accessed in these ways:
+* Using the [[#set|#set]] command.
+* Call a Java method with a reference to a variable (e.g. a [[#Map|Map]], [[#Lists|List]] or [[#namspace|namespace]]) as argument to that method and let the method populate the data via the reference.
+* The function [[#env|env()]] gets a reference to all environment variables.
+* Store the result from a [[#Methods|method]] or [[#function|function]] into a variable using the ''into'' syntax.
+
+Variables and objects is referenced to by surrounding them with curly brackets:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (name = "out")
+
+#write "{name}.txt"
+  This is written to the file {name}.txt!
+#end
+</pre>
+|
+<pre>
+  This is written to the file out.txt!
+
+</pre>
+|}
+
+=== Types ===
+
+All values are translated into its equivalent in Java:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (a = true)
+#set (b = 1)
+#set (c = 123456789012345)
+#set (d = 3.141592653589793)
+#set (e = "123")
+#set (f = [1,2,3])
+#set (g = { a: "Hi" b: "There" })
+
+#write "out.txt"
+  Type of a: {a.class.name}
+  Type of b: {b.class.name}
+  Type of c: {c.class.name}
+  Type of d: {d.class.name}
+  Type of e: {e.class.name}
+  Type of f: {f.class.name}
+  Type of g: {g.class().name}
+#end
+
+Note that g.class tries to return the value
+for the key 'class' in the map. This value
+does not exists, so it returns null.
+
+</pre>
+|
+<pre>
+  Type of a: java.lang.Boolean
+  Type of b: java.lang.Integer
+  Type of c: java.lang.Long
+  Type of d: java.lang.Double
+  Type of e: java.lang.String
+  Type of f: java.util.ArrayList
+  Type of g: java.util.LinkedHashMap
+
+</pre>
+|}
+
+=== Boolean ===
+
+Boolean values are represented by the Java class ''java.lang.Boolean'' and can hold the values ''true'' or ''false''.
+Boolean values and expressions are used by the [[#if|#if]] command,
+and can also be used as arguments to [[#methods|methods]] or as [[#Data|data in text]].
+
+{| class="wikitable"
+! Example !! Description
+|-
+| <pre>#set (a = false)</pre>
+| Stores the boolean value ''false'' in variable ''a''. Valid boolean values are: false, true
+|-
+| <pre>#if (1 == 1)
+It's true that 1 equals to 1.
+#end
+</pre>
+| Writes ''It's true that 1 equals to 1''. Valid operators are: ==, !=, <, <=, >, >=, >. See next section [[#Operators|]].
+|-
+| <pre>#set (a = !true)</pre>
+| The not (!) operator can be added before any boolean expression.
+|-
+| <pre>
+#set (a = 0)
+#set (b = 1000)
+#if (a >= 1 && a <= 9 || b > 999 && b < 1001)
+It's a digit or b == 1000!
+#end
+</pre>
+| The operator && is used to perform logical AND, &#124;&#124; is used to perform logical OR. AND operations are performed before
+OR operations, so this is equivalent to (a >= 1 && a <= 9) &#124;&#124; (b > 999 && b < 1001).
+|-
+| <pre>
+#set (a = 0)
+#set (b = 1000)
+#if (a >= 1 && (a <= 9 || b > 999) && b < 1001)
+This line is skipped
+#end
+</pre>
+| Paranthesis can also be used in expressions
+|-
+| <pre>#set (flag = false.valueOf("true")))</pre>
+| Sets the value ''true'' to the variable ''flag''. This is what's happening under the hood: ''false'' is converted to a ''java.lang.Boolan'' and its method ''valueOf(java.lang.String)'' is called which evaluates to the boolean value ''true''.
+You have access to all ''java.lang.Boolean'' methods, see section [http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Boolean.html Method Summary] in the Java API documentation.
+|}
+
+=== Operators ===
+{| class="wikitable"
+! Operator !! Description
+|-
+| !
+| The not operator, change ''true'' into ''false'' and vice versa.
+|-
+| ==
+|
+* True if the ''left'' and ''right'' values are ''null''.
+* If the ''left'' and ''right'' values are of the same type (Java class), a ''left.equals(right)'' is performed.
+* False if ''left'' is null and ''right'' is not null or ''left'' is not null and ''right'' is ''null''.
+* If the ''left'' and ''right'' values are not of the same type, a ''left.toString().equals(right.toString())'' is performed. Example, the expression: ''1 == "1"'' evaluates to true.
+|-
+| !=
+| Evaluates to the opposite of ==.
+|-
+| <
+|
+* True if ''left'' is less than ''right''.
+* If ''left'' or ''right'' are null then the Java exception ''IllegalArgumentException'' is thrown.
+* Both ''left'' and ''right'' must implement the ''java.lang.Comparable'' interface. All primitives like 123 (''java.lang.Integer) or 3.14 (''java.lang.Double) does that.
+* If ''left'' and ''right'' are of the same type (Java class), a ''left.compareTo(right) == -1'' is performed.
+* Its possible to compare different primitives (types that implements the Java class ''java.lang.Number'') with eachother, example: 1 < 3.14.
+* Its possible to compare primitives with strings (the String is converted to a ''java.lang.Double'' before comparision), example: 1 < "3.14". |
+|-
+| <=, >, >=, >
+| Works the same way as the < operator except that it checks for different outcome of x in ''left.compareTo(right) == x''.
+|}
+
+
+=== Lists ===
+Lists are represented by the Java type ''java.util.ArrayList''. Example of lists:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (one = 1)
+#set (integers = [one, 2, 3])
+#set (mixedList = [ one, "x", 2 ])
+#set (twoDimension = [["hi", "there"], [10,20,30]])
+
+#write "out.txt"
+  integers: {integers}
+  mixedList: {mixedList}
+  mixedList[1]: {mixedList[1]}
+  twoDimension[0]: {twoDimension[0]}
+  twoDimension[1]: {twoDimension[1]}
+#end
+</pre>
+|
+<pre>
+  integers: [1, 2, 3]
+  mixedList: [1, x, 2]
+  mixedList[1]: x
+  twoDimension[0]: [hi, there]
+  twoDimension[1]: [10, 20, 30]
+
+</pre>
+|}
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (names = ["Adam", "Marilyn", "James"])
+#set (values = ["Robert", ["A",15], [names[0],77]])
+
+#write "out.txt"
+  names = {names}
+  names[1] = {names[1]}
+  values = {values}
+
+  #foreach (object in values)
+    #if (object.class.name.endsWith("String"))
+Name: {object}
+    #else
+  first: {object[0]}, second: {object[1]}
+    #end
+  #end
+#end
+</pre>
+|
+<pre>
+  names = [Adam, Marilyn, James]
+  names[1] = Marilyn
+  values = [Robert, [A, 15], [Adam, 77]]
+
+Name: Robert
+  first: A, second: 15
+  first: Adam, second: 77
+
+</pre>
+|}
+
+=== Arrays ===
+By default, lists are stored as ''java.util.ArrayList''. To store the list as a native array,
+put the keyword ''as array'' after the list definition. Example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (x = [ 55, 66, 77] as array)
+
+#write "out.txt"
+  x[1] = {x[1]}
+  x.class.name = {x.class.name}
+#end
+</pre>
+|
+<pre>
+  x[1] = 66
+  x.class.name = [Ljava.lang.Object;
+
+</pre>
+|}
+
+
+=== Map ===
+Maps are represented by the Java type ''java.util.LinkedHashMap'' (to preserve the order of the map members). Example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (values = { a: 123 b: "hello" })
+
+#write "out.txt"
+values = {values}
+values.a = {values.a}
+values.b = {values.b}
+#end
+</pre>
+|
+<pre>
+values = {a=123, b=hello }
+values.a = 123
+values.b = hello
+
+</pre>
+|}
+
+Advanced example:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+- d is an empty map
+- e is an empty list
+
+#set (x = {
+  a: 123
+  b: ["h", "i"]
+  c: [{ x1: "value"
+        x2: {
+	      a1: x.a
+          a2: "name"
+        }
+      }, {y1: "age"}]
+  d: {}
+  e: []
+})
+
+#write "out.txt"
+x = {x}
+x.b = {x.b}
+x.b[0] = {x.b[0]}
+x.b[1] = {x.b[1]}
+x.c[0] = {x.c[0]}
+x.c[0].x1 = {x.c[0].x1}
+x.c[0].x2.a1 = {x.c[0].x2.a1}
+x.c[0].x2.a2 = {x.c[0].x2.a2}
+x.c[1].y1 = {x.c[1].y1}
+#end
+</pre>
+|
+<pre>
+x = {a=123, b=[h, i], c=[{x1=value, x2={a1=123, a2=name}}, {y1=age}], d={}, e=[]}
+x.b = [h, i]
+x.b[0] = h
+x.b[1] = i
+x.c[0] = {x1=value, x2={a1=123, a2=name}}
+x.c[0].x1 = value
+x.c[0].x2.a1 = 123
+x.c[0].x2.a2 = name
+x.c[1].y1 = age
+</pre>
+|}
+
+=== Methods ===
+
+You can access public methods on your variables, Java- or Groovy class instances that you have access to.
+Look in the Java API documentation, for example the [http://java.sun.com/j2se/1.5.0/docs/api/java/lang/String.html String] class,
+section Method Summary, if you want to see which String methods you have access to.
+If the parameter list to the method is a [[#Map|Map]] you can skip the curly braces that is otherwise required for maps, see [[#Arguments|arguments]].
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (integer = 123)
+#set (string = "abc")
+#set (upper = "ABC")
+#set (value = "1A2A3")
+#set (map = { x: 10 })
+
+#write "out.txt"
+  ## Parenthesis to void methods can be omitted
+  ## Access the method length() on java.lang.String
+  string.length = {string.length}
+  string.length() = {string.length()}
+
+  ## You can access methods directly on primitives
+  "abc".length = {"abc".length}
+
+  ## You have access to all public methods on the object:
+  1.toBinaryString(5) = {1.toBinaryString(5)}
+  integer.toBinaryString(255) = {integer.toBinaryString(255)}
+  string.equalsIgnoreCase(upper) = {string.equalsIgnoreCase(upper)}
+  value.replace("A", "-") = {value.replace("A", "-")}
+
+  ## If you want to access a method on a map, you need to use
+  ## the () notation
+  map.x = {map.x}
+  map.class = {map.class}
+  map.class() = {map.class()}
+
+  ## Classes can be loaded via the system function loadClass
+  #set (system = loadClass("java.lang.System"))
+  ## The get in a method can be omitted
+  system.getProperties().getProperty("java.vendor.url") =
+     {system.getProperties().getProperty("java.vendor.url")}
+  system.properties().property("java.vendor.url") =
+     {system.properties().property("java.vendor.url")}
+  system.properties.property("java.vendor.url") =
+     {system.properties.property("java.vendor.url")}
+
+  ## Missing methods are evaluated to null
+  string.missing = {string.missing}
+
+  ## It's always the toString() method that is called at the end.
+  ## bytes() is returning a byte array that has the default
+  ## "class name @ hash code" naming implementation of toString()
+  ## (that's why it looks a little bit cryptic!)
+  string.bytes = {string.bytes}
+#end
+</pre>
+|
+<pre>
+  string.length = 3
+  string.length() = 3
+
+  "abc".length = 3
+
+  1.toBinaryString(5) = 101
+  integer.toBinaryString(255) = 11111111
+  string.equalsIgnoreCase(upper) = true
+  value.replace("A", "-") = 1-2-3
+
+  map.x = 10
+  map.class = NULL
+  map.class() = class java.util.LinkedHashMap
+
+  system.getProperties().getProperty("java.vendor.url") =
+     http://java.sun.com/
+  system.properties().property("java.vendor.url") =
+     http://java.sun.com/
+  system.properties.property("java.vendor.url") =
+     http://java.sun.com/
+
+  string.missing = NULL
+
+  string.bytes = [B@c1f10e
+
+</pre>
+|}
+
+In this example we get an instance of the class StrictMath, then we access the static method max().
+This example shows the three different ways you can access a method.
+
+{| class="nogridtable"
+! generate.laja !! out.txt
+|-
+|
+<pre>
+#set (math = loadClass("java.lang.StrictMath"))
+
+#math.max(20,30) into value1
+
+#set (value2 = math.max(40,50))
+
+#write "out.txt"
+max(1,10) = {math.max(1,10)}
+value1 = {value1}
+value2 = {value2}
+#end
+</pre>
+|
+<pre>
+max(1,10) = 10
+value1 = 30
+value2 = 50
+
+</pre>
+|}
+
+If you are trying to call a method on a null reference you will get an error:
+
+{| class="nogridtable"
+! Template file content !! Error message
+|-
+|
+<pre>
+#set (ref = null)
+
+#write "out.txt"
+  ref.a = {ref.a}
+#end
+</pre>
+|
+<pre>
+Can not call method with null reference
+Error in file "generate.laja", row 4, column 12:
+  ref.a = {ref.a}
+           ^
+</pre>
+|}
+
+=== Fields ===
+You can access public fields on variables and other Java or Groovy class instances.
+
+{| class="nogridtable"
+! generate.laja !! MyClass.groovy !! out.txt
+|-
+|
+<pre>
+#import "{.}/MyClass.groovy"
+
+#set (integer = 1)
+#set (myClass = new MyClass())
+
+#write "out.txt"
+  integer.MAX_VALUE = {integer.MAX_VALUE}
+  myClass.x = {myClass.x}
+  myClass.y = {myClass.y}
+  myClass.z = {myClass.z}
+#end
+</pre>
+|
+<pre>
+class MyClass {
+  public int x = 10
+}
+</pre>
+|
+<pre>
+  integer.MAX_VALUE = 2147483647
+  myClass.x = 10
+  myClass.y = NULL
+  myClass.z = NULL
+
+</pre>
+|}
+
+=== New ===
+
+The ''new'' statement is used to instantiate Java or Groovy classes. A class must have a public constructor to be instantiated.
+You can add a [[#Map|Map]] directly in the argument list, see [[#Arguments|arguments]].
+The following classes are accessible from Laja:
+* All core Java classes.
+* All [[#import|imported]] Groovy classes.
+* All Java classes that is included in the classpath when starting Laja:
+** [http://commons.apache.org/lang/api-2.4/index.html commons-lang-2.4.jar]
+** [http://groovy.codehaus.org/gapi groovy-all-1.0-jsr-05.jar]
+** All jar files in the directory {java home}/lib and {java home}/system-lib.
+
+Example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (value = new java.lang.Integer(123))
+
+#write "out.txt"
+  {value}
+#end
+</pre>
+|
+<pre>
+  123
+
+</pre>
+|}
+
+=== Arguments ===
+
+[[#macro|Macros]], [[#function|functions]], [[#Method|methods]] and the [[#new|new]] statement all have a method signature (parameter list).
+When calling one of these you pass in an argument list (or an empty list) separated by commas (,). Example:
+
+{| class="nogridtable"
+! Template file content !! Car.groovy !! out.txt
+|-
+|
+<pre>
+#import "{.}/Car.groovy"
+
+#function number()
+  #return (123)
+#end
+
+#macro car(type, color)
+type={type}, color={color}##
+#end
+
+#macro viewcar(car)
+type={car.type}, color={car.color}, age={car.age}##
+#end
+
+#set (car = new Car())
+#set (map = { type: "BMW" color: "red" age: 3 })
+
+- car1 is called with the arguments: String,String.
+- car2, car3 and car4 is called with the argument: Map (java.util.LinkedHashMap)
+- the argument list for car3 is translated into a Map.
+
+#write "out.txt"
+  number: {number()}
+  car1: {car("Renault", "blue")}
+  car2: {viewcar({type: "Saab" color: "blue" age: 7})}
+  car3: {viewcar(type: "Volvo" color: "green" age: 15)}
+  car4: {viewcar(map)}
+  car5: {car.view(type: "Fiat" color: "white" age: 5)}
+#end
+</pre>
+|
+<pre>
+class Car {
+	public def view(def car) {
+		return "type=${car.type}, color=${car.color}, age=${car.age}"
+	}
+}</pre>
+|
+<pre>
+  number: 123
+  car1: type=Renault, color=blue
+  car2: type=Saab, color=blue, age=7
+  car3: type=Volvo, color=green, age=15
+  car4: type=BMW, color=red, age=3
+  car5: type=Fiat, color=white, age=5
+
+</pre>
+|}
+
+== Groovy ==
+Laja comes with support for [http://groovy.codehaus.org Groovy]. Groovy classes are imported (and loaded by the Groovy class loader)
+with the [[#import|#import]] command and after that available to all [[#namespace|namespaces]].
+If a method isn't public or does not exist then null is returned. Example:
+
+{| class="nogridtable"
+! generate.laja !! TestClass.groovy !! out.txt
+|-
+|
+<pre>
+#import "{.}/TestClass.groovy"
+
+#set (testClass = new TestClass())
+
+#write "out.txt"
+increment(1) = {testClass.increment(1)}
+increment(1,2) = {testClass.increment(1,2)}
+#end
+</pre>
+|
+<pre>
+class TestClass {
+    public int increment(int value) {
+        return value + 1
+    }
+}
+</pre>
+|
+<pre>
+increment(1) = 2
+increment(1,2) = NULL
+
+</pre>
+|}
+
+If a Groovy class B is used by Groovy class A, then class B must be [[#import|imported]] before class A, example:
+
+{| class="nogridtable"
+! generate.laja !! A.groovy !! B.groovy !! out.txt
+|-
+|
+<pre>
+#import "{.}/B.groovy"
+#import "{.}/A.groovy"
+
+#set (a = new A())
+
+#write "out.txt"
+  {a.x}
+#end
+</pre>
+|
+<pre>
+class A {
+    public String x() {
+        return new B().y()
+    }
+}
+</pre>
+|
+<pre>
+class B {
+    public y() {
+        return "Abc"
+    }
+}
+</pre>
+|
+<pre>
+  Abc
+
+</pre>
+|}
+
+== Commands ==
+
+Laja consists of the following commands:
+
+{| class="wikitable"
+! Command !! Description
+|-
+| [[#error|#error]] || Stops the execution
+|-
+| [[#foreach|#foreach]] || Iterates over a collection
+|-
+| [[#function|#function]] || Defines a function
+|-
+| [[#if|#if]] || Control flow statement
+|-
+| [[#import|#import]] || Imports a Laja template file
+|-
+| [[#local|#local]] || Sets a variable with local scope within a macro
+|-
+| [[#macro|#macro]] || Defines a macro
+|-
+| [[#namespace|#namespace]] || Specifies a namespace for current file
+|-
+| [[#set|#set]] || Stores a value
+|-
+| [[#while|#while]] || While flow statement
+|-
+| [[#write|#write]] || Writes text to a file
+|}
+
+=== error ===
+
+This command is used for stopping the execution and print out an error message.
+
+{| class="nogridtable"
+! generate.laja !! out.txt !! Error message
+|-
+|
+<pre>
+#set (name = "Gordon")
+
+#write "out.txt"
+  Start
+  #error ("Stop the execution for {name}")
+  End
+#end
+</pre>
+|
+<pre>
+  Start
+
+</pre>
+|
+<pre>
+Stop the execution for Gordon
+Error in file "generate.laja", row 5, column 3:
+  #error ("Stop the execution for {name}")
+  ^
+</pre>
+|}
+
+=== foreach ===
+
+The foreach statement can iterate over these kind of objecs:
+* Java arrays
+* Any object that implements the interface ''java.util.Iterator''
+* Any object that implements the interface ''java.lang.Iterable'', like ''java.util.List'' or ''java.util.Set''
+* Any object that implements the interface ''java.util.Map'', like ''java.util.HashMap'' or ''java.util.Properties''.
+* null (handled as an empty list).
+
+A simple foreach loop:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  #foreach (x in [1,2,3])
+    value = {x}
+  #end
+#end
+</pre>
+|
+<pre>
+    value = 1
+    value = 2
+    value = 3
+</pre>
+|}
+
+A foreach loop, showing a litte trick to produce a comma separated list:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (listOfValues = [1,2,3])
+
+#write "out.txt"
+  #set (comma = "")
+  #foreach (value in listOfValues)
+{comma}{value}##
+    #set (comma = ",")
+  #end
+#end
+</pre>
+|
+<pre>
+1,2,3
+</pre>
+|}
+
+A nested foreach loop:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (multilist = [["a","b"], ["c","d"], ["e"]])
+
+#write "out.txt"
+  #foreach (list in multilist)
+[##
+    #foreach (x in list)
+{x},##
+    #end
+]
+  #end
+#end
+</pre>
+|
+<pre>
+[a,b,]
+[c,d,]
+[e,]
+
+</pre>
+|}
+
+A foreach loop with a ''where'' clause:
+{| class="nogridtable" !! Template file content !! out.txt
+|-
+|
+<pre>
+#set (even = [ true, false, true, false, true ])
+
+#write "out.txt"
+  #foreach (x in [0,1,2,3,4] where even[x])
+value = {x}
+  #end
+#end
+</pre>
+|
+<pre>
+value = 0
+value = 2
+value = 4
+
+</pre>
+|}
+
+=== function ===
+
+A function is very similar to [[#macro|#macro]] except that you have to return a value using the ''#return'' statement.
+Surrounding the return statement with parenthesis is optional.
+Another difference is that when executing it as a "command" (by prefixing it with #, see #increment(200) in this example)
+it does not write anything to the output. To assign the result from a function call, you use the ''into'' syntax.
+If the function exits without a return statement and exception is thrown. Overloaded functions are currently not
+supported. You can also pass a [[#Map|Map]] directly in the argument list, see [[#Arguments|arguments]]. Example:
+
+{| class="nogridtable"
+! generate.laja !! Adder.groovy !! out.txt
+|-
+|
+<pre>
+#import "{.}/Adder.groovy"
+
+#set (adder = new Adder())
+
+#function increment(x)
+  #if (x > 10)
+    #return (adder.add(x,10))
+  #else
+    #return adder.add(x,1)
+  #end
+#end
+
+#write "out.txt"
+  #set (a = increment(1))
+  #increment(5) into value
+a = {a}
+value = {value}
+increment(100) = {increment(100)}
+increment(200) = #increment(200)
+#end
+</pre>
+|
+<pre>
+class Adder {
+  def add(def a, def b) {
+    return a + b
+  }
+}
+</pre>
+|
+<pre>
+a = 2
+value = 6
+increment(100) = 110
+increment(200) =
+
+</pre>
+|}
+
+Functions can return conditions:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#function lessThan(a,b)
+  #return a < b  ## More complex conditions
+                 ## like "a < b && a > 10"
+                 ## is currently not supported
+#end
+
+#write "out.txt"
+  #if (lessThan(1,2))
+    1 is less than 2
+  #end
+#end
+</pre>
+|
+<pre>
+    1 is less than 2
+
+</pre>
+|}
+
+=== if ===
+
+A simple if statement:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  #if (true)
+This is true!
+  #end
+#end
+</pre>
+|
+<pre>
+This is true!
+
+</pre>
+|}
+
+Any valid [[#Boolean|boolean value]] can be used, e.g. ''1 > 10 && a == "Smith"'' in this example:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+
+#set (a = "Smith")
+
+#write "out.txt"
+  #if (1 > 10 && a == "Smith")
+This is true!
+  #end
+#end
+</pre>
+|
+<pre>
+This is true!
+
+</pre>
+|}
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+
+The if statement can be followed by an else:
+
+#write "out.txt"
+  #if (false)
+This is not true!
+  #else
+This is true!
+  #end
+#end
+</pre>
+|
+<pre>
+This is true!
+
+</pre>
+|}
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+The if statement can be followed by
+one ore more "else if" statements.
+
+#write "out.txt"
+  #if (false)
+    This is not true...
+  #else if (1 == 2)
+    and not this...
+  #else if (1 > 10 || 10 <= 5)
+    and not this either...
+  #else
+    but this!
+  #end
+#end
+</pre>
+|
+<pre>
+    but this!
+
+</pre>
+|}
+
+=== import ===
+
+Import statement can be placed anywhere in the template file after the [[#namespace|#namespace]] command (which must
+be the first statement in the file if exists).
+
+If the file ends with ".laja" then it will be parsed and executed as a normal Laja template. If the file ends with ".groovy" then file is imported as [[#Groovy|Groovy code]]. All other prefixes is imported as plain text. If using the syntax ''#import "myfile" as text'' then even Groovy and Laja files are handled as plain text.
+
+The "{.}" is substituted by the directory path where the current template (''generate.laja'' in this example) is located.
+A "{..}" is substituted with the parent directory path of the directory where current tamplate is located. Example:
+
+{| class="nogridtable"
+! generate.laja !! importme.laja !! out.txt
+|-
+|
+<pre>
+#set (a = "greetings!")
+
+#write "out.txt"
+  #import "{.}/importme.laja"
+#end
+</pre>
+|
+<pre>
+#namespace mydata
+#set (b = 123)
+a = {a}  ## Values stored in the default are
+         ## accessible from all namespaces.
+b = {b}  ## The variable 'b' is only accesible
+         ## from the namespace 'mydata'.
+</pre>
+|
+<pre>
+a = greetings!
+b = 123
+</pre>
+|}
+
+The following example will procude the error message ''Could not find macro 'pi' in namespace $''.
+The reason is that the macro pi() is only accessible from the namespace ''mydata''.
+
+{| class="nogridtable"
+! generate.laja !! importme.laja
+|-
+|
+<pre>
+#macro hello(name)
+  Hello {name}!
+#end
+
+#write "out.txt"
+  #import "importme.laja"
+{hello("Smith")}
+{pi()}
+#end
+</pre>
+|
+<pre>
+#namespace mydata
+
+#macro pi()
+3.14##
+#end
+</pre>
+|}
+
+Prefixing with the name of the namespace ''$mydata'' will fix the problem:
+{| class="nogridtable"
+! generate.laja !! importme.laja !! out.txt
+|-
+|
+<pre>
+#macro hello(name)
+  Hello {name}!
+#end
+
+#write "out.txt"
+  #import "importme.laja"
+{hello("Smith")}
+{$mydata.pi()}
+#end
+</pre>
+|
+<pre>
+#namespace mydata
+
+#macro pi()
+3.14##
+#end
+</pre>
+|
+<pre>
+
+  Hello Smith!
+
+3.14
+
+</pre>
+|}
+
+Import as plain text:
+{| class="nogridtable"
+! generate.laja !! importme.laja !! out.txt
+|-
+|
+<pre>
+#set (a = "greetings!")
+
+#write "out.txt"
+  #import "{.}/importme.laja" as text
+#end
+</pre>
+|
+<pre>
+#namespace mydata
+#set (b = 123)
+a = {a}
+b = {b}
+</pre>
+|
+<pre>
+#namespace mydata
+#set (b = 123)
+a = {a}
+b = {b}
+</pre>
+|}
+
+=== local ===
+
+The local instruction works the same way as the [[#set|#set]] instruction except that it has local scope within a macro body.
+Incoming macro parameters has local scope and can be changed with a ''#local'' instruction.
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#macro testlocal(arg1, arg2)
+arg1 = {arg1}
+arg2 = {arg2}
+#local (arg1 = 992)
+arg1 = {arg1}
+  #local (x = 123)
+  #set (x1 = "{x}-outer")
+  #set (x2 = x)
+  #local (localx1 = "{x}-local")
+  #local (localx2 = x)
+local x = {x}
+local x1 = {localx1}
+local x2 = {localx2}
+#end
+
+#write "out.txt"
+  #set (arg1 = 990)
+  #set (x = 5)
+  #set (y = 77)
+  #testlocal(991, 1001)
+arg1 = {arg1}
+arg2 = {arg2}
+outer x = {x}
+outer y = {y}
+outer x1 = {x1}
+outer x2 = {x2}
+#end
+</pre>
+|
+<pre>
+arg1 = 991
+arg2 = 1001
+arg1 = 992
+local x = 123
+local x1 = 123-local
+local x2 = 123
+arg1 = 990
+arg2 = NULL
+outer x = 5
+outer y = 77
+outer x1 = 123-outer
+outer x2 = 123
+
+</pre>
+|}
+
+Laja only support simple conditions in local statements.
+
+<pre>
+
+#macro test()
+  #local (x = 1 < 2)           # This is OK
+  #local (x = 1 < 2 && 9 > 7)  # This is not allowed
+#end
+
+#write "out.txt"
+  #test()
+#end
+</pre>
+
+=== macro ===
+Macros are local within its namespace. You can access macros in other namespaces by prefixing the macro with the namespace.
+Macros in the default ($) namespace is accessable from all namespaces.
+Overloaded macros (macros with the same name but different parameter lists) are currently not supported by Laja.
+
+If referencing to a macro using curly braces, the "new line" character(s) on the last line "Hello {name}!" is included
+in the output:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#macro hello(name)
+Hello {name}!
+#end
+
+#write "out.txt"
+  {hello("Ken")}!!
+  how are you?
+#end
+</pre>
+|
+<pre>
+  Hello Ken!
+!!
+  how are you?
+
+</pre>
+|}
+
+To fix this problem you can add a comment at the end of the macro, example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#macro hello(name)
+Hello {name}!##
+#end
+
+#write "out.txt"
+  {hello("Ken")}!!
+  how are you?
+#end
+</pre>
+|
+<pre>
+  Hello Ken!!!
+  how are you?
+
+</pre>
+|}
+
+A macro can also be executed as a "command". When executing like a command, it behaves the same way as normal commands
+(like #foreach, #if and others) which means that preceding white spaces are ignored (two spaces in this example) and if the macro call
+is the last thing on the row, the trailing white spaces (including "new line") is ignored, example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+
+#macro hello(name)
+Hello {name}!
+#end
+
+#write "out.txt"
+  #hello("Ken")
+  how are you?
+#end
+</pre>
+|
+<pre>
+Hello Ken!
+  how are you?
+
+</pre>
+|}
+
+It the argument list is a map then you can specify that [[#Map|map]] directly without the curly braces, see also [[#Argruments|arguments]].
+When iterating over a map, every element will be a map itself containing the elemnts ''key'' and ''value''. Example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#macro viewXAttributes(settings)
+  #foreach (setting in settings)
+    #if (setting.key.startsWith("x"))
+  {setting.key} : {setting.value}
+    #end
+  #end
+#end
+
+#write "out.txt"
+  #viewXAttributes(abc: 123 name: "Sven" xyz: "hello" xaa: 3.14)
+#end
+</pre>
+|
+<pre>
+  xyz : hello
+  xaa : 3.14
+
+</pre>
+|}
+
+Example of a local macro that hides the macro in the default namespace.
+
+{| class="nogridtable"
+! generate.laja !! importme.laja !! out.txt
+|-
+|
+<pre>
+#macro test(name)
+  Your name is: {name}!!!##
+#end
+
+#write "out.txt"
+{test("John")}
+  #import "importme.laja"
+#end
+</pre>
+|
+<pre>
+#namespace testing
+#macro test(name)
+  Local scope: {name}##
+#end
+{$.test("Adam")}
+{test("Bobo")}
+</pre>
+|
+<pre>
+  Your name is: John!!!
+  Your name is: Adam!!!
+  Local scope: Bobo
+
+</pre>
+|}
+
+Example using recursion:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#macro printClass(class)
+
+Class: {class}
+Methods:
+  #foreach (method in class.methods)
+{method}
+  #end
+  #if (class.superclass != null)
+{printClass(class.superclass)}
+  #end
+#end
+
+#write "out.txt"
+  #set (string = "")
+{printClass(string.class)}
+#end
+</pre>
+|
+<pre>
+
+Class: class java.lang.String
+Methods:
+public int java.lang.String.hashCode()
+public int java.lang.String.compareTo(java.lang.Object)
+public int java.lang.String.compareTo(java.lang.String)
+public int java.lang.String.indexOf(java.lang.String,int)
+public int java.lang.String.indexOf(java.lang.String)
+public int java.lang.String.indexOf(int)
+public int java.lang.String.indexOf(int,int)
+public boolean java.lang.String.equals(java.lang.Object)
+public java.lang.String java.lang.String.toString()
+public char java.lang.String.charAt(int)
+public int java.lang.String.codePointAt(int)
+public int java.lang.String.codePointBefore(int)
+public int java.lang.String.codePointCount(int,int)
+public int java.lang.String.compareToIgnoreCase(java.lang.String)
+public java.lang.String java.lang.String.concat(java.lang.String)
+public boolean java.lang.String.contains(java.lang.CharSequence)
+public boolean java.lang.String.contentEquals(java.lang.StringBuffer)
+public boolean java.lang.String.contentEquals(java.lang.CharSequence)
+public static java.lang.String java.lang.String.copyValueOf(char[],int,int)
+public static java.lang.String java.lang.String.copyValueOf(char[])
+public boolean java.lang.String.endsWith(java.lang.String)
+public boolean java.lang.String.equalsIgnoreCase(java.lang.String)
+public static java.lang.String java.lang.String.format(java.lang.String,java.lang.Object[])
+public static java.lang.String java.lang.String.format(java.util.Locale,java.lang.String,java.lang.Object[])
+public byte[] java.lang.String.getBytes(java.nio.charset.Charset)
+public byte[] java.lang.String.getBytes()
+public byte[] java.lang.String.getBytes(java.lang.String) throws java.io.UnsupportedEncodingException
+public void java.lang.String.getBytes(int,int,byte[],int)
+public void java.lang.String.getChars(int,int,char[],int)
+public native java.lang.String java.lang.String.intern()
+public boolean java.lang.String.isEmpty()
+public int java.lang.String.lastIndexOf(java.lang.String)
+public int java.lang.String.lastIndexOf(int)
+public int java.lang.String.lastIndexOf(int,int)
+public int java.lang.String.lastIndexOf(java.lang.String,int)
+public int java.lang.String.length()
+public boolean java.lang.String.matches(java.lang.String)
+public int java.lang.String.offsetByCodePoints(int,int)
+public boolean java.lang.String.regionMatches(int,java.lang.String,int,int)
+public boolean java.lang.String.regionMatches(boolean,int,java.lang.String,int,int)
+public java.lang.String java.lang.String.replace(char,char)
+public java.lang.String java.lang.String.replace(java.lang.CharSequence,java.lang.CharSequence)
+public java.lang.String java.lang.String.replaceAll(java.lang.String,java.lang.String)
+public java.lang.String java.lang.String.replaceFirst(java.lang.String,java.lang.String)
+public java.lang.String[] java.lang.String.split(java.lang.String,int)
+public java.lang.String[] java.lang.String.split(java.lang.String)
+public boolean java.lang.String.startsWith(java.lang.String,int)
+public boolean java.lang.String.startsWith(java.lang.String)
+public java.lang.CharSequence java.lang.String.subSequence(int,int)
+public java.lang.String java.lang.String.substring(int)
+public java.lang.String java.lang.String.substring(int,int)
+public char[] java.lang.String.toCharArray()
+public java.lang.String java.lang.String.toLowerCase()
+public java.lang.String java.lang.String.toLowerCase(java.util.Locale)
+public java.lang.String java.lang.String.toUpperCase()
+public java.lang.String java.lang.String.toUpperCase(java.util.Locale)
+public java.lang.String java.lang.String.trim()
+public static java.lang.String java.lang.String.valueOf(char[])
+public static java.lang.String java.lang.String.valueOf(int)
+public static java.lang.String java.lang.String.valueOf(long)
+public static java.lang.String java.lang.String.valueOf(float)
+public static java.lang.String java.lang.String.valueOf(double)
+public static java.lang.String java.lang.String.valueOf(java.lang.Object)
+public static java.lang.String java.lang.String.valueOf(char)
+public static java.lang.String java.lang.String.valueOf(char[],int,int)
+public static java.lang.String java.lang.String.valueOf(boolean)
+public final void java.lang.Object.wait() throws java.lang.InterruptedException
+public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException
+public final native java.lang.Class java.lang.Object.getClass()
+public final native void java.lang.Object.notify()
+public final native void java.lang.Object.notifyAll()
+
+Class: class java.lang.Object
+Methods:
+public final void java.lang.Object.wait() throws java.lang.InterruptedException
+public final void java.lang.Object.wait(long,int) throws java.lang.InterruptedException
+public final native void java.lang.Object.wait(long) throws java.lang.InterruptedException
+public native int java.lang.Object.hashCode()
+public final native java.lang.Class java.lang.Object.getClass()
+public boolean java.lang.Object.equals(java.lang.Object)
+public java.lang.String java.lang.Object.toString()
+public final native void java.lang.Object.notify()
+public final native void java.lang.Object.notifyAll()
+
+
+</pre>
+|}
+
+=== namespace ===
+If no namespace is specified, all [[#set|#set]] variables will be stored in the default ($) namespace.
+A namespace is a ''java.util.LinkedHashMap'' and holds all the values for the namespace.
+The ''#namespace'' command must be the first statement in the file (or left out).
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (yes = "Yes!")
+#set (no = "No!")
+#set (map = $)
+
+#write "out.txt"
+  Default namespace = {$}
+  $.yes = {$.yes}
+  $.no = {$.no}
+  $.class().name = {$.class().name}
+  map.class().name = {map.class().name}
+#end
+
+Found a bug! Expected:
+  $.class().name = java.util.HashMap
+</pre>
+|
+<pre>
+  Default namespace = {yes=Yes!, fileService=FileService@ba8602, no=No!, classService=ClassService@1b3f8f6, map=(this Map), reflectModifier=class java.lang.reflect.Modifier}
+  $.yes = Yes!
+  $.no = No!
+  $.class().name = NULL
+  map.class().name = java.util.LinkedHashMap
+
+</pre>
+|}
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#namespace data
+
+#set (value = 123)
+#set ($.x = 500)
+#set ($data.y = 777)
+
+#write "out.txt"
+  $ = {$}
+  $.x = {$.x}
+  $data.x = {$data.x}
+  $data = {$data}
+  $data.value = {$data.value}
+#end
+
+Another bug, expected:
+  $.x = 500
+  $data.x = NULL
+  $data = {value=123, y=777}
+</pre>
+|
+<pre>
+  $ = {}
+  $.x = NULL
+  $data.x = 500
+  $data = {value=123, y=777, x=500}
+  $data.value = 123
+
+</pre>
+|}
+
+=== set ===
+
+If no [[#namespace|namespace]] is given, then all set instructions will store it's values in the default namespace ($).
+If a namespace is specified in the file, then the values will be stored in that namespace.
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+Let's say we have the Java class:
+
+my.package.MyClass {
+   private int x;
+
+   public void setX(int x) {
+      this.x = x;
+   }
+
+   public int getX() {
+      return x;
+   }
+}
+
+#set (myClass = new my.package.MyClass())
+#set (myClass.x = 123)   ## Calls setX(123) on the instance of MyClass.
+
+#set (map = {})    ## Empty map
+#set (map.x = "hello")  ## Calls put("hello") on the map.
+
+#write "out.txt"
+  myClass.x = {myClass.x}
+  myClass.y = {myClass.y}  ## Missing methods is evaluated to null
+
+  map = {map}
+  map.x = {map.x}
+#end
+
+Accessing public members other than methods are currently not supported!
+</pre>
+|
+<pre>
+  myClass.x = 123
+  myClass.x = NULL
+
+  map = {x=hello}
+  map.x = hello
+</pre>
+|}
+
+If refering a namespace that does not already exists, it will be created. This statement will create namespace ''x'' (if not exists):
+  #set ($x.abc = 10)
+
+The only exception from this rule is when assigning a namespace to a variable (Map). This will throw an exception if the namespace ''$x'' does not exist:
+  #set (map = $x)
+
+Laja only support simple conditions in set statements.
+
+<pre>
+  #set (x = 1 < 2>           # This is OK
+  #set (x = 1 < 2 && 9 > 7)  # This is not allowed
+</pre>
+
+=== while ===
+Any valid [[#Boolean|boolean value]] can be used within the parenthesis.
+
+Example:
+
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#set (message = "")
+
+#write "target/test-output/while.out"
+  #while (message.length < 10)
+    #set (message = "x{message}")
+{message}
+  #end
+#end
+</pre>
+|
+<pre>
+x
+xx
+xxx
+xxxx
+xxxxx
+xxxxxx
+xxxxxxx
+xxxxxxxx
+xxxxxxxxx
+xxxxxxxxxx
+</pre>
+|}
+
+=== write ===
+
+How comments and white spaces works is described in section [[#Plain text|plain text]].
+Everything within a ''#write'' block is written to the file specified within the "".
+If the file does not exist it will be created. If the file exists it will be overwritten.
+
+
+Writing to one file:
+{| class="nogridtable"
+! Template file content !! out.txt
+|-
+|
+<pre>
+#write "out.txt"
+  Hello!
+#end
+</pre>
+|
+<pre>
+  Hello!
+</pre>
+|}
+
+Write/create several files:
+{| class="nogridtable"
+! general.laja !! out.txt || file1.txt || file2.txt || file3.txt
+|-
+|
+<pre>
+#write "out.txt"
+Header
+  #foreach (x in [1,2,3])
+    #write "file{x}.txt"
+  x = {x}
+    #end
+  #end
+#end
+</pre>
+|
+<pre>
+Header
+  x = 1
+  x = 2
+  x = 3
+
+</pre>
+|
+<pre>
+  x = 1
+
+</pre>
+|
+<pre>
+  x = 2
+
+</pre>
+|
+<pre>
+  x = 3
+
+</pre>
+|}
+
+== System functions ==
+[[Code generator - System functions]]

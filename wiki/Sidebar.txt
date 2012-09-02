@@ -1,0 +1,29 @@
+* laja
+** mainpage|Overview
+** https://sourceforge.net/projects/laja|Download Laja
+** Install|Install Laja
+** http://laja.svn.sourceforge.net/viewvc/laja/trunk/Laja|Browse code
+** Releases|Releases
+** http://www.gnu.org/copyleft/gpl.html|License
+** Development|Developing Laja
+* code generator
+** Code generator|Getting started
+** Code generator - Architecture|Architecture
+** Code generator - Documentation|Documentation
+** Code generator - System functions|System functions
+* parser generator
+** Parser generator - Getting started|Getting started
+** Parser generator - Architecture|Architecture
+** Parser generator - Documentation|Documentation
+* CDD
+** CDD - Getting started|Getting started
+Sidebar
+* SEARCH
+* TOOLBOX
+* LANGUAGES
+* Admin
+** http://laja.wikinet.org/w/index.php?title=MediaWiki:Sidebar&action=edit|Edit Sidebar
+** http://laja.wikinet.org/w/index.php?title=MediaWiki:Common.css&action=edit|Edit Common.css
+** http://meta.wikimedia.org/wiki/Help:Contents#For_editors|Wiki Doc
+** http://www.mediawiki.org/wiki/Manual:FAQ|Wiki FAQ
+** recentchanges-url|recentchanges

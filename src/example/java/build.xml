@@ -1,0 +1,76 @@
+
+<project name="Laja" default="dist" basedir=".">
+	<description>Laja examples</description>
+
+	<property environment="env" />
+
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+
+	<property name="laja.version.name" value="laja1-004-alpha" />
+	<property name="laja.jar" value="${env.LAJA_HOME}/system-lib/${laja.version.name}.jar" />
+	<property name="laja.system-lib" value="${env.LAJA_HOME}/system-lib" />
+	<property name="laja.example.jar" value="laja-example.jar" />
+
+	<taskdef name="laja" className="net.sf.laja.ant.LajaTask" classpath="${env.LAJA_HOME}/system-lib/${laja.version.name}.jar" />
+
+	<path id="execute.classpath">
+		<pathelement location="${build}/${laja.example.jar}" />
+		<pathelement location="${laja.system-lib}/commons-lang-2.4.jar" />
+		<pathelement location="${laja.system-lib}/groovy-all-1.0-jsr-05.jar" />
+		<pathelement location="${laja.system-lib}/${laja.version.name}.jar" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build}" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}" source="1.6">
+			<classpath>
+				<pathelement path="${classpath}" />
+				<pathelement location="${laja.jar}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile">
+		<jar jarfile="${build}/${laja.example.jar}" basedir="${build}" />
+	</target>
+
+	<!-- Example 1 (Parser generator) -->
+	<target name="example1">
+		<!-- Generates Example1Parser.java and Example1ParserApp.java -->
+		<laja>
+			<template file="${basedir}/parsergenerator/example1/example1.laja" />
+		</laja>
+
+		<!-- Compile and build laja-example.jar -->
+		<antcall target="dist" />
+
+		<!-- Parse the file example1.txt and prints result if all went well -->
+		<java classname="net.sf.laja.example.parsergenerator.example1.Example1DomApp">
+			<classpath refid="execute.classpath" />
+		</java>
+	</target>
+
+	<!-- Example 2 (Parser generator) -->
+	<target name="example2">
+		<!-- Generates Example2.java, Operator.java, Example2Parser.java and Example2DomApp.java -->
+		<laja>
+			<template file="${basedir}/parsergenerator/example2/example2.laja" />
+		</laja>
+
+		<!-- Compile and build laja-example.jar -->
+		<antcall target="dist" />
+
+		<!-- Parse the file example2.txt and prints the result if all went well -->
+		<java classname="net.sf.laja.example.parsergenerator.example2.Example2DomApp">
+			<classpath refid="execute.classpath" />
+		</java>
+	</target>
+</project>

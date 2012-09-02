@@ -1,0 +1,8 @@
+This diagram explains the design of the code generator in Laja:
+
+# Laja can read from different kind of data sources and formats. The data is used by the ''template enginge'' to produce output files.
+# The ''user'' wants to generate one or more text files (code, documentation etc). To do that a ''template file'' needs to be created.
+# The next step is to let Laja execute the ''template file'' to perform the code generation.
+# The result is some kind of text file(s) ('''4''') that combines the data ('''1'''), the tempate file(s) ('''2'''), and optionally some user imports and/or user libraries (.jar files) ('''3''').
+
+[[File:Laja-code-generator.png]]

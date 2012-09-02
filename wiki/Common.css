@@ -1,0 +1,50 @@
+/* CSS placed here will be applied to all skins */
+
+h3 {
+   font-weight: bold;
+}
+
+/***** Table formatting *****/
+  table.wikitable,
+  table.nogridtable {
+     margin:1em 1em 1em 0;
+     border-collapse:collapse;
+  }
+
+  table.wikitable {
+     border:1px #AAA solid;
+  }
+
+  table.nogridtable {
+     border:0px;
+  }
+
+  table.wikitable th,
+  table.wikitable td,
+  table.nogridtable  th,
+  table.nogridtable  td {
+     padding:0.2em;
+     text-align:left;
+     vertical-align:top;
+  }
+
+  table.wikitable th,
+  table.nogridtable  th {
+     background:#DDDDFF;
+  }
+
+  table.wikitable th,
+  table.wikitable td {
+     border:2px #DDDDDD solid;
+  }
+
+  table.nogridtable  th,
+  table.nogridtable  td {
+     border:2px #FFFFFF solid;
+  }
+
+  table.wikitable caption,
+  table.nogridtable  caption {
+     margin-left:inherit;
+     margin-right:inherit;
+  }
