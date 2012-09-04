@@ -2,7 +2,7 @@
 
 * Laja is a [http://en.wikipedia.org/wiki/Template_processor code generator].
 * Laja is a [http://en.wikipedia.org/wiki/Compiler-compiler parser generator] that uses the code generator and generates parsers for Java.
-* Laja has support for Context Driven Development (CDD) where the target language is Java.
+* Laja supports Context Driven Development (CDD) where the target language is Java.
 * It should be possible to run Laja on most variants of Windows, Unix/Linux.
 * Laja is Open Source, using [http://www.gnu.org/licenses/gpl-3.0-standalone.html GNU General Publi License version 3.0].
 * Laja is written to be used by developers with easy of use as the primary goal. Generating text files or creating [http://en.wikipedia.org/wiki/Domain-specific_language DSL]'s should be both easy and fun!
@@ -52,15 +52,15 @@ One of the main ideas of the parser generator has been to introduce a more objec
 * You will get compilation failures if the implementing output classes does not follow the interface defined in the grammar, which makes it easy to implement the output classes.
 * Laja is prepared to support more languages than Java in the future.
 
-=== CDD ===
+=== The CDD support ===
 Context Driven Development brings the concept ''context'' to [http://en.wikipedia.org/wiki/Object-oriented_programming object orientation] by separating ''state'' and ''behaviour'':
-* Create tailor made behaviour representations of each context and switch between them without breaking [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation].
-* CDD separates its parts which encourages and facilitates [http://en.wikipedia.org/wiki/Separation_of_concerns separation of concerns] and [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility]:
-** ''define'' state in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way
-** ''build'' state in a more flexible and robust manner
-** the state can be validated, and errors can be fixed, before encapsulation takes place
-** have one behaviour representation per task (context) with support of [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html context-switching] (improved version)
-* Facilitates [http://en.wikipedia.org/wiki/Object_composition composition] over [http://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29 inheritance] which gives more modular code and encourages reuse.
+
+CDD separates its parts which facilitates the design principles [http://en.wikipedia.org/wiki/Separation_of_concerns separation of concerns], [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility] and [http://c2.com/cgi/wiki?TellDontAsk tell don't ask]:
+* Define state in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way
+* Building [http://en.wikipedia.org/wiki/State_%28computer_science%29 state] is both robust and flexible
+* The state can be validated, and errors can be fixed, before encapsulation takes place
+* Have one behaviour representation per context and [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html switch] between them without breaking [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation]
+* Encourages [http://en.wikipedia.org/wiki/Object_composition composition] over [http://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29 inheritance] which provides more modular code and facilitates reuse
 
 
 This website is a Wiki using [http://www.mediawiki.org/wiki/MediaWiki MediaWiki].
