@@ -15,8 +15,10 @@
 ** Parser generator - Getting started|Getting started
 ** Parser generator - Architecture|Architecture
 ** Parser generator - Documentation|Documentation
-* CDD
+* cdd
 ** CDD - Getting started|Getting started
+** CDD - Architecture|Architecture
+** CDD - Documentation|Documentation
 Sidebar
 * SEARCH
 * TOOLBOX
