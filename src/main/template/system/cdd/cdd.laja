@@ -116,6 +116,9 @@
           #set (template.rootBehaviourPackage = behaviourPackage)
           #set (template.sourceDir = file.parent)
           #set (template.outputDir = directoryConverter.convertSourceDirToOutputDir(template.sourceDir, stateSrcDir, stateOutDir, errors))
+          #if (!template.packagename.startsWith(statePackage))
+            #errors.addMessage("Illegal package '{template.packagename}' in class '{template.classname}', must start with '{statePackage}'")
+          #end
           #if (errors.hasErrors)
             #set (parserError = true)
           #end
