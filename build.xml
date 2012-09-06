@@ -32,7 +32,7 @@
   <target name="dist-and-copy" depends="dist">
     <property environment="env"/>
       <unzip src="${project.build.directory}/${maven.build.finalName}.zip" dest="${env.LAJA_HOME}"/>
-      <echo file="${env.LAJA_HOME}/template/system-imports.laja">#import "C:/Source/IDEA/Laja/src/main/template/system-imports.laja"</echo>
+      <echo file="${env.LAJA_HOME}/template/system-imports.laja">#import "C:/Source/IDEA/Laja2/Laja/src/main/template/system-imports.laja"</echo>
   </target>
 
   <target name="help">
