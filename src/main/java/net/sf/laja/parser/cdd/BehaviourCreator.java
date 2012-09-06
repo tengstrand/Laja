@@ -7,6 +7,7 @@ import net.sf.laja.parser.cdd.behaviour.Parameters;
 import net.sf.laja.parser.cdd.behaviour.Statement;
 import net.sf.laja.parser.cdd.behaviour.constructor.Importstatement;
 import net.sf.laja.parser.cdd.statetemplate.StateTemplate;
+import org.apache.commons.lang.Validate;
 
 public class BehaviourCreator {
     private DirectoryConverter directoryConverter = new DirectoryConverter();
@@ -46,11 +47,14 @@ public class BehaviourCreator {
     }
 
     String asBehaviourPackage(String rootStatePackage, String statePackage, String rootBehaviourPackage) {
-        if (!statePackage.startsWith(rootStatePackage)) {
-            return null;
-        }
+        Validate.notEmpty(statePackage, "State package is missing");
+        Validate.notEmpty(rootStatePackage, "Root state package is missing");
+
         if (statePackage.equals(rootStatePackage)) {
             return rootBehaviourPackage;
+        }
+        if (!statePackage.startsWith(rootStatePackage)) {
+            throw new IllegalArgumentException("State package '" + statePackage + "' did not start with '" + rootBehaviourPackage);
         }
         return rootBehaviourPackage + statePackage.substring(rootStatePackage.length());
     }
