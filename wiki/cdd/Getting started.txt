@@ -1,0 +1,169 @@
+Lets start using CDD by writing some code:
+* Make sure Laja is [[Install|installed]].
+* Create a project directory e.g. ''C:/Projects/MyProject''
+* Create the following directory structure in directory ''MyProject'' (package = ''com.myproject'' in this example).
+<pre>
+src/java/main/com/myproject/behaviour
+src/java/main/com/myproject/state
+</pre>
+
+Create the template file ''src/java/myproject.laja'' with the following content:
+<pre>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }]
+)
+</pre>
+
+Create the file ''src/java/main/com/myproject/state/PersonStateTemplate.java'':
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String givenName;
+    String surname;
+}
+</pre>
+
+Open a shell or DOS prompt, go to ''C:\Projects\MyProject\src\java'' and enter ''laja myproject.laja'':
+<pre>
+C:\Projects\MyProject\src\java>laja myproject.laja
+</pre>
+
+Which gives the output:
+<pre>
+Reading file "myproject.laja"
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/Certificate.java" - OK
+  Generate state classes: [Person]
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateImpl.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListImpl.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilder.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilderImpl.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateProjection.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListBuilder.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonState.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateList.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonValue.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonElement.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBehaviourFactory.java" - OK
+  Generate behaviour classes: [Person]
+  Writing to file "C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
+Generated 18 new files:
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/Certificate.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateImpl.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListImpl.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilder.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilderImpl.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateProjection.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListBuilder.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonState.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateList.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonValue.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonElement.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBehaviourFactory.java
+  C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java
+  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java
+</pre>
+
+Lets add some behaviour by creating the method ''isAdult'' to our newly created "core domain" class ''Person'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public boolean isAdult() {
+        return state.getAge() >= 18;
+    }
+}
+</pre>
+
+Lets create a persistable version of "Person" in ''java/source/main'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonValue;
+
+public class PersistablePerson extends PersonValue {
+    public PersistablePerson(PersonState state) {
+        super(state);
+    }
+
+    public void save() {
+        System.out.println("The state was saved: " + state);
+    }
+}
+</pre>
+
+Add the method ''asPersistable'' to ''Person'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+
+    public boolean isAdult() {
+        return state.getAge() >= 18;
+    }
+}
+</pre>
+
+
+
+The last step is to create a main class, in ''java/source/main'':
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Person person = Person.age(15).givenName("Dag").surname("Vag").asPerson();
+        System.out.println("Is adult: " + person.isAdult());
+
+        person.asPersistable().save();
+    }
+}
+</pre>
+
+If executing the program we get the output:
+<pre>
+Is adult: false
+The state was saved: {age=15, givenName='Dag', surname='Vag'}
+</pre>
+
+This little exercise demonstrated the basic concept of CDD, the ability to shift context without breaking encapsulation!
