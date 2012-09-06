@@ -28,7 +28,7 @@ public class PersonStateTemplate {
 }
 </pre>
 
-Open a shell or DOS prompt, go to ''C:\Projects\MyProject\src\java'' and enter ''laja myproject.laja'':
+Open a Unix shell or DOS prompt, go to ''C:\Projects\MyProject\src\java'' and enter ''laja myproject.laja'':
 <pre>
 C:\Projects\MyProject\src\java>laja myproject.laja
 </pre>
