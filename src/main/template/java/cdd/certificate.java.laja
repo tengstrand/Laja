@@ -27,6 +27,10 @@ public class {certificateClass} {
 }
 #end
 
+#if (!directoryExists(certificatePath))
+  #createDirectoryPath(certificatePath)
+#end
+
 #set (filename = "{certificatePath}/{certificateClass}.java")
 #generateFile(filename)
 #write "{filename}"
