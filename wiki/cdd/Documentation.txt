@@ -2,7 +2,11 @@
 
 Context Driven Development (CDD) takes a new approach to object orientation by separating ''state'' and ''behaviour''.
 That allows you to work in different context without breaking encapsulation.
-It's also the foundation that makes it possible to improve the way you build and validate state.
+It's also the foundation that makes it possible to improve the way state is built and validated.
 The problem is solved by using ''code generation''.
-By using code generation, the amount of code you need to write is reduced to a minimum so you
-can focus more on ''what'' to do instead of ''how'' resulting in cleaner and more concise code.
+By using code generation, the amount of code you need to write is reduced to a minimum which allows you to
+focus more on ''what'' to do instead of ''how'' resulting in cleaner and more concise code.
+
+== Getting started ==
+Take a look at the [[CDD_-_Getting_started|Getting started]] example.
+
