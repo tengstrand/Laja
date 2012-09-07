@@ -168,6 +168,4 @@ Is adult: false
 The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 </pre>
 
-This example demonstrates how to work in different context without breaking encapsulation!
-
-This is explained in the [[CDD_-_Documentation|Documentation]].
+This example is explained in the [[CDD_-_Documentation|Documentation]].
