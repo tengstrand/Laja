@@ -1,10 +1,10 @@
-Lets start using CDD by writing some code:
+Let's get started with CDD:
 * Make sure Laja is [[Install|installed]].
 * Create a project directory e.g. ''C:/Projects/MyProject''
 * Create the following directory structure in directory ''MyProject'' (package = ''com.myproject'' in this example).
 <pre>
-src/java/main/com/myproject/behaviour
 src/java/main/com/myproject/state
+src/java/main/com/myproject/behaviour
 </pre>
 
 Create the template file ''src/java/myproject.laja'' with the following content:
@@ -17,7 +17,7 @@ Create the template file ''src/java/myproject.laja'' with the following content:
 )
 </pre>
 
-Create the file ''src/java/main/com/myproject/state/PersonStateTemplate.java'':
+Create the class ''src/java/main/com/myproject/state/PersonStateTemplate.java'':
 <pre>
 package com.myproject.state;
 
@@ -28,9 +28,9 @@ public class PersonStateTemplate {
 }
 </pre>
 
-Open a Unix shell or DOS prompt, go to ''C:\Projects\MyProject\src\java'' and enter ''laja myproject.laja'':
+Open a Unix shell or DOS prompt, go to the project root and enter ''laja myproject'':
 <pre>
-C:\Projects\MyProject\src\java>laja myproject.laja
+C:\Projects\MyProject\src\java>laja myproject
 </pre>
 
 Which gives the output:
@@ -77,7 +77,7 @@ Generated 18 new files:
   C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java
 </pre>
 
-Lets add some behaviour by creating the method ''isAdult'' to our newly created "core domain" class ''Person'':
+Let's add some behaviour by creating the method ''isAdult'' to our newly created "core domain" class ''Person'':
 <pre>
 package com.myproject.behaviour;
 
@@ -99,7 +99,7 @@ public class Person extends PersonFactory {
 }
 </pre>
 
-Lets create a persistable version of "Person" in ''java/source/main'':
+Now create a persistable version of "Person" in ''java/source/main'':
 <pre>
 package com.myproject.behaviour;
 
@@ -145,14 +145,14 @@ public class Person extends PersonFactory {
 
 
 
-The last step is to create a main class, in ''java/source/main'':
+The last step is to create a main class ''src/java/main/com/myproject/behaviour/Main.java'':
 <pre>
 package com.myproject.behaviour;
 
 public class Main {
 
     public static void main(String[] args) {
-        Person person = Person.age(15).givenName("Dag").surname("Vag").asPerson();
+        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
         System.out.println("Is adult: " + person.isAdult());
 
         person.asPersistable().save();
@@ -163,7 +163,7 @@ public class Main {
 If executing the program we get the output:
 <pre>
 Is adult: false
-The state was saved: {age=15, givenName='Dag', surname='Vag'}
+The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 </pre>
 
-This little exercise demonstrated the basic concept of CDD, the ability to shift context without breaking encapsulation!
+This example demonstrates how to work in different context without breaking encapsulation!
