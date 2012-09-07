@@ -47,7 +47,7 @@ One of the main ideas of the parser generator has been to introduce a more objec
 * With little practice you will be able to create your own external DSLs, even complex ones.
 * Spaces and comments are handled the same way as other grammar rules, with no exceptions.
 * No configuration files (e.g XML files) is needed when generating a parser.
-* You can control the output that will come out from the parsing. This is done by mapping the grammar rules into object structures (which is both simple and powerful).
+* You can control the output that will come out from the parsing. This is done by mapping the grammar rules into object structures, which is both simple and powerful.
 * The generated parser code and the implementing output classes is separated, which is good!
 * You will get compilation failures if the implementing output classes does not follow the interface defined in the grammar, which makes it easy to implement the output classes.
 * Laja is prepared to support more languages than Java in the future.
@@ -55,7 +55,7 @@ One of the main ideas of the parser generator has been to introduce a more objec
 === Context Driven Development ===
 Context Driven Development brings the concept ''context'' to [http://en.wikipedia.org/wiki/Object-oriented_programming object orientation]
 by separating ''state'' and ''behaviour'' which gives a number of advantages:
-* [http://en.wikipedia.org/wiki/State_%28computer_science%29 State] can be defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way which enables that hashCode(), equals() and toString() can be generated.
+* [http://en.wikipedia.org/wiki/State_%28computer_science%29 State] can be defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way which allows that hashCode(), equals() and toString() can be generated.
 * The state is built in a more readable and robust way resulting in increases maintainability.
 * The state can be validated, and errors can be fixed, before encapsulation takes place
 * Have one behaviour representation per context and [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html switch] between them without breaking [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation]
