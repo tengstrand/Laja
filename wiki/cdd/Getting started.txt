@@ -77,6 +77,8 @@ Generated 18 new files:
   C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java
 </pre>
 
+If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you now need to add ''java-gen/main'' to your source path.
+
 Let's add some behaviour by creating the method ''isAdult'' to our newly created "core domain" class ''Person'':
 <pre>
 package com.myproject.behaviour;
@@ -167,3 +169,5 @@ The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 </pre>
 
 This example demonstrates how to work in different context without breaking encapsulation!
+
+This is explained in the [[CDD_-_Documentation|Documentation]].
