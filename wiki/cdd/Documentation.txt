@@ -83,5 +83,23 @@ Let's take a closer look at the statement that creates an instance of ''Person''
 In CDD you start by building state and ends with choosing a behaviour representation (encapsulation).
 Before encapsulation takes place it's also possible to validate the state, more on that later.
 In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html| method chain]: ''age(15).givenName("Ingmar").surname("Bergman")''.
-The attributes are defined in ''PersonStateTemplate'', and the method chain, the toString() and others are based on this definition.
+The attributes are defined in ''PersonStateTemplate'', and the method chain, the toString method (shown in the output) and others are based on this definition.
+The statement...
+<pre>
+        person.asPersistable().save();
+</pre>
 
+...switch the context and save the instance.
+
+
+If we had used traditional object orientation we would have to choose between two bad alternatives (pretend that we can't use a bytecode instrumenting persistence framework):
+# Add the method ''save'' to ''Person''.
+# Add some getters to ''Person'' and let another class perform the ''save'' operation.
+
+The first alternative leads to unclear responsibility and reduced [http://en.wikipedia.org/wiki/Cohesion_%28computer_science%29| cohesion].
+It's usually preferable to let a class work in one context by [http://en.wikipedia.org/wiki/Single_responsibility_principle| doing one thing].
+
+The second alternative breaks encapsulation by adding getters, which is bad and well described [http://typicalprogrammer.com/?p=23| here].
+
+
+So the problem with traditional OO is that you have to choose between two bad alternatives. That was the main reason why CDD was developed!
