@@ -77,9 +77,9 @@ Generated 18 new files:
   C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java
 </pre>
 
-If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you now need to add ''java-gen/main'' to your source path.
+If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.
 
-Let's add some behaviour by creating the method ''isAdult'' to our newly created "core domain" class ''Person'':
+Let's add some behaviour by creating the method ''isAdult'' to our newly generated "core domain" class ''Person'':
 <pre>
 package com.myproject.behaviour;
 
@@ -144,7 +144,6 @@ public class Person extends PersonFactory {
     }
 }
 </pre>
-
 
 
 The last step is to create a main class ''src/java/main/com/myproject/behaviour/Main.java'':
