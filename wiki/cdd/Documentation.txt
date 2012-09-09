@@ -1,10 +1,10 @@
 == Introduction ==
 
 Context Driven Development (CDD) takes a new approach to object orientation by separating ''state'' and ''behaviour''.
-That allows you to work in different context without breaking encapsulation.
+That allows us to work in different context without breaking encapsulation.
 It's also the foundation that makes it possible to improve the way state is built and validated.
 The problem is solved by using ''code generation''.
-By using code generation, the amount of code you need to write is reduced to a minimum which allows you to
+By using code generation, the amount of code you need to write is reduced to a minimum which allows us to
 focus more on ''what'' to do instead of ''how'' resulting in cleaner and more concise code.
 
 == Basic concepts ==
@@ -12,12 +12,12 @@ If we take a look at the [[CDD_-_Getting_started|Getting started]] example, it h
 
 [[File:project-directory-structure.png]]
 
-A lot of classes have been generated in directory ''java-gen'', but don't worry (be happy!) they are here to make your development experience more pleasant!
+The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
 
 If you are using a version control system you should put both ''java'' and ''java-gen'' under version control.
 
 
-Let's explain some of the basic concepts of CDD by looking at the main actors: ''PersonStateTemplate'', ''Person'' and ''Main'':
+Let's explain some of the basic concepts of CDD by looking at three of the four classes: ''PersonStateTemplate'', ''Person'' and ''Main'':
 
 <pre>
 package com.myproject.state;
@@ -81,25 +81,27 @@ Let's take a closer look at the statement that creates an instance of ''Person''
 </pre>
 
 In CDD you start by building state and ends with choosing a behaviour representation (encapsulation).
-Before encapsulation takes place it's also possible to validate the state, more on that later.
-In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html| method chain]: ''age(15).givenName("Ingmar").surname("Bergman")''.
-The attributes are defined in ''PersonStateTemplate'', and the method chain, the toString method (shown in the output) and others are based on this definition.
+In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]: ''age(15).givenName("Ingmar").surname("Bergman")''.
+The attributes are defined in ''PersonStateTemplate'', and the chained creator, the toString method (shown in the output) and others are based on this definition.
+
+== The contradiction between single responsibility and encapsulation ==
+
 The statement...
 <pre>
         person.asPersistable().save();
 </pre>
 
-...switch the context and save the instance.
+...switches context and saves the instance.
 
 
-If we had used traditional object orientation we would have to choose between two bad alternatives (pretend that we can't use a bytecode instrumenting persistence framework):
+If our code would have been written in a more traditional object oriented style, we would have to choose between two bad alternatives (pretend that we can't use a bytecode instrumenting persistence framework here!):
 # Add the method ''save'' to ''Person''.
 # Add some getters to ''Person'' and let another class perform the ''save'' operation.
 
-The first alternative leads to unclear responsibility and reduced [http://en.wikipedia.org/wiki/Cohesion_%28computer_science%29| cohesion].
-It's usually preferable to let a class work in one context by [http://en.wikipedia.org/wiki/Single_responsibility_principle| doing one thing].
+The first alternative leads to unclear responsibility with reduced [http://en.wikipedia.org/wiki/Cohesion_%28computer_science%29 cohesion] as a result.
+It's usually preferable to let a class ''work in one context'' by following the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
 
-The second alternative breaks encapsulation by adding getters, which is bad and well described [http://typicalprogrammer.com/?p=23| here].
+The second alternative breaks encapsulation by adding getters, which is bad and well described [http://typicalprogrammer.com/?p=23 here].
 
 
-So the problem with traditional OO is that you have to choose between two bad alternatives. That was the main reason why CDD was developed!
+A problem with traditional OO is that you have to choose between ''mixing responsibilities'' and ''breaking encapsulation''. That was the original reason why CDD was created!
