@@ -110,7 +110,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isOptional = isExclude || comment.contains("(optional)");
         isMandatory = !isOptional;
 
-        if (comment.contains("(nostate)")) {
+        if (comment.contains("(stateless)")) {
             isState = false;
         }
     }
