@@ -84,7 +84,7 @@ In CDD you start by building state and ends with choosing a behaviour representa
 In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]: ''age(15).givenName("Ingmar").surname("Bergman")''.
 The attributes are defined in ''PersonStateTemplate'', and the chained creator, the toString method (shown in the output) and others are based on this definition.
 
-== The contradiction between encapsulation and single responsibility ==
+== The problem CDD solves ==
 
 The statement...
 <pre>
@@ -104,9 +104,9 @@ It's usually preferable to let a class ''work in one context'' by following the 
 The second alternative breaks encapsulation by adding getters, which is bad and well described [http://typicalprogrammer.com/?p=23 here].
 
 
-A problem with traditional OO is that you have to choose between ''mixing responsibilities'' and ''breaking encapsulation''. That was the main reason why CDD was created in the first place!
+A problem with traditional OO is that you have to choose between ''mixing responsibilities'' and ''breaking encapsulation'', the CDD you do neither of them!
 
-== Building state ==
+== Manage state ==
 The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
 
 Instead of creating objects in one step by using a constructor, the object is created in several steps giving a number of advantages:
@@ -115,3 +115,74 @@ Instead of creating objects in one step by using a constructor, the object is cr
 * Ensures valid state before encapsulation takes place.
 * The state can be validated before encapsulation takes place, which is handy when working with external data sources and user input.
 * The encapsulation step can be postponed allowing the calling code to perform validation and encapsulation.
+
+== Define state ==
+In CDD the state is defined in ''state template classes''.
+All state template classes should be placed in the ''srcDir'', package ''statePackage'' defined in a Laja template file (e.g ''myproject.laja''):
+<pre>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }]
+)
+</pre>
+
+Example of valid state packages (in this example) are:
+* com.myproject.state
+* com.myproject.state.domain
+* com.myproject.state.infrastructure.export''
+
+
+The instruction ''#generateCdd'' is just an ordinary [[Code_generator_-_System_functions|Laja system function]] that is parsed and executed by Laja.
+Any other additional Laja code can therefore be included in the template file if needed.
+
+
+The following state attribute keywords are supported at the moment:
+
+{| class="wikitable"
+! Keyword !! Code example !! Description
+|-
+|
+id
+||
+<span style="color:#008000">int</span>&nbsp;personId;&nbsp;// (id)
+||
+The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. One or zero attributes can be marked as ''(id)''.
+|-
+|
+key
+||
+<span style="color:#008000">long</span>&nbsp;socialSecurityNumber;&nbsp;//&nbsp;(key)
+||
+The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be marked as ''(key)''.
+|-
+|
+optional
+||
+<span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
+||
+Allows the object to be null. When an attribute is marked as optional it is removed from the mandatory attributes in the ''chained creator''
+(primitives will be left uninitialized and therefore set to the default value of the data type, e.g. zero for <span style="color:#008000">int</span> values).
+|-
+|
+(hide)
+||
+Hide...
+||
+Hide...
+|-
+|
+(exclude)
+||
+Exclude...
+||
+Exclude...
+|-
+|
+(stateless)
+||
+Stateless
+||
+Stateless
+|}
