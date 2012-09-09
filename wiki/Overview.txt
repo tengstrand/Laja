@@ -53,11 +53,11 @@ One of the main ideas of the parser generator has been to introduce a more objec
 * Laja is prepared to support more languages than Java in the future.
 
 === Context Driven Development ===
-Context Driven Development brings the concept ''context'' to [http://en.wikipedia.org/wiki/Object-oriented_programming object orientation]
+Context Driven Development (CDD) brings the concept ''context'' to [http://en.wikipedia.org/wiki/Object-oriented_programming object orientation]
 by separating ''state'' and ''behaviour'' which gives a number of advantages:
-* [http://en.wikipedia.org/wiki/State_%28computer_science%29 State] can be defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way which allows that hashCode(), equals() and toString() can be generated.
-* The state is built in a more readable and robust way resulting in increases maintainability.
-* The state can be validated, and errors can be fixed, before encapsulation takes place
+* [http://en.wikipedia.org/wiki/State_%28computer_science%29 State] is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way.
+* State is built in a more readable and robust way resulting in increases maintainability.
+* Provides a simple and powerful way to validate and ensure valid state.
 * Have one behaviour representation per context and [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html switch] between them without breaking [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation]
 * Encourages [http://en.wikipedia.org/wiki/Object_composition composition] over [http://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29 inheritance] which gives more modular code and facilitates reuse
 
