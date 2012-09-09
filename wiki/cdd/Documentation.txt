@@ -84,7 +84,7 @@ In CDD you start by building state and ends with choosing a behaviour representa
 In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]: ''age(15).givenName("Ingmar").surname("Bergman")''.
 The attributes are defined in ''PersonStateTemplate'', and the chained creator, the toString method (shown in the output) and others are based on this definition.
 
-== The contradiction between single responsibility and encapsulation ==
+== The contradiction between encapsulation and single responsibility ==
 
 The statement...
 <pre>
@@ -104,4 +104,10 @@ It's usually preferable to let a class ''work in one context'' by following the 
 The second alternative breaks encapsulation by adding getters, which is bad and well described [http://typicalprogrammer.com/?p=23 here].
 
 
-A problem with traditional OO is that you have to choose between ''mixing responsibilities'' and ''breaking encapsulation''. That was the original reason why CDD was created!
+A problem with traditional OO is that you have to choose between ''mixing responsibilities'' and ''breaking encapsulation''. That was the main reason why CDD was created in the first place!
+
+== Building state ==
+The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
+Instead of creating instances in one step (using a constructor) we introduce an ''object creation life cycle'' with several benefits:
+* the state is defined in a declarative way so that ''equals'', ''hashCode'' and ''toString'' can be generated letting you focus on the properties of each state attributes.
+* the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of setters!)
