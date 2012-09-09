@@ -108,6 +108,10 @@ A problem with traditional OO is that you have to choose between ''mixing respon
 
 == Building state ==
 The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
-Instead of creating instances in one step (using a constructor) we introduce an ''object creation life cycle'' with several benefits:
-* the state is defined in a declarative way so that ''equals'', ''hashCode'' and ''toString'' can be generated letting you focus on the properties of each state attributes.
-* the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of setters!)
+
+Instead of creating objects in one step by using a constructor, the object is created in several steps giving a number of advantages:
+* The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting you focus on the properties of each attribute.
+* The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of setters!)
+* Ensures valid state before encapsulation takes place.
+* The state can be validated before encapsulation takes place, which is handy when working with external data sources and user input.
+* The encapsulation step can be postponed allowing the calling code to perform validation and encapsulation.
