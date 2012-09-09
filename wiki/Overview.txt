@@ -55,7 +55,7 @@ One of the main ideas of the parser generator has been to introduce a more objec
 === Context Driven Development ===
 Context Driven Development (CDD) brings the concept ''context'' to [http://en.wikipedia.org/wiki/Object-oriented_programming object orientation]
 by separating ''state'' and ''behaviour'' which gives a number of advantages:
-* [http://en.wikipedia.org/wiki/State_%28computer_science%29 State] is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way.
+* [http://en.wikipedia.org/wiki/State_%28computer_science%29 State] is defined in a declarative way.
 * State is built in a more readable and robust way resulting in increases maintainability.
 * Provides a simple and powerful way to validate and ensure valid state.
 * Have one behaviour representation per context and [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html switch] between them without breaking [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation]
