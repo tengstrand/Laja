@@ -21,7 +21,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isExclude;
     public boolean isState;
     public boolean isStateList;
-    public boolean isStateless;
     public boolean isHidden;
     public boolean isOptional;
     public boolean isMandatory = true;
@@ -109,13 +108,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isHidden = comment.contains("(hide)");
         isExclude = comment.contains("(exclude)") || isId;
         isOptional = isExclude || comment.contains("(optional)");
-
-        if (comment.contains("(stateless)")) {
-            isStateless = true;
-            isState = false;
-            isExclude = true;
-            isOptional = true;
-        }
         isMandatory = !isOptional;
     }
 
