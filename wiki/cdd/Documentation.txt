@@ -117,8 +117,7 @@ Instead of creating objects in one step by using a constructor, the object is cr
 * The encapsulation step can be postponed allowing the calling code to perform validation and encapsulation.
 
 == Define state ==
-In CDD the state is defined in ''state template classes''.
-All state template classes should be placed in the ''srcDir'', package ''statePackage'' defined in a Laja template file (e.g ''myproject.laja''):
+The states is defined in ''state templates'' and is expected to be found in directory ''srcDir'', package ''statePackate'' in the project file, e.g. ''myproject.laja'':
 <pre>
 #generateCdd([{
   srcDir: "{.}/main"
@@ -131,39 +130,50 @@ All state template classes should be placed in the ''srcDir'', package ''statePa
 Example of valid state packages (in this example) are:
 * com.myproject.state
 * com.myproject.state.domain
-* com.myproject.state.infrastructure.export''
+* com.myproject.state.infrastructure.x''
 
 
 The instruction ''#generateCdd'' is just an ordinary [[Code_generator_-_System_functions|Laja system function]] that is parsed and executed by Laja.
-Any other additional Laja code can therefore be included in the template file if needed.
 
 
-The following state attribute keywords are supported at the moment:
+A ''state template'' is an ordinary Java class, e.g.:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int personId; // (id)
+    long socialSecurityNumber; // (key)
+    String givenName;
+    String middleName; // (optional)
+    String surname;
+}
+</pre>
+
+Each attribute (''personId, socialSecurityNumber, givenName, middleName, surname'') can have one or several properties by ending the line with a comment. None of them are mandatory:
 
 {| class="wikitable"
-! Keyword !! Code example !! Description
+! Keyword !! Example !! Description
 |-
 |
 id
 ||
 <span style="color:#008000">int</span>&nbsp;personId;&nbsp;// (id)
 ||
-The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. One or zero attributes can be marked as ''(id)''.
+The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. Only one attribute can be marked as surrogate key.
 |-
 |
 key
 ||
 <span style="color:#008000">long</span>&nbsp;socialSecurityNumber;&nbsp;//&nbsp;(key)
 ||
-The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be marked as ''(key)''.
+The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be included in the natural key.
 |-
 |
 optional
 ||
 <span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
 ||
-Allows the object to be null. When an attribute is marked as optional it is removed from the mandatory attributes in the ''chained creator''
-(primitives will be left uninitialized and therefore set to the default value of the data type, e.g. zero for <span style="color:#008000">int</span> values).
+When an attribute is marked as optional they will be excluded from the ''chained creator'' and is allowed to be null.
 |-
 |
 (hide)
