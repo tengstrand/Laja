@@ -14,6 +14,11 @@ public class AddressEncapsulator {
         return (Address)builder.as(new AddressFactory.AddressFactory_(builder));
     }
 
+    public AddressEncapsulator withAddressId(int addressId) {
+        builder.withAddressId(addressId);
+        return this;
+    }
+
     public boolean isValid() {
          return builder.isValid();
     }

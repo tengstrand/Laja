@@ -31,6 +31,11 @@ public class CustomerEncapsulator {
         return this;
     }
 
+    public CustomerEncapsulator withAddressId(int addressId) {
+        builder.withAddressId(addressId);
+        return this;
+    }
+
     public CustomerEncapsulator withOldAddresses(AddressListCreator oldAddresses) {
         builder.withOldAddresses(oldAddresses.stateList);
         return this;

@@ -14,6 +14,11 @@ public class AddressBuilder {
         builder = AddressStateImpl.build(state);
     }
 
+    public AddressBuilder withAddressId(int addressId) {
+        builder.withAddressId(addressId);
+        return this;
+    }
+
     public AddressBuilder withStreetName(String streetName) {
         builder.withStreetName(streetName);
         return this;

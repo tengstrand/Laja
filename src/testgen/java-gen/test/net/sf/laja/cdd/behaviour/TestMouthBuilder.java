@@ -15,6 +15,11 @@ public class TestMouthBuilder {
         builder = MouthStateImpl.build(state);
     }
 
+    public TestMouthBuilder withNumberOfTeeth(int numberOfTeeth) {
+        builder.withNumberOfTeeth(numberOfTeeth);
+        return this;
+    }
+
     public TestMouthBuilder withWidth(int width) {
         builder.withWidth(width);
         return this;

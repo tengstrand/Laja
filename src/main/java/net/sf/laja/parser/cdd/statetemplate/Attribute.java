@@ -34,7 +34,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     }
 
     public boolean isBuilderMethod() {
-        return !isExclude && !isHidden;
+        return !isHidden;
     }
 
     public boolean isExplicitAssigned() {
@@ -108,13 +108,13 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isHidden = comment.contains("(hide)");
         isExclude = comment.contains("(exclude)") || isId;
         isOptional = isExclude || comment.contains("(optional)");
-        isMandatory = !isOptional;
 
         if (comment.contains("(stateless)")) {
             isState = false;
             isExclude = true;
             isOptional = true;
         }
+        isMandatory = !isOptional;
     }
 
     @Override

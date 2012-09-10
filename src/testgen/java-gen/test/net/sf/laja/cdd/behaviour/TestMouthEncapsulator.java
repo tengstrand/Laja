@@ -15,6 +15,11 @@ public class TestMouthEncapsulator {
         return (TestMouth)builder.as(new TestMouthFactory.TestMouthFactory_(builder));
     }
 
+    public TestMouthEncapsulator withNumberOfTeeth(int numberOfTeeth) {
+        builder.withNumberOfTeeth(numberOfTeeth);
+        return this;
+    }
+
     public boolean isValid() {
          return builder.isValid();
     }

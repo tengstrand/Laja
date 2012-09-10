@@ -42,6 +42,11 @@ public class CustomerBuilder {
         return this;
     }
 
+    public CustomerBuilder withAddressId(int addressId) {
+        builder.withAddressId(addressId);
+        return this;
+    }
+
     public CustomerBuilder withStreetName(String streetName) {
         builder.withStreetName(streetName);
         return this;

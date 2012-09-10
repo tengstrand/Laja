@@ -146,10 +146,11 @@ public class PersonStateTemplate {
     String givenName;
     String middleName; // (optional)
     String surname;
+    String specialInfo; // (exclude)
 }
 </pre>
 
-Each attribute (''personId, socialSecurityNumber, givenName, middleName, surname'') can have one or several properties by ending the line with a comment. None of them are mandatory:
+Each attribute (''personId, socialSecurityNumber, givenName...) can have one or several properties by ending the line with a comment. None of them are mandatory:
 
 {| class="wikitable"
 ! Keyword !! Example !! Description
@@ -173,19 +174,20 @@ optional
 ||
 <span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
 ||
-When an attribute is marked as optional they will be excluded from the ''chained creator'' and is allowed to be null.
+When an attribute is marked as ''optional'' it will be excluded from the ''chained creator'' and is allowed to be null.
 |-
 |
 (hide)
 ||
-Hide...
+int length; // (hide)
 ||
-Hide...
+When an attribute is marked as ''hide'' it is still mandatory (if not also marked as ''optional'') but excluded from the ''chained creator''.
+The attribute is expected to be set by the ''behaviour'' constructor.
 |-
 |
 (exclude)
 ||
-Exclude...
+int Exclude...
 ||
 Exclude...
 |-

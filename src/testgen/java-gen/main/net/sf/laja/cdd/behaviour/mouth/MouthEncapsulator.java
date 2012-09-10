@@ -15,6 +15,11 @@ public class MouthEncapsulator {
         return (Mouth)builder.as(new MouthFactory.MouthFactory_(builder), size);
     }
 
+    public MouthEncapsulator withNumberOfTeeth(int numberOfTeeth) {
+        builder.withNumberOfTeeth(numberOfTeeth);
+        return this;
+    }
+
     public boolean isValid() {
          return builder.isValid();
     }
