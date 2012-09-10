@@ -311,7 +311,11 @@
 
 {tab}@Override
 {tab}public String toString() {
-  #set (iterator = t.attributes.iterator())
+  #set (toStringAttributes = new java.util.ArrayList())
+  #foreach (attribute in t.attributes where !attribute.isStateless)
+    #toStringAttributes.add(attribute)
+  #end
+  #set (iterator = toStringAttributes.iterator())
   #set (hasNext = iterator.hasNext)
   #set (first = true)
   #if (hasNext)
