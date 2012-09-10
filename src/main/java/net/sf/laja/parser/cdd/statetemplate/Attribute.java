@@ -112,6 +112,8 @@ public class Attribute implements StateTemplateParser.IAttribute {
 
         if (comment.contains("(stateless)")) {
             isState = false;
+            isExclude = true;
+            isOptional = true;
         }
     }
 
