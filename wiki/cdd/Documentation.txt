@@ -111,10 +111,10 @@ The decision to separate ''state'' and ''behavior'' enables us to improve the ob
 
 Instead of creating objects in one step by using a constructor, the object is created in several steps giving a number of advantages:
 * The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting you focus on the properties of each attribute.
-* The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of setters!)
+* The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
 * Ensures valid state before encapsulation takes place.
 * The state can be validated before encapsulation takes place, which is handy when working with external data sources and user input.
-* The encapsulation step can be postponed allowing the calling code to perform validation and encapsulation.
+* The encapsulation step can be postponed allowing delegation of validation and encapsulation to the calling code.
 
 == Define state ==
 The states is defined in ''state templates'' and is expected to be found in directory ''srcDir'', package ''statePackate'' in the project file, e.g. ''myproject.laja'':
@@ -133,68 +133,96 @@ Example of valid state packages (in this example) are:
 * com.myproject.state.infrastructure.x''
 
 
-The instruction ''#generateCdd'' is just an ordinary [[Code_generator_-_System_functions|Laja system function]] that is parsed and executed by Laja.
-
-
-A ''state template'' is an ordinary Java class, e.g.:
+Let's extend the state definition of "Person" by modifying the state template ''PersonStateTemplate'':
 <pre>
 package com.myproject.state;
 
 public class PersonStateTemplate {
     int personId; // (id)
-    long socialSecurityNumber; // (key)
+    int length; // (hide)
+    long ssn; // (key)
     String givenName;
     String middleName; // (optional)
     String surname;
-    String specialInfo; // (exclude)
+    String occupation; // (exclude)
 }
 </pre>
 
-Each attribute (''personId, socialSecurityNumber, givenName...) can have one or several properties by ending the line with a comment. None of them are mandatory:
+...regenerate and modify the main class:
+
+<pre>
+public class Main {
+    public static void main(String[] args) {
+        // The 'chained constructor' starts here...
+        Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
+                .withPersonId(1)                  // ...followed by builder methods
+                .withMiddleName("Ernst")
+                .withOccupation("Film director")
+                .asPerson();                      // ...and encapsulation
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...and modify the constructor of ''Person'':
+<pre>
+    public Person(PersonState state) {
+        super(state);
+        state.setLength(179);
+    }
+</pre>
+
+... gives the output:
+<pre>
+Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ernst', surname='Bergman', occupation='Film director'}
+</pre>
+
+
+If we look at how the instance of ''Person'' is created in the ''Main'' class, it has the following structure:
+* Chained constructor: contains all mandatory attributes. These methods are mandatory using the pattern [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html Chained Creator].
+* Builder methods: all optional attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory.
+* Encapsulation: encapsulates the state by choosing a behaviour representation.
+
+
+Each attribute can have one or several properties by ending the line with a comment. None of them are mandatory:
 
 {| class="wikitable"
 ! Keyword !! Example !! Description
 |-
 |
-id
+(id)
 ||
 <span style="color:#008000">int</span>&nbsp;personId;&nbsp;// (id)
 ||
 The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. Only one attribute can be marked as surrogate key.
 |-
 |
-key
+(key)
 ||
-<span style="color:#008000">long</span>&nbsp;socialSecurityNumber;&nbsp;//&nbsp;(key)
+<span style="color:#008000">long</span>&nbsp;ssn;&nbsp;//&nbsp;(key)
 ||
 The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be included in the natural key.
 |-
 |
-optional
+(optional)
 ||
 <span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
 ||
-When an attribute is marked as ''optional'' it will be excluded from the ''chained creator'' and is allowed to be null.
+The keywords ''(optional)'', ''(id)'' and ''(exclude)'' will exclude the attribute from the ''chained creator'' and allow the attribute to be uninitialized (''null'' if an object).
 |-
 |
 (hide)
 ||
-int length; // (hide)
+<span style="color:#008000">int</span> length; // (hide)
 ||
-When an attribute is marked as ''hide'' it is still mandatory (if not also marked as ''optional'') but excluded from the ''chained creator''.
-The attribute is expected to be set by the ''behaviour'' constructor.
+The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized (''!= null'' if an object) by the ''behaviour'' constructor.
 |-
 |
 (exclude)
 ||
-int Exclude...
+<span style="color:#008000">String</span> occupation; // (exclude)
 ||
-Exclude...
-|-
-|
-(stateless)
-||
-Stateless
-||
-Stateless
+Same as ''optional'' + excluded from ''hashCode()'' and ''equals()''.
+Excluded from the ''chained creator''.
 |}
