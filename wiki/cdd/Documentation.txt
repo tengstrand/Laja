@@ -179,9 +179,9 @@ Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ern
 </pre>
 
 
-If we look at how the instance of ''Person'' is created in the ''Main'' class, it has the following structure:
+If we look at how the instance of ''Person'' is created in the Main class, it has the following structure:
 * Chained constructor: contains all mandatory attributes. These methods are mandatory using the pattern [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html Chained Creator].
-* Builder methods: all optional attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory.
+* Builder methods: all optional attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory and can be omitted.
 * Encapsulation: encapsulates the state by choosing a behaviour representation.
 
 
@@ -209,20 +209,19 @@ The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attri
 ||
 <span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
 ||
-The keywords ''(optional)'', ''(id)'' and ''(exclude)'' will exclude the attribute from the ''chained creator'' and allow the attribute to be uninitialized (''null'' if an object).
+The keywords ''(optional)'', ''(id)'' and ''(exclude)'' will exclude the attribute from the ''chained creator'' and allows it to be uninitialized.
 |-
 |
 (hide)
 ||
 <span style="color:#008000">int</span> length; // (hide)
 ||
-The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized (''!= null'' if an object) by the ''behaviour'' constructor.
+The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized by the ''behaviour'' constructor if not combined with ''(optional)''.
 |-
 |
 (exclude)
 ||
 <span style="color:#008000">String</span> occupation; // (exclude)
 ||
-Same as ''optional'' + excluded from ''hashCode()'' and ''equals()''.
-Excluded from the ''chained creator''.
+Same as ''optional'' except that it also is excluded from ''hashCode()'' and ''equals()''.
 |}
