@@ -363,4 +363,173 @@ If we add the following method to ''Person'':
 2. Equals: false
 </pre>
 
-We can see that Person treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but treated as not equal when wrapped by ''OtherPerson''.
+We can see that Person treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but treated as not equal when wrapped by ''OtherPerson'' because ''surname'' doesn't match.
+
+== Composite state ==
+CDD supports building composite states referred to as ''aggregate roots'' in [http://en.wikipedia.org/wiki/Domain-driven_design DDD].
+Lets add the state definition "Address":
+<pre>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+    int zipcode;
+}
+</pre>
+
+...regenerate and add it to the state definition of "Person":
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname;
+    AddressState address;
+}
+</pre>
+
+...regenerate and change ''Main'':
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
+                Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...gives the output:
+<pre>
+Person{ssn=112233, givenName='Ingmar', surname='Bergman', address={streetName='Main Street', streetNumber=123, zipcode=111222}}
+</pre>
+
+This example demonstrates how to build state of substates which can be very useful.
+
+== Expanding substates ==
+Substates can be "expanded" resulting in that the attributes of the substate is merged into the parent state. A dollar sign ($) marks a substate for expansion:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname;
+    AddressState $address;
+}
+</pre>
+
+...if we regenerate we can change ''Main'' to this:
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman")
+                .streetName("Main Street").streetNumber(123).zipcode(111222).asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...gives the output:
+<pre>
+Person{ssn=112233, givenName='Ingmar', surname='Bergman', streetName='Main Street', streetNumber=123, zipcode=111222}
+</pre>
+
+As we can see, the attributes from ''AddressState'' has been "exploded" and merged into ''PersonState''.
+If we take a look at ''PersonState'' it now extends ''AddressState'':
+<pre>
+...
+
+public interface PersonState extends AddressState {
+    ...
+}
+</pre>
+
+...this will make it possible to wrap both ''Person'' and ''Address'' behaviour around ''PersonState', more on that later.
+
+If Laja finds two or more attributes with the same type and name they will be merged into a single attribute.
+This will change in the next release where support for aliases will be added.
+
+== Default values ==
+Attributes can be set to default values, e.g:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname = "Unknown"; // (optional)
+}
+</pre>
+
+...if regenerating and changing ''Main'':
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.ssn(112233).givenName("Ingmar").asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...we get the output:
+<pre>
+Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
+</pre>
+
+== Build state ==
+So far we have used ''chained creators'' to build state. Sometimes you need to build the states one piece at a time, in these situations you need a ''builder''. Example:
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.build()
+                .withGivenName("Ingmar")
+                .withSsn(111111)
+                .withSurname("Bergman").asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+output:
+<pre>
+Person{ssn=111111, givenName='Ingmar', surname='Bergman'}
+</pre>
+
+The attributes can occur in arbitrary order and some or all attributes can be left out:
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.build().asPerson();
+    }
+}
+</pre>
+
+output:
+<pre>
+Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
+	at com.myproject.behaviour.PersonEntityFactory$PersonFactory_.create(PersonEntityFactory.java:35)
+	at com.myproject.state.PersonStateBuilderImpl.as(PersonStateBuilderImpl.java:51)
+	at com.myproject.behaviour.PersonBuilder.asPerson(PersonBuilder.java:37)
+	at com.myproject.behaviour.Main.main(Main.java:5)
+	...
+</pre>
+
+As you can see, it's not possible to create instances if the state is invalid. In this case we have missed to set the mandatory attributes ''ssn' and ''givenName''.
+This is the main reason why a chained creator is preferable choice in most situations. More on how state can be validated later.
+
