@@ -455,8 +455,8 @@ public interface PersonState extends AddressState {
 
 ...this will make it possible to wrap both ''Person'' and ''Address'' behaviour around ''PersonState', more on that later.
 
-If Laja finds two or more attributes with the same type and name they will be merged into a single attribute.
-This will change in the next release where support for aliases will be added.
+If Laja finds two or more attributes with the same type and name they will be merged into a single attribute ''without any warnings''.
+This is not how it should work and will be changed in the next release!
 
 == Default values ==
 Attributes can be set to default values, e.g:
@@ -497,7 +497,7 @@ public class Main {
     public static void main(String[] args) {
         Person person = Person.build()
                 .withGivenName("Ingmar")
-                .withSsn(111111)
+                .withSsn(11111)
                 .withSurname("Bergman").asPerson();
 
         System.out.println(person);
@@ -506,7 +506,7 @@ public class Main {
 </pre>
 output:
 <pre>
-Person{ssn=111111, givenName='Ingmar', surname='Bergman'}
+Person{ssn=11111, givenName='Ingmar', surname='Bergman'}
 </pre>
 
 The attributes can occur in arbitrary order and some or all attributes can be left out:
@@ -531,5 +531,187 @@ Exception in thread "main" java.lang.IllegalStateException: Illegal state, could
 </pre>
 
 As you can see, it's not possible to create instances if the state is invalid. In this case we have missed to set the mandatory attributes ''ssn' and ''givenName''.
-This is the main reason why a chained creator is preferable choice in most situations. More on how state can be validated later.
+With a ''builder'' you can't be sure that all mandatory attribute has been initialized and that is the main reason why a ''chained creator'' is the preferable choice in most situations.
+
+== Validate state ==
+
+The state can be validated before the state is encapsulated:
+
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        PersonEncapsulator personEncapsulator = Person.ssn(11111).givenName("Carl");
+        PersonBuilder personBuilder = Person.build();
+
+        System.out.println("1. Is valid: " + personEncapsulator.isValid());
+        System.out.println("2. Is valid: " + personBuilder.isValid());
+    }
+}
+</pre>
+
+<pre>
+1. Is valid: true
+2. Is valid: false
+Person{ssn=11111, givenName='Carl', surname='Unknown'}
+Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
+...
+</pre>
+
+It is possible to add a custom validator by adding the method ''isValid()'':
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname; // (optional)
+
+    public boolean isValid() {
+        return ssn > 1000000;
+    }
+}
+</pre>
+
+...if we run the ''Main'' class again (don't forget to regenerate) we now get:
+<pre>
+1. Is valid: false
+2. Is valid: false
+Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
+...
+</pre>
+
+The reason is that ''ssn'' doesn't meet the validation criteria ''ssn > 1000000'' since ''ssn'' was set to ''11111''.
+
+
+Validations can also be performed for substates, e.g:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname; // (optional)
+    AddressState address;
+
+    public boolean isValid() {
+        return address.getStreetName().startsWith("A") && ssn > 1000000;
+    }
+}
+</pre>
+
+In this case the state will only be valid, and possible to encapsulate, if the street name starts with an "A":
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        boolean isValid1 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("AStreet").streetNumber(1).zipcode(123)).isValid();
+        boolean isValid2 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("BStreet").streetNumber(1).zipcode(123)).isValid();
+
+        System.out.println("isValid1: " + isValid1);
+        System.out.println("isValid2: " + isValid2);
+    }
+}
+</pre>
+
+output:
+<pre>
+isValid1: true
+isValid2: false
+</pre>
+
+It the ''isValid()'' method operates on an expanded substate, the state template class need to extend the ''StateImpl'' class:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate extends PersonStateImpl {
+    int ssn; // (key)
+    String givenName;
+    String surname; // (optional)
+    AddressState $address;
+
+    public boolean isValid() {
+        return streetName.startsWith("A") && ssn > 1000000;
+    }
+}
+</pre>
+
+Let's see what will happen if we add validations on both ''PersonState'' and ''AddressState'':
+<pre>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+    int zipcode;
+
+    public boolean isValid() {
+        return streetName.startsWith("A");
+    }
+}
+</pre>
+
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname; // (optional)
+    AddressState $address;
+
+    public boolean isValid() {
+        return ssn > 1000000;
+    }
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        boolean isValid1 = Person.ssn(10000000).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
+        boolean isValid2 = Person.ssn(1).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
+        boolean isValid3 = Person.ssn(10000000).givenName("Carl").streetName("BStreet").streetNumber(1).zipcode(123).isValid();
+
+        System.out.println("isValid1: " + isValid1);
+        System.out.println("isValid2: " + isValid2);
+        System.out.println("isValid3: " + isValid3);
+    }
+}
+</pre>
+
+output:
+
+<pre>
+isValid1: true
+isValid2: false
+isValid3: false
+</pre>
+
+As we can see both validation rules has to be met to give a valid result.
+We can see that both validation rules are handled by generated class ''PersonStateImpl'':
+<pre>
+    ...
+
+    private boolean isValid(boolean encapsulated) {
+        if (givenName == null
+           || streetName == null) {
+            return false;
+        }
+        if (!isAddressValid()) {
+            return false;
+        }
+        return ssn > 1000000;
+    }
+
+    private boolean isAddressValid() {
+        return streetName.startsWith("A");
+    }
+
+    ...
+</pre>
 
