@@ -79,7 +79,8 @@ Generated 18 new files:
 
 If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.
 
-Let's add some behaviour by creating the method ''isAdult'' to our newly generated "core domain" class ''Person'':
+
+Let's add some behaviour by creating the method ''isAdult()'' to our newly generated "core domain" class ''Person'':
 <pre>
 package com.myproject.behaviour;
 
@@ -101,7 +102,7 @@ public class Person extends PersonFactory {
 }
 </pre>
 
-Now create a persistable version of "Person" in ''java/source/main'':
+Now create a "persistable" version in ''java/source/main'':
 <pre>
 package com.myproject.behaviour;
 
@@ -119,7 +120,7 @@ public class PersistablePerson extends PersonValue {
 }
 </pre>
 
-Add the method ''asPersistable'' to ''Person'':
+Add the method ''asPersistable()'' to ''Person'':
 <pre>
 package com.myproject.behaviour;
 
@@ -161,7 +162,7 @@ public class Main {
 }
 </pre>
 
-If executing the program we get the output:
+If executed you will get the output:
 <pre>
 Is adult: false
 The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
