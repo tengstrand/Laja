@@ -765,7 +765,7 @@ We have finally reached the point where it's time to add behavior. Developing a 
 Context Driven Development (CDD) makes it easy to add behaviour and let you build your system in a way similar to building with Lego.
 
 
-In CDD we can have different representations for each context, allowing us to put each behaviour in the right place, in a behaviour class to which it belongs.
+In CDD we can have different representations for each context, allowing us to put each behaviour in the right place.
 In the [[CDD_-_Getting_started|Getting started]] section we let ''Person'' work in the core domain and ''PersistablePerson'' be responsible for persisting:
 <pre>
 package com.myproject.behaviour;
@@ -785,12 +785,14 @@ In traditional [http://en.wikipedia.org/wiki/Object-oriented_programming OO] the
 # Create the "core domain " class ''Person'' with the behaviour method ''isAdult'' (with no getters or setters).
 # After a while we need to do something with ''Person'' outside the core domain like ''export as XML'' or ''persist''. This presents us with two bad alternatives:
 #* Add the method ''asXml()'' or ''save()'' to ''Person'' braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-#* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' or ''PersonPersisterService'' leading to violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
+#* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' or ''PersonPersisterService'' leading to violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (*).
 
 
 CDD respects these two principles by allowing you to work in different contexts!
 
 Context Driven Development is not the only attempt to solve the problem of working in different contexts, you may also take a look at the [http://en.wikipedia.org/wiki/Data,_context_and_interaction Data Context Interaction] paradigm.
+
+(*) The ''Tell Don't Ask principle'' is about letting the objects themselves perform tasks.
 
 == Switch context ==
 
@@ -800,7 +802,7 @@ In the previous listing we ''switched context'' in order to perform the save ope
 </pre>
 
 
-The switching is performed by the method ''asPersistablePerson()'':
+The switching is performed by the method ''asPersistable()'':
 
 <pre>
 package com.myproject.behaviour;
@@ -817,7 +819,7 @@ public class Person extends PersonFactory {
         return new Person(state);
     }
 
-    public PersistablePerson asPersistablePerson() {
+    public PersistablePerson asPersistable() {
         return new PersistablePerson(state);
     }
 }
@@ -867,18 +869,18 @@ public class Person extends PersonFactory {
         return new Person(state);
     }
 
-    public PersistablePerson asPersistablePerson() {
+    public PersistablePerson asPersistable() {
         return new PersistablePerson(state);
     }
 }
 </pre>
 
-Only the method that is marked as ''factory'' can be directly created by the factory class. If an "as-method" is not marked as factory then it has to be accessed via the factory method:
+Only the method that is marked as ''factory'' can be directly created by the factory class. If an "as-method" is not marked as factory then it has to be called via the factory method:
 <pre>
-    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistablePerson();
+    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistable();
 </pre>
 
-If we mark ''asPersistablePerson'' as factory:
+If we also mark ''asPersistable'' as factory:
 <pre>
 package com.myproject.behaviour;
 
@@ -895,7 +897,7 @@ public class Person extends PersonFactory {
     }
 
     // (factory)
-    public PersistablePerson asPersistablePerson() {
+    public PersistablePerson asPersistable() {
         return new PersistablePerson(state);
     }
 }
@@ -903,13 +905,13 @@ public class Person extends PersonFactory {
 
 ...it allows us to create instances directly:
 <pre>
-    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistablePerson();
+    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistable();
 </pre>
 
 In some situations we want the object themselves to act as factory:
 <pre>
     Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
-    PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistablePerson();
+    PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistable();
 </pre>
 
 ...by letting the behaviour class inherit from its ''Factory'':
@@ -943,7 +945,7 @@ public class PersistablePerson extends PersistablePersonFactory {
     }
 
     // (factory)
-    public PersistablePerson asPersistablePerson() {
+    public PersistablePerson asPersistable() {
         return new PersistablePerson(state);
     }
 
