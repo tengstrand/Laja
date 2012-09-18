@@ -90,23 +90,7 @@ The statement...
         person.asPersistable().save();
 </pre>
 
-...switches context and persist the instance.
-
-
-If our code would have been written in a more traditional object oriented style, we would have to choose between two bad alternatives (if don't using a bytecode instrumenting persistence framework!):
-# Add the method ''save'' to ''Person''.
-# Add some getters to ''Person'' and let another class perform the ''save'' operation.
-
-The first alternative leads to unclear responsibility with reduced [http://en.wikipedia.org/wiki/Cohesion_%28computer_science%29 cohesion] as a result.
-It's usually preferable to let a class work in ''one context'' by following the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-
-The second alternative breaks encapsulation and does not follow the principle [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask].
-Why adding getters is a bad idea is well described [http://typicalprogrammer.com/?p=23 here].
-
-
-A problem with traditional OO is that you have to choose between ''mixing responsibilities'' and ''breaking encapsulation''.
-
-CDD is solving the problem by letting you have one representations per context without breaking encapsulation!
+...switches context and persists the instance in one statement! The benefits of doing it this way is described more in detail in the [[#Behaviour|behaviour]] section.
 
 = State =
 The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
@@ -341,7 +325,7 @@ public class OtherPerson extends PersonValue {
 }
 </pre>
 
-To make this class a ''value'' we extend from ''PersonValue'' which has the following implementation of ''hashCode'' and ''equals'':
+To make this class a ''value'' we extend from (the code generated) ''PersonValue'' which has the following implementation of ''hashCode'' and ''equals'':
 <pre>
     ...
 
@@ -360,7 +344,7 @@ To make this class a ''value'' we extend from ''PersonValue'' which has the foll
     ...
 </pre>
 
-...which delegates to ''valueHashCode()'' and ''valueEquals()'' in ''PersonStateImpl'':
+...which delegates to ''valueHashCode()'' and ''valueEquals()'' in (code generated) ''PersonStateImpl'':
 <pre>
     ...
 
@@ -392,14 +376,14 @@ To make this class a ''value'' we extend from ''PersonValue'' which has the foll
     ...
 </pre>
 
-If we add the following method to ''Person'':
+If we add the switch method ''asOtherPerson'' to ''Person'':
 <pre>
     public OtherPerson asOtherPerson() {
         return new OtherPerson(state);
     }
 </pre>
 
-.. and modify the ''main'' method in ''Main'':
+...and modify the ''main'' method in ''Main'':
 <pre>
     public static void main(String[] args) {
         Person person1 = Person.ssn(111222).givenName("Ingmar").surname("Bergman").asPerson();
@@ -546,8 +530,7 @@ Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
 </pre>
 
 == Build state ==
-So far we have used ''chained creators'' to build state. Sometimes you need to build the state in small steps and in these situations you need a ''builder''.
-The builder is accessed via the method ''build()'':
+So far we have used ''chained creators'' to build state. Sometimes you don't have access to all mandatory attributes from start. In these situations you need a ''builder'' which is accessed via the method ''build()'':
 <pre>
 package com.myproject.behaviour;
 
@@ -618,9 +601,9 @@ Exception in thread "main" java.lang.IllegalStateException: Illegal state, could
 ...
 </pre>
 
-=== Custom validators ===
+=== Custom validation ===
 
-It is possible to add a custom validator by adding the method ''isValid()'':
+It is possible to add a custom validation by adding the method ''isValid()'':
 <pre>
 package com.myproject.state;
 
@@ -754,7 +737,7 @@ isValid2: false
 isValid3: false
 </pre>
 
-As we can see, both validation rules has to be met to give a valid result. We can verify that both validation rules are handled correct by the generated class ''PersonStateImpl'':
+As we can see, both validation rules must be valid. We can verify that both validation rules are performed by taking a look in the generated class ''PersonStateImpl'':
 <pre>
     ...
 
@@ -778,11 +761,11 @@ As we can see, both validation rules has to be met to give a valid result. We ca
 
 = Behaviour =
 
-We have finally reached the point where it's time to talk about behavior! Developing a system without behavior would nevertheless be quite pointless.
+We have finally reached the point where it's time to add behavior. Developing a system without behavior would nevertheless be quite pointless!
 Context Driven Development (CDD) makes it easy to add behaviour and let you build your system in a way similar to building with Lego.
 
 
-In CDD we can have different representations for each context, allowing us to put each behaviour in the right place, the behaviour class to which it belongs.
+In CDD we can have different representations for each context, allowing us to put each behaviour in the right place, in a behaviour class to which it belongs.
 In the [[CDD_-_Getting_started|Getting started]] section we let ''Person'' work in the core domain and ''PersistablePerson'' be responsible for persisting:
 <pre>
 package com.myproject.behaviour;
@@ -798,20 +781,16 @@ public class Main {
 }
 </pre>
 
-By letting both ''Person'' and ''PersistablePerson'' operate close to their data and only expose ''behavior'' (''isAdult'' and ''save'') we have followed the important principle [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask].
-This principle is about letting the objects themselves to perform tasks which is exactly what we are going to do in this section!
-
-
 In traditional [http://en.wikipedia.org/wiki/Object-oriented_programming OO] the code above would have evolved something like this:
-* Create the "core domain " class ''Person'' with the behaviour ''isAdult''.
-* After a while we need to do something with ''Person'' outside the core domain like ''export as XML'' or ''persist''. This presents us with two choices:
-** Add the method ''asXml()'' or ''save()'' to ''Person'' which brakes the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-** Break encapsulation by adding some getters to ''Person'' and delegate the job to e.g. ''PersonXmlExporter'' or ''PersistPersonService''. When we break encapsulation we run the risk that behaviour (business rules) is scattered around the system leading to [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself code duplication].
+# Create the "core domain " class ''Person'' with the behaviour method ''isAdult'' (with no getters or setters).
+# After a while we need to do something with ''Person'' outside the core domain like ''export as XML'' or ''persist''. This presents us with two bad alternatives:
+#* Add the method ''asXml()'' or ''save()'' to ''Person'' braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
+#* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' or ''PersonPersisterService'' leading to violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
 
 
-The good thing with CDD is that you don't need to do either of these two things!
+CDD respects these two principles by allowing you to work in different contexts!
 
-Context Driven Development is not alone in trying to solve the problem of working in different contexts, an interesting alternative is the [http://en.wikipedia.org/wiki/Data,_context_and_interaction Data Context Interaction] paradigm.
+Context Driven Development is not the only attempt to solve the problem of working in different contexts, you may also take a look at the [http://en.wikipedia.org/wiki/Data,_context_and_interaction Data Context Interaction] paradigm.
 
 == Switch context ==
 
@@ -859,6 +838,156 @@ Context switching can both mean changing task ''within'' an architecture layer a
               |
               |
               \/
+(this ascii art will be replaced by a picture)
 </pre>
 
 Switching context has never been easier!
+
+== Factory ==
+
+In our example we have used ''Person'' as factory when creating instances of ''Person''. We could also have used ''PersonFactory'':
+<pre>
+    Person person1 = PersonFactory.givenName("Ingmar").surname("Bergman").asPerson();
+    Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
+</pre>
+
+To select ''Person'' as factory, we extend from ''PersonFactory'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public PersistablePerson asPersistablePerson() {
+        return new PersistablePerson(state);
+    }
+}
+</pre>
+
+Only the method that is marked as ''factory'' can be directly created by the factory class. If an "as-method" is not marked as factory then it has to be accessed via the factory method:
+<pre>
+    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistablePerson();
+</pre>
+
+If we mark ''asPersistablePerson'' as factory:
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    // (factory)
+    public PersistablePerson asPersistablePerson() {
+        return new PersistablePerson(state);
+    }
+}
+</pre>
+
+...it allows us to create instances directly:
+<pre>
+    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistablePerson();
+</pre>
+
+In some situations we want the object themselves to act as factory:
+<pre>
+    Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
+    PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistablePerson();
+</pre>
+
+...by letting the behaviour class inherit from its ''Factory'':
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonValue;
+
+public class PersistablePerson extends PersistablePersonFactory {
+    public PersistablePerson(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public PersistablePerson asPersistablePerson() {
+        return new PersistablePerson(state);
+    }
+
+    public void save() {
+        System.out.println("The state was saved: " + state);
+    }
+}
+</pre>
+
+This is a way to isolate the creation process.
+
+
+It's not mandatory to pick a behaviour class and use it as a factory, like we have done with ''Person'' and ''PersistablePerson''.
+It is just as easy to use the corresponding Factory class directly. So why should we bother doing the extra work to inherit from the factory?
+The main reason is to ''improve readability''. The class ''Person'' can represent the concept "person" and it feels natural to write:
+ <pre>
+    Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
+ </pre>
+...even though ''Person'' is just one behaviour representation among others that wraps ''PersonState''.
+
+
+If you don't want a class to act as factory you have to inherit from either (e.g.) ''PersonValue'' or ''PersonEntity'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonEntity;
+import com.myproject.state.PersonState;
+
+public class PersistablePerson extends PersonEntity {
+    public PersistablePerson(PersonState state) {
+        super(state);
+    }
+
+    public void save() {
+        System.out.println("The state was saved: " + state);
+    }
+}
+</pre>
+
+If the state template definition (''PersonStateTemplate'' in this case) includes a ''natural key'', both the ''value'' and the ''entity'' is generated, otherwise
+If a natural key is missing, only the ''value'' is generated.
+
+Whether your representation is a ''values'', ''entities'' and/or ''factory'' you often only need ''one'' constructor.
+The exception is when you need to modify a substate:
+
+
+
