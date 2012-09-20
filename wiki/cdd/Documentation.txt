@@ -90,7 +90,44 @@ The statement...
         person.asPersistable().save();
 </pre>
 
-...switches context and persists the instance in one statement! The benefits of doing it this way is described more in detail in the [[#Behaviour|behaviour]] section.
+...switches context and persists the instance in one statement!
+
+= Object =
+In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
+
+<pre>
+|-------------|
+|             |
+|  state      |  (data)
+|  behaviour  |  (methods)
+|             |
+|-------------|
+</pre>
+
+The lack of separation makes it hard to reuse code.
+Another problem is the difficulties associated with working in different contexts since each class is written for a specific context.
+Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] has enhanced modularity at the class level but not at the object level.
+
+Context Driven Development separates ''state'' and ''behaviour'' not only at the ''class'' level but also at the ''object'' level which enables powerful ways to build and compose classes and objects.
+CDD ia not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
+
+
+An object (class instance) in CDD consists of the following layers:
+<pre>
+|-------------------
+|     Behaviour    |
+|   1  |  2  |  3  |  (e.g. Person, PersistablePerson, OtherPerson...)
+|-------------------
+|  State interface |  (e.g. PersonState)
+|-------------------
+|   State storage  |  (e.g. PersonStateImp)
+|-------------------
+
+(this ascii art will be replaced by a picture)
+</pre>
+
+This layering allows us to have a set of behaviour representations, one per context. The behaviour representation does not know how the state is stored which makes it possible to support a couple of
+interesting techniques like [[#Expanding substate|substate expansion]] and [[#State projection|state projection]].
 
 = State =
 The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
@@ -500,6 +537,87 @@ public interface PersonState extends AddressState {
 If Laja finds two or more attributes with the same type and name they will be merged into a single attribute ''without any warnings''.
 This is not how it should work and will be changed in a future release!
 
+== State projection ==
+If we have a ''state'', e.g. ''PersonState'', and we want another state, e.g. ''StrangePersonState'' act as a ''PersonState''
+and if the object structure or the name of the attributes differs, then we can use ''state projection''.
+A state projection can map from one state format to another, letting one state act as another.
+Let's say we define these three states:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String givenName;
+    String surname;
+    AddressState $address;
+}
+</pre>
+
+<pre>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+}
+</pre>
+
+<pre>
+package com.myproject.state;
+
+public class StrangePersonStateTemplate {
+    int ageInYears;
+    String firstName;
+    String secondName;
+    AddressState address;
+}
+</pre>
+
+As you can see, the attributes in ''StrangePersonState'' doesn't match the attributes in ''PersonState''. The attribute ''address'' is expanded
+in ''PersonState'' it's not in  ''StrangePersonState''. The name of the attribute doesn't match either.
+We can let ''StrangePersonState'' act as a ''PersonState'' by adding a projection method:
+<pre>
+package com.myproject.state;
+
+public class StrangePersonStateTemplate {
+    int ageInYears;
+    String firstName;
+    String secondName;
+    AddressState address;
+
+    PersonStateProjection statePerson() {
+        return PersonStateProjection.age(ageInYears).givenName(firstName).surname(secondName).streetName(address.getStreetName()).streetNumber(address.getStreetNumber());
+    }
+}
+</pre>
+
+When generated, the interface ''StrangePersonState'' now has the method ''personState()'' that returns a ''PersonState'' to be used in e.g.'' StrangePerson'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.StrangePersonState;
+
+public class StrangePerson extends StrangePersonFactory {
+    private Person person;
+
+    public StrangePerson(StrangePersonState state) {
+        super(state);
+        person = new Person(state.personState());
+    }
+
+    // (factory)
+    public StrangePerson asStrangePerson() {
+        return new StrangePerson(state);
+    }
+
+    public boolean isAdult() {
+        return person.isAdult();
+    }
+}
+</pre>
+
+A better choice is often to use [#Expanding substate|expansion] instead of state projection and the recommendation is to not overuse them.
+
 == Default values ==
 Attributes can be set to default values, e.g.:
 <pre>
@@ -761,7 +879,7 @@ As we can see, both validation rules must be valid. We can verify that both vali
 
 = Behaviour =
 
-We have finally reached the point where it's time to add behavior. Developing a system without behavior would nevertheless be quite pointless!
+We have finally reached the point where it's time to add some behavior. Developing a system without behavior would nevertheless be quite pointless!
 Context Driven Development (CDD) makes it easy to add behaviour and let you build your system in a way similar to building with Lego.
 
 
@@ -789,8 +907,6 @@ In traditional [http://en.wikipedia.org/wiki/Object-oriented_programming OO] the
 
 
 CDD respects these two principles by allowing you to work in different contexts!
-
-Context Driven Development is not the only attempt to solve the problem of working in different contexts, you may also take a look at the [http://en.wikipedia.org/wiki/Data,_context_and_interaction Data Context Interaction] paradigm.
 
 (*) The ''Tell Don't Ask principle'' is about letting the objects themselves perform tasks.
 
@@ -840,6 +956,7 @@ Context switching can both mean changing task ''within'' an architecture layer a
               |
               |
               \/
+
 (this ascii art will be replaced by a picture)
 </pre>
 
@@ -908,13 +1025,14 @@ public class Person extends PersonFactory {
     PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistable();
 </pre>
 
+
 In some situations we want the object themselves to act as factory:
 <pre>
     Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
     PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistable();
 </pre>
 
-...by letting the behaviour class inherit from its ''Factory'':
+...by letting the behaviour class inherit from its ''Factory'' and only provide one factory method:
 
 <pre>
 package com.myproject.behaviour;
@@ -955,16 +1073,14 @@ public class PersistablePerson extends PersistablePersonFactory {
 }
 </pre>
 
-This is a way to isolate the creation process.
 
-
-It's not mandatory to pick a behaviour class and use it as a factory, like we have done with ''Person'' and ''PersistablePerson''.
-It is just as easy to use the corresponding Factory class directly. So why should we bother doing the extra work to inherit from the factory?
-The main reason is to ''improve readability''. The class ''Person'' can represent the concept "person" and it feels natural to write:
+It's not mandatory to pick a behaviour class and use it as a factory, like we did with ''Person'' and ''PersistablePerson'', we could just as easily have used ''PersonFactory'' and ''PersistablePersonFactory''.
+So why should we bother doing the extra work it means to inherit from the factory?
+The reason is that we want to express the concept "person" and improve readability:
  <pre>
     Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
  </pre>
-...even though ''Person'' is just one behaviour representation among others that wraps ''PersonState''.
+...even though ''Person'' is just one behaviour representation among others that wraps ''PersonState'' it's a natural representative of the concept "person" and a good candidate for the factory role.
 
 
 If you don't want a class to act as factory you have to inherit from either (e.g.) ''PersonValue'' or ''PersonEntity'':
