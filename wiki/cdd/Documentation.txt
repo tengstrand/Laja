@@ -1,11 +1,11 @@
 = Introduction =
 
 Context Driven Development (CDD) takes a new approach to object orientation by separating ''state'' and ''behaviour''.
-That allows us to work in different context without breaking encapsulation.
+This allows us to work in different context without breaking encapsulation.
 It's also the foundation that makes it possible to improve the way state is built and validated.
 The problem is solved by using ''code generation''.
 By using code generation, the amount of code needed to be written is reduced to a minimum which allows us to
-focus more on ''what'' to do instead of ''how'' resulting in cleaner and more concise code.
+focus more on ''what'' to do instead of ''how'' resulting in cleaner and more robust code.
 
 = Basic concepts =
 If we take a look at the [[CDD_-_Getting_started|Getting started]] example, it has the following structure in the IDE:
@@ -17,7 +17,7 @@ The directory ''java-gen'' contains a lot of code generated classes, but don't w
 If you are using a version control system you should put both ''java'' and ''java-gen'' under version control which will facilitate [http://en.wikipedia.org/wiki/Code_refactoring refactoring].
 
 
-Let's explain some of the basic concepts of CDD by looking at three of the four classes from the ''Getting started'' example: ''PersonStateTemplate'', ''Person'' and ''Main'':
+Let's explain some of the basic concepts of CDD by looking at three of the four classes from the [[CDD_-_Getting_started|Getting started]] example, the classes ''PersonStateTemplate'', ''Person'' and ''Main'':
 
 <pre>
 package com.myproject.state;
@@ -75,7 +75,7 @@ The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 </pre>
 
 
-If we take a closer look at the statement that creates an instance of ''Person'' (in the ''Main'' class):
+If we take a closer look at the statement that creates an instance of ''Person'':
 <pre>
         Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
 </pre>
@@ -92,7 +92,7 @@ The statement...
 
 ...switches context and persists the instance in one statement!
 
-= Object =
+= Class and Object =
 In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
 
 <pre>
@@ -105,11 +105,11 @@ In traditional object oriented languages the ''state'' and ''behaviour'' are mer
 </pre>
 
 The lack of separation makes it hard to reuse code.
-Another problem is the difficulties associated with working in different contexts since each class is written for a specific context.
+Another problem is the difficulties associated with switching context.
 Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] has enhanced modularity at the class level but not at the object level.
 
 Context Driven Development separates ''state'' and ''behaviour'' not only at the ''class'' level but also at the ''object'' level which enables powerful ways to build and compose classes and objects.
-CDD ia not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
+CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
 
 
 An object (class instance) in CDD consists of the following layers:
@@ -141,7 +141,7 @@ Instead of creating objects in ''one step'' by using a constructor, the object i
 * The encapsulation step can be postponed allowing delegation of validation and encapsulation to the caller.
 
 
-The states is defined in ''state templates'' and is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
+The states is defined in ''state templates'' which is ordinary Java classes and is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
 <pre>
 #generateCdd([{
   srcDir: "{.}/main"
@@ -172,7 +172,7 @@ public class PersonStateTemplate {
 }
 </pre>
 
-...regenerate and modify the main class:
+...regenerate and modify the main method:
 
 <pre>
 public class Main {
@@ -189,7 +189,7 @@ public class Main {
 }
 </pre>
 
-...modify the constructor of ''Person'' (ensure the hidden attribute ''length'' is set):
+...modify the constructor of ''Person'' (ensures that the hidden attribute ''length'' is set):
 <pre>
     public Person(PersonState state) {
         super(state);
@@ -203,7 +203,7 @@ Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ern
 </pre>
 
 
-If we look at how the instance of ''Person'' is created in the ''Main'' class, it follows this pattern:
+If we look at how the instance of ''Person'' is created, it follows this pattern:
 * '''Chained creator''': contains all ''mandatory'' attributes using the pattern [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html Chained Creator].
 * '''Builder methods''': all ''optional'' attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory and can be omitted.
 * '''Encapsulation''': encapsulates the state by choosing a behaviour representation.
@@ -240,14 +240,14 @@ The keywords ''(optional)'', ''(id)'' and ''(exclude)'' will exclude the attribu
 ||
 <span style="color:#008000">int</span> length; // (hide)
 ||
-The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized (not ''null'') by the constructor of the ''behaviour'' class (if not combined with the ''(optional)'' keyword).
+The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized (not ''null'') by the constructor of the ''behaviour'' class, if not combined with the ''(optional)'' keyword.
 |-
 |
 (exclude)
 ||
 <span style="color:#008000">String</span> occupation; // (exclude)
 ||
-Same as ''optional'' except that it is excluded from ''hashCode()'' and ''equals()''.
+Same as ''optional'' except that it's excluded from ''hashCode()'' and ''equals()''.
 |}
 
 
@@ -257,7 +257,7 @@ Person person = Person.create().withAge(16).asPerson();
 </pre>
 
 == Identity ==
-In [http://en.wikipedia.org/wiki/Domain-driven_design Domain Driven Design] the objects are categorized in two groups, ''values'' and ''entities''.
+In [http://en.wikipedia.org/wiki/Domain-driven_design Domain Driven Design] the state objects are categorized in two groups, ''values'' and ''entities''.
 If no attribute is marked as ''natural key'' causes CDD consider the state as a ''value'', example:
 <pre>
 package com.myproject.state;
@@ -285,12 +285,12 @@ public class Person extends PersonFactory {
 }
 </pre>
 
-The inheritance chain of Person goes like this: ''PersonFactory'' > ''PersonValueFactory'' > ''PersonValue'' where the last one includes both ''givenName'' and ''surname'' in ''hashCode()'' and ''equals()''.
+The inheritance hierarchy of Person goes like this: ''PersonFactory'' > ''PersonValueFactory'' > ''PersonValue'' where PersonValue includes both ''givenName'' and ''surname'' in ''hashCode()'' and ''equals()''.
 
 '''Rule''': All attributes except ''(id)'' and ''(exclude)'', are included in ''hashCode()'' and ''equals()'' for values.
 
 
-If we add a ''natural key'' to ''PersonState'':
+If we add a [http://en.wikipedia.org/wiki/Natural_key natural key] to ''PersonState'':
 <pre>
 package com.myproject.state;
 
@@ -300,13 +300,11 @@ public class PersonStateTemplate {
 }
 </pre>
 
-...the inheritance chain will change to: ''PersonFactory'' > ''PersonEntityFactory'' > ''PersonEntity'' where the last one includes only ''givenName'' in ''hashCode()'' and ''equals()''.
+...the inheritance hierarchy is changed to: ''PersonFactory'' > ''PersonEntityFactory'' > ''PersonEntity'' where the PersonEntity includes only ''givenName'' in ''hashCode()'' and ''equals()''.
 
 '''Rule''': Only the ''natural key'' is included in ''hashCode()'' and ''equals()'' for entities.
 
-
-To sum up, if you have defined a ''natural key'' in the state definition (by marking one or more attributes as ''key'') the state will be implemented as an ''entity'', otherwise as a ''value''.
-
+'''Rule''': If one or more attribute is marked as ''natural key'' the state will be implemented as an ''entity'', otherwise as a ''value''.
 
 === Context dependent identity ===
 A tricky part in object orientation is the management of ''identity''.
@@ -444,8 +442,8 @@ We can see that the class ''Person'' treats ''person1'' and ''person2'' as equal
 
 By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only ''ssn'' but can make a "full comparison" between two instances without breaking encapsulation.
 
-== Composite state ==
-CDD supports building composite states referred to as ''aggregate roots'' in [http://en.wikipedia.org/wiki/Domain-driven_design DDD].
+== State composition ==
+CDD supports composition referred to as ''aggregate roots'' in [http://en.wikipedia.org/wiki/Domain-driven_design DDD].
 This is best explained by adding ''AddressState'':
 <pre>
 package com.myproject.state;
@@ -490,8 +488,8 @@ Person{ssn=112233, givenName='Ingmar', surname='Bergman', address={streetName='M
 
 Substates can include other substates by for example letting ''AddressSate'' include ''ZipcodeState''.
 
-== Expanding substate ==
-Substates can be "expanded" and merged with the state. A dollar sign ($) marks a substate for expansion:
+== State expansion ==
+Substates can be "expanded" and merged into the state. A dollar sign ($) marks a substate for expansion:
 <pre>
 package com.myproject.state;
 
@@ -538,9 +536,11 @@ If Laja finds two or more attributes with the same type and name they will be me
 This is not how it should work and will be changed in a future release!
 
 == State projection ==
-If we have a ''state'', e.g. ''PersonState'', and we want another state, e.g. ''StrangePersonState'' act as a ''PersonState''
-and if the object structure or the name of the attributes differs, then we can use ''state projection''.
-A state projection can map from one state format to another, letting one state act as another.
+If we have the states ''A'' and ''B'', then we can use ''state projection'' to let ''B'' act as an ''A''.
+This can be useful if ''B'' contains all the attributes that ''A'' has but the object structure or the attribute names differs.
+State projection should only be used when [[#Expanding substates|state expansion]] is not possible.
+
+
 Let's say we define these three states:
 <pre>
 package com.myproject.state;
@@ -573,9 +573,11 @@ public class StrangePersonStateTemplate {
 }
 </pre>
 
-As you can see, the attributes in ''StrangePersonState'' doesn't match the attributes in ''PersonState''. The attribute ''address'' is expanded
-in ''PersonState'' it's not in  ''StrangePersonState''. The name of the attribute doesn't match either.
-We can let ''StrangePersonState'' act as a ''PersonState'' by adding a projection method:
+The attributes in ''StrangePersonState'' doesn't match the attributes in ''PersonState'':
+* ''address'' is expanded in ''PersonState'' but not in  ''StrangePersonState''.
+* The name of the attributes doesn't match.
+
+We can let ''StrangePersonState'' act as a ''PersonState'' by adding a state projection method:
 <pre>
 package com.myproject.state;
 
@@ -586,12 +588,18 @@ public class StrangePersonStateTemplate {
     AddressState address;
 
     PersonStateProjection statePerson() {
-        return PersonStateProjection.age(ageInYears).givenName(firstName).surname(secondName).streetName(address.getStreetName()).streetNumber(address.getStreetNumber());
+        return PersonStateProjection
+            .age(ageInYears)
+            .givenName(firstName)
+            .surname(secondName)
+            .streetName(address.getStreetName())
+            .streetNumber(address.getStreetNumber());
     }
 }
 </pre>
 
-When generated, the interface ''StrangePersonState'' now has the method ''personState()'' that returns a ''PersonState'' to be used in e.g.'' StrangePerson'':
+The method has to return an instance of the ''StateProjection'' it is going to act as and the method name must start with "state" followed by an upper case letter.
+When generated, the interface ''StrangePersonState'' will have the method ''personState()'' returning a ''PersonState'', to be used from e.g. ''StrangePerson'':
 <pre>
 package com.myproject.behaviour;
 
@@ -616,7 +624,9 @@ public class StrangePerson extends StrangePersonFactory {
 }
 </pre>
 
-A better choice is often to use [#Expanding substate|expansion] instead of state projection and the recommendation is to not overuse them.
+The current version lacks some functionality that will be added in a future version:
+* The types of the mapping attributes has to match, casting or converting types is not supported.
+* Some restrictions in how the object structure (substates) can be mapped.
 
 == Default values ==
 Attributes can be set to default values, e.g.:
