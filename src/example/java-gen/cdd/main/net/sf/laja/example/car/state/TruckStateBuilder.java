@@ -20,6 +20,8 @@ public interface TruckStateBuilder extends VehicleSizeStateBuilder {
     void withType(TruckTypeStateBuilder type);
     void withColor(CarColor color);
     void withOwner(OwnerStateBuilder owner);
+    TruckTypeStateBuilder getTypeStateBuilder();
+    OwnerStateBuilder getOwnerStateBuilder();
     boolean isValid();
     Object as(TruckStateBehaviourFactory factory, Object... args);
     TruckState getTruckState(net.sf.laja.example.car.state.Certificate certificate);

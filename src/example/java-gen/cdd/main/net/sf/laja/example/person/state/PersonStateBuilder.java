@@ -16,6 +16,7 @@ public interface PersonStateBuilder {
     void withSurname(String surname);
     void withWeightInKilograms(int weightInKilograms);
     void withHeight(HeightStateBuilder height);
+    HeightStateBuilder getHeightStateBuilder();
     boolean isValid();
     Object as(PersonStateBehaviourFactory factory, Object... args);
     PersonState getPersonState(net.sf.laja.example.person.state.Certificate certificate);

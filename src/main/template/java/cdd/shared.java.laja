@@ -115,16 +115,33 @@ import {template.packagename}.{template.stateClass}ListImpl;
   #foreach (attribute in attributes where attribute.isState && !attribute.isExpand)
     #set (template = templates.get(attribute.cleanedStateType))
     #if (template != null)
-import {template.packagename}.{template.stateClass}Builder;
+      #stateImports.add("import {template.packagename}.{attribute.stateBuilder}")
       #set (hasImports = true)
     #end
   #end
 #end
 
+#macro prepareStateImports()
+  #set (stateImports = new java.util.LinkedHashSet())
+#end
+
+#macro importStates()
+  #foreach (import in stateImports)
+{import};
+  #end
+#end
+
 #macro importStateBuilderImpl()
+  #foreach (attribute in attributes where attribute.isState && !attribute.isExpand)
+    #set (template = templates.get(attribute.cleanedStateType))
+    #if (template != null)
+      #stateImports.add("import {template.packagename}.{attribute.stateBuilderImpl}")
+      #set (hasImports = true)
+    #end
+  #end
   #foreach (method in stateMethods)
     #foreach (template in templates.values() where template.classname == method.classname)
-import {template.packagename}.{method.stateBuilderImplClass};
+      #stateImports.add("import {template.packagename}.{method.stateBuilderImplClass}")
       #set (hasImports = true)
     #end
   #end

@@ -4,6 +4,7 @@ import net.sf.laja.example.car.behaviour.CarColor;
 import net.sf.laja.example.car.state.VehicleSizeStateBehaviourFactory;
 import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.OwnerStateBuilder;
+import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -16,6 +17,7 @@ public class CarStateBuilderImpl implements CarStateBuilder {
     private CarState state;
     private final Certificate certificate;
     private boolean trusted;
+    private OwnerStateBuilder ownerStateBuilder;
 
     CarStateBuilderImpl() {
         state = new CarStateImpl();
@@ -51,6 +53,13 @@ public class CarStateBuilderImpl implements CarStateBuilder {
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(CarColor.valueOf(color.toUpperCase()));
+    }
+
+    public OwnerStateBuilder getOwnerStateBuilder() {
+        if (ownerStateBuilder == null) {
+            ownerStateBuilder = new OwnerStateBuilderImpl(state.getOwner());
+        }
+        return ownerStateBuilder;
     }
 
     private void throwEncapsulationException() {

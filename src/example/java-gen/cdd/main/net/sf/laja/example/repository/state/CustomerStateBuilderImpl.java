@@ -4,7 +4,7 @@ import net.sf.laja.example.repository.state.AddressStateBehaviourFactory;
 import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.ZipcodeStateBehaviourFactory;
 import net.sf.laja.example.repository.state.ZipcodeState;
-import net.sf.laja.example.repository.state.AddressStateBuilder;
+import net.sf.laja.example.repository.state.AddressStateListBuilder;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -17,6 +17,7 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     private CustomerState state;
     private final Certificate certificate;
     private boolean trusted;
+    private AddressStateListBuilder oldAddressesStateListBuilder;
 
     CustomerStateBuilderImpl() {
         state = new CustomerStateImpl();
@@ -77,6 +78,13 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     public void withOldAddresses(net.sf.laja.example.repository.state.AddressStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setOldAddresses(listBuilder.getStateList(certificate));
+    }
+
+    public AddressStateListBuilder getOldAddressesStateListBuilder() {
+        if (oldAddressesStateListBuilder == null) {
+            oldAddressesStateListBuilder = new AddressStateListBuilder(state.getOldAddresses());
+        }
+        return oldAddressesStateListBuilder;
     }
 
     private void throwEncapsulationException() {

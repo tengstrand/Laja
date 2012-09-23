@@ -61,11 +61,19 @@ public class Attribute implements StateTemplateParser.IAttribute {
     }
 
     public String getStateBuilder() {
-        return cleanedStateType + "StateBuilder";
+        return isStateList ? cleanedStateType + "StateListBuilder" : cleanedStateType + "StateBuilder";
     }
 
-    public String getStateListBuilder() {
-        return cleanedStateType + "StateListBuilder";
+    public String getStateBuilderImpl() {
+        return getStateBuilder() + (isStateList ? "" : "Impl");
+    }
+
+    public String getStateBuilderVariable() {
+        return variable + (isStateList ? "StateListBuilder" : "StateBuilder");
+    }
+
+    public String getStateBuilderGetter() {
+        return "get" + StringUtils.capitalize(getStateBuilderVariable());
     }
 
     public void setType(String type) {

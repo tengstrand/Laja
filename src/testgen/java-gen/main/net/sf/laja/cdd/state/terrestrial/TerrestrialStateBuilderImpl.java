@@ -2,8 +2,7 @@ package net.sf.laja.cdd.state.terrestrial;
 
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
+import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -16,6 +15,9 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
     private TerrestrialState state;
     private final Certificate certificate;
     private boolean trusted;
+    private EyeStateBuilder leftEyeStateBuilder;
+    private EyeStateBuilder rightEyeStateBuilder;
+    private EyeStateBuilder middleEyeStateBuilder;
 
     TerrestrialStateBuilderImpl() {
         state = new TerrestrialStateImpl();
@@ -56,6 +58,27 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
     public void withWeight(int weight) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setWeight(weight);
+    }
+
+    public EyeStateBuilder getLeftEyeStateBuilder() {
+        if (leftEyeStateBuilder == null) {
+            leftEyeStateBuilder = new EyeStateBuilderImpl(state.getLeftEye());
+        }
+        return leftEyeStateBuilder;
+    }
+
+    public EyeStateBuilder getRightEyeStateBuilder() {
+        if (rightEyeStateBuilder == null) {
+            rightEyeStateBuilder = new EyeStateBuilderImpl(state.getRightEye());
+        }
+        return rightEyeStateBuilder;
+    }
+
+    public EyeStateBuilder getMiddleEyeStateBuilder() {
+        if (middleEyeStateBuilder == null) {
+            middleEyeStateBuilder = new EyeStateBuilderImpl(state.getMiddleEye());
+        }
+        return middleEyeStateBuilder;
     }
 
     private void throwEncapsulationException() {

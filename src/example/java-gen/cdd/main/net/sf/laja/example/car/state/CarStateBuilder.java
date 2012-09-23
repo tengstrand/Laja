@@ -16,6 +16,7 @@ public interface CarStateBuilder extends VehicleSizeStateBuilder {
     void withOwner(OwnerStateBuilder owner);
     void withColor(CarColor color);
     void withColor(String color);
+    OwnerStateBuilder getOwnerStateBuilder();
     boolean isValid();
     Object as(CarStateBehaviourFactory factory, Object... args);
     CarState getCarState(net.sf.laja.example.car.state.Certificate certificate);

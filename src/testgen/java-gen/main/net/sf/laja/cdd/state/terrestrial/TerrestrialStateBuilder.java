@@ -2,8 +2,6 @@ package net.sf.laja.cdd.state.terrestrial;
 
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -18,6 +16,9 @@ public interface TerrestrialStateBuilder {
     void withRightEye(EyeStateBuilder rightEye);
     void withMiddleEye(EyeStateBuilder middleEye);
     void withWeight(int weight);
+    EyeStateBuilder getLeftEyeStateBuilder();
+    EyeStateBuilder getRightEyeStateBuilder();
+    EyeStateBuilder getMiddleEyeStateBuilder();
     boolean isValid();
     Object as(TerrestrialStateBehaviourFactory factory, Object... args);
     TerrestrialState getTerrestrialState(net.sf.laja.cdd.state.Certificate certificate);

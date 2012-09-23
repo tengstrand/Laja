@@ -6,6 +6,8 @@ import net.sf.laja.example.car.state.VehicleSizeStateBehaviourFactory;
 import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.TruckTypeStateBuilder;
 import net.sf.laja.example.car.state.OwnerStateBuilder;
+import net.sf.laja.example.car.state.TruckTypeStateBuilderImpl;
+import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
 import net.sf.laja.example.car.state.CarStateBuilderImpl;
 import net.sf.laja.example.car.state.CarStateBuilder;
 import net.sf.laja.example.car.state.Certificate;
@@ -20,6 +22,8 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     private TruckState state;
     private final Certificate certificate;
     private boolean trusted;
+    private TruckTypeStateBuilder typeStateBuilder;
+    private OwnerStateBuilder ownerStateBuilder;
 
     TruckStateBuilderImpl() {
         state = new TruckStateImpl();
@@ -59,6 +63,20 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     public void withOwner(OwnerStateBuilder owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setOwner(owner.getOwnerState(certificate));
+    }
+
+    public TruckTypeStateBuilder getTypeStateBuilder() {
+        if (typeStateBuilder == null) {
+            typeStateBuilder = new TruckTypeStateBuilderImpl(state.getType());
+        }
+        return typeStateBuilder;
+    }
+
+    public OwnerStateBuilder getOwnerStateBuilder() {
+        if (ownerStateBuilder == null) {
+            ownerStateBuilder = new OwnerStateBuilderImpl(state.getOwner());
+        }
+        return ownerStateBuilder;
     }
 
     private void throwEncapsulationException() {

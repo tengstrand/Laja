@@ -21,14 +21,13 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadStateBehaviourFactory;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.nose.NoseStateBuilder;
-import net.sf.laja.cdd.state.brow.BrowStateBuilder;
-import net.sf.laja.cdd.state.ear.EarStateBuilder;
-import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
+import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
+import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
+import net.sf.laja.cdd.state.ear.EarStateListBuilder;
+import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.arm.ArmStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
+import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilderImpl;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
@@ -44,6 +43,14 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     private MonsterState state;
     private final Certificate certificate;
     private boolean trusted;
+    private EyeStateBuilder leftEyeStateBuilder;
+    private EyeStateBuilder rightEyeStateBuilder;
+    private EyeStateBuilder midEyeStateBuilder;
+    private NoseStateListBuilder nosesStateListBuilder;
+    private BrowStateListBuilder browsStateListBuilder;
+    private EarStateListBuilder earsStateListBuilder;
+    private MouthStateListBuilder mouthsStateListBuilder;
+    private ArmStateBuilder leftArmStateBuilder;
 
     MonsterStateBuilderImpl() {
         state = new MonsterStateImpl();
@@ -212,6 +219,62 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     public void withLeftArm(ArmStateBuilder leftArm) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setLeftArm(leftArm.getArmState(certificate));
+    }
+
+    public EyeStateBuilder getLeftEyeStateBuilder() {
+        if (leftEyeStateBuilder == null) {
+            leftEyeStateBuilder = new EyeStateBuilderImpl(state.getLeftEye());
+        }
+        return leftEyeStateBuilder;
+    }
+
+    public EyeStateBuilder getRightEyeStateBuilder() {
+        if (rightEyeStateBuilder == null) {
+            rightEyeStateBuilder = new EyeStateBuilderImpl(state.getRightEye());
+        }
+        return rightEyeStateBuilder;
+    }
+
+    public EyeStateBuilder getMidEyeStateBuilder() {
+        if (midEyeStateBuilder == null) {
+            midEyeStateBuilder = new EyeStateBuilderImpl(state.getMidEye());
+        }
+        return midEyeStateBuilder;
+    }
+
+    public NoseStateListBuilder getNosesStateListBuilder() {
+        if (nosesStateListBuilder == null) {
+            nosesStateListBuilder = new NoseStateListBuilder(state.getNoses());
+        }
+        return nosesStateListBuilder;
+    }
+
+    public BrowStateListBuilder getBrowsStateListBuilder() {
+        if (browsStateListBuilder == null) {
+            browsStateListBuilder = new BrowStateListBuilder(state.getBrows());
+        }
+        return browsStateListBuilder;
+    }
+
+    public EarStateListBuilder getEarsStateListBuilder() {
+        if (earsStateListBuilder == null) {
+            earsStateListBuilder = new EarStateListBuilder(state.getEars());
+        }
+        return earsStateListBuilder;
+    }
+
+    public MouthStateListBuilder getMouthsStateListBuilder() {
+        if (mouthsStateListBuilder == null) {
+            mouthsStateListBuilder = new MouthStateListBuilder(state.getMouths());
+        }
+        return mouthsStateListBuilder;
+    }
+
+    public ArmStateBuilder getLeftArmStateBuilder() {
+        if (leftArmStateBuilder == null) {
+            leftArmStateBuilder = new ArmStateBuilderImpl(state.getLeftArm());
+        }
+        return leftArmStateBuilder;
     }
 
     private void throwEncapsulationException() {

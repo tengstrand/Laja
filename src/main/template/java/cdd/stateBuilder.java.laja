@@ -10,7 +10,7 @@ public interface {builderClass}{extends} {
   #foreach (attribute in attributes)
     #if (attribute.isStateList)
       #set (template = templates.get(attribute.cleanedStateType))
-    void {attribute.withMethod}({template.packagename}.{attribute.stateListBuilder} listBuilder);
+    void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder);
     #else if (attribute.isState)
     void {attribute.withMethod}({attribute.stateBuilder} {attribute.variable});
     #else
@@ -19,6 +19,9 @@ public interface {builderClass}{extends} {
     #foreach (method in convertMethods where method.variable == attribute.variable)
     void {attribute.withMethod}({method.type} {method.variable});
     #end
+  #end
+  #foreach (attribute in attributes where attribute.isState)
+    {attribute.stateBuilder} {attribute.stateBuilderGetter}();
   #end
     boolean isValid();
     Object as({stateBehaviourFactoryClass} factory, Object... args);
@@ -32,7 +35,9 @@ public interface {builderClass}{extends} {
   #package()
   #importBegin(false)
   #importExpandedType(prefix)
+  #prepareStateImports()
   #importStateBuilder()
+  #importStates()
   #importProjectedStateBuilder()
   #importCertificate()
   #importEnd()

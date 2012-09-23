@@ -2,6 +2,7 @@ package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.HeightStateBuilder;
+import net.sf.laja.example.person.state.HeightStateBuilderImpl;
 import net.sf.laja.example.person.state.BmiStateBuilderImpl;
 import net.sf.laja.example.person.state.BmiStateBuilder;
 import net.sf.laja.example.person.state.Certificate;
@@ -16,6 +17,7 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     private PersonState state;
     private final Certificate certificate;
     private boolean trusted;
+    private HeightStateBuilder heightStateBuilder;
 
     PersonStateBuilderImpl() {
         state = new PersonStateImpl();
@@ -50,6 +52,13 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     public void withHeight(HeightStateBuilder height) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setHeight(height.getHeightState(certificate));
+    }
+
+    public HeightStateBuilder getHeightStateBuilder() {
+        if (heightStateBuilder == null) {
+            heightStateBuilder = new HeightStateBuilderImpl(state.getHeight());
+        }
+        return heightStateBuilder;
     }
 
     private void throwEncapsulationException() {

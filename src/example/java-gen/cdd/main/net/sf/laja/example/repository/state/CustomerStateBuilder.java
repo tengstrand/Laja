@@ -2,7 +2,7 @@ package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.AddressStateBuilder;
 import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
-import net.sf.laja.example.repository.state.AddressStateBuilder;
+import net.sf.laja.example.repository.state.AddressStateListBuilder;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -21,6 +21,7 @@ public interface CustomerStateBuilder extends AddressStateBuilder {
     void withZipcode(int zipcode);
     void withCity(String city);
     void withOldAddresses(net.sf.laja.example.repository.state.AddressStateListBuilder listBuilder);
+    AddressStateListBuilder getOldAddressesStateListBuilder();
     boolean isValid();
     Object as(CustomerStateBehaviourFactory factory, Object... args);
     CustomerState getCustomerState(net.sf.laja.example.repository.state.Certificate certificate);
