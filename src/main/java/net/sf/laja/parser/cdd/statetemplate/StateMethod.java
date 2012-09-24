@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class StateMethod implements StateTemplateParser.IStateMethod {
     public String classname;
+    public String getter;
     public String classVariable;
     public String returnclass;
     public String variable;
@@ -39,6 +40,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         this.returnclass = classname + "State";
         stateBuilderClass = classname + "StateBuilder";
         stateBuilderImplClass = classname + "StateBuilderImpl";
+        getter = "get" + this.returnclass;
         classVariable = StringUtils.uncapitalize(this.returnclass);
     }
 

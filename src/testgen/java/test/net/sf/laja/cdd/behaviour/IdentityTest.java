@@ -11,14 +11,12 @@ import static org.junit.Assert.assertEquals;
 
 public class IdentityTest {
 
-    @Test
+    @Test (expected = UnsupportedOperationException.class)
     public void removeValueFromEntityStateList() {
         final int width = 10;
         final int height = 5;
         final String red = "Red";
         final String green = "Green";
-
-
 
         CuteMouthList cuteMouthList = MouthFactory.createList(MouthFactory.width(width).height(height).color(red),
                 MouthFactory.width(width).height(height).color(green)).asMouthList(SMALL).asCuteMouthList(SMALL, 1);

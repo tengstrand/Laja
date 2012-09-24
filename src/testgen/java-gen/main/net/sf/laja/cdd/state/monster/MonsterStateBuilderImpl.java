@@ -64,11 +64,11 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     }
 
     public EyeStateBuilder eyeStateBuilder() {
-        return new EyeStateBuilderImpl(state.eyeState());
+        return new EyeStateBuilderImpl(state.getEyeState());
     }
 
     public TerrestrialStateBuilder terrestrialStateBuilder() {
-        return new TerrestrialStateBuilderImpl(state.terrestrialState());
+        return new TerrestrialStateBuilderImpl(state.getTerrestrialState());
     }
 
     public void withNumberOfLegs(int numberOfLegs) {

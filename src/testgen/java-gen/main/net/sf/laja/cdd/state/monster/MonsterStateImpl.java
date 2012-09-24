@@ -61,7 +61,7 @@ public class MonsterStateImpl implements MonsterState {
 
     private boolean _encapsulated = false;
 
-    public EyeState eyeState() {
+    public EyeState getEyeState() {
         return new EyeState() {
             public int getEyeWeightInGrams() { return MonsterStateImpl.this.weight; }
             public void setEyeWeightInGrams(int eyeWeightInGrams) { MonsterStateImpl.this.setWeight(eyeWeightInGrams); }
@@ -158,7 +158,7 @@ public class MonsterStateImpl implements MonsterState {
         };
     }
 
-    public TerrestrialState terrestrialState() {
+    public TerrestrialState getTerrestrialState() {
         return new TerrestrialState() {
             public int getNumberOfLegs() { return MonsterStateImpl.this.numberOfLegs; }
             public void setNumberOfLegs(int numberOfLegs) { MonsterStateImpl.this.setNumberOfLegs(numberOfLegs); }

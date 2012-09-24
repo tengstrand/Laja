@@ -67,7 +67,7 @@ public class MonsterValueFactory extends MonsterValue {
         }
 
       private Object create_(MonsterState state, MonsterStateBuilder stateBuilder, Object... args) {
-        return new Terrestrial(state.terrestrialState(), stateBuilder.terrestrialStateBuilder());
+        return new Terrestrial(state.getTerrestrialState(), stateBuilder.terrestrialStateBuilder());
     
       }
     }

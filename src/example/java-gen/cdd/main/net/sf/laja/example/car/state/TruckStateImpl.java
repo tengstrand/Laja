@@ -20,7 +20,7 @@ public class TruckStateImpl implements TruckState {
 
     private boolean _encapsulated = false;
 
-    public CarState carState() {
+    public CarState getCarState() {
         return new CarState() {
             public int getLengthInCentimeters() { return TruckStateImpl.this.lengthInCentimeters; }
             public void setLengthInCentimeters(int lengthInCentimeters) { TruckStateImpl.this.setLengthInCentimeters(lengthInCentimeters); }

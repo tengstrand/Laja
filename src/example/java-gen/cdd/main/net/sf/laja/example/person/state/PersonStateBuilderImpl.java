@@ -31,7 +31,7 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     }
 
     public BmiStateBuilder bmiStateBuilder() {
-        return new BmiStateBuilderImpl(state.bmiState());
+        return new BmiStateBuilderImpl(state.getBmiState());
     }
 
     public void withGivenName(String givenName) {

@@ -22,7 +22,7 @@ public interface {stateClass}{extends} {
   #foreach (method in stateMethods)
 
     #foreach (template in templates.values() where template.classname == method.classname)
-    {method.returnclass} {method.classVariable}();
+    {method.returnclass} {method.getter}();
     #end
   #end
   #if (extends.length == 0)

@@ -2,7 +2,7 @@
   #foreach (method in stateMethods)
     #foreach (template in templates.values() where template.classname == method.classname)
 
-    public {method.returnclass} {method.classVariable}() {
+    public {method.returnclass} {method.getter}() {
         return new {method.returnclass}() {
       #foreach (attribute in template.attributes)
         #set (statement = method.statements.get(attribute.variable))

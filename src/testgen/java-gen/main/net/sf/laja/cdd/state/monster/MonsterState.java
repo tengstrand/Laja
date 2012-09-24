@@ -108,7 +108,7 @@ public interface MonsterState extends HeadState {
     ArmState getLeftArm();
     void setLeftArm(ArmState leftArm);
 
-    EyeState eyeState();
+    EyeState getEyeState();
 
-    TerrestrialState terrestrialState();
+    TerrestrialState getTerrestrialState();
 }

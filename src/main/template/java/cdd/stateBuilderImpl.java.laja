@@ -22,7 +22,7 @@ public class {builderImplClass} implements {builderClass} {
   #foreach (method in stateMethods)
 
     public {method.stateBuilderClass} {method.stateBuilderVariable}() {
-        return new {method.stateBuilderImplClass}(state.{method.classVariable}());
+        return new {method.stateBuilderImplClass}(state.{method.getter}());
     }
   #end
   #foreach (attribute in attributes)

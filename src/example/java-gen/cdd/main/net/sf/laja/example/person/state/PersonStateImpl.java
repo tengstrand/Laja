@@ -17,7 +17,7 @@ public class PersonStateImpl implements PersonState {
 
     private boolean _encapsulated = false;
 
-    public BmiState bmiState() {
+    public BmiState getBmiState() {
         return new BmiState() {
             public int getHeightInCentimeters() { return PersonStateImpl.this.height.getHeightInCentimeters(); }
             public void setHeightInCentimeters(int heightInCentimeters) { PersonStateImpl.this.height.setHeightInCentimeters(heightInCentimeters); }

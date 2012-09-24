@@ -37,7 +37,7 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     }
 
     public CarStateBuilder carStateBuilder() {
-        return new CarStateBuilderImpl(state.carState());
+        return new CarStateBuilderImpl(state.getCarState());
     }
 
     public void withLengthInCentimeters(int lengthInCentimeters) {

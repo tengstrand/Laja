@@ -27,5 +27,5 @@ public interface TruckState extends VehicleSizeState {
     OwnerState getOwner();
     void setOwner(OwnerState owner);
 
-    CarState carState();
+    CarState getCarState();
 }

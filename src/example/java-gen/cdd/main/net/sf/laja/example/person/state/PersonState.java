@@ -21,7 +21,7 @@ public interface PersonState {
     HeightState getHeight();
     void setHeight(HeightState height);
 
-    BmiState bmiState();
+    BmiState getBmiState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();
