@@ -1171,7 +1171,7 @@ public class PersonStateTemplate {
 }
 </pre>
 
-In this case the ''hairColor'' should be set by each behaviour representation. We add the representation ''GreyHairedPerson'' (don't forget to create it in [[#create_factory_in_two_steps|two steps]]):
+In this case the ''hairColor'' should be populated by the behaviour representations. We start by adding the class ''GreyHairedPerson'' (don't forget to create it in [[#create_factory_in_two_steps|two steps]]):
 <pre>
 package com.myproject.behaviour;
 
@@ -1230,4 +1230,90 @@ GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
 RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
 </pre>
 
+=== Populate substate ===
+If you for some reason need to populate a substate, and if it can't be done by the corresponding behaviour class (''Address'' in this example), it can be managed by the aggregate root itself (''Person''):
+<pre>
+package com.myproject.state;
 
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+    int zipcode; // (hide)
+}
+</pre>
+
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String givenName;
+    String surname;
+    AddressState address;
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.AddressState;
+
+public class Address extends AddressFactory {
+    public Address(AddressState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Address asAddress() {
+        return new Address(state);
+    }
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonStateBuilder;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state, PersonStateBuilder stateBuilder) {
+        super(state, stateBuilder);
+
+        // Populate attribute "zipcode" in substate "address".
+        stateBuilder.getAddressStateBuilder().withZipcode(123);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state, stateBuilder);
+    }
+}
+</pre>
+
+If we run our "test program":
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.givenName("Ingmar").surname("Bergman").address(Address.streetName("Thestreet").streetNumber(1)).asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...the zipcode has been set to 123:
+<pre>
+Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', streetNumber=1, zipcode=123}}
+</pre>
+
+
+In CDD we can choose between two constructors when implementing our behaviour representations, e.g.:
+<pre>
+    public Person(PersonState state)
+    public Person(PersonState state, PersonStateBuilder stateBuilder)
+</pre>
+
+The first is the most common. The second should be used if we need to populate the substates by the behaviour representation(s).
+Only one of the two constructors should be implemented at a time.
