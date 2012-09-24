@@ -104,12 +104,15 @@ In traditional object oriented languages the ''state'' and ''behaviour'' are mer
 |-------------|
 </pre>
 
-The lack of separation makes it hard to reuse code.
+The lack of separation between state and behaviour makes it harder to reuse code.
 Another problem is the difficulties associated with switching context.
 Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] has enhanced modularity at the class level but not at the instance/object level.
 
 Context Driven Development separates ''state'' and ''behaviour'' not only at the ''class'' level but also at the ''object'' level which enables powerful ways to build and compose classes and objects.
+
+
 CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
+The popular [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 account example] looks like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
 
 
 An object (class instance) in CDD has the following layers:
@@ -127,7 +130,7 @@ An object (class instance) in CDD has the following layers:
 </pre>
 
 This layering allows us to have a set of behaviour representations, one per context. The behaviour representation does not know how the state is stored which makes it possible to support a couple of
-interesting techniques like [[#State expansion|substate expansion]] and [[#State projection|state projection]] making the code more flexible and modular.
+interesting techniques like [[#State expansion|state expansion]] and [[#State projection|state projection]] which facilitates code reuse.
 
 = State =
 The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
@@ -1309,11 +1312,11 @@ Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', s
 </pre>
 
 
-In CDD we can choose between two constructors when implementing our behaviour representations, e.g.:
+We can choose between two constructors when implementing our behaviour representations, e.g.:
 <pre>
     public Person(PersonState state)
     public Person(PersonState state, PersonStateBuilder stateBuilder)
 </pre>
 
-The first is the most common. The second should be used if we need to populate the substates by the behaviour representation(s).
+The first is the most common and used when the state is not changed by the behaviour class and the second if we need to populate one or more substates.
 Only one of the two constructors should be implemented at a time.
