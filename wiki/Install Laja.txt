@@ -73,7 +73,7 @@ You can check the basic installation with opening a new shell and typing ''laja'
 
   Could not find default template file 'generate.laja'. Type 'laja -help' for instructions
 
-This message is there because you haven't specified a file and the default template file 'generate.laja' is missing in current directory. This means that the installation is complete! Continue with  [[Code generator|parser generator -> getting started]].
+This message is there because you haven't specified a file and the default template file 'generate.laja' is missing in current directory. This means that the installation is complete! Continue with  [[Code generator - Getting started|code generator -> getting started]].
 
 === Problems ===
 If you get an error similar to the below when you start Laja, then you need to change to Java 1.5 or higher:
