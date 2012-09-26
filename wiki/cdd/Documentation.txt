@@ -7,7 +7,7 @@ The problem is solved by using ''code generation''.
 By using code generation, the amount of code needed to be written is reduced to a minimum which allows us to
 focus more on ''what'' to do instead of ''how'' resulting in cleaner and more robust code.
 
-= Basic concepts =
+
 If we take a look at the [[CDD_-_Getting_started|Getting started]] example, it has the following structure in the IDE:
 
 [[File:project-directory-structure.png]]
@@ -112,7 +112,7 @@ Context Driven Development separates ''state'' and ''behaviour'' not only at the
 
 
 CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
-The popular [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 account example] looks like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
+The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
 
 
 An object (class instance) in CDD has the following layers:
@@ -144,7 +144,9 @@ Instead of creating objects in ''one step'' by using a constructor, the object i
 * The encapsulation step can be postponed allowing delegation of validation and encapsulation to the caller.
 
 
-The states is defined in ''state templates'' which is ordinary Java classes and is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
+The states is defined in ''state templates'' which is ordinary Java classes that is checked at compile time the same way as all other code.
+This approach makes the state definition more robust than having them in an ordinary text file format like XML.
+The templates is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
 <pre>
 #generateCdd([{
   srcDir: "{.}/main"
@@ -480,11 +482,11 @@ package com.myproject.behaviour;
 
 public class Main {
     public static void main(String[] args) {
-        Person person1 = Person.ssn(123).givenName("Ingmar").surname("Bergman").asPerson();
-        Person person2 = Person.ssn("456").givenName("Lars").surname("von Trier").asPerson();
+        Person ingmar = Person.ssn(123).givenName("Ingmar").surname("Bergman").asPerson();
+        Person lars = Person.ssn("456").givenName("Lars").surname("von Trier").asPerson();
 
-        System.out.println(person1);
-        System.out.println(person2);
+        System.out.println(ingmar);
+        System.out.println(lars);
     }
 }
 </pre>
@@ -975,9 +977,9 @@ CDD respects these two principles by allowing you to work in different contexts!
 
 (*) The ''Tell Don't Ask principle'' is about letting the objects themselves perform tasks.
 
-== Switch context ==
+== Context switching ==
 
-In the previous listing we ''switched context'' in order to perform the save operation:
+In the listing above we ''switched context'' in order to perform the save operation:
 <pre>
         person.asPersistable().save();
 </pre>
@@ -1006,10 +1008,11 @@ public class Person extends PersonFactory {
 }
 </pre>
 
-Being able to switch context is not just a way of dividing behavior between objects,
+
+Being able to switch context is not just a way of splitting up behavior between objects,
 it's also a way to reduce the amount of code needed to integrate different parts of the system.
 
-Context switching can both mean changing task ''within'' an architecture layer as well as moving to ''another'' layer:
+Context switching can both mean switching task ''within'' an architectural layer as well as switching task to ''another'' architectural layer:
 
 <pre>
               /\
