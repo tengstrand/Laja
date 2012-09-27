@@ -17,7 +17,7 @@ The directory ''java-gen'' contains a lot of code generated classes, but don't w
 If you are using a version control system you should put both ''java'' and ''java-gen'' under version control which will facilitate [http://en.wikipedia.org/wiki/Code_refactoring refactoring].
 
 
-Let's explain some of the basic concepts of CDD by looking at three of the four classes from the [[CDD_-_Getting_started|Getting started]] example:
+Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[CDD_-_Getting_started|Getting started]] example:
 
 <pre>
 package com.myproject.state;
@@ -90,53 +90,44 @@ The statement...
         person.asPersistable().save();
 </pre>
 
-...switches context and persists the instance in one statement, more on that later.
+...switches context and persists the instance in one statement! This will be described in more detail later.
 
 = Classes and objects =
-In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects. A typical object can look like this:
+In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
 
-<pre>
-|-------------|
-|             |
-|  state      |  (data)
-|  behaviour  |  (methods)
-|             |
-|-------------|
-</pre>
 
-The lack of separation between state and behaviour makes it harder to reuse code.
-Another problem is the difficulties associated with switching context.
-Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] has enhanced modularity at the class level but not at the instance/object level.
+[[File:Traditional-object.png|450px]]
 
-Context Driven Development separates ''state'' and ''behaviour'' not only at the ''class'' level but also at the ''object'' level which enables powerful ways to build and compose classes and objects.
+
+The merging of state and behavior makes it harder to reuse code and to work in different contexts.
+Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] has enhanced flexibility at the class level but not at the instance/object level.
+
+
+CDD wants to bring the same level of flexibility to objects as for classes.
+The separation between ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
+It also makes it easy to work in different contexts:
+
+
+[[File:CDD-object.png|500px]]
 
 
 CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
 The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
 
 
-An object (class instance) in CDD has the following layers:
-<pre>
-|-------------------
-|     Behaviour    |
-|   1  |  2  |  3  |  (e.g. Person, PersistablePerson, OtherPerson...)
-|-------------------
-|  State interface |  (e.g. PersonState)
-|-------------------
-|   State storage  |  (e.g. PersonStateImp)
-|-------------------
+An object (class instance) is in CDD has the following structure:
+<br/>
 
-(this ascii art will be replaced by a picture)
-</pre>
+[[File:CDD-object-layering.png|350px]]
 
-This layering allows us to have a set of behaviour representations, one per context. The behaviour representation does not know how the state is stored which makes it possible to support a couple of
-interesting techniques like [[#State expansion|state expansion]] and [[#State projection|state projection]] which facilitates code reuse.
+
+This layering allows us to have a set of behaviour representations, one per task/context. The behaviour representation does not know how the state is stored which makes it possible to support a couple of
+interesting techniques like [[#State expansion|state expansion]] and [[#State projection|state projection]] which facilitates composition and code reuse.
 
 = State =
-The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process.
-
-Instead of creating objects in ''one step'' by using a constructor, the object is created in ''several steps'' which gives us a number of advantages:
-* The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting you focus on the properties of each attribute (like if it's optional or not).
+The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process by giving more love and care to it.
+Instead of creating objects in ''one step'' by using a constructor, the object is created in ''several steps'' allowing for a range of improvements:
+* The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting you focus on the properties of each attribute.
 * The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the readability'' and is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
 * Ensures valid state before encapsulation takes place.
 * Ensures that the state can not be change from the outside once the state is encapsulated.
