@@ -1,3 +1,5 @@
+'''This page is not up to date!'''
+
 == Set up the development environment ==
 
 These steps is only required if you are a developer of the Laja tool itself. Laja is currently developed by Joakim Tengstrand, so if you are not a new member of the team, you should skip this part!
