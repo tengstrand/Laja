@@ -100,7 +100,7 @@ In traditional object oriented languages the ''state'' and ''behaviour'' are mer
 
 
 The merging of state and behavior makes it harder to reuse code and to work in different contexts.
-Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] has enhanced flexibility at the class level but not at the instance/object level.
+Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] is able to compose classes in a powerful way, but once instantiated the objects become quite static in its nature.
 
 
 CDD wants to bring the same level of flexibility to objects as for classes.
@@ -115,13 +115,13 @@ CDD is not the only attempt to improve the way of working with objects, you may 
 The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
 
 
-An object (class instance) is in CDD has the following structure:
+Objects are divided into state and behaviour and the state is implemented by one or more classes:
 <br/>
 
-[[File:CDD-object-layering.png|350px]]
+[[File:CDD-object-layering.png|400px]]
 
 
-This layering allows us to have a set of behaviour representations, one per task/context. The behaviour representation does not know how the state is stored which makes it possible to support a couple of
+This layering allows us to have a set of behaviour representations, one per task/context. The behaviour representation only knows the state interface which makes it possible to support a couple of
 interesting techniques like [[#State expansion|state expansion]] and [[#State projection|state projection]] which facilitates composition and code reuse.
 
 = State =
