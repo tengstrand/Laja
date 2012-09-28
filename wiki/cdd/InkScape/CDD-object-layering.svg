@@ -68,7 +68,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="345.39084"
+     inkscape:cx="329.63139"
      inkscape:cy="865.05409"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -88,7 +88,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -161,59 +161,79 @@
        x="64.59903"
        y="48.386829" />
     <rect
-       y="56.473663"
-       x="243.5"
+       style="color:#000000;fill:#a6c1d5;fill-opacity:1;fill-rule:nonzero;stroke:#4b7ca1;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect14597"
+       width="127"
+       height="25.455845"
+       x="259.5"
+       y="56.473663" />
+    <rect
+       y="86.473663"
+       x="259.5"
        height="25.455845"
        width="127"
-       id="rect12653"
+       id="rect14599"
        style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#858585;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <rect
-       transform="scale(-1,1)"
-       style="color:#000000;fill:#d2d2d2;fill-opacity:1;fill-rule:nonzero;stroke:#858585;stroke-width:0.99999976;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect12655"
-       width="127.00001"
+       y="56.473663"
+       x="399.5"
        height="25.455845"
-       x="-370.5"
+       width="127"
+       id="rect14601"
+       style="color:#000000;fill:#adc383;fill-opacity:1;fill-rule:nonzero;stroke:#7e9a4a;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <rect
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#858585;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect14603"
+       width="127"
+       height="25.455845"
+       x="399.5"
        y="86.473663" />
     <rect
-       y="48.085312"
-       x="233.89192"
-       height="72.153374"
-       width="145.83846"
-       id="rect12657"
-       style="color:#000000;fill:none;stroke:#979797;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+       style="color:#000000;fill:#ffaaaa;fill-opacity:1;fill-rule:nonzero;stroke:#ff8a8a;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect14605"
+       width="127"
+       height="25.455845"
+       x="539.5"
+       y="56.473663" />
+    <rect
+       y="86.473663"
+       x="539.5"
+       height="25.455845"
+       width="127"
+       id="rect14607"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#858585;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text15175"
+       y="127.55627"
+       x="302.54358"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="127.55627"
+         x="302.54358"
+         sodipodi:role="line"
+         id="tspan15177">Context 1</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
-       x="288.38879"
-       y="40.347557"
-       id="text12659"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       x="440.54358"
+       y="127.55627"
+       id="text15179"
        sodipodi:linespacing="125%"><tspan
-         id="tspan12661"
+         id="tspan15181"
          sodipodi:role="line"
-         x="288.38879"
-         y="40.347557">State</tspan></text>
+         x="440.54358"
+         y="127.55627">Context 2</tspan></text>
     <text
        sodipodi:linespacing="125%"
-       id="text12663"
-       y="73.556267"
-       x="256.7507"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       id="text15183"
+       y="127.55627"
+       x="578.54358"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
        xml:space="preserve"><tspan
-         y="73.556267"
-         x="256.7507"
+         y="127.55627"
+         x="578.54358"
          sodipodi:role="line"
-         id="tspan12665">State (interface)</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text10051"
-       y="103.55627"
-       x="268.54358"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
-       xml:space="preserve"><tspan
-         y="103.55627"
-         x="268.54358"
-         sodipodi:role="line"
-         id="tspan10053">State (class)</tspan></text>
+         id="tspan15187">Context 3</tspan></text>
   </g>
 </svg>

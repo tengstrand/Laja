@@ -104,8 +104,8 @@ Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_progr
 
 
 CDD wants to bring the same level of flexibility to objects as for classes.
-The separation between ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
-It also makes it easy to work in different contexts:
+The decoupling of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
+It also makes it easy to work in different contexts with preserved encapsulation:
 
 
 [[File:CDD-object.png|500px]]
@@ -115,14 +115,16 @@ CDD is not the only attempt to improve the way of working with objects, you may 
 The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
 
 
-Objects are divided into state and behaviour and the state is implemented by one or more classes:
-<br/>
-
-[[File:CDD-object-layering.png|400px]]
+An object is divided into state and behaviour and we can switch context by replacing the behaviour:
 
 
-This layering allows us to have a set of behaviour representations, one per task/context. The behaviour representation only knows the state interface which makes it possible to support a couple of
-interesting techniques like [[#State expansion|state expansion]] and [[#State projection|state projection]] which facilitates composition and code reuse.
+[[File:CDD-object-layering.png|800px]]
+
+
+The state is also very modular and can be created in several ways:
+
+
+[[File:CDD-state-layering.png|800px]]
 
 = State =
 The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process by giving more love and care to it.
