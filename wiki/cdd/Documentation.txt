@@ -496,9 +496,9 @@ Person{ssn=456, givenName='Lars', surname='von Trier'}
 The ''ssn'' is in both cases internally stored as ''int'' which is the type of the attribute.
 
 == State composition ==
-CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate root] in DDD when building more complex objects.
+CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in DDD, when building more complex objects:
 
-[[File:CDD-state-composition.png|120px]]
+[[File:CDD-state-composition.png|180px]]
 
 
 This is best explained by and example:
@@ -592,15 +592,28 @@ public interface PersonState extends AddressState {
 }
 </pre>
 
-...this will make it possible to wrap both ''Person'' and ''Address'' behaviour around ''PersonState'', more on that later.
+...this will make it possible to wrap both ''Person'' and ''Address'' behaviour around ''PersonState'', more on that in the ''behaviour'' section.
 
-If Laja finds two or more attributes with the same type and name they will be merged into a single attribute ''without any warnings''.
+
+If two or more attributes are found with the same type and name, they will be merged into a single attribute ''without any warnings'' in this alpha version.
 This is not how it should work and will be changed in a future release!
 
 == State projection ==
-If we have the states ''A'' and ''B'', then we can use ''state projection'' to let ''B'' act as an ''A''.
-This can be useful if ''B'' contains all the attributes that ''A'' has but the object structure or the attribute names differs.
-State projection should only be used when [[#State expansion|state expansion]] is not possible.
+In the [[#State composition|state composition]] section we illustrated state with different forms like circle, triangle and pentagon.
+Looking at ''state'' as ''form'' turns out to be a useful mental model when describing how CDD works:
+
+[[File:CDD-state-projection.png|300px]]
+
+State projection allows a state to ''look like'' another state. In the illustration above we let A look like B.
+
+
+It's possible to put together pieces from several states to form a new state:
+
+[[File:CDD-state-multi-projection.png|300px]]
+
+
+This technique can be useful if ''A'' contains all the attributes that ''B'' has but the object structure or the attribute names differs.
+[[#State expansion|State expansion]] is preferable to ''state projection'' when possible because it's simpler and less complex.
 
 
 Let's say we define these three states:
@@ -639,7 +652,8 @@ The attributes in ''StrangePersonState'' doesn't match the attributes in ''Perso
 * ''address'' is expanded in ''PersonState'' but not in  ''StrangePersonState''.
 * The name of the attributes doesn't match.
 
-We can let ''StrangePersonState'' act as a ''PersonState'' by adding a state projection method:
+
+We can let ''StrangePersonState'' take the form of ''PersonState'' by implementing a state projection method:
 <pre>
 package com.myproject.state;
 
@@ -660,7 +674,7 @@ public class StrangePersonStateTemplate {
 }
 </pre>
 
-The method has to return an instance of the ''StateProjection'' it is going to act as and the method name must start with "state" followed by an upper case letter.
+The method has to return an instance of a ''StateProjection'' of the "destination state" (Person). The method must also start with "state" followed by an upper case letter.
 When generated, the interface ''StrangePersonState'' will have the method ''getPersonState()'' returning a ''PersonState'', to be used from e.g. ''StrangePerson'':
 <pre>
 package com.myproject.behaviour;
