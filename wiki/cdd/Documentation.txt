@@ -498,6 +498,10 @@ The ''ssn'' is in both cases internally stored as ''int'' which is the type of t
 == State composition ==
 CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate root] in DDD when building more complex objects.
 
+
+[[File:CDD-state-composition.png|120px]]
+
+
 This is best explained by and example:
 <pre>
 package com.myproject.state;
