@@ -127,17 +127,17 @@ The state is also very modular and can be created in several ways:
 [[File:CDD-state-layering.png|800px]]
 
 = State =
-The decision to separate ''state'' and ''behavior'' enables us to improve the objects creation process by giving more love and care to it.
-Instead of creating objects in ''one step'' by using a constructor, the object is created in ''several steps'' allowing for a range of improvements:
-* The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting you focus on the properties of each attribute.
-* The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the readability'' and is more robust and flexible than a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
+The decision to separate ''state'' and ''behavior'' allow us to focus more on the state creation process.
+Instead of creating an object in ''one step'' by using a constructor, the object is created in ''several steps'' improving the situation in several ways:
+* The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
+* The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the usability'' compared to a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
 * Ensures valid state before encapsulation takes place.
 * Ensures that the state can not be change from the outside once the state is encapsulated.
-* The state can be validated before encapsulation takes place, which is handy when working with external data and user input.
-* The encapsulation step can be postponed allowing delegation of validation and encapsulation to the caller.
+* The state can be validated before encapsulation takes place, which is handy when working with data that we can't trust like and user input and external data.
+* The encapsulation step can be postponed so that validation and encapsulation can be performed by the caller.
 
 
-The states is defined in ''state templates'' which is ordinary Java classes that is checked at compile time the same way as all other code.
+The states is defined in ''state templates'' which is ordinary Java classes that can be compiled and type checked like any other code.
 This approach makes the state definition more robust than having them in an ordinary text file format like XML.
 The templates is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
 <pre>
@@ -201,7 +201,7 @@ Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ern
 </pre>
 
 
-If we look at how the instance of ''Person'' is created, it follows this pattern:
+If we look at how the instance of ''Person'' is created, it follows these steps:
 * '''Chained creator''': contains all ''mandatory'' attributes using the pattern [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html Chained Creator].
 * '''Builder methods''': all ''optional'' attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory and can be omitted.
 * '''Encapsulation''': encapsulates the state by choosing a behaviour representation.
@@ -255,8 +255,15 @@ Person person = Person.create().withAge(16).asPerson();
 </pre>
 
 == Identity ==
-In [http://en.wikipedia.org/wiki/Domain-driven_design Domain Driven Design] the state objects are categorized in two groups, ''values'' and ''entities''.
-If no attribute is marked as ''natural key'' causes CDD consider the state as a ''value'', example:
+Identity is described as "''...the property of objects that distinguishes them from other objects''" in [http://en.wikipedia.org/wiki/Identity_%28object-oriented_programming%29 Wikipedia].
+CDD divides stateful objects into two groups, ''values'' and ''entities''. The difference between the two is that values includes (almost) every attribute in the identity while entities only include the [http://en.wikipedia.org/wiki/Natural_key natural key].
+The natural key is the attributes that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key].
+If a surrogate key is not specified then only the natural key is included in ''hashCode()'' and ''equals()''.
+In some situations the surrogate key should also be included. This case is not handled by this alpha version of CDD but will be fixed in a future version.
+
+
+Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] in CDD and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
+If no attribute in the state is marked as ''natural key'' it will be treated as a values, example:
 <pre>
 package com.myproject.state;
 
@@ -285,8 +292,6 @@ public class Person extends PersonFactory {
 
 The inheritance hierarchy of Person goes like this: ''PersonFactory'' > ''PersonValueFactory'' > ''PersonValue'' where PersonValue includes both ''givenName'' and ''surname'' in ''hashCode()'' and ''equals()''.
 
-'''Rule''': All attributes except ''(id)'' and ''(exclude)'', are included in ''hashCode()'' and ''equals()'' for values.
-
 
 If we add a [http://en.wikipedia.org/wiki/Natural_key natural key] to ''PersonState'':
 <pre>
@@ -300,15 +305,15 @@ public class PersonStateTemplate {
 
 ...the inheritance hierarchy is changed to: ''PersonFactory'' > ''PersonEntityFactory'' > ''PersonEntity'' where the PersonEntity includes only ''givenName'' in ''hashCode()'' and ''equals()''.
 
-'''Rule''': Only the ''natural key'' is included in ''hashCode()'' and ''equals()'' for entities.
 
-'''Rule''': If one or more attribute is marked as ''natural key'' the state will be implemented as an ''entity'', otherwise as a ''value''.
+We can summarize with three rules:
+* All attributes except ''(id)'' and ''(exclude)'', are included in ''hashCode()'' and ''equals()'' for values.
+* Only the ''natural key'' is included in ''hashCode()'' and ''equals()'' for entities.
+* If one or more attribute is marked as ''natural key'' the state is treated as an ''entity'', otherwise as a ''value''.
 
 === Context dependent identity ===
-A tricky part in object orientation is the management of ''identity''.
-The problem in traditional OO is that we need to decide if a class should be treated as a ''value'' or an ''entity''.
-A better solution would be to support both value based and entity based representation by allowing [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html context switching].
-As a surprise, this is just what CDD allows us to do!
+A problem in traditional OO is that we need to decide if a stateful class should be treated as a value or entity.
+Instead of forcing us to make this decision, CDD allow us to have a set of behaviour representations where some of them can be values and others can be an entities.
 
 If we include ''ssn'' in the ''natural key'':
 <pre>
@@ -351,12 +356,10 @@ public class PersonStateImpl implements PersonState {
 </pre>
 
 This is the desired behaviour in most situations when working against a persistence layer.
-In our test code, however, we may be interested in comparing all attributes in some situations.
-
-In traditional OO we need to treat ''Person'' as either ''entity'' or ''value'' while in CDD you can have several representations and switch between them.
+In for example the test code we sometimes are interested in comparing all attributes.
 
 
-Let's demonstrate how we can create the value based representation ''OtherPerson'' and switch context between the entity based ''Person'' and ''OtherPerson'':
+Let's demonstrate how we can treat a person state as both value and entity by introducing ''OtherPerson'':
 <pre>
 package com.myproject.behaviour;
 
@@ -448,9 +451,9 @@ If we add the switch method ''asOtherPerson'' to ''Person'':
 2. Equals: false
 </pre>
 
-We can see that the class ''Person'' treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but seen as different when wrapped by ''OtherPerson'' since ''surname'' differs.
+We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but seen as different by the value ''OtherPerson'' since ''surname'' differs.
 
-By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only ''ssn'' but can make a "full comparison" between two instances without breaking encapsulation.
+By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only ''ssn'' but can make a "full comparison" between two instances without breaking encapsulation!
 
 == Type converters ==
 Sometimes we want an attribute to support more than one type. To add that support we need to add a converter:
