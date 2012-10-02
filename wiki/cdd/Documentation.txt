@@ -958,46 +958,27 @@ As we can see, both validation rules must be met, and if we take a look at the g
 
 = Behaviour =
 
-We have finally reached the point where it's time to add some behavior. Developing a system without behavior would nevertheless be quite pointless!
-Context Driven Development (CDD) makes it easy to add behaviour and let you build your system in a way similar to building with Lego.
+We have finally reached the point where it's time to talk about behavior. Developing a system without behavior would nevertheless be quite pointless!
+With CDD you are very free to compose your objects in a way similar to building with Lego.
 
 
-In CDD we can have different representations for each context, allowing us to put each behaviour in the right place.
-In the [[CDD_-_Getting_started|Getting started]] section we let ''Person'' work in the core domain and ''PersistablePerson'' be responsible for persisting:
-<pre>
-package com.myproject.behaviour;
+In traditional OO, when you have created a cohesive class with a clear responsibility, the problems begin when you need to do some work in a different context.
+Lets say we create the class ''Person'' only containing methods related to the core domain. When you want to export an instance of ''Person'' as XML, you are facing two bad alternatives:
+* Add the method ''asXml()'' to ''Person'' resulting in braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
+* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (*).
 
-public class Main {
-
-    public static void main(String[] args) {
-        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
-        System.out.println("Is adult: " + person.isAdult());
-
-        person.asPersistable().save();
-    }
-}
-</pre>
-
-In traditional [http://en.wikipedia.org/wiki/Object-oriented_programming OO] the code above would have evolved something like this:
-# Create the "core domain " class ''Person'' with the behaviour method ''isAdult'' (with no getters or setters).
-# After a while we need to do something with ''Person'' outside the core domain like ''export as XML'' or ''persist''. This presents us with two bad alternatives:
-#* Add the method ''asXml()'' or ''save()'' to ''Person'' braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-#* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' or ''PersonPersisterService'' leading to violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (*).
-
-
-CDD respects these two principles by allowing you to work in different contexts!
 
 (*) The ''Tell Don't Ask principle'' is about letting the objects themselves perform tasks.
 
-== Context switching ==
+The good news is that you don't need to do any of these unwanted things and the solution is spelled ''context switching''.
 
-In the listing above we ''switched context'' in order to perform the save operation:
+== Context switching ==
+In an earlier example we switched context to be able to perform the save operation:
 <pre>
         person.asPersistable().save();
 </pre>
 
-
-The switching is performed by the method ''asPersistable()'':
+The switching was performed by the method ''asPersistable()'':
 
 <pre>
 package com.myproject.behaviour;
@@ -1020,11 +1001,11 @@ public class Person extends PersonFactory {
 }
 </pre>
 
-
 Being able to switch context is not just a way of splitting up behavior between objects,
 it's also a way to reduce the amount of code needed to integrate different parts of the system.
 
-Context switching can both mean switching task ''within'' an architectural layer as well as switching task to ''another'' architectural layer:
+
+Context switching can both mean switching task ''within'' an architectural layer as well as switching task ''between'' architectural layers:
 
 <pre>
               /\
