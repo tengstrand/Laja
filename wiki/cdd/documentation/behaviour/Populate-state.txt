@@ -68,3 +68,6 @@ public class Main {
 GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
 RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
 </pre>
+
+
+[[CDD - Documentation|< Back]]

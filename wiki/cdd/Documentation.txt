@@ -1,6 +1,8 @@
 
 * [[CDD - Introduction|Introduction]]
+* [[CDD - Classes and objects|Classes and objects]]
 * [[CDD - State|State]]
+** [[CDD - State - Define state|Define state]]
 ** [[CDD - State - Identity|Identity]]
 ** [[CDD - State - Type converters|Type converters]]
 ** [[CDD - State - State composition|State composition]]

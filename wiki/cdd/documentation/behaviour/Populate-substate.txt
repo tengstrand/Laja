@@ -85,3 +85,6 @@ We can choose between two constructors when implementing our behaviour represent
 
 The first is the most common and used when the state is not changed by the behaviour class and the second if we need to populate one or more substates.
 Only one of the two constructors should be implemented at a time.
+
+
+[[CDD - Documentation|< Back]]

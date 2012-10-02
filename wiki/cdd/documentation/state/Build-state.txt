@@ -41,3 +41,6 @@ Exception in thread "main" java.lang.IllegalStateException: Illegal state, could
 As you can see, it's not possible to create instances if the state is invalid. In this case we have missed to set the mandatory attributes ''ssn'' and ''givenName''.
 With a ''builder'' you can't guarantee, at compile time, that all mandatory attribute has been set.
 That's also the main reason why a ''chained creator'' is the preferable choice in most situations.
+
+
+[[CDD - Documentation|< Back]]

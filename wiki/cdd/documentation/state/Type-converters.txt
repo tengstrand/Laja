@@ -37,3 +37,6 @@ Person{ssn=456, givenName='Lars', surname='von Trier'}
 </pre>
 
 The ''ssn'' is in both cases internally stored as ''int'' which is the type of the attribute.
+
+
+[[CDD - Documentation|< Back]]

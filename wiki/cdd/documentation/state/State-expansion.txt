@@ -46,3 +46,6 @@ public interface PersonState extends AddressState {
 
 If two or more attributes have the same type and name, they will be merged into a single attribute ''without any warnings''.
 This is not how it works in this alpha version but will be changed in a future release!
+
+
+[[CDD - Documentation|< Back]]

@@ -103,3 +103,5 @@ public class StrangePerson extends StrangePersonFactory {
 The current alpha version lacks some functionality that will be added in a future version:
 * The types of the mapping attributes has to match, casting or type conversion is not supported.
 * Some restrictions in how the object structure (substates) can be mapped.
+
+[[CDD - Documentation|< Back]]

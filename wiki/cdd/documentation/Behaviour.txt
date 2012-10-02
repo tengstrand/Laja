@@ -13,3 +13,6 @@ Lets say we create the class ''Person'' only containing methods related to the c
 (*) The ''Tell Don't Ask principle'' is about letting the objects themselves perform tasks.
 
 The good news is that you don't need to do any of these unwanted things and the solution is spelled ''context switching''.
+
+
+[[CDD - Documentation|< Back]]

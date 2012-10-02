@@ -3,7 +3,7 @@ Identity is described as "''...the property of objects that distinguishes them f
 CDD divides stateful objects into two groups, ''values'' and ''entities''. The difference between the two is that values includes (almost) every attribute in the identity while entities only include the [http://en.wikipedia.org/wiki/Natural_key natural key].
 You can think of the natural key as the attribute(s) that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key] (id/counter).
 If a surrogate key is not specified then only the natural key is included in ''hashCode()'' and ''equals()''.
-In some situations the surrogate key should also be included. This case is not handled by this alpha version of CDD but will be fixed in a future version.
+In some situations the surrogate key should also be included. This case is not handled by this alpha version of CDD but will be fixed in a future release.
 
 
 Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
@@ -198,3 +198,6 @@ If we add the switch method ''asOtherPerson'' to ''Person'':
 We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but seen as different by the value ''OtherPerson'' since ''surname'' differs.
 
 By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only the ''natural key'' but can make a "full comparison" between two instances without breaking encapsulation!
+
+
+[[CDD - Documentation|< Back]]

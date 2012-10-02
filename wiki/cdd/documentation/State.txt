@@ -25,3 +25,6 @@ Example of valid state packages (in this example) are:
 * com.myproject.state
 * com.myproject.state.domain
 * com.myproject.state.infrastructure.x''
+
+
+[[CDD - Documentation|< Back]]
