@@ -105,7 +105,7 @@ Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_progr
 
 CDD wants to bring the same level of flexibility to objects as for classes.
 The decoupling of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
-It also makes it easy to work in different contexts with preserved encapsulation:
+It also makes it easy to switch between contexts:
 
 
 [[File:CDD-object.png|500px]]
@@ -115,7 +115,7 @@ CDD is not the only attempt to improve the way of working with objects, you may 
 The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
 
 
-An object is divided into state and behaviour and we can switch context by replacing the behaviour:
+An object is divided into state and behaviour and is looser coupled than "traditional OO". The context is switched by selecting another behaviour:
 
 
 [[File:CDD-object-layering.png|800px]]
@@ -128,7 +128,7 @@ The state is also very modular and can be created in several ways:
 
 = State =
 The decision to separate ''state'' and ''behavior'' allow us to focus more on the state creation process.
-Instead of creating an object in ''one step'' by using a constructor, the object is created in ''several steps'' improving the situation in several ways:
+Instead of creating an object in ''one step'' by using a constructor, the object is created in ''several steps'' which gives the following advantages:
 * The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
 * The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the usability'' compared to a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
 * Ensures valid state before encapsulation takes place.
@@ -138,7 +138,7 @@ Instead of creating an object in ''one step'' by using a constructor, the object
 
 
 The states is defined in ''state templates'' which is ordinary Java classes that can be compiled and type checked like any other code.
-This approach makes the state definition more robust than having them in an ordinary text file format like XML.
+This approach makes the state definition cleaner and more robust than having them in an ordinary text file format like XML.
 The templates is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
 <pre>
 #generateCdd([{
@@ -257,12 +257,12 @@ Person person = Person.create().withAge(16).asPerson();
 == Identity ==
 Identity is described as "''...the property of objects that distinguishes them from other objects''" in [http://en.wikipedia.org/wiki/Identity_%28object-oriented_programming%29 Wikipedia].
 CDD divides stateful objects into two groups, ''values'' and ''entities''. The difference between the two is that values includes (almost) every attribute in the identity while entities only include the [http://en.wikipedia.org/wiki/Natural_key natural key].
-The natural key is the attributes that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key].
+You can think of the natural key as the attribute(s) that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key] (id/counter).
 If a surrogate key is not specified then only the natural key is included in ''hashCode()'' and ''equals()''.
 In some situations the surrogate key should also be included. This case is not handled by this alpha version of CDD but will be fixed in a future version.
 
 
-Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] in CDD and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
+Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
 If no attribute in the state is marked as ''natural key'' it will be treated as a values, example:
 <pre>
 package com.myproject.state;
@@ -312,8 +312,8 @@ We can summarize with three rules:
 * If one or more attribute is marked as ''natural key'' the state is treated as an ''entity'', otherwise as a ''value''.
 
 === Context dependent identity ===
-A problem in traditional OO is that we need to decide if a stateful class should be treated as a value or entity.
-Instead of forcing us to make this decision, CDD allow us to have a set of behaviour representations where some of them can be values and others can be an entities.
+A problem in traditional OO is that we up front need to decide if a stateful class should be treated as a value or entity.
+Instead of forcing us to make this decision, CDD allow us to have a set of behaviour representations where some can be values and others can be entities.
 
 If we include ''ssn'' in the ''natural key'':
 <pre>
@@ -445,7 +445,7 @@ If we add the switch method ''asOtherPerson'' to ''Person'':
     }
 </pre>
 
-..we get the output:
+...we get the output:
 <pre>
 1. Equals: true
 2. Equals: false
@@ -512,7 +512,7 @@ public class AddressStateTemplate {
 }
 </pre>
 
-...regenerate and add it to ''PersonState'' (the attribute should be named ''address'' not ''addressState''):
+...regenerate and add it to ''PersonState'', Note that the attribute ''address'' should not be named ''addressState'':
 <pre>
 package com.myproject.state;
 
@@ -543,15 +543,15 @@ public class Main {
 Person{ssn=112233, givenName='Ingmar', surname='Bergman', address={streetName='Main Street', streetNumber=123, zipcode=111222}}
 </pre>
 
-Substates can include other substates (including itself). We could for example let ''AddressState'' include ''ZipcodeState'', but we leave that exercise to the reader!
+Substates can include other substates (including itself if representing a parent/child relationship). We could for example let ''AddressState'' include ''ZipcodeState'', but we leave that exercise to the reader!
 
 == State expansion ==
-Substates can be "expanded" and merged into the state:
+Substates can be "expanded" and merged into the state (the light grey area represents the ''address'' in the following example):
 
 [[File:CDD-state-expansion.png|250px]]
 
 
-A dollar sign ($) marks a substate for expansion:
+A dollar sign ($) marks a substate for expansion ($ is a valid character for variable names in Java!):
 <pre>
 package com.myproject.state;
 
@@ -563,21 +563,17 @@ public class PersonStateTemplate {
 }
 </pre>
 
-...if we regenerate we can change ''Main'':
+...if we regenerate and change ''main'':
 <pre>
-package com.myproject.behaviour;
-
-public class Main {
     public static void main(String[] args) {
         Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman")
                 .streetName("Main Street").streetNumber(123).zipcode(111222).asPerson();
 
         System.out.println(person);
     }
-}
 </pre>
 
-...which gives the output:
+...we get the output:
 <pre>
 Person{ssn=112233, givenName='Ingmar', surname='Bergman', streetName='Main Street', streetNumber=123, zipcode=111222}
 </pre>
@@ -592,11 +588,11 @@ public interface PersonState extends AddressState {
 }
 </pre>
 
-...this will make it possible to wrap both ''Person'' and ''Address'' behaviour around ''PersonState'', more on that in the ''behaviour'' section.
+...this will allow us to use ''PersonState'' as an "Address" which will be explained more in detail later.
 
 
-If two or more attributes are found with the same type and name, they will be merged into a single attribute ''without any warnings'' in this alpha version.
-This is not how it should work and will be changed in a future release!
+If two or more attributes have the same type and name, they will be merged into a single attribute ''without any warnings''.
+This is not how it works in this alpha version but will be changed in a future release!
 
 == State projection ==
 In the [[#State composition|state composition]] section we illustrated state with different forms like circle, triangle and pentagon.
@@ -701,7 +697,7 @@ public class StrangePerson extends StrangePersonFactory {
 </pre>
 
 The current alpha version lacks some functionality that will be added in a future version:
-* The types of the mapping attributes has to match, casting or converting types is not supported.
+* The types of the mapping attributes has to match, casting or type conversion is not supported.
 * Some restrictions in how the object structure (substates) can be mapped.
 
 == Default values ==
@@ -734,11 +730,9 @@ Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
 </pre>
 
 == Build state ==
-So far we have used ''chained creators'' to build state. Sometimes you don't have access to all mandatory attributes from start. In these situations you need a ''builder'' which is accessed via the method ''build()'':
+So far we have used ''chained creators'' to build state.
+In some situations, if you for example don't have control of in which order the attributes are going to be set,  a ''builder'' can be more convenient:
 <pre>
-package com.myproject.behaviour;
-
-public class Main {
     public static void main(String[] args) {
         Person person = Person.build()
                 .withGivenName("Ingmar")
@@ -747,7 +741,6 @@ public class Main {
 
         System.out.println(person);
     }
-}
 </pre>
 output:
 <pre>
@@ -777,32 +770,30 @@ Exception in thread "main" java.lang.IllegalStateException: Illegal state, could
 </pre>
 
 As you can see, it's not possible to create instances if the state is invalid. In this case we have missed to set the mandatory attributes ''ssn'' and ''givenName''.
-With a ''builder'' you can't guarantee, in compile time, that all mandatory attribute has been set and that's the main reason why a ''chained creator'' is the preferable choice in most situations.
+With a ''builder'' you can't guarantee, at compile time, that all mandatory attribute has been set.
+That's also the main reason why a ''chained creator'' is the preferable choice in most situations.
 
 == Validate state ==
 
 The state can be validated before the state is encapsulated:
 
 <pre>
-package com.myproject.behaviour;
-
-public class Main {
     public static void main(String[] args) {
-        PersonEncapsulator personEncapsulator = Person.ssn(11111).givenName("Carl");
-        PersonBuilder personBuilder = Person.build();
+        PersonBuilder builder1 = Person.build().withSsn(11111).withGivenName("Carl");
+        PersonBuilder builder2 = Person.build();
 
-        System.out.println("1. Is valid: " + personEncapsulator.isValid());
-        System.out.println("2. Is valid: " + personBuilder.isValid());
+        System.out.println("1. Is valid: " + builder1.isValid());
+        System.out.println("2. Is valid: " + builder2.isValid());
+
+        Person person1 = builder1.asPerson();
+        System.out.println(person1);
     }
-}
 </pre>
 
 <pre>
 1. Is valid: true
 2. Is valid: false
-Person{ssn=11111, givenName='Carl', surname='Unknown'}
-Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
-...
+Person{ssn=11111, givenName='Carl', surname='null'}
 </pre>
 
 === Custom validation ===
@@ -941,7 +932,7 @@ isValid2: false
 isValid3: false
 </pre>
 
-As we can see, both validation rules must be valid. We can verify that both validation rules are performed by taking a look in the generated class ''PersonStateImpl'':
+As we can see, both validation rules must be met, and if we take a look at the generated class ''PersonStateImpl'':
 <pre>
     ...
 
@@ -962,6 +953,8 @@ As we can see, both validation rules must be valid. We can verify that both vali
 
     ...
 </pre>
+
+...we can verify that both rules actually are included!
 
 = Behaviour =
 
