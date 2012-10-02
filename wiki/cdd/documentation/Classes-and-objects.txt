@@ -1,0 +1,33 @@
+= Classes and objects =
+In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
+
+
+[[File:Traditional-object.png|450px]]
+
+
+The merging of state and behavior makes it harder to reuse code and to work in different contexts.
+Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] is able to compose classes in a powerful way, but once instantiated the objects become quite static in its nature.
+
+
+CDD wants to bring the same level of flexibility to objects as for classes.
+The decoupling of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
+It also makes it easy to switch between contexts:
+
+
+[[File:CDD-object.png|500px]]
+
+
+CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
+The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
+
+
+An object is divided into state and behaviour and is looser coupled than "traditional OO". The context is switched by selecting another behaviour:
+
+
+[[File:CDD-object-layering.png|800px]]
+
+
+The state is also very modular and can be created in several ways:
+
+
+[[File:CDD-state-layering.png|800px]]

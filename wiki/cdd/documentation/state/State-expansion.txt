@@ -1,0 +1,48 @@
+== State expansion ==
+Substates can be "expanded" and merged into the state (the light grey area represents the ''address'' in the following example):
+
+[[File:CDD-state-expansion.png|250px]]
+
+
+A dollar sign ($) marks a substate for expansion ($ is a valid character for variable names in Java!):
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname;
+    AddressState $address;
+}
+</pre>
+
+...if we regenerate and change ''main'':
+<pre>
+    public static void main(String[] args) {
+        Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman")
+                .streetName("Main Street").streetNumber(123).zipcode(111222).asPerson();
+
+        System.out.println(person);
+    }
+</pre>
+
+...we get the output:
+<pre>
+Person{ssn=112233, givenName='Ingmar', surname='Bergman', streetName='Main Street', streetNumber=123, zipcode=111222}
+</pre>
+
+As we can see, the attributes from ''AddressState'' has been "exploded" and merged into ''PersonState''.
+If we take a look at ''PersonState'' it now extends ''AddressState'':
+<pre>
+...
+
+public interface PersonState extends AddressState {
+    ...
+}
+</pre>
+
+...this will allow us to use ''PersonState'' as an "Address" which will be explained more in detail later.
+
+
+If two or more attributes have the same type and name, they will be merged into a single attribute ''without any warnings''.
+This is not how it works in this alpha version but will be changed in a future release!

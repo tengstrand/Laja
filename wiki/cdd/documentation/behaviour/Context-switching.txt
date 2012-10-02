@@ -1,0 +1,50 @@
+== Context switching ==
+In an earlier example we switched context to be able to perform the save operation:
+<pre>
+        person.asPersistable().save();
+</pre>
+
+The switching was performed by the method ''asPersistable()'':
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+}
+</pre>
+
+Being able to switch context is not just a way of splitting up behavior between objects,
+it's also a way to reduce the amount of code needed to integrate different parts of the system.
+
+
+Context switching can both mean switching task ''within'' an architectural layer as well as switching task ''between'' architectural layers:
+
+<pre>
+              /\
+              |
+              |   architectural layers
+              |
+   <--- switch tasks --->
+              |
+              |
+              |
+              \/
+
+(this ascii art will be replaced by a picture)
+</pre>
+
+Switching context has never been easier!

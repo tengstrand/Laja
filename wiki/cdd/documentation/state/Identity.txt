@@ -1,0 +1,200 @@
+== Identity ==
+Identity is described as "''...the property of objects that distinguishes them from other objects''" in [http://en.wikipedia.org/wiki/Identity_%28object-oriented_programming%29 Wikipedia].
+CDD divides stateful objects into two groups, ''values'' and ''entities''. The difference between the two is that values includes (almost) every attribute in the identity while entities only include the [http://en.wikipedia.org/wiki/Natural_key natural key].
+You can think of the natural key as the attribute(s) that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key] (id/counter).
+If a surrogate key is not specified then only the natural key is included in ''hashCode()'' and ''equals()''.
+In some situations the surrogate key should also be included. This case is not handled by this alpha version of CDD but will be fixed in a future version.
+
+
+Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
+If no attribute in the state is marked as ''natural key'' it will be treated as a values, example:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String givenName;
+    String surname;
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+}
+</pre>
+
+The inheritance hierarchy of Person goes like this: ''PersonFactory'' > ''PersonValueFactory'' > ''PersonValue'' where PersonValue includes both ''givenName'' and ''surname'' in ''hashCode()'' and ''equals()''.
+
+
+If we add a [http://en.wikipedia.org/wiki/Natural_key natural key] to ''PersonState'':
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String givenName; // (key)
+    String surname;
+}
+</pre>
+
+...the inheritance hierarchy is changed to: ''PersonFactory'' > ''PersonEntityFactory'' > ''PersonEntity'' where the PersonEntity includes only ''givenName'' in ''hashCode()'' and ''equals()''.
+
+
+We can summarize with three rules:
+* All attributes except ''(id)'' and ''(exclude)'', are included in ''hashCode()'' and ''equals()'' for values.
+* Only the ''natural key'' is included in ''hashCode()'' and ''equals()'' for entities.
+* If one or more attribute is marked as ''natural key'' the state is treated as an ''entity'', otherwise as a ''value''.
+
+=== Context dependent identity ===
+A problem in traditional OO is that we up front need to decide if a stateful class should be treated as a value or entity.
+Instead of forcing us to make this decision, CDD allow us to have a set of behaviour representations where some can be values and others can be entities.
+
+If we include ''ssn'' in the ''natural key'':
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname;
+}
+</pre>
+
+...we can see that only ''ssn'' is included in ''hashCode()'' and ''equals()'':
+
+<pre>
+public class PersonStateImpl implements PersonState {
+    ...
+
+    @Override
+    public int hashCode() {
+        int result = (int)ssn;
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonStateImpl state = (PersonStateImpl)o;
+
+        if (ssn != state.getSsn()) return false;
+
+        return true;
+    }
+
+    ...
+}
+</pre>
+
+This is the desired behaviour in most situations when working against a persistence layer.
+In for example the test code we sometimes are interested in comparing all attributes.
+
+
+Let's demonstrate how we can treat a person state as both value and entity by introducing ''OtherPerson'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonValue;
+
+public class OtherPerson extends PersonValue {
+    public OtherPerson(PersonState state) {
+        super(state);
+    }
+}
+</pre>
+
+To make this class a ''value'' we extend from (the code generated) ''PersonValue'' which has the following implementation of ''hashCode'' and ''equals'':
+<pre>
+    ...
+
+    @Override
+    public int hashCode() {
+        return state.valueHashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        return state.valueEquals(((PersonValue)o).state);
+    }
+
+    ...
+</pre>
+
+...which delegates to ''valueHashCode()'' and ''valueEquals()'' in the (code generated) class ''PersonStateImpl'':
+<pre>
+    ...
+
+    public int valueHashCode() {
+        int result = length;
+        result = 31 * result + (int)ssn;
+        result = 31 * result + (givenName != null ? givenName.hashCode() : 0);
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+
+        return result;
+    }
+
+    public boolean valueEquals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonStateImpl state = (PersonStateImpl)o;
+
+        if (length != state.getLength()) return false;
+        if (ssn != state.getSsn()) return false;
+        if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
+        if (middleName != null ? !middleName.equals(state.middleName) : state.middleName != null) return false;
+        if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
+
+        return true;
+    }
+
+    ...
+</pre>
+
+If we add the switch method ''asOtherPerson'' to ''Person'':
+<pre>
+    public OtherPerson asOtherPerson() {
+        return new OtherPerson(state);
+    }
+</pre>
+
+...and modify the ''main'' method in ''Main'':
+<pre>
+    public static void main(String[] args) {
+        Person person1 = Person.ssn(111222).givenName("Ingmar").surname("Bergman").asPerson();
+        Person person2 = Person.ssn(111222).givenName("Ingmar").surname("Johansson").asPerson();
+
+        OtherPerson otherPerson1 = person1.asOtherPerson();
+        OtherPerson otherPerson2 = person2.asOtherPerson();
+
+        System.out.println("1. Equals: " + person1.equals(person2));
+        System.out.println("2. Equals: " + otherPerson1.equals(otherPerson2));
+    }
+</pre>
+
+...we get the output:
+<pre>
+1. Equals: true
+2. Equals: false
+</pre>
+
+We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but seen as different by the value ''OtherPerson'' since ''surname'' differs.
+
+By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only the ''natural key'' but can make a "full comparison" between two instances without breaking encapsulation!

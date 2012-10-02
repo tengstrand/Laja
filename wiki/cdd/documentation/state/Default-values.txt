@@ -1,0 +1,28 @@
+== Default values ==
+Attributes can be set to default values, e.g.:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname = "Unknown"; // (optional)
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.ssn(112233).givenName("Ingmar").asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+output:
+<pre>
+Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
+</pre>

@@ -1,0 +1,186 @@
+== Factory ==
+
+In our example we have used ''Person'' as factory when creating instances of ''Person''. We could also have used the generated class ''PersonFactory'':
+<pre>
+    Person person1 = PersonFactory.givenName("Ingmar").surname("Bergman").asPerson();
+    Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
+</pre>
+
+To make ''Person'' a factory we extend from ''PersonFactory'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+}
+</pre>
+
+Only the method that is marked as ''factory'' can be directly created by the factory class. If an "as-method" is not marked as factory then it has to be called via the factory method:
+<pre>
+    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistable();
+</pre>
+
+If we also mark ''asPersistable'' as factory:
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    // (factory)
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+}
+</pre>
+
+...we can create instances directly:
+<pre>
+    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistable();
+</pre>
+
+
+In some situations we want the object themselves to act as factory:
+<pre>
+    Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
+    PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistable();
+</pre>
+
+...by letting the behaviour class inherit from its factory and include a factory method:
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    // Behaviour is added here...
+}
+</pre>
+
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonValue;
+
+public class PersistablePerson extends PersistablePersonFactory {
+    public PersistablePerson(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+
+    // Behaviour is added here...
+}
+</pre>
+
+
+It's not mandatory to pick a behaviour class and use it as a factory, like we did with ''Person'' and ''PersistablePerson'', we could just as easily have used ''PersonFactory'' and ''PersistablePersonFactory''.
+So why should we bother doing the extra work it means to inherit from the factory?
+The reason is that we want to express the concept "person" and improve the readability:
+ <pre>
+    Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
+ </pre>
+...even though ''Person'' is just one behaviour representation among others it's a natural representative of the concept "person" and a good candidate for the factory role.
+
+
+If you don't want a behaviour representation act as a factory you have to inherit from either (e.g.) ''PersonValue'' or ''PersonEntity'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonEntity;
+import com.myproject.state.PersonState;
+
+public class PersistablePerson extends PersonEntity {
+    public PersistablePerson(PersonState state) {
+        super(state);
+    }
+
+    // ...
+}
+</pre>
+
+
+If the state template definition (''PersonStateTemplate'' in this case) includes a ''natural key'' (keyword "(key)") both the ''value'' and the ''entity'' class is generated,
+otherwise only the ''value'' class is generated. If you remove the ''natural key'' from e.g. ''PersonStateTemplate'' you need to manually remove ''PersonEntity'' and all related ''PersonEntityFactory'' classes.
+
+
+When a state template, e.g. ''PersonStateTemplate'', is created and regenerated for the first time, a couple of other classes is also generated.
+The class ''Person'' is generated and put under the (non-generated) ''java'' directory structure and ''PersonFactory'' is generated and put under the ''java-gen'' structure.
+
+
+If we don't need the behaviour representation ''Person'' we can just delete or rename it.
+
+
+<span id="create_factory_in_two_steps"></span>
+If we add another representation and don't want to put the factory method in ''Person'' we need to create it in two steps by first inherit from ''PersonValue'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonValue;
+
+public class XmlPerson extends PersonValue {
+    public XmlPerson(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public XmlPerson asXmlPerson() {
+        return new XmlPerson(state);
+    }
+}
+</pre>
+
+...regenerate and then inherit from (the newly created) ''XmlPersonFactory'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class XmlPerson extends XmlPersonFactory {
+    public XmlPerson(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public XmlPerson asXmlPerson() {
+        return new XmlPerson(state);
+    }
+}
+</pre>

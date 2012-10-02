@@ -1,0 +1,70 @@
+== Populate state ==
+Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword "hide":
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String hairColor; // (hide)
+    String givenName;
+    String surname;
+}
+</pre>
+
+In this case the ''hairColor'' should be populated by the behaviour representations. We start by adding the class ''GreyHairedPerson'' (don't forget to create it in [[#create_factory_in_two_steps|two steps]]):
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class GreyHairedPerson extends GreyHairedPersonFactory {
+    public GreyHairedPerson(PersonState state) {
+        super(state);
+        state.setHairColor("Grey");
+    }
+
+    // (factory)
+    public GreyHairedPerson asGreyHairedPerson() {
+        return new GreyHairedPerson(state);
+    }
+}
+</pre>
+
+...we also add a class for red haired people:
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class RedHairedPerson extends RedHairedPersonFactory {
+    public RedHairedPerson(PersonState state) {
+        super(state);
+        state.setHairColor("Red");
+    }
+
+    // (factory)
+    public RedHairedPerson asRedHairedPerson() {
+        return new RedHairedPerson(state);
+    }
+}
+</pre>
+...when executing:
+
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
+        RedHairedPerson tage = RedHairedPerson.givenName("Tage").surname("Danielsson").asRedHairedPerson();
+
+        System.out.println(hans);
+        System.out.println(tage);
+    }
+}
+</pre>
+
+...we get the output:
+<pre>
+GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
+RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
+</pre>

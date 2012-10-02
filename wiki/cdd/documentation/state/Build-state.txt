@@ -1,0 +1,43 @@
+== Build state ==
+So far we have used ''chained creators'' to build state.
+In some situations, if you for example don't have control of in which order the attributes are going to be set,  a ''builder'' can be more convenient:
+<pre>
+    public static void main(String[] args) {
+        Person person = Person.build()
+                .withGivenName("Ingmar")
+                .withSsn(11111)
+                .withSurname("Bergman").asPerson();
+
+        System.out.println(person);
+    }
+</pre>
+output:
+<pre>
+Person{ssn=11111, givenName='Ingmar', surname='Bergman'}
+</pre>
+
+
+The attributes can occur in arbitrary order and some or all attributes can be left out:
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.build().asPerson();
+    }
+}
+</pre>
+
+output:
+<pre>
+Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
+	at com.myproject.behaviour.PersonEntityFactory$PersonFactory_.create(PersonEntityFactory.java:35)
+	at com.myproject.state.PersonStateBuilderImpl.as(PersonStateBuilderImpl.java:51)
+	at com.myproject.behaviour.PersonBuilder.asPerson(PersonBuilder.java:37)
+	at com.myproject.behaviour.Main.main(Main.java:5)
+	...
+</pre>
+
+As you can see, it's not possible to create instances if the state is invalid. In this case we have missed to set the mandatory attributes ''ssn'' and ''givenName''.
+With a ''builder'' you can't guarantee, at compile time, that all mandatory attribute has been set.
+That's also the main reason why a ''chained creator'' is the preferable choice in most situations.

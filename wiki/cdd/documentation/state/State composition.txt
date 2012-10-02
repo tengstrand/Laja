@@ -1,0 +1,49 @@
+== State composition ==
+CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in DDD, when building more complex objects:
+
+[[File:CDD-state-composition.png|180px]]
+
+
+This is best explained by and example:
+<pre>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+    int zipcode;
+}
+</pre>
+
+...regenerate and add it to ''PersonState'', Note that the attribute ''address'' should not be named ''addressState'':
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int ssn; // (key)
+    String givenName;
+    String surname;
+    AddressState address;
+}
+</pre>
+
+...regenerate and execute:
+<pre>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
+                Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...gives the output:
+<pre>
+Person{ssn=112233, givenName='Ingmar', surname='Bergman', address={streetName='Main Street', streetNumber=123, zipcode=111222}}
+</pre>
+
+Substates can include other substates (including itself if representing a parent/child relationship). We could for example let ''AddressState'' include ''ZipcodeState'', but we leave that exercise to the reader!

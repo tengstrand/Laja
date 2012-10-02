@@ -1,0 +1,105 @@
+== State projection ==
+In the [[#State composition|state composition]] section we illustrated state with different forms like circle, triangle and pentagon.
+Looking at ''state'' as ''form'' turns out to be a useful mental model when describing how CDD works:
+
+[[File:CDD-state-projection.png|300px]]
+
+State projection allows a state to ''look like'' another state. In the illustration above we let A look like B.
+
+
+It's possible to put together pieces from several states to form a new state:
+
+[[File:CDD-state-multi-projection.png|300px]]
+
+
+This technique can be useful if ''A'' contains all the attributes that ''B'' has but the object structure or the attribute names differs.
+[[#State expansion|State expansion]] is preferable to ''state projection'' when possible because it's simpler and less complex.
+
+
+Let's say we define these three states:
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String givenName;
+    String surname;
+    AddressState $address;
+}
+</pre>
+
+<pre>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+}
+</pre>
+
+<pre>
+package com.myproject.state;
+
+public class StrangePersonStateTemplate {
+    int ageInYears;
+    String firstName;
+    String secondName;
+    AddressState address;
+}
+</pre>
+
+The attributes in ''StrangePersonState'' doesn't match the attributes in ''PersonState'':
+* ''address'' is expanded in ''PersonState'' but not in  ''StrangePersonState''.
+* The name of the attributes doesn't match.
+
+
+We can let ''StrangePersonState'' take the form of ''PersonState'' by implementing a state projection method:
+<pre>
+package com.myproject.state;
+
+public class StrangePersonStateTemplate {
+    int ageInYears;
+    String firstName;
+    String secondName;
+    AddressState address;
+
+    PersonStateProjection statePerson() {
+        return PersonStateProjection
+            .age(ageInYears)
+            .givenName(firstName)
+            .surname(secondName)
+            .streetName(address.getStreetName())
+            .streetNumber(address.getStreetNumber());
+    }
+}
+</pre>
+
+The method has to return an instance of a ''StateProjection'' of the "destination state" (Person). The method must also start with "state" followed by an upper case letter.
+When generated, the interface ''StrangePersonState'' will have the method ''getPersonState()'' returning a ''PersonState'', to be used from e.g. ''StrangePerson'':
+<pre>
+package com.myproject.behaviour;
+
+import com.myproject.state.StrangePersonState;
+
+public class StrangePerson extends StrangePersonFactory {
+    private Person person;
+
+    public StrangePerson(StrangePersonState state) {
+        super(state);
+        person = new Person(state.getPersonState());
+    }
+
+    // (factory)
+    public StrangePerson asStrangePerson() {
+        return new StrangePerson(state);
+    }
+
+    public boolean isAdult() {
+        return person.isAdult();
+    }
+}
+</pre>
+
+The current alpha version lacks some functionality that will be added in a future version:
+* The types of the mapping attributes has to match, casting or type conversion is not supported.
+* Some restrictions in how the object structure (substates) can be mapped.

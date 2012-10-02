@@ -1,0 +1,100 @@
+== Define state ==
+
+Let's extend ''PersonState'' by modifying the state template ''PersonStateTemplate'':
+<pre>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int personId; // (id)
+    int length; // (hide)
+    long ssn; // (key)
+    String givenName;
+    String middleName; // (optional)
+    String surname;
+    String occupation; // (exclude)
+}
+</pre>
+
+...regenerate and modify the main method:
+
+<pre>
+public class Main {
+    public static void main(String[] args) {
+        // The 'chained creator' starts here...
+        Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
+                .withPersonId(1)                  // ...followed by builder methods
+                .withMiddleName("Ernst")
+                .withOccupation("Film director")
+                .asPerson();                      // ...and encapsulation
+
+        System.out.println(person);
+    }
+}
+</pre>
+
+...modify the constructor of ''Person'' (ensures that the hidden attribute ''length'' is set):
+<pre>
+    public Person(PersonState state) {
+        super(state);
+        state.setLength(179);
+    }
+</pre>
+
+... gives the output:
+<pre>
+Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ernst', surname='Bergman', occupation='Film director'}
+</pre>
+
+
+If we look at how the instance of ''Person'' is created, it follows these steps:
+* '''Chained creator''': contains all ''mandatory'' attributes using the pattern [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html Chained Creator].
+* '''Builder methods''': all ''optional'' attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory and can be omitted.
+* '''Encapsulation''': encapsulates the state by choosing a behaviour representation.
+
+
+Each attribute can have one or several properties by ending the line with a comment. None of them are mandatory:
+
+{| class="wikitable"
+! Keyword !! Example !! Description
+|-
+|
+(id)
+||
+<span style="color:#008000">int</span>&nbsp;personId;&nbsp;// (id)
+||
+The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. Only one attribute can be marked as surrogate key.
+|-
+|
+(key)
+||
+<span style="color:#008000">long</span>&nbsp;ssn;&nbsp;//&nbsp;(key)
+||
+The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be included in the natural key.
+|-
+|
+(optional)
+||
+<span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
+||
+The keywords ''(optional)'', ''(id)'' and ''(exclude)'' will exclude the attribute from the ''chained creator'' allowing them to be uninitialized (''null'').
+|-
+|
+(hide)
+||
+<span style="color:#008000">int</span> length; // (hide)
+||
+The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized (''not null'') by the constructor of the ''behaviour'' class, if not combined with the ''(optional)'' keyword.
+|-
+|
+(exclude)
+||
+<span style="color:#008000">String</span> occupation; // (exclude)
+||
+Same as ''optional'' except that it's excluded from ''hashCode()'' and ''equals()''.
+|}
+
+
+If all attributes are optional, then the chained creator can be accessed via the ''create()'' method, example:
+<pre>
+Person person = Person.create().withAge(16).asPerson();
+</pre>

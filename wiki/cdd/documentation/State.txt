@@ -1,0 +1,27 @@
+= State =
+The decision to separate ''state'' and ''behavior'' allow us to focus more on the state creation process.
+Instead of creating an object in ''one step'' by using a constructor, the object is created in ''several steps'' which gives the following advantages:
+* The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
+* The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the usability'' compared to a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
+* Ensures valid state before encapsulation takes place.
+* Ensures that the state can not be change from the outside once the state is encapsulated.
+* The state can be validated before encapsulation takes place, which is handy when working with data that we can't trust like and user input and external data.
+* The encapsulation step can be postponed so that validation and encapsulation can be performed by the caller.
+
+
+The states is defined in ''state templates'' which is ordinary Java classes that can be compiled and type checked like any other code.
+This approach makes the state definition cleaner and more robust than having them in an ordinary text file format like XML.
+The templates is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
+<pre>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }]
+)
+</pre>
+
+Example of valid state packages (in this example) are:
+* com.myproject.state
+* com.myproject.state.domain
+* com.myproject.state.infrastructure.x''
