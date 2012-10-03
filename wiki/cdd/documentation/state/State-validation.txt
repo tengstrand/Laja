@@ -1,3 +1,7 @@
+[[CDD - State - Build state|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - Behaviour|Next >]]
+
 == State validation ==
 
 The state can be validated before the state is encapsulated:

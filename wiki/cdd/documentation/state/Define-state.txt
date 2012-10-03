@@ -1,3 +1,7 @@
+[[CDD - State|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Identity|Next >]]
+
 == Define state ==
 
 Let's extend ''PersonState'' by modifying the state template ''PersonStateTemplate'':

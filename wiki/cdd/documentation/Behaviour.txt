@@ -1,3 +1,7 @@
+[[CDD - State - State validation|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - Behaviour - Context switching|Next >]]
+
 = Behaviour =
 
 We have finally reached the point where it's time to talk about behavior. Developing a system without behavior would nevertheless be quite pointless!

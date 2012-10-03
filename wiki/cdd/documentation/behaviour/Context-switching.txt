@@ -1,3 +1,7 @@
+[[CDD - Behaviour|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - Behaviour - Factory|Next >]]
+
 == Context switching ==
 In an earlier example we switched context to be able to perform the save operation:
 <pre>
@@ -53,4 +57,3 @@ Switching context has never been easier!
 [[CDD - Behaviour|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[CDD - Behaviour - Factory|Next >]]
-

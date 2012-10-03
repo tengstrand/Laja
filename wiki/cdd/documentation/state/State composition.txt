@@ -1,3 +1,7 @@
+[[CDD - State - Type converters|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - State expansion|Next >]]
+
 == State composition ==
 CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in DDD, when building more complex objects:
 

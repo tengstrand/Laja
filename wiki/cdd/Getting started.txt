@@ -1,3 +1,6 @@
+[[CDD - Introduction|Next >]]
+
+== Getting Started ==
 Let's get started with CDD:
 * Make sure Laja is [[Install|installed]].
 * Create a project directory e.g. ''C:/Projects/MyProject''

@@ -1,3 +1,7 @@
+[[CDD - Behaviour - Factory|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - Behaviour - Populate substate|Next >]]
+
 == Populate state ==
 Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword "hide":
 <pre>

@@ -1,3 +1,5 @@
+[[CDD - Behaviour - Populate state|< Back]]
+
 == Populate substate ==
 If you for some reason need to populate a substate, and if it can't be done by the corresponding behaviour class (''Address'' in this example), it can be managed by the aggregate root itself (''Person''):
 <pre>

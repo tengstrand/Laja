@@ -1,3 +1,7 @@
+[[CDD - Introduction|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State|Next >]]
+
 = Classes and objects =
 In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
 

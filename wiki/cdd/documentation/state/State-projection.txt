@@ -1,3 +1,7 @@
+[[CDD - State - State composition|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Default values|Next >]]
+
 == State projection ==
 In the [[#State composition|state composition]] section we illustrated state with different forms like circle, triangle and pentagon.
 Looking at ''state'' as ''form'' turns out to be a useful mental model when describing how CDD works:

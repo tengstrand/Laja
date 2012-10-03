@@ -1,3 +1,7 @@
+[[CDD - Classes and objects|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Define state|Next >]]
+
 = State =
 The decision to separate ''state'' and ''behavior'' allow us to focus more on the state creation process.
 Instead of creating an object in ''one step'' by using a constructor, the object is created in ''several steps'' which gives the following advantages:

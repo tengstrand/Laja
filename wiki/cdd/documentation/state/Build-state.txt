@@ -1,3 +1,7 @@
+[[CDD - State - Default values|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - State validation|Next >]]
+
 == Build state ==
 So far we have used ''chained creators'' to build state.
 In some situations, if you for example don't have control of in which order the attributes are going to be set,  a ''builder'' can be more convenient:

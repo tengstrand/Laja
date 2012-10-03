@@ -1,3 +1,7 @@
+[[CDD - State - Define state|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Type converters|Next >]]
+
 == Identity ==
 Identity is described as "''...the property of objects that distinguishes them from other objects''" in [http://en.wikipedia.org/wiki/Identity_%28object-oriented_programming%29 Wikipedia].
 CDD divides stateful objects into two groups, ''values'' and ''entities''. The difference between the two is that values includes (almost) every attribute in the identity while entities only include the [http://en.wikipedia.org/wiki/Natural_key natural key].
@@ -203,4 +207,3 @@ By switching context from ''Person'' to ''OtherPerson'' we are not stuck compari
 [[CDD - State - Define state|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[CDD - State - Type converters|Next >]]
-

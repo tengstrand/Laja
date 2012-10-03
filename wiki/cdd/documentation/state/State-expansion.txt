@@ -1,3 +1,7 @@
+[[CDD - State - State expansion|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - State projection|Next >]]
+
 == State expansion ==
 Substates can be "expanded" and merged into the state (the light grey area represents the ''address'' in the following example):
 
