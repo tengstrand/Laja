@@ -43,4 +43,6 @@ With a ''builder'' you can't guarantee, at compile time, that all mandatory attr
 That's also the main reason why a ''chained creator'' is the preferable choice in most situations.
 
 
-[[CDD - Documentation|< Back]]
+[[CDD - State - Default values|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - State validation|Next >]]

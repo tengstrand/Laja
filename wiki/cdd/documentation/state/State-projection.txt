@@ -104,4 +104,7 @@ The current alpha version lacks some functionality that will be added in a futur
 * The types of the mapping attributes has to match, casting or type conversion is not supported.
 * Some restrictions in how the object structure (substates) can be mapped.
 
-[[CDD - Documentation|< Back]]
+
+[[CDD - State - State composition|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Default values|Next >]]

@@ -200,4 +200,7 @@ We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equa
 By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only the ''natural key'' but can make a "full comparison" between two instances without breaking encapsulation!
 
 
-[[CDD - Documentation|< Back]]
+[[CDD - State - Define state|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Type converters|Next >]]
+

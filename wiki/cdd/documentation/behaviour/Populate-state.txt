@@ -70,4 +70,6 @@ RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
 </pre>
 
 
-[[CDD - Documentation|< Back]]
+[[CDD - Behaviour - Factory|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - Behaviour - Populate substate|Next >]]

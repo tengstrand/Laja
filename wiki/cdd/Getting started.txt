@@ -168,4 +168,5 @@ Is adult: false
 The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 </pre>
 
-This example is explained in the [[CDD_-_Documentation|Documentation]].
+
+[[CDD - Introduction|Next >]]

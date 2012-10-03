@@ -93,4 +93,6 @@ The statement...
 ...switches context and persists the instance in one statement! This will be described in more detail later.
 
 
-[[CDD - Documentation|< Back]]
+[[CDD - Getting started|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - Classes and objects|Next >]]

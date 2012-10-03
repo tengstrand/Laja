@@ -39,4 +39,6 @@ Person{ssn=456, givenName='Lars', surname='von Trier'}
 The ''ssn'' is in both cases internally stored as ''int'' which is the type of the attribute.
 
 
-[[CDD - Documentation|< Back]]
+[[CDD - State - Identity|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - State composition|Next >]]

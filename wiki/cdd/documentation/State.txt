@@ -27,4 +27,6 @@ Example of valid state packages (in this example) are:
 * com.myproject.state.infrastructure.x''
 
 
-[[CDD - Documentation|< Back]]
+[[CDD - Classes and objects|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[CDD - State - Define state|Next >]]
