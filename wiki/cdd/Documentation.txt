@@ -11,7 +11,7 @@
 ** [[CDD - State - State projection|State projection]]
 ** [[CDD - State - Default values|Default values]]
 ** [[CDD - State - Build state|Build state]]
-** [[CDD - State - State validation|State validation]]
+** [[CDD - State - State validation|Validation]]
 * [[CDD - Behaviour|Behaviour]]
 ** [[CDD - Behaviour - Context switching|Context switching]]
 ** [[CDD - Behaviour - Factory|Factory]]
