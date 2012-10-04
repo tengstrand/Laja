@@ -60,17 +60,15 @@ public class Person extends PersonFactory {
 }
 </pre>
 
-If we run our "test program":
+The trick here is to override the other constructor with the signature "PersonState, PersonStateBuilder" to be able to populate the substate.
+Make sure you only implement one of these constructors!
+
+If executed:
 <pre>
-package com.myproject.behaviour;
+    Person person = Person.givenName("Ingmar").surname("Bergman")
+        .address(Address.streetName("Thestreet").streetNumber(1)).asPerson();
 
-public class Main {
-    public static void main(String[] args) {
-        Person person = Person.givenName("Ingmar").surname("Bergman").address(Address.streetName("Thestreet").streetNumber(1)).asPerson();
-
-        System.out.println(person);
-    }
-}
+    System.out.println(person);
 </pre>
 
 ...the zipcode has been set to 123:

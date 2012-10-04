@@ -33,16 +33,10 @@ public class PersonStateTemplate {
 
 ...regenerate and execute:
 <pre>
-package com.myproject.behaviour;
+    Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
+            Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
 
-public class Main {
-    public static void main(String[] args) {
-        Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
-                Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
-
-        System.out.println(person);
-    }
-}
+    System.out.println(person);
 </pre>
 
 ...gives the output:

@@ -54,20 +54,14 @@ public class RedHairedPerson extends RedHairedPersonFactory {
 ...when executing:
 
 <pre>
-package com.myproject.behaviour;
+    GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
+    RedHairedPerson tage = RedHairedPerson.givenName("Tage").surname("Danielsson").asRedHairedPerson();
 
-public class Main {
-    public static void main(String[] args) {
-        GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
-        RedHairedPerson tage = RedHairedPerson.givenName("Tage").surname("Danielsson").asRedHairedPerson();
-
-        System.out.println(hans);
-        System.out.println(tage);
-    }
-}
+    System.out.println(hans);
+    System.out.println(tage);
 </pre>
 
-...we get the output:
+...we get the output (not that ''hairColor'' was excluded from the ''chained creator''):
 <pre>
 GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
 RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}

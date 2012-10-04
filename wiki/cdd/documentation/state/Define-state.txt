@@ -19,21 +19,17 @@ public class PersonStateTemplate {
 }
 </pre>
 
-...regenerate and modify the main method:
+...regenerate and modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
 <pre>
-public class Main {
-    public static void main(String[] args) {
-        // The 'chained creator' starts here...
-        Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
-                .withPersonId(1)                  // ...followed by builder methods
-                .withMiddleName("Ernst")
-                .withOccupation("Film director")
-                .asPerson();                      // ...and encapsulation
+    // The 'chained creator' starts here...
+    Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
+            .withPersonId(1)                  // ...followed by builder methods
+            .withMiddleName("Ernst")
+            .withOccupation("Film director")
+            .asPerson();                      // ...and encapsulation
 
-        System.out.println(person);
-    }
-}
+    System.out.println(person);
 </pre>
 
 ...modify the constructor of ''Person'' (ensures that the hidden attribute ''length'' is set):

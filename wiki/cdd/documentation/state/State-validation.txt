@@ -2,21 +2,19 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[CDD - Behaviour|Next >]]
 
-== State validation ==
+== Validation ==
 
 The state can be validated before the state is encapsulated:
 
 <pre>
-    public static void main(String[] args) {
-        PersonBuilder builder1 = Person.build().withSsn(11111).withGivenName("Carl");
-        PersonBuilder builder2 = Person.build();
+    PersonBuilder builder1 = Person.build().withSsn(11111).withGivenName("Carl");
+    PersonBuilder builder2 = Person.build();
 
-        System.out.println("1. Is valid: " + builder1.isValid());
-        System.out.println("2. Is valid: " + builder2.isValid());
+    System.out.println("1. Is valid: " + builder1.isValid());
+    System.out.println("2. Is valid: " + builder2.isValid());
 
-        Person person1 = builder1.asPerson();
-        System.out.println(person1);
-    }
+    Person person1 = builder1.asPerson();
+    System.out.println(person1);
 </pre>
 
 <pre>
@@ -71,17 +69,11 @@ public class PersonStateTemplate {
 
 In this case the state will only be valid, and possible to encapsulate, if the street name starts with an 'A':
 <pre>
-package com.myproject.behaviour;
+    boolean isValid1 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("AStreet").streetNumber(1).zipcode(123)).isValid();
+    boolean isValid2 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("BStreet").streetNumber(1).zipcode(123)).isValid();
 
-public class Main {
-    public static void main(String[] args) {
-        boolean isValid1 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("AStreet").streetNumber(1).zipcode(123)).isValid();
-        boolean isValid2 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("BStreet").streetNumber(1).zipcode(123)).isValid();
-
-        System.out.println("isValid1: " + isValid1);
-        System.out.println("isValid2: " + isValid2);
-    }
-}
+    System.out.println("isValid1: " + isValid1);
+    System.out.println("isValid2: " + isValid2);
 </pre>
 
 output:
@@ -138,19 +130,13 @@ public class PersonStateTemplate {
 </pre>
 
 <pre>
-package com.myproject.behaviour;
+    boolean isValid1 = Person.ssn(10000000).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
+    boolean isValid2 = Person.ssn(1).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
+    boolean isValid3 = Person.ssn(10000000).givenName("Carl").streetName("BStreet").streetNumber(1).zipcode(123).isValid();
 
-public class Main {
-    public static void main(String[] args) {
-        boolean isValid1 = Person.ssn(10000000).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
-        boolean isValid2 = Person.ssn(1).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
-        boolean isValid3 = Person.ssn(10000000).givenName("Carl").streetName("BStreet").streetNumber(1).zipcode(123).isValid();
-
-        System.out.println("isValid1: " + isValid1);
-        System.out.println("isValid2: " + isValid2);
-        System.out.println("isValid3: " + isValid3);
-    }
-}
+    System.out.println("isValid1: " + isValid1);
+    System.out.println("isValid2: " + isValid2);
+    System.out.println("isValid3: " + isValid3);
 </pre>
 
 output:

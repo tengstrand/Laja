@@ -181,16 +181,14 @@ If we add the switch method ''asOtherPerson'' to ''Person'':
 
 ...and modify the ''main'' method in ''Main'':
 <pre>
-    public static void main(String[] args) {
-        Person person1 = Person.ssn(111222).givenName("Ingmar").surname("Bergman").asPerson();
-        Person person2 = Person.ssn(111222).givenName("Ingmar").surname("Johansson").asPerson();
+    Person person1 = Person.ssn(111222).givenName("Ingmar").surname("Bergman").asPerson();
+    Person person2 = Person.ssn(111222).givenName("Ingmar").surname("Johansson").asPerson();
 
-        OtherPerson otherPerson1 = person1.asOtherPerson();
-        OtherPerson otherPerson2 = person2.asOtherPerson();
+    OtherPerson otherPerson1 = person1.asOtherPerson();
+    OtherPerson otherPerson2 = person2.asOtherPerson();
 
-        System.out.println("1. Equals: " + person1.equals(person2));
-        System.out.println("2. Equals: " + otherPerson1.equals(otherPerson2));
-    }
+    System.out.println("1. Equals: " + person1.equals(person2));
+    System.out.println("2. Equals: " + otherPerson1.equals(otherPerson2));
 </pre>
 
 ...we get the output:

@@ -6,14 +6,12 @@
 So far we have used ''chained creators'' to build state.
 In some situations, if you for example don't have control of in which order the attributes are going to be set,  a ''builder'' can be more convenient:
 <pre>
-    public static void main(String[] args) {
-        Person person = Person.build()
-                .withGivenName("Ingmar")
-                .withSsn(11111)
-                .withSurname("Bergman").asPerson();
+    Person person = Person.build()
+            .withGivenName("Ingmar")
+            .withSsn(11111)
+            .withSurname("Bergman").asPerson();
 
-        System.out.println(person);
-    }
+    System.out.println(person);
 </pre>
 output:
 <pre>
@@ -23,13 +21,7 @@ Person{ssn=11111, givenName='Ingmar', surname='Bergman'}
 
 The attributes can occur in arbitrary order and some or all attributes can be left out:
 <pre>
-package com.myproject.behaviour;
-
-public class Main {
-    public static void main(String[] args) {
-        Person person = Person.build().asPerson();
-    }
-}
+    Person person = Person.build().asPerson();
 </pre>
 
 output:
