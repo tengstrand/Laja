@@ -1,6 +1,3 @@
-[[CDD - Behaviour - Populate state|< Back]]
-
-== Populate substate ==
 If a substate need to be populated by the behaviour class and if it can't be done by the sub-behaviour class itself (''Address'' in this example) it can be managed by the aggregate root itself (''Person''):
 <pre>
 package com.myproject.state;
@@ -165,4 +162,4 @@ Voilà! The zipcode was populated and we now also have the class member ''addres
 That brings us naturally to the next exciting area ''composition''!
 
 
-[[CDD - Behaviour - Populate state|< Back]]
+[[Populate state|< Back]]
