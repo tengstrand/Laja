@@ -1,8 +1,3 @@
-[[CDD - State - Default values|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State validation|Next >]]
-
-== Build state ==
 So far we have used ''chained creators'' to build state.
 In some situations, if you for example don't have control of in which order the attributes are going to be set,  a ''builder'' can be more convenient:
 <pre>
@@ -39,6 +34,6 @@ With a ''builder'' you can't guarantee, at compile time, that all mandatory attr
 That's also the main reason why a ''chained creator'' is the preferable choice in most situations.
 
 
-[[CDD - State - Default values|< Back]]
+[[Default values|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State validation|Next >]]
+[[State validation|Next >]]

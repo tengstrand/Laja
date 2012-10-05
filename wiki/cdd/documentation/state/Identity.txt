@@ -1,8 +1,3 @@
-[[CDD - State - Define state|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Type converters|Next >]]
-
-== Identity ==
 Identity is described as "''...the property of objects that distinguishes them from other objects''" in [http://en.wikipedia.org/wiki/Identity_%28object-oriented_programming%29 Wikipedia].
 CDD divides stateful objects into two groups, ''values'' and ''entities''. The difference between the two is that values includes (almost) every attribute in the identity while entities only include the [http://en.wikipedia.org/wiki/Natural_key natural key].
 You can think of the natural key as the attribute(s) that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key] (id/counter).
@@ -202,6 +197,6 @@ We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equa
 By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only the ''natural key'' but can make a "full comparison" between two instances without breaking encapsulation!
 
 
-[[CDD - State - Define state|< Back]]
+[[Define state|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Type converters|Next >]]
+[[Type converters|Next >]]

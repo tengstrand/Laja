@@ -1,8 +1,3 @@
-[[CDD - State - State expansion|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State projection|Next >]]
-
-== State expansion ==
 Substates can be "expanded" and merged into the state (the light grey area represents the ''address'' in the following example):
 
 [[File:CDD-state-expansion.png|250px]]
@@ -50,6 +45,6 @@ If two or more attributes have the same type and name, they will be merged into 
 This is not how it works in this alpha version but will be changed in a future release!
 
 
-[[CDD - State - State expansion|< Back]]
+[[State composition|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State projection|Next >]]
+[[State projection|Next >]]

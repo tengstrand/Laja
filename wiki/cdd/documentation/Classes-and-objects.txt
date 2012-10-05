@@ -1,8 +1,3 @@
-[[CDD - Introduction|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State|Next >]]
-
-= Classes and objects =
 In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
 
 
@@ -37,6 +32,6 @@ The state is also very modular and can be created in several ways:
 [[File:CDD-state-layering.png|800px]]
 
 
-[[CDD - Introduction|< Back]]
+[[Main_Page|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State|Next >]]
+[[State|Next >]]

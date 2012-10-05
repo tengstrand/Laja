@@ -1,0 +1,19 @@
+* cdd
+** Getting started|Getting started
+** mainpage|Introduction
+** Classes and objects|Classes and objects
+** State|State
+** Behaviour|Behaviour
+* misc
+** http://www.gnu.org/copyleft/gpl.html|License
+Sidebar
+* SEARCH
+* TOOLBOX
+* LANGUAGES
+* Admin
+** http://cdd.tengstrand.nu/wiki/Special:Upload
+** http://cdd.tengstrand.nu/index.php?title=MediaWiki:Sidebar&action=edit|Edit Sidebar
+** http://cdd.tengstrand.nu/index.php?title=MediaWiki:Common.css&action=edit|Edit Common.css
+** http://meta.wikimedia.org/wiki/Help:Contents#For_editors|Wiki Doc
+** http://www.mediawiki.org/wiki/Manual:FAQ|Wiki FAQ
+** recentchanges-url|recentchanges

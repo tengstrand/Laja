@@ -1,8 +1,3 @@
-[[CDD - State - Identity|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State composition|Next >]]
-
-== Type converters ==
 Sometimes we want more than one way to populate an attribute. This can be achieved by adding a converter:
 <pre>
 package com.myproject.state;
@@ -37,6 +32,6 @@ Person{ssn=456, givenName='Lars', surname='von Trier'}
 The ''ssn'' is in both cases internally stored as ''int'' which is the type of the attribute.
 
 
-[[CDD - State - Identity|< Back]]
+[[Identity|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State composition|Next >]]
+[[State composition|Next >]]

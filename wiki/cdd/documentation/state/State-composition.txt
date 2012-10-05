@@ -1,9 +1,4 @@
-[[CDD - State - Type converters|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State expansion|Next >]]
-
-== State composition ==
-CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in DDD, when building more complex objects:
+CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in [http://en.wikipedia.org/wiki/Domain-driven_design DDD], when building more complex objects:
 
 [[File:CDD-state-composition.png|180px]]
 
@@ -47,6 +42,6 @@ Person{ssn=112233, givenName='Ingmar', surname='Bergman', address={streetName='M
 Substates can include other substates (including itself if representing a parent/child relationship). We could for example let ''AddressState'' include ''ZipcodeState'', but we leave that exercise to the reader!
 
 
-[[CDD - State - Type converters|< Back]]
+[[Type converters|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - State expansion|Next >]]
+[[State expansion|Next >]]

@@ -1,7 +1,3 @@
-[[CDD - Behaviour|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Factory|Next >]]
-
 == Context switching ==
 In an earlier example we switched context to be able to perform the save operation:
 <pre>
@@ -54,6 +50,6 @@ Context switching can both mean switching task ''within'' an architectural layer
 Switching context has never been easier!
 
 
-[[CDD - Behaviour|< Back]]
+[[Behaviour|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Factory|Next >]]
+[[Factories|Next >]]

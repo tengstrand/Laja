@@ -1,8 +1,3 @@
-[[CDD - State - State projection|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Build state|Next >]]
-
-== Default values ==
 Attributes can be set to default values, e.g.:
 <pre>
 package com.myproject.state;
@@ -32,6 +27,6 @@ Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
 </pre>
 
 
-[[CDD - State - State projection|< Back]]
+[[State projection|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Build state|Next >]]
+[[State builder|Next >]]

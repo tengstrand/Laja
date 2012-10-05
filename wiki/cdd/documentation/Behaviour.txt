@@ -1,14 +1,14 @@
-[[CDD - State - State validation|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Context switching|Next >]]
+* [[Context switching]]
+* [[Factories]]
+* [[Populate state]]
+* [[Populate substate]]
 
-= Behaviour =
 
 We have finally reached the point where it's time to talk about behavior. Developing a system without behavior would nevertheless be quite pointless!
 With CDD you are very free to compose your objects in a way similar to building with Lego.
 
 
-In traditional OO, when you have created a cohesive class with a clear responsibility, the problems begin when you need to do some work in a different context.
+In traditional OO, when you have created a class with a clear responsibility, the problems begin when you need to do some work in a different context.
 Lets say we create the class ''Person'' only containing methods related to the core domain. When you want to export an instance of ''Person'' as XML, you are facing two bad alternatives:
 * Add the method ''asXml()'' to ''Person'' resulting in braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
 * Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (*).
@@ -19,6 +19,6 @@ Lets say we create the class ''Person'' only containing methods related to the c
 The good news is that you don't need to do any of these unwanted things and the solution is spelled ''context switching''.
 
 
-[[CDD - State - State validation|< Back]]
+[[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Context switching|Next >]]
+[[Context switching|Next >]]

@@ -1,8 +1,14 @@
-[[CDD - Classes and objects|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Define state|Next >]]
+* [[Define state]]
+* [[Identity]]
+* [[Type converters]]
+* [[State composition]]
+* [[State expansion]]
+* [[State projection]]
+* [[Default values]]
+* [[State builder]]
+* [[State validation]]
 
-= State =
+
 The decision to separate ''state'' and ''behavior'' allow us to focus more on the state creation process.
 Instead of creating an object in ''one step'' by using a constructor, the object is created in ''several steps'' which gives the following advantages:
 * The state is defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
@@ -30,6 +36,6 @@ Example of valid state packages (in this example) are:
 * com.myproject.state.infrastructure.x''
 
 
-[[CDD - Classes and objects|< Back]]
+[[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Define state|Next >]]
+[[Define state|Next >]]

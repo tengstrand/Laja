@@ -1,8 +1,3 @@
-[[CDD - Behaviour - Factory|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Populate substate|Next >]]
-
-== Populate state ==
 Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword "hide":
 <pre>
 package com.myproject.state;
@@ -14,7 +9,7 @@ public class PersonStateTemplate {
 }
 </pre>
 
-In this case the ''hairColor'' should be populated by the behaviour representations. We start by adding the class ''GreyHairedPerson'' (don't forget to create it in [[#create_factory_in_two_steps|two steps]]):
+In this case the ''hairColor'' should be populated by the behaviour representations. We start by adding the class ''GreyHairedPerson'' (don't forget to create it in [[Factories#create_factory_in_two_steps|two steps]]):
 <pre>
 package com.myproject.behaviour;
 
@@ -68,6 +63,6 @@ RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
 </pre>
 
 
-[[CDD - Behaviour - Factory|< Back]]
+[[Factories|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Populate substate|Next >]]
+[[Populate substate|Next >]]

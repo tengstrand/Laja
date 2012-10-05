@@ -1,8 +1,3 @@
-[[CDD - State - State composition|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Default values|Next >]]
-
-== State projection ==
 In the [[#State composition|state composition]] section we illustrated state with different forms like circle, triangle and pentagon.
 Looking at ''state'' as ''form'' turns out to be a useful mental model when describing how CDD works:
 
@@ -109,6 +104,6 @@ The current alpha version lacks some functionality that will be added in a futur
 * Some restrictions in how the object structure (substates) can be mapped.
 
 
-[[CDD - State - State composition|< Back]]
+[[State composition|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - State - Default values|Next >]]
+[[Default values|Next >]]

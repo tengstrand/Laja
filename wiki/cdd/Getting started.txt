@@ -1,8 +1,5 @@
-[[CDD - Introduction|Next >]]
-
-== Getting Started ==
 Let's get started with CDD:
-* Make sure Laja is [[Install|installed]].
+* Make sure Laja is [http://laja.tengstrand.nu/index.php/Install installed].
 * Create a project directory e.g. ''C:/Projects/MyProject''
 * Create the following directory structure in directory ''MyProject'' (package = ''com.myproject'' in this example).
 <pre>
@@ -172,4 +169,4 @@ The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 </pre>
 
 
-[[CDD - Introduction|Next >]]
+[[Main_Page|Next >]]

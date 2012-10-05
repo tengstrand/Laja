@@ -1,9 +1,3 @@
-[[CDD - State - Build state|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour|Next >]]
-
-== Validation ==
-
 The state can be validated before the state is encapsulated:
 
 <pre>
@@ -172,6 +166,6 @@ As we can see, both validation rules must be met, and if we take a look at the g
 ...we can verify that both rules actually are included!
 
 
-[[CDD - State - Build state|< Back]]
+[[State builder|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour|Next >]]
+[[Behaviour|Next >]]

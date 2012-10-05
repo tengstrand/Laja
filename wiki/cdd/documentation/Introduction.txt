@@ -1,8 +1,8 @@
-[[CDD - Getting started|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Classes and objects|Next >]]
 
-= Introduction =
+=== <span style="color:#FF0000">Under Construction!!</span> ===
+Will be released later 2012.
+
+= Context Driven Development =
 
 Context Driven Development (CDD) takes a new approach to object orientation by separating ''state'' and ''behaviour''.
 This allows us to work in different context without breaking encapsulation.
@@ -12,7 +12,7 @@ By using code generation, the amount of code needed to be written is reduced to 
 focus more on ''what'' to do instead of ''how'' resulting in cleaner and more robust code.
 
 
-If we take a look at the [[CDD_-_Getting_started|Getting started]] example, it has the following structure in the IDE:
+If we take a look at the [[Getting_started|Getting started]] example, it has the following structure in the IDE:
 
 [[File:project-directory-structure.png]]
 
@@ -21,7 +21,7 @@ The directory ''java-gen'' contains a lot of code generated classes, but don't w
 If you are using a version control system you should put both ''java'' and ''java-gen'' under version control which will facilitate [http://en.wikipedia.org/wiki/Code_refactoring refactoring].
 
 
-Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[CDD_-_Getting_started|Getting started]] example:
+Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:
 
 <pre>
 package com.myproject.state;
@@ -97,6 +97,4 @@ The statement...
 ...switches context and persists the instance in one statement! This will be described in more detail later.
 
 
-[[CDD - Getting started|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Classes and objects|Next >]]
+[[Classes and objects|Next >]]

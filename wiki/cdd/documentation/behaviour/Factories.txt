@@ -1,10 +1,4 @@
-[[CDD - Behaviour - Context switching|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Populate state|Next >]]
-
-== Factory ==
-
-In our example we have used ''Person'' as factory when creating instances of ''Person''. We could also have used the generated class ''PersonFactory'':
+In our examples we have used ''Person'' as factory when creating instances of ''Person''. We could also have used the generated class ''PersonFactory'':
 <pre>
     Person person1 = PersonFactory.givenName("Ingmar").surname("Bergman").asPerson();
     Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
@@ -142,17 +136,16 @@ public class PersistablePerson extends PersonEntity {
 
 If the state template definition (''PersonStateTemplate'' in this case) includes a ''natural key'' (keyword "(key)") both the ''value'' and the ''entity'' class is generated,
 otherwise only the ''value'' class is generated. If you remove the ''natural key'' from e.g. ''PersonStateTemplate'' you need to manually remove ''PersonEntity'' and all related ''PersonEntityFactory'' classes.
+This will be improved in a future version!
 
 
 When a state template, e.g. ''PersonStateTemplate'', is created and regenerated for the first time, a couple of other classes is also generated.
-The class ''Person'' is generated and put under the (non-generated) ''java'' directory structure and ''PersonFactory'' is generated and put under the ''java-gen'' structure.
-
-
-If we don't need the behaviour representation ''Person'' we can just delete or rename it.
-
+The class ''Person'' is generated and put under the (non-generated) ''java'' directory structure and ''PersonFactory'' is generated and put under the ''java-gen'' structure. If we don't need the behaviour representation ''Person'' we can just delete or rename it.
 
 <span id="create_factory_in_two_steps"></span>
-If we add another representation and don't want to put the factory method in ''Person'' we need to create it in two steps by first inherit from ''PersonValue'':
+=== Put the factory in the specialized representation ===
+
+If we add a new representation, we can let this act as factory instead of ''Person''. If we do that, it need to be created in two steps by first inherit from ''PersonValue'':
 <pre>
 package com.myproject.behaviour;
 
@@ -189,7 +182,12 @@ public class XmlPerson extends XmlPersonFactory {
 }
 </pre>
 
+An instance of ''XmlPerson'' is then created by e.g.:
+<pre>
+    XmlPerson xmlPerson = XmlPerson.givenName("Eric").surname("Adams").asXmlPerson();
+</pre>
 
-[[CDD - Behaviour - Context switching|< Back]]
+
+[[Context switching|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[CDD - Behaviour - Populate state|Next >]]
+[[Populate state|Next >]]
