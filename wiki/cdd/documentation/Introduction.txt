@@ -87,7 +87,7 @@ If we take a closer look at the statement that creates an instance of ''Person''
 
 ...we can see that CDD starts by building ''state'' and ends with encapsulation by choosing a ''behaviour representation''.
 In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]: ''age(15).givenName("Ingmar").surname("Bergman")''.
-The attributes are defined in ''PersonStateTemplate'' which is the foundation that all generated code is based on, such as the ''chained constructor'', ''hashCode()'', ''equals()'' and ''toString()''.
+The attributes are defined in ''PersonStateTemplate'' which is the foundation that all generated code is based on, such as the ''chained creator'', ''hashCode()'', ''equals()'' and ''toString()''.
 
 
 The statement...
