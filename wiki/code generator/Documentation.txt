@@ -269,41 +269,6 @@ row 1
 </pre>
 |}
 
-{| class="nogridtable"
-! Template file content !! out.txt
-|-
-|
-<pre>
-Comments on a line starts with ##.
-
-Block comments starts with #* and ends with *#.
-Nested block comments are not supported (at the moment).
-
-If you put a comment (like after "this is " and
-"fun!" in this example), then the new line character(s)
-("\r\n" on Windows, "\n" on Unix) for the row is ignored.
-
-#write "out.txt"    ## Comments after commands are ignored.
-row 1
-	   ## A comment on a single row is ignored including
-	   ## preceding spaces and tabs (if only spaces and tabs).
-  row 2
-  #*
-    Comment block.
-    All text within this comment block is ignored.
-  *#
-    row 3, this is ##
-fun!##
-#end
-</pre>
-|
-<pre>
-row 1
-  row 2
-    row 3, this is fun!
-</pre>
-|}
-
 == Data ==
 To be useful, the template files (e.g. ''generate.laja'') need data to produce files. Data is created or accessed in these ways:
 * Using the [[#set|#set]] command.
