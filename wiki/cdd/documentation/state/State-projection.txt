@@ -16,7 +16,7 @@ This technique can be useful if ''A'' contains all the attributes that ''B'' has
 
 
 Let's say we define these three states:
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -25,18 +25,18 @@ public class PersonStateTemplate {
     String surname;
     AddressState $address;
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.state;
 
 public class AddressStateTemplate {
     String streetName;
     int streetNumber;
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.state;
 
 public class StrangePersonStateTemplate {
@@ -45,7 +45,7 @@ public class StrangePersonStateTemplate {
     String secondName;
     AddressState address;
 }
-</pre>
+</source>
 
 The attributes in ''StrangePersonState'' doesn't match the attributes in ''PersonState'':
 * ''address'' is expanded in ''PersonState'' but not in  ''StrangePersonState''.
@@ -53,7 +53,7 @@ The attributes in ''StrangePersonState'' doesn't match the attributes in ''Perso
 
 
 We can let ''StrangePersonState'' take the form of ''PersonState'' by implementing a state projection method:
-<pre>
+<source>
 package com.myproject.state;
 
 public class StrangePersonStateTemplate {
@@ -71,11 +71,11 @@ public class StrangePersonStateTemplate {
             .streetNumber(address.getStreetNumber());
     }
 }
-</pre>
+</source>
 
 The method has to return an instance of a ''StateProjection'' of the "destination state" (Person). The method must also start with "state" followed by an upper case letter.
 When generated, the interface ''StrangePersonState'' will have the method ''getPersonState()'' returning a ''PersonState'', to be used from e.g. ''StrangePerson'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.StrangePersonState;
@@ -97,7 +97,7 @@ public class StrangePerson extends StrangePersonFactory {
         return person.isAdult();
     }
 }
-</pre>
+</source>
 
 The current alpha version lacks some functionality that will be added in a future version:
 * The types of the mapping attributes has to match, casting or type conversion is not supported.

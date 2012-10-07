@@ -1,11 +1,11 @@
 In our examples we have used ''Person'' as factory when creating instances of ''Person''. We could also have used the generated class ''PersonFactory'':
-<pre>
+<source>
     Person person1 = PersonFactory.givenName("Ingmar").surname("Bergman").asPerson();
     Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
-</pre>
+</source>
 
 To make ''Person'' a factory we extend from ''PersonFactory'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -24,15 +24,15 @@ public class Person extends PersonFactory {
         return new PersistablePerson(state);
     }
 }
-</pre>
+</source>
 
 Only the method that is marked as ''factory'' can be directly created by the factory class. If an "as-method" is not marked as factory then it has to be called via the factory method:
-<pre>
+<source>
     PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistable();
-</pre>
+</source>
 
 If we also mark ''asPersistable'' as factory:
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -52,23 +52,23 @@ public class Person extends PersonFactory {
         return new PersistablePerson(state);
     }
 }
-</pre>
+</source>
 
 ...we can create instances directly:
-<pre>
+<source>
     PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistable();
-</pre>
+</source>
 
 
 In some situations we want the object themselves to act as factory:
-<pre>
+<source>
     Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
     PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistable();
-</pre>
+</source>
 
 ...by letting the behaviour class inherit from its factory and include a factory method:
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -85,9 +85,9 @@ public class Person extends PersonFactory {
 
     // Behaviour is added here...
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -105,20 +105,20 @@ public class PersistablePerson extends PersistablePersonFactory {
 
     // Behaviour is added here...
 }
-</pre>
+</source>
 
 
 It's not mandatory to pick a behaviour class and use it as a factory, like we did with ''Person'' and ''PersistablePerson'', we could just as easily have used ''PersonFactory'' and ''PersistablePersonFactory''.
 So why should we bother doing the extra work it means to inherit from the factory?
 The reason is that we want to express the concept "person" and improve the readability:
- <pre>
+ <source>
     Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
- </pre>
+ </source>
 ...even though ''Person'' is just one behaviour representation among others it's a natural representative of the concept "person" and a good candidate for the factory role.
 
 
 If you don't want a behaviour representation act as a factory you have to inherit from either (e.g.) ''PersonValue'' or ''PersonEntity'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonEntity;
@@ -131,7 +131,7 @@ public class PersistablePerson extends PersonEntity {
 
     // ...
 }
-</pre>
+</source>
 
 
 If the state template definition (''PersonStateTemplate'' in this case) includes a ''natural key'' (keyword "(key)") both the ''value'' and the ''entity'' class is generated,
@@ -146,7 +146,7 @@ The class ''Person'' is generated and put under the (non-generated) ''java'' dir
 === Put the factory in the specialized representation ===
 
 If we add a new representation, we can let this act as factory instead of ''Person''. If we do that, it need to be created in two steps by first inherit from ''PersonValue'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -162,10 +162,10 @@ public class XmlPerson extends PersonValue {
         return new XmlPerson(state);
     }
 }
-</pre>
+</source>
 
 ...regenerate and then inherit from (the newly created) ''XmlPersonFactory'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -180,12 +180,12 @@ public class XmlPerson extends XmlPersonFactory {
         return new XmlPerson(state);
     }
 }
-</pre>
+</source>
 
 An instance of ''XmlPerson'' is then created by e.g.:
-<pre>
+<source>
     XmlPerson xmlPerson = XmlPerson.givenName("Eric").surname("Adams").asXmlPerson();
-</pre>
+</source>
 
 
 [[Context switching|< Back]]

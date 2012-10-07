@@ -4,7 +4,7 @@ Substates can be "expanded" and merged into the state (the light grey area repre
 
 
 A dollar sign ($) marks a substate for expansion ($ is a valid character for variable names in Java!):
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -13,30 +13,30 @@ public class PersonStateTemplate {
     String surname;
     AddressState $address;
 }
-</pre>
+</source>
 
 ...if we regenerate and change ''main'':
-<pre>
+<source>
     Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman")
             .streetName("Main Street").streetNumber(123).zipcode(111222).asPerson();
 
     System.out.println(person);
-</pre>
+</source>
 
 ...we get the output:
-<pre>
+<source>
 Person{ssn=112233, givenName='Ingmar', surname='Bergman', streetName='Main Street', streetNumber=123, zipcode=111222}
-</pre>
+</source>
 
 As we can see, the attributes from ''AddressState'' has been "exploded" and merged into ''PersonState''.
 If we take a look at ''PersonState'' it now extends ''AddressState'':
-<pre>
+<source>
 ...
 
 public interface PersonState extends AddressState {
     ...
 }
-</pre>
+</source>
 
 ...this will allow us to use ''PersonState'' as an "Address" which will be explained more in detail later.
 

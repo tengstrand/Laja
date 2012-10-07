@@ -1,5 +1,5 @@
 Let's extend ''PersonState'' by modifying the state template ''PersonStateTemplate'':
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -11,11 +11,11 @@ public class PersonStateTemplate {
     String surname;
     String occupation; // (exclude)
 }
-</pre>
+</source>
 
 ...regenerate and modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
-<pre>
+<source>
     // The 'chained creator' starts here...
     Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
             .withPersonId(1)                  // ...followed by builder methods
@@ -24,20 +24,20 @@ public class PersonStateTemplate {
             .asPerson();                      // ...and encapsulation
 
     System.out.println(person);
-</pre>
+</source>
 
 ...modify the constructor of ''Person'' (ensures that the hidden attribute ''length'' is set):
-<pre>
+<source>
     public Person(PersonState state) {
         super(state);
         state.setLength(179);
     }
-</pre>
+</source>
 
 ... gives the output:
-<pre>
+<source>
 Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ernst', surname='Bergman', occupation='Film director'}
-</pre>
+</source>
 
 
 If we look at how the instance of ''Person'' is created, it follows these steps:
@@ -89,9 +89,9 @@ Same as ''optional'' except that it's excluded from ''hashCode()'' and ''equals(
 
 
 If all attributes are optional, then the chained creator can be accessed via the ''create()'' method, example:
-<pre>
+<source>
 Person person = Person.create().withAge(16).asPerson();
-</pre>
+</source>
 
 
 [[State|< Back]]

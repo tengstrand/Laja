@@ -1,5 +1,5 @@
 If a substate need to be populated by the behaviour class and if it can't be done by the sub-behaviour class itself (''Address'' in this example) it can be managed by the aggregate root itself (''Person''):
-<pre>
+<source>
 package com.myproject.state;
 
 public class AddressStateTemplate {
@@ -7,9 +7,9 @@ public class AddressStateTemplate {
     int streetNumber;
     int zipcode; // (hide)
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -17,9 +17,9 @@ public class PersonStateTemplate {
     String surname;
     AddressState address;
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.AddressState;
@@ -34,9 +34,9 @@ public class Address extends AddressFactory {
         return new Address(state);
     }
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -55,27 +55,27 @@ public class Person extends PersonFactory {
         return new Person(state, stateBuilder);
     }
 }
-</pre>
+</source>
 
 ...if executed:
-<pre>
+<source>
     Person person = Person.givenName("Ingmar").surname("Bergman")
         .address(Address.streetName("Thestreet").streetNumber(1)).asPerson();
 
     System.out.println(person);
-</pre>
+</source>
 
 ...the zipcode is now 123:
-<pre>
+<source>
 Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', streetNumber=1, zipcode=123}}
-</pre>
+</source>
 
 
 We can choose between two constructors when implementing our behaviour representations, e.g.:
-<pre>
+<source>
     public Person(PersonState state)
     public Person(PersonState state, PersonStateBuilder stateBuilder)
-</pre>
+</source>
 
 The second is used when we need to populate one or more substates from the aggregate root (as in this example).
 Only one of the two constructors should be implemented at a time.
@@ -84,7 +84,7 @@ Remember that in most situations your first choice should be to either let the u
 
 === Populating substate from the sub-behaviour ===
 Let's see if instead we can populate ''zipcode'' from the behaviour class ''Address'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.AddressState;
@@ -100,9 +100,9 @@ public class Address extends AddressFactory {
         return new Address(state);
     }
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -117,23 +117,23 @@ public class Person extends PersonFactory {
         return new Person(state);
     }
 }
-</pre>
+</source>
 
 ...if regenerated and executed:
-<pre>
+<source>
     Person person = Person.givenName("Ingmar").surname("Bergman")
             .address(Address.streetName("Thestreet").streetNumber(1)).asPerson();
 
     System.out.println(person);
-</pre>
+</source>
 
 ...we get the output:
-<pre>
+<source>
 Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', streetNumber=1, zipcode=0}}
-</pre>
+</source>
 
 What happened here? Didn't we set the zipcode from ''Address''? The answer is no, the constructor of ''Address'' was never executed, but let's fix that:
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -151,12 +151,12 @@ public class Person extends PersonFactory {
         return new Person(state);
     }
 }
-</pre>
+</source>
 
 ...output:
-<pre>
+<source>
 Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', streetNumber=1, zipcode=123}}
-</pre>
+</source>
 
 Voilà! The zipcode was populated and we now also have the class member ''address'' that can be used by ''Person''.
 That brings us naturally to the next exciting area ''composition''!

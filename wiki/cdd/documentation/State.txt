@@ -21,14 +21,14 @@ Instead of creating an object in ''one step'' by using a constructor, the object
 The states is defined in ''state templates'' which is ordinary Java classes that can be compiled and type checked like any other code.
 This approach makes the state definition cleaner and more robust than having them in an ordinary text file format like XML.
 The templates is expected to be found in directory ''srcDir'', package ''statePackage'' in the project file, e.g. ''myproject.laja'':
-<pre>
+<source>
 #generateCdd([{
   srcDir: "{.}/main"
   outDir: "{..}/java-gen/main"
   statePackage: "com.myproject.state"
   behaviourPackage: "com.myproject.behaviour" }]
 )
-</pre>
+</source>
 
 Example of valid state packages (in this example) are:
 * com.myproject.state

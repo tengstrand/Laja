@@ -8,17 +8,17 @@ src/java/main/com/myproject/behaviour
 </pre>
 
 Create the template file ''src/java/myproject.laja'' with the following content:
-<pre>
+<source>
 #generateCdd([{
   srcDir: "{.}/main"
   outDir: "{..}/java-gen/main"
   statePackage: "com.myproject.state"
   behaviourPackage: "com.myproject.behaviour" }]
 )
-</pre>
+</source>
 
 Create the class ''src/java/main/com/myproject/state/PersonStateTemplate.java'':
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -26,15 +26,15 @@ public class PersonStateTemplate {
     String givenName;
     String surname;
 }
-</pre>
+</source>
 
 Open a Unix shell or DOS prompt, go to the project root and enter ''laja myproject'':
-<pre>
+<source lang="dos">
 C:\Projects\MyProject\src\java>laja myproject
-</pre>
+</source>
 
 Which gives the output:
-<pre>
+<source lang="dos">
 Reading file "myproject.laja"
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/Certificate.java" - OK
   Generate state classes: [Person]
@@ -75,13 +75,13 @@ Generated 18 new files:
   C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java
   C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java
   C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java
-</pre>
+</source>
 
 If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.
 
 
 Let's add some behaviour by creating the method ''isAdult()'' to our newly generated "core domain" class ''Person'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -100,10 +100,10 @@ public class Person extends PersonFactory {
         return state.getAge() >= 18;
     }
 }
-</pre>
+</source>
 
 Now create a "persistable" version in ''java/source/main'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -118,10 +118,10 @@ public class PersistablePerson extends PersonValue {
         System.out.println("The state was saved: " + state);
     }
 }
-</pre>
+</source>
 
 Add the method ''asPersistable()'' to ''Person'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -144,11 +144,11 @@ public class Person extends PersonFactory {
         return state.getAge() >= 18;
     }
 }
-</pre>
+</source>
 
 
 The last step is to create a main class ''src/java/main/com/myproject/behaviour/Main.java'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 public class Main {
@@ -160,13 +160,13 @@ public class Main {
         person.asPersistable().save();
     }
 }
-</pre>
+</source>
 
 If executed you will get the output:
-<pre>
+<source>
 Is adult: false
 The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
-</pre>
+</source>
 
 
 [[Main_Page|Next >]]

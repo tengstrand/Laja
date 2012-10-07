@@ -7,16 +7,16 @@ In some situations the surrogate key should also be included. This case is not h
 
 Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
 If no attribute in the state is marked as ''natural key'' it will be treated as a values, example:
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
     String givenName;
     String surname;
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -31,20 +31,20 @@ public class Person extends PersonFactory {
         return new Person(state);
     }
 }
-</pre>
+</source>
 
 The inheritance hierarchy of Person goes like this: ''PersonFactory'' > ''PersonValueFactory'' > ''PersonValue'' where PersonValue includes both ''givenName'' and ''surname'' in ''hashCode()'' and ''equals()''.
 
 
 If we add a [http://en.wikipedia.org/wiki/Natural_key natural key] to ''PersonState'':
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
     String givenName; // (key)
     String surname;
 }
-</pre>
+</source>
 
 ...the inheritance hierarchy is changed to: ''PersonFactory'' > ''PersonEntityFactory'' > ''PersonEntity'' where the PersonEntity includes only ''givenName'' in ''hashCode()'' and ''equals()''.
 
@@ -59,7 +59,7 @@ A problem in traditional OO is that we up front need to decide if a stateful cla
 Instead of forcing us to make this decision, CDD allow us to have a set of behaviour representations where some can be values and others can be entities.
 
 If we include ''ssn'' in the ''natural key'':
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -67,11 +67,11 @@ public class PersonStateTemplate {
     String givenName;
     String surname;
 }
-</pre>
+</source>
 
 ...we can see that only ''ssn'' is included in ''hashCode()'' and ''equals()'':
 
-<pre>
+<source>
 public class PersonStateImpl implements PersonState {
     ...
 
@@ -96,14 +96,14 @@ public class PersonStateImpl implements PersonState {
 
     ...
 }
-</pre>
+</source>
 
 This is the desired behaviour in most situations when working against a persistence layer.
 In for example the test code we sometimes are interested in comparing all attributes.
 
 
 Let's demonstrate how we can treat a person state as both value and entity by introducing ''OtherPerson'':
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -114,10 +114,10 @@ public class OtherPerson extends PersonValue {
         super(state);
     }
 }
-</pre>
+</source>
 
 To make this class a ''value'' we extend from (the code generated) ''PersonValue'' which has the following implementation of ''hashCode'' and ''equals'':
-<pre>
+<source>
     ...
 
     @Override
@@ -133,10 +133,10 @@ To make this class a ''value'' we extend from (the code generated) ''PersonValue
     }
 
     ...
-</pre>
+</source>
 
 ...which delegates to ''valueHashCode()'' and ''valueEquals()'' in the (code generated) class ''PersonStateImpl'':
-<pre>
+<source>
     ...
 
     public int valueHashCode() {
@@ -165,17 +165,17 @@ To make this class a ''value'' we extend from (the code generated) ''PersonValue
     }
 
     ...
-</pre>
+</source>
 
 If we add the switch method ''asOtherPerson'' to ''Person'':
-<pre>
+<source>
     public OtherPerson asOtherPerson() {
         return new OtherPerson(state);
     }
-</pre>
+</source>
 
 ...and modify the ''main'' method in ''Main'':
-<pre>
+<source>
     Person person1 = Person.ssn(111222).givenName("Ingmar").surname("Bergman").asPerson();
     Person person2 = Person.ssn(111222).givenName("Ingmar").surname("Johansson").asPerson();
 
@@ -184,13 +184,13 @@ If we add the switch method ''asOtherPerson'' to ''Person'':
 
     System.out.println("1. Equals: " + person1.equals(person2));
     System.out.println("2. Equals: " + otherPerson1.equals(otherPerson2));
-</pre>
+</source>
 
 ...we get the output:
-<pre>
+<source>
 1. Equals: true
 2. Equals: false
-</pre>
+</source>
 
 We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equal because they have the same value of ''ssn'' but seen as different by the value ''OtherPerson'' since ''surname'' differs.
 

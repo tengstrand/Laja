@@ -1,12 +1,12 @@
 == Context switching ==
 In an earlier example we switched context to be able to perform the save operation:
-<pre>
+<source>
         person.asPersistable().save();
-</pre>
+</source>
 
 The switching was performed by the method ''asPersistable()'':
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -25,7 +25,7 @@ public class Person extends PersonFactory {
         return new PersistablePerson(state);
     }
 }
-</pre>
+</source>
 
 Being able to switch context is not just a way of splitting up behavior between objects,
 it's also a way to reduce the amount of code needed to integrate different parts of the system.

@@ -1,6 +1,6 @@
 The state can be validated before the state is encapsulated:
 
-<pre>
+<source>
     PersonBuilder builder1 = Person.build().withSsn(11111).withGivenName("Carl");
     PersonBuilder builder2 = Person.build();
 
@@ -9,18 +9,18 @@ The state can be validated before the state is encapsulated:
 
     Person person1 = builder1.asPerson();
     System.out.println(person1);
-</pre>
+</source>
 
-<pre>
+<source>
 1. Is valid: true
 2. Is valid: false
 Person{ssn=11111, givenName='Carl', surname='null'}
-</pre>
+</source>
 
 === Custom validation ===
 
 It is possible to add a custom validation by adding the method ''isValid()'':
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -32,21 +32,21 @@ public class PersonStateTemplate {
         return ssn > 1000000;
     }
 }
-</pre>
+</source>
 
 ...if we run the ''Main'' class again (don't forget to regenerate) we now get:
-<pre>
+<source>
 1. Is valid: false
 2. Is valid: false
 Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
 ...
-</pre>
+</source>
 
 The reason is that ''ssn'' doesn't meet the validation rule ''ssn > 1000000'' since ''ssn'' was set to ''11111''.
 
 
 Validations can also be performed for substates, e.g:
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -59,25 +59,25 @@ public class PersonStateTemplate {
         return address.getStreetName().startsWith("A") && ssn > 1000000;
     }
 }
-</pre>
+</source>
 
 In this case the state will only be valid, and possible to encapsulate, if the street name starts with an 'A':
-<pre>
+<source>
     boolean isValid1 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("AStreet").streetNumber(1).zipcode(123)).isValid();
     boolean isValid2 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("BStreet").streetNumber(1).zipcode(123)).isValid();
 
     System.out.println("isValid1: " + isValid1);
     System.out.println("isValid2: " + isValid2);
-</pre>
+</source>
 
 output:
-<pre>
+<source>
 isValid1: true
 isValid2: false
-</pre>
+</source>
 
 If the ''isValid()'' method operates on an expanded substate, the state template class need to extend the ''StateImpl'' class:
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate extends PersonStateImpl {
@@ -90,11 +90,11 @@ public class PersonStateTemplate extends PersonStateImpl {
         return streetName.startsWith("A") && ssn > 1000000;
     }
 }
-</pre>
+</source>
 
 
 We could also have added validations on both ''PersonState'' and ''AddressState'':
-<pre>
+<source>
 package com.myproject.state;
 
 public class AddressStateTemplate {
@@ -106,9 +106,9 @@ public class AddressStateTemplate {
         return streetName.startsWith("A");
     }
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -121,9 +121,9 @@ public class PersonStateTemplate {
         return ssn > 1000000;
     }
 }
-</pre>
+</source>
 
-<pre>
+<source>
     boolean isValid1 = Person.ssn(10000000).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
     boolean isValid2 = Person.ssn(1).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
     boolean isValid3 = Person.ssn(10000000).givenName("Carl").streetName("BStreet").streetNumber(1).zipcode(123).isValid();
@@ -131,18 +131,18 @@ public class PersonStateTemplate {
     System.out.println("isValid1: " + isValid1);
     System.out.println("isValid2: " + isValid2);
     System.out.println("isValid3: " + isValid3);
-</pre>
+</source>
 
 output:
 
-<pre>
+<source>
 isValid1: true
 isValid2: false
 isValid3: false
-</pre>
+</source>
 
 As we can see, both validation rules must be met, and if we take a look at the generated class ''PersonStateImpl'':
-<pre>
+<source>
     ...
 
     private boolean isValid(boolean encapsulated) {
@@ -161,7 +161,7 @@ As we can see, both validation rules must be met, and if we take a look at the g
     }
 
     ...
-</pre>
+</source>
 
 ...we can verify that both rules actually are included!
 

@@ -1,5 +1,5 @@
 Attributes can be set to default values, e.g.:
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -7,9 +7,9 @@ public class PersonStateTemplate {
     String givenName;
     String surname = "Unknown"; // (optional)
 }
-</pre>
+</source>
 
-<pre>
+<source>
 package com.myproject.behaviour;
 
 public class Main {
@@ -19,12 +19,12 @@ public class Main {
         System.out.println(person);
     }
 }
-</pre>
+</source>
 
 output:
-<pre>
+<source>
 Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
-</pre>
+</source>
 
 
 [[State projection|< Back]]

@@ -1,5 +1,5 @@
 Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword "hide":
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -7,10 +7,10 @@ public class PersonStateTemplate {
     String givenName;
     String surname;
 }
-</pre>
+</source>
 
 In this case the ''hairColor'' should be populated by the behaviour representations. We start by adding the class ''GreyHairedPerson'' (don't forget to create it in [[Factories#create_factory_in_two_steps|two steps]]):
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -26,10 +26,10 @@ public class GreyHairedPerson extends GreyHairedPersonFactory {
         return new GreyHairedPerson(state);
     }
 }
-</pre>
+</source>
 
 ...we also add a class for red haired people:
-<pre>
+<source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
@@ -45,22 +45,22 @@ public class RedHairedPerson extends RedHairedPersonFactory {
         return new RedHairedPerson(state);
     }
 }
-</pre>
+</source>
 ...when executing:
 
-<pre>
+<source>
     GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
     RedHairedPerson tage = RedHairedPerson.givenName("Tage").surname("Danielsson").asRedHairedPerson();
 
     System.out.println(hans);
     System.out.println(tage);
-</pre>
+</source>
 
 ...we get the output (note that ''hairColor'' was excluded from the ''chained creator''):
-<pre>
+<source>
 GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
 RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
-</pre>
+</source>
 
 
 [[Factories|< Back]]

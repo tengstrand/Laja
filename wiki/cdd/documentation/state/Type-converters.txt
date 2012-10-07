@@ -1,5 +1,5 @@
 Sometimes we want more than one way to populate an attribute. This can be achieved by adding a converter:
-<pre>
+<source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
@@ -11,23 +11,23 @@ public class PersonStateTemplate {
         return Integer.valueOf(ssn);
     }
 }
-</pre>
+</source>
 
 This little trick allow us to select between ''int'' and ''String'' when giving the attribute ''ssn'':
 
-<pre>
+<source>
     Person ingmar = Person.ssn(123).givenName("Ingmar").surname("Bergman").asPerson();
     Person lars = Person.ssn("456").givenName("Lars").surname("von Trier").asPerson();
 
     System.out.println(ingmar);
     System.out.println(lars);
-</pre>
+</source>
 
 ...gives the output:
-<pre>
+<source>
 Person{ssn=123, givenName='Ingmar', surname='Bergman'}
 Person{ssn=456, givenName='Lars', surname='von Trier'}
-</pre>
+</source>
 
 The ''ssn'' is in both cases internally stored as ''int'' which is the type of the attribute.
 
