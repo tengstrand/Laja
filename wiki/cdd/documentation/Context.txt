@@ -1,4 +1,4 @@
-The concept ''context'' is one of key concepts in CDD alongside of ''state'' and ''behaviour''.
+The concept ''context'' is one of key concepts in CDD alongside ''state'' and ''behaviour''.
 Context is divided into two parts where the first part ''context area'' has to do with the task to be performed and its location in the system:
 
 
@@ -17,7 +17,7 @@ The second part is optional and is something that can vary at ''runtime'' within
 Examples of what a ''context variable'' can consist of are:
 * Current user role
 * Current time
-* Configurations, e.g. file or database
+* Configurations, e.g. values from file or database
 
 
 Different aspects of ''context'' will gradually be covered by the rest of this documentation.
