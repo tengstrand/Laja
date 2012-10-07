@@ -5,16 +5,16 @@ Context is divided into two parts where the first part ''context area'' has to d
 [[File:CDD-context-area.png|400px]]
 
 
-The context area is actively selected by the developer at ''compile time''.
+The context area is actively selected or [[Context switching|switched]] by the developer at ''compile time''.
 
 
-The second part is optional and is something that can vary at ''runtime'' within the context area:
+The second part is optional and is something that can vary at ''runtime'' within a selected ''context area'':
 
 
 [[File:CDD-context-runtime.png|170px]]
 
 
-Examples of what a ''context variable'' can consist of are:
+The selected context is based on a ''context variable''. Examples of such a variable might be:
 * Current user role
 * Current time
 * Configurations, e.g. values from file or database
