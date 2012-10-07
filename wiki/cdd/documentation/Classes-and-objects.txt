@@ -1,7 +1,7 @@
 In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
 
 
-[[File:Traditional-object.png|450px]]
+[[File:Traditional-object.png|400px]]
 
 
 The merging of state and behavior makes it harder to reuse code and to work in different contexts.
@@ -13,7 +13,7 @@ The decoupling of ''state'' and ''behaviour'' enables powerful ways to build, va
 It also makes it easy to switch between contexts:
 
 
-[[File:CDD-object.png|500px]]
+[[File:CDD-object.png|400px]]
 
 
 CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
@@ -23,13 +23,13 @@ The popular ''account example'' looks like [http://www.jroller.com/sebastianKueb
 An object is divided into state and behaviour and is looser coupled than "traditional OO". The context is switched by selecting another behaviour:
 
 
-[[File:CDD-object-layering.png|800px]]
+[[File:CDD-object-layering.png|600px]]
 
 
 The state is also very modular and can be created in several ways:
 
 
-[[File:CDD-state-layering.png|800px]]
+[[File:CDD-state-layering.png|600px]]
 
 
 [[Main_Page|< Back]]
