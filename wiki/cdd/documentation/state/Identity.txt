@@ -5,7 +5,7 @@ If a surrogate key is not specified then only the natural key is included in ''h
 In some situations the surrogate key should also be included. This case is not handled by this alpha version of CDD but will be fixed in a future release.
 
 
-Entities means the same in CDD and DDD while values ​​can be both mutable and [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
+Entities has the same meaning in CDD and DDD while values ​​can be both mutable or [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
 If no attribute in the state is marked as ''natural key'' it will be treated as a values, example:
 <source>
 package com.myproject.state;
