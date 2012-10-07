@@ -1,6 +1,7 @@
 * cdd
 ** Getting started|Getting started
 ** mainpage|Introduction
+** Context|Context
 ** Classes and objects|Classes and objects
 ** State|State
 ** Behaviour|Behaviour
