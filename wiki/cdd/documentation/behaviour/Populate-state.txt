@@ -56,7 +56,7 @@ public class RedHairedPerson extends RedHairedPersonFactory {
     System.out.println(tage);
 </pre>
 
-...we get the output (not that ''hairColor'' was excluded from the ''chained creator''):
+...we get the output (note that ''hairColor'' was excluded from the ''chained creator''):
 <pre>
 GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
 RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}
