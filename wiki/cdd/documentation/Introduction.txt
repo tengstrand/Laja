@@ -1,12 +1,17 @@
 
-=== <span style="color:#FF0000">Under Construction!</span> ===
+=== <span style="color:#FF0000">Under construction!</span> ===
 Will be released later 2012.
 
-= Context Driven Development =
+= Introduction =
 
 Context Driven Development (CDD) is a new approach to object orientation, which allows for a clean separation of ''state'' and ''behaviour''; enabling us to switch an object's [[Context|context]] without breaking its encapsulation.
-The secret sauce that makes this possible in Java is ''code generation''.
+The secret sauce that makes this possible is ''code generation''.
 Having all of the CDD foundation classes generated automatically frees developers to just focus on ''what'' the system does instead of ''how'' it does it - resulting in less code, cleaner code and more robust code.
+
+=== Code generation ===
+CDD is included in the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja] where the targeting language is Java.
+There are no technical barriers to implement CDD in other languages such as C++, C# or Ruby but at the moment only Java is supported.
+
 
 If we take a look at the [[Getting_started|Getting started]] example, it has the following structure in the IDE:
 
