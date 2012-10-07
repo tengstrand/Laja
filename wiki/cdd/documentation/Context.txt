@@ -1,4 +1,4 @@
-The concept ''context'' is one of the cornerstones in CDD alongside of ''state'' and ''behaviour''.
+The concept ''context'' is one of key concepts in CDD alongside of ''state'' and ''behaviour''.
 Context is divided into two parts where the first part ''context area'' has to do with the task to be performed and its location in the system:
 
 
