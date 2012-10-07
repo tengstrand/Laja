@@ -17,7 +17,12 @@ The second part is optional and is something that can vary at ''runtime'' within
 Examples of what a ''context variable'' can consist of are:
 * Current user role
 * Current time
-* Configurations in files and databases
+* Configurations, e.g. file or database
 
 
 Different aspects of ''context'' will gradually be covered by the rest of this documentation.
+
+
+[[Main_Page|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Classes and objects|Next >]]
