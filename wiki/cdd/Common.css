@@ -1,0 +1,8 @@
+body.page-Main_Page h1.firstHeading { display:none; }
+
+div.mw-geshi {
+  padding: 1em;
+  margin: 1em 0;
+  border: 1px dashed #2f6fab;
+  background-color: #f9f9f9;
+}
