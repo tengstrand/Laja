@@ -1,4 +1,4 @@
-* cdd
+* documentation
 ** Getting started|Getting started
 ** mainpage|Introduction
 ** Context|Context
