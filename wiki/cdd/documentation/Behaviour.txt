@@ -4,17 +4,15 @@
 * [[Populate substate]]
 
 
-We have finally reached the point where it's time to talk about behavior. Developing a system without behavior would nevertheless be quite pointless!
-With CDD you are very free to compose your objects in a way similar to building with Lego.
+Behaviour is an important part of object orientation and therefore also in CDD. Developing a system without behavior would nevertheless be quite pointless!
+With CDD we are free to compose objects in a way similar to building with wood bricks.
 
 
 In traditional OO, when you have created a class with a clear responsibility, the problems begin when you need to do some work in a different context.
 Lets say we create the class ''Person'' only containing methods related to the core domain. When you want to export an instance of ''Person'' as XML, you are facing two bad alternatives:
 * Add the method ''asXml()'' to ''Person'' resulting in braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (*).
+* Add some getters to ''Person'' and delegate the work to e.g. ''PersonXmlExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (the principle is about letting objects themselves perform tasks).
 
-
-(*) The ''Tell Don't Ask principle'' is about letting the objects themselves perform tasks.
 
 The good news is that you don't need to do any of these unwanted things and the solution is spelled ''context switching''.
 
