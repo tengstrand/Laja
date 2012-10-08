@@ -28,10 +28,10 @@ public class PersonStateTemplate {
 
 ...regenerate and execute:
 <source>
-    Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
-            Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
+Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
+        Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
 
-    System.out.println(person);
+System.out.println(person);
 </source>
 
 ...gives the output:

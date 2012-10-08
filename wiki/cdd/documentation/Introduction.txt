@@ -82,7 +82,7 @@ The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
 
 If we take a closer look at the statement that creates an instance of ''Person'':
 <source>
-        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
+Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
 </source>
 
 ...we can see that CDD starts by building ''state'' and ends with encapsulation by choosing a ''behaviour representation''.
@@ -92,7 +92,7 @@ The attributes are defined in ''PersonStateTemplate'' which is the foundation th
 
 The statement...
 <source>
-        person.asPersistable().save();
+person.asPersistable().save();
 </source>
 
 ...switches context and persists the instance in one statement! This will be described in more detail later.

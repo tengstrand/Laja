@@ -16,11 +16,11 @@ public class PersonStateTemplate {
 This little trick allow us to select between ''int'' and ''String'' when giving the attribute ''ssn'':
 
 <source>
-    Person ingmar = Person.ssn(123).givenName("Ingmar").surname("Bergman").asPerson();
-    Person lars = Person.ssn("456").givenName("Lars").surname("von Trier").asPerson();
+Person ingmar = Person.ssn(123).givenName("Ingmar").surname("Bergman").asPerson();
+Person lars = Person.ssn("456").givenName("Lars").surname("von Trier").asPerson();
 
-    System.out.println(ingmar);
-    System.out.println(lars);
+System.out.println(ingmar);
+System.out.println(lars);
 </source>
 
 ...gives the output:

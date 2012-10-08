@@ -17,10 +17,10 @@ public class PersonStateTemplate {
 
 ...if we regenerate and change ''main'':
 <source>
-    Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman")
-            .streetName("Main Street").streetNumber(123).zipcode(111222).asPerson();
+Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman")
+        .streetName("Main Street").streetNumber(123).zipcode(111222).asPerson();
 
-    System.out.println(person);
+System.out.println(person);
 </source>
 
 ...we get the output:
