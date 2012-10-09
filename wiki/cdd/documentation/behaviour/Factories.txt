@@ -188,6 +188,6 @@ An instance of ''XmlPerson'' is then created by e.g.:
 </source>
 
 
-[[Context switching|< Back]]
+[[Behaviour|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Populate state|Next >]]

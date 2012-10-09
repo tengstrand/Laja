@@ -4,6 +4,8 @@
 ** Context|Context
 ** Classes and objects|Classes and objects
 ** State|State
+** Identity|Identity
+** Context switching|Context switching
 ** Behaviour|Behaviour
 * misc
 ** http://www.gnu.org/copyleft/gpl.html|License

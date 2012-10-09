@@ -197,6 +197,6 @@ We can see that the entity ''Person'' treats ''person1'' and ''person2'' as equa
 By switching context from ''Person'' to ''OtherPerson'' we are not stuck comparing only the ''natural key'' but can make a "full comparison" between two instances without breaking encapsulation!
 
 
-[[Define state|< Back]]
+[[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Type converters|Next >]]
+[[Context switching|Next]]
