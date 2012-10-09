@@ -1,9 +1,3 @@
-* [[Context switching]]
-* [[Factories]]
-* [[Populate state]]
-* [[Populate substate]]
-
-
 Behaviour is an important part of object orientation and therefore also in CDD. Developing a system without behavior would nevertheless be quite pointless!
 With CDD we are free to compose objects in a way similar to building with wood bricks.
 
@@ -17,6 +11,10 @@ Lets say we create the class ''Person'' only containing methods related to the c
 The good news is that you don't need to do any of these unwanted things and the solution is spelled ''context switching''.
 
 
+* [[Factories]]
+* [[Populate state]]
+* [[Populate substate]]
+
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Context switching|Next >]]
+[[Factories|Next >]]
