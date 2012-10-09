@@ -1,3 +1,7 @@
+The concept context switching as known here was invented in 2011 and first described [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html here].
+It is now part of CDD and improved so that state and behavior are completely separated.
+
+
 In an earlier example we switched context to be able to perform the save operation:
 <source>
 person.asPersistable().save();
@@ -39,15 +43,15 @@ Context switching can both mean switching task ''within'' an architectural layer
 Example of architectural layers can be "GUI", "Domain" or "Persistence".
 Example of different contexts within an architectural layer can be "Export as XML" or "Convert to format Y".
 
-Context switching is a key concept of CDD which allows our objects to travel around the system, and perform tailor made tasks, almost friction free.
+Context switching is a key concept of CDD which allows our objects to travel around the system, performing well defined tasks, almost friction free.
 We don't need to convert between different state representations when crossing context borders because the state format never change.
 Conversion between state representations are a common source of errors that is almost eliminated in CDD.
 Support for packing and unpacking state so that objects can cross physical context borders is not included in this alpha version but may be added in a later version.
 
 === Layers and tier of deployment ===
-It's often a good thing to separate different responsibilities into different logical layers (packages/modules) in the codebase.
-If we do that it will affects the design of the system in a positive direction so that modularity and cohesion is increased hopefully ending up with objects [http://en.wikipedia.org/wiki/Single_responsibility_principle doing one thing].
-There is a common misconception that architectural layers are the same as tiers of deployment. This is well described in this [http://gojko.net/2010/06/11/udi-dahan-the-biggest-mistakes-teams-make-when-applying-ddd blog post] by Udi Dahan and the same principles is also applicable for CDD.
+It's often a good thing to separate different responsibilities into different logical layers in the codebase (packages/modules).
+If we do that it will affects the design of the system in a positive direction so that modularity and cohesion is increased.
+There is a common misconception that architectural layers are the same as tiers of deployment. This is well described in this [http://gojko.net/2010/06/11/udi-dahan-the-biggest-mistakes-teams-make-when-applying-ddd blog post] by Udi Dahan and the same principles is also applicable to CDD.
 Assume that you own and have control over all source code in your layered system.
 If the layers are physically separated (deployed to different physical locations) and a layer (for example the ''GUI'') need access to another layer (for example the ''Domain'')
 then the ''domain code'' (in this example) should also be deployed to the ''GUI'' tier.
@@ -58,10 +62,10 @@ It's very similar to calling a service with the difference that instead of sendi
 we ''encapsulate'' the state so that we can work in a more object oriented way. For example ''person.save()'' instead of ''service.save(person)''.
 The latter breaks encapsulation (if not using techniques like reflection) which may lead to a situation where business rules are scattered around the system instead of gathered into one place.
 
-The rule of thumb is that the code should be maintained in ''one place'' in the codebase but is allowed to be deployed and used from ''many places''.
-This will help you keeping the code both clean and [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY]!
+The rule of thumb is that different parts of the codebase should be maintained in ''one place'' but is allowed to be deployed and used from ''several places''.
+This helps to keep the code clean and [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY].
 
 
-[[Behaviour|< Back]]
+[[Identity|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Factories|Next >]]
+[[Behaviour|Next >]]
