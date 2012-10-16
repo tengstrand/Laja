@@ -387,9 +387,7 @@ public class {stateImplClass} implements {stateClass} {
 }
 #end
 
-#set (filename = "{outputDir}/{stateImplClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #importBegin(false)
   #importState()
@@ -398,3 +396,6 @@ public class {stateImplClass} implements {stateClass} {
   #importEnd()
   #class()
 #end
+
+#set (filename = "{outputDir}/{stateImplClass}.java")
+#generateFile(filename, fileContent())

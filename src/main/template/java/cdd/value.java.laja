@@ -39,10 +39,11 @@ public class {valueClass} {
 }
 #end
 
-#set (filename = "{outputDir}/{valueClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #importCertificate()
   #class()
 #end
+
+#set (filename = "{outputDir}/{valueClass}.java")
+#generateFile(filename, fileContent())

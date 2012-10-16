@@ -45,9 +45,7 @@ public class {stateProjectionClass} {
 }
 #end
 
-#set (filename = "{outputDir}/{stateProjectionClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #importBegin(false)
   #importState()
@@ -55,3 +53,6 @@ public class {stateProjectionClass} {
   #importEnd()
   #class()
 #end
+
+#set (filename = "{outputDir}/{stateProjectionClass}.java")
+#generateFile(filename, fileContent())

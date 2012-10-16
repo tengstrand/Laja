@@ -1,8 +1,6 @@
 #set (extends = interfaceImports("State"))
 
-#set (filename = "{outputDir}/{stateClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #importBegin(false)
   #importExpandedType("State")
@@ -35,3 +33,6 @@ public interface {stateClass}{extends} {
   #end
 }
 #end
+
+#set (filename = "{outputDir}/{stateClass}.java")
+#generateFile(filename, fileContent())

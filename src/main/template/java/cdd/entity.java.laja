@@ -38,13 +38,14 @@ public class {entityClass} {
 }
 #end
 
-#if (stateTemplate.isEntity && isFactory(classname))
-  #set (filename = "{outputDir}/{entityClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
+#macro fileContent()
     #package()
     #importCertificate()
 
     #class()
-  #end
+#end
+
+#if (stateTemplate.isEntity && isFactory(classname))
+  #set (filename = "{outputDir}/{entityClass}.java")
+  #generateFile(filename, fileContent())
 #end

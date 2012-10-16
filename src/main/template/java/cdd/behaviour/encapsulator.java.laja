@@ -39,10 +39,7 @@ public class {encapsulatorClass} {
 }
 #end
 
-#if (behaviour.isFactory)
-  #set (filename = "{outputDir}/{encapsulatorClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
+#macro fileContent()
 package {behaviour.packagename};
 
     #importsBegin()
@@ -50,5 +47,9 @@ package {behaviour.packagename};
     #importsListCreator()
     #importsEnd()
     #class()
-  #end
+#end
+
+#if (behaviour.isFactory)
+  #set (filename = "{outputDir}/{encapsulatorClass}.java")
+  #generateFile(filename, fileContent())
 #end

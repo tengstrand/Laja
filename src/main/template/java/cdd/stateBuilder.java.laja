@@ -29,9 +29,7 @@ public interface {builderClass}{extends} {
 }
 #end
 
-#set (filename = "{outputDir}/{builderClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #importBegin(false)
   #importExpandedType(prefix)
@@ -43,3 +41,6 @@ public interface {builderClass}{extends} {
   #importEnd()
   #interface()
 #end
+
+#set (filename = "{outputDir}/{builderClass}.java")
+#generateFile(filename, fileContent())

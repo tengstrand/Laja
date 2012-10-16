@@ -52,10 +52,7 @@ import {import.fullclassname}List;
   #end
 #end
 
-#if (behaviour.isFactory && generateList())
-  #set (filename = "{outputDir}/{listCreatorClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
+#macro fileContent()
 package {behaviour.packagename};
 
 import java.util.*;
@@ -63,5 +60,9 @@ import java.util.*;
     #importsList()
     #importsEnd()
     #class()
-  #end
+#end
+
+#if (behaviour.isFactory && generateList())
+  #set (filename = "{outputDir}/{listCreatorClass}.java")
+  #generateFile(filename, fileContent())
 #end

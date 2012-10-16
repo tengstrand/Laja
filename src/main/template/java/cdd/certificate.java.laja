@@ -31,11 +31,12 @@ public class {certificateClass} {
   #createDirectoryPath(certificatePath)
 #end
 
-#set (filename = "{certificatePath}/{certificateClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
 package {certificatePackage};
 
   #import()
   #class()
 #end
+
+#set (filename = "{certificatePath}/{certificateClass}.java")
+#generateFile(filename, fileContent())

@@ -90,10 +90,7 @@ import {behaviourRef.packagename}.{attribute.getEncapsulator};
   #end
 #end
 
-#if (behaviour.isFactory)
-  #set (filename = "{outputDir}/{creatorClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
+#macro fileContent()
 package {behaviour.packagename};
 
     #importsBegin()
@@ -102,5 +99,9 @@ package {behaviour.packagename};
     #importsListCreator()
     #importsEnd()
     #class()
-  #end
+#end
+
+#if (behaviour.isFactory)
+  #set (filename = "{outputDir}/{creatorClass}.java")
+  #generateFile(filename, fileContent())
 #end

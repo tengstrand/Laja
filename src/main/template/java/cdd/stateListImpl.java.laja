@@ -29,12 +29,13 @@ public class {stateListImplClass} extends ArrayList<{stateClass}> implements {st
 }
 #end
 
-#set (filename = "{outputDir}/{stateListImplClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
 import java.util.*;
   #importCertificate()
 
   #class()
 #end
+
+#set (filename = "{outputDir}/{stateListImplClass}.java")
+#generateFile(filename, fileContent())

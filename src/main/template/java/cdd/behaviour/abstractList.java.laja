@@ -7,17 +7,7 @@
         throw new UnsupportedOperationException("The state can only be mutated via an entity based list ({entryClass} is value based and {stateClass} is entity based). Try switch the list to an entity based list before performing the '{operation}' operation");
 #end
 
-#foreach (method in behaviour.asMethods where method.generateList)
-  #prepareList(outputDir, outDir)
-
-  #if (!processedAbstractLists.contains(abstractListClass))
-    #processedAbstractLists.add(abstractListClass)
-    #if (!directoryExists(listOutputDir))
-      #createDirectoryPath(listOutputDir)
-    #end
-    #set (filename = "{listOutputDir}/{abstractListClass}.java")
-    #generateFile(filename)
-    #write "{filename}"
+#macro fileContent()
 package {packagename};
 
 import {template.packagename}.*;
@@ -303,6 +293,17 @@ public abstract class {abstractListClass} implements List<{entryClass}> {
         return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
     }
 }
+#end
+
+#foreach (method in behaviour.asMethods where method.generateList)
+  #prepareList(outputDir, outDir)
+
+  #if (!processedAbstractLists.contains(abstractListClass))
+    #processedAbstractLists.add(abstractListClass)
+    #if (!directoryExists(listOutputDir))
+      #createDirectoryPath(listOutputDir)
     #end
+    #set (filename = "{listOutputDir}/{abstractListClass}.java")
+    #generateFile(filename, fileContent())
   #end
 #end

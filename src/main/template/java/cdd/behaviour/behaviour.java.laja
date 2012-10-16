@@ -21,12 +21,13 @@ public class {behaviourClass} extends {factoryClass} {
 }
 #end
 
+#macro fileContent()
+  #class()
+#end
+
 #if (!behaviour.exists)
   #set (filename = "{sourceDir}/{behaviourClass}.java")
   #if (!fileExists(filename))
-    #generateFile(filename)
-    #write "{filename}"
-      #class()
-    #end
+    #generateFile(filename, fileContent())
   #end
 #end

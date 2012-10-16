@@ -10,11 +10,12 @@ public interface {elementClass} {
 }
 #end
 
-#if (isFactory(classname))
-  #set (filename = "{outputDir}/{elementClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
+#macro fileContent()
     #package()
     #class()
-  #end
+#end
+
+#if (isFactory(classname))
+  #set (filename = "{outputDir}/{elementClass}.java")
+  #generateFile(filename, fileContent())
 #end

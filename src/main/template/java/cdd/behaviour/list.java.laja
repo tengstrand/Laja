@@ -1,17 +1,5 @@
 
-#foreach (method in behaviour.asMethods where method.generateList)
-  #prepareList(sourceDir, srcDir)
-  #setArgumentsAndParameters(method, true)
-
-  #set (filename = "{listOutputDir}/{listClass}.java")
-  #if (!processedLists.contains(listClass))
-    #processedLists.add(listClass)
-    #if (!fileExists(filename))
-      #if (!directoryExists(listOutputDir))
-        #createDirectoryPath(listOutputDir)
-      #end
-      #generateFile(filename)
-      #write "{filename}"
+#macro fileContent()
 package {packagename};
 
 import java.util.List;
@@ -37,7 +25,20 @@ public class {listClass} extends {abstractListClass} {
     }
         #end
 }
+#end
+
+#foreach (method in behaviour.asMethods where method.generateList)
+  #prepareList(sourceDir, srcDir)
+  #setArgumentsAndParameters(method, true)
+
+  #set (filename = "{listOutputDir}/{listClass}.java")
+  #if (!processedLists.contains(listClass))
+    #processedLists.add(listClass)
+    #if (!fileExists(filename))
+      #if (!directoryExists(listOutputDir))
+        #createDirectoryPath(listOutputDir)
       #end
+      #generateFile(filename, fileContent())
     #end
   #end
 #end

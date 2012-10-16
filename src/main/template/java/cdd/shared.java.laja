@@ -14,10 +14,26 @@
 #set (elementClass = "{classname}Element")
 #set (stateBehaviourFactoryClass = "{stateClass}BehaviourFactory")
 
-#macro generateFile(filename)
-  #if (!fileExists(filename))
-    #newFiles.add(filename)
+#macro oldFileContent(filename)
+  #import "{filename}" as text
+#end
+
+#macro generateFile(filename, content)
+  #if (fileExists(filename))
+    #set (oldContent = oldFileContent(filename))
+    #set (status = "SKIP")
+    #if (oldContent != content)
+      #set (status = "CHANGED")
+    #end
+  #else
+    #set (status = "NEW")
   #end
+  #if (status != "SKIP")
+    #write "{filename}"
+{content}##
+    #end
+  #end
+  #processedFiles.add(filename, status)
 #end
 
 #function setter(attribute)

@@ -5,9 +5,10 @@ public interface {stateBehaviourFactoryClass} {
 }
 #end
 
-#set (filename = "{outputDir}/{stateBehaviourFactoryClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #class()
 #end
+
+#set (filename = "{outputDir}/{stateBehaviourFactoryClass}.java")
+#generateFile(filename, fileContent())

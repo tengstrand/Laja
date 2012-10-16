@@ -110,12 +110,7 @@ public class {factoryClass} extends {parentClass} {
 }
 #end
 
-#macro createBasicFactory(parentClass)
-  #set (factoryClass = behaviour.factoryClass)
-
-  #set (filename = "{outputDir}/{factoryClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
+#macro basicFactoryContent(parentClass)
 package {behaviour.packagename};
 
 import {template.packagename}.{stateClass};
@@ -130,18 +125,24 @@ public class {factoryClass} extends {parentClass} {
         super(state, stateBuilder);
     }
 }
-  #end
+#end
+
+#macro createBasicFactory(parentClass)
+  #set (factoryClass = behaviour.factoryClass)
+
+  #set (filename = "{outputDir}/{factoryClass}.java")
+  #generateFile(filename, basicFactoryContent(parentClass))
+#end
+
+#macro factoryContent(factoryClass, parentClass)
+package {behaviour.packagename};
+    #imports()
+    #class(factoryClass, parentClass)
 #end
 
 #macro createFactory(factoryClass, parentClass)
   #set (filename = "{outputDir}/{factoryClass}.java")
-  #generateFile(filename)
-  #write "{filename}"
-package {behaviour.packagename};
-
-    #imports()
-    #class(factoryClass, parentClass)
-  #end
+  #generateFile(filename, factoryContent(factoryClass, parentClass))
 #end
 
 #if (behaviour.isFactory)

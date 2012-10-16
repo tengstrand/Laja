@@ -99,9 +99,7 @@ public class {builderImplClass} implements {builderClass} {
 }
 #end
 
-#set (filename = "{outputDir}/{builderImplClass}.java")
-#generateFile(filename)
-#write "{filename}"
+#macro fileContent()
   #package()
   #importBegin(true)
   #importExpandedType("StateBehaviourFactory,State")
@@ -114,3 +112,6 @@ public class {builderImplClass} implements {builderClass} {
   #importEnd()
   #class()
 #end
+
+#set (filename = "{outputDir}/{builderImplClass}.java")
+#generateFile(filename, fileContent())
