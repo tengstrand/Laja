@@ -111,7 +111,7 @@
 
       #if (template != null)
         #if (!template.errors.hasErrors)
-          #outputDirectoryReader.readFiles(outDir, processedFiles)
+          #outputDirectoryReader.readFiles(stateOutDir, processedFiles)
 
           #set (template.rootSrcDir = srcDir)
           #set (template.rootOutDir = outDir)
@@ -137,7 +137,7 @@
     #end
 
     #foreach (behaviourFile in behaviourFilesInDir)
-      #outputDirectoryReader.readFiles(outDir, processedFiles)
+      #outputDirectoryReader.readFiles(behaviourOutDir, processedFiles)
 
       #set (behaviour = cddParser.parseBehaviour(behaviourFile))
       #if (behaviour != null)
@@ -202,7 +202,7 @@
   #end
   #cleanupInputParameters()
 
-  #if (autoRemove)
+  #if (autoRemove != null && autoRemove)z
     #processedFiles.removeFilesMarkedForDeletion()
   #end
   #processedFiles.printProcessedMessage(verbose, autoRemove)
