@@ -15,7 +15,7 @@ public class OutputDirectoryReader {
         public Map<String,String> processedFiles = new HashMap<String,String>();
 
         private static String NEW = "new";
-        private static String REMOVE = "REMOVE";
+        private static String REMOVE = "remove";
         private static String UNCHANGED = "unchanged";
         private static String CHANGED = "changed";
 
@@ -27,9 +27,16 @@ public class OutputDirectoryReader {
         }
 
         public void printProcessedMessage(Boolean verbose) {
-            String message = "  Processed " + processedFiles.size() + " classes: " +
-                                count(NEW) + " new, " + count(CHANGED) + " changed, " +
-                                count(UNCHANGED) + " unchanged";
+            if (verbose == null) verbose = false;
+
+            String message = "  Processed " + processedFiles.size() + " classes";
+
+            if (verbose) {
+                String directories = numberOfDirs == 1 ? "directory" : "directories";
+                message += " (searched in " + numberOfDirs + " " + directories + ")";
+            }
+            message += ": " + count(NEW) + " new, " + count(CHANGED) + " changed, " +
+                    count(UNCHANGED) + " unchanged";
 
             if (count(REMOVE) > 0) {
                 message += ", " + count(REMOVE) + " to be manually removed";
@@ -41,8 +48,8 @@ public class OutputDirectoryReader {
 
             for (String filePath : processedFiles.keySet()) {
                 String status = processedFiles.get(filePath);
-                if ((verbose != null && verbose) || (!status.equals(UNCHANGED) && !status.equals(CHANGED))) {
-                    fileStatuses.add(StringUtils.rightPad("    (" + status.toLowerCase() + ")", 16) + filePath);
+                if (verbose || (!status.equals(UNCHANGED) && !status.equals(CHANGED))) {
+                    fileStatuses.add(StringUtils.rightPad("    (" + status + ")", 16) + filePath);
                 }
             }
             Collections.sort(fileStatuses);
