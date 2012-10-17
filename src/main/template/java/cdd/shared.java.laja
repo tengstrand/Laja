@@ -21,14 +21,14 @@
 #macro generateFile(filename, content)
   #if (fileExists(filename))
     #set (oldContent = oldFileContent(filename))
-    #set (status = "SKIP")
+    #set (status = "unchanged")
     #if (oldContent != content)
-      #set (status = "CHANGED")
+      #set (status = "changed")
     #end
   #else
-    #set (status = "NEW")
+    #set (status = "new")
   #end
-  #if (status != "SKIP")
+  #if (status != "unchanged")
     #write "{filename}"
 {content}##
     #end

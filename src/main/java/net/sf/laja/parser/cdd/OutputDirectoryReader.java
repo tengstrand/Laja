@@ -3,18 +3,21 @@ package net.sf.laja.parser.cdd;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OutputDirectoryReader {
     public static class Result {
         public int numberOfDirs;
-        public Map<String,String> processedFiles = new LinkedHashMap<String,String>();
+        public Map<String,String> processedFiles = new HashMap<String,String>();
 
-        private static String NEW = "NEW";
+        private static String NEW = "new";
         private static String REMOVE = "REMOVE";
-        private static String SKIP = "SKIP";
-        private static String CHANGE = "CHANGED";
+        private static String UNCHANGED = "unchanged";
+        private static String CHANGED = "changed";
 
         public void add(String filePath, String status) {
             processedFiles.put(filePath.replace("\\", "/"), status);
@@ -23,29 +26,28 @@ public class OutputDirectoryReader {
             processedFiles.put(filePath.replace("\\", "/"), REMOVE);
         }
 
-        public void printProcessedMessage() {
-            String dirs = numberOfDirs == 1 ? "directory" : "directories";
-            String message = "  Processed " + processedFiles.size() + " classes in " + numberOfDirs + " " + dirs + ": " +
-                                count(NEW) + " new, " + count(CHANGE) + " changed, " +
-                                count(SKIP) + " skipped";
+        public void printProcessedMessage(Boolean verbose) {
+            String message = "  Processed " + processedFiles.size() + " classes: " +
+                                count(NEW) + " new, " + count(CHANGED) + " changed, " +
+                                count(UNCHANGED) + " unchanged";
 
             if (count(REMOVE) > 0) {
                 message += ", " + count(REMOVE) + " to be manually removed";
             }
-            if (countNotSkipped() == 0) {
-                System.out.println(message + ". Nothing to generate.");
-            } else {
-                System.out.println(message + ":");
-            }
+            message += countNotSkipped() > 0 ? ":" : ". Nothing to generate.";
+            System.out.println(message);
+
+            List<String> fileStatuses = new ArrayList<String>();
 
             for (String filePath : processedFiles.keySet()) {
                 String status = processedFiles.get(filePath);
-                if (!status.equals(REMOVE)) {
-                    status = status.toLowerCase();
+                if ((verbose != null && verbose) || (!status.equals(UNCHANGED) && !status.equals(CHANGED))) {
+                    fileStatuses.add(StringUtils.rightPad("    (" + status.toLowerCase() + ")", 16) + filePath);
                 }
-                if (!status.equals("skip") && !status.equals("changed")) {
-                    System.out.println(StringUtils.rightPad("    (" + status.toLowerCase() + ")", 14) + filePath);
-                }
+            }
+            Collections.sort(fileStatuses);
+            for (String fileStatus : fileStatuses) {
+                System.out.println(fileStatus);
             }
         }
 
@@ -62,7 +64,7 @@ public class OutputDirectoryReader {
         private int countNotSkipped() {
             int count = 0;
             for (String filePath : processedFiles.keySet()) {
-                if (!processedFiles.get(filePath).equals(SKIP)) {
+                if (!processedFiles.get(filePath).equals(UNCHANGED)) {
                     count++;
                 }
             }

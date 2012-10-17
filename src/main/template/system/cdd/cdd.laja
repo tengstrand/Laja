@@ -201,7 +201,7 @@
     #errors.printMessages()
   #end
   #cleanupInputParameters()
-  #processedFiles.printProcessedMessage()
+  #processedFiles.printProcessedMessage(verbose)
 #end
 
 #macro generateState()
