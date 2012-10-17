@@ -12,7 +12,7 @@ import java.util.Map;
 public class OutputDirectoryReader {
     public static class Result {
         public int numberOfDirs;
-        public Map<String,String> processedFiles = new HashMap<String,String>();
+        public Map<String,String> files = new HashMap<String,String>();
 
         private static String NEW = "new";
         private static String REMOVE = "remove";
@@ -20,16 +20,17 @@ public class OutputDirectoryReader {
         private static String CHANGED = "changed";
 
         public void add(String filePath, String status) {
-            processedFiles.put(filePath.replace("\\", "/"), status);
+            files.put(filePath.replace("\\", "/"), status);
         }
         public void addRemove(String filePath) {
-            processedFiles.put(filePath.replace("\\", "/"), REMOVE);
+            files.put(filePath.replace("\\", "/"), REMOVE);
         }
 
-        public void printProcessedMessage(Boolean verbose) {
+        public void printProcessedMessage(Boolean verbose, Boolean autoRemove) {
             if (verbose == null) verbose = false;
+            if (autoRemove == null) autoRemove = false;
 
-            String message = "  Processed " + processedFiles.size() + " classes";
+            String message = "  Processed " + files.size() + " classes";
 
             if (verbose) {
                 String directories = numberOfDirs == 1 ? "directory" : "directories";
@@ -39,16 +40,23 @@ public class OutputDirectoryReader {
                     count(UNCHANGED) + " unchanged";
 
             if (count(REMOVE) > 0) {
-                message += ", " + count(REMOVE) + " to be manually removed";
+                if (autoRemove) {
+                    message += ", " + count(REMOVE) + " was removed";
+                } else {
+                    message += ", " + count(REMOVE) + " to be manually removed";
+                }
             }
-            message += countNotSkipped() > 0 ? ":" : ". Nothing to generate.";
+            message += countNotUnchanged(autoRemove) > 0 ? ":" : ". Nothing new to generate.";
             System.out.println(message);
 
             List<String> fileStatuses = new ArrayList<String>();
 
-            for (String filePath : processedFiles.keySet()) {
-                String status = processedFiles.get(filePath);
+            for (String filePath : files.keySet()) {
+                String status = files.get(filePath);
                 if (verbose || (!status.equals(UNCHANGED) && !status.equals(CHANGED))) {
+                    if (autoRemove && status.equals(REMOVE)) {
+                        status = "removed";
+                    }
                     fileStatuses.add(StringUtils.rightPad("    (" + status + ")", 16) + filePath);
                 }
             }
@@ -58,20 +66,28 @@ public class OutputDirectoryReader {
             }
         }
 
+        public void removeFilesMarkedForDeletion() {
+            for (String file : files.keySet()) {
+                if (files.get(file).equals(REMOVE)) {
+                    new File(file).delete();
+                }
+            }
+        }
+
         private int count(String status) {
             int count = 0;
-            for (String filePath : processedFiles.keySet()) {
-                if (processedFiles.get(filePath).equals(status)) {
+            for (String filePath : files.keySet()) {
+                if (files.get(filePath).equals(status)) {
                     count++;
                 }
             }
             return count;
         }
 
-        private int countNotSkipped() {
+        private int countNotUnchanged(boolean autoRemove) {
             int count = 0;
-            for (String filePath : processedFiles.keySet()) {
-                if (!processedFiles.get(filePath).equals(UNCHANGED)) {
+            for (String filePath : files.keySet()) {
+                if (!files.get(filePath).equals(UNCHANGED)) {
                     count++;
                 }
             }
@@ -82,7 +98,7 @@ public class OutputDirectoryReader {
         public String toString() {
             return "Result{" +
                     "numberOfDirs=" + numberOfDirs +
-                    ", number of processedFiles=" + processedFiles.size() +
+                    ", number of files=" + files.size() +
                     '}';
         }
     }

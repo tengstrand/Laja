@@ -201,7 +201,11 @@
     #errors.printMessages()
   #end
   #cleanupInputParameters()
-  #processedFiles.printProcessedMessage(verbose)
+
+  #if (autoRemove)
+    #processedFiles.removeFilesMarkedForDeletion()
+  #end
+  #processedFiles.printProcessedMessage(verbose, autoRemove)
 #end
 
 #macro generateState()
