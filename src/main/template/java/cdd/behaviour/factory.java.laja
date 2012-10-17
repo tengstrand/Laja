@@ -136,6 +136,7 @@ public class {factoryClass} extends {parentClass} {
 
 #macro factoryContent(factoryClass, parentClass)
 package {behaviour.packagename};
+
     #imports()
     #class(factoryClass, parentClass)
 #end
