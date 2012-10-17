@@ -24,6 +24,7 @@
   		<zipfileset dir="src/test/laja" prefix="template/java/examples/code-generator-intregration-tests" excludes=".svn"/>
   		<zipfileset dir="src/main/template/java/examples" prefix="template/java/examples" excludes=".svn"/>
   		<zipfileset dir="target" includes="laja.jar" prefix="system-lib"/>
+  		<zipfileset dir="${maven.repo.local}/commons-io/commons-io/2.4" includes="commons-io-2.4.jar" prefix="system-lib"/>
   		<zipfileset dir="${maven.repo.local}/commons-lang/commons-lang/2.4" includes="commons-lang-2.4.jar" prefix="system-lib"/>
   		<zipfileset dir="${maven.repo.local}/groovy/groovy-all-1.0-jsr/05" includes="groovy-all-1.0-jsr-05.jar" prefix="system-lib"/>
 	</zip>

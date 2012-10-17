@@ -1,5 +1,6 @@
 package net.sf.laja.parser.cdd;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -20,10 +21,12 @@ public class OutputDirectoryReader {
         private static String CHANGED = "changed";
 
         public void add(String filePath, String status) {
+            filePath = FilenameUtils.normalize(filePath);
             files.put(filePath.replace("\\", "/"), status);
         }
+
         public void addRemove(String filePath) {
-            files.put(filePath.replace("\\", "/"), REMOVE);
+            add(filePath, REMOVE);
         }
 
         public void printProcessedMessage(Boolean verbose, Boolean autoRemove) {
@@ -34,7 +37,7 @@ public class OutputDirectoryReader {
 
             if (verbose) {
                 String directories = numberOfDirs == 1 ? "directory" : "directories";
-                message += " (searched in " + numberOfDirs + " " + directories + ")";
+                message += " in " + numberOfDirs + " " + directories;
             }
             message += ": " + count(NEW) + " new, " + count(CHANGED) + " changed, " +
                     count(UNCHANGED) + " unchanged";
