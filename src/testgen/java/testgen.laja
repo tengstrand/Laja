@@ -1,5 +1,6 @@
 
 #generateCdd([{
+  autoRemove: false
   srcDir: "{.}/main"
   outDir: "{..}/java-gen/main"
   statePackage: "net.sf.laja.cdd.state"

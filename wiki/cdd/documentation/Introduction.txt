@@ -19,7 +19,7 @@ If we take a look at the [[Getting_started|Getting started]] example, it has the
 
 The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
 
-If you are using a version control system you should put both ''java'' and ''java-gen'' under version control which will facilitate [http://en.wikipedia.org/wiki/Code_refactoring refactoring].
+If you are using a version control system you should only put ''java'' under version control.
 
 
 Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:

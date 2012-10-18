@@ -2,13 +2,13 @@ Let's get started with CDD:
 * Make sure Laja is [http://laja.tengstrand.nu/index.php/Install installed].
 * Create a project directory e.g. ''C:/Projects/MyProject''
 * Create the following directory structure in directory ''MyProject'' (package = ''com.myproject'' in this example).
-<pre>
+<source lang="dos">
 src/java/main/com/myproject/state
 src/java/main/com/myproject/behaviour
-</pre>
+</source>
 
 Create the template file ''src/java/myproject.laja'' with the following content:
-<source>
+<source lang="dos">
 #generateCdd([{
   srcDir: "{.}/main"
   outDir: "{..}/java-gen/main"
@@ -37,7 +37,7 @@ Which gives the output:
 <source lang="dos">
 Reading file "myproject.laja"
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/Certificate.java" - OK
-  Generate state classes: [Person]
+  State: Person
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateImpl.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListImpl.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilder.java" - OK
@@ -49,32 +49,15 @@ Reading file "myproject.laja"
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonValue.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonElement.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBehaviourFactory.java" - OK
-  Generate behaviour classes: [Person]
-  Writing to file "C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java" - OK
+  Behaviour: Person
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
-Generated 18 new files:
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/Certificate.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateImpl.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListImpl.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilder.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilderImpl.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateProjection.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListBuilder.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonState.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateList.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonValue.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonElement.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBehaviourFactory.java
-  C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java
-  C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonAbstractList.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonListCreator.java" - OK
+  Processed 19 classes: 19 new, 0 changed, 0 unchanged.
 </source>
 
 If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.

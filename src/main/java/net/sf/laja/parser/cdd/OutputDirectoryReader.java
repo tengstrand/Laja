@@ -29,9 +29,8 @@ public class OutputDirectoryReader {
             add(filePath, REMOVE);
         }
 
-        public void printProcessedMessage(Boolean verbose, Boolean autoRemove) {
+        public void printProcessedMessage(Boolean verbose, boolean autoRemove) {
             if (verbose == null) verbose = false;
-            if (autoRemove == null) autoRemove = false;
 
             String message = "  Processed " + files.size() + " classes";
 
@@ -39,24 +38,32 @@ public class OutputDirectoryReader {
                 String directories = numberOfDirs == 1 ? "directory" : "directories";
                 message += " in " + numberOfDirs + " " + directories;
             }
-            message += ": " + count(NEW) + " new, " + count(CHANGED) + " changed, " +
-                    count(UNCHANGED) + " unchanged";
+            String sep = ": ";
 
-            if (count(REMOVE) > 0) {
+            int cntNew = count(NEW);
+            int cntChanged = count(CHANGED);
+            int cntUnchanged = count(UNCHANGED);
+            int cntRemoved = count(REMOVE);
+
+            if (cntNew > 0) { message += sep + cntNew + " new"; sep = ", "; }
+            if (cntChanged > 0) { message += sep + cntChanged + " changed"; sep = ", "; }
+            if (cntUnchanged > 0 && (cntNew > 0 || cntChanged > 0 || cntRemoved > 0)) { message += sep + cntUnchanged + " unchanged"; sep = ", "; }
+
+            if (cntRemoved > 0) {
                 if (autoRemove) {
-                    message += ", " + count(REMOVE) + " was removed";
+                    message += sep + count(REMOVE) + " removed";
                 } else {
-                    message += ", " + count(REMOVE) + " to be manually removed";
+                    message += sep + count(REMOVE) + " to be manually removed";
                 }
             }
-            message += countNotUnchanged(autoRemove) > 0 ? ":" : ". Nothing new to generate.";
+            message += verbose ? ":" : existsOnlyUnchanged() ? ", no changes." : ".";
             System.out.println(message);
 
             List<String> fileStatuses = new ArrayList<String>();
 
             for (String filePath : files.keySet()) {
                 String status = files.get(filePath);
-                if (verbose || (!status.equals(UNCHANGED) && !status.equals(CHANGED))) {
+                if (verbose || (!autoRemove && status.equals(REMOVE))) {
                     if (autoRemove && status.equals(REMOVE)) {
                         status = "removed";
                     }
@@ -87,15 +94,17 @@ public class OutputDirectoryReader {
             return count;
         }
 
-        private int countNotUnchanged(boolean autoRemove) {
-            int count = 0;
+        private boolean existsOnlyUnchanged() {
+            int unchangedCount = 0;
+
             for (String filePath : files.keySet()) {
-                if (!files.get(filePath).equals(UNCHANGED)) {
-                    count++;
+                if (files.get(filePath).equals(UNCHANGED)) {
+                    unchangedCount++;
                 }
             }
-            return count;
+            return unchangedCount > 0 && unchangedCount == files.keySet().size();
         }
+
 
         @Override
         public String toString() {

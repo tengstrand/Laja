@@ -189,9 +189,9 @@
 
     #expander.expand(errors)
     #if (!errors.hasErrors)
-      #messageFormatter.printAsSorted("  State classes: ", templates)
+      #messageFormatter.printAsSorted("  State: ", templates)
       #generateState()
-      #messageFormatter.printAsSorted("  Behaviour classes: ", behaviours)
+      #messageFormatter.printAsSorted("  Behaviour: ", behaviours)
       #generateBehaviour()
     #end
 
@@ -203,7 +203,10 @@
   #end
   #cleanupInputParameters()
 
-  #if (autoRemove != null && autoRemove)z
+  #if (autoRemove == null)
+    #set (autoRemove = true)
+  #end
+  #if (autoRemove)
     #processedFiles.removeFilesMarkedForDeletion()
   #end
   #processedFiles.printProcessedMessage(verbose, autoRemove)
