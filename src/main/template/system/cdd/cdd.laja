@@ -9,6 +9,7 @@
     #set (behaviourCreator = new net.sf.laja.parser.cdd.BehaviourCreator())
     #set (statementConverter = new net.sf.laja.parser.cdd.StatementConverter())
     #set (directoryConverter = new net.sf.laja.parser.cdd.DirectoryConverter())
+    #set (messageFormatter = new net.sf.laja.parser.cdd.MessageFormatter())
   #end
 #end
 
@@ -188,9 +189,9 @@
 
     #expander.expand(errors)
     #if (!errors.hasErrors)
-      #println ("  Generate state classes: {templates.keySet()}")
+      #messageFormatter.printAsSorted("  State classes: ", templates)
       #generateState()
-      #println ("  Generate behaviour classes: {behaviours.keySet()}")
+      #messageFormatter.printAsSorted("  Behaviour classes: ", behaviours)
       #generateBehaviour()
     #end
 
