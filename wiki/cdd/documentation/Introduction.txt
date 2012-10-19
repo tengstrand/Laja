@@ -1,6 +1,6 @@
 
 === <span style="color:#FF0000">Under construction!</span> ===
-Will be released later 2012.
+Will be released later in 2012.
 
 = Introduction =
 
@@ -18,8 +18,6 @@ If we take a look at the [[Getting_started|Getting started]] example, it has the
 [[File:project-directory-structure.png]]
 
 The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
-
-If you are using a version control system you should only put ''java'' under version control.
 
 
 Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:
@@ -98,4 +96,4 @@ person.asPersistable().save();
 ...switches context and persists the instance in one statement! This will be described in more detail later.
 
 
-[[Context|Next >]]
+[[Classes and objects|Next >]]

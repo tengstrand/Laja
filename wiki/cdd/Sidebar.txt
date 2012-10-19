@@ -1,12 +1,26 @@
-* documentation
+* introduction
 ** Getting started|Getting started
 ** mainpage|Introduction
-** Context|Context
 ** Classes and objects|Classes and objects
-** State|State
 ** Identity|Identity
+* context
+** Context|Context
 ** Context switching|Context switching
-** Behaviour|Behaviour
+* state
+** State|Introduction
+** Define state|Define state
+** Type converters|Type converters
+** State composition|State composition
+** State expansion|State expansion
+** State projection|State projection
+** Default values|Default values
+** State builder|State builder
+** State validation|State validation
+* behaviour
+** Behaviour|Introduction
+** Factories|Factories
+** Populate state|Populate state
+** Populate substate|Populate substate
 * misc
 ** http://www.gnu.org/copyleft/gpl.html|License
 Sidebar

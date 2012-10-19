@@ -66,6 +66,6 @@ The rule of thumb is that different parts of the codebase should be maintained i
 This helps to keep the code clean and [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY].
 
 
-[[Identity|< Back]]
+[[Behaviour|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Behaviour|Next >]]
+[[Factories|Next >]]

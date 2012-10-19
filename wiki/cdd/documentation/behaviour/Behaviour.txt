@@ -11,10 +11,6 @@ Lets say we create the class ''Person'' only containing methods related to the c
 The good news is that you don't need to do any of these unwanted things and the solution is spelled ''context switching''.
 
 
-* [[Factories]]
-* [[Populate state]]
-* [[Populate substate]]
-
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Factories|Next >]]
+[[Context switching|Next >]]

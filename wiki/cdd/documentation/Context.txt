@@ -1,6 +1,6 @@
-''Context'' is one of the key concepts in CDD alongside ''state'' and ''behaviour''.
-The concept context is often left out in traditional object oriented languages of today except from some less widely practiced like [http://www.cs.cmu.edu/~aldrich/papers/plaid-oopsla11.pdf Plaid].
-CDD tries to fill that gap by making ''context'' a first-class citizens.
+''Context'' is a key concepts in CDD alongside ''state'' and ''behaviour''.
+
+To consider ''context'' as a first-class citizens allow us to reason about software design in a more concise way.
 
 
 Context is divided into two parts where the first part ''context area'' has to do with the task to be performed and its location in the system:
@@ -9,24 +9,39 @@ Context is divided into two parts where the first part ''context area'' has to d
 [[File:CDD-context-area.png|400px]]
 
 
-The context area is actively selected or [[Context switching|switched]] by the developer at ''compile time'' (or "coding time" if implemented in an interpreted language).
+The context area is actively selected or [[Context switching|switched]] by the developer when the code is written (''compile time'').
+
+If we look at the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/account account] example, it has two
+different account contexts, ''source'' and ''destination'':
+<source>
+SourceAccount sourceAccount = Account.balance(1000).asSourceAccount();
+DestinationAccount destinationAccount = Account.balance(100).asDestinationAccount();
+</source>
 
 
-The second part is optional and is something that can vary at ''runtime'' within a selected ''context area'':
+The second type of context is optional and is something that can vary at ''runtime'' within a ''context area'' depending on a ''context variable''
+like ''configuration'' in [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/computer this] example (but hard coded here):
+<source>
+Amiga standardAmiga = AmigaFactory.owner("Joakim").asAmiga(Configuration.STANDARD);
+Amiga fastAmiga = AmigaFactory.owner("Riku").asAmiga(Configuration.FAST);
+</source>
+
+When the configuration is set to ''STANDARD'' we will get a an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500],
+but when the configuration is set to ''FAST'' we will get an [http://en.wikipedia.org/wiki/Amiga_4000 Amiga 4000].
 
 
-[[File:CDD-context-runtime.png|170px]]
-
-
-The selected context is based on a ''context variable''. Examples of such a variable might be:
+The selected context is based on a ''context variable'' such as:
 * Current user role
 * Current time
 * Configurations, e.g. values from file or database
 
 
+[[File:CDD-context-runtime.png|170px]]
+
+
 Different aspects of ''context'' will gradually be covered by the rest of this documentation.
 
 
-[[Main_Page|< Back]]
+[[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Classes and objects|Next >]]
+[[State|Next >]]

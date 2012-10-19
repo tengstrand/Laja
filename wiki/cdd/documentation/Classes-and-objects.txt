@@ -17,10 +17,10 @@ It also makes it easy to switch between contexts:
 
 
 CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
-The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java this] in CDD.
+The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
 
 
-An object is divided into state and behaviour and is looser coupled than "traditional OO". The context is switched by selecting another behaviour:
+An object is divided into state and behaviour and is looser coupled than "traditional OO" so that the behaviour can be changed depending on context:
 
 
 [[File:CDD-object-layering.png|600px]]
@@ -32,6 +32,6 @@ The state is also very modular and can be created in several ways:
 [[File:CDD-state-layering.png|600px]]
 
 
-[[Context|< Back]]
+[[Main_Page|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[State|Next >]]
+[[Context|Next >]]
