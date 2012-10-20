@@ -21,6 +21,7 @@
 ** Factories|Factories
 ** Populate state|Populate state
 ** Populate substate|Populate substate
+** Composition|Composition
 * misc
 ** http://www.gnu.org/copyleft/gpl.html|License
 Sidebar

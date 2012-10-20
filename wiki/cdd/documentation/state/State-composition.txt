@@ -3,7 +3,7 @@ CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as
 [[File:CDD-state-composition.png|180px]]
 
 
-This is best explained by and example:
+This is best explained by an example:
 <source>
 package com.myproject.state;
 

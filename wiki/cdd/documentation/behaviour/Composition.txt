@@ -1,0 +1,107 @@
+Composition is the technique used to construct more complex objects in CDD, also known as ''aggregate'' in [http://en.wikipedia.org/wiki/Domain-driven_design Domain-driven Design]:
+
+
+[[File:CDD-object-composition.png|400px]]
+
+
+The main difference compared to traditional object orientation is that
+each behaviour representation, with all its sub behaviours, can be specialized for a specific context.
+
+
+Let's start by composing ''PersonState'' containing an address with a zipcode:
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String givenName;
+    String surname;
+    AddressState address;
+}
+</source>
+
+<source>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+    ZipcodeState $zipcode;
+}
+</source>
+
+<source>
+package com.myproject.state;
+
+public class ZipcodeStateTemplate {
+    int zipcode;
+}
+</source>
+
+...when generated, CDD will create default behaviour implementations for ''person'', ''address'' and ''zipcode'':
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.AddressState;
+
+public class Address extends AddressFactory {
+    public Address(AddressState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Address asAddress() {
+        return new Address(state);
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.ZipcodeState;
+
+public class Zipcode extends ZipcodeFactory {
+    public Zipcode(ZipcodeState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Zipcode asZipcode() {
+        return new Zipcode(state);
+    }
+}
+</source>
+
+...let's se how the code behaves so far by executing:
+<source>
+Person person = Person.givenName("Ingmar").surname("Bergman").address(
+        Address.streetName("First street").streetNumber(1).zipcode(123)).asPerson();
+
+System.out.println(person);
+</source>
+
+...gives the output:
+<source>
+Person{givenName='Ingmar', surname='Bergman', address={streetName='First street', streetNumber=1, zipcode=123}}
+</source>
+
+We can see that person contains the three attributes ''givenName'', ''surname'' and ''address'' as defined in ''PersonStateTemplate''.
+The address has the attributes ''streetName'', ''streetNumber'' and ''zipcode'' as defined in ''AddressStateTemplate''.
+The zipcode attribute was marked as ''$zipcode'' and therefore [[State expansion|expanded]] into the address state.
