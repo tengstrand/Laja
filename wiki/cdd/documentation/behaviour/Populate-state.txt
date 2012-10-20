@@ -1,4 +1,4 @@
-Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword "hide":
+Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword ''hide'':
 <source>
 package com.myproject.state;
 
@@ -9,13 +9,16 @@ public class PersonStateTemplate {
 }
 </source>
 
-In this case the ''hairColor'' should be populated by the behaviour representations. We start by adding the class ''GreyHairedPerson'' (don't forget to create it in [[Factories#create_factory_in_two_steps|two steps]]):
+In this case the ''hairColor'' should be populated by the behaviour representations.
+
+
+Regenerate and add behaviour classes for grey and red haired persons:
 <source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
-public class GreyHairedPerson extends GreyHairedPersonFactory {
+public class GreyHairedPerson extends PersonFactory {
     public GreyHairedPerson(PersonState state) {
         super(state);
         state.setHairColor("Grey");
@@ -28,13 +31,12 @@ public class GreyHairedPerson extends GreyHairedPersonFactory {
 }
 </source>
 
-...we also add a class for red haired people:
 <source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
-public class RedHairedPerson extends RedHairedPersonFactory {
+public class RedHairedPerson extends PersonFactory {
     public RedHairedPerson(PersonState state) {
         super(state);
         state.setHairColor("Red");
@@ -46,7 +48,21 @@ public class RedHairedPerson extends RedHairedPersonFactory {
     }
 }
 </source>
-...when executing:
+
+...to let ''GreyHairedPerson'' and ''RedHairedPerson'' act as factories we inherit from the corresponding factory classes:
+<source>
+...
+public class GreyHairedPerson extends GreyHairedPersonFactory {
+...
+</source>
+
+<source>
+...
+public class RedHairedPerson extends RedHairedPersonFactory {
+...
+</source>
+
+...regenerate and execute (note that ''hairColor'' is excluded from the chained creator):
 
 <source>
     GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
@@ -56,7 +72,7 @@ public class RedHairedPerson extends RedHairedPersonFactory {
     System.out.println(tage);
 </source>
 
-...we get the output (note that ''hairColor'' was excluded from the ''chained creator''):
+...and we get the output (with the hair colors set):
 <source>
 GreyHairedPerson{hairColor='Grey', givenName='Hans', surname='Alfredson'}
 RedHairedPerson{hairColor='Red', givenName='Tage', surname='Danielsson'}

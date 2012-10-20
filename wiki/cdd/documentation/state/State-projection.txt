@@ -73,7 +73,7 @@ public class StrangePersonStateTemplate {
 }
 </source>
 
-The method has to return an instance of a ''StateProjection'' of the "destination state" (Person). The method must also start with "state" followed by an upper case letter.
+The method has to return an instance of a ''StateProjection'' of the "destination state" (Person). The method must start with "state" followed by an upper case letter.
 When generated, the interface ''StrangePersonState'' will have the method ''getPersonState()'' returning a ''PersonState'', to be used from e.g. ''StrangePerson'':
 <source>
 package com.myproject.behaviour;

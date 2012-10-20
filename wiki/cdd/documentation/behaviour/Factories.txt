@@ -4,7 +4,7 @@ In our examples we have used ''Person'' as factory when creating instances of ''
     Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
 </source>
 
-To make ''Person'' a factory we extend from ''PersonFactory'':
+To make ''Person'' a factory we let it inherit from ''PersonFactory'':
 <source>
 package com.myproject.behaviour;
 
@@ -28,7 +28,7 @@ public class Person extends PersonFactory {
 
 Only the method that is marked as ''factory'' can be directly created by the factory class. If an "as-method" is not marked as factory then it has to be called via the factory method:
 <source>
-    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistable();
+PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPerson().asPersistable();
 </source>
 
 If we also mark ''asPersistable'' as factory:
@@ -56,17 +56,18 @@ public class Person extends PersonFactory {
 
 ...we can create instances directly:
 <source>
-    PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistable();
+PersistablePerson persistablePerson = Person.givenName("Ingmar").surname("Bergman").asPersistable();
 </source>
 
 
 In some situations we want the object themselves to act as factory:
 <source>
-    Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
-    PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistable();
+Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
+PersistablePerson persistablePerson = PersistablePerson.givenName("Ingmar").surname("Bergman").asPersistable();
 </source>
 
-...by letting the behaviour class inherit from its factory and include a factory method:
+...this is accomplished by letting the behaviour class inherit from the corresponding factory class and include a factory method.
+Note that ''PersistablePerson'' need to be generated in two steps by first inheriting from ''PersonFactory'':
 
 <source>
 package com.myproject.behaviour;
@@ -93,7 +94,7 @@ package com.myproject.behaviour;
 import com.myproject.state.PersonState;
 import com.myproject.state.PersonValue;
 
-public class PersistablePerson extends PersistablePersonFactory {
+public class PersistablePerson extends PersonFactory {
     public PersistablePerson(PersonState state) {
         super(state);
     }
@@ -107,17 +108,25 @@ public class PersistablePerson extends PersistablePersonFactory {
 }
 </source>
 
+...regenerate to create the class ''PersistablePersonFactory'' and inherit from it:
+
+<source>
+...
+public class PersistablePerson extends PersistablePersonFactory {
+...
+</source>
+
 
 It's not mandatory to pick a behaviour class and use it as a factory, like we did with ''Person'' and ''PersistablePerson'', we could just as easily have used ''PersonFactory'' and ''PersistablePersonFactory''.
 So why should we bother doing the extra work it means to inherit from the factory?
-The reason is that we want to express the concept "person" and improve the readability:
- <source>
-    Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
- </source>
-...even though ''Person'' is just one behaviour representation among others it's a natural representative of the concept "person" and a good candidate for the factory role.
+The reason is that we want to express the concept "person" and improve the readability of the code:
+<source>
+Person person = Person.givenName("Ingmar").surname("Bergman").asPerson();
+</source>
+...even though ''Person'' is just a behaviour representation among others it's a natural representative of the concept "person" and a good candidate for the factory role.
 
 
-If you don't want a behaviour representation act as a factory you have to inherit from either (e.g.) ''PersonValue'' or ''PersonEntity'':
+If you don't want a behaviour representation act as factory you have to inherit from either ''PersonValue'' or ''PersonEntity'' (if it is a "person"!):
 <source>
 package com.myproject.behaviour;
 
@@ -133,59 +142,15 @@ public class PersistablePerson extends PersonEntity {
 }
 </source>
 
-
-If the state template definition (''PersonStateTemplate'' in this case) includes a ''natural key'' (keyword "(key)") both the ''value'' and the ''entity'' class is generated,
-otherwise only the ''value'' class is generated. If you remove the ''natural key'' from e.g. ''PersonStateTemplate'' you need to manually remove ''PersonEntity'' and all related ''PersonEntityFactory'' classes.
-This will be improved in a future version!
+If the state template definition (''PersonStateTemplate'' in this case) includes a ''natural key'', both the ''value'' and the ''entity'' class is generated,
+otherwise only the ''value'' class is generated.
 
 
-When a state template, e.g. ''PersonStateTemplate'', is created and regenerated for the first time, a couple of other classes is also generated.
-The class ''Person'' is generated and put under the (non-generated) ''java'' directory structure and ''PersonFactory'' is generated and put under the ''java-gen'' structure. If we don't need the behaviour representation ''Person'' we can just delete or rename it.
-
-<span id="create_factory_in_two_steps"></span>
-=== Put the factory in the specialized representation ===
-
-If we add a new representation, we can let this act as factory instead of ''Person''. If we do that, it need to be created in two steps by first inherit from ''PersonValue'':
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-import com.myproject.state.PersonValue;
-
-public class XmlPerson extends PersonValue {
-    public XmlPerson(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public XmlPerson asXmlPerson() {
-        return new XmlPerson(state);
-    }
-}
-</source>
-
-...regenerate and then inherit from (the newly created) ''XmlPersonFactory'':
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-public class XmlPerson extends XmlPersonFactory {
-    public XmlPerson(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public XmlPerson asXmlPerson() {
-        return new XmlPerson(state);
-    }
-}
-</source>
-
-An instance of ''XmlPerson'' is then created by e.g.:
-<source>
-    XmlPerson xmlPerson = XmlPerson.givenName("Eric").surname("Adams").asXmlPerson();
-</source>
+If we add a new state template, e.g. ''AddressStateTemplate.java'', and regenerate, the behaviour class ''Address'' will also be generated (if not exists) an put in the same package as the state template under the ''java'' directory structure.
+This is the only situation where generated code is put somewhere else than in the ''outDir'' directory.
+''Address'' is generated to give you a flying start with creating behavior representations for the concept "address".
+If you don't want the generated class ''Address'' you can rename and/or move it to another package.
+At the moment CDD requires at least one behaviour representation per state and if it can't find any, it will generate one for you!
 
 
 [[Behaviour|< Back]]

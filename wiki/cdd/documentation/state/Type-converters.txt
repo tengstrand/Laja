@@ -1,4 +1,4 @@
-Sometimes we want more than one way to populate an attribute. This can be achieved by adding a converter:
+In some situations we want to populate an attribute in different ways. This can be achieved by adding a converter:
 <source>
 package com.myproject.state;
 

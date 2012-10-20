@@ -71,7 +71,7 @@ Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', s
 </source>
 
 
-We can choose between two constructors when implementing our behaviour representations, e.g.:
+We can choose between two constructors when implementing our behaviour representations:
 <source>
     public Person(PersonState state)
     public Person(PersonState state, PersonStateBuilder stateBuilder)
@@ -80,10 +80,10 @@ We can choose between two constructors when implementing our behaviour represent
 The second is used when we need to populate one or more substates from the aggregate root (as in this example).
 Only one of the two constructors should be implemented at a time.
 
-Remember that in most situations your first choice should be to either let the user of the class populate the attributes, alternatively using [[CDD - State - Default values|default values]].
+Remember that in most situations your first choice should be to either let the user of the class populate the attributes, alternatively using [[Default values|default values]].
 
 === Populating substate from the sub-behaviour ===
-Let's see if instead we can populate ''zipcode'' from the behaviour class ''Address'':
+Let's see if we instead can populate ''zipcode'' from the behaviour class ''Address'':
 <source>
 package com.myproject.behaviour;
 

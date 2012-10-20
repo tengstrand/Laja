@@ -6,7 +6,7 @@ In some situations the surrogate key should also be included. This case is not h
 
 
 Entities has the same meaning in CDD and DDD while values ​​can be both mutable or [http://en.wikipedia.org/wiki/Immutable_object immutable] and therefore differs from [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD value objects in DDD].
-If no attribute in the state is marked as ''natural key'' it will be treated as a values, example:
+If no attribute in the state is marked as ''natural key'' it will be treated as a value, example:
 <source>
 package com.myproject.state;
 
@@ -36,7 +36,7 @@ public class Person extends PersonFactory {
 The inheritance hierarchy of Person goes like this: ''PersonFactory'' > ''PersonValueFactory'' > ''PersonValue'' where PersonValue includes both ''givenName'' and ''surname'' in ''hashCode()'' and ''equals()''.
 
 
-If we add a [http://en.wikipedia.org/wiki/Natural_key natural key] to ''PersonState'':
+If we add a [http://en.wikipedia.org/wiki/Natural_key natural key] to ''PersonState'' (even if ''givenName'' is not a good example of a natural key):
 <source>
 package com.myproject.state;
 
@@ -52,10 +52,10 @@ public class PersonStateTemplate {
 We can summarize with three rules:
 * All attributes except ''(id)'' and ''(exclude)'', are included in ''hashCode()'' and ''equals()'' for values.
 * Only the ''natural key'' is included in ''hashCode()'' and ''equals()'' for entities.
-* If one or more attribute is marked as ''natural key'' the state is treated as an ''entity'', otherwise as a ''value''.
+* If one or more attribute is marked as ''natural key'' (keyword ''key'') the state is treated as an ''entity'', otherwise as a ''value''.
 
-=== Context dependent identity ===
-A problem in traditional OO is that we up front need to decide if a stateful class should be treated as a value or entity.
+=== Identity that varies with context ===
+A problem in traditional OO is that we need to decide if a stateful class should be treated as a value or entity up front.
 Instead of forcing us to make this decision, CDD allow us to have a set of behaviour representations where some can be values and others can be entities.
 
 If we include ''ssn'' in the ''natural key'':
@@ -199,4 +199,4 @@ By switching context from ''Person'' to ''OtherPerson'' we are not stuck compari
 
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Context switching|Next]]
+[[Context switching|Next >]]

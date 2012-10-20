@@ -27,7 +27,7 @@ Amiga fastAmiga = AmigaFactory.owner("Riku").asAmiga(Configuration.FAST);
 </source>
 
 When the configuration is set to ''STANDARD'' we will get a an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500],
-but when the configuration is set to ''FAST'' we will get an [http://en.wikipedia.org/wiki/Amiga_4000 Amiga 4000].
+but when set to ''FAST'' we will get an [http://en.wikipedia.org/wiki/Amiga_4000 Amiga 4000].
 
 
 The selected context is based on a ''context variable'' such as:

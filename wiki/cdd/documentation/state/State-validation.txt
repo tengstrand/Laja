@@ -163,7 +163,7 @@ As we can see, both validation rules must be met, and if we take a look at the g
     ...
 </source>
 
-...we can verify that both rules actually are included!
+...both validation rules was performed as expected! Validation rules can be added in arbitrary number of levels.
 
 
 [[State builder|< Back]]
