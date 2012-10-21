@@ -57,7 +57,7 @@ Reading file "myproject.laja"
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonAbstractList.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonListCreator.java" - OK
-  Processed 19 classes: 19 new, 0 changed, 0 unchanged.
+  Processed 19 classes: 19 new.
 </source>
 
 If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.
