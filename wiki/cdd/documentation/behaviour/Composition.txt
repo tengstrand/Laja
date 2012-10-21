@@ -1,11 +1,18 @@
-Composition is the technique used to construct more complex objects in CDD, also known as ''aggregate'' in [http://en.wikipedia.org/wiki/Domain-driven_design Domain-driven Design]:
+Composition is a great technique used to construct more complex objects in object oriented languages,
+also known as ''aggregate'' in [http://en.wikipedia.org/wiki/Domain-driven_design Domain-driven Design]:
+
+
+[[File:Traditional-object-composition.png|400px]]
+
+
+Composition is often a better alternative than inheritance mainly because it's more modular
+and lacks many of the quirks associated with inheritance.
+Composition is the way that more complex stateful objects is constructed in CDD.
+The main difference compared to traditional object orientation is that each behaviour representation,
+with all its sub behaviours, can be specialized for a specific context:
 
 
 [[File:CDD-object-composition.png|400px]]
-
-
-The main difference compared to traditional object orientation is that
-each behaviour representation, with all its sub behaviours, can be specialized for a specific context.
 
 
 Let's start by composing the state object of person with all its parts:
