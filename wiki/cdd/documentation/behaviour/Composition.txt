@@ -8,14 +8,24 @@ The main difference compared to traditional object orientation is that
 each behaviour representation, with all its sub behaviours, can be specialized for a specific context.
 
 
-Let's start by composing ''PersonState'' containing an address with a zipcode:
+Let's start by composing the state object of person with all its parts:
 <source>
 package com.myproject.state;
 
 public class PersonStateTemplate {
     String givenName;
     String surname;
+    SizeState $size;
     AddressState address;
+}
+</source>
+
+<source>
+package com.myproject.state;
+
+public class SizeStateTemplate {
+    int heightCm;
+    int weightKg;
 }
 </source>
 
@@ -25,19 +35,12 @@ package com.myproject.state;
 public class AddressStateTemplate {
     String streetName;
     int streetNumber;
-    ZipcodeState $zipcode;
-}
-</source>
-
-<source>
-package com.myproject.state;
-
-public class ZipcodeStateTemplate {
     int zipcode;
+    String city;
 }
 </source>
 
-...when generated, CDD will create default behaviour implementations for ''person'', ''address'' and ''zipcode'':
+...when generated, empty behaviour implementations are created:
 <source>
 package com.myproject.behaviour;
 
@@ -75,33 +78,213 @@ public class Address extends AddressFactory {
 <source>
 package com.myproject.behaviour;
 
-import com.myproject.state.ZipcodeState;
+import com.myproject.state.SizeState;
 
-public class Zipcode extends ZipcodeFactory {
-    public Zipcode(ZipcodeState state) {
+public class Size extends SizeFactory {
+    public Size(SizeState state) {
         super(state);
     }
 
     // (factory)
-    public Zipcode asZipcode() {
-        return new Zipcode(state);
+    public Size asSize() {
+        return new Size(state);
     }
 }
 </source>
 
 ...let's se how the code behaves so far by executing:
 <source>
-Person person = Person.givenName("Ingmar").surname("Bergman").address(
-        Address.streetName("First street").streetNumber(1).zipcode(123)).asPerson();
+Person person = Person.givenName("Ingmar").surname("Bergman")
+        .heightCm(179).weightKg(75).address(
+        Address.streetName("First street").streetNumber(2).zipcode(123).city("Stockholm")).asPerson();
 
 System.out.println(person);
 </source>
 
-...gives the output:
+...which gives the output (the director Ingmar Bergman lived on Fårö by the way):
 <source>
-Person{givenName='Ingmar', surname='Bergman', address={streetName='First street', streetNumber=1, zipcode=123}}
+Person{givenName='Ingmar', surname='Bergman', heightCm=179, weightKg=75, address={streetName='First street', streetNumber=2, zipcode=123, city='Stockholm'}}
 </source>
 
-We can see that person contains the three attributes ''givenName'', ''surname'' and ''address'' as defined in ''PersonStateTemplate''.
-The address has the attributes ''streetName'', ''streetNumber'' and ''zipcode'' as defined in ''AddressStateTemplate''.
-The zipcode attribute was marked as ''$zipcode'' and therefore [[State expansion|expanded]] into the address state.
+We can see that a person contains the five attributes ''givenName'', ''surname'', ''lengthCm'', ''weightKg'' and ''address'' as defined in ''PersonStateTemplate''.
+The size was marked as ''$size'' and therefore [[State expansion|expanded]] into the person state.
+The address has the attributes ''streetName'', ''streetNumber'', ''zipcode'' and ''city'' as defined in ''AddressStateTemplate''.
+
+
+Let's add some behaviour to address:
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.AddressState;
+
+public class Address extends AddressFactory {
+    public Address(AddressState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Address asAddress() {
+        return new Address(state);
+    }
+
+    // Ullared is a small town in Sweden.
+    public boolean isRegisteredInUllared() {
+        return state.getZipcode() >= 31109 && state.getZipcode() <= 31185;
+    }
+}
+</source>
+
+Rename ''Size'' to ''BMI'' and replace it with this content (and regenerate):
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.SizeState;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public class BMI extends BMIFactory {
+    public BMI(SizeState state) {
+        super(state);
+    }
+
+    // (factory)
+    public BMI asBmi() {
+        return new BMI(state);
+    }
+
+    /**
+     * @return body mass index with one decimal.
+     */
+    public double calculateBmi() {
+        double heightInMeter = state.getHeightCm() / 100.0;
+        double bmi = state.getWeightKg() / (heightInMeter * heightInMeter);
+        return new BigDecimal(bmi).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
+    }
+
+    public boolean hasNormalWeight() {
+        double bmi = calculateBmi();
+        return bmi >= 18.5 && bmi <= 24.9;
+    }
+}
+</source>
+
+Now that we have all the building blocks we need, it's time to put the pieces together:
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    private final BMI bmi;
+    private final Address address;
+
+    public Person(PersonState state) {
+        super(state);
+        bmi = new BMI(state);
+        address = new Address(state.getAddress());
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public String getName() {
+        return state.getGivenName() + " " + state.getSurname();
+    }
+
+    public boolean isRegisteredInUllared() {
+        return address.isRegisteredInUllared();
+    }
+
+    public double calculateBmi() {
+        return bmi.calculateBmi();
+    }
+
+    public boolean hasNormalWeight() {
+        return bmi.hasNormalWeight();
+    }
+}
+</source>
+
+...if executed:
+
+<source>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = Person.givenName("Ingmar").surname("Bergman")
+                .heightCm(179).weightKg(75).address(
+                Address.streetName("First street").streetNumber(2).zipcode(123).city("Stockholm")).asPerson();
+
+        System.out.println("Name: " + person.getName());
+        System.out.println("Body Mass Index: " + person.calculateBmi());
+        System.out.println("Has normal weight: " + person.hasNormalWeight());
+        System.out.println("Registered in Ullared: " + person.isRegisteredInUllared());
+    }
+}
+</source>
+
+...we get the output:
+
+<source>
+Name: Ingmar Bergman
+Body Mass Index: 23.4
+Has normal weight: true
+Registered in Ullared: false
+</source>
+
+
+Let's say we now are asked to implement functionality that export persons to a file in a semicolon separated text format.
+
+This is a ''new context'' so let's create the class ''TextPerson'' (we don't want to mix responsibilities by adding this functionality to ''Person''):
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.AddressState;
+import com.myproject.state.PersonState;
+
+public class TextPerson extends PersonFactory {
+    public TextPerson(PersonState state) {
+        super(state);
+    }
+
+    public String getText() {
+        AddressState address = state.getAddress();
+
+        return state.getGivenName() + ";"
+                + state.getSurname() + ";"
+                + address.getStreetName() + " " + address.getStreetNumber() + ";"
+                + address.getZipcode() + ";"
+                + address.getCity();
+    }
+}
+</source>
+
+...add the switcher method ''asTextPerson'' to ''Person'':
+<source>
+...
+public TextPerson asTextPerson() {
+    return new TextPerson(state);
+}
+...
+</source>
+
+...when executing the statement:
+
+<source>
+System.out.println(person.asTextPerson().getText());
+</source>
+
+...we get:
+
+<source>
+Ingmar;Bergman;First street 2;123;Stockholm
+</source>
+
+So long, so good, but we are not finished with the export function yet
+and it would be great if we could operate on more than one person, which leads us to the next topic ''collections''.
+
+[[Populate substate|< Back]]
