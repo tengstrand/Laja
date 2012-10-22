@@ -20,32 +20,24 @@ public class HairEntity implements HairElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(HairStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public HairState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(HairStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(HairStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(HairStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, HairStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, HairStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(HairStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

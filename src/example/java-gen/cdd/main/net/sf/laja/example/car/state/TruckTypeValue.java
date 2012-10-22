@@ -20,32 +20,24 @@ public class TruckTypeValue implements TruckTypeElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(TruckTypeStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public TruckTypeState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(TruckTypeStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(TruckTypeStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(TruckTypeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, TruckTypeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, TruckTypeStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(TruckTypeStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

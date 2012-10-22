@@ -4,7 +4,6 @@ package {packagename};
 
 import java.util.List;
 import {template.packagename}.{stateListClass};
-import {template.packagename}.{stateListBuilder};
 
 public class {listClass} extends {abstractListClass} {
     public {listClass}({entryClass}... list) {
@@ -13,10 +12,6 @@ public class {listClass} extends {abstractListClass} {
 
     public {listClass}(List<{entryClass}> list) {
         super(list);
-    }
-
-    public {listClass}(List<{entryClass}> list, {stateListBuilder} stateListBuilder) {
-        super(list, stateListBuilder);
     }
         #if (method.isFactory)
 

@@ -10,86 +10,83 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class TextFileAbstractList implements List<TextFile> {
-    protected final FileStateListBuilder stateListBuilder;
+    protected FileStateList stateList;
     protected final List<TextFile> list = new ArrayList<TextFile>();
 
     public TextFileAbstractList(TextFile... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new FileStateListBuilder();
-        for (TextFile entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public TextFileAbstractList(List<TextFile> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new FileStateListBuilder();
-        for (TextFile entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public TextFileAbstractList(List<TextFile> list, FileStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
+
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
+        }
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (TextFile element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (TextFile entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<TextFile> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <TextFile> TextFile[] toArray(TextFile[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(TextFile element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, TextFile element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends TextFile> collection) {
-        for (TextFile element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends TextFile> collection) {
-        FileStateListBuilder statesToAdd = new FileStateListBuilder();
-
-        for (TextFile element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -97,78 +94,54 @@ public abstract class TextFileAbstractList implements List<TextFile> {
         if (!(element instanceof TextFile)) {
             return false;
         }
-        ((TextFile)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof TextFile) {
-                ((TextFile)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        FileStateListBuilder retainStates = new FileStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof TextFile) {
-                ((TextFile)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public TextFile get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public TextFile set(int index, TextFile element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public TextFile remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<TextFile> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<TextFile> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<TextFile> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -184,6 +157,6 @@ public abstract class TextFileAbstractList implements List<TextFile> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

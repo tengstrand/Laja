@@ -20,32 +20,24 @@ public class BrowValue implements BrowElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(BrowStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public BrowState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(BrowStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(BrowStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(BrowStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, BrowStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, BrowStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(BrowStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

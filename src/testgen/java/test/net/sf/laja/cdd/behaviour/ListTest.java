@@ -33,7 +33,7 @@ public class ListTest {
 
         list.remove(1);
 
-        assertEquals(Arrays.asList(1,3), list.areas());
+        assertEquals(Arrays.asList(1, 3), list.areas());
     }
 
     @Test
@@ -52,8 +52,7 @@ public class ListTest {
 
     @Test
     public void remove_createdFromStateList() {
-        TestForehead forehead = TestForehead.create().withBrows(Brow.createList(Brow.area(1), Brow.area(2), Brow.area(3))
-        ).asTestForehead();
+        TestForehead forehead = TestForehead.create().withBrows(Brow.createList(Brow.area(1), Brow.area(2), Brow.area(3))).asTestForehead();
 
         TestBrowList list = forehead.remove(1);
 
@@ -64,7 +63,7 @@ public class ListTest {
 
         assertEquals(expectedList, list);
         assertEquals(Arrays.asList(1, 3), list.areas());
-   }
+    }
 
     @Test
     public void size() {
@@ -106,7 +105,7 @@ public class ListTest {
         TestBrowList list = createBrowList();
         list.add(TestBrow.area(5).asTestBrow());
 
-        assertEquals(Arrays.asList(1,2,3,5), list.areas());
+        assertEquals(Arrays.asList(1, 2, 3, 5), list.areas());
     }
 
     @Test
@@ -122,7 +121,7 @@ public class ListTest {
         );
 
         assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1,2,5,3), list.areas());
+        assertEquals(Arrays.asList(1, 2, 5, 3), list.areas());
     }
 
     @Test
@@ -161,7 +160,7 @@ public class ListTest {
         );
 
         assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1,2,3,4,5), list.areas());
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5), list.areas());
     }
 
     @Test
@@ -182,7 +181,7 @@ public class ListTest {
         );
 
         assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1,4,5,2,3), list.areas());
+        assertEquals(Arrays.asList(1, 4, 5, 2, 3), list.areas());
     }
 
     @Test
@@ -232,7 +231,7 @@ public class ListTest {
                 TestBrow.area(3).asTestBrow()
         );
         assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(2,3), list.areas());
+        assertEquals(Arrays.asList(2, 3), list.areas());
     }
 
     @Test
@@ -264,7 +263,7 @@ public class ListTest {
                 TestBrow.area(3).asTestBrow()
         );
         assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1,5,3), list.areas());
+        assertEquals(Arrays.asList(1, 5, 3), list.areas());
     }
 
     @Test
@@ -277,9 +276,10 @@ public class ListTest {
                 TestBrow.area(3).asTestBrow()
         );
         assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1,3), list.areas());
+        assertEquals(Arrays.asList(1, 3), list.areas());
     }
 
+/*
     @Test
     public void removeViaOtherList() {
         TestMouthList testList = TestMouthFactory.createList(TestMouth.width(10).height(5).color("Red"),
@@ -289,14 +289,16 @@ public class ListTest {
 
         assertEquals(1, testList.stateSize());
     }
-
+*/
+/*
     @Test(expected = IllegalStateException.class)
     public void illegalStateIfListIsMutatedFromAnotherList() {
         TestMouthList testList = createTestMouthList();
         testList.asCuteMouthList().remove(0);
         testList.get(0);
     }
-
+*/
+    /*
     @Test
     public void listIsMutatedFromAnotherListWithSyncState() {
         TestMouthList testList = createTestMouthList();
@@ -306,12 +308,14 @@ public class ListTest {
 
         assertEquals(1, testList.size());
     }
+*/
 
     private TestMouthList createTestMouthList() {
         return TestMouthFactory.createList(TestMouth.width(10).height(5).color("Red"),
                 TestMouth.width(8).height(4).color("Blue")).asTestMouthList();
     }
 
+/*
     @Test(expected = UnsupportedOperationException.class)
     public void tryRemoveElementViaValueBasedListHavingEntityBasedState() {
         final int length = 9;
@@ -325,4 +329,5 @@ public class ListTest {
 
         hairList.remove(Hair.length(length).color(black).asHair());
     }
+*/
 }

@@ -10,155 +10,138 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class CuteMouthAbstractList implements List<CuteMouth> {
-    protected final MouthStateListBuilder stateListBuilder;
+    protected MouthStateList stateList;
     protected final List<CuteMouth> list = new ArrayList<CuteMouth>();
 
     public CuteMouthAbstractList(CuteMouth... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new MouthStateListBuilder();
-        for (CuteMouth entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public CuteMouthAbstractList(List<CuteMouth> list) {
         this.list.addAll(list);
+    }
 
-        stateListBuilder = new MouthStateListBuilder();
+
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
+        }
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (CuteMouth element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
         for (CuteMouth entry : list) {
-            entry.addToList(stateListBuilder);
+            entry.syncState();
+            entry.addToList(stateList);
         }
-    }
-
-    public CuteMouthAbstractList(List<CuteMouth> list, MouthStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
-
-    public void syncState(MouthSize size, int x) {
-        list.clear();
-        for (MouthStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            CuteMouth entry = ((Mouth) builder.as(new MouthFactory.MouthFactory_(builder), size)).asCuteMouth(size, x);
-            list.add(entry);
-        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<CuteMouth> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <CuteMouth> CuteMouth[] toArray(CuteMouth[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(CuteMouth element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, CuteMouth element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends CuteMouth> collection) {
-        for (CuteMouth element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
-        MouthStateListBuilder statesToAdd = new MouthStateListBuilder();
-
-        for (CuteMouth element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (CuteMouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'remove' operation");
+        if (!(element instanceof CuteMouth)) {
+            return false;
+        }
+        return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (CuteMouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'containsAll' operation");
+        return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (CuteMouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'removeAll' operation");
+        return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (CuteMouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'retainAll' operation");
+        return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public CuteMouth get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public CuteMouth set(int index, CuteMouth element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public CuteMouth remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<CuteMouth> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<CuteMouth> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<CuteMouth> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -174,6 +157,6 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

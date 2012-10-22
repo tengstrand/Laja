@@ -20,32 +20,24 @@ public class MonsterValue implements MonsterElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(MonsterStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public MonsterState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(MonsterStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(MonsterStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(MonsterStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, MonsterStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, MonsterStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(MonsterStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

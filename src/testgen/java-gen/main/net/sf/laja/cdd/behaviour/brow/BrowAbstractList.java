@@ -10,34 +10,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class BrowAbstractList implements List<Brow> {
-    protected final BrowStateListBuilder stateListBuilder;
+    protected BrowStateList stateList;
     protected final List<Brow> list = new ArrayList<Brow>();
 
     public BrowAbstractList(Brow... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new BrowStateListBuilder();
-        for (Brow entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public BrowAbstractList(List<Brow> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new BrowStateListBuilder();
-        for (Brow entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public BrowAbstractList(List<Brow> list, BrowStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public BrowAbstractList(BrowStateList stateList) {
-        stateListBuilder = new BrowStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (BrowState state : stateList) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
@@ -46,69 +32,71 @@ public abstract class BrowAbstractList implements List<Brow> {
         }
     }
 
-    public void syncState() {
-        list.clear();
-        for (BrowStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_(builder));
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Brow element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Brow entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Brow> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Brow> Brow[] toArray(Brow[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Brow element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Brow element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Brow> collection) {
-        for (Brow element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Brow> collection) {
-        BrowStateListBuilder statesToAdd = new BrowStateListBuilder();
-
-        for (Brow element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -116,78 +104,54 @@ public abstract class BrowAbstractList implements List<Brow> {
         if (!(element instanceof Brow)) {
             return false;
         }
-        ((Brow)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof Brow) {
-                ((Brow)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        BrowStateListBuilder retainStates = new BrowStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof Brow) {
-                ((Brow)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Brow get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Brow set(int index, Brow element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Brow remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Brow> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Brow> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Brow> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -203,6 +167,6 @@ public abstract class BrowAbstractList implements List<Brow> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

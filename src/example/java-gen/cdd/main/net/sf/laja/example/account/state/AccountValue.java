@@ -20,32 +20,24 @@ public class AccountValue implements AccountElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(AccountStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public AccountState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(AccountStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(AccountStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(AccountStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, AccountStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, AccountStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(AccountStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

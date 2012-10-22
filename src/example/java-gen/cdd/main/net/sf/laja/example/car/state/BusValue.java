@@ -20,32 +20,24 @@ public class BusValue implements BusElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(BusStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public BusState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(BusStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(BusStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(BusStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, BusStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, BusStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(BusStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

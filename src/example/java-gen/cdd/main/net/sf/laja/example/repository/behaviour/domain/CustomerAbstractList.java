@@ -10,34 +10,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class CustomerAbstractList implements List<Customer> {
-    protected final CustomerStateListBuilder stateListBuilder;
+    protected CustomerStateList stateList;
     protected final List<Customer> list = new ArrayList<Customer>();
 
     public CustomerAbstractList(Customer... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new CustomerStateListBuilder();
-        for (Customer entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public CustomerAbstractList(List<Customer> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new CustomerStateListBuilder();
-        for (Customer entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public CustomerAbstractList(List<Customer> list, CustomerStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public CustomerAbstractList(CustomerStateList stateList) {
-        stateListBuilder = new CustomerStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (CustomerState state : stateList) {
             CustomerStateBuilder builder = new CustomerStateBuilderImpl(state);
@@ -46,130 +32,126 @@ public abstract class CustomerAbstractList implements List<Customer> {
         }
     }
 
-    public void syncState() {
-        list.clear();
-        for (CustomerStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Customer entry = (Customer) builder.as(new CustomerFactory.CustomerFactory_(builder));
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Customer element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Customer entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Customer> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Customer> Customer[] toArray(Customer[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Customer element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Customer element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Customer> collection) {
-        for (Customer element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Customer> collection) {
-        CustomerStateListBuilder statesToAdd = new CustomerStateListBuilder();
-
-        for (Customer element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Customer is value based and CustomerState is entity based). Try switch the list to an entity based list before performing the 'remove' operation");
+        if (!(element instanceof Customer)) {
+            return false;
+        }
+        return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Customer is value based and CustomerState is entity based). Try switch the list to an entity based list before performing the 'containsAll' operation");
+        return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Customer is value based and CustomerState is entity based). Try switch the list to an entity based list before performing the 'removeAll' operation");
+        return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Customer is value based and CustomerState is entity based). Try switch the list to an entity based list before performing the 'retainAll' operation");
+        return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Customer get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Customer set(int index, Customer element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Customer remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Customer> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Customer> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Customer> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -185,6 +167,6 @@ public abstract class CustomerAbstractList implements List<Customer> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

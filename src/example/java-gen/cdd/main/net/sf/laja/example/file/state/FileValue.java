@@ -20,32 +20,24 @@ public class FileValue implements FileElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(FileStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public FileState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(FileStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(FileStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(FileStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, FileStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, FileStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(FileStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

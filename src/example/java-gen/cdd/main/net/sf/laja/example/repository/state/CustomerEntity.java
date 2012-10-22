@@ -20,32 +20,24 @@ public class CustomerEntity implements CustomerElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(CustomerStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public CustomerState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(CustomerStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(CustomerStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(CustomerStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, CustomerStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, CustomerStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(CustomerStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

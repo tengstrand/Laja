@@ -14,10 +14,6 @@ public class HairList extends HairAbstractList {
         super(list);
     }
 
-    public HairList(List<Hair> list, HairStateListBuilder stateListBuilder) {
-        super(list, stateListBuilder);
-    }
-
     public HairList(HairStateList stateList) {
         super(stateList);
     }

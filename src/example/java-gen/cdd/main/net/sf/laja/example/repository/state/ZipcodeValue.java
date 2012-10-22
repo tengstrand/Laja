@@ -20,32 +20,24 @@ public class ZipcodeValue {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(ZipcodeStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public ZipcodeState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(ZipcodeStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(ZipcodeStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(ZipcodeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, ZipcodeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, ZipcodeStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(ZipcodeStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

@@ -239,31 +239,23 @@ import {certificatePackage}.{certificateClass};
 #end
 
 #macro elementMethods()
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains({stateListClass} stateList) {
+        return stateList.contains(state);
+    }
+
     public {stateClass} getState(Certificate certificate) {
         return state;
     }
 
     public void addToList({stateListClass} stateList) {
         stateList.add(state);
-    }
-
-    public void addToList({stateListBuilder} listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList({stateListBuilder} listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, {stateListBuilder} listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, {stateListBuilder} listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList({stateListBuilder} listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 #end

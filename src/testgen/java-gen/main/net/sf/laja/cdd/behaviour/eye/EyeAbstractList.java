@@ -13,34 +13,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class EyeAbstractList implements List<Eye> {
-    protected final EyeStateListBuilder stateListBuilder;
+    protected EyeStateList stateList;
     protected final List<Eye> list = new ArrayList<Eye>();
 
     public EyeAbstractList(Eye... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new EyeStateListBuilder();
-        for (Eye entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public EyeAbstractList(List<Eye> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new EyeStateListBuilder();
-        for (Eye entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public EyeAbstractList(List<Eye> list, EyeStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public EyeAbstractList(EyeStateList stateList) {
-        stateListBuilder = new EyeStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (EyeState state : stateList) {
             EyeStateBuilder builder = new EyeStateBuilderImpl(state);
@@ -54,72 +40,74 @@ public abstract class EyeAbstractList implements List<Eye> {
         for (Eye entry : list) {
             result.add(entry.asScaryEye());
         }
-        return new ScaryEyeList(result, stateListBuilder);
+        return new ScaryEyeList(result);
     }
 
-    public void syncState() {
-        list.clear();
-        for (EyeStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_(builder));
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Eye element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Eye entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Eye> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Eye> Eye[] toArray(Eye[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Eye element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Eye element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Eye> collection) {
-        for (Eye element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Eye> collection) {
-        EyeStateListBuilder statesToAdd = new EyeStateListBuilder();
-
-        for (Eye element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -127,78 +115,54 @@ public abstract class EyeAbstractList implements List<Eye> {
         if (!(element instanceof Eye)) {
             return false;
         }
-        ((Eye)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof Eye) {
-                ((Eye)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        EyeStateListBuilder retainStates = new EyeStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof Eye) {
-                ((Eye)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Eye get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Eye set(int index, Eye element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Eye remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Eye> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Eye> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Eye> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -214,6 +178,6 @@ public abstract class EyeAbstractList implements List<Eye> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

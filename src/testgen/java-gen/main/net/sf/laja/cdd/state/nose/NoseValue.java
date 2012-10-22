@@ -20,32 +20,24 @@ public class NoseValue implements NoseElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(NoseStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public NoseState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(NoseStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(NoseStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(NoseStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, NoseStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, NoseStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(NoseStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

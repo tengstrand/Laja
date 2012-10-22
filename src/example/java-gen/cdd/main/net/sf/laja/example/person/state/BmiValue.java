@@ -20,32 +20,24 @@ public class BmiValue implements BmiElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(BmiStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public BmiState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(BmiStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(BmiStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(BmiStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, BmiStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, BmiStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(BmiStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

@@ -1,12 +1,10 @@
 
 #macro class()
 public interface {elementClass} {
-    public void addToList({stateListClass} stateList);
-    public void addToList({stateListBuilder} listBuilder);
-    public void addToList({stateListBuilder} listBuilder, Object mutator);
-    public void addToList(int index, {stateListBuilder} listBuilder, Object mutator);
-    public void setInList(int index, {stateListBuilder} listBuilder, Object accessor);
-    public boolean removeFromList({stateListBuilder} listBuilder, Object mutator);
+    boolean syncState();
+    boolean isStateInSync();
+    boolean contains({stateListClass} stateList);
+    void addToList({stateListClass} stateList);
 }
 #end
 

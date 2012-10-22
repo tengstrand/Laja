@@ -20,32 +20,24 @@ public class DirectoryValue implements DirectoryElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(DirectoryStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public DirectoryState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(DirectoryStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(DirectoryStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(DirectoryStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, DirectoryStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, DirectoryStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(DirectoryStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

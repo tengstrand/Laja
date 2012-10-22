@@ -13,34 +13,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class ClosedFileAbstractList implements List<ClosedFile> {
-    protected final FileStateListBuilder stateListBuilder;
+    protected FileStateList stateList;
     protected final List<ClosedFile> list = new ArrayList<ClosedFile>();
 
     public ClosedFileAbstractList(ClosedFile... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new FileStateListBuilder();
-        for (ClosedFile entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public ClosedFileAbstractList(List<ClosedFile> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new FileStateListBuilder();
-        for (ClosedFile entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public ClosedFileAbstractList(List<ClosedFile> list, FileStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public ClosedFileAbstractList(FileStateList stateList, Directory directory) {
-        stateListBuilder = new FileStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (FileState state : stateList) {
             FileStateBuilder builder = new FileStateBuilderImpl(state);
@@ -54,72 +40,74 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
         for (ClosedFile entry : list) {
             result.add(entry.asTextFile());
         }
-        return new TextFileList(result, stateListBuilder);
+        return new TextFileList(result);
     }
 
-    public void syncState(Directory directory) {
-        list.clear();
-        for (FileStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (ClosedFile element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (ClosedFile entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<ClosedFile> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <ClosedFile> ClosedFile[] toArray(ClosedFile[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(ClosedFile element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, ClosedFile element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends ClosedFile> collection) {
-        for (ClosedFile element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
-        FileStateListBuilder statesToAdd = new FileStateListBuilder();
-
-        for (ClosedFile element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -127,78 +115,54 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
         if (!(element instanceof ClosedFile)) {
             return false;
         }
-        ((ClosedFile)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof ClosedFile) {
-                ((ClosedFile)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        FileStateListBuilder retainStates = new FileStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof ClosedFile) {
-                ((ClosedFile)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public ClosedFile get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public ClosedFile set(int index, ClosedFile element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public ClosedFile remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<ClosedFile> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<ClosedFile> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<ClosedFile> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -214,6 +178,6 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

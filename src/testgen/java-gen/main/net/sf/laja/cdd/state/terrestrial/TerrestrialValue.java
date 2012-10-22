@@ -20,32 +20,24 @@ public class TerrestrialValue implements TerrestrialElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(TerrestrialStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public TerrestrialState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(TerrestrialStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(TerrestrialStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(TerrestrialStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, TerrestrialStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, TerrestrialStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(TerrestrialStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

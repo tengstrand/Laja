@@ -20,32 +20,24 @@ public class MouthEntity implements MouthElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(MouthStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public MouthState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(MouthStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(MouthStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(MouthStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, MouthStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, MouthStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(MouthStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

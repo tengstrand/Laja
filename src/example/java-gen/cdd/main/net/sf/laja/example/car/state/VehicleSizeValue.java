@@ -20,32 +20,24 @@ public class VehicleSizeValue implements VehicleSizeElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(VehicleSizeStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public VehicleSizeState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(VehicleSizeStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(VehicleSizeStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(VehicleSizeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, VehicleSizeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, VehicleSizeStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(VehicleSizeStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

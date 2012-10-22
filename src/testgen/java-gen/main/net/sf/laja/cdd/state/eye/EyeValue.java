@@ -20,32 +20,24 @@ public class EyeValue implements EyeElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(EyeStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public EyeState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(EyeStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(EyeStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(EyeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, EyeStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, EyeStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(EyeStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

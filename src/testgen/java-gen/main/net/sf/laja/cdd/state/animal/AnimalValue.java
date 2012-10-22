@@ -20,32 +20,24 @@ public class AnimalValue implements AnimalElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(AnimalStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public AnimalState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(AnimalStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(AnimalStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(AnimalStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, AnimalStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, AnimalStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(AnimalStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

@@ -20,32 +20,24 @@ public class ForeheadValue implements ForeheadElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(ForeheadStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public ForeheadState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(ForeheadStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(ForeheadStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(ForeheadStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, ForeheadStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, ForeheadStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(ForeheadStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

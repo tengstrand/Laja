@@ -13,34 +13,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class DirectoryAbstractList implements List<Directory> {
-    protected final DirectoryStateListBuilder stateListBuilder;
+    protected DirectoryStateList stateList;
     protected final List<Directory> list = new ArrayList<Directory>();
 
     public DirectoryAbstractList(Directory... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new DirectoryStateListBuilder();
-        for (Directory entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public DirectoryAbstractList(List<Directory> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new DirectoryStateListBuilder();
-        for (Directory entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public DirectoryAbstractList(List<Directory> list, DirectoryStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public DirectoryAbstractList(DirectoryStateList stateList) {
-        stateListBuilder = new DirectoryStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (DirectoryState state : stateList) {
             DirectoryStateBuilder builder = new DirectoryStateBuilderImpl(state);
@@ -54,72 +40,74 @@ public abstract class DirectoryAbstractList implements List<Directory> {
         for (Directory entry : list) {
             result.add(entry.asTextDirectory());
         }
-        return new TextDirectoryList(result, stateListBuilder);
+        return new TextDirectoryList(result);
     }
 
-    public void syncState() {
-        list.clear();
-        for (DirectoryStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_(builder));
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Directory element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Directory entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Directory> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Directory> Directory[] toArray(Directory[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Directory element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Directory element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Directory> collection) {
-        for (Directory element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Directory> collection) {
-        DirectoryStateListBuilder statesToAdd = new DirectoryStateListBuilder();
-
-        for (Directory element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -127,78 +115,54 @@ public abstract class DirectoryAbstractList implements List<Directory> {
         if (!(element instanceof Directory)) {
             return false;
         }
-        ((Directory)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof Directory) {
-                ((Directory)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        DirectoryStateListBuilder retainStates = new DirectoryStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof Directory) {
-                ((Directory)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Directory get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Directory set(int index, Directory element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Directory remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Directory> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Directory> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Directory> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -214,6 +178,6 @@ public abstract class DirectoryAbstractList implements List<Directory> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

@@ -81,6 +81,10 @@ public class MonsterCreator {
     }
 
     public class Noses_ {
+        public A_ noses() {
+            return new A_();
+        }
+
         public A_ noses(NoseListCreator noses) {
             builder.withNoses(noses.stateList);
             return new A_();
@@ -144,6 +148,10 @@ public class MonsterCreator {
     }
 
     public class Mouths_ {
+        public Weight_ mouths() {
+            return new Weight_();
+        }
+
         public Weight_ mouths(MouthListCreator mouths) {
             builder.withMouths(mouths.stateList);
             return new Weight_();

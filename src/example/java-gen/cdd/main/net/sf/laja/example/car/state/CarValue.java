@@ -20,32 +20,24 @@ public class CarValue implements CarElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(CarStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public CarState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(CarStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(CarStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(CarStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, CarStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, CarStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(CarStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

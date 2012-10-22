@@ -10,34 +10,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class ArmAbstractList implements List<Arm> {
-    protected final ArmStateListBuilder stateListBuilder;
+    protected ArmStateList stateList;
     protected final List<Arm> list = new ArrayList<Arm>();
 
     public ArmAbstractList(Arm... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new ArmStateListBuilder();
-        for (Arm entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public ArmAbstractList(List<Arm> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new ArmStateListBuilder();
-        for (Arm entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public ArmAbstractList(List<Arm> list, ArmStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public ArmAbstractList(ArmStateList stateList) {
-        stateListBuilder = new ArmStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (ArmState state : stateList) {
             ArmStateBuilder builder = new ArmStateBuilderImpl(state);
@@ -46,69 +32,71 @@ public abstract class ArmAbstractList implements List<Arm> {
         }
     }
 
-    public void syncState() {
-        list.clear();
-        for (ArmStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_(builder));
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Arm element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Arm entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Arm> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Arm> Arm[] toArray(Arm[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Arm element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Arm element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Arm> collection) {
-        for (Arm element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Arm> collection) {
-        ArmStateListBuilder statesToAdd = new ArmStateListBuilder();
-
-        for (Arm element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -116,78 +104,54 @@ public abstract class ArmAbstractList implements List<Arm> {
         if (!(element instanceof Arm)) {
             return false;
         }
-        ((Arm)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof Arm) {
-                ((Arm)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        ArmStateListBuilder retainStates = new ArmStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof Arm) {
-                ((Arm)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Arm get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Arm set(int index, Arm element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Arm remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Arm> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Arm> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Arm> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -203,6 +167,6 @@ public abstract class ArmAbstractList implements List<Arm> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

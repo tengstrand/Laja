@@ -20,32 +20,24 @@ public class HeightValue implements HeightElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(HeightStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public HeightState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(HeightStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(HeightStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(HeightStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, HeightStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, HeightStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(HeightStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

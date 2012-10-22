@@ -20,32 +20,24 @@ public class PersonValue implements PersonElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(PersonStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public PersonState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(PersonStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(PersonStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(PersonStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, PersonStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, PersonStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(PersonStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

@@ -10,34 +10,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class AddressAbstractList implements List<Address> {
-    protected final AddressStateListBuilder stateListBuilder;
+    protected AddressStateList stateList;
     protected final List<Address> list = new ArrayList<Address>();
 
     public AddressAbstractList(Address... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new AddressStateListBuilder();
-        for (Address entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public AddressAbstractList(List<Address> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new AddressStateListBuilder();
-        for (Address entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public AddressAbstractList(List<Address> list, AddressStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public AddressAbstractList(AddressStateList stateList) {
-        stateListBuilder = new AddressStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (AddressState state : stateList) {
             AddressStateBuilder builder = new AddressStateBuilderImpl(state);
@@ -46,69 +32,71 @@ public abstract class AddressAbstractList implements List<Address> {
         }
     }
 
-    public void syncState() {
-        list.clear();
-        for (AddressStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_(builder));
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Address element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Address entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Address> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Address> Address[] toArray(Address[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Address element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Address element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Address> collection) {
-        for (Address element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Address> collection) {
-        AddressStateListBuilder statesToAdd = new AddressStateListBuilder();
-
-        for (Address element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -116,78 +104,54 @@ public abstract class AddressAbstractList implements List<Address> {
         if (!(element instanceof Address)) {
             return false;
         }
-        ((Address)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof Address) {
-                ((Address)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        AddressStateListBuilder retainStates = new AddressStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof Address) {
-                ((Address)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Address get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Address set(int index, Address element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Address remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Address> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Address> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Address> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -203,6 +167,6 @@ public abstract class AddressAbstractList implements List<Address> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

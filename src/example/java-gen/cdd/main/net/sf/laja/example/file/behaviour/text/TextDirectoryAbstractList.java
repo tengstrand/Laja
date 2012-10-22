@@ -13,94 +13,83 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
-    protected final DirectoryStateListBuilder stateListBuilder;
+    protected DirectoryStateList stateList;
     protected final List<TextDirectory> list = new ArrayList<TextDirectory>();
 
     public TextDirectoryAbstractList(TextDirectory... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new DirectoryStateListBuilder();
-        for (TextDirectory entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public TextDirectoryAbstractList(List<TextDirectory> list) {
         this.list.addAll(list);
+    }
 
-        stateListBuilder = new DirectoryStateListBuilder();
+
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
+        }
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (TextDirectory element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
         for (TextDirectory entry : list) {
-            entry.addToList(stateListBuilder);
+            entry.syncState();
+            entry.addToList(stateList);
         }
-    }
-
-    public TextDirectoryAbstractList(List<TextDirectory> list, DirectoryStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
-
-    public void syncState() {
-        list.clear();
-        for (DirectoryStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            TextDirectory entry = ((Directory) builder.as(new DirectoryFactory.DirectoryFactory_(builder))).asTextDirectory();
-            list.add(entry);
-        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<TextDirectory> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <TextDirectory> TextDirectory[] toArray(TextDirectory[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(TextDirectory element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, TextDirectory element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends TextDirectory> collection) {
-        for (TextDirectory element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
-        DirectoryStateListBuilder statesToAdd = new DirectoryStateListBuilder();
-
-        for (TextDirectory element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -108,78 +97,54 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
         if (!(element instanceof TextDirectory)) {
             return false;
         }
-        ((TextDirectory)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof TextDirectory) {
-                ((TextDirectory)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        DirectoryStateListBuilder retainStates = new DirectoryStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof TextDirectory) {
-                ((TextDirectory)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public TextDirectory get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public TextDirectory set(int index, TextDirectory element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public TextDirectory remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<TextDirectory> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<TextDirectory> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<TextDirectory> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -195,6 +160,6 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

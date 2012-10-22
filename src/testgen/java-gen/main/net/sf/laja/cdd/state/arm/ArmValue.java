@@ -20,32 +20,24 @@ public class ArmValue implements ArmElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(ArmStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public ArmState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(ArmStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(ArmStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(ArmStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, ArmStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, ArmStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(ArmStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

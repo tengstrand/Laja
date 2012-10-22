@@ -20,32 +20,24 @@ public class FleckValue implements FleckElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(FleckStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public FleckState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(FleckStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(FleckStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(FleckStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, FleckStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, FleckStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(FleckStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

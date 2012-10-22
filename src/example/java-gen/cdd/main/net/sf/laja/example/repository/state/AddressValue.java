@@ -20,32 +20,24 @@ public class AddressValue implements AddressElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(AddressStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public AddressState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(AddressStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(AddressStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(AddressStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, AddressStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, AddressStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(AddressStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override

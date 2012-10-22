@@ -13,94 +13,83 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class ScaryEyeAbstractList implements List<ScaryEye> {
-    protected final EyeStateListBuilder stateListBuilder;
+    protected EyeStateList stateList;
     protected final List<ScaryEye> list = new ArrayList<ScaryEye>();
 
     public ScaryEyeAbstractList(ScaryEye... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new EyeStateListBuilder();
-        for (ScaryEye entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public ScaryEyeAbstractList(List<ScaryEye> list) {
         this.list.addAll(list);
+    }
 
-        stateListBuilder = new EyeStateListBuilder();
+
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
+        }
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (ScaryEye element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
         for (ScaryEye entry : list) {
-            entry.addToList(stateListBuilder);
+            entry.syncState();
+            entry.addToList(stateList);
         }
-    }
-
-    public ScaryEyeAbstractList(List<ScaryEye> list, EyeStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
-
-    public void syncState() {
-        list.clear();
-        for (EyeStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            ScaryEye entry = ((Eye) builder.as(new EyeFactory.EyeFactory_(builder))).asScaryEye();
-            list.add(entry);
-        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<ScaryEye> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <ScaryEye> ScaryEye[] toArray(ScaryEye[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(ScaryEye element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, ScaryEye element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends ScaryEye> collection) {
-        for (ScaryEye element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends ScaryEye> collection) {
-        EyeStateListBuilder statesToAdd = new EyeStateListBuilder();
-
-        for (ScaryEye element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
@@ -108,78 +97,54 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye> {
         if (!(element instanceof ScaryEye)) {
             return false;
         }
-        ((ScaryEye)element).removeFromList(stateListBuilder, this);
         return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        for (Object element : collection) {
-            if (element instanceof ScaryEye) {
-                ((ScaryEye)element).removeFromList(stateListBuilder, this);
-            }
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        EyeStateListBuilder retainStates = new EyeStateListBuilder();
-
-        for (Object element : collection) {
-            if (element instanceof ScaryEye) {
-                ((ScaryEye)element).addToList(retainStates, this);
-            }
-        }
-        stateListBuilder.retainAll(retainStates, this);
         return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public ScaryEye get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public ScaryEye set(int index, ScaryEye element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public ScaryEye remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<ScaryEye> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<ScaryEye> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<ScaryEye> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -195,6 +160,6 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

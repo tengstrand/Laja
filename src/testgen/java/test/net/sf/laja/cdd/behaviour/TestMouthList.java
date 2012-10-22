@@ -15,8 +15,4 @@ public class TestMouthList extends TestMouthAbstractList {
     public TestMouthList(MouthStateList stateList) {
         super(stateList);
     }
-
-    public int stateSize() {
-        return stateListBuilder.size();
-    }
 }

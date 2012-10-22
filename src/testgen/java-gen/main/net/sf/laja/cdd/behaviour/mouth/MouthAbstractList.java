@@ -10,34 +10,20 @@ import java.util.*;
  *   http://laja.sf.net
  */
 public abstract class MouthAbstractList implements List<Mouth> {
-    protected final MouthStateListBuilder stateListBuilder;
+    protected MouthStateList stateList;
     protected final List<Mouth> list = new ArrayList<Mouth>();
 
     public MouthAbstractList(Mouth... list) {
         this.list.addAll(Arrays.asList(list));
-
-        stateListBuilder = new MouthStateListBuilder();
-        for (Mouth entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
     public MouthAbstractList(List<Mouth> list) {
         this.list.addAll(list);
-
-        stateListBuilder = new MouthStateListBuilder();
-        for (Mouth entry : list) {
-            entry.addToList(stateListBuilder);
-        }
     }
 
-    public MouthAbstractList(List<Mouth> list, MouthStateListBuilder stateListBuilder) {
-        this.list.addAll(list);
-        this.stateListBuilder = stateListBuilder;
-    }
 
     public MouthAbstractList(MouthStateList stateList, MouthSize size) {
-        stateListBuilder = new MouthStateListBuilder(stateList);
+        this.stateList = stateList;
 
         for (MouthState state : stateList) {
             MouthStateBuilder builder = new MouthStateBuilderImpl(state);
@@ -51,133 +37,129 @@ public abstract class MouthAbstractList implements List<Mouth> {
         for (Mouth entry : list) {
             result.add(entry.asCuteMouth(size, x));
         }
-        return new CuteMouthList(result, stateListBuilder);
+        return new CuteMouthList(result);
     }
 
-    public void syncState(MouthSize size) {
-        list.clear();
-        for (MouthStateBuilder builder : stateListBuilder.getStateBuilders()) {
-            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(builder), size);
-            list.add(entry);
+    public boolean isStateInSync() {
+        if (stateList == null) {
+            return true;
         }
-        stateListBuilder.syncState();
+        if (stateList.size() != list.size()) {
+            return false;
+        }
+        for (Mouth element : list) {
+            if (!element.contains(stateList) || !element.isStateInSync()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean syncState() {
+        if (isStateInSync()) {
+            return false;
+        }
+        stateList.clear();
+
+        for (Mouth entry : list) {
+            entry.syncState();
+            entry.addToList(stateList);
+        }
+        return true;
     }
 
     public int size() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.size();
     }
 
     public boolean isEmpty() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.isEmpty();
     }
 
     public boolean contains(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.contains(element);
     }
 
     public Iterator<Mouth> iterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.iterator();
     }
 
     public Object[] toArray() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray();
     }
 
     public <Mouth> Mouth[] toArray(Mouth[] array) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.toArray(array);
     }
 
     public boolean add(Mouth element) {
-        element.addToList(stateListBuilder, this);
         return list.add(element);
     }
 
     public void add(int index, Mouth element) {
-        element.addToList(index, stateListBuilder, this);
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Mouth> collection) {
-        for (Mouth element : collection) {
-            element.addToList(stateListBuilder, this);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Mouth> collection) {
-        MouthStateListBuilder statesToAdd = new MouthStateListBuilder();
-
-        for (Mouth element : collection) {
-            element.addToList(statesToAdd, this);
-        }
-        stateListBuilder.addAll(index, statesToAdd, this);
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Mouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'remove' operation");
+        if (!(element instanceof Mouth)) {
+            return false;
+        }
+        return list.remove(element);
     }
 
     public boolean containsAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Mouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'containsAll' operation");
+        return list.containsAll(collection);
     }
 
     public boolean removeAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Mouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'removeAll' operation");
+        return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        throw new UnsupportedOperationException("The state can only be mutated via an entity based list (Mouth is value based and MouthState is entity based). Try switch the list to an entity based list before performing the 'retainAll' operation");
+        return list.retainAll(collection);
     }
 
     public void clear() {
-        stateListBuilder.clear(this);
         list.clear();
     }
 
     public Mouth get(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.get(index);
     }
 
     public Mouth set(int index, Mouth element) {
-        element.setInList(index, stateListBuilder, this);
         return list.set(index, element);
     }
 
     public Mouth remove(int index) {
-        stateListBuilder.remove(index, this);
         return list.remove(index);
     }
 
     public int indexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.indexOf(element);
     }
 
     public int lastIndexOf(Object element) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.lastIndexOf(element);
     }
 
     public ListIterator<Mouth> listIterator() {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator();
     }
 
     public ListIterator<Mouth> listIterator(int index) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.listIterator(index);
     }
 
     public List<Mouth> subList(int fromIndex, int toIndex) {
-        stateListBuilder.throwExceptionIfOutOfSync(this);
         return list.subList(fromIndex, toIndex);
     }
 
@@ -193,6 +175,6 @@ public abstract class MouthAbstractList implements List<Mouth> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + ", stateList=" + stateListBuilder + '}';
+        return getClass().getSimpleName() + "{list=" + list + '}';
     }
 }

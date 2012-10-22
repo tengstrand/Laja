@@ -20,32 +20,24 @@ public class HeadValue implements HeadElement {
         this.stateBuilder = stateBuilder;
     }
 
+    public boolean isStateInSync() {
+        return true;
+    }
+
+    public boolean syncState() {
+        return false;
+    }
+
+    public boolean contains(HeadStateList stateList) {
+        return stateList.contains(state);
+    }
+
     public HeadState getState(Certificate certificate) {
         return state;
     }
 
     public void addToList(HeadStateList stateList) {
         stateList.add(state);
-    }
-
-    public void addToList(HeadStateListBuilder listBuilder) {
-        listBuilder.add(state);
-    }
-
-    public void addToList(HeadStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(state, mutator);
-    }
-
-    public void addToList(int index, HeadStateListBuilder listBuilder, Object mutator) {
-        listBuilder.add(index, state, mutator);
-    }
-
-    public void setInList(int index, HeadStateListBuilder listBuilder, Object accessor) {
-        listBuilder.set(index, state, accessor);
-    }
-
-    public boolean removeFromList(HeadStateListBuilder listBuilder, Object mutator) {
-        return listBuilder.remove(state, mutator);
     }
 
     @Override
