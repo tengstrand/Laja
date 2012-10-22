@@ -41,7 +41,6 @@ public abstract class {abstractListClass} implements List<{entryClass}> {
     public {abstractListClass}(List<{entryClass}> list) {
         this.list.addAll(list);
     }
-
       #if (method.isFactory)
 
         #setArgumentsAndParameters(method, true)
@@ -55,7 +54,7 @@ public abstract class {abstractListClass} implements List<{entryClass}> {
         }
     }
       #end
-      #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName && m.generateList && !m.isFactory)
+      #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName && m.generateList)
         #setArgumentsAndParameters(m, false)
 
     public {m.listClass} {m.methodName}List({parameters}) {

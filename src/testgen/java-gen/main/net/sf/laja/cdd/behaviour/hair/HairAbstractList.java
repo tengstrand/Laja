@@ -21,7 +21,6 @@ public abstract class HairAbstractList implements List<Hair> {
         this.list.addAll(list);
     }
 
-
     public HairAbstractList(HairStateList stateList) {
         this.stateList = stateList;
 
@@ -30,6 +29,14 @@ public abstract class HairAbstractList implements List<Hair> {
             Hair entry = (Hair) builder.as(new HairFactory.HairFactory_(builder));
             list.add(entry);
         }
+    }
+
+    public FakeHairList asFakeHairList() {
+        List<FakeHair> result = new ArrayList<FakeHair>();
+        for (Hair entry : list) {
+            result.add(entry.asFakeHair());
+        }
+        return new FakeHairList(result);
     }
 
     public boolean isStateInSync() {

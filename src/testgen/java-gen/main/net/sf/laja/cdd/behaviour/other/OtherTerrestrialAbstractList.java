@@ -21,7 +21,6 @@ public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestr
         this.list.addAll(list);
     }
 
-
     public OtherTerrestrialAbstractList(TerrestrialStateList stateList) {
         this.stateList = stateList;
 

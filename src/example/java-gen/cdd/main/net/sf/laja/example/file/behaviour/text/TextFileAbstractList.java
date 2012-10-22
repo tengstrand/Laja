@@ -21,7 +21,6 @@ public abstract class TextFileAbstractList implements List<TextFile> {
         this.list.addAll(list);
     }
 
-
     public boolean isStateInSync() {
         if (stateList == null) {
             return true;

@@ -21,7 +21,6 @@ public abstract class ArmAbstractList implements List<Arm> {
         this.list.addAll(list);
     }
 
-
     public ArmAbstractList(ArmStateList stateList) {
         this.stateList = stateList;
 

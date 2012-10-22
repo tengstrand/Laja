@@ -24,7 +24,6 @@ public abstract class TestMouthAbstractList implements List<TestMouth> {
         this.list.addAll(list);
     }
 
-
     public TestMouthAbstractList(MouthStateList stateList) {
         this.stateList = stateList;
 

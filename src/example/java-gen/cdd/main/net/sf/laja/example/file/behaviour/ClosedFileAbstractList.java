@@ -24,7 +24,6 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
         this.list.addAll(list);
     }
 
-
     public ClosedFileAbstractList(FileStateList stateList, Directory directory) {
         this.stateList = stateList;
 

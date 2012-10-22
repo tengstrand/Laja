@@ -24,7 +24,6 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
         this.list.addAll(list);
     }
 
-
     public boolean isStateInSync() {
         if (stateList == null) {
             return true;

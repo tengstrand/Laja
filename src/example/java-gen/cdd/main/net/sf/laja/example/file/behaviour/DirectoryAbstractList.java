@@ -24,7 +24,6 @@ public abstract class DirectoryAbstractList implements List<Directory> {
         this.list.addAll(list);
     }
 
-
     public DirectoryAbstractList(DirectoryStateList stateList) {
         this.stateList = stateList;
 

@@ -21,7 +21,6 @@ public abstract class FakeHairAbstractList implements List<FakeHair> {
         this.list.addAll(list);
     }
 
-
     public FakeHairAbstractList(HairStateList stateList) {
         this.stateList = stateList;
 

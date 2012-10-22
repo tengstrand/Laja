@@ -21,7 +21,6 @@ public abstract class AddressAbstractList implements List<Address> {
         this.list.addAll(list);
     }
 
-
     public AddressAbstractList(AddressStateList stateList) {
         this.stateList = stateList;
 

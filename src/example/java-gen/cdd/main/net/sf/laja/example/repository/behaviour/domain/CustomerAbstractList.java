@@ -21,7 +21,6 @@ public abstract class CustomerAbstractList implements List<Customer> {
         this.list.addAll(list);
     }
 
-
     public CustomerAbstractList(CustomerStateList stateList) {
         this.stateList = stateList;
 

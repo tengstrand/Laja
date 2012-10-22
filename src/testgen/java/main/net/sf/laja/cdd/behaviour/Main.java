@@ -2,6 +2,9 @@ package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
+import net.sf.laja.cdd.behaviour.eye.Eye;
+import net.sf.laja.cdd.behaviour.eye.EyeList;
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEyeList;
 
 public class Main {
 
@@ -15,5 +18,7 @@ public class Main {
         list3.remove(1);
 
         System.out.println(list3);
+
+        ScaryEyeList eyes = Eye.createList(Eye.eyeWeightInGrams(1).color(1)).asEyeList().asScaryEyeList();
     }
 }

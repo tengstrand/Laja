@@ -21,7 +21,6 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth> {
         this.list.addAll(list);
     }
 
-
     public boolean isStateInSync() {
         if (stateList == null) {
             return true;

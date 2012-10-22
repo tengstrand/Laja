@@ -21,7 +21,6 @@ public abstract class TestBrowAbstractList implements List<TestBrow> {
         this.list.addAll(list);
     }
 
-
     public TestBrowAbstractList(BrowStateList stateList) {
         this.stateList = stateList;
 

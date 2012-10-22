@@ -24,7 +24,6 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye> {
         this.list.addAll(list);
     }
 
-
     public boolean isStateInSync() {
         if (stateList == null) {
             return true;

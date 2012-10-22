@@ -24,7 +24,6 @@ public abstract class EyeAbstractList implements List<Eye> {
         this.list.addAll(list);
     }
 
-
     public EyeAbstractList(EyeStateList stateList) {
         this.stateList = stateList;
 
