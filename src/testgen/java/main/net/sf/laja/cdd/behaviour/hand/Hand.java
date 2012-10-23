@@ -1,0 +1,14 @@
+package net.sf.laja.cdd.behaviour.hand;
+
+import net.sf.laja.cdd.state.hand.HandState;
+
+public class Hand extends HandFactory {
+    public Hand(HandState state) {
+        super(state);
+    }
+
+    // (factory) (list)
+    public Hand asHand() {
+        return new Hand(state);
+    }
+}

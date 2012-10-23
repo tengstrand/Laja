@@ -1,5 +1,7 @@
 package net.sf.laja.cdd.state.arm;
 
+import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.hand.HandStateListBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -11,6 +13,8 @@ public interface ArmStateBuilder {
     void withArmLength(int armLength);
     void withArmWeight(double armWeight);
     void withArmWeight(String armWeight);
+    void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder);
+    HandStateListBuilder getHandsStateListBuilder();
     boolean isValid();
     Object as(ArmStateBehaviourFactory factory, Object... args);
     ArmState getArmState(net.sf.laja.cdd.state.Certificate certificate);

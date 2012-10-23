@@ -18,6 +18,9 @@ import net.sf.laja.cdd.state.animal.AnimalStateBuilderImpl;
 import net.sf.laja.cdd.state.fleck.FleckStateImpl;
 import net.sf.laja.cdd.state.fleck.FleckStateListImpl;
 import net.sf.laja.cdd.state.fleck.FleckStateBuilderImpl;
+import net.sf.laja.cdd.state.hand.HandStateImpl;
+import net.sf.laja.cdd.state.hand.HandStateListImpl;
+import net.sf.laja.cdd.state.hand.HandStateBuilderImpl;
 import net.sf.laja.cdd.state.arm.ArmStateImpl;
 import net.sf.laja.cdd.state.arm.ArmStateListImpl;
 import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
@@ -76,6 +79,10 @@ public class Certificate {
     public static Certificate get(FleckStateImpl state) { return new Certificate(); }
     public static Certificate get(FleckStateListImpl state) { return new Certificate(); }
     public static Certificate get(FleckStateBuilderImpl state) { return new Certificate(); }
+
+    public static Certificate get(HandStateImpl state) { return new Certificate(); }
+    public static Certificate get(HandStateListImpl state) { return new Certificate(); }
+    public static Certificate get(HandStateBuilderImpl state) { return new Certificate(); }
 
     public static Certificate get(ArmStateImpl state) { return new Certificate(); }
     public static Certificate get(ArmStateListImpl state) { return new Certificate(); }

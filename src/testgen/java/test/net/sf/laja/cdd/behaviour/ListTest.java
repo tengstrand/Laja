@@ -1,9 +1,12 @@
 package net.sf.laja.cdd.behaviour;
 
+import net.sf.laja.cdd.behaviour.arm.Arm;
 import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.hair.FakeHairList;
 import net.sf.laja.cdd.behaviour.hair.Hair;
 import net.sf.laja.cdd.behaviour.hair.HairList;
+import net.sf.laja.cdd.behaviour.hand.Hand;
+import net.sf.laja.cdd.behaviour.hand.HandList;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -279,55 +282,63 @@ public class ListTest {
         assertEquals(Arrays.asList(1, 3), list.areas());
     }
 
-/*
     @Test
-    public void removeViaOtherList() {
-        TestMouthList testList = TestMouthFactory.createList(TestMouth.width(10).height(5).color("Red"),
-                TestMouth.width(8).height(4).color("Blue")).asTestMouthList();
+    public void syncState() {
+        Arm arm = Arm.armWeight(1).hands(Hand.createList(Hand.area(10), Hand.area(20), Hand.area(30))).asArm();
 
-        testList.asCuteMouthList().remove(0);
+        assertEquals(3, arm.numberOfStateHands());
 
-        assertEquals(1, testList.stateSize());
-    }
-*/
-/*
-    @Test(expected = IllegalStateException.class)
-    public void illegalStateIfListIsMutatedFromAnotherList() {
-        TestMouthList testList = createTestMouthList();
-        testList.asCuteMouthList().remove(0);
-        testList.get(0);
-    }
-*/
-    /*
-    @Test
-    public void listIsMutatedFromAnotherListWithSyncState() {
-        TestMouthList testList = createTestMouthList();
-        testList.asCuteMouthList().remove(0);
-        testList.syncState();
-        testList.get(0);
+        HandList hands = arm.getHands();
 
-        assertEquals(1, testList.size());
+        hands.remove(1);
+
+        assertEquals(3, arm.numberOfStateHands());
+
+        hands.syncState();
+
+        assertEquals(2, arm.numberOfStateHands());
     }
-*/
 
     private TestMouthList createTestMouthList() {
         return TestMouthFactory.createList(TestMouth.width(10).height(5).color("Red"),
                 TestMouth.width(8).height(4).color("Blue")).asTestMouthList();
     }
 
-/*
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void tryRemoveElementViaValueBasedListHavingEntityBasedState() {
         final int length = 9;
         final String red = "Red";
         final String black = "Black";
+        final String blond = "Blond";
 
         HairList hairList = Hair.createList(
                 Hair.length(length).color(red),
-                Hair.length(length).color(black)
+                Hair.length(length).color(black),
+                Hair.length(length).color(blond)
         ).asHairList();
 
+        HairList expectedHair = Hair.createList(
+                Hair.length(length).color(black),
+                Hair.length(length).color(blond)
+        ).asHairList();
+
+        // Will remove the Red hair.
         hairList.remove(Hair.length(length).color(black).asHair());
+
+        assertEquals(2, hairList.size());
+        assertTrue(hairList.containsAll(expectedHair));
+
+        FakeHairList fakeList = hairList.asFakeHairList();
+
+        assertEquals(2, fakeList.size());
+
+        System.out.println(fakeList);
+
+        fakeList.remove(Hair.length(length).color(blond).asFakeHair());
+
+        assertEquals(1, fakeList.size());
+        assertTrue(fakeList.get(0).hasColor(black));
+
+
     }
-*/
 }

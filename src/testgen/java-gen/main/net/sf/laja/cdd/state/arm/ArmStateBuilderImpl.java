@@ -1,5 +1,7 @@
 package net.sf.laja.cdd.state.arm;
 
+import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.hand.HandStateListBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -12,6 +14,7 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
     private ArmState state;
     private final Certificate certificate;
     private boolean trusted;
+    private HandStateListBuilder handsStateListBuilder;
 
     ArmStateBuilderImpl() {
         state = new ArmStateImpl();
@@ -37,6 +40,18 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
     public void withArmWeight(String armWeight) {
         if (!trusted && encapsulated) throwEncapsulationException();
         state.setArmWeight(Double.valueOf(armWeight));
+    }
+
+    public void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder) {
+        if (!trusted && encapsulated) throwEncapsulationException();
+        state.setHands(listBuilder.getStateList(certificate));
+    }
+
+    public HandStateListBuilder getHandsStateListBuilder() {
+        if (handsStateListBuilder == null) {
+            handsStateListBuilder = new HandStateListBuilder(state.getHands());
+        }
+        return handsStateListBuilder;
     }
 
     private void throwEncapsulationException() {

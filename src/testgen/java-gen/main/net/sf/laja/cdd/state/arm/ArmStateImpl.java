@@ -1,5 +1,8 @@
 package net.sf.laja.cdd.state.arm;
 
+import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.hand.HandStateListImpl;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -10,10 +13,12 @@ import net.sf.laja.cdd.state.Certificate;
 public class ArmStateImpl implements ArmState {
     protected int armLength = -1; // (optional)
     protected double armWeight;
+    protected HandStateList hands;
 
     private boolean _encapsulated = false;
 
     ArmStateImpl() {
+        hands = HandStateListImpl.emptyList(Certificate.get(this));
     }
 
     public static ArmStateBuilder build() {
@@ -33,19 +38,25 @@ public class ArmStateImpl implements ArmState {
     }
 
     private boolean isValid(boolean encapsulated) {
+        if ((hands == null || !hands.isValid())) {
+            return false;
+        }
         return true;
     }
 
     // Getters
     public int getArmLength() { return armLength; }
     public double getArmWeight() { return armWeight; }
+    public HandStateList getHands() { return hands; }
 
     // Setters
     public void setArmLength(int armLength) { this.armLength = armLength; }
     public void setArmWeight(double armWeight) { this.armWeight = armWeight; }
+    public void setHands(HandStateList hands) { this.hands.clear(); this.hands.addAll(hands); }
 
     public void encapsulate() {
         _encapsulated = true;
+        hands.encapsulate();
     }
 
     @Override
@@ -57,6 +68,7 @@ public class ArmStateImpl implements ArmState {
 
         if (armLength != state.getArmLength()) return false;
         if (armWeight != state.getArmWeight()) return false;
+        if (hands != null ? !hands.equals(state.hands) : state.hands != null) return false;
 
         return true;
     }
@@ -69,6 +81,7 @@ public class ArmStateImpl implements ArmState {
 
         if (armLength != state.getArmLength()) return false;
         if (armWeight != state.getArmWeight()) return false;
+        if (hands != null ? !hands.equals(state.hands) : state.hands != null) return false;
 
         return true;
     }
@@ -77,6 +90,7 @@ public class ArmStateImpl implements ArmState {
     public int hashCode() {
         int result = armLength;
         result = 31 * result + (int)armWeight;
+        result = 31 * result + (hands != null ? hands.hashCode() : 0);
 
         return result;
     }
@@ -84,6 +98,7 @@ public class ArmStateImpl implements ArmState {
     public int valueHashCode() {
         int result = armLength;
         result = 31 * result + (int)armWeight;
+        result = 31 * result + (hands != null ? hands.hashCode() : 0);
 
         return result;
     }
@@ -91,6 +106,7 @@ public class ArmStateImpl implements ArmState {
     @Override
     public String toString() {
         return "{armLength=" + armLength +
-                ", armWeight=" + armWeight + "}";
+                ", armWeight=" + armWeight +
+                ", hands=" + hands + "}";
     }
 }

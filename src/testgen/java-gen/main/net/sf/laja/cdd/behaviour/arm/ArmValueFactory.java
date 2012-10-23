@@ -6,6 +6,7 @@ import java.util.Arrays;
 import net.sf.laja.cdd.state.arm.*;
 import net.sf.laja.cdd.state.arm.ArmState;
 import java.util.ArrayList;
+import net.sf.laja.cdd.behaviour.hand.HandListCreator;
 
 public class ArmValueFactory extends ArmValue {
 
@@ -17,11 +18,11 @@ public class ArmValueFactory extends ArmValue {
         super(state, stateBuilder);
     }
 
-    public static ArmEncapsulator armWeight(double armWeight) {
+    public static ArmCreator.Hands_ armWeight(double armWeight) {
         return new ArmCreator().new ArmWeight_().armWeight(armWeight);
     }
 
-    public static ArmEncapsulator armWeight(String armWeight) {
+    public static ArmCreator.Hands_ armWeight(String armWeight) {
         return new ArmCreator().new ArmWeight_().armWeight(armWeight);
     }
 

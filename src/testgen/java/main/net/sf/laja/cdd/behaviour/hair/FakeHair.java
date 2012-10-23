@@ -7,4 +7,8 @@ public class FakeHair extends HairValue {
     public FakeHair(HairState state) {
         super(state);
     }
+
+    public boolean hasColor(String color) {
+        return state.getColor().equals(color);
+    }
 }

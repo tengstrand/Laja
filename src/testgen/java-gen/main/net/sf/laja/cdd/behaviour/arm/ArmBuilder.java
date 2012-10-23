@@ -1,7 +1,11 @@
 package net.sf.laja.cdd.behaviour.arm;
 
 import net.sf.laja.cdd.state.arm.*;
+import net.sf.laja.cdd.behaviour.hand.HandListCreator;
 import net.sf.laja.cdd.state.arm.ArmState;
+import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.behaviour.hand.HandBuilder;
+import net.sf.laja.cdd.behaviour.hand.HandListCreator;
 
 public class ArmBuilder {
     public final ArmStateBuilder builder;
@@ -26,6 +30,11 @@ public class ArmBuilder {
 
     public ArmBuilder withArmWeight(String armWeight) {
         builder.withArmWeight(armWeight);
+        return this;
+    }
+
+    public ArmBuilder withHands(HandListCreator hands) {
+        builder.withHands(hands.stateList);
         return this;
     }
 

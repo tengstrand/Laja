@@ -9,7 +9,7 @@ public class EncapsulationTest {
 
     @Test (expected = IllegalStateException.class)
     public void modifyEncapsulatedObject_viaTheEncapsulator() {
-        ArmEncapsulator encapsulator = Arm.armWeight(10);
+        ArmEncapsulator encapsulator = Arm.armWeight(10).hands();
         encapsulator.asArm();
 
         // Trying to modify state after encapsulation.
@@ -27,7 +27,7 @@ public class EncapsulationTest {
 
     @Test (expected = IllegalStateException.class)
     public void modifyEncapsulatedList() {
-        ArmEncapsulator encapsulator = Arm.armWeight(1);
+        ArmEncapsulator encapsulator = Arm.armWeight(1).hands();
         Arm.createList(encapsulator).asArmList();
 
         // Trying to modify state of an element after encapsulation of the list.
