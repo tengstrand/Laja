@@ -42,12 +42,15 @@ public class OutputDirectoryReader {
 
             int cntNew = count(NEW);
             int cntChanged = count(CHANGED);
-            int cntUnchanged = count(UNCHANGED);
             int cntRemoved = count(REMOVE);
 
             if (cntNew > 0) { message += sep + cntNew + " new"; sep = ", "; }
             if (cntChanged > 0) { message += sep + cntChanged + " changed"; sep = ", "; }
-            if (cntUnchanged > 0 && (cntNew > 0 || cntChanged > 0 || cntRemoved > 0)) { message += sep + cntUnchanged + " unchanged"; sep = ", "; }
+
+            if (verbose) {
+                int cntUnchanged = count(UNCHANGED);
+                if (cntUnchanged > 0 && (cntNew > 0 || cntChanged > 0 || cntRemoved > 0)) { message += sep + cntUnchanged + " unchanged"; sep = ", "; }
+            }
 
             if (cntRemoved > 0) {
                 if (autoRemove) {
