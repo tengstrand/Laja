@@ -6,7 +6,7 @@ import java.util.Arrays;
 import net.sf.laja.cdd.state.arm.*;
 import net.sf.laja.cdd.state.arm.ArmState;
 import java.util.ArrayList;
-import net.sf.laja.cdd.behaviour.hand.HandListCreator;
+import net.sf.laja.cdd.behaviour.hand.HandList;
 
 public class ArmValueFactory extends ArmValue {
 

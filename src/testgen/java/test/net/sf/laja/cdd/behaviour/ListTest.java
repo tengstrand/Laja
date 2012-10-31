@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.behaviour;
 
+import junit.framework.Assert;
 import net.sf.laja.cdd.behaviour.arm.Arm;
 import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.hair.FakeHairList;
@@ -104,38 +105,6 @@ public class ListTest {
     }
 
     @Test
-    public void add() {
-        TestBrowList list = createBrowList();
-        list.add(TestBrow.area(5).asTestBrow());
-
-        assertEquals(Arrays.asList(1, 2, 3, 5), list.areas());
-    }
-
-    @Test
-    public void add_withIndex() {
-        TestBrowList list = createBrowList();
-        list.add(2, TestBrow.area(5).asTestBrow());
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(5).asTestBrow(),
-                TestBrow.area(3).asTestBrow()
-        );
-
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1, 2, 5, 3), list.areas());
-    }
-
-    @Test
-    public void remove() {
-        TestBrowList list = createBrowList();
-        list.remove(TestBrow.area(2).asTestBrow());
-
-        assertEquals(Arrays.asList(1, 3), list.areas());
-    }
-
-    @Test
     public void containsAll() {
         TestBrowList list = createBrowList();
         TestBrowList collection = new TestBrowList(
@@ -146,157 +115,12 @@ public class ListTest {
     }
 
     @Test
-    public void addAll() {
-        TestBrowList list = createBrowList();
-        TestBrowList collection = new TestBrowList(
-                TestBrow.area(4).asTestBrow(),
-                TestBrow.area(5).asTestBrow()
-        );
-        list.addAll(collection);
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(3).asTestBrow(),
-                TestBrow.area(4).asTestBrow(),
-                TestBrow.area(5).asTestBrow()
-        );
-
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5), list.areas());
-    }
-
-    @Test
-    public void addAll_withIndex() {
-        TestBrowList list = createBrowList();
-        TestBrowList collection = new TestBrowList(
-                TestBrow.area(4).asTestBrow(),
-                TestBrow.area(5).asTestBrow()
-        );
-        list.addAll(1, collection);
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(4).asTestBrow(),
-                TestBrow.area(5).asTestBrow(),
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(3).asTestBrow()
-        );
-
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1, 4, 5, 2, 3), list.areas());
-    }
-
-    @Test
-    public void removeAll() {
-        TestBrowList list = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(3).asTestBrow(),
-                TestBrow.area(4).asTestBrow(),
-                TestBrow.area(5).asTestBrow(),
-                TestBrow.area(6).asTestBrow()
-        );
-        TestBrowList removeList = new TestBrowList(
-                TestBrow.area(3).asTestBrow(),
-                TestBrow.area(4).asTestBrow()
-        );
-        list.removeAll(removeList);
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(5).asTestBrow(),
-                TestBrow.area(6).asTestBrow()
-        );
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1, 2, 5, 6), list.areas());
-    }
-
-    @Test
-    public void retainAll() {
-        TestBrowList list = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(3).asTestBrow(),
-                TestBrow.area(4).asTestBrow()
-        );
-        TestBrowList retainList = new TestBrowList(
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(3).asTestBrow(),
-                TestBrow.area(5).asTestBrow()
-        );
-
-        list.retainAll(retainList);
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(2).asTestBrow(),
-                TestBrow.area(3).asTestBrow()
-        );
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(2, 3), list.areas());
-    }
-
-    @Test
-    public void clear() {
-        TestBrowList list = createBrowList();
-        list.clear();
-
-        assertEquals(0, list.size());
-        assertEquals(Arrays.asList(), list.areas());
-    }
-
-    @Test
     public void get() {
         TestBrowList list = createBrowList();
         TestBrow expectedBrow = TestBrow.area(2).asTestBrow();
 
         assertEquals(expectedBrow, list.get(1));
         assertEquals(new Integer(2), list.areas().get(1));
-    }
-
-    @Test
-    public void set() {
-        TestBrowList list = createBrowList();
-        list.set(1, TestBrow.area(5).asTestBrow());
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(5).asTestBrow(),
-                TestBrow.area(3).asTestBrow()
-        );
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1, 5, 3), list.areas());
-    }
-
-    @Test
-    public void remove_usingIndex() {
-        TestBrowList list = createBrowList();
-        list.remove(1);
-
-        TestBrowList expectedList = new TestBrowList(
-                TestBrow.area(1).asTestBrow(),
-                TestBrow.area(3).asTestBrow()
-        );
-        assertEquals(expectedList, list);
-        assertEquals(Arrays.asList(1, 3), list.areas());
-    }
-
-    @Test
-    public void syncState() {
-        Arm arm = Arm.armWeight(1).hands(Hand.createList(Hand.area(10), Hand.area(20), Hand.area(30))).asArm();
-
-        assertEquals(3, arm.numberOfStateHands());
-
-        HandList hands = arm.getHands();
-
-        hands.remove(1);
-
-        assertEquals(3, arm.numberOfStateHands());
-
-        hands.syncState();
-
-        assertEquals(2, arm.numberOfStateHands());
     }
 
     private TestMouthList createTestMouthList() {
@@ -338,7 +162,125 @@ public class ListTest {
 
         assertEquals(1, fakeList.size());
         assertTrue(fakeList.get(0).hasColor(black));
+    }
 
+    @Test
+    public void add() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1))).asArm();
+        arm1.getHands().add(Hand.area(2).asHand());
+        Arm arm2 = arm1.asArm();
 
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void addAtIndex() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
+        arm1.getHands().add(1, Hand.area(3).asHand());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3), Hand.area(2)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void addAll() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
+        arm1.getHands().addAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3), Hand.area(4)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void addAllAtIndex() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
+        arm1.getHands().addAll(1, Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3), Hand.area(4), Hand.area(2)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void remove() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        arm1.getHands().remove(Hand.area(2).asHand());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void removeAll() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3), Hand.area(4), Hand.area(5))).asArm();
+        arm1.getHands().removeAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2), Hand.area(5)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void retainAll() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        arm1.getHands().retainAll(Hand.createList(Hand.area(2), Hand.area(3), Hand.area(4)).asHandList());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(2), Hand.area(3)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void clear() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        arm1.getHands().clear();
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList().asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void set() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        arm1.getHands().set(1, Hand.area(4).asHand());
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(4), Hand.area(3)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
+    }
+
+    @Test
+    public void removeAtIndex() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        arm1.getHands().remove(1);
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3)).asHandList();
+
+        assertEquals(expectedList, arm1.getHands());
+        assertEquals(expectedList, arm2.getHands());
     }
 }

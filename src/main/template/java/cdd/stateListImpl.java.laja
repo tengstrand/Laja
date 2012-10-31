@@ -3,7 +3,7 @@
 public class {stateListImplClass} extends ArrayList<{stateClass}> implements {stateListClass} {
     private boolean _encapsulated = false;
 
-    {stateListImplClass}() {
+    public {stateListImplClass}() {
     }
 
     public static {stateListClass} emptyList(Certificate certificate) {

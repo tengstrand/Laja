@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class FleckStateListImpl extends ArrayList<FleckState> implements FleckStateList {
     private boolean _encapsulated = false;
 
-    FleckStateListImpl() {
+    public FleckStateListImpl() {
     }
 
     public static FleckStateList emptyList(Certificate certificate) {

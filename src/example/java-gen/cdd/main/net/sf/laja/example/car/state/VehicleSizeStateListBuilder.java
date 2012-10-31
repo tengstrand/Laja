@@ -11,7 +11,6 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public final class VehicleSizeStateListBuilder {
-    private Object lastMutator;
     private final Certificate certificate;
     private final VehicleSizeStateList states;
 
@@ -38,27 +37,11 @@ public final class VehicleSizeStateListBuilder {
         return builders;
     }
 
-    public void throwExceptionIfOutOfSync(Object accessor) {
-        if (lastMutator != null && lastMutator != accessor) {
-            throw new IllegalStateException("The state has been changed by another list. Call syncState() to synchronize the internal state with the enclosing list.");
-        }
-    }
-
-    private void prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(Object mutator) {
-        throwExceptionIfOutOfSync(mutator);
-        this.lastMutator = mutator;
-    }
-
-    public void syncState() {
-        this.lastMutator = null;
-    }
-
     public int size() {
         return states.size();
     }
 
-    public void clear(Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void clear() {
         states.clear();
     }
 
@@ -70,43 +53,32 @@ public final class VehicleSizeStateListBuilder {
         states.add(state);
     }
 
-    public void add(VehicleSizeState state, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
-        states.add(state);
-    }
-
-    public void add(int index, VehicleSizeState state, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void add(int index, VehicleSizeState state) {
         states.add(index, state);
     }
 
-    public void addAll(int index, VehicleSizeStateListBuilder listBuilder, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void addAll(int index, VehicleSizeStateListBuilder listBuilder) {
         states.addAll(index, listBuilder.states);
     }
 
-    public void set(int index, VehicleSizeState state, Object accessor) {
-        throwExceptionIfOutOfSync(accessor);
+    public void set(int index, VehicleSizeState state) {
         states.set(index, state);
     }
 
-    public boolean remove(VehicleSizeState state, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public boolean remove(VehicleSizeState state) {
         return states.remove(state);
     }
 
-    public void remove(int index, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void remove(int index) {
         states.remove(index);
     }
 
-    public void retainAll(VehicleSizeStateListBuilder retainStates, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void retainAll(VehicleSizeStateListBuilder retainStates) {
         states.retainAll(retainStates.states);
     }
 
     @Override
     public String toString() {
-        return "VehicleSizeStateListBuilder{states=" + states + ", lastMutator.hashCode()=" + (lastMutator == null ? null : lastMutator.hashCode()) + "}";
+        return "VehicleSizeStateListBuilder{states=" + states + "}";
     }
 }

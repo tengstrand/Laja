@@ -20,19 +20,15 @@ public class ArmValue implements ArmElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(ArmStateList stateList) {
         return stateList.contains(state);
     }
 
     public ArmState getState(Certificate certificate) {
+        return state;
+    }
+
+    public ArmState getState(ArmStateList stateList) {
         return state;
     }
 

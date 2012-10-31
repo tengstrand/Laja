@@ -20,19 +20,15 @@ public class HandValue implements HandElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(HandStateList stateList) {
         return stateList.contains(state);
     }
 
     public HandState getState(Certificate certificate) {
+        return state;
+    }
+
+    public HandState getState(HandStateList stateList) {
         return state;
     }
 

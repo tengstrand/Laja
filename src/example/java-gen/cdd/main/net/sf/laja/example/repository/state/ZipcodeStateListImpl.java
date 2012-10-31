@@ -11,7 +11,7 @@ import net.sf.laja.example.repository.state.Certificate;
 public class ZipcodeStateListImpl extends ArrayList<ZipcodeState> implements ZipcodeStateList {
     private boolean _encapsulated = false;
 
-    ZipcodeStateListImpl() {
+    public ZipcodeStateListImpl() {
     }
 
     public static ZipcodeStateList emptyList(Certificate certificate) {

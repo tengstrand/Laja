@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class LegStateListImpl extends ArrayList<LegState> implements LegStateList {
     private boolean _encapsulated = false;
 
-    LegStateListImpl() {
+    public LegStateListImpl() {
     }
 
     public static LegStateList emptyList(Certificate certificate) {

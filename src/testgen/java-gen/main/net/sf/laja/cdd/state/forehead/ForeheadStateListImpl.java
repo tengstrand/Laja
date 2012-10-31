@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class ForeheadStateListImpl extends ArrayList<ForeheadState> implements ForeheadStateList {
     private boolean _encapsulated = false;
 
-    ForeheadStateListImpl() {
+    public ForeheadStateListImpl() {
     }
 
     public static ForeheadStateList emptyList(Certificate certificate) {

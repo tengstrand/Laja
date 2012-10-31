@@ -11,7 +11,7 @@ import net.sf.laja.example.car.state.Certificate;
 public class OwnerStateListImpl extends ArrayList<OwnerState> implements OwnerStateList {
     private boolean _encapsulated = false;
 
-    OwnerStateListImpl() {
+    public OwnerStateListImpl() {
     }
 
     public static OwnerStateList emptyList(Certificate certificate) {

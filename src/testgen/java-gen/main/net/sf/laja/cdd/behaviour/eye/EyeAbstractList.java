@@ -42,34 +42,6 @@ public abstract class EyeAbstractList implements List<Eye> {
         return new ScaryEyeList(result);
     }
 
-    public boolean isStateInSync() {
-        if (stateList == null) {
-            return true;
-        }
-        if (stateList.size() != list.size()) {
-            return false;
-        }
-        for (Eye element : list) {
-            if (!element.contains(stateList) || !element.isStateInSync()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean syncState() {
-        if (isStateInSync()) {
-            return false;
-        }
-        stateList.clear();
-
-        for (Eye entry : list) {
-            entry.syncState();
-            entry.addToList(stateList);
-        }
-        return true;
-    }
-
     public int size() {
         return list.size();
     }
@@ -95,24 +67,47 @@ public abstract class EyeAbstractList implements List<Eye> {
     }
 
     public boolean add(Eye element) {
+        if (stateList != null) {
+            stateList.add(element.getState(stateList));
+        }
         return list.add(element);
     }
 
     public void add(int index, Eye element) {
+        if (stateList != null) {
+            stateList.add(index, element.getState(stateList));
+        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Eye> collection) {
+        if (stateList != null) {
+            List newElements = new ArrayList(collection.size());
+            for (Eye element : collection) {
+                newElements.add(element.getState(stateList));
+            }
+            stateList.addAll(newElements);
+        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Eye> collection) {
+        if (stateList != null) {
+            List newElements = new ArrayList(collection.size());
+            for (Eye element : collection) {
+                newElements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, newElements);
+        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof Eye)) {
             return false;
+        }
+        if (stateList != null) {
+            stateList.remove(((Eye)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -122,14 +117,41 @@ public abstract class EyeAbstractList implements List<Eye> {
     }
 
     public boolean removeAll(Collection<?> collection) {
+        if (stateList != null) {
+            List removedElements = new ArrayList(collection.size());
+            List removedStateElements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Eye) {
+                    removedElements.add(element);
+                    removedStateElements.add(((Eye)element).getState(stateList));
+                }
+            }
+            stateList.removeAll(removedStateElements);
+            return list.removeAll(removedElements);
+        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
+        if (stateList != null) {
+            List retainedElements = new ArrayList(collection.size());
+            List retainedStateElements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Eye) {
+                    retainedElements.add(element);
+                    retainedStateElements.add(((Eye)element).getState(stateList));
+                }
+            }
+            stateList.retainAll(retainedStateElements);
+            return list.retainAll(retainedElements);
+        }
         return list.retainAll(collection);
     }
 
     public void clear() {
+        if (stateList != null) {
+            stateList.clear();
+        }
         list.clear();
     }
 
@@ -138,10 +160,16 @@ public abstract class EyeAbstractList implements List<Eye> {
     }
 
     public Eye set(int index, Eye element) {
+        if (stateList != null) {
+            stateList.set(index, element.getState(stateList));
+        }
         return list.set(index, element);
     }
 
     public Eye remove(int index) {
+        if (stateList != null) {
+            stateList.remove(index);
+        }
         return list.remove(index);
     }
 

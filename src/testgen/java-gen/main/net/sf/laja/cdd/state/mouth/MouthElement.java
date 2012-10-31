@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.mouth;
 
 public interface MouthElement {
-    boolean syncState();
-    boolean isStateInSync();
+    MouthState getState(MouthStateList stateList);
     boolean contains(MouthStateList stateList);
     void addToList(MouthStateList stateList);
 }

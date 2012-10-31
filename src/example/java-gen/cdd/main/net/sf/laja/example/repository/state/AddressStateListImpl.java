@@ -11,7 +11,7 @@ import net.sf.laja.example.repository.state.Certificate;
 public class AddressStateListImpl extends ArrayList<AddressState> implements AddressStateList {
     private boolean _encapsulated = false;
 
-    AddressStateListImpl() {
+    public AddressStateListImpl() {
     }
 
     public static AddressStateList emptyList(Certificate certificate) {

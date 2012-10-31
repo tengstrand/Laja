@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class MouthStateListImpl extends ArrayList<MouthState> implements MouthStateList {
     private boolean _encapsulated = false;
 
-    MouthStateListImpl() {
+    public MouthStateListImpl() {
     }
 
     public static MouthStateList emptyList(Certificate certificate) {

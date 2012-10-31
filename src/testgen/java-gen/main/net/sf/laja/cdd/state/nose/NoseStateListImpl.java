@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class NoseStateListImpl extends ArrayList<NoseState> implements NoseStateList {
     private boolean _encapsulated = false;
 
-    NoseStateListImpl() {
+    public NoseStateListImpl() {
     }
 
     public static NoseStateList emptyList(Certificate certificate) {

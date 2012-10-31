@@ -20,19 +20,15 @@ public class ZipcodeValue {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(ZipcodeStateList stateList) {
         return stateList.contains(state);
     }
 
     public ZipcodeState getState(Certificate certificate) {
+        return state;
+    }
+
+    public ZipcodeState getState(ZipcodeStateList stateList) {
         return state;
     }
 

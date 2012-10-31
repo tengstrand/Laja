@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class EarStateListImpl extends ArrayList<EarState> implements EarStateList {
     private boolean _encapsulated = false;
 
-    EarStateListImpl() {
+    public EarStateListImpl() {
     }
 
     public static EarStateList emptyList(Certificate certificate) {

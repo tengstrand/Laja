@@ -1,8 +1,7 @@
 package net.sf.laja.example.person.state;
 
 public interface BmiElement {
-    boolean syncState();
-    boolean isStateInSync();
+    BmiState getState(BmiStateList stateList);
     boolean contains(BmiStateList stateList);
     void addToList(BmiStateList stateList);
 }

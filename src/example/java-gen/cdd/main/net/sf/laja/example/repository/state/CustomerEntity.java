@@ -20,19 +20,15 @@ public class CustomerEntity implements CustomerElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(CustomerStateList stateList) {
         return stateList.contains(state);
     }
 
     public CustomerState getState(Certificate certificate) {
+        return state;
+    }
+
+    public CustomerState getState(CustomerStateList stateList) {
         return state;
     }
 

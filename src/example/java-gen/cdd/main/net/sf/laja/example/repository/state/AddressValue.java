@@ -20,19 +20,15 @@ public class AddressValue implements AddressElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(AddressStateList stateList) {
         return stateList.contains(state);
     }
 
     public AddressState getState(Certificate certificate) {
+        return state;
+    }
+
+    public AddressState getState(AddressStateList stateList) {
         return state;
     }
 

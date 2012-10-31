@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class HeadStateListImpl extends ArrayList<HeadState> implements HeadStateList {
     private boolean _encapsulated = false;
 
-    HeadStateListImpl() {
+    public HeadStateListImpl() {
     }
 
     public static HeadStateList emptyList(Certificate certificate) {

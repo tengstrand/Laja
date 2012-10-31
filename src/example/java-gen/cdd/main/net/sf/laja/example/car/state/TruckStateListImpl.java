@@ -11,7 +11,7 @@ import net.sf.laja.example.car.state.Certificate;
 public class TruckStateListImpl extends ArrayList<TruckState> implements TruckStateList {
     private boolean _encapsulated = false;
 
-    TruckStateListImpl() {
+    public TruckStateListImpl() {
     }
 
     public static TruckStateList emptyList(Certificate certificate) {

@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class TerrestrialStateListImpl extends ArrayList<TerrestrialState> implements TerrestrialStateList {
     private boolean _encapsulated = false;
 
-    TerrestrialStateListImpl() {
+    public TerrestrialStateListImpl() {
     }
 
     public static TerrestrialStateList emptyList(Certificate certificate) {

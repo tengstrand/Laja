@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.ear;
 
 public interface EarElement {
-    boolean syncState();
-    boolean isStateInSync();
+    EarState getState(EarStateList stateList);
     boolean contains(EarStateList stateList);
     void addToList(EarStateList stateList);
 }

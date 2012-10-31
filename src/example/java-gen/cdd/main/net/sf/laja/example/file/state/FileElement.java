@@ -1,8 +1,7 @@
 package net.sf.laja.example.file.state;
 
 public interface FileElement {
-    boolean syncState();
-    boolean isStateInSync();
+    FileState getState(FileStateList stateList);
     boolean contains(FileStateList stateList);
     void addToList(FileStateList stateList);
 }

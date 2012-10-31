@@ -11,7 +11,7 @@ import net.sf.laja.example.repository.state.Certificate;
 public class CustomerStateListImpl extends ArrayList<CustomerState> implements CustomerStateList {
     private boolean _encapsulated = false;
 
-    CustomerStateListImpl() {
+    public CustomerStateListImpl() {
     }
 
     public static CustomerStateList emptyList(Certificate certificate) {

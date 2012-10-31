@@ -11,7 +11,7 @@ import net.sf.laja.example.file.state.Certificate;
 public class FileStateListImpl extends ArrayList<FileState> implements FileStateList {
     private boolean _encapsulated = false;
 
-    FileStateListImpl() {
+    public FileStateListImpl() {
     }
 
     public static FileStateList emptyList(Certificate certificate) {

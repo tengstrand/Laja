@@ -20,19 +20,15 @@ public class OwnerValue implements OwnerElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(OwnerStateList stateList) {
         return stateList.contains(state);
     }
 
     public OwnerState getState(Certificate certificate) {
+        return state;
+    }
+
+    public OwnerState getState(OwnerStateList stateList) {
         return state;
     }
 

@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class BrowStateListImpl extends ArrayList<BrowState> implements BrowStateList {
     private boolean _encapsulated = false;
 
-    BrowStateListImpl() {
+    public BrowStateListImpl() {
     }
 
     public static BrowStateList emptyList(Certificate certificate) {

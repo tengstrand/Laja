@@ -20,19 +20,15 @@ public class HeightValue implements HeightElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(HeightStateList stateList) {
         return stateList.contains(state);
     }
 
     public HeightState getState(Certificate certificate) {
+        return state;
+    }
+
+    public HeightState getState(HeightStateList stateList) {
         return state;
     }
 

@@ -11,7 +11,7 @@ import net.sf.laja.example.account.state.Certificate;
 public class AccountStateListImpl extends ArrayList<AccountState> implements AccountStateList {
     private boolean _encapsulated = false;
 
-    AccountStateListImpl() {
+    public AccountStateListImpl() {
     }
 
     public static AccountStateList emptyList(Certificate certificate) {

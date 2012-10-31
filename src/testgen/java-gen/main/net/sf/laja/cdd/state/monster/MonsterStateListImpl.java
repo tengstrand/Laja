@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class MonsterStateListImpl extends ArrayList<MonsterState> implements MonsterStateList {
     private boolean _encapsulated = false;
 
-    MonsterStateListImpl() {
+    public MonsterStateListImpl() {
     }
 
     public static MonsterStateList emptyList(Certificate certificate) {

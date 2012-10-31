@@ -20,19 +20,15 @@ public class EyeValue implements EyeElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(EyeStateList stateList) {
         return stateList.contains(state);
     }
 
     public EyeState getState(Certificate certificate) {
+        return state;
+    }
+
+    public EyeState getState(EyeStateList stateList) {
         return state;
     }
 

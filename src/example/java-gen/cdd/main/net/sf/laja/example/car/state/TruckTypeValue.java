@@ -20,19 +20,15 @@ public class TruckTypeValue implements TruckTypeElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(TruckTypeStateList stateList) {
         return stateList.contains(state);
     }
 
     public TruckTypeState getState(Certificate certificate) {
+        return state;
+    }
+
+    public TruckTypeState getState(TruckTypeStateList stateList) {
         return state;
     }
 

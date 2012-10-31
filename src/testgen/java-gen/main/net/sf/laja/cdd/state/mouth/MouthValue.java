@@ -20,19 +20,15 @@ public class MouthValue implements MouthElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(MouthStateList stateList) {
         return stateList.contains(state);
     }
 
     public MouthState getState(Certificate certificate) {
+        return state;
+    }
+
+    public MouthState getState(MouthStateList stateList) {
         return state;
     }
 

@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.brow;
 
 public interface BrowElement {
-    boolean syncState();
-    boolean isStateInSync();
+    BrowState getState(BrowStateList stateList);
     boolean contains(BrowStateList stateList);
     void addToList(BrowStateList stateList);
 }

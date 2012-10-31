@@ -20,19 +20,15 @@ public class BrowValue implements BrowElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(BrowStateList stateList) {
         return stateList.contains(state);
     }
 
     public BrowState getState(Certificate certificate) {
+        return state;
+    }
+
+    public BrowState getState(BrowStateList stateList) {
         return state;
     }
 

@@ -23,9 +23,4 @@ public class Arm extends ArmFactory {
     public HandList getHands() {
         return hands;
     }
-
-    @Override
-    public boolean syncState() {
-        return hands.syncState();
-    }
 }

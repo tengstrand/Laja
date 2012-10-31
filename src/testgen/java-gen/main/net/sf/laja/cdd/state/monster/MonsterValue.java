@@ -20,19 +20,15 @@ public class MonsterValue implements MonsterElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(MonsterStateList stateList) {
         return stateList.contains(state);
     }
 
     public MonsterState getState(Certificate certificate) {
+        return state;
+    }
+
+    public MonsterState getState(MonsterStateList stateList) {
         return state;
     }
 

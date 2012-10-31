@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class HandStateListImpl extends ArrayList<HandState> implements HandStateList {
     private boolean _encapsulated = false;
 
-    HandStateListImpl() {
+    public HandStateListImpl() {
     }
 
     public static HandStateList emptyList(Certificate certificate) {

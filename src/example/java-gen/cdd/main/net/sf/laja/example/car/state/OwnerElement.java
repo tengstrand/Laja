@@ -1,8 +1,7 @@
 package net.sf.laja.example.car.state;
 
 public interface OwnerElement {
-    boolean syncState();
-    boolean isStateInSync();
+    OwnerState getState(OwnerStateList stateList);
     boolean contains(OwnerStateList stateList);
     void addToList(OwnerStateList stateList);
 }

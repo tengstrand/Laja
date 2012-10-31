@@ -20,19 +20,15 @@ public class HairEntity implements HairElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(HairStateList stateList) {
         return stateList.contains(state);
     }
 
     public HairState getState(Certificate certificate) {
+        return state;
+    }
+
+    public HairState getState(HairStateList stateList) {
         return state;
     }
 

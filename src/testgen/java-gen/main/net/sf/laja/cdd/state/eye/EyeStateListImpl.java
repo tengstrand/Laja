@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class EyeStateListImpl extends ArrayList<EyeState> implements EyeStateList {
     private boolean _encapsulated = false;
 
-    EyeStateListImpl() {
+    public EyeStateListImpl() {
     }
 
     public static EyeStateList emptyList(Certificate certificate) {

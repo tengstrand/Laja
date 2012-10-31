@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class HairStateListImpl extends ArrayList<HairState> implements HairStateList {
     private boolean _encapsulated = false;
 
-    HairStateListImpl() {
+    public HairStateListImpl() {
     }
 
     public static HairStateList emptyList(Certificate certificate) {

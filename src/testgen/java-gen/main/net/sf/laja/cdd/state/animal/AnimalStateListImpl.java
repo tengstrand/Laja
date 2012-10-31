@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class AnimalStateListImpl extends ArrayList<AnimalState> implements AnimalStateList {
     private boolean _encapsulated = false;
 
-    AnimalStateListImpl() {
+    public AnimalStateListImpl() {
     }
 
     public static AnimalStateList emptyList(Certificate certificate) {

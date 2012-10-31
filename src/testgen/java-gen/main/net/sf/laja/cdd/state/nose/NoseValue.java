@@ -20,19 +20,15 @@ public class NoseValue implements NoseElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(NoseStateList stateList) {
         return stateList.contains(state);
     }
 
     public NoseState getState(Certificate certificate) {
+        return state;
+    }
+
+    public NoseState getState(NoseStateList stateList) {
         return state;
     }
 

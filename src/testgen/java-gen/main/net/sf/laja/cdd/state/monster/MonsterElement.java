@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.monster;
 
 public interface MonsterElement {
-    boolean syncState();
-    boolean isStateInSync();
+    MonsterState getState(MonsterStateList stateList);
     boolean contains(MonsterStateList stateList);
     void addToList(MonsterStateList stateList);
 }

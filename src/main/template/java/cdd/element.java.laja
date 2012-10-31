@@ -1,8 +1,7 @@
 
 #macro class()
 public interface {elementClass} {
-    boolean syncState();
-    boolean isStateInSync();
+    {stateClass} getState({stateListClass} stateList);
     boolean contains({stateListClass} stateList);
     void addToList({stateListClass} stateList);
 }

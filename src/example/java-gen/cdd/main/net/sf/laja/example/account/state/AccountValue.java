@@ -20,19 +20,15 @@ public class AccountValue implements AccountElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(AccountStateList stateList) {
         return stateList.contains(state);
     }
 
     public AccountState getState(Certificate certificate) {
+        return state;
+    }
+
+    public AccountState getState(AccountStateList stateList) {
         return state;
     }
 

@@ -20,19 +20,15 @@ public class PersonValue implements PersonElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(PersonStateList stateList) {
         return stateList.contains(state);
     }
 
     public PersonState getState(Certificate certificate) {
+        return state;
+    }
+
+    public PersonState getState(PersonStateList stateList) {
         return state;
     }
 

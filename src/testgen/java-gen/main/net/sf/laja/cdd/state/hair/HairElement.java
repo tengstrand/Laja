@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.hair;
 
 public interface HairElement {
-    boolean syncState();
-    boolean isStateInSync();
+    HairState getState(HairStateList stateList);
     boolean contains(HairStateList stateList);
     void addToList(HairStateList stateList);
 }

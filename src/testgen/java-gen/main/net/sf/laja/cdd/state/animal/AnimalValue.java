@@ -20,19 +20,15 @@ public class AnimalValue implements AnimalElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(AnimalStateList stateList) {
         return stateList.contains(state);
     }
 
     public AnimalState getState(Certificate certificate) {
+        return state;
+    }
+
+    public AnimalState getState(AnimalStateList stateList) {
         return state;
     }
 

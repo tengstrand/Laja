@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.arm;
 
 public interface ArmElement {
-    boolean syncState();
-    boolean isStateInSync();
+    ArmState getState(ArmStateList stateList);
     boolean contains(ArmStateList stateList);
     void addToList(ArmStateList stateList);
 }

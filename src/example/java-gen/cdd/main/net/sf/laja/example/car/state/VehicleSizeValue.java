@@ -20,19 +20,15 @@ public class VehicleSizeValue implements VehicleSizeElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(VehicleSizeStateList stateList) {
         return stateList.contains(state);
     }
 
     public VehicleSizeState getState(Certificate certificate) {
+        return state;
+    }
+
+    public VehicleSizeState getState(VehicleSizeStateList stateList) {
         return state;
     }
 

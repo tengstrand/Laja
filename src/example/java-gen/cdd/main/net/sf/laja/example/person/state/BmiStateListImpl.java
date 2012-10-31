@@ -11,7 +11,7 @@ import net.sf.laja.example.person.state.Certificate;
 public class BmiStateListImpl extends ArrayList<BmiState> implements BmiStateList {
     private boolean _encapsulated = false;
 
-    BmiStateListImpl() {
+    public BmiStateListImpl() {
     }
 
     public static BmiStateList emptyList(Certificate certificate) {

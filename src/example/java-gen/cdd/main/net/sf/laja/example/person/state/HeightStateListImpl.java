@@ -11,7 +11,7 @@ import net.sf.laja.example.person.state.Certificate;
 public class HeightStateListImpl extends ArrayList<HeightState> implements HeightStateList {
     private boolean _encapsulated = false;
 
-    HeightStateListImpl() {
+    public HeightStateListImpl() {
     }
 
     public static HeightStateList emptyList(Certificate certificate) {

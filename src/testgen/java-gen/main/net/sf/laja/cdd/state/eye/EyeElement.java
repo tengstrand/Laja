@@ -1,8 +1,7 @@
 package net.sf.laja.cdd.state.eye;
 
 public interface EyeElement {
-    boolean syncState();
-    boolean isStateInSync();
+    EyeState getState(EyeStateList stateList);
     boolean contains(EyeStateList stateList);
     void addToList(EyeStateList stateList);
 }

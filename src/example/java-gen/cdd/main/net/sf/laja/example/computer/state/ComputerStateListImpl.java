@@ -11,7 +11,7 @@ import net.sf.laja.example.computer.state.Certificate;
 public class ComputerStateListImpl extends ArrayList<ComputerState> implements ComputerStateList {
     private boolean _encapsulated = false;
 
-    ComputerStateListImpl() {
+    public ComputerStateListImpl() {
     }
 
     public static ComputerStateList emptyList(Certificate certificate) {

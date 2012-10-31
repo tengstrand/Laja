@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
 public class ArmStateListImpl extends ArrayList<ArmState> implements ArmStateList {
     private boolean _encapsulated = false;
 
-    ArmStateListImpl() {
+    public ArmStateListImpl() {
     }
 
     public static ArmStateList emptyList(Certificate certificate) {

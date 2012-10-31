@@ -20,19 +20,15 @@ public class ComputerValue implements ComputerElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean isStateInSync() {
-        return true;
-    }
-
-    public boolean syncState() {
-        return false;
-    }
-
     public boolean contains(ComputerStateList stateList) {
         return stateList.contains(state);
     }
 
     public ComputerState getState(Certificate certificate) {
+        return state;
+    }
+
+    public ComputerState getState(ComputerStateList stateList) {
         return state;
     }
 

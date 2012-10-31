@@ -11,7 +11,6 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public final class ComputerStateListBuilder {
-    private Object lastMutator;
     private final Certificate certificate;
     private final ComputerStateList states;
 
@@ -38,27 +37,11 @@ public final class ComputerStateListBuilder {
         return builders;
     }
 
-    public void throwExceptionIfOutOfSync(Object accessor) {
-        if (lastMutator != null && lastMutator != accessor) {
-            throw new IllegalStateException("The state has been changed by another list. Call syncState() to synchronize the internal state with the enclosing list.");
-        }
-    }
-
-    private void prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(Object mutator) {
-        throwExceptionIfOutOfSync(mutator);
-        this.lastMutator = mutator;
-    }
-
-    public void syncState() {
-        this.lastMutator = null;
-    }
-
     public int size() {
         return states.size();
     }
 
-    public void clear(Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void clear() {
         states.clear();
     }
 
@@ -70,43 +53,32 @@ public final class ComputerStateListBuilder {
         states.add(state);
     }
 
-    public void add(ComputerState state, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
-        states.add(state);
-    }
-
-    public void add(int index, ComputerState state, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void add(int index, ComputerState state) {
         states.add(index, state);
     }
 
-    public void addAll(int index, ComputerStateListBuilder listBuilder, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void addAll(int index, ComputerStateListBuilder listBuilder) {
         states.addAll(index, listBuilder.states);
     }
 
-    public void set(int index, ComputerState state, Object accessor) {
-        throwExceptionIfOutOfSync(accessor);
+    public void set(int index, ComputerState state) {
         states.set(index, state);
     }
 
-    public boolean remove(ComputerState state, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public boolean remove(ComputerState state) {
         return states.remove(state);
     }
 
-    public void remove(int index, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void remove(int index) {
         states.remove(index);
     }
 
-    public void retainAll(ComputerStateListBuilder retainStates, Object mutator) {
-        prepareAddOrRemoveElementAndThrowExceptionIfOutOfSync(mutator);
+    public void retainAll(ComputerStateListBuilder retainStates) {
         states.retainAll(retainStates.states);
     }
 
     @Override
     public String toString() {
-        return "ComputerStateListBuilder{states=" + states + ", lastMutator.hashCode()=" + (lastMutator == null ? null : lastMutator.hashCode()) + "}";
+        return "ComputerStateListBuilder{states=" + states + "}";
     }
 }
