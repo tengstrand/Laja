@@ -9,25 +9,133 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class AddressAbstractList implements List<Address> {
+public abstract class AddressAbstractList implements List<Address>, RandomAccess, Cloneable, java.io.Serializable {
     protected AddressStateList stateList;
-    protected final List<Address> list = new ArrayList<Address>();
+    protected final List<Address> list;
 
     public AddressAbstractList(Address... list) {
+        this.list = new ArrayList<Address>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public AddressAbstractList(List<Address> list) {
+        this.list = new ArrayList<Address>();
         this.list.addAll(list);
     }
 
     public AddressAbstractList(AddressStateList stateList) {
         this.stateList = stateList;
+        List<Address> elements = new ArrayList<Address>(stateList.size());
 
         for (AddressState state : stateList) {
             AddressStateBuilder builder = new AddressStateBuilderImpl(state);
             Address entry = (Address) builder.as(new AddressFactory.AddressFactory_(builder));
-            list.add(entry);
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public static class StateInSyncList extends ArrayList<Address> {
+        private final AddressStateList stateList;
+
+        public StateInSyncList(AddressStateList stateList, List<Address> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(Address element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, Address element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Address> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (Address element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Address> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (Address element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof Address)) {
+                return false;
+            }
+            stateList.remove(((Address) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Address) {
+                    elements.add(element);
+                    states.add(((Address)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Address) {
+                    elements.add(element);
+                    states.add(((Address)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public Address set(int index, Address element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public Address remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
         }
     }
 
@@ -56,47 +164,24 @@ public abstract class AddressAbstractList implements List<Address> {
     }
 
     public boolean add(Address element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, Address element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Address> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Address element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Address> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Address element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof Address)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((Address)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -106,41 +191,14 @@ public abstract class AddressAbstractList implements List<Address> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Address) {
-                    removedElements.add(element);
-                    removedStateElements.add(((Address)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Address) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((Address)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -149,16 +207,10 @@ public abstract class AddressAbstractList implements List<Address> {
     }
 
     public Address set(int index, Address element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public Address remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -194,6 +246,6 @@ public abstract class AddressAbstractList implements List<Address> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

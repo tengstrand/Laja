@@ -12,26 +12,30 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TestMouthAbstractList implements List<TestMouth> {
+public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAccess, Cloneable, java.io.Serializable {
     protected MouthStateList stateList;
-    protected final List<TestMouth> list = new ArrayList<TestMouth>();
+    protected final List<TestMouth> list;
 
     public TestMouthAbstractList(TestMouth... list) {
+        this.list = new ArrayList<TestMouth>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public TestMouthAbstractList(List<TestMouth> list) {
+        this.list = new ArrayList<TestMouth>();
         this.list.addAll(list);
     }
 
     public TestMouthAbstractList(MouthStateList stateList) {
         this.stateList = stateList;
+        List<TestMouth> elements = new ArrayList<TestMouth>(stateList.size());
 
         for (MouthState state : stateList) {
             MouthStateBuilder builder = new MouthStateBuilderImpl(state);
             TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_(builder));
-            list.add(entry);
+            elements.add(entry);
         }
+        this.list = new StateInSyncList(stateList, elements);
     }
 
     public CuteMouthList asCuteMouthList() {
@@ -40,6 +44,110 @@ public abstract class TestMouthAbstractList implements List<TestMouth> {
             result.add(entry.asCuteMouth());
         }
         return new CuteMouthList(result);
+    }
+
+    public static class StateInSyncList extends ArrayList<TestMouth> {
+        private final MouthStateList stateList;
+
+        public StateInSyncList(MouthStateList stateList, List<TestMouth> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(TestMouth element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, TestMouth element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends TestMouth> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (TestMouth element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends TestMouth> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (TestMouth element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof TestMouth)) {
+                return false;
+            }
+            stateList.remove(((TestMouth) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof TestMouth) {
+                    elements.add(element);
+                    states.add(((TestMouth)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof TestMouth) {
+                    elements.add(element);
+                    states.add(((TestMouth)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public TestMouth set(int index, TestMouth element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public TestMouth remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
+        }
     }
 
     public int size() {
@@ -67,47 +175,24 @@ public abstract class TestMouthAbstractList implements List<TestMouth> {
     }
 
     public boolean add(TestMouth element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, TestMouth element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends TestMouth> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (TestMouth element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends TestMouth> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (TestMouth element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof TestMouth)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((TestMouth)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -117,41 +202,14 @@ public abstract class TestMouthAbstractList implements List<TestMouth> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof TestMouth) {
-                    removedElements.add(element);
-                    removedStateElements.add(((TestMouth)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof TestMouth) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((TestMouth)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -160,16 +218,10 @@ public abstract class TestMouthAbstractList implements List<TestMouth> {
     }
 
     public TestMouth set(int index, TestMouth element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public TestMouth remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -205,6 +257,6 @@ public abstract class TestMouthAbstractList implements List<TestMouth> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

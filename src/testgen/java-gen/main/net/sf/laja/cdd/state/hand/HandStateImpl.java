@@ -8,7 +8,7 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class HandStateImpl implements HandState {
-    protected int area;
+    protected int area; // (key)
 
     private boolean _encapsulated = false;
 

@@ -12,26 +12,30 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ClosedFileAbstractList implements List<ClosedFile> {
+public abstract class ClosedFileAbstractList implements List<ClosedFile>, RandomAccess, Cloneable, java.io.Serializable {
     protected FileStateList stateList;
-    protected final List<ClosedFile> list = new ArrayList<ClosedFile>();
+    protected final List<ClosedFile> list;
 
     public ClosedFileAbstractList(ClosedFile... list) {
+        this.list = new ArrayList<ClosedFile>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public ClosedFileAbstractList(List<ClosedFile> list) {
+        this.list = new ArrayList<ClosedFile>();
         this.list.addAll(list);
     }
 
     public ClosedFileAbstractList(FileStateList stateList, Directory directory) {
         this.stateList = stateList;
+        List<ClosedFile> elements = new ArrayList<ClosedFile>(stateList.size());
 
         for (FileState state : stateList) {
             FileStateBuilder builder = new FileStateBuilderImpl(state);
             ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
-            list.add(entry);
+            elements.add(entry);
         }
+        this.list = new StateInSyncList(stateList, elements);
     }
 
     public TextFileList asTextFileList() {
@@ -40,6 +44,110 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
             result.add(entry.asTextFile());
         }
         return new TextFileList(result);
+    }
+
+    public static class StateInSyncList extends ArrayList<ClosedFile> {
+        private final FileStateList stateList;
+
+        public StateInSyncList(FileStateList stateList, List<ClosedFile> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(ClosedFile element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, ClosedFile element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends ClosedFile> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (ClosedFile element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (ClosedFile element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof ClosedFile)) {
+                return false;
+            }
+            stateList.remove(((ClosedFile) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof ClosedFile) {
+                    elements.add(element);
+                    states.add(((ClosedFile)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof ClosedFile) {
+                    elements.add(element);
+                    states.add(((ClosedFile)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public ClosedFile set(int index, ClosedFile element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public ClosedFile remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
+        }
     }
 
     public int size() {
@@ -67,47 +175,24 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
     }
 
     public boolean add(ClosedFile element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, ClosedFile element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends ClosedFile> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (ClosedFile element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (ClosedFile element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof ClosedFile)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((ClosedFile)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -117,41 +202,14 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof ClosedFile) {
-                    removedElements.add(element);
-                    removedStateElements.add(((ClosedFile)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof ClosedFile) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((ClosedFile)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -160,16 +218,10 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
     }
 
     public ClosedFile set(int index, ClosedFile element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public ClosedFile remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -205,6 +257,6 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

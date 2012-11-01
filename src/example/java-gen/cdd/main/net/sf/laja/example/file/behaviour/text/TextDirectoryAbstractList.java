@@ -12,16 +12,122 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
+public abstract class TextDirectoryAbstractList implements List<TextDirectory>, RandomAccess, Cloneable, java.io.Serializable {
     protected DirectoryStateList stateList;
-    protected final List<TextDirectory> list = new ArrayList<TextDirectory>();
+    protected final List<TextDirectory> list;
 
     public TextDirectoryAbstractList(TextDirectory... list) {
+        this.list = new ArrayList<TextDirectory>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public TextDirectoryAbstractList(List<TextDirectory> list) {
+        this.list = new ArrayList<TextDirectory>();
         this.list.addAll(list);
+    }
+
+    public static class StateInSyncList extends ArrayList<TextDirectory> {
+        private final DirectoryStateList stateList;
+
+        public StateInSyncList(DirectoryStateList stateList, List<TextDirectory> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(TextDirectory element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, TextDirectory element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends TextDirectory> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (TextDirectory element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (TextDirectory element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof TextDirectory)) {
+                return false;
+            }
+            stateList.remove(((TextDirectory) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof TextDirectory) {
+                    elements.add(element);
+                    states.add(((TextDirectory)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof TextDirectory) {
+                    elements.add(element);
+                    states.add(((TextDirectory)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public TextDirectory set(int index, TextDirectory element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public TextDirectory remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
+        }
     }
 
     public int size() {
@@ -49,47 +155,24 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
     }
 
     public boolean add(TextDirectory element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, TextDirectory element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends TextDirectory> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (TextDirectory element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (TextDirectory element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof TextDirectory)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((TextDirectory)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -99,41 +182,14 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof TextDirectory) {
-                    removedElements.add(element);
-                    removedStateElements.add(((TextDirectory)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof TextDirectory) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((TextDirectory)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -142,16 +198,10 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
     }
 
     public TextDirectory set(int index, TextDirectory element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public TextDirectory remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -187,6 +237,6 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

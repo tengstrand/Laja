@@ -8,6 +8,7 @@ import net.sf.laja.cdd.state.hand.HandStateList;
 public class ArmStateTemplate {
     int armLength = -1; // (optional)
     double armWeight;
+
     HandStateList hands;
 
     double convertWeight(String armWeight) {

@@ -6,7 +6,7 @@ package net.sf.laja.cdd.state.hand;
  *   http://laja.sf.net
  */
 public interface HandState {
-    int getArea();
+    int getArea(); // (key)
     void setArea(int area);
 
     boolean isValid();

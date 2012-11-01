@@ -9,16 +9,122 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TextFileAbstractList implements List<TextFile> {
+public abstract class TextFileAbstractList implements List<TextFile>, RandomAccess, Cloneable, java.io.Serializable {
     protected FileStateList stateList;
-    protected final List<TextFile> list = new ArrayList<TextFile>();
+    protected final List<TextFile> list;
 
     public TextFileAbstractList(TextFile... list) {
+        this.list = new ArrayList<TextFile>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public TextFileAbstractList(List<TextFile> list) {
+        this.list = new ArrayList<TextFile>();
         this.list.addAll(list);
+    }
+
+    public static class StateInSyncList extends ArrayList<TextFile> {
+        private final FileStateList stateList;
+
+        public StateInSyncList(FileStateList stateList, List<TextFile> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(TextFile element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, TextFile element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends TextFile> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (TextFile element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends TextFile> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (TextFile element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof TextFile)) {
+                return false;
+            }
+            stateList.remove(((TextFile) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof TextFile) {
+                    elements.add(element);
+                    states.add(((TextFile)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof TextFile) {
+                    elements.add(element);
+                    states.add(((TextFile)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public TextFile set(int index, TextFile element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public TextFile remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
+        }
     }
 
     public int size() {
@@ -46,47 +152,24 @@ public abstract class TextFileAbstractList implements List<TextFile> {
     }
 
     public boolean add(TextFile element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, TextFile element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends TextFile> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (TextFile element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends TextFile> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (TextFile element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof TextFile)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((TextFile)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -96,41 +179,14 @@ public abstract class TextFileAbstractList implements List<TextFile> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof TextFile) {
-                    removedElements.add(element);
-                    removedStateElements.add(((TextFile)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof TextFile) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((TextFile)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -139,16 +195,10 @@ public abstract class TextFileAbstractList implements List<TextFile> {
     }
 
     public TextFile set(int index, TextFile element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public TextFile remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -184,6 +234,6 @@ public abstract class TextFileAbstractList implements List<TextFile> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

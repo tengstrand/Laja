@@ -12,26 +12,30 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class EyeAbstractList implements List<Eye> {
+public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Cloneable, java.io.Serializable {
     protected EyeStateList stateList;
-    protected final List<Eye> list = new ArrayList<Eye>();
+    protected final List<Eye> list;
 
     public EyeAbstractList(Eye... list) {
+        this.list = new ArrayList<Eye>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public EyeAbstractList(List<Eye> list) {
+        this.list = new ArrayList<Eye>();
         this.list.addAll(list);
     }
 
     public EyeAbstractList(EyeStateList stateList) {
         this.stateList = stateList;
+        List<Eye> elements = new ArrayList<Eye>(stateList.size());
 
         for (EyeState state : stateList) {
             EyeStateBuilder builder = new EyeStateBuilderImpl(state);
             Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_(builder));
-            list.add(entry);
+            elements.add(entry);
         }
+        this.list = new StateInSyncList(stateList, elements);
     }
 
     public ScaryEyeList asScaryEyeList() {
@@ -40,6 +44,110 @@ public abstract class EyeAbstractList implements List<Eye> {
             result.add(entry.asScaryEye());
         }
         return new ScaryEyeList(result);
+    }
+
+    public static class StateInSyncList extends ArrayList<Eye> {
+        private final EyeStateList stateList;
+
+        public StateInSyncList(EyeStateList stateList, List<Eye> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(Eye element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, Eye element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Eye> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (Eye element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Eye> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (Eye element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof Eye)) {
+                return false;
+            }
+            stateList.remove(((Eye) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Eye) {
+                    elements.add(element);
+                    states.add(((Eye)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Eye) {
+                    elements.add(element);
+                    states.add(((Eye)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public Eye set(int index, Eye element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public Eye remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
+        }
     }
 
     public int size() {
@@ -67,47 +175,24 @@ public abstract class EyeAbstractList implements List<Eye> {
     }
 
     public boolean add(Eye element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, Eye element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Eye> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Eye element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Eye> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Eye element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof Eye)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((Eye)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -117,41 +202,14 @@ public abstract class EyeAbstractList implements List<Eye> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Eye) {
-                    removedElements.add(element);
-                    removedStateElements.add(((Eye)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Eye) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((Eye)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -160,16 +218,10 @@ public abstract class EyeAbstractList implements List<Eye> {
     }
 
     public Eye set(int index, Eye element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public Eye remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -205,6 +257,6 @@ public abstract class EyeAbstractList implements List<Eye> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

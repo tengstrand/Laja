@@ -9,25 +9,133 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class BrowAbstractList implements List<Brow> {
+public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Cloneable, java.io.Serializable {
     protected BrowStateList stateList;
-    protected final List<Brow> list = new ArrayList<Brow>();
+    protected final List<Brow> list;
 
     public BrowAbstractList(Brow... list) {
+        this.list = new ArrayList<Brow>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public BrowAbstractList(List<Brow> list) {
+        this.list = new ArrayList<Brow>();
         this.list.addAll(list);
     }
 
     public BrowAbstractList(BrowStateList stateList) {
         this.stateList = stateList;
+        List<Brow> elements = new ArrayList<Brow>(stateList.size());
 
         for (BrowState state : stateList) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
             Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_(builder));
-            list.add(entry);
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public static class StateInSyncList extends ArrayList<Brow> {
+        private final BrowStateList stateList;
+
+        public StateInSyncList(BrowStateList stateList, List<Brow> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(Brow element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, Brow element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Brow> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (Brow element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Brow> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (Brow element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof Brow)) {
+                return false;
+            }
+            stateList.remove(((Brow) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Brow) {
+                    elements.add(element);
+                    states.add(((Brow)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Brow) {
+                    elements.add(element);
+                    states.add(((Brow)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public Brow set(int index, Brow element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public Brow remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
         }
     }
 
@@ -56,47 +164,24 @@ public abstract class BrowAbstractList implements List<Brow> {
     }
 
     public boolean add(Brow element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, Brow element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Brow> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Brow element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Brow> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Brow element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof Brow)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((Brow)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -106,41 +191,14 @@ public abstract class BrowAbstractList implements List<Brow> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Brow) {
-                    removedElements.add(element);
-                    removedStateElements.add(((Brow)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Brow) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((Brow)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -149,16 +207,10 @@ public abstract class BrowAbstractList implements List<Brow> {
     }
 
     public Brow set(int index, Brow element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public Brow remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -194,6 +246,6 @@ public abstract class BrowAbstractList implements List<Brow> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

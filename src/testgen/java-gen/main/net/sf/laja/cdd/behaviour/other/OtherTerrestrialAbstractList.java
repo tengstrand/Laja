@@ -9,25 +9,133 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestrial> {
+public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestrial>, RandomAccess, Cloneable, java.io.Serializable {
     protected TerrestrialStateList stateList;
-    protected final List<OtherTerrestrial> list = new ArrayList<OtherTerrestrial>();
+    protected final List<OtherTerrestrial> list;
 
     public OtherTerrestrialAbstractList(OtherTerrestrial... list) {
+        this.list = new ArrayList<OtherTerrestrial>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public OtherTerrestrialAbstractList(List<OtherTerrestrial> list) {
+        this.list = new ArrayList<OtherTerrestrial>();
         this.list.addAll(list);
     }
 
     public OtherTerrestrialAbstractList(TerrestrialStateList stateList) {
         this.stateList = stateList;
+        List<OtherTerrestrial> elements = new ArrayList<OtherTerrestrial>(stateList.size());
 
         for (TerrestrialState state : stateList) {
             TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
             OtherTerrestrial entry = (OtherTerrestrial) builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_(builder));
-            list.add(entry);
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public static class StateInSyncList extends ArrayList<OtherTerrestrial> {
+        private final TerrestrialStateList stateList;
+
+        public StateInSyncList(TerrestrialStateList stateList, List<OtherTerrestrial> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(OtherTerrestrial element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, OtherTerrestrial element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends OtherTerrestrial> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (OtherTerrestrial element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends OtherTerrestrial> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (OtherTerrestrial element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof OtherTerrestrial)) {
+                return false;
+            }
+            stateList.remove(((OtherTerrestrial) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof OtherTerrestrial) {
+                    elements.add(element);
+                    states.add(((OtherTerrestrial)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof OtherTerrestrial) {
+                    elements.add(element);
+                    states.add(((OtherTerrestrial)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public OtherTerrestrial set(int index, OtherTerrestrial element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public OtherTerrestrial remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
         }
     }
 
@@ -56,47 +164,24 @@ public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestr
     }
 
     public boolean add(OtherTerrestrial element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, OtherTerrestrial element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends OtherTerrestrial> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (OtherTerrestrial element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends OtherTerrestrial> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (OtherTerrestrial element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof OtherTerrestrial)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((OtherTerrestrial)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -106,41 +191,14 @@ public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestr
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof OtherTerrestrial) {
-                    removedElements.add(element);
-                    removedStateElements.add(((OtherTerrestrial)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof OtherTerrestrial) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((OtherTerrestrial)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -149,16 +207,10 @@ public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestr
     }
 
     public OtherTerrestrial set(int index, OtherTerrestrial element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public OtherTerrestrial remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -194,6 +246,6 @@ public abstract class OtherTerrestrialAbstractList implements List<OtherTerrestr
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }

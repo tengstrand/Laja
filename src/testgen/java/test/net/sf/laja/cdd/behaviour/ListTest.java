@@ -3,15 +3,20 @@ package net.sf.laja.cdd.behaviour;
 import junit.framework.Assert;
 import net.sf.laja.cdd.behaviour.arm.Arm;
 import net.sf.laja.cdd.behaviour.brow.Brow;
+import net.sf.laja.cdd.behaviour.foot.Foot;
 import net.sf.laja.cdd.behaviour.hair.FakeHairList;
 import net.sf.laja.cdd.behaviour.hair.Hair;
 import net.sf.laja.cdd.behaviour.hair.HairList;
 import net.sf.laja.cdd.behaviour.hand.Hand;
 import net.sf.laja.cdd.behaviour.hand.HandList;
+import net.sf.laja.cdd.behaviour.toe.Toe;
+import net.sf.laja.cdd.behaviour.toe.ValToeList;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -167,120 +172,150 @@ public class ListTest {
     @Test
     public void add() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1))).asArm();
-        arm1.getHands().add(Hand.area(2).asHand());
+        arm1.hands.add(Hand.area(2).asHand());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void addAtIndex() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
-        arm1.getHands().add(1, Hand.area(3).asHand());
+        arm1.hands.add(1, Hand.area(3).asHand());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3), Hand.area(2)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void addAll() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
-        arm1.getHands().addAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
+        arm1.hands.addAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3), Hand.area(4)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void addAllAtIndex() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
-        arm1.getHands().addAll(1, Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
+        arm1.hands.addAll(1, Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3), Hand.area(4), Hand.area(2)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void remove() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
-        arm1.getHands().remove(Hand.area(2).asHand());
+        arm1.hands.remove(Hand.area(2).asHand());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void removeAll() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3), Hand.area(4), Hand.area(5))).asArm();
-        arm1.getHands().removeAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
+        arm1.hands.removeAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2), Hand.area(5)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void retainAll() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
-        arm1.getHands().retainAll(Hand.createList(Hand.area(2), Hand.area(3), Hand.area(4)).asHandList());
+        arm1.hands.retainAll(Hand.createList(Hand.area(2), Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(2), Hand.area(3)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void clear() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
-        arm1.getHands().clear();
+        arm1.hands.clear();
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList().asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
     }
 
     @Test
     public void set() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
-        arm1.getHands().set(1, Hand.area(4).asHand());
+        arm1.hands.set(1, Hand.area(4).asHand());
         Arm arm2 = arm1.asArm();
 
         HandList expectedList = Hand.createList(Hand.area(1), Hand.area(4), Hand.area(3)).asHandList();
+
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
+    }
+
+    @Test
+    public void removeAtIndex() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        arm1.hands.remove(1);
+        Arm arm2 = arm1.asArm();
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3)).asHandList();
+
+        assertEquals(expectedList, arm1.hands);
+        assertEquals(expectedList, arm2.hands);
+    }
+
+    @Test
+    public void sort() {
+        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(3), Hand.area(2), Hand.area(1))).asArm();
+        HandList hands = arm1.hands;
+        Arm arm2 = arm1.asArm();
+
+        Collections.sort(hands);
+
+        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3)).asHandList();
 
         assertEquals(expectedList, arm1.getHands());
         assertEquals(expectedList, arm2.getHands());
     }
 
     @Test
-    public void removeAtIndex() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
-        arm1.getHands().remove(1);
-        Arm arm2 = arm1.asArm();
+    @Ignore
+    public void removeValueFromEntityStateList() {
+        Foot foot = Foot.area(10).toes(Toe.createList(Toe.length(1).weight(1), Toe.length(1).weight(2))).asFoot();
+        ValToeList valToes = foot.toes.asValToeList();
+        valToes.remove(Toe.length(1).weight(2).asToe());
 
-        HandList expectedList = Hand.createList(Hand.area(1), Hand.area(3)).asHandList();
+        //ToeList expectedList = Hand.createList(Hand.area(1), Hand.area(3)).asHandList();
 
-        assertEquals(expectedList, arm1.getHands());
-        assertEquals(expectedList, arm2.getHands());
+        assertEquals(Toe.createList(Toe.length(1).weight(1)).asValToeList(), valToes);
+        assertEquals(Toe.createList(Toe.length(1).weight(1)).asValToeList(), foot.toes.asValToeList());
+
+        System.out.println(valToes);
+        System.out.println(foot.toes);
     }
 }

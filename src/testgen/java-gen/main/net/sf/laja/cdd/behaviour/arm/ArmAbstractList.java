@@ -9,25 +9,133 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ArmAbstractList implements List<Arm> {
+public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Cloneable, java.io.Serializable {
     protected ArmStateList stateList;
-    protected final List<Arm> list = new ArrayList<Arm>();
+    protected final List<Arm> list;
 
     public ArmAbstractList(Arm... list) {
+        this.list = new ArrayList<Arm>();
         this.list.addAll(Arrays.asList(list));
     }
 
     public ArmAbstractList(List<Arm> list) {
+        this.list = new ArrayList<Arm>();
         this.list.addAll(list);
     }
 
     public ArmAbstractList(ArmStateList stateList) {
         this.stateList = stateList;
+        List<Arm> elements = new ArrayList<Arm>(stateList.size());
 
         for (ArmState state : stateList) {
             ArmStateBuilder builder = new ArmStateBuilderImpl(state);
             Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_(builder));
-            list.add(entry);
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public static class StateInSyncList extends ArrayList<Arm> {
+        private final ArmStateList stateList;
+
+        public StateInSyncList(ArmStateList stateList, List<Arm> elements) {
+            this.stateList = stateList;
+            super.addAll(elements);
+        }
+
+        @Override
+        public boolean add(Arm element) {
+            stateList.add(element.getState(stateList));
+            return super.add(element);
+        }
+
+        @Override
+        public void add(int index, Arm element) {
+            stateList.add(index, element.getState(stateList));
+            super.add(index, element);
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Arm> collection) {
+            boolean modified = super.addAll(collection);
+
+            for (Arm element : collection) {
+                stateList.add(element.getState(stateList));
+            }
+            return modified;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Arm> collection) {
+            boolean modified = super.addAll(index, collection);
+
+            List elements = new ArrayList(collection.size());
+            for (Arm element : collection) {
+                elements.add(element.getState(stateList));
+            }
+            stateList.addAll(index, elements);
+
+            return modified;
+        }
+
+        @Override
+        public boolean remove(Object element) {
+            if (!(element instanceof Arm)) {
+                return false;
+            }
+            stateList.remove(((Arm) element).getState(stateList));
+
+            return super.remove(element);
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Arm) {
+                    elements.add(element);
+                    states.add(((Arm)element).getState(stateList));
+                }
+            }
+            boolean modified = super.removeAll(elements);
+            stateList.removeAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> collection) {
+            List states = new ArrayList(collection.size());
+            List elements = new ArrayList(collection.size());
+            for (Object element : collection) {
+                if (element instanceof Arm) {
+                    elements.add(element);
+                    states.add(((Arm)element).getState(stateList));
+                }
+            }
+            boolean modified = super.retainAll(elements);
+            stateList.retainAll(states);
+
+            return modified;
+        }
+
+        @Override
+        public void clear() {
+            stateList.clear();
+            super.clear();
+        }
+
+        @Override
+        public Arm set(int index, Arm element) {
+            stateList.set(index, element.getState(stateList));
+            return super.set(index, element);
+        }
+
+        @Override
+        public Arm remove(int index) {
+            stateList.remove(index);
+            return super.remove(index);
         }
     }
 
@@ -56,47 +164,24 @@ public abstract class ArmAbstractList implements List<Arm> {
     }
 
     public boolean add(Arm element) {
-        if (stateList != null) {
-            stateList.add(element.getState(stateList));
-        }
         return list.add(element);
     }
 
     public void add(int index, Arm element) {
-        if (stateList != null) {
-            stateList.add(index, element.getState(stateList));
-        }
         list.add(index, element);
     }
 
     public boolean addAll(Collection<? extends Arm> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Arm element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(newElements);
-        }
         return list.addAll(collection);
     }
 
     public boolean addAll(int index, Collection<? extends Arm> collection) {
-        if (stateList != null) {
-            List newElements = new ArrayList(collection.size());
-            for (Arm element : collection) {
-                newElements.add(element.getState(stateList));
-            }
-            stateList.addAll(index, newElements);
-        }
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
         if (!(element instanceof Arm)) {
             return false;
-        }
-        if (stateList != null) {
-            stateList.remove(((Arm)element).getState(stateList));
         }
         return list.remove(element);
     }
@@ -106,41 +191,14 @@ public abstract class ArmAbstractList implements List<Arm> {
     }
 
     public boolean removeAll(Collection<?> collection) {
-        if (stateList != null) {
-            List removedElements = new ArrayList(collection.size());
-            List removedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Arm) {
-                    removedElements.add(element);
-                    removedStateElements.add(((Arm)element).getState(stateList));
-                }
-            }
-            stateList.removeAll(removedStateElements);
-            return list.removeAll(removedElements);
-        }
         return list.removeAll(collection);
     }
 
     public boolean retainAll(Collection<?> collection) {
-        if (stateList != null) {
-            List retainedElements = new ArrayList(collection.size());
-            List retainedStateElements = new ArrayList(collection.size());
-            for (Object element : collection) {
-                if (element instanceof Arm) {
-                    retainedElements.add(element);
-                    retainedStateElements.add(((Arm)element).getState(stateList));
-                }
-            }
-            stateList.retainAll(retainedStateElements);
-            return list.retainAll(retainedElements);
-        }
         return list.retainAll(collection);
     }
 
     public void clear() {
-        if (stateList != null) {
-            stateList.clear();
-        }
         list.clear();
     }
 
@@ -149,16 +207,10 @@ public abstract class ArmAbstractList implements List<Arm> {
     }
 
     public Arm set(int index, Arm element) {
-        if (stateList != null) {
-            stateList.set(index, element.getState(stateList));
-        }
         return list.set(index, element);
     }
 
     public Arm remove(int index) {
-        if (stateList != null) {
-            stateList.remove(index);
-        }
         return list.remove(index);
     }
 
@@ -194,6 +246,6 @@ public abstract class ArmAbstractList implements List<Arm> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{list=" + list + '}';
+        return getClass().getSimpleName() + "{" + list + '}';
     }
 }
