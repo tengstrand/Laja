@@ -1,6 +1,10 @@
 package net.sf.laja.example.car.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.example.car.state.*;
+import java.util.Arrays;
+import java.util.ArrayList;
 import net.sf.laja.example.car.state.OwnerState;
 
 public class OwnerValueFactory extends OwnerValue {
@@ -23,6 +27,10 @@ public class OwnerValueFactory extends OwnerValue {
 
     public static OwnerBuilder build() {
         return new OwnerBuilder();
+    }
+
+    public static OwnerListCreator createList(OwnerEncapsulator... encapsulators) {
+        return new OwnerListCreator(encapsulators);
     }
 
     public static class OwnerFactory_ implements OwnerStateBehaviourFactory {

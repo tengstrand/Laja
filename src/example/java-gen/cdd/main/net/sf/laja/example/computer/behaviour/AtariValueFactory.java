@@ -1,6 +1,10 @@
 package net.sf.laja.example.computer.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.example.computer.state.*;
+import java.util.Arrays;
+import java.util.ArrayList;
 import net.sf.laja.example.computer.state.ComputerState;
 
 public class AtariValueFactory extends ComputerValue {
@@ -19,6 +23,10 @@ public class AtariValueFactory extends ComputerValue {
 
     public static AtariBuilder build() {
         return new AtariBuilder();
+    }
+
+    public static AtariListCreator createList(AtariEncapsulator... encapsulators) {
+        return new AtariListCreator(encapsulators);
     }
 
     public static class AtariSTFactory_ implements ComputerStateBehaviourFactory {

@@ -28,18 +28,6 @@
   #error ("Could not find the state object '{behaviour.cleanedStateClass}' referenced from '{behaviourClass}'. Valid state classes are: {templates.keySet()}")
 #end
 
-#function generateList()
-  #foreach (method in behaviour.asMethods where method.generateList)
-    #return true
-  #end
-  #foreach (t3 in templates.values())
-    #foreach (attribute in t3.attributes where attribute.isStateList && attribute.type == "{behaviour.stateClass}List")
-      #return true
-    #end
-  #end
-  #return false
-#end
-
 #macro setArgumentsAndParameters(m, isNextArgument)
   #setArgumentsAndParametersWithExclusion(m, isNextArgument, null)
 #end
@@ -73,7 +61,7 @@
 
 #macro prepareList(outputDirArg, outDirArg)
   #set (entryClass = method.returnclass)
-  #set (listClass = method.listClass)
+  #set (listInterface = method.listInterface)
   #set (arrayListClass = method.arrayListClass)
   #set (packagename = behaviour.packagename)
   #set (listOutputDir = outputDirArg)
@@ -81,6 +69,11 @@
   #if (asBehaviour == null)
     #set (asBehaviour = behaviour)
   #end
+  #set (statePackagename = templates.get(asBehaviour.cleanedStateClass).packagename)
+  #set (stateClass = asBehaviour.stateClass)
+  #set (stateListClass = "{stateClass}List")
+  #set (stateBuilderClass = "{stateClass}Builder")
+  #set (stateBuilderImplClass = "{stateBuilderClass}Impl")
   #foreach (import in behaviour.imports where import.endsWithType(method.returnclass))
     #set (packagename = statementConverter.asPackageName(import.fullclassname))
     #set (listOutputDir = directoryConverter.asDirectory(outDirArg, import.fullclassname))
@@ -126,4 +119,30 @@ import {behaviourRef.packagename}.{attribute.listCreator};
 
 #macro importsEnd()
 
+#end
+
+#macro listImports()
+  #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName)
+    #set (behaviourRef = behaviours.get(m.returnclass))
+    #if (behaviourRef == null)
+      #error ("Could not find behaviour class {m.returnclass}")
+    #end
+    #if (behaviourRef.packagename != packagename)
+
+import {behaviourRef.packagename}.{m.returnclass};
+import {behaviourRef.packagename}.{m.arrayListClass};
+    #end
+  #end
+  #if (!method.isFactory)
+    #set (first = true)
+    #foreach (m in behaviour.asMethods where m.isFactory && first)
+      #set (behaviourRef = behaviours.get(m.returnclass))
+      #if (behaviourRef.packagename != packagename)
+
+import {behaviourRef.packagename}.{m.returnclass};
+import {behaviourRef.packagename}.{m.returnclass}Factory;
+      #end
+      #set (first = false)
+    #end
+  #end
 #end

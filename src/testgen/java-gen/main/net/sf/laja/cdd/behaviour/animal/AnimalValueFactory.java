@@ -1,7 +1,11 @@
 package net.sf.laja.cdd.behaviour.animal;
 
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
 import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
+import java.util.ArrayList;
 
 public class AnimalValueFactory extends AnimalValue {
 
@@ -19,6 +23,10 @@ public class AnimalValueFactory extends AnimalValue {
 
     public static AnimalBuilder build() {
         return new AnimalBuilder();
+    }
+
+    public static AnimalListCreator createList(AnimalEncapsulator... encapsulators) {
+        return new AnimalListCreator(encapsulators);
     }
 
     public static class AnimalFactory_ implements AnimalStateBehaviourFactory {

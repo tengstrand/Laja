@@ -31,7 +31,7 @@ public class AddressListCreator implements Iterable<AddressEncapsulator> {
         for (AddressEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asAddress());
         }
-        return new AddressList(result);
+        return new AddressArrayList(result);
     }
 
     public boolean isValid() {

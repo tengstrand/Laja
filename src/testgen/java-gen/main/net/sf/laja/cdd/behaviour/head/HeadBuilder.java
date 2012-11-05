@@ -2,6 +2,7 @@ package net.sf.laja.cdd.behaviour.head;
 
 import net.sf.laja.cdd.state.head.*;
 import net.sf.laja.cdd.behaviour.eye.Eye;
+import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
 import net.sf.laja.cdd.behaviour.mouth.MouthList;
 import net.sf.laja.cdd.behaviour.mouth.MouthSize;
 import net.sf.laja.cdd.state.head.HeadStateBuilder;

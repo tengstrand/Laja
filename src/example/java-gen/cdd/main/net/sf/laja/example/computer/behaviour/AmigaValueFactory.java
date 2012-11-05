@@ -1,6 +1,10 @@
 package net.sf.laja.example.computer.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.example.computer.state.*;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 public class AmigaValueFactory extends ComputerValue {
 
@@ -18,6 +22,10 @@ public class AmigaValueFactory extends ComputerValue {
 
     public static AmigaBuilder build() {
         return new AmigaBuilder();
+    }
+
+    public static AmigaListCreator createList(AmigaEncapsulator... encapsulators) {
+        return new AmigaListCreator(encapsulators);
     }
 
     public static class AmigaFactory_ implements ComputerStateBehaviourFactory {

@@ -9,7 +9,7 @@ public class TestForehead extends TestForeheadFactory {
     public TestForehead(ForeheadState state) {
         super(state);
         BrowStateList browStates = state.getBrows();
-        brows = new TestBrowList(browStates);
+        brows = new TestBrowArrayList(browStates);
     }
 
     // (factory)
@@ -18,7 +18,7 @@ public class TestForehead extends TestForeheadFactory {
     }
 
     public TestBrowList remove(int index) {
-        TestBrowList browList = new TestBrowList(state.getBrows());
+        TestBrowList browList = new TestBrowArrayList(state.getBrows());
         browList.remove(index);
         return browList;
     }

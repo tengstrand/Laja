@@ -1,10 +1,10 @@
 package net.sf.laja.cdd.behaviour.scaryeye;
 
 import net.sf.laja.cdd.state.eye.*;
+import net.sf.laja.cdd.behaviour.eye.*;
 
 import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.behaviour.eye.EyeFactory;
-
 import java.util.*;
 
 /**
@@ -12,7 +12,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class ScaryEyeArrayList implements List<ScaryEye>, RandomAccess, Cloneable, java.io.Serializable {
+public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable, java.io.Serializable {
     protected EyeStateList stateList;
     protected final List<ScaryEye> list;
 

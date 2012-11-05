@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.behaviour.head;
 
 import net.sf.laja.cdd.behaviour.eye.Eye;
+import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
 import net.sf.laja.cdd.behaviour.mouth.MouthList;
 import net.sf.laja.cdd.behaviour.mouth.MouthSize;
 import net.sf.laja.cdd.state.head.HeadStateBuilder;
@@ -21,7 +22,7 @@ public class Head extends HeadFactory {
         if (state.getMidEye() != null) {
             midEye = new Eye(state.getMidEye());
         }
-        mouths = new MouthList(state.getMouths(), MouthSize.SMALL);
+        mouths = new MouthArrayList(state.getMouths(), MouthSize.SMALL);
     }
 
     // (factory)

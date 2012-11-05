@@ -28,16 +28,18 @@ import static org.junit.Assert.assertFalse;
  */
 public class ListTest {
 
-    private TestBrowList createBrowList() {
-        return TestBrow.createList(
+    private AreaBrowList createBrowList() {
+        TestBrowList list = TestBrow.createList(
                 TestBrow.area(1),
                 TestBrow.area(2),
                 TestBrow.area(3)).asTestBrowList();
+
+        return new AreaBrowList(list);
     }
 
     @Test
     public void remove_createdFromVarargConstructor() {
-        TestBrowList list = createBrowList();
+        AreaBrowList list = createBrowList();
 
         list.remove(1);
 
@@ -51,7 +53,7 @@ public class ListTest {
         brows.add(TestBrow.area(2).asTestBrow());
         brows.add(TestBrow.area(3).asTestBrow());
 
-        TestBrowList list = new TestBrowList(brows);
+        AreaBrowList list = new AreaBrowList(brows);
 
         list.remove(1);
 
@@ -62,7 +64,7 @@ public class ListTest {
     public void remove_createdFromStateList() {
         TestForehead forehead = TestForehead.create().withBrows(Brow.createList(Brow.area(1), Brow.area(2), Brow.area(3))).asTestForehead();
 
-        TestBrowList list = forehead.remove(1);
+        AreaBrowList list = new AreaBrowList(forehead.remove(1));
 
         TestBrowList expectedList = TestBrow.createList(
                 TestBrow.area(1),
@@ -80,7 +82,7 @@ public class ListTest {
 
     @Test
     public void isEmpty() {
-        assertTrue(new TestBrowList().isEmpty());
+        assertTrue(new TestBrowArrayList().isEmpty());
     }
 
     @Test
@@ -110,8 +112,8 @@ public class ListTest {
 
     @Test
     public void containsAll() {
-        TestBrowList list = createBrowList();
-        TestBrowList collection = new TestBrowList(
+        AreaBrowList list = createBrowList();
+        AreaBrowList collection = new AreaBrowList(
                 TestBrow.area(2).asTestBrow(),
                 TestBrow.area(3).asTestBrow()
         );
@@ -120,7 +122,7 @@ public class ListTest {
 
     @Test
     public void get() {
-        TestBrowList list = createBrowList();
+        AreaBrowList list = createBrowList();
         TestBrow expectedBrow = TestBrow.area(2).asTestBrow();
 
         assertEquals(expectedBrow, list.get(1));

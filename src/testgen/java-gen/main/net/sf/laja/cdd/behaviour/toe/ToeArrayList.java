@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.toe;
 
 import net.sf.laja.cdd.state.toe.*;
-
+import net.sf.laja.cdd.behaviour.toe.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class ToeArrayList implements List<Toe>, RandomAccess, Cloneable, java.io.Serializable {
+public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.Serializable {
     protected ToeStateList stateList;
     protected final List<Toe> list;
 
@@ -35,12 +35,12 @@ public class ToeArrayList implements List<Toe>, RandomAccess, Cloneable, java.io
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public ValToeList asValToeList() {
+    public ValToeArrayList asValToeList() {
         List<ValToe> result = new ArrayList<ValToe>();
         for (Toe entry : list) {
             result.add(entry.asValToe());
         }
-        return new ValToeList(result);
+        return new ValToeArrayList(result);
     }
 
     public static class StateInSyncList extends ArrayList<Toe> {

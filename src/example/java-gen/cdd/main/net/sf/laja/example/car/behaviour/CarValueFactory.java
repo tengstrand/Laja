@@ -1,7 +1,11 @@
 package net.sf.laja.example.car.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.example.car.state.*;
+import java.util.Arrays;
 import net.sf.laja.example.car.state.CarState;
+import java.util.ArrayList;
 
 public class CarValueFactory extends CarValue {
 
@@ -19,6 +23,10 @@ public class CarValueFactory extends CarValue {
 
     public static CarBuilder build() {
         return new CarBuilder();
+    }
+
+    public static CarListCreator createList(CarEncapsulator... encapsulators) {
+        return new CarListCreator(encapsulators);
     }
 
     public static class CarFactory_ implements CarStateBehaviourFactory {

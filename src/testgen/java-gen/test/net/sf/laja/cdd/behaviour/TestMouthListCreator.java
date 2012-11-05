@@ -32,7 +32,7 @@ public class TestMouthListCreator implements Iterable<TestMouthEncapsulator> {
         for (TestMouthEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asTestMouth());
         }
-        return new TestMouthList(result);
+        return new TestMouthArrayList(result);
     }
 
     public boolean isValid() {

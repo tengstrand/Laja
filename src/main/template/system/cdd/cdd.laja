@@ -267,8 +267,8 @@
     #import "{..}/../java/cdd/behaviour/builder.java.laja"
     #import "{..}/../java/cdd/behaviour/creator.java.laja"
     #import "{..}/../java/cdd/behaviour/encapsulator.java.laja"
-    #import "{..}/../java/cdd/behaviour/arrayList.java.laja"
     #import "{..}/../java/cdd/behaviour/list.java.laja"
+    #import "{..}/../java/cdd/behaviour/arrayList.java.laja"
     #import "{..}/../java/cdd/behaviour/listCreator.java.laja"
   #end
 #end

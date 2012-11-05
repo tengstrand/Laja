@@ -1,7 +1,11 @@
 package net.sf.laja.example.person.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
 import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.HeightState;
+import java.util.ArrayList;
 
 public class HeightValueFactory extends HeightValue {
 
@@ -19,6 +23,10 @@ public class HeightValueFactory extends HeightValue {
 
     public static HeightBuilder build() {
         return new HeightBuilder();
+    }
+
+    public static HeightListCreator createList(HeightEncapsulator... encapsulators) {
+        return new HeightListCreator(encapsulators);
     }
 
     public static class HeightFactory_ implements HeightStateBehaviourFactory {

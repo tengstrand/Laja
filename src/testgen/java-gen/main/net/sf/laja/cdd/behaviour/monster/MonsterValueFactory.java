@@ -1,9 +1,13 @@
 package net.sf.laja.cdd.behaviour.monster;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.monster.MonsterState;
+import java.util.Arrays;
 import net.sf.laja.cdd.behaviour.head.Head;
 import net.sf.laja.cdd.state.monster.*;
 import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
+import java.util.ArrayList;
 import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 
 public class MonsterValueFactory extends MonsterValue {
@@ -22,6 +26,10 @@ public class MonsterValueFactory extends MonsterValue {
 
     public static MonsterBuilder build() {
         return new MonsterBuilder();
+    }
+
+    public static MonsterListCreator createList(MonsterEncapsulator... encapsulators) {
+        return new MonsterListCreator(encapsulators);
     }
 
     public static class MonsterFactory_ implements MonsterStateBehaviourFactory {
@@ -44,30 +52,6 @@ public class MonsterValueFactory extends MonsterValue {
 
       private Object create_(MonsterState state, MonsterStateBuilder stateBuilder, Object... args) {
         return new Monster(state, stateBuilder);
-    
-      }
-    }
-
-    public static class TerrestrialFactory_ implements MonsterStateBehaviourFactory {
-        private final MonsterStateBuilder builder;
-
-        public TerrestrialFactory_(MonsterStateBuilder builder) {
-            this.builder = builder;
-        }
-
-        public Object create(MonsterState state, Object... args) {
-            Object result = create_(state, builder, args);
-
-            if (!state.isValidAsEncapsulated()) {
-                throw new IllegalStateException("Illegal state, could not create behaviour class 'Terrestrial'");
-            }
-            state.encapsulate();
-
-            return result;
-        }
-
-      private Object create_(MonsterState state, MonsterStateBuilder stateBuilder, Object... args) {
-        return new Terrestrial(state.getTerrestrialState(), stateBuilder.terrestrialStateBuilder());
     
       }
     }

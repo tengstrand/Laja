@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.arm;
 
 import net.sf.laja.cdd.state.arm.*;
-
+import net.sf.laja.cdd.behaviour.arm.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class ArmArrayList implements List<Arm>, RandomAccess, Cloneable, java.io.Serializable {
+public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.Serializable {
     protected ArmStateList stateList;
     protected final List<Arm> list;
 

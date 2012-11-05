@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
 import net.sf.laja.cdd.state.mouth.*;
-
+import net.sf.laja.cdd.behaviour.mouth.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class CuteMouthArrayList implements List<CuteMouth>, RandomAccess, Cloneable, java.io.Serializable {
+public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneable, java.io.Serializable {
     protected MouthStateList stateList;
     protected final List<CuteMouth> list;
 

@@ -31,7 +31,7 @@ public class ToeListCreator implements Iterable<ToeEncapsulator> {
         for (ToeEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asToe());
         }
-        return new ToeList(result);
+        return new ToeArrayList(result);
     }
 
     public ValToeList asValToeList() {
@@ -40,7 +40,7 @@ public class ToeListCreator implements Iterable<ToeEncapsulator> {
         for (ToeEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asValToe());
         }
-        return new ValToeList(result);
+        return new ValToeArrayList(result);
     }
 
     public boolean isValid() {

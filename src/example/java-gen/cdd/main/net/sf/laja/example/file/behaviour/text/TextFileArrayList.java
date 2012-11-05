@@ -1,7 +1,7 @@
 package net.sf.laja.example.file.behaviour.text;
 
 import net.sf.laja.example.file.state.*;
-
+import net.sf.laja.example.file.behaviour.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class TextFileArrayList implements List<TextFile>, RandomAccess, Cloneable, java.io.Serializable {
+public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable, java.io.Serializable {
     protected FileStateList stateList;
     protected final List<TextFile> list;
 

@@ -25,6 +25,15 @@ public class EarListCreator implements Iterable<EarEncapsulator> {
         return encapsulators.iterator();
     }
 
+    public EarList asEarList() {
+        List<Ear> result = new ArrayList<Ear>();
+
+        for (EarEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asEar());
+        }
+        return new EarArrayList(result);
+    }
+
     public boolean isValid() {
         for (EarEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {

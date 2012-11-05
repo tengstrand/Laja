@@ -33,7 +33,7 @@ public class EyeListCreator implements Iterable<EyeEncapsulator> {
         for (EyeEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asEye());
         }
-        return new EyeList(result);
+        return new EyeArrayList(result);
     }
 
     public boolean isValid() {

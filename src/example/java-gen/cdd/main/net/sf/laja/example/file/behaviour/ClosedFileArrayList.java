@@ -1,10 +1,10 @@
 package net.sf.laja.example.file.behaviour;
 
 import net.sf.laja.example.file.state.*;
+import net.sf.laja.example.file.behaviour.*;
 
 import net.sf.laja.example.file.behaviour.text.TextFile;
-import net.sf.laja.example.file.behaviour.text.TextFileList;
-
+import net.sf.laja.example.file.behaviour.text.TextFileArrayList;
 import java.util.*;
 
 /**
@@ -12,7 +12,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class ClosedFileArrayList implements List<ClosedFile>, RandomAccess, Cloneable, java.io.Serializable {
+public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Cloneable, java.io.Serializable {
     protected FileStateList stateList;
     protected final List<ClosedFile> list;
 
@@ -38,12 +38,12 @@ public class ClosedFileArrayList implements List<ClosedFile>, RandomAccess, Clon
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public TextFileList asTextFileList() {
+    public TextFileArrayList asTextFileList() {
         List<TextFile> result = new ArrayList<TextFile>();
         for (ClosedFile entry : list) {
             result.add(entry.asTextFile());
         }
-        return new TextFileList(result);
+        return new TextFileArrayList(result);
     }
 
     public static class StateInSyncList extends ArrayList<ClosedFile> {

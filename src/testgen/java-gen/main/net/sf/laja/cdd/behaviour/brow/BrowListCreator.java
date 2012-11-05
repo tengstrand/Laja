@@ -31,7 +31,7 @@ public class BrowListCreator implements Iterable<BrowEncapsulator> {
         for (BrowEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asBrow());
         }
-        return new BrowList(result);
+        return new BrowArrayList(result);
     }
 
     public boolean isValid() {

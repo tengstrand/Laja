@@ -1,6 +1,10 @@
 package net.sf.laja.example.person.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
 import net.sf.laja.example.person.state.*;
+import java.util.ArrayList;
 import net.sf.laja.example.person.state.PersonState;
 
 public class PersonValueFactory extends PersonValue {
@@ -19,6 +23,10 @@ public class PersonValueFactory extends PersonValue {
 
     public static PersonBuilder build() {
         return new PersonBuilder();
+    }
+
+    public static PersonListCreator createList(PersonEncapsulator... encapsulators) {
+        return new PersonListCreator(encapsulators);
     }
 
     public static class PersonFactory_ implements PersonStateBehaviourFactory {

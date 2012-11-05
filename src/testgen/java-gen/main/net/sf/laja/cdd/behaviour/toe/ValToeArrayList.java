@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.toe;
 
 import net.sf.laja.cdd.state.toe.*;
-
+import net.sf.laja.cdd.behaviour.toe.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class ValToeArrayList implements List<ValToe>, RandomAccess, Cloneable, java.io.Serializable {
+public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, java.io.Serializable {
     protected ToeStateList stateList;
     protected final List<ValToe> list;
 

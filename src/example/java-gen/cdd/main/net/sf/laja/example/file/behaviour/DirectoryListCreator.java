@@ -33,7 +33,7 @@ public class DirectoryListCreator implements Iterable<DirectoryEncapsulator> {
         for (DirectoryEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asDirectory());
         }
-        return new DirectoryList(result);
+        return new DirectoryArrayList(result);
     }
 
     public boolean isValid() {

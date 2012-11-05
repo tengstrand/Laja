@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.hair;
 
 import net.sf.laja.cdd.state.hair.*;
-
+import net.sf.laja.cdd.behaviour.hair.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class FakeHairArrayList implements List<FakeHair>, RandomAccess, Cloneable, java.io.Serializable {
+public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable, java.io.Serializable {
     protected HairStateList stateList;
     protected final List<FakeHair> list;
 

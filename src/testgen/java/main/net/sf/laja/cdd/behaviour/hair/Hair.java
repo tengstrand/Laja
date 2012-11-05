@@ -7,12 +7,12 @@ public class Hair extends HairFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public Hair asHair() {
         return new Hair(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public FakeHair asFakeHair() {
         return new FakeHair(state);
     }

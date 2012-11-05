@@ -32,7 +32,7 @@ public class OtherTerrestrialListCreator implements Iterable<OtherTerrestrialEnc
         for (OtherTerrestrialEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asOtherTerrestrial());
         }
-        return new OtherTerrestrialList(result);
+        return new OtherTerrestrialArrayList(result);
     }
 
     public boolean isValid() {

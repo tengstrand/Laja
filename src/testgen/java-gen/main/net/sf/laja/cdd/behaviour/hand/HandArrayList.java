@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.hand;
 
 import net.sf.laja.cdd.state.hand.*;
-
+import net.sf.laja.cdd.behaviour.hand.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class HandArrayList implements List<Hand>, RandomAccess, Cloneable, java.io.Serializable {
+public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io.Serializable {
     protected HandStateList stateList;
     protected final List<Hand> list;
 

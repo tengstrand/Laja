@@ -1,5 +1,6 @@
 
 #generateCdd([{
+  verbose: false
   autoRemove: false
   srcDir: "{.}/main"
   outDir: "{..}/java-gen/main"

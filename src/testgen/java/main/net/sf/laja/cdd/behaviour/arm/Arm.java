@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.behaviour.arm;
 
+import net.sf.laja.cdd.behaviour.hand.HandArrayList;
 import net.sf.laja.cdd.behaviour.hand.HandList;
 import net.sf.laja.cdd.state.arm.ArmState;
 
@@ -8,7 +9,7 @@ public class Arm extends ArmFactory {
 
     public Arm(ArmState state) {
         super(state);
-        hands = new HandList(state.getHands());
+        hands = new HandArrayList(state.getHands());
     }
 
     // (factory) (list)
@@ -17,6 +18,6 @@ public class Arm extends ArmFactory {
     }
 
     public HandList getHands() {
-        return new HandList(state.getHands());
+        return new HandArrayList(state.getHands());
     }
 }

@@ -20,16 +20,16 @@ public class {listCreatorClass} implements Iterable<{encapsulatorClass}> {
     public Iterator<{encapsulatorClass}> iterator() {
         return encapsulators.iterator();
     }
-  #foreach (method in behaviour.asMethods where method.isFactory && method.generateList)
+  #foreach (method in behaviour.asMethods where method.isFactory)
 
     #setArgumentsAndParameters(method, false)
-    public {method.listClass} {method.methodName}List({parameters}) {
+    public {method.listInterface} {method.methodName}List({parameters}) {
         List<{method.returnclass}> result = new ArrayList<{method.returnclass}>();
 
         for ({encapsulatorClass} encapsulator : encapsulators) {
             result.add(encapsulator.{method.methodName}({arguments}));
         }
-        return new {method.listClass}(result);
+        return new {method.arrayListClass}(result);
     }
   #end
 
@@ -45,9 +45,10 @@ public class {listCreatorClass} implements Iterable<{encapsulatorClass}> {
 #end
 
 #macro importsList()
-  #foreach (method in behaviour.asMethods where method.isFactory && method.generateList)
+  #foreach (method in behaviour.asMethods where method.isFactory)
     #foreach (import in behaviour.imports where import.endsWithType(method.returnclass))
 import {import.fullclassname}List;
+import {import.fullclassname}ArrayList;
      #end
   #end
 #end
@@ -62,7 +63,7 @@ import java.util.*;
     #class()
 #end
 
-#if (behaviour.isFactory && generateList())
+#if (behaviour.isFactory)
   #set (filename = "{outputDir}/{listCreatorClass}.java")
   #generateFile(filename, fileContent())
 #end

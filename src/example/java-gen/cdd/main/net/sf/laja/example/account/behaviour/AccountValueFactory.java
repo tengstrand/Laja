@@ -1,7 +1,11 @@
 package net.sf.laja.example.account.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.example.account.state.*;
+import java.util.Arrays;
 import net.sf.laja.example.account.state.AccountState;
+import java.util.ArrayList;
 
 public class AccountValueFactory extends AccountValue {
 
@@ -19,6 +23,10 @@ public class AccountValueFactory extends AccountValue {
 
     public static AccountBuilder build() {
         return new AccountBuilder();
+    }
+
+    public static AccountListCreator createList(AccountEncapsulator... encapsulators) {
+        return new AccountListCreator(encapsulators);
     }
 
     public static class SourceAccountFactory_ implements AccountStateBehaviourFactory {

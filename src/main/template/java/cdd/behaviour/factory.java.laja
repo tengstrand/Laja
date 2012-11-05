@@ -5,12 +5,10 @@
     #imports.add(importstatement.statement)
   #end
   #imports.add("import {template.packagename}.*;")
-  #if (generateList())
-    #imports.add("import java.util.ArrayList;")
-    #imports.add("import java.util.Arrays;")
-    #imports.add("import java.util.Iterator;")
-    #imports.add("import java.util.List;")
-  #end
+  #imports.add("import java.util.ArrayList;")
+  #imports.add("import java.util.Arrays;")
+  #imports.add("import java.util.Iterator;")
+  #imports.add("import java.util.List;")
   #foreach (importstatement in imports)
 {importstatement}
   #end
@@ -60,12 +58,10 @@ public class {factoryClass} extends {parentClass} {
     public static {builderClass} build() {
         return new {builderClass}();
     }
-  #if (generateList())
 
     public static {listCreatorClass} createList({encapsulatorClass}... encapsulators) {
         return new {listCreatorClass}(encapsulators);
     }
-  #end
   #foreach (method in behaviour.asMethods where method.isFactory)
     #set (innerFactoryClass = "{method.returnclass}Factory_")
 

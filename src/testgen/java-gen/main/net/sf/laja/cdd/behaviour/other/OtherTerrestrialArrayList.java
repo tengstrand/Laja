@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour.other;
 
 import net.sf.laja.cdd.state.terrestrial.*;
-
+import net.sf.laja.cdd.behaviour.other.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class OtherTerrestrialArrayList implements List<OtherTerrestrial>, RandomAccess, Cloneable, java.io.Serializable {
+public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAccess, Cloneable, java.io.Serializable {
     protected TerrestrialStateList stateList;
     protected final List<OtherTerrestrial> list;
 

@@ -1,10 +1,10 @@
 package net.sf.laja.example.file.behaviour.text;
 
 import net.sf.laja.example.file.state.*;
+import net.sf.laja.example.file.behaviour.*;
 
 import net.sf.laja.example.file.behaviour.Directory;
 import net.sf.laja.example.file.behaviour.DirectoryFactory;
-
 import java.util.*;
 
 /**
@@ -12,7 +12,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class TextDirectoryArrayList implements List<TextDirectory>, RandomAccess, Cloneable, java.io.Serializable {
+public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, Cloneable, java.io.Serializable {
     protected DirectoryStateList stateList;
     protected final List<TextDirectory> list;
 

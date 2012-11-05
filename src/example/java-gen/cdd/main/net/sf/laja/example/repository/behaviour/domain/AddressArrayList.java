@@ -1,7 +1,7 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
 import net.sf.laja.example.repository.state.*;
-
+import net.sf.laja.example.repository.behaviour.domain.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class AddressArrayList implements List<Address>, RandomAccess, Cloneable, java.io.Serializable {
+public class AddressArrayList implements AddressList, RandomAccess, Cloneable, java.io.Serializable {
     protected AddressStateList stateList;
     protected final List<Address> list;
 

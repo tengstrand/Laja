@@ -4,17 +4,15 @@ import org.apache.commons.lang.StringUtils;
 
 public class AsMethod implements BehaviourParser.IAsMethod {
     public boolean isFactory;
-    public boolean generateList;
     public String returnclass;
     public String methodName;
-    public String listClass;
+    public String listInterface;
     public String arrayListClass;
     public Parameters parameters;
     public String statement;
 
     public void setComment(String comment) {
         isFactory = comment.contains("(factory)");
-        generateList = comment.contains("(list)");
     }
 
     public void setReturnclass(String returnclass) {
@@ -24,7 +22,7 @@ public class AsMethod implements BehaviourParser.IAsMethod {
     public void setMethodName(String methodName) {
         this.methodName = methodName;
         String methodAsClass = StringUtils.capitalize(methodName.substring(2));
-        listClass = methodAsClass + "List";
+        listInterface = methodAsClass + "List";
         arrayListClass = methodAsClass + "ArrayList";
     }
 
@@ -40,10 +38,9 @@ public class AsMethod implements BehaviourParser.IAsMethod {
     public String toString() {
         return "AsMethod{" +
                 "isFactory=" + isFactory +
-                ", generateList=" + generateList +
                 ", returnclass='" + returnclass + '\'' +
                 ", methodName='" + methodName + '\'' +
-                ", listClass='" + listClass + '\'' +
+                ", listInterface='" + listInterface + '\'' +
                 ", arrayListClass='" + arrayListClass + '\'' +
                 ", parameters=" + parameters +
                 ", statement='" + statement + '\'' +

@@ -1,10 +1,10 @@
 package net.sf.laja.example.file.behaviour;
 
 import net.sf.laja.example.file.state.*;
+import net.sf.laja.example.file.behaviour.*;
 
 import net.sf.laja.example.file.behaviour.text.TextDirectory;
-import net.sf.laja.example.file.behaviour.text.TextDirectoryList;
-
+import net.sf.laja.example.file.behaviour.text.TextDirectoryArrayList;
 import java.util.*;
 
 /**
@@ -12,7 +12,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class DirectoryArrayList implements List<Directory>, RandomAccess, Cloneable, java.io.Serializable {
+public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneable, java.io.Serializable {
     protected DirectoryStateList stateList;
     protected final List<Directory> list;
 
@@ -38,12 +38,12 @@ public class DirectoryArrayList implements List<Directory>, RandomAccess, Clonea
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public TextDirectoryList asTextDirectoryList() {
+    public TextDirectoryArrayList asTextDirectoryList() {
         List<TextDirectory> result = new ArrayList<TextDirectory>();
         for (Directory entry : list) {
             result.add(entry.asTextDirectory());
         }
-        return new TextDirectoryList(result);
+        return new TextDirectoryArrayList(result);
     }
 
     public static class StateInSyncList extends ArrayList<Directory> {

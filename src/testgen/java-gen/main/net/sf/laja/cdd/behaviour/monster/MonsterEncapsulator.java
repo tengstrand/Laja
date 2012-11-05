@@ -34,10 +34,6 @@ public class MonsterEncapsulator {
         return (Monster)builder.as(new MonsterFactory.MonsterFactory_(builder));
     }
 
-    public Terrestrial asTerrestrial() {
-        return (Terrestrial)builder.as(new MonsterFactory.TerrestrialFactory_(builder));
-    }
-
     public MonsterEncapsulator withMidEye(EyeEncapsulator midEye) {
         builder.withMidEye(midEye.builder);
         return this;

@@ -1,8 +1,12 @@
 package net.sf.laja.example.person.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import net.sf.laja.example.person.state.*;
+import java.util.ArrayList;
 import net.sf.laja.example.person.state.BmiState;
 
 public class BodyMassIndexValueFactory extends BmiValue {
@@ -21,6 +25,10 @@ public class BodyMassIndexValueFactory extends BmiValue {
 
     public static BodyMassIndexBuilder build() {
         return new BodyMassIndexBuilder();
+    }
+
+    public static BodyMassIndexListCreator createList(BodyMassIndexEncapsulator... encapsulators) {
+        return new BodyMassIndexListCreator(encapsulators);
     }
 
     public static class BodyMassIndexFactory_ implements BmiStateBehaviourFactory {

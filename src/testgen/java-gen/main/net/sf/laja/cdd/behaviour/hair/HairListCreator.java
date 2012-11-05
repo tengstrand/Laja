@@ -31,7 +31,7 @@ public class HairListCreator implements Iterable<HairEncapsulator> {
         for (HairEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asHair());
         }
-        return new HairList(result);
+        return new HairArrayList(result);
     }
 
     public FakeHairList asFakeHairList() {
@@ -40,7 +40,7 @@ public class HairListCreator implements Iterable<HairEncapsulator> {
         for (HairEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asFakeHair());
         }
-        return new FakeHairList(result);
+        return new FakeHairArrayList(result);
     }
 
     public boolean isValid() {

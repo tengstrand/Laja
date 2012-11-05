@@ -12,10 +12,6 @@ public class Terrestrial extends TerrestrialFactory {
         stateBuilder.withRightEye(Eye.eyeWeightInGrams(100).color("Red").builder);
     }
 
-    private void postConstructor(TerrestrialStateBuilder builder) {
-        builder.withNumberOfWings(3);
-    }
-
     // (factory)
     public Terrestrial asTerrestrial() {
         return new Terrestrial(state, stateBuilder);

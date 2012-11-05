@@ -25,6 +25,15 @@ public class NoseListCreator implements Iterable<NoseEncapsulator> {
         return encapsulators.iterator();
     }
 
+    public NoseList asNoseList(int extraParameter) {
+        List<Nose> result = new ArrayList<Nose>();
+
+        for (NoseEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asNose(extraParameter));
+        }
+        return new NoseArrayList(result);
+    }
+
     public boolean isValid() {
         for (NoseEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {

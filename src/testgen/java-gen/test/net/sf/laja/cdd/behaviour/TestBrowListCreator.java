@@ -31,7 +31,7 @@ public class TestBrowListCreator implements Iterable<TestBrowEncapsulator> {
         for (TestBrowEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asTestBrow());
         }
-        return new TestBrowList(result);
+        return new TestBrowArrayList(result);
     }
 
     public boolean isValid() {

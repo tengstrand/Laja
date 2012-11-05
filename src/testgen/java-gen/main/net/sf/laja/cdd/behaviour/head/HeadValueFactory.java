@@ -1,11 +1,16 @@
 package net.sf.laja.cdd.behaviour.head;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.behaviour.mouth.MouthSize;
 import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.behaviour.eye.Eye;
+import java.util.Arrays;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.behaviour.mouth.MouthList;
 import net.sf.laja.cdd.state.head.*;
+import java.util.ArrayList;
+import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
 
 public class HeadValueFactory extends HeadValue {
 
@@ -23,6 +28,10 @@ public class HeadValueFactory extends HeadValue {
 
     public static HeadBuilder build() {
         return new HeadBuilder();
+    }
+
+    public static HeadListCreator createList(HeadEncapsulator... encapsulators) {
+        return new HeadListCreator(encapsulators);
     }
 
     public static class HeadFactory_ implements HeadStateBehaviourFactory {

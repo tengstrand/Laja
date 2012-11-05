@@ -1,7 +1,10 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
 import net.sf.laja.example.repository.state.*;
+import net.sf.laja.example.repository.behaviour.domain.*;
 
+import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
+import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcherArrayList;
 import java.util.*;
 
 /**
@@ -9,7 +12,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class CustomerArrayList implements List<Customer>, RandomAccess, Cloneable, java.io.Serializable {
+public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable, java.io.Serializable {
     protected CustomerStateList stateList;
     protected final List<Customer> list;
 
@@ -33,6 +36,14 @@ public class CustomerArrayList implements List<Customer>, RandomAccess, Cloneabl
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public CustomerMatcherArrayList asCustomerMatcherList() {
+        List<CustomerMatcher> result = new ArrayList<CustomerMatcher>();
+        for (Customer entry : list) {
+            result.add(entry.asCustomerMatcher());
+        }
+        return new CustomerMatcherArrayList(result);
     }
 
     public static class StateInSyncList extends ArrayList<Customer> {

@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.state.brow.*;
-
+import net.sf.laja.cdd.behaviour.*;
 import java.util.*;
 
 /**
@@ -9,7 +9,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class TestBrowArrayList implements List<TestBrow>, RandomAccess, Cloneable, java.io.Serializable {
+public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable, java.io.Serializable {
     protected BrowStateList stateList;
     protected final List<TestBrow> list;
 

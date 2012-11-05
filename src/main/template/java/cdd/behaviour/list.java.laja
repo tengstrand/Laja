@@ -3,37 +3,26 @@
 package {packagename};
 
 import java.util.List;
-import {template.packagename}.{stateListClass};
+  #listImports()
 
-public class {listClass} extends {arrayListClass} {
-    public {listClass}({entryClass}... list) {
-        super(list);
-    }
-
-    public {listClass}(List<{entryClass}> list) {
-        super(list);
-    }
-        #if (method.isFactory)
-
-    public {listClass}({stateListClass} stateList{parameters}) {
-        super(stateList{arguments});
-    }
-        #end
+public interface {listInterface} extends List<{entryClass}> {
+  #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName)
+    #setArgumentsAndParameters(m, false)
+    {m.arrayListClass} {m.methodName}List({parameters});
+  #end
 }
 #end
 
-#foreach (method in behaviour.asMethods where method.generateList)
-  #prepareList(sourceDir, srcDir)
+#foreach (method in behaviour.asMethods)
+  #prepareList(outputDir, outDir)
   #setArgumentsAndParameters(method, true)
 
-  #set (filename = "{listOutputDir}/{listClass}.java")
-  #if (!processedLists.contains(listClass))
-    #processedLists.add(listClass)
-    #if (!fileExists(filename))
-      #if (!directoryExists(listOutputDir))
-        #createDirectoryPath(listOutputDir)
-      #end
-      #generateFile(filename, fileContent())
+  #if (!processedLists.contains(listInterface))
+    #processedLists.add(listInterface)
+    #if (!directoryExists(listOutputDir))
+      #createDirectoryPath(listOutputDir)
     #end
+    #set (filename = "{listOutputDir}/{listInterface}.java")
+    #generateFile(filename, fileContent())
   #end
 #end

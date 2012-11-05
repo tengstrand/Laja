@@ -9,35 +9,13 @@
 #macro fileContent()
 package {packagename};
 
-import {template.packagename}.*;
-      #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName && m.generateList && !m.isFactory)
-        #set (behaviourRef = behaviours.get(m.returnclass))
-        #if (behaviourRef == null)
-          #error ("Could not find behaviour class {m.returnclass}")
-        #end
-        #if (behaviourRef.packagename != packagename)
-
-import {behaviourRef.packagename}.{m.returnclass};
-import {behaviourRef.packagename}.{m.listClass};
-        #end
-      #end
-      #if (!method.isFactory)
-        #set (first = true)
-        #foreach (m in behaviour.asMethods where m.isFactory && first)
-          #set (behaviourRef = behaviours.get(m.returnclass))
-          #if (behaviourRef.packagename != packagename)
-
-import {behaviourRef.packagename}.{m.returnclass};
-import {behaviourRef.packagename}.{m.returnclass}Factory;
-          #end
-          #set (first = false)
-        #end
-      #end
-
+import {statePackagename}.*;
+import {behaviour.packagename}.*;
+  #listImports()
 import java.util.*;
 
-      #header()
-public class {arrayListClass} implements List<{entryClass}>, RandomAccess, Cloneable, java.io.Serializable {
+  #header()
+public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneable, java.io.Serializable {
     protected {stateListClass} stateList;
     protected final List<{entryClass}> list;
 
@@ -50,9 +28,9 @@ public class {arrayListClass} implements List<{entryClass}>, RandomAccess, Clone
         this.list = new ArrayList<{entryClass}>();
         this.list.addAll(list);
     }
-      #if (method.isFactory)
+  #if (method.isFactory)
 
-        #setArgumentsAndParameters(method, true)
+    #setArgumentsAndParameters(method, true)
     public {arrayListClass}({stateListClass} stateList{parameters}) {
         this.stateList = stateList;
         List<{entryClass}> elements = new ArrayList<{entryClass}>(stateList.size());
@@ -64,18 +42,18 @@ public class {arrayListClass} implements List<{entryClass}>, RandomAccess, Clone
         }
         this.list = new StateInSyncList(stateList, elements);
     }
-      #end
-      #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName && m.generateList)
-        #setArgumentsAndParameters(m, false)
+  #end
+  #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName)
+    #setArgumentsAndParameters(m, false)
 
-    public {m.listClass} {m.methodName}List({parameters}) {
+    public {m.arrayListClass} {m.methodName}List({parameters}) {
         List<{m.returnclass}> result = new ArrayList<{m.returnclass}>();
         for ({entryClass} entry : list) {
             result.add(entry.{m.methodName}({arguments}));
         }
-        return new {m.listClass}(result);
+        return new {m.arrayListClass}(result);
     }
-      #end
+  #end
 
     public static class StateInSyncList extends ArrayList<{entryClass}> {
         private final {stateListClass} stateList;
@@ -293,7 +271,7 @@ public class {arrayListClass} implements List<{entryClass}>, RandomAccess, Clone
 }
 #end
 
-#foreach (method in behaviour.asMethods where method.generateList)
+#foreach (method in behaviour.asMethods)
   #prepareList(outputDir, outDir)
 
   #if (!processedArrayLists.contains(arrayListClass))

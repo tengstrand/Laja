@@ -31,7 +31,16 @@ public class FileListCreator implements Iterable<FileEncapsulator> {
         for (FileEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asClosedFile(directory));
         }
-        return new ClosedFileList(result);
+        return new ClosedFileArrayList(result);
+    }
+
+    public WritableFileList asWritableFileList(Directory directory, boolean createIfNotExists) {
+        List<WritableFile> result = new ArrayList<WritableFile>();
+
+        for (FileEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asWritableFile(directory, createIfNotExists));
+        }
+        return new WritableFileArrayList(result);
     }
 
     public boolean isValid() {

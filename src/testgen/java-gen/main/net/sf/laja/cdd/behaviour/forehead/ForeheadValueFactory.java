@@ -1,7 +1,12 @@
 package net.sf.laja.cdd.behaviour.forehead;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.forehead.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 
 public class ForeheadValueFactory extends ForeheadValue {
@@ -20,6 +25,10 @@ public class ForeheadValueFactory extends ForeheadValue {
 
     public static ForeheadBuilder build() {
         return new ForeheadBuilder();
+    }
+
+    public static ForeheadListCreator createList(ForeheadEncapsulator... encapsulators) {
+        return new ForeheadListCreator(encapsulators);
     }
 
     public static class ForeheadFactory_ implements ForeheadStateBehaviourFactory {

@@ -31,7 +31,7 @@ public class HandListCreator implements Iterable<HandEncapsulator> {
         for (HandEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asHand());
         }
-        return new HandList(result);
+        return new HandArrayList(result);
     }
 
     public boolean isValid() {

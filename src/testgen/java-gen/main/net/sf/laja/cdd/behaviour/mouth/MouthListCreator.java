@@ -32,7 +32,7 @@ public class MouthListCreator implements Iterable<MouthEncapsulator> {
         for (MouthEncapsulator encapsulator : encapsulators) {
             result.add(encapsulator.asMouth(size));
         }
-        return new MouthList(result);
+        return new MouthArrayList(result);
     }
 
     public boolean isValid() {

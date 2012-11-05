@@ -1,10 +1,10 @@
 package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.state.mouth.*;
+import net.sf.laja.cdd.behaviour.*;
 
 import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
-import net.sf.laja.cdd.behaviour.mouth.CuteMouthList;
-
+import net.sf.laja.cdd.behaviour.mouth.CuteMouthArrayList;
 import java.util.*;
 
 /**
@@ -12,7 +12,7 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class TestMouthArrayList implements List<TestMouth>, RandomAccess, Cloneable, java.io.Serializable {
+public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneable, java.io.Serializable {
     protected MouthStateList stateList;
     protected final List<TestMouth> list;
 
@@ -38,12 +38,12 @@ public class TestMouthArrayList implements List<TestMouth>, RandomAccess, Clonea
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public CuteMouthList asCuteMouthList() {
+    public CuteMouthArrayList asCuteMouthList() {
         List<CuteMouth> result = new ArrayList<CuteMouth>();
         for (TestMouth entry : list) {
             result.add(entry.asCuteMouth());
         }
-        return new CuteMouthList(result);
+        return new CuteMouthArrayList(result);
     }
 
     public static class StateInSyncList extends ArrayList<TestMouth> {
