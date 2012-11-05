@@ -9,21 +9,21 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ToeAbstractList implements List<Toe>, RandomAccess, Cloneable, java.io.Serializable {
+public class ToeArrayList implements List<Toe>, RandomAccess, Cloneable, java.io.Serializable {
     protected ToeStateList stateList;
     protected final List<Toe> list;
 
-    public ToeAbstractList(Toe... list) {
+    public ToeArrayList(Toe... list) {
         this.list = new ArrayList<Toe>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ToeAbstractList(List<Toe> list) {
+    public ToeArrayList(List<Toe> list) {
         this.list = new ArrayList<Toe>();
         this.list.addAll(list);
     }
 
-    public ToeAbstractList(ToeStateList stateList) {
+    public ToeArrayList(ToeStateList stateList) {
         this.stateList = stateList;
         List<Toe> elements = new ArrayList<Toe>(stateList.size());
 

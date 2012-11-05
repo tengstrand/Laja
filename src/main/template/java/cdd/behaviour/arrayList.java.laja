@@ -37,23 +37,23 @@ import {behaviourRef.packagename}.{m.returnclass}Factory;
 import java.util.*;
 
       #header()
-public abstract class {abstractListClass} implements List<{entryClass}>, RandomAccess, Cloneable, java.io.Serializable {
+public class {arrayListClass} implements List<{entryClass}>, RandomAccess, Cloneable, java.io.Serializable {
     protected {stateListClass} stateList;
     protected final List<{entryClass}> list;
 
-    public {abstractListClass}({entryClass}... list) {
+    public {arrayListClass}({entryClass}... list) {
         this.list = new ArrayList<{entryClass}>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public {abstractListClass}(List<{entryClass}> list) {
+    public {arrayListClass}(List<{entryClass}> list) {
         this.list = new ArrayList<{entryClass}>();
         this.list.addAll(list);
     }
       #if (method.isFactory)
 
         #setArgumentsAndParameters(method, true)
-    public {abstractListClass}({stateListClass} stateList{parameters}) {
+    public {arrayListClass}({stateListClass} stateList{parameters}) {
         this.stateList = stateList;
         List<{entryClass}> elements = new ArrayList<{entryClass}>(stateList.size());
 
@@ -296,12 +296,12 @@ public abstract class {abstractListClass} implements List<{entryClass}>, RandomA
 #foreach (method in behaviour.asMethods where method.generateList)
   #prepareList(outputDir, outDir)
 
-  #if (!processedAbstractLists.contains(abstractListClass))
-    #processedAbstractLists.add(abstractListClass)
+  #if (!processedArrayLists.contains(arrayListClass))
+    #processedArrayLists.add(arrayListClass)
     #if (!directoryExists(listOutputDir))
       #createDirectoryPath(listOutputDir)
     #end
-    #set (filename = "{listOutputDir}/{abstractListClass}.java")
+    #set (filename = "{listOutputDir}/{arrayListClass}.java")
     #generateFile(filename, fileContent())
   #end
 #end

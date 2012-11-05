@@ -8,7 +8,7 @@ public class AsMethod implements BehaviourParser.IAsMethod {
     public String returnclass;
     public String methodName;
     public String listClass;
-    public String abstractListClass;
+    public String arrayListClass;
     public Parameters parameters;
     public String statement;
 
@@ -25,7 +25,7 @@ public class AsMethod implements BehaviourParser.IAsMethod {
         this.methodName = methodName;
         String methodAsClass = StringUtils.capitalize(methodName.substring(2));
         listClass = methodAsClass + "List";
-        abstractListClass = methodAsClass + "AbstractList";
+        arrayListClass = methodAsClass + "ArrayList";
     }
 
     public void setParameters(BehaviourParser.IParameters iparameters) {
@@ -44,7 +44,7 @@ public class AsMethod implements BehaviourParser.IAsMethod {
                 ", returnclass='" + returnclass + '\'' +
                 ", methodName='" + methodName + '\'' +
                 ", listClass='" + listClass + '\'' +
-                ", abstractListClass='" + abstractListClass + '\'' +
+                ", arrayListClass='" + arrayListClass + '\'' +
                 ", parameters=" + parameters +
                 ", statement='" + statement + '\'' +
                 '}';

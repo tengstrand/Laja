@@ -2,7 +2,7 @@ package net.sf.laja.cdd.behaviour.hair;
 
 import java.util.List;
 
-public class FakeHairList extends FakeHairAbstractList {
+public class FakeHairList extends FakeHairArrayList {
     public FakeHairList(FakeHair... list) {
         super(list);
     }

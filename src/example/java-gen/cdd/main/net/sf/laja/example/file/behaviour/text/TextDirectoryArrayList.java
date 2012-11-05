@@ -1,6 +1,9 @@
-package net.sf.laja.cdd.behaviour.brow;
+package net.sf.laja.example.file.behaviour.text;
 
-import net.sf.laja.cdd.state.brow.*;
+import net.sf.laja.example.file.state.*;
+
+import net.sf.laja.example.file.behaviour.Directory;
+import net.sf.laja.example.file.behaviour.DirectoryFactory;
 
 import java.util.*;
 
@@ -9,68 +12,56 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Cloneable, java.io.Serializable {
-    protected BrowStateList stateList;
-    protected final List<Brow> list;
+public class TextDirectoryArrayList implements List<TextDirectory>, RandomAccess, Cloneable, java.io.Serializable {
+    protected DirectoryStateList stateList;
+    protected final List<TextDirectory> list;
 
-    public BrowAbstractList(Brow... list) {
-        this.list = new ArrayList<Brow>();
+    public TextDirectoryArrayList(TextDirectory... list) {
+        this.list = new ArrayList<TextDirectory>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public BrowAbstractList(List<Brow> list) {
-        this.list = new ArrayList<Brow>();
+    public TextDirectoryArrayList(List<TextDirectory> list) {
+        this.list = new ArrayList<TextDirectory>();
         this.list.addAll(list);
     }
 
-    public BrowAbstractList(BrowStateList stateList) {
-        this.stateList = stateList;
-        List<Brow> elements = new ArrayList<Brow>(stateList.size());
+    public static class StateInSyncList extends ArrayList<TextDirectory> {
+        private final DirectoryStateList stateList;
 
-        for (BrowState state : stateList) {
-            BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_(builder));
-            elements.add(entry);
-        }
-        this.list = new StateInSyncList(stateList, elements);
-    }
-
-    public static class StateInSyncList extends ArrayList<Brow> {
-        private final BrowStateList stateList;
-
-        public StateInSyncList(BrowStateList stateList, List<Brow> elements) {
+        public StateInSyncList(DirectoryStateList stateList, List<TextDirectory> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Brow element) {
+        public boolean add(TextDirectory element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Brow element) {
+        public void add(int index, TextDirectory element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Brow> collection) {
+        public boolean addAll(Collection<? extends TextDirectory> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Brow element : collection) {
+            for (TextDirectory element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Brow> collection) {
+        public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Brow element : collection) {
+            for (TextDirectory element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +71,10 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Brow)) {
+            if (!(element instanceof TextDirectory)) {
                 return false;
             }
-            stateList.remove(((Brow) element).getState(stateList));
+            stateList.remove(((TextDirectory) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +84,9 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Brow) {
+                if (element instanceof TextDirectory) {
                     elements.add(element);
-                    states.add(((Brow)element).getState(stateList));
+                    states.add(((TextDirectory)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +100,9 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Brow) {
+                if (element instanceof TextDirectory) {
                     elements.add(element);
-                    states.add(((Brow)element).getState(stateList));
+                    states.add(((TextDirectory)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +118,13 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
         }
 
         @Override
-        public Brow set(int index, Brow element) {
+        public TextDirectory set(int index, TextDirectory element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Brow remove(int index) {
+        public TextDirectory remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +142,7 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
         return list.contains(element);
     }
 
-    public Iterator<Brow> iterator() {
+    public Iterator<TextDirectory> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +150,28 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
         return list.toArray();
     }
 
-    public <Brow> Brow[] toArray(Brow[] array) {
+    public <TextDirectory> TextDirectory[] toArray(TextDirectory[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Brow element) {
+    public boolean add(TextDirectory element) {
         return list.add(element);
     }
 
-    public void add(int index, Brow element) {
+    public void add(int index, TextDirectory element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Brow> collection) {
+    public boolean addAll(Collection<? extends TextDirectory> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Brow> collection) {
+    public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Brow)) {
+        if (!(element instanceof TextDirectory)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +193,15 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
         list.clear();
     }
 
-    public Brow get(int index) {
+    public TextDirectory get(int index) {
         return list.get(index);
     }
 
-    public Brow set(int index, Brow element) {
+    public TextDirectory set(int index, TextDirectory element) {
         return list.set(index, element);
     }
 
-    public Brow remove(int index) {
+    public TextDirectory remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +213,15 @@ public abstract class BrowAbstractList implements List<Brow>, RandomAccess, Clon
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Brow> listIterator() {
+    public ListIterator<TextDirectory> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Brow> listIterator(int index) {
+    public ListIterator<TextDirectory> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Brow> subList(int fromIndex, int toIndex) {
+    public List<TextDirectory> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

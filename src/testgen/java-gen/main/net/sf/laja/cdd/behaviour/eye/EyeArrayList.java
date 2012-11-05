@@ -1,6 +1,9 @@
-package net.sf.laja.cdd.behaviour.mouth;
+package net.sf.laja.cdd.behaviour.eye;
 
-import net.sf.laja.cdd.state.mouth.*;
+import net.sf.laja.cdd.state.eye.*;
+
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEyeList;
 
 import java.util.*;
 
@@ -9,76 +12,76 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateList;
-    protected final List<Mouth> list;
+public class EyeArrayList implements List<Eye>, RandomAccess, Cloneable, java.io.Serializable {
+    protected EyeStateList stateList;
+    protected final List<Eye> list;
 
-    public MouthAbstractList(Mouth... list) {
-        this.list = new ArrayList<Mouth>();
+    public EyeArrayList(Eye... list) {
+        this.list = new ArrayList<Eye>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public MouthAbstractList(List<Mouth> list) {
-        this.list = new ArrayList<Mouth>();
+    public EyeArrayList(List<Eye> list) {
+        this.list = new ArrayList<Eye>();
         this.list.addAll(list);
     }
 
-    public MouthAbstractList(MouthStateList stateList, MouthSize size) {
+    public EyeArrayList(EyeStateList stateList) {
         this.stateList = stateList;
-        List<Mouth> elements = new ArrayList<Mouth>(stateList.size());
+        List<Eye> elements = new ArrayList<Eye>(stateList.size());
 
-        for (MouthState state : stateList) {
-            MouthStateBuilder builder = new MouthStateBuilderImpl(state);
-            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(builder), size);
+        for (EyeState state : stateList) {
+            EyeStateBuilder builder = new EyeStateBuilderImpl(state);
+            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public CuteMouthList asCuteMouthList(MouthSize size, int x) {
-        List<CuteMouth> result = new ArrayList<CuteMouth>();
-        for (Mouth entry : list) {
-            result.add(entry.asCuteMouth(size, x));
+    public ScaryEyeList asScaryEyeList() {
+        List<ScaryEye> result = new ArrayList<ScaryEye>();
+        for (Eye entry : list) {
+            result.add(entry.asScaryEye());
         }
-        return new CuteMouthList(result);
+        return new ScaryEyeList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Mouth> {
-        private final MouthStateList stateList;
+    public static class StateInSyncList extends ArrayList<Eye> {
+        private final EyeStateList stateList;
 
-        public StateInSyncList(MouthStateList stateList, List<Mouth> elements) {
+        public StateInSyncList(EyeStateList stateList, List<Eye> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Mouth element) {
+        public boolean add(Eye element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Mouth element) {
+        public void add(int index, Eye element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Mouth> collection) {
+        public boolean addAll(Collection<? extends Eye> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Mouth element : collection) {
+            for (Eye element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Mouth> collection) {
+        public boolean addAll(int index, Collection<? extends Eye> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Mouth element : collection) {
+            for (Eye element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -88,10 +91,10 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Mouth)) {
+            if (!(element instanceof Eye)) {
                 return false;
             }
-            stateList.remove(((Mouth) element).getState(stateList));
+            stateList.remove(((Eye) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -101,9 +104,9 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Mouth) {
+                if (element instanceof Eye) {
                     elements.add(element);
-                    states.add(((Mouth)element).getState(stateList));
+                    states.add(((Eye)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -117,9 +120,9 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Mouth) {
+                if (element instanceof Eye) {
                     elements.add(element);
-                    states.add(((Mouth)element).getState(stateList));
+                    states.add(((Eye)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -135,13 +138,13 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
         }
 
         @Override
-        public Mouth set(int index, Mouth element) {
+        public Eye set(int index, Eye element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Mouth remove(int index) {
+        public Eye remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -159,7 +162,7 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
         return list.contains(element);
     }
 
-    public Iterator<Mouth> iterator() {
+    public Iterator<Eye> iterator() {
         return list.iterator();
     }
 
@@ -167,28 +170,28 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
         return list.toArray();
     }
 
-    public <Mouth> Mouth[] toArray(Mouth[] array) {
+    public <Eye> Eye[] toArray(Eye[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Mouth element) {
+    public boolean add(Eye element) {
         return list.add(element);
     }
 
-    public void add(int index, Mouth element) {
+    public void add(int index, Eye element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Mouth> collection) {
+    public boolean addAll(Collection<? extends Eye> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Mouth> collection) {
+    public boolean addAll(int index, Collection<? extends Eye> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Mouth)) {
+        if (!(element instanceof Eye)) {
             return false;
         }
         return list.remove(element);
@@ -210,15 +213,15 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
         list.clear();
     }
 
-    public Mouth get(int index) {
+    public Eye get(int index) {
         return list.get(index);
     }
 
-    public Mouth set(int index, Mouth element) {
+    public Eye set(int index, Eye element) {
         return list.set(index, element);
     }
 
-    public Mouth remove(int index) {
+    public Eye remove(int index) {
         return list.remove(index);
     }
 
@@ -230,15 +233,15 @@ public abstract class MouthAbstractList implements List<Mouth>, RandomAccess, Cl
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Mouth> listIterator() {
+    public ListIterator<Eye> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Mouth> listIterator(int index) {
+    public ListIterator<Eye> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Mouth> subList(int fromIndex, int toIndex) {
+    public List<Eye> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

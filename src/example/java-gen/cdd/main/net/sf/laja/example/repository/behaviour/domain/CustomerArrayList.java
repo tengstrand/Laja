@@ -1,6 +1,6 @@
-package net.sf.laja.cdd.behaviour.hair;
+package net.sf.laja.example.repository.behaviour.domain;
 
-import net.sf.laja.cdd.state.hair.*;
+import net.sf.laja.example.repository.state.*;
 
 import java.util.*;
 
@@ -9,68 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAccess, Cloneable, java.io.Serializable {
-    protected HairStateList stateList;
-    protected final List<FakeHair> list;
+public class CustomerArrayList implements List<Customer>, RandomAccess, Cloneable, java.io.Serializable {
+    protected CustomerStateList stateList;
+    protected final List<Customer> list;
 
-    public FakeHairAbstractList(FakeHair... list) {
-        this.list = new ArrayList<FakeHair>();
+    public CustomerArrayList(Customer... list) {
+        this.list = new ArrayList<Customer>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public FakeHairAbstractList(List<FakeHair> list) {
-        this.list = new ArrayList<FakeHair>();
+    public CustomerArrayList(List<Customer> list) {
+        this.list = new ArrayList<Customer>();
         this.list.addAll(list);
     }
 
-    public FakeHairAbstractList(HairStateList stateList) {
+    public CustomerArrayList(CustomerStateList stateList) {
         this.stateList = stateList;
-        List<FakeHair> elements = new ArrayList<FakeHair>(stateList.size());
+        List<Customer> elements = new ArrayList<Customer>(stateList.size());
 
-        for (HairState state : stateList) {
-            HairStateBuilder builder = new HairStateBuilderImpl(state);
-            FakeHair entry = (FakeHair) builder.as(new HairFactory.FakeHairFactory_(builder));
+        for (CustomerState state : stateList) {
+            CustomerStateBuilder builder = new CustomerStateBuilderImpl(state);
+            Customer entry = (Customer) builder.as(new CustomerFactory.CustomerFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<FakeHair> {
-        private final HairStateList stateList;
+    public static class StateInSyncList extends ArrayList<Customer> {
+        private final CustomerStateList stateList;
 
-        public StateInSyncList(HairStateList stateList, List<FakeHair> elements) {
+        public StateInSyncList(CustomerStateList stateList, List<Customer> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(FakeHair element) {
+        public boolean add(Customer element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, FakeHair element) {
+        public void add(int index, Customer element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends FakeHair> collection) {
+        public boolean addAll(Collection<? extends Customer> collection) {
             boolean modified = super.addAll(collection);
 
-            for (FakeHair element : collection) {
+            for (Customer element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends FakeHair> collection) {
+        public boolean addAll(int index, Collection<? extends Customer> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (FakeHair element : collection) {
+            for (Customer element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +80,10 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof FakeHair)) {
+            if (!(element instanceof Customer)) {
                 return false;
             }
-            stateList.remove(((FakeHair) element).getState(stateList));
+            stateList.remove(((Customer) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +93,9 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof FakeHair) {
+                if (element instanceof Customer) {
                     elements.add(element);
-                    states.add(((FakeHair)element).getState(stateList));
+                    states.add(((Customer)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +109,9 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof FakeHair) {
+                if (element instanceof Customer) {
                     elements.add(element);
-                    states.add(((FakeHair)element).getState(stateList));
+                    states.add(((Customer)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +127,13 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
         }
 
         @Override
-        public FakeHair set(int index, FakeHair element) {
+        public Customer set(int index, Customer element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public FakeHair remove(int index) {
+        public Customer remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +151,7 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
         return list.contains(element);
     }
 
-    public Iterator<FakeHair> iterator() {
+    public Iterator<Customer> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +159,28 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
         return list.toArray();
     }
 
-    public <FakeHair> FakeHair[] toArray(FakeHair[] array) {
+    public <Customer> Customer[] toArray(Customer[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(FakeHair element) {
+    public boolean add(Customer element) {
         return list.add(element);
     }
 
-    public void add(int index, FakeHair element) {
+    public void add(int index, Customer element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends FakeHair> collection) {
+    public boolean addAll(Collection<? extends Customer> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends FakeHair> collection) {
+    public boolean addAll(int index, Collection<? extends Customer> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof FakeHair)) {
+        if (!(element instanceof Customer)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +202,15 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
         list.clear();
     }
 
-    public FakeHair get(int index) {
+    public Customer get(int index) {
         return list.get(index);
     }
 
-    public FakeHair set(int index, FakeHair element) {
+    public Customer set(int index, Customer element) {
         return list.set(index, element);
     }
 
-    public FakeHair remove(int index) {
+    public Customer remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +222,15 @@ public abstract class FakeHairAbstractList implements List<FakeHair>, RandomAcce
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<FakeHair> listIterator() {
+    public ListIterator<Customer> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<FakeHair> listIterator(int index) {
+    public ListIterator<Customer> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<FakeHair> subList(int fromIndex, int toIndex) {
+    public List<Customer> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

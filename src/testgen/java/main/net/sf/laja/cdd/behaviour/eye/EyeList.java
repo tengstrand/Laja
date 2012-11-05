@@ -2,7 +2,7 @@ package net.sf.laja.cdd.behaviour.eye;
 
 import java.util.List;
 
-public class EyeList extends EyeAbstractList {
+public class EyeList extends EyeArrayList {
     public EyeList(Eye... list) {
         super(list);
     }

@@ -1,6 +1,6 @@
-package net.sf.laja.example.repository.behaviour.domain;
+package net.sf.laja.cdd.behaviour.other;
 
-import net.sf.laja.example.repository.state.*;
+import net.sf.laja.cdd.state.terrestrial.*;
 
 import java.util.*;
 
@@ -9,68 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class AddressAbstractList implements List<Address>, RandomAccess, Cloneable, java.io.Serializable {
-    protected AddressStateList stateList;
-    protected final List<Address> list;
+public class OtherTerrestrialArrayList implements List<OtherTerrestrial>, RandomAccess, Cloneable, java.io.Serializable {
+    protected TerrestrialStateList stateList;
+    protected final List<OtherTerrestrial> list;
 
-    public AddressAbstractList(Address... list) {
-        this.list = new ArrayList<Address>();
+    public OtherTerrestrialArrayList(OtherTerrestrial... list) {
+        this.list = new ArrayList<OtherTerrestrial>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public AddressAbstractList(List<Address> list) {
-        this.list = new ArrayList<Address>();
+    public OtherTerrestrialArrayList(List<OtherTerrestrial> list) {
+        this.list = new ArrayList<OtherTerrestrial>();
         this.list.addAll(list);
     }
 
-    public AddressAbstractList(AddressStateList stateList) {
+    public OtherTerrestrialArrayList(TerrestrialStateList stateList) {
         this.stateList = stateList;
-        List<Address> elements = new ArrayList<Address>(stateList.size());
+        List<OtherTerrestrial> elements = new ArrayList<OtherTerrestrial>(stateList.size());
 
-        for (AddressState state : stateList) {
-            AddressStateBuilder builder = new AddressStateBuilderImpl(state);
-            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_(builder));
+        for (TerrestrialState state : stateList) {
+            TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
+            OtherTerrestrial entry = (OtherTerrestrial) builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Address> {
-        private final AddressStateList stateList;
+    public static class StateInSyncList extends ArrayList<OtherTerrestrial> {
+        private final TerrestrialStateList stateList;
 
-        public StateInSyncList(AddressStateList stateList, List<Address> elements) {
+        public StateInSyncList(TerrestrialStateList stateList, List<OtherTerrestrial> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Address element) {
+        public boolean add(OtherTerrestrial element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Address element) {
+        public void add(int index, OtherTerrestrial element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Address> collection) {
+        public boolean addAll(Collection<? extends OtherTerrestrial> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Address element : collection) {
+            for (OtherTerrestrial element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Address> collection) {
+        public boolean addAll(int index, Collection<? extends OtherTerrestrial> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Address element : collection) {
+            for (OtherTerrestrial element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +80,10 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Address)) {
+            if (!(element instanceof OtherTerrestrial)) {
                 return false;
             }
-            stateList.remove(((Address) element).getState(stateList));
+            stateList.remove(((OtherTerrestrial) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +93,9 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Address) {
+                if (element instanceof OtherTerrestrial) {
                     elements.add(element);
-                    states.add(((Address)element).getState(stateList));
+                    states.add(((OtherTerrestrial)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +109,9 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Address) {
+                if (element instanceof OtherTerrestrial) {
                     elements.add(element);
-                    states.add(((Address)element).getState(stateList));
+                    states.add(((OtherTerrestrial)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +127,13 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
         }
 
         @Override
-        public Address set(int index, Address element) {
+        public OtherTerrestrial set(int index, OtherTerrestrial element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Address remove(int index) {
+        public OtherTerrestrial remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +151,7 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
         return list.contains(element);
     }
 
-    public Iterator<Address> iterator() {
+    public Iterator<OtherTerrestrial> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +159,28 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
         return list.toArray();
     }
 
-    public <Address> Address[] toArray(Address[] array) {
+    public <OtherTerrestrial> OtherTerrestrial[] toArray(OtherTerrestrial[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Address element) {
+    public boolean add(OtherTerrestrial element) {
         return list.add(element);
     }
 
-    public void add(int index, Address element) {
+    public void add(int index, OtherTerrestrial element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Address> collection) {
+    public boolean addAll(Collection<? extends OtherTerrestrial> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Address> collection) {
+    public boolean addAll(int index, Collection<? extends OtherTerrestrial> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Address)) {
+        if (!(element instanceof OtherTerrestrial)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +202,15 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
         list.clear();
     }
 
-    public Address get(int index) {
+    public OtherTerrestrial get(int index) {
         return list.get(index);
     }
 
-    public Address set(int index, Address element) {
+    public OtherTerrestrial set(int index, OtherTerrestrial element) {
         return list.set(index, element);
     }
 
-    public Address remove(int index) {
+    public OtherTerrestrial remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +222,15 @@ public abstract class AddressAbstractList implements List<Address>, RandomAccess
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Address> listIterator() {
+    public ListIterator<OtherTerrestrial> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Address> listIterator(int index) {
+    public ListIterator<OtherTerrestrial> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Address> subList(int fromIndex, int toIndex) {
+    public List<OtherTerrestrial> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

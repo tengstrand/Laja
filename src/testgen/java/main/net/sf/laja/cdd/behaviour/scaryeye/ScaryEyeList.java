@@ -2,7 +2,7 @@ package net.sf.laja.cdd.behaviour.scaryeye;
 
 import java.util.List;
 
-public class ScaryEyeList extends ScaryEyeAbstractList {
+public class ScaryEyeList extends ScaryEyeArrayList {
     public ScaryEyeList(ScaryEye... list) {
         super(list);
     }

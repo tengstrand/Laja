@@ -1,9 +1,6 @@
-package net.sf.laja.cdd.behaviour.scaryeye;
+package net.sf.laja.cdd.behaviour.hand;
 
-import net.sf.laja.cdd.state.eye.*;
-
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import net.sf.laja.cdd.behaviour.eye.EyeFactory;
+import net.sf.laja.cdd.state.hand.*;
 
 import java.util.*;
 
@@ -12,56 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAccess, Cloneable, java.io.Serializable {
-    protected EyeStateList stateList;
-    protected final List<ScaryEye> list;
+public class HandArrayList implements List<Hand>, RandomAccess, Cloneable, java.io.Serializable {
+    protected HandStateList stateList;
+    protected final List<Hand> list;
 
-    public ScaryEyeAbstractList(ScaryEye... list) {
-        this.list = new ArrayList<ScaryEye>();
+    public HandArrayList(Hand... list) {
+        this.list = new ArrayList<Hand>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ScaryEyeAbstractList(List<ScaryEye> list) {
-        this.list = new ArrayList<ScaryEye>();
+    public HandArrayList(List<Hand> list) {
+        this.list = new ArrayList<Hand>();
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<ScaryEye> {
-        private final EyeStateList stateList;
+    public HandArrayList(HandStateList stateList) {
+        this.stateList = stateList;
+        List<Hand> elements = new ArrayList<Hand>(stateList.size());
 
-        public StateInSyncList(EyeStateList stateList, List<ScaryEye> elements) {
+        for (HandState state : stateList) {
+            HandStateBuilder builder = new HandStateBuilderImpl(state);
+            Hand entry = (Hand) builder.as(new HandFactory.HandFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public static class StateInSyncList extends ArrayList<Hand> {
+        private final HandStateList stateList;
+
+        public StateInSyncList(HandStateList stateList, List<Hand> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(ScaryEye element) {
+        public boolean add(Hand element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, ScaryEye element) {
+        public void add(int index, Hand element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends ScaryEye> collection) {
+        public boolean addAll(Collection<? extends Hand> collection) {
             boolean modified = super.addAll(collection);
 
-            for (ScaryEye element : collection) {
+            for (Hand element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends ScaryEye> collection) {
+        public boolean addAll(int index, Collection<? extends Hand> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (ScaryEye element : collection) {
+            for (Hand element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -71,10 +80,10 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof ScaryEye)) {
+            if (!(element instanceof Hand)) {
                 return false;
             }
-            stateList.remove(((ScaryEye) element).getState(stateList));
+            stateList.remove(((Hand) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -84,9 +93,9 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof ScaryEye) {
+                if (element instanceof Hand) {
                     elements.add(element);
-                    states.add(((ScaryEye)element).getState(stateList));
+                    states.add(((Hand)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -100,9 +109,9 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof ScaryEye) {
+                if (element instanceof Hand) {
                     elements.add(element);
-                    states.add(((ScaryEye)element).getState(stateList));
+                    states.add(((Hand)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -118,13 +127,13 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
         }
 
         @Override
-        public ScaryEye set(int index, ScaryEye element) {
+        public Hand set(int index, Hand element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public ScaryEye remove(int index) {
+        public Hand remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -142,7 +151,7 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
         return list.contains(element);
     }
 
-    public Iterator<ScaryEye> iterator() {
+    public Iterator<Hand> iterator() {
         return list.iterator();
     }
 
@@ -150,28 +159,28 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
         return list.toArray();
     }
 
-    public <ScaryEye> ScaryEye[] toArray(ScaryEye[] array) {
+    public <Hand> Hand[] toArray(Hand[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(ScaryEye element) {
+    public boolean add(Hand element) {
         return list.add(element);
     }
 
-    public void add(int index, ScaryEye element) {
+    public void add(int index, Hand element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends ScaryEye> collection) {
+    public boolean addAll(Collection<? extends Hand> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends ScaryEye> collection) {
+    public boolean addAll(int index, Collection<? extends Hand> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof ScaryEye)) {
+        if (!(element instanceof Hand)) {
             return false;
         }
         return list.remove(element);
@@ -193,15 +202,15 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
         list.clear();
     }
 
-    public ScaryEye get(int index) {
+    public Hand get(int index) {
         return list.get(index);
     }
 
-    public ScaryEye set(int index, ScaryEye element) {
+    public Hand set(int index, Hand element) {
         return list.set(index, element);
     }
 
-    public ScaryEye remove(int index) {
+    public Hand remove(int index) {
         return list.remove(index);
     }
 
@@ -213,15 +222,15 @@ public abstract class ScaryEyeAbstractList implements List<ScaryEye>, RandomAcce
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<ScaryEye> listIterator() {
+    public ListIterator<Hand> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<ScaryEye> listIterator(int index) {
+    public ListIterator<Hand> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<ScaryEye> subList(int fromIndex, int toIndex) {
+    public List<Hand> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

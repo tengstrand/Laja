@@ -1,9 +1,6 @@
-package net.sf.laja.example.file.behaviour;
+package net.sf.laja.cdd.behaviour.brow;
 
-import net.sf.laja.example.file.state.*;
-
-import net.sf.laja.example.file.behaviour.text.TextFile;
-import net.sf.laja.example.file.behaviour.text.TextFileList;
+import net.sf.laja.cdd.state.brow.*;
 
 import java.util.*;
 
@@ -12,76 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ClosedFileAbstractList implements List<ClosedFile>, RandomAccess, Cloneable, java.io.Serializable {
-    protected FileStateList stateList;
-    protected final List<ClosedFile> list;
+public class BrowArrayList implements List<Brow>, RandomAccess, Cloneable, java.io.Serializable {
+    protected BrowStateList stateList;
+    protected final List<Brow> list;
 
-    public ClosedFileAbstractList(ClosedFile... list) {
-        this.list = new ArrayList<ClosedFile>();
+    public BrowArrayList(Brow... list) {
+        this.list = new ArrayList<Brow>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ClosedFileAbstractList(List<ClosedFile> list) {
-        this.list = new ArrayList<ClosedFile>();
+    public BrowArrayList(List<Brow> list) {
+        this.list = new ArrayList<Brow>();
         this.list.addAll(list);
     }
 
-    public ClosedFileAbstractList(FileStateList stateList, Directory directory) {
+    public BrowArrayList(BrowStateList stateList) {
         this.stateList = stateList;
-        List<ClosedFile> elements = new ArrayList<ClosedFile>(stateList.size());
+        List<Brow> elements = new ArrayList<Brow>(stateList.size());
 
-        for (FileState state : stateList) {
-            FileStateBuilder builder = new FileStateBuilderImpl(state);
-            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
+        for (BrowState state : stateList) {
+            BrowStateBuilder builder = new BrowStateBuilderImpl(state);
+            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public TextFileList asTextFileList() {
-        List<TextFile> result = new ArrayList<TextFile>();
-        for (ClosedFile entry : list) {
-            result.add(entry.asTextFile());
-        }
-        return new TextFileList(result);
-    }
+    public static class StateInSyncList extends ArrayList<Brow> {
+        private final BrowStateList stateList;
 
-    public static class StateInSyncList extends ArrayList<ClosedFile> {
-        private final FileStateList stateList;
-
-        public StateInSyncList(FileStateList stateList, List<ClosedFile> elements) {
+        public StateInSyncList(BrowStateList stateList, List<Brow> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(ClosedFile element) {
+        public boolean add(Brow element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, ClosedFile element) {
+        public void add(int index, Brow element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends ClosedFile> collection) {
+        public boolean addAll(Collection<? extends Brow> collection) {
             boolean modified = super.addAll(collection);
 
-            for (ClosedFile element : collection) {
+            for (Brow element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
+        public boolean addAll(int index, Collection<? extends Brow> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (ClosedFile element : collection) {
+            for (Brow element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -91,10 +80,10 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof ClosedFile)) {
+            if (!(element instanceof Brow)) {
                 return false;
             }
-            stateList.remove(((ClosedFile) element).getState(stateList));
+            stateList.remove(((Brow) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -104,9 +93,9 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof ClosedFile) {
+                if (element instanceof Brow) {
                     elements.add(element);
-                    states.add(((ClosedFile)element).getState(stateList));
+                    states.add(((Brow)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -120,9 +109,9 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof ClosedFile) {
+                if (element instanceof Brow) {
                     elements.add(element);
-                    states.add(((ClosedFile)element).getState(stateList));
+                    states.add(((Brow)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,13 +127,13 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
         }
 
         @Override
-        public ClosedFile set(int index, ClosedFile element) {
+        public Brow set(int index, Brow element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public ClosedFile remove(int index) {
+        public Brow remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -162,7 +151,7 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
         return list.contains(element);
     }
 
-    public Iterator<ClosedFile> iterator() {
+    public Iterator<Brow> iterator() {
         return list.iterator();
     }
 
@@ -170,28 +159,28 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
         return list.toArray();
     }
 
-    public <ClosedFile> ClosedFile[] toArray(ClosedFile[] array) {
+    public <Brow> Brow[] toArray(Brow[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(ClosedFile element) {
+    public boolean add(Brow element) {
         return list.add(element);
     }
 
-    public void add(int index, ClosedFile element) {
+    public void add(int index, Brow element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends ClosedFile> collection) {
+    public boolean addAll(Collection<? extends Brow> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
+    public boolean addAll(int index, Collection<? extends Brow> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof ClosedFile)) {
+        if (!(element instanceof Brow)) {
             return false;
         }
         return list.remove(element);
@@ -213,15 +202,15 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
         list.clear();
     }
 
-    public ClosedFile get(int index) {
+    public Brow get(int index) {
         return list.get(index);
     }
 
-    public ClosedFile set(int index, ClosedFile element) {
+    public Brow set(int index, Brow element) {
         return list.set(index, element);
     }
 
-    public ClosedFile remove(int index) {
+    public Brow remove(int index) {
         return list.remove(index);
     }
 
@@ -233,15 +222,15 @@ public abstract class ClosedFileAbstractList implements List<ClosedFile>, Random
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<ClosedFile> listIterator() {
+    public ListIterator<Brow> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<ClosedFile> listIterator(int index) {
+    public ListIterator<Brow> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<ClosedFile> subList(int fromIndex, int toIndex) {
+    public List<Brow> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

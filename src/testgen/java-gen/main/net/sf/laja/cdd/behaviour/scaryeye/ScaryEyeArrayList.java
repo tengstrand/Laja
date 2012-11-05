@@ -1,9 +1,9 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd.behaviour.scaryeye;
 
-import net.sf.laja.cdd.state.mouth.*;
+import net.sf.laja.cdd.state.eye.*;
 
-import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
-import net.sf.laja.cdd.behaviour.mouth.CuteMouthList;
+import net.sf.laja.cdd.behaviour.eye.Eye;
+import net.sf.laja.cdd.behaviour.eye.EyeFactory;
 
 import java.util.*;
 
@@ -12,76 +12,56 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateList;
-    protected final List<TestMouth> list;
+public class ScaryEyeArrayList implements List<ScaryEye>, RandomAccess, Cloneable, java.io.Serializable {
+    protected EyeStateList stateList;
+    protected final List<ScaryEye> list;
 
-    public TestMouthAbstractList(TestMouth... list) {
-        this.list = new ArrayList<TestMouth>();
+    public ScaryEyeArrayList(ScaryEye... list) {
+        this.list = new ArrayList<ScaryEye>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TestMouthAbstractList(List<TestMouth> list) {
-        this.list = new ArrayList<TestMouth>();
+    public ScaryEyeArrayList(List<ScaryEye> list) {
+        this.list = new ArrayList<ScaryEye>();
         this.list.addAll(list);
     }
 
-    public TestMouthAbstractList(MouthStateList stateList) {
-        this.stateList = stateList;
-        List<TestMouth> elements = new ArrayList<TestMouth>(stateList.size());
+    public static class StateInSyncList extends ArrayList<ScaryEye> {
+        private final EyeStateList stateList;
 
-        for (MouthState state : stateList) {
-            MouthStateBuilder builder = new MouthStateBuilderImpl(state);
-            TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_(builder));
-            elements.add(entry);
-        }
-        this.list = new StateInSyncList(stateList, elements);
-    }
-
-    public CuteMouthList asCuteMouthList() {
-        List<CuteMouth> result = new ArrayList<CuteMouth>();
-        for (TestMouth entry : list) {
-            result.add(entry.asCuteMouth());
-        }
-        return new CuteMouthList(result);
-    }
-
-    public static class StateInSyncList extends ArrayList<TestMouth> {
-        private final MouthStateList stateList;
-
-        public StateInSyncList(MouthStateList stateList, List<TestMouth> elements) {
+        public StateInSyncList(EyeStateList stateList, List<ScaryEye> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(TestMouth element) {
+        public boolean add(ScaryEye element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, TestMouth element) {
+        public void add(int index, ScaryEye element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends TestMouth> collection) {
+        public boolean addAll(Collection<? extends ScaryEye> collection) {
             boolean modified = super.addAll(collection);
 
-            for (TestMouth element : collection) {
+            for (ScaryEye element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends TestMouth> collection) {
+        public boolean addAll(int index, Collection<? extends ScaryEye> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (TestMouth element : collection) {
+            for (ScaryEye element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -91,10 +71,10 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof TestMouth)) {
+            if (!(element instanceof ScaryEye)) {
                 return false;
             }
-            stateList.remove(((TestMouth) element).getState(stateList));
+            stateList.remove(((ScaryEye) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -104,9 +84,9 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TestMouth) {
+                if (element instanceof ScaryEye) {
                     elements.add(element);
-                    states.add(((TestMouth)element).getState(stateList));
+                    states.add(((ScaryEye)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -120,9 +100,9 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TestMouth) {
+                if (element instanceof ScaryEye) {
                     elements.add(element);
-                    states.add(((TestMouth)element).getState(stateList));
+                    states.add(((ScaryEye)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,13 +118,13 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
         }
 
         @Override
-        public TestMouth set(int index, TestMouth element) {
+        public ScaryEye set(int index, ScaryEye element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public TestMouth remove(int index) {
+        public ScaryEye remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -162,7 +142,7 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
         return list.contains(element);
     }
 
-    public Iterator<TestMouth> iterator() {
+    public Iterator<ScaryEye> iterator() {
         return list.iterator();
     }
 
@@ -170,28 +150,28 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
         return list.toArray();
     }
 
-    public <TestMouth> TestMouth[] toArray(TestMouth[] array) {
+    public <ScaryEye> ScaryEye[] toArray(ScaryEye[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(TestMouth element) {
+    public boolean add(ScaryEye element) {
         return list.add(element);
     }
 
-    public void add(int index, TestMouth element) {
+    public void add(int index, ScaryEye element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends TestMouth> collection) {
+    public boolean addAll(Collection<? extends ScaryEye> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends TestMouth> collection) {
+    public boolean addAll(int index, Collection<? extends ScaryEye> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof TestMouth)) {
+        if (!(element instanceof ScaryEye)) {
             return false;
         }
         return list.remove(element);
@@ -213,15 +193,15 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
         list.clear();
     }
 
-    public TestMouth get(int index) {
+    public ScaryEye get(int index) {
         return list.get(index);
     }
 
-    public TestMouth set(int index, TestMouth element) {
+    public ScaryEye set(int index, ScaryEye element) {
         return list.set(index, element);
     }
 
-    public TestMouth remove(int index) {
+    public ScaryEye remove(int index) {
         return list.remove(index);
     }
 
@@ -233,15 +213,15 @@ public abstract class TestMouthAbstractList implements List<TestMouth>, RandomAc
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<TestMouth> listIterator() {
+    public ListIterator<ScaryEye> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<TestMouth> listIterator(int index) {
+    public ListIterator<ScaryEye> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<TestMouth> subList(int fromIndex, int toIndex) {
+    public List<ScaryEye> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

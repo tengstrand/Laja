@@ -1,6 +1,9 @@
-package net.sf.laja.cdd.behaviour.hair;
+package net.sf.laja.example.file.behaviour;
 
-import net.sf.laja.cdd.state.hair.*;
+import net.sf.laja.example.file.state.*;
+
+import net.sf.laja.example.file.behaviour.text.TextDirectory;
+import net.sf.laja.example.file.behaviour.text.TextDirectoryList;
 
 import java.util.*;
 
@@ -9,76 +12,76 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class HairAbstractList implements List<Hair>, RandomAccess, Cloneable, java.io.Serializable {
-    protected HairStateList stateList;
-    protected final List<Hair> list;
+public class DirectoryArrayList implements List<Directory>, RandomAccess, Cloneable, java.io.Serializable {
+    protected DirectoryStateList stateList;
+    protected final List<Directory> list;
 
-    public HairAbstractList(Hair... list) {
-        this.list = new ArrayList<Hair>();
+    public DirectoryArrayList(Directory... list) {
+        this.list = new ArrayList<Directory>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public HairAbstractList(List<Hair> list) {
-        this.list = new ArrayList<Hair>();
+    public DirectoryArrayList(List<Directory> list) {
+        this.list = new ArrayList<Directory>();
         this.list.addAll(list);
     }
 
-    public HairAbstractList(HairStateList stateList) {
+    public DirectoryArrayList(DirectoryStateList stateList) {
         this.stateList = stateList;
-        List<Hair> elements = new ArrayList<Hair>(stateList.size());
+        List<Directory> elements = new ArrayList<Directory>(stateList.size());
 
-        for (HairState state : stateList) {
-            HairStateBuilder builder = new HairStateBuilderImpl(state);
-            Hair entry = (Hair) builder.as(new HairFactory.HairFactory_(builder));
+        for (DirectoryState state : stateList) {
+            DirectoryStateBuilder builder = new DirectoryStateBuilderImpl(state);
+            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public FakeHairList asFakeHairList() {
-        List<FakeHair> result = new ArrayList<FakeHair>();
-        for (Hair entry : list) {
-            result.add(entry.asFakeHair());
+    public TextDirectoryList asTextDirectoryList() {
+        List<TextDirectory> result = new ArrayList<TextDirectory>();
+        for (Directory entry : list) {
+            result.add(entry.asTextDirectory());
         }
-        return new FakeHairList(result);
+        return new TextDirectoryList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Hair> {
-        private final HairStateList stateList;
+    public static class StateInSyncList extends ArrayList<Directory> {
+        private final DirectoryStateList stateList;
 
-        public StateInSyncList(HairStateList stateList, List<Hair> elements) {
+        public StateInSyncList(DirectoryStateList stateList, List<Directory> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Hair element) {
+        public boolean add(Directory element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Hair element) {
+        public void add(int index, Directory element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Hair> collection) {
+        public boolean addAll(Collection<? extends Directory> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Hair element : collection) {
+            for (Directory element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Hair> collection) {
+        public boolean addAll(int index, Collection<? extends Directory> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Hair element : collection) {
+            for (Directory element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -88,10 +91,10 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Hair)) {
+            if (!(element instanceof Directory)) {
                 return false;
             }
-            stateList.remove(((Hair) element).getState(stateList));
+            stateList.remove(((Directory) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -101,9 +104,9 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Hair) {
+                if (element instanceof Directory) {
                     elements.add(element);
-                    states.add(((Hair)element).getState(stateList));
+                    states.add(((Directory)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -117,9 +120,9 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Hair) {
+                if (element instanceof Directory) {
                     elements.add(element);
-                    states.add(((Hair)element).getState(stateList));
+                    states.add(((Directory)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -135,13 +138,13 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
         }
 
         @Override
-        public Hair set(int index, Hair element) {
+        public Directory set(int index, Directory element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Hair remove(int index) {
+        public Directory remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -159,7 +162,7 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
         return list.contains(element);
     }
 
-    public Iterator<Hair> iterator() {
+    public Iterator<Directory> iterator() {
         return list.iterator();
     }
 
@@ -167,28 +170,28 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
         return list.toArray();
     }
 
-    public <Hair> Hair[] toArray(Hair[] array) {
+    public <Directory> Directory[] toArray(Directory[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Hair element) {
+    public boolean add(Directory element) {
         return list.add(element);
     }
 
-    public void add(int index, Hair element) {
+    public void add(int index, Directory element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Hair> collection) {
+    public boolean addAll(Collection<? extends Directory> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Hair> collection) {
+    public boolean addAll(int index, Collection<? extends Directory> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Hair)) {
+        if (!(element instanceof Directory)) {
             return false;
         }
         return list.remove(element);
@@ -210,15 +213,15 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
         list.clear();
     }
 
-    public Hair get(int index) {
+    public Directory get(int index) {
         return list.get(index);
     }
 
-    public Hair set(int index, Hair element) {
+    public Directory set(int index, Directory element) {
         return list.set(index, element);
     }
 
-    public Hair remove(int index) {
+    public Directory remove(int index) {
         return list.remove(index);
     }
 
@@ -230,15 +233,15 @@ public abstract class HairAbstractList implements List<Hair>, RandomAccess, Clon
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Hair> listIterator() {
+    public ListIterator<Directory> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Hair> listIterator(int index) {
+    public ListIterator<Directory> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Hair> subList(int fromIndex, int toIndex) {
+    public List<Directory> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

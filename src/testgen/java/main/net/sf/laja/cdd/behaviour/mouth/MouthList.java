@@ -3,7 +3,7 @@ package net.sf.laja.cdd.behaviour.mouth;
 import java.util.List;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 
-public class MouthList extends MouthAbstractList {
+public class MouthList extends MouthArrayList {
     public MouthList(Mouth... list) {
         super(list);
     }

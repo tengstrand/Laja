@@ -4,7 +4,7 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
 
 import java.util.List;
 
-public class BrowList extends BrowAbstractList {
+public class BrowList extends BrowArrayList {
     public BrowList(Brow... list) {
         super(list);
     }

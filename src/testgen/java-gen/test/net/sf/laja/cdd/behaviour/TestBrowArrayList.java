@@ -1,6 +1,6 @@
-package net.sf.laja.cdd.behaviour.mouth;
+package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.state.mouth.*;
+import net.sf.laja.cdd.state.brow.*;
 
 import java.util.*;
 
@@ -9,56 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateList;
-    protected final List<CuteMouth> list;
+public class TestBrowArrayList implements List<TestBrow>, RandomAccess, Cloneable, java.io.Serializable {
+    protected BrowStateList stateList;
+    protected final List<TestBrow> list;
 
-    public CuteMouthAbstractList(CuteMouth... list) {
-        this.list = new ArrayList<CuteMouth>();
+    public TestBrowArrayList(TestBrow... list) {
+        this.list = new ArrayList<TestBrow>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public CuteMouthAbstractList(List<CuteMouth> list) {
-        this.list = new ArrayList<CuteMouth>();
+    public TestBrowArrayList(List<TestBrow> list) {
+        this.list = new ArrayList<TestBrow>();
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<CuteMouth> {
-        private final MouthStateList stateList;
+    public TestBrowArrayList(BrowStateList stateList) {
+        this.stateList = stateList;
+        List<TestBrow> elements = new ArrayList<TestBrow>(stateList.size());
 
-        public StateInSyncList(MouthStateList stateList, List<CuteMouth> elements) {
+        for (BrowState state : stateList) {
+            BrowStateBuilder builder = new BrowStateBuilderImpl(state);
+            TestBrow entry = (TestBrow) builder.as(new TestBrowFactory.TestBrowFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public static class StateInSyncList extends ArrayList<TestBrow> {
+        private final BrowStateList stateList;
+
+        public StateInSyncList(BrowStateList stateList, List<TestBrow> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(CuteMouth element) {
+        public boolean add(TestBrow element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, CuteMouth element) {
+        public void add(int index, TestBrow element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends CuteMouth> collection) {
+        public boolean addAll(Collection<? extends TestBrow> collection) {
             boolean modified = super.addAll(collection);
 
-            for (CuteMouth element : collection) {
+            for (TestBrow element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
+        public boolean addAll(int index, Collection<? extends TestBrow> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (CuteMouth element : collection) {
+            for (TestBrow element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -68,10 +80,10 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof CuteMouth)) {
+            if (!(element instanceof TestBrow)) {
                 return false;
             }
-            stateList.remove(((CuteMouth) element).getState(stateList));
+            stateList.remove(((TestBrow) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -81,9 +93,9 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof CuteMouth) {
+                if (element instanceof TestBrow) {
                     elements.add(element);
-                    states.add(((CuteMouth)element).getState(stateList));
+                    states.add(((TestBrow)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -97,9 +109,9 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof CuteMouth) {
+                if (element instanceof TestBrow) {
                     elements.add(element);
-                    states.add(((CuteMouth)element).getState(stateList));
+                    states.add(((TestBrow)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -115,13 +127,13 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
         }
 
         @Override
-        public CuteMouth set(int index, CuteMouth element) {
+        public TestBrow set(int index, TestBrow element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public CuteMouth remove(int index) {
+        public TestBrow remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -139,7 +151,7 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
         return list.contains(element);
     }
 
-    public Iterator<CuteMouth> iterator() {
+    public Iterator<TestBrow> iterator() {
         return list.iterator();
     }
 
@@ -147,28 +159,28 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
         return list.toArray();
     }
 
-    public <CuteMouth> CuteMouth[] toArray(CuteMouth[] array) {
+    public <TestBrow> TestBrow[] toArray(TestBrow[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(CuteMouth element) {
+    public boolean add(TestBrow element) {
         return list.add(element);
     }
 
-    public void add(int index, CuteMouth element) {
+    public void add(int index, TestBrow element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends CuteMouth> collection) {
+    public boolean addAll(Collection<? extends TestBrow> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
+    public boolean addAll(int index, Collection<? extends TestBrow> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof CuteMouth)) {
+        if (!(element instanceof TestBrow)) {
             return false;
         }
         return list.remove(element);
@@ -190,15 +202,15 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
         list.clear();
     }
 
-    public CuteMouth get(int index) {
+    public TestBrow get(int index) {
         return list.get(index);
     }
 
-    public CuteMouth set(int index, CuteMouth element) {
+    public TestBrow set(int index, TestBrow element) {
         return list.set(index, element);
     }
 
-    public CuteMouth remove(int index) {
+    public TestBrow remove(int index) {
         return list.remove(index);
     }
 
@@ -210,15 +222,15 @@ public abstract class CuteMouthAbstractList implements List<CuteMouth>, RandomAc
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<CuteMouth> listIterator() {
+    public ListIterator<TestBrow> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<CuteMouth> listIterator(int index) {
+    public ListIterator<TestBrow> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<CuteMouth> subList(int fromIndex, int toIndex) {
+    public List<TestBrow> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

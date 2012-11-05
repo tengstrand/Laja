@@ -1,6 +1,6 @@
-package net.sf.laja.cdd.behaviour.arm;
+package net.sf.laja.cdd.behaviour.toe;
 
-import net.sf.laja.cdd.state.arm.*;
+import net.sf.laja.cdd.state.toe.*;
 
 import java.util.*;
 
@@ -9,68 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Cloneable, java.io.Serializable {
-    protected ArmStateList stateList;
-    protected final List<Arm> list;
+public class ValToeArrayList implements List<ValToe>, RandomAccess, Cloneable, java.io.Serializable {
+    protected ToeStateList stateList;
+    protected final List<ValToe> list;
 
-    public ArmAbstractList(Arm... list) {
-        this.list = new ArrayList<Arm>();
+    public ValToeArrayList(ValToe... list) {
+        this.list = new ArrayList<ValToe>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ArmAbstractList(List<Arm> list) {
-        this.list = new ArrayList<Arm>();
+    public ValToeArrayList(List<ValToe> list) {
+        this.list = new ArrayList<ValToe>();
         this.list.addAll(list);
     }
 
-    public ArmAbstractList(ArmStateList stateList) {
+    public ValToeArrayList(ToeStateList stateList) {
         this.stateList = stateList;
-        List<Arm> elements = new ArrayList<Arm>(stateList.size());
+        List<ValToe> elements = new ArrayList<ValToe>(stateList.size());
 
-        for (ArmState state : stateList) {
-            ArmStateBuilder builder = new ArmStateBuilderImpl(state);
-            Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_(builder));
+        for (ToeState state : stateList) {
+            ToeStateBuilder builder = new ToeStateBuilderImpl(state);
+            ValToe entry = (ValToe) builder.as(new ToeFactory.ValToeFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Arm> {
-        private final ArmStateList stateList;
+    public static class StateInSyncList extends ArrayList<ValToe> {
+        private final ToeStateList stateList;
 
-        public StateInSyncList(ArmStateList stateList, List<Arm> elements) {
+        public StateInSyncList(ToeStateList stateList, List<ValToe> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Arm element) {
+        public boolean add(ValToe element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Arm element) {
+        public void add(int index, ValToe element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Arm> collection) {
+        public boolean addAll(Collection<? extends ValToe> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Arm element : collection) {
+            for (ValToe element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Arm> collection) {
+        public boolean addAll(int index, Collection<? extends ValToe> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Arm element : collection) {
+            for (ValToe element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +80,10 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Arm)) {
+            if (!(element instanceof ValToe)) {
                 return false;
             }
-            stateList.remove(((Arm) element).getState(stateList));
+            stateList.remove(((ValToe) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +93,9 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Arm) {
+                if (element instanceof ValToe) {
                     elements.add(element);
-                    states.add(((Arm)element).getState(stateList));
+                    states.add(((ValToe)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +109,9 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Arm) {
+                if (element instanceof ValToe) {
                     elements.add(element);
-                    states.add(((Arm)element).getState(stateList));
+                    states.add(((ValToe)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +127,13 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
         }
 
         @Override
-        public Arm set(int index, Arm element) {
+        public ValToe set(int index, ValToe element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Arm remove(int index) {
+        public ValToe remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +151,7 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
         return list.contains(element);
     }
 
-    public Iterator<Arm> iterator() {
+    public Iterator<ValToe> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +159,28 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
         return list.toArray();
     }
 
-    public <Arm> Arm[] toArray(Arm[] array) {
+    public <ValToe> ValToe[] toArray(ValToe[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Arm element) {
+    public boolean add(ValToe element) {
         return list.add(element);
     }
 
-    public void add(int index, Arm element) {
+    public void add(int index, ValToe element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Arm> collection) {
+    public boolean addAll(Collection<? extends ValToe> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Arm> collection) {
+    public boolean addAll(int index, Collection<? extends ValToe> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Arm)) {
+        if (!(element instanceof ValToe)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +202,15 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
         list.clear();
     }
 
-    public Arm get(int index) {
+    public ValToe get(int index) {
         return list.get(index);
     }
 
-    public Arm set(int index, Arm element) {
+    public ValToe set(int index, ValToe element) {
         return list.set(index, element);
     }
 
-    public Arm remove(int index) {
+    public ValToe remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +222,15 @@ public abstract class ArmAbstractList implements List<Arm>, RandomAccess, Clonea
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Arm> listIterator() {
+    public ListIterator<ValToe> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Arm> listIterator(int index) {
+    public ListIterator<ValToe> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Arm> subList(int fromIndex, int toIndex) {
+    public List<ValToe> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

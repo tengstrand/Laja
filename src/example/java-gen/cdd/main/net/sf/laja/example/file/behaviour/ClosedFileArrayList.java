@@ -1,9 +1,9 @@
-package net.sf.laja.cdd.behaviour.eye;
+package net.sf.laja.example.file.behaviour;
 
-import net.sf.laja.cdd.state.eye.*;
+import net.sf.laja.example.file.state.*;
 
-import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
-import net.sf.laja.cdd.behaviour.scaryeye.ScaryEyeList;
+import net.sf.laja.example.file.behaviour.text.TextFile;
+import net.sf.laja.example.file.behaviour.text.TextFileList;
 
 import java.util.*;
 
@@ -12,76 +12,76 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Cloneable, java.io.Serializable {
-    protected EyeStateList stateList;
-    protected final List<Eye> list;
+public class ClosedFileArrayList implements List<ClosedFile>, RandomAccess, Cloneable, java.io.Serializable {
+    protected FileStateList stateList;
+    protected final List<ClosedFile> list;
 
-    public EyeAbstractList(Eye... list) {
-        this.list = new ArrayList<Eye>();
+    public ClosedFileArrayList(ClosedFile... list) {
+        this.list = new ArrayList<ClosedFile>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public EyeAbstractList(List<Eye> list) {
-        this.list = new ArrayList<Eye>();
+    public ClosedFileArrayList(List<ClosedFile> list) {
+        this.list = new ArrayList<ClosedFile>();
         this.list.addAll(list);
     }
 
-    public EyeAbstractList(EyeStateList stateList) {
+    public ClosedFileArrayList(FileStateList stateList, Directory directory) {
         this.stateList = stateList;
-        List<Eye> elements = new ArrayList<Eye>(stateList.size());
+        List<ClosedFile> elements = new ArrayList<ClosedFile>(stateList.size());
 
-        for (EyeState state : stateList) {
-            EyeStateBuilder builder = new EyeStateBuilderImpl(state);
-            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_(builder));
+        for (FileState state : stateList) {
+            FileStateBuilder builder = new FileStateBuilderImpl(state);
+            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public ScaryEyeList asScaryEyeList() {
-        List<ScaryEye> result = new ArrayList<ScaryEye>();
-        for (Eye entry : list) {
-            result.add(entry.asScaryEye());
+    public TextFileList asTextFileList() {
+        List<TextFile> result = new ArrayList<TextFile>();
+        for (ClosedFile entry : list) {
+            result.add(entry.asTextFile());
         }
-        return new ScaryEyeList(result);
+        return new TextFileList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Eye> {
-        private final EyeStateList stateList;
+    public static class StateInSyncList extends ArrayList<ClosedFile> {
+        private final FileStateList stateList;
 
-        public StateInSyncList(EyeStateList stateList, List<Eye> elements) {
+        public StateInSyncList(FileStateList stateList, List<ClosedFile> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Eye element) {
+        public boolean add(ClosedFile element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Eye element) {
+        public void add(int index, ClosedFile element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Eye> collection) {
+        public boolean addAll(Collection<? extends ClosedFile> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Eye element : collection) {
+            for (ClosedFile element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Eye> collection) {
+        public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Eye element : collection) {
+            for (ClosedFile element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -91,10 +91,10 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Eye)) {
+            if (!(element instanceof ClosedFile)) {
                 return false;
             }
-            stateList.remove(((Eye) element).getState(stateList));
+            stateList.remove(((ClosedFile) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -104,9 +104,9 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Eye) {
+                if (element instanceof ClosedFile) {
                     elements.add(element);
-                    states.add(((Eye)element).getState(stateList));
+                    states.add(((ClosedFile)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -120,9 +120,9 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Eye) {
+                if (element instanceof ClosedFile) {
                     elements.add(element);
-                    states.add(((Eye)element).getState(stateList));
+                    states.add(((ClosedFile)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,13 +138,13 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
         }
 
         @Override
-        public Eye set(int index, Eye element) {
+        public ClosedFile set(int index, ClosedFile element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Eye remove(int index) {
+        public ClosedFile remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -162,7 +162,7 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
         return list.contains(element);
     }
 
-    public Iterator<Eye> iterator() {
+    public Iterator<ClosedFile> iterator() {
         return list.iterator();
     }
 
@@ -170,28 +170,28 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
         return list.toArray();
     }
 
-    public <Eye> Eye[] toArray(Eye[] array) {
+    public <ClosedFile> ClosedFile[] toArray(ClosedFile[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Eye element) {
+    public boolean add(ClosedFile element) {
         return list.add(element);
     }
 
-    public void add(int index, Eye element) {
+    public void add(int index, ClosedFile element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Eye> collection) {
+    public boolean addAll(Collection<? extends ClosedFile> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Eye> collection) {
+    public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Eye)) {
+        if (!(element instanceof ClosedFile)) {
             return false;
         }
         return list.remove(element);
@@ -213,15 +213,15 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
         list.clear();
     }
 
-    public Eye get(int index) {
+    public ClosedFile get(int index) {
         return list.get(index);
     }
 
-    public Eye set(int index, Eye element) {
+    public ClosedFile set(int index, ClosedFile element) {
         return list.set(index, element);
     }
 
-    public Eye remove(int index) {
+    public ClosedFile remove(int index) {
         return list.remove(index);
     }
 
@@ -233,15 +233,15 @@ public abstract class EyeAbstractList implements List<Eye>, RandomAccess, Clonea
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Eye> listIterator() {
+    public ListIterator<ClosedFile> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Eye> listIterator(int index) {
+    public ListIterator<ClosedFile> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Eye> subList(int fromIndex, int toIndex) {
+    public List<ClosedFile> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

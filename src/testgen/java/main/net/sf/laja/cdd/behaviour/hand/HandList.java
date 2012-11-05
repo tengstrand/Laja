@@ -3,7 +3,7 @@ package net.sf.laja.cdd.behaviour.hand;
 import java.util.List;
 import net.sf.laja.cdd.state.hand.HandStateList;
 
-public class HandList extends HandAbstractList {
+public class HandList extends HandArrayList {
     public HandList(Hand... list) {
         super(list);
     }

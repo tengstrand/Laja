@@ -2,7 +2,7 @@ package net.sf.laja.example.file.behaviour.text;
 
 import java.util.List;
 
-public class TextFileList extends TextFileAbstractList {
+public class TextFileList extends TextFileArrayList {
     public TextFileList(TextFile... list) {
         super(list);
     }

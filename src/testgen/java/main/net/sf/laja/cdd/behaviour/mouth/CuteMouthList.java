@@ -1,10 +1,8 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
 import java.util.List;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 
-public class CuteMouthList extends CuteMouthAbstractList {
+public class CuteMouthList extends CuteMouthArrayList {
     public CuteMouthList(CuteMouth... list) {
         super(list);
     }

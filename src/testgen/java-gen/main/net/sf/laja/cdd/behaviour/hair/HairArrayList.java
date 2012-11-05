@@ -1,6 +1,6 @@
-package net.sf.laja.example.file.behaviour.text;
+package net.sf.laja.cdd.behaviour.hair;
 
-import net.sf.laja.example.file.state.*;
+import net.sf.laja.cdd.state.hair.*;
 
 import java.util.*;
 
@@ -9,56 +9,76 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TextFileAbstractList implements List<TextFile>, RandomAccess, Cloneable, java.io.Serializable {
-    protected FileStateList stateList;
-    protected final List<TextFile> list;
+public class HairArrayList implements List<Hair>, RandomAccess, Cloneable, java.io.Serializable {
+    protected HairStateList stateList;
+    protected final List<Hair> list;
 
-    public TextFileAbstractList(TextFile... list) {
-        this.list = new ArrayList<TextFile>();
+    public HairArrayList(Hair... list) {
+        this.list = new ArrayList<Hair>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TextFileAbstractList(List<TextFile> list) {
-        this.list = new ArrayList<TextFile>();
+    public HairArrayList(List<Hair> list) {
+        this.list = new ArrayList<Hair>();
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<TextFile> {
-        private final FileStateList stateList;
+    public HairArrayList(HairStateList stateList) {
+        this.stateList = stateList;
+        List<Hair> elements = new ArrayList<Hair>(stateList.size());
 
-        public StateInSyncList(FileStateList stateList, List<TextFile> elements) {
+        for (HairState state : stateList) {
+            HairStateBuilder builder = new HairStateBuilderImpl(state);
+            Hair entry = (Hair) builder.as(new HairFactory.HairFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public FakeHairList asFakeHairList() {
+        List<FakeHair> result = new ArrayList<FakeHair>();
+        for (Hair entry : list) {
+            result.add(entry.asFakeHair());
+        }
+        return new FakeHairList(result);
+    }
+
+    public static class StateInSyncList extends ArrayList<Hair> {
+        private final HairStateList stateList;
+
+        public StateInSyncList(HairStateList stateList, List<Hair> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(TextFile element) {
+        public boolean add(Hair element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, TextFile element) {
+        public void add(int index, Hair element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends TextFile> collection) {
+        public boolean addAll(Collection<? extends Hair> collection) {
             boolean modified = super.addAll(collection);
 
-            for (TextFile element : collection) {
+            for (Hair element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends TextFile> collection) {
+        public boolean addAll(int index, Collection<? extends Hair> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (TextFile element : collection) {
+            for (Hair element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -68,10 +88,10 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof TextFile)) {
+            if (!(element instanceof Hair)) {
                 return false;
             }
-            stateList.remove(((TextFile) element).getState(stateList));
+            stateList.remove(((Hair) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -81,9 +101,9 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TextFile) {
+                if (element instanceof Hair) {
                     elements.add(element);
-                    states.add(((TextFile)element).getState(stateList));
+                    states.add(((Hair)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -97,9 +117,9 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TextFile) {
+                if (element instanceof Hair) {
                     elements.add(element);
-                    states.add(((TextFile)element).getState(stateList));
+                    states.add(((Hair)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -115,13 +135,13 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
         }
 
         @Override
-        public TextFile set(int index, TextFile element) {
+        public Hair set(int index, Hair element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public TextFile remove(int index) {
+        public Hair remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -139,7 +159,7 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
         return list.contains(element);
     }
 
-    public Iterator<TextFile> iterator() {
+    public Iterator<Hair> iterator() {
         return list.iterator();
     }
 
@@ -147,28 +167,28 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
         return list.toArray();
     }
 
-    public <TextFile> TextFile[] toArray(TextFile[] array) {
+    public <Hair> Hair[] toArray(Hair[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(TextFile element) {
+    public boolean add(Hair element) {
         return list.add(element);
     }
 
-    public void add(int index, TextFile element) {
+    public void add(int index, Hair element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends TextFile> collection) {
+    public boolean addAll(Collection<? extends Hair> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends TextFile> collection) {
+    public boolean addAll(int index, Collection<? extends Hair> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof TextFile)) {
+        if (!(element instanceof Hair)) {
             return false;
         }
         return list.remove(element);
@@ -190,15 +210,15 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
         list.clear();
     }
 
-    public TextFile get(int index) {
+    public Hair get(int index) {
         return list.get(index);
     }
 
-    public TextFile set(int index, TextFile element) {
+    public Hair set(int index, Hair element) {
         return list.set(index, element);
     }
 
-    public TextFile remove(int index) {
+    public Hair remove(int index) {
         return list.remove(index);
     }
 
@@ -210,15 +230,15 @@ public abstract class TextFileAbstractList implements List<TextFile>, RandomAcce
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<TextFile> listIterator() {
+    public ListIterator<Hair> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<TextFile> listIterator(int index) {
+    public ListIterator<Hair> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<TextFile> subList(int fromIndex, int toIndex) {
+    public List<Hair> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

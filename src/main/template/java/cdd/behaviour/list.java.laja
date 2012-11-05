@@ -5,7 +5,7 @@ package {packagename};
 import java.util.List;
 import {template.packagename}.{stateListClass};
 
-public class {listClass} extends {abstractListClass} {
+public class {listClass} extends {arrayListClass} {
     public {listClass}({entryClass}... list) {
         super(list);
     }

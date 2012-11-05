@@ -1,6 +1,6 @@
-package net.sf.laja.cdd.behaviour.toe;
+package net.sf.laja.example.file.behaviour.text;
 
-import net.sf.laja.cdd.state.toe.*;
+import net.sf.laja.example.file.state.*;
 
 import java.util.*;
 
@@ -9,68 +9,56 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, Cloneable, java.io.Serializable {
-    protected ToeStateList stateList;
-    protected final List<ValToe> list;
+public class TextFileArrayList implements List<TextFile>, RandomAccess, Cloneable, java.io.Serializable {
+    protected FileStateList stateList;
+    protected final List<TextFile> list;
 
-    public ValToeAbstractList(ValToe... list) {
-        this.list = new ArrayList<ValToe>();
+    public TextFileArrayList(TextFile... list) {
+        this.list = new ArrayList<TextFile>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ValToeAbstractList(List<ValToe> list) {
-        this.list = new ArrayList<ValToe>();
+    public TextFileArrayList(List<TextFile> list) {
+        this.list = new ArrayList<TextFile>();
         this.list.addAll(list);
     }
 
-    public ValToeAbstractList(ToeStateList stateList) {
-        this.stateList = stateList;
-        List<ValToe> elements = new ArrayList<ValToe>(stateList.size());
+    public static class StateInSyncList extends ArrayList<TextFile> {
+        private final FileStateList stateList;
 
-        for (ToeState state : stateList) {
-            ToeStateBuilder builder = new ToeStateBuilderImpl(state);
-            ValToe entry = (ValToe) builder.as(new ToeFactory.ValToeFactory_(builder));
-            elements.add(entry);
-        }
-        this.list = new StateInSyncList(stateList, elements);
-    }
-
-    public static class StateInSyncList extends ArrayList<ValToe> {
-        private final ToeStateList stateList;
-
-        public StateInSyncList(ToeStateList stateList, List<ValToe> elements) {
+        public StateInSyncList(FileStateList stateList, List<TextFile> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(ValToe element) {
+        public boolean add(TextFile element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, ValToe element) {
+        public void add(int index, TextFile element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends ValToe> collection) {
+        public boolean addAll(Collection<? extends TextFile> collection) {
             boolean modified = super.addAll(collection);
 
-            for (ValToe element : collection) {
+            for (TextFile element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends ValToe> collection) {
+        public boolean addAll(int index, Collection<? extends TextFile> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (ValToe element : collection) {
+            for (TextFile element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +68,10 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof ValToe)) {
+            if (!(element instanceof TextFile)) {
                 return false;
             }
-            stateList.remove(((ValToe) element).getState(stateList));
+            stateList.remove(((TextFile) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +81,9 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof ValToe) {
+                if (element instanceof TextFile) {
                     elements.add(element);
-                    states.add(((ValToe)element).getState(stateList));
+                    states.add(((TextFile)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +97,9 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof ValToe) {
+                if (element instanceof TextFile) {
                     elements.add(element);
-                    states.add(((ValToe)element).getState(stateList));
+                    states.add(((TextFile)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +115,13 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
         }
 
         @Override
-        public ValToe set(int index, ValToe element) {
+        public TextFile set(int index, TextFile element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public ValToe remove(int index) {
+        public TextFile remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +139,7 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
         return list.contains(element);
     }
 
-    public Iterator<ValToe> iterator() {
+    public Iterator<TextFile> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +147,28 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
         return list.toArray();
     }
 
-    public <ValToe> ValToe[] toArray(ValToe[] array) {
+    public <TextFile> TextFile[] toArray(TextFile[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(ValToe element) {
+    public boolean add(TextFile element) {
         return list.add(element);
     }
 
-    public void add(int index, ValToe element) {
+    public void add(int index, TextFile element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends ValToe> collection) {
+    public boolean addAll(Collection<? extends TextFile> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends ValToe> collection) {
+    public boolean addAll(int index, Collection<? extends TextFile> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof ValToe)) {
+        if (!(element instanceof TextFile)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +190,15 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
         list.clear();
     }
 
-    public ValToe get(int index) {
+    public TextFile get(int index) {
         return list.get(index);
     }
 
-    public ValToe set(int index, ValToe element) {
+    public TextFile set(int index, TextFile element) {
         return list.set(index, element);
     }
 
-    public ValToe remove(int index) {
+    public TextFile remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +210,15 @@ public abstract class ValToeAbstractList implements List<ValToe>, RandomAccess, 
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<ValToe> listIterator() {
+    public ListIterator<TextFile> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<ValToe> listIterator(int index) {
+    public ListIterator<TextFile> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<ValToe> subList(int fromIndex, int toIndex) {
+    public List<TextFile> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

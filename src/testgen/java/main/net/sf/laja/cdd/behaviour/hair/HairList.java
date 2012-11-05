@@ -1,11 +1,10 @@
 package net.sf.laja.cdd.behaviour.hair;
 
 import net.sf.laja.cdd.state.hair.HairStateList;
-import net.sf.laja.cdd.state.hair.HairStateListBuilder;
 
 import java.util.List;
 
-public class HairList extends HairAbstractList {
+public class HairList extends HairArrayList {
     public HairList(Hair... list) {
         super(list);
     }

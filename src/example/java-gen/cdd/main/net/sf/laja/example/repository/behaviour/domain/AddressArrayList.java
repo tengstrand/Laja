@@ -1,9 +1,6 @@
-package net.sf.laja.example.file.behaviour;
+package net.sf.laja.example.repository.behaviour.domain;
 
-import net.sf.laja.example.file.state.*;
-
-import net.sf.laja.example.file.behaviour.text.TextDirectory;
-import net.sf.laja.example.file.behaviour.text.TextDirectoryList;
+import net.sf.laja.example.repository.state.*;
 
 import java.util.*;
 
@@ -12,76 +9,68 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class DirectoryAbstractList implements List<Directory>, RandomAccess, Cloneable, java.io.Serializable {
-    protected DirectoryStateList stateList;
-    protected final List<Directory> list;
+public class AddressArrayList implements List<Address>, RandomAccess, Cloneable, java.io.Serializable {
+    protected AddressStateList stateList;
+    protected final List<Address> list;
 
-    public DirectoryAbstractList(Directory... list) {
-        this.list = new ArrayList<Directory>();
+    public AddressArrayList(Address... list) {
+        this.list = new ArrayList<Address>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public DirectoryAbstractList(List<Directory> list) {
-        this.list = new ArrayList<Directory>();
+    public AddressArrayList(List<Address> list) {
+        this.list = new ArrayList<Address>();
         this.list.addAll(list);
     }
 
-    public DirectoryAbstractList(DirectoryStateList stateList) {
+    public AddressArrayList(AddressStateList stateList) {
         this.stateList = stateList;
-        List<Directory> elements = new ArrayList<Directory>(stateList.size());
+        List<Address> elements = new ArrayList<Address>(stateList.size());
 
-        for (DirectoryState state : stateList) {
-            DirectoryStateBuilder builder = new DirectoryStateBuilderImpl(state);
-            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_(builder));
+        for (AddressState state : stateList) {
+            AddressStateBuilder builder = new AddressStateBuilderImpl(state);
+            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public TextDirectoryList asTextDirectoryList() {
-        List<TextDirectory> result = new ArrayList<TextDirectory>();
-        for (Directory entry : list) {
-            result.add(entry.asTextDirectory());
-        }
-        return new TextDirectoryList(result);
-    }
+    public static class StateInSyncList extends ArrayList<Address> {
+        private final AddressStateList stateList;
 
-    public static class StateInSyncList extends ArrayList<Directory> {
-        private final DirectoryStateList stateList;
-
-        public StateInSyncList(DirectoryStateList stateList, List<Directory> elements) {
+        public StateInSyncList(AddressStateList stateList, List<Address> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Directory element) {
+        public boolean add(Address element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Directory element) {
+        public void add(int index, Address element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Directory> collection) {
+        public boolean addAll(Collection<? extends Address> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Directory element : collection) {
+            for (Address element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Directory> collection) {
+        public boolean addAll(int index, Collection<? extends Address> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Directory element : collection) {
+            for (Address element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -91,10 +80,10 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Directory)) {
+            if (!(element instanceof Address)) {
                 return false;
             }
-            stateList.remove(((Directory) element).getState(stateList));
+            stateList.remove(((Address) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -104,9 +93,9 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Directory) {
+                if (element instanceof Address) {
                     elements.add(element);
-                    states.add(((Directory)element).getState(stateList));
+                    states.add(((Address)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -120,9 +109,9 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Directory) {
+                if (element instanceof Address) {
                     elements.add(element);
-                    states.add(((Directory)element).getState(stateList));
+                    states.add(((Address)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,13 +127,13 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
         }
 
         @Override
-        public Directory set(int index, Directory element) {
+        public Address set(int index, Address element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Directory remove(int index) {
+        public Address remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -162,7 +151,7 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
         return list.contains(element);
     }
 
-    public Iterator<Directory> iterator() {
+    public Iterator<Address> iterator() {
         return list.iterator();
     }
 
@@ -170,28 +159,28 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
         return list.toArray();
     }
 
-    public <Directory> Directory[] toArray(Directory[] array) {
+    public <Address> Address[] toArray(Address[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Directory element) {
+    public boolean add(Address element) {
         return list.add(element);
     }
 
-    public void add(int index, Directory element) {
+    public void add(int index, Address element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Directory> collection) {
+    public boolean addAll(Collection<? extends Address> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Directory> collection) {
+    public boolean addAll(int index, Collection<? extends Address> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Directory)) {
+        if (!(element instanceof Address)) {
             return false;
         }
         return list.remove(element);
@@ -213,15 +202,15 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
         list.clear();
     }
 
-    public Directory get(int index) {
+    public Address get(int index) {
         return list.get(index);
     }
 
-    public Directory set(int index, Directory element) {
+    public Address set(int index, Address element) {
         return list.set(index, element);
     }
 
-    public Directory remove(int index) {
+    public Address remove(int index) {
         return list.remove(index);
     }
 
@@ -233,15 +222,15 @@ public abstract class DirectoryAbstractList implements List<Directory>, RandomAc
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Directory> listIterator() {
+    public ListIterator<Address> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Directory> listIterator(int index) {
+    public ListIterator<Address> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Directory> subList(int fromIndex, int toIndex) {
+    public List<Address> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

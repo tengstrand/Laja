@@ -74,7 +74,7 @@
 #macro prepareList(outputDirArg, outDirArg)
   #set (entryClass = method.returnclass)
   #set (listClass = method.listClass)
-  #set (abstractListClass = method.abstractListClass)
+  #set (arrayListClass = method.arrayListClass)
   #set (packagename = behaviour.packagename)
   #set (listOutputDir = outputDirArg)
   #set (asBehaviour = behaviours.get(entryClass))

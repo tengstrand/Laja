@@ -2,7 +2,7 @@ package net.sf.laja.example.repository.behaviour.domain;
 
 import java.util.List;
 
-public class AddressList extends AddressAbstractList {
+public class AddressList extends AddressArrayList {
     public AddressList(Address... list) {
         super(list);
     }

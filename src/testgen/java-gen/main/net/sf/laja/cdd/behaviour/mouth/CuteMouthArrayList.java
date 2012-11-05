@@ -1,6 +1,6 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd.behaviour.mouth;
 
-import net.sf.laja.cdd.state.brow.*;
+import net.sf.laja.cdd.state.mouth.*;
 
 import java.util.*;
 
@@ -9,68 +9,56 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAccess, Cloneable, java.io.Serializable {
-    protected BrowStateList stateList;
-    protected final List<TestBrow> list;
+public class CuteMouthArrayList implements List<CuteMouth>, RandomAccess, Cloneable, java.io.Serializable {
+    protected MouthStateList stateList;
+    protected final List<CuteMouth> list;
 
-    public TestBrowAbstractList(TestBrow... list) {
-        this.list = new ArrayList<TestBrow>();
+    public CuteMouthArrayList(CuteMouth... list) {
+        this.list = new ArrayList<CuteMouth>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TestBrowAbstractList(List<TestBrow> list) {
-        this.list = new ArrayList<TestBrow>();
+    public CuteMouthArrayList(List<CuteMouth> list) {
+        this.list = new ArrayList<CuteMouth>();
         this.list.addAll(list);
     }
 
-    public TestBrowAbstractList(BrowStateList stateList) {
-        this.stateList = stateList;
-        List<TestBrow> elements = new ArrayList<TestBrow>(stateList.size());
+    public static class StateInSyncList extends ArrayList<CuteMouth> {
+        private final MouthStateList stateList;
 
-        for (BrowState state : stateList) {
-            BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            TestBrow entry = (TestBrow) builder.as(new TestBrowFactory.TestBrowFactory_(builder));
-            elements.add(entry);
-        }
-        this.list = new StateInSyncList(stateList, elements);
-    }
-
-    public static class StateInSyncList extends ArrayList<TestBrow> {
-        private final BrowStateList stateList;
-
-        public StateInSyncList(BrowStateList stateList, List<TestBrow> elements) {
+        public StateInSyncList(MouthStateList stateList, List<CuteMouth> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(TestBrow element) {
+        public boolean add(CuteMouth element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, TestBrow element) {
+        public void add(int index, CuteMouth element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends TestBrow> collection) {
+        public boolean addAll(Collection<? extends CuteMouth> collection) {
             boolean modified = super.addAll(collection);
 
-            for (TestBrow element : collection) {
+            for (CuteMouth element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends TestBrow> collection) {
+        public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (TestBrow element : collection) {
+            for (CuteMouth element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +68,10 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof TestBrow)) {
+            if (!(element instanceof CuteMouth)) {
                 return false;
             }
-            stateList.remove(((TestBrow) element).getState(stateList));
+            stateList.remove(((CuteMouth) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +81,9 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TestBrow) {
+                if (element instanceof CuteMouth) {
                     elements.add(element);
-                    states.add(((TestBrow)element).getState(stateList));
+                    states.add(((CuteMouth)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +97,9 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TestBrow) {
+                if (element instanceof CuteMouth) {
                     elements.add(element);
-                    states.add(((TestBrow)element).getState(stateList));
+                    states.add(((CuteMouth)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +115,13 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
         }
 
         @Override
-        public TestBrow set(int index, TestBrow element) {
+        public CuteMouth set(int index, CuteMouth element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public TestBrow remove(int index) {
+        public CuteMouth remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +139,7 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
         return list.contains(element);
     }
 
-    public Iterator<TestBrow> iterator() {
+    public Iterator<CuteMouth> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +147,28 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
         return list.toArray();
     }
 
-    public <TestBrow> TestBrow[] toArray(TestBrow[] array) {
+    public <CuteMouth> CuteMouth[] toArray(CuteMouth[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(TestBrow element) {
+    public boolean add(CuteMouth element) {
         return list.add(element);
     }
 
-    public void add(int index, TestBrow element) {
+    public void add(int index, CuteMouth element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends TestBrow> collection) {
+    public boolean addAll(Collection<? extends CuteMouth> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends TestBrow> collection) {
+    public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof TestBrow)) {
+        if (!(element instanceof CuteMouth)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +190,15 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
         list.clear();
     }
 
-    public TestBrow get(int index) {
+    public CuteMouth get(int index) {
         return list.get(index);
     }
 
-    public TestBrow set(int index, TestBrow element) {
+    public CuteMouth set(int index, CuteMouth element) {
         return list.set(index, element);
     }
 
-    public TestBrow remove(int index) {
+    public CuteMouth remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +210,15 @@ public abstract class TestBrowAbstractList implements List<TestBrow>, RandomAcce
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<TestBrow> listIterator() {
+    public ListIterator<CuteMouth> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<TestBrow> listIterator(int index) {
+    public ListIterator<CuteMouth> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<TestBrow> subList(int fromIndex, int toIndex) {
+    public List<CuteMouth> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

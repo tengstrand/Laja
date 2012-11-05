@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestBrowList extends TestBrowAbstractList {
+public class TestBrowList extends TestBrowArrayList {
     public TestBrowList(TestBrow... list) {
         super(list);
     }

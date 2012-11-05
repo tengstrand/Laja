@@ -4,7 +4,7 @@ import net.sf.laja.example.file.state.FileStateList;
 
 import java.util.List;
 
-public class ClosedFileList extends ClosedFileAbstractList {
+public class ClosedFileList extends ClosedFileArrayList {
     public ClosedFileList(ClosedFile... list) {
         super(list);
     }

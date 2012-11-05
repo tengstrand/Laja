@@ -4,7 +4,7 @@ import net.sf.laja.cdd.state.arm.ArmStateList;
 
 import java.util.List;
 
-public class ArmList extends ArmAbstractList {
+public class ArmList extends ArmArrayList {
     public ArmList(Arm... list) {
         super(list);
     }

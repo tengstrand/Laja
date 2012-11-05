@@ -256,7 +256,7 @@
 
 #macro generateBehaviour()
   #set (processedLists = new java.util.HashSet())
-  #set (processedAbstractLists = new java.util.HashSet())
+  #set (processedArrayLists = new java.util.HashSet())
   #foreach (behaviour in behaviours.values())
     #if (!directoryExists(behaviour.outputDir))
       #createDirectoryPath(behaviour.outputDir)
@@ -267,7 +267,7 @@
     #import "{..}/../java/cdd/behaviour/builder.java.laja"
     #import "{..}/../java/cdd/behaviour/creator.java.laja"
     #import "{..}/../java/cdd/behaviour/encapsulator.java.laja"
-    #import "{..}/../java/cdd/behaviour/abstractList.java.laja"
+    #import "{..}/../java/cdd/behaviour/arrayList.java.laja"
     #import "{..}/../java/cdd/behaviour/list.java.laja"
     #import "{..}/../java/cdd/behaviour/listCreator.java.laja"
   #end

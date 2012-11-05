@@ -1,6 +1,6 @@
-package net.sf.laja.cdd.behaviour.hand;
+package net.sf.laja.cdd.behaviour.mouth;
 
-import net.sf.laja.cdd.state.hand.*;
+import net.sf.laja.cdd.state.mouth.*;
 
 import java.util.*;
 
@@ -9,68 +9,76 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class HandAbstractList implements List<Hand>, RandomAccess, Cloneable, java.io.Serializable {
-    protected HandStateList stateList;
-    protected final List<Hand> list;
+public class MouthArrayList implements List<Mouth>, RandomAccess, Cloneable, java.io.Serializable {
+    protected MouthStateList stateList;
+    protected final List<Mouth> list;
 
-    public HandAbstractList(Hand... list) {
-        this.list = new ArrayList<Hand>();
+    public MouthArrayList(Mouth... list) {
+        this.list = new ArrayList<Mouth>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public HandAbstractList(List<Hand> list) {
-        this.list = new ArrayList<Hand>();
+    public MouthArrayList(List<Mouth> list) {
+        this.list = new ArrayList<Mouth>();
         this.list.addAll(list);
     }
 
-    public HandAbstractList(HandStateList stateList) {
+    public MouthArrayList(MouthStateList stateList, MouthSize size) {
         this.stateList = stateList;
-        List<Hand> elements = new ArrayList<Hand>(stateList.size());
+        List<Mouth> elements = new ArrayList<Mouth>(stateList.size());
 
-        for (HandState state : stateList) {
-            HandStateBuilder builder = new HandStateBuilderImpl(state);
-            Hand entry = (Hand) builder.as(new HandFactory.HandFactory_(builder));
+        for (MouthState state : stateList) {
+            MouthStateBuilder builder = new MouthStateBuilderImpl(state);
+            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(builder), size);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Hand> {
-        private final HandStateList stateList;
+    public CuteMouthList asCuteMouthList(MouthSize size, int x) {
+        List<CuteMouth> result = new ArrayList<CuteMouth>();
+        for (Mouth entry : list) {
+            result.add(entry.asCuteMouth(size, x));
+        }
+        return new CuteMouthList(result);
+    }
 
-        public StateInSyncList(HandStateList stateList, List<Hand> elements) {
+    public static class StateInSyncList extends ArrayList<Mouth> {
+        private final MouthStateList stateList;
+
+        public StateInSyncList(MouthStateList stateList, List<Mouth> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Hand element) {
+        public boolean add(Mouth element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Hand element) {
+        public void add(int index, Mouth element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Hand> collection) {
+        public boolean addAll(Collection<? extends Mouth> collection) {
             boolean modified = super.addAll(collection);
 
-            for (Hand element : collection) {
+            for (Mouth element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Hand> collection) {
+        public boolean addAll(int index, Collection<? extends Mouth> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Hand element : collection) {
+            for (Mouth element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -80,10 +88,10 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof Hand)) {
+            if (!(element instanceof Mouth)) {
                 return false;
             }
-            stateList.remove(((Hand) element).getState(stateList));
+            stateList.remove(((Mouth) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -93,9 +101,9 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Hand) {
+                if (element instanceof Mouth) {
                     elements.add(element);
-                    states.add(((Hand)element).getState(stateList));
+                    states.add(((Mouth)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,9 +117,9 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Hand) {
+                if (element instanceof Mouth) {
                     elements.add(element);
-                    states.add(((Hand)element).getState(stateList));
+                    states.add(((Mouth)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -127,13 +135,13 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
         }
 
         @Override
-        public Hand set(int index, Hand element) {
+        public Mouth set(int index, Mouth element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public Hand remove(int index) {
+        public Mouth remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -151,7 +159,7 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
         return list.contains(element);
     }
 
-    public Iterator<Hand> iterator() {
+    public Iterator<Mouth> iterator() {
         return list.iterator();
     }
 
@@ -159,28 +167,28 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
         return list.toArray();
     }
 
-    public <Hand> Hand[] toArray(Hand[] array) {
+    public <Mouth> Mouth[] toArray(Mouth[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Hand element) {
+    public boolean add(Mouth element) {
         return list.add(element);
     }
 
-    public void add(int index, Hand element) {
+    public void add(int index, Mouth element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Hand> collection) {
+    public boolean addAll(Collection<? extends Mouth> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Hand> collection) {
+    public boolean addAll(int index, Collection<? extends Mouth> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Hand)) {
+        if (!(element instanceof Mouth)) {
             return false;
         }
         return list.remove(element);
@@ -202,15 +210,15 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
         list.clear();
     }
 
-    public Hand get(int index) {
+    public Mouth get(int index) {
         return list.get(index);
     }
 
-    public Hand set(int index, Hand element) {
+    public Mouth set(int index, Mouth element) {
         return list.set(index, element);
     }
 
-    public Hand remove(int index) {
+    public Mouth remove(int index) {
         return list.remove(index);
     }
 
@@ -222,15 +230,15 @@ public abstract class HandAbstractList implements List<Hand>, RandomAccess, Clon
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Hand> listIterator() {
+    public ListIterator<Mouth> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Hand> listIterator(int index) {
+    public ListIterator<Mouth> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Hand> subList(int fromIndex, int toIndex) {
+    public List<Mouth> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

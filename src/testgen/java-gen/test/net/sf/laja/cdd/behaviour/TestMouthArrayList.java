@@ -1,9 +1,9 @@
-package net.sf.laja.example.file.behaviour.text;
+package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.example.file.state.*;
+import net.sf.laja.cdd.state.mouth.*;
 
-import net.sf.laja.example.file.behaviour.Directory;
-import net.sf.laja.example.file.behaviour.DirectoryFactory;
+import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
+import net.sf.laja.cdd.behaviour.mouth.CuteMouthList;
 
 import java.util.*;
 
@@ -12,56 +12,76 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public abstract class TextDirectoryAbstractList implements List<TextDirectory>, RandomAccess, Cloneable, java.io.Serializable {
-    protected DirectoryStateList stateList;
-    protected final List<TextDirectory> list;
+public class TestMouthArrayList implements List<TestMouth>, RandomAccess, Cloneable, java.io.Serializable {
+    protected MouthStateList stateList;
+    protected final List<TestMouth> list;
 
-    public TextDirectoryAbstractList(TextDirectory... list) {
-        this.list = new ArrayList<TextDirectory>();
+    public TestMouthArrayList(TestMouth... list) {
+        this.list = new ArrayList<TestMouth>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TextDirectoryAbstractList(List<TextDirectory> list) {
-        this.list = new ArrayList<TextDirectory>();
+    public TestMouthArrayList(List<TestMouth> list) {
+        this.list = new ArrayList<TestMouth>();
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<TextDirectory> {
-        private final DirectoryStateList stateList;
+    public TestMouthArrayList(MouthStateList stateList) {
+        this.stateList = stateList;
+        List<TestMouth> elements = new ArrayList<TestMouth>(stateList.size());
 
-        public StateInSyncList(DirectoryStateList stateList, List<TextDirectory> elements) {
+        for (MouthState state : stateList) {
+            MouthStateBuilder builder = new MouthStateBuilderImpl(state);
+            TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public CuteMouthList asCuteMouthList() {
+        List<CuteMouth> result = new ArrayList<CuteMouth>();
+        for (TestMouth entry : list) {
+            result.add(entry.asCuteMouth());
+        }
+        return new CuteMouthList(result);
+    }
+
+    public static class StateInSyncList extends ArrayList<TestMouth> {
+        private final MouthStateList stateList;
+
+        public StateInSyncList(MouthStateList stateList, List<TestMouth> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(TextDirectory element) {
+        public boolean add(TestMouth element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, TextDirectory element) {
+        public void add(int index, TestMouth element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends TextDirectory> collection) {
+        public boolean addAll(Collection<? extends TestMouth> collection) {
             boolean modified = super.addAll(collection);
 
-            for (TextDirectory element : collection) {
+            for (TestMouth element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
+        public boolean addAll(int index, Collection<? extends TestMouth> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (TextDirectory element : collection) {
+            for (TestMouth element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -71,10 +91,10 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof TextDirectory)) {
+            if (!(element instanceof TestMouth)) {
                 return false;
             }
-            stateList.remove(((TextDirectory) element).getState(stateList));
+            stateList.remove(((TestMouth) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -84,9 +104,9 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TextDirectory) {
+                if (element instanceof TestMouth) {
                     elements.add(element);
-                    states.add(((TextDirectory)element).getState(stateList));
+                    states.add(((TestMouth)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -100,9 +120,9 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof TextDirectory) {
+                if (element instanceof TestMouth) {
                     elements.add(element);
-                    states.add(((TextDirectory)element).getState(stateList));
+                    states.add(((TestMouth)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -118,13 +138,13 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
         }
 
         @Override
-        public TextDirectory set(int index, TextDirectory element) {
+        public TestMouth set(int index, TestMouth element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public TextDirectory remove(int index) {
+        public TestMouth remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -142,7 +162,7 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
         return list.contains(element);
     }
 
-    public Iterator<TextDirectory> iterator() {
+    public Iterator<TestMouth> iterator() {
         return list.iterator();
     }
 
@@ -150,28 +170,28 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
         return list.toArray();
     }
 
-    public <TextDirectory> TextDirectory[] toArray(TextDirectory[] array) {
+    public <TestMouth> TestMouth[] toArray(TestMouth[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(TextDirectory element) {
+    public boolean add(TestMouth element) {
         return list.add(element);
     }
 
-    public void add(int index, TextDirectory element) {
+    public void add(int index, TestMouth element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends TextDirectory> collection) {
+    public boolean addAll(Collection<? extends TestMouth> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
+    public boolean addAll(int index, Collection<? extends TestMouth> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof TextDirectory)) {
+        if (!(element instanceof TestMouth)) {
             return false;
         }
         return list.remove(element);
@@ -193,15 +213,15 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
         list.clear();
     }
 
-    public TextDirectory get(int index) {
+    public TestMouth get(int index) {
         return list.get(index);
     }
 
-    public TextDirectory set(int index, TextDirectory element) {
+    public TestMouth set(int index, TestMouth element) {
         return list.set(index, element);
     }
 
-    public TextDirectory remove(int index) {
+    public TestMouth remove(int index) {
         return list.remove(index);
     }
 
@@ -213,15 +233,15 @@ public abstract class TextDirectoryAbstractList implements List<TextDirectory>, 
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<TextDirectory> listIterator() {
+    public ListIterator<TestMouth> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<TextDirectory> listIterator(int index) {
+    public ListIterator<TestMouth> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<TextDirectory> subList(int fromIndex, int toIndex) {
+    public List<TestMouth> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 
