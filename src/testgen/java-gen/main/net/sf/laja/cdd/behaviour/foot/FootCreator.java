@@ -19,12 +19,9 @@ public class FootCreator {
     }
 
     public class Toes_ {
-        public FootEncapsulator toes() {
-            return create();
-        }
-
-        public FootEncapsulator toes(ToeListCreator toes) {
-            builder.withToes(toes.stateList);
+        public FootEncapsulator toes(ToeEncapsulator... toes) {
+            ToeListCreator creator = new ToeListCreator(toes);
+            builder.withToes(creator.stateList);
             return create();
         }
     }

@@ -27,7 +27,7 @@ public class HeadTest {
                 .color("RED")
                 .noses(noses)
                 .a(true).b((byte) 1).c((short) 2).d('a').e(3).f(4).g((float) 5.0).h(6.0)
-                .mouths(MouthFactory.createList(MouthFactory.width(10).height(5).color("red"))).asHead();
+                .mouths(MouthFactory.width(10).height(5).color("red")).asHead();
 
         System.out.println(head);
     }

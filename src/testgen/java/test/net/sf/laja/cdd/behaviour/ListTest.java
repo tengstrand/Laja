@@ -38,6 +38,12 @@ public class ListTest {
     }
 
     @Test
+    private void testing() {
+        Arm.armWeight(1).hands(Hand.area(1));
+
+    }
+
+    @Test
     public void remove_createdFromVarargConstructor() {
         AreaBrowList list = createBrowList();
 
@@ -172,7 +178,7 @@ public class ListTest {
 
     @Test
     public void add() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1)).asArm();
         arm1.hands.add(Hand.area(2).asHand());
         Arm arm2 = arm1.asArm();
 
@@ -184,7 +190,7 @@ public class ListTest {
 
     @Test
     public void addAtIndex() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2)).asArm();
         arm1.hands.add(1, Hand.area(3).asHand());
         Arm arm2 = arm1.asArm();
 
@@ -196,7 +202,7 @@ public class ListTest {
 
     @Test
     public void addAll() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2)).asArm();
         arm1.hands.addAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
@@ -208,7 +214,7 @@ public class ListTest {
 
     @Test
     public void addAllAtIndex() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2)).asArm();
         arm1.hands.addAll(1, Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
@@ -220,7 +226,7 @@ public class ListTest {
 
     @Test
     public void remove() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3)).asArm();
         arm1.hands.remove(Hand.area(2).asHand());
         Arm arm2 = arm1.asArm();
 
@@ -232,7 +238,7 @@ public class ListTest {
 
     @Test
     public void removeAll() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3), Hand.area(4), Hand.area(5))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3), Hand.area(4), Hand.area(5)).asArm();
         arm1.hands.removeAll(Hand.createList(Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
@@ -244,7 +250,7 @@ public class ListTest {
 
     @Test
     public void retainAll() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3)).asArm();
         arm1.hands.retainAll(Hand.createList(Hand.area(2), Hand.area(3), Hand.area(4)).asHandList());
         Arm arm2 = arm1.asArm();
 
@@ -256,7 +262,7 @@ public class ListTest {
 
     @Test
     public void clear() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3)).asArm();
         arm1.hands.clear();
         Arm arm2 = arm1.asArm();
 
@@ -268,7 +274,7 @@ public class ListTest {
 
     @Test
     public void set() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3)).asArm();
         arm1.hands.set(1, Hand.area(4).asHand());
         Arm arm2 = arm1.asArm();
 
@@ -280,7 +286,7 @@ public class ListTest {
 
     @Test
     public void removeAtIndex() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(1), Hand.area(2), Hand.area(3))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3)).asArm();
         arm1.hands.remove(1);
         Arm arm2 = arm1.asArm();
 
@@ -292,7 +298,7 @@ public class ListTest {
 
     @Test
     public void sort() {
-        Arm arm1 = Arm.armWeight(10).hands(Hand.createList(Hand.area(3), Hand.area(2), Hand.area(1))).asArm();
+        Arm arm1 = Arm.armWeight(10).hands(Hand.area(3), Hand.area(2), Hand.area(1)).asArm();
         HandList hands = arm1.hands;
         Arm arm2 = arm1.asArm();
 
@@ -307,7 +313,7 @@ public class ListTest {
     @Test
     @Ignore
     public void removeValueFromEntityStateList() {
-        Foot foot = Foot.area(10).toes(Toe.createList(Toe.length(1).weight(1), Toe.length(1).weight(2))).asFoot();
+        Foot foot = Foot.area(10).toes(Toe.length(1).weight(1), Toe.length(1).weight(2)).asFoot();
         ValToeList valToes = foot.toes.asValToeList();
         valToes.remove(Toe.length(1).weight(2).asToe());
 

@@ -53,12 +53,9 @@ public class {creatorClass} {
 
     public class {currentClass} {
       #if (attribute.isStateList)
-        public {encapsulatorClass} {attribute.variable}() {
-            return create();
-        }
-
-        public {encapsulatorClass} {attribute.variable}({attribute.listCreator} {attribute.variable}) {
-            builder.{attribute.withMethod}({attribute.variable}.stateList);
+        public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
+            {attribute.listCreator} creator = new {attribute.listCreator}({attribute.variable});
+            builder.{attribute.withMethod}(creator.stateList);
             return create();
         }
       #else if (attribute.isState)

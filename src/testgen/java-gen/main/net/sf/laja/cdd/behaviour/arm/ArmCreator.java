@@ -24,12 +24,9 @@ public class ArmCreator {
     }
 
     public class Hands_ {
-        public ArmEncapsulator hands() {
-            return create();
-        }
-
-        public ArmEncapsulator hands(HandListCreator hands) {
-            builder.withHands(hands.stateList);
+        public ArmEncapsulator hands(HandEncapsulator... hands) {
+            HandListCreator creator = new HandListCreator(hands);
+            builder.withHands(creator.stateList);
             return create();
         }
     }

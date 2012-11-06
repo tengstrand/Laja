@@ -131,12 +131,9 @@ public class HeadCreator {
     }
 
     public class Mouths_ {
-        public HeadEncapsulator mouths() {
-            return create();
-        }
-
-        public HeadEncapsulator mouths(MouthListCreator mouths) {
-            builder.withMouths(mouths.stateList);
+        public HeadEncapsulator mouths(MouthEncapsulator... mouths) {
+            MouthListCreator creator = new MouthListCreator(mouths);
+            builder.withMouths(creator.stateList);
             return create();
         }
     }
