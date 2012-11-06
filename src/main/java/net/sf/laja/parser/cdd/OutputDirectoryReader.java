@@ -66,7 +66,7 @@ public class OutputDirectoryReader {
 
             for (String filePath : files.keySet()) {
                 String status = files.get(filePath);
-                if (verbose || (!autoRemove && status.equals(REMOVE))) {
+                if (verbose || (!autoRemove && (status.equals(REMOVE) || status.equals(NEW)))) {
                     if (autoRemove && status.equals(REMOVE)) {
                         status = "removed";
                     }
