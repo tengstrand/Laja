@@ -16,8 +16,9 @@ public class {encapsulatorClass} {
   #foreach (attribute in template.attributes where attribute.isOptional && attribute.isBuilderMethod)
 
     #if (attribute.isStateList)
-    public {encapsulatorClass} {attribute.withMethod}({attribute.listCreator} {attribute.variable}) {
-        builder.{attribute.withMethod}({attribute.variable}.stateList);
+    public {encapsulatorClass} {attribute.withMethod}({attribute.encapsulator}... {attribute.variable}) {
+        {attribute.listCreator} creator = new {attribute.listCreator}({attribute.variable});
+        builder.{attribute.withMethod}(creator.stateList);
         return this;
     }
     #else if (attribute.isState)

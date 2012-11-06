@@ -19,8 +19,9 @@ public class ForeheadEncapsulator {
         return (Forehead)builder.as(new ForeheadFactory.ForeheadFactory_(builder));
     }
 
-    public ForeheadEncapsulator withBrows(BrowListCreator brows) {
-        builder.withBrows(brows.stateList);
+    public ForeheadEncapsulator withBrows(BrowEncapsulator... brows) {
+        BrowListCreator creator = new BrowListCreator(brows);
+        builder.withBrows(creator.stateList);
         return this;
     }
 

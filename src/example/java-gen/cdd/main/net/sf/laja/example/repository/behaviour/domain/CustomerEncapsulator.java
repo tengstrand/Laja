@@ -36,8 +36,9 @@ public class CustomerEncapsulator {
         return this;
     }
 
-    public CustomerEncapsulator withOldAddresses(AddressListCreator oldAddresses) {
-        builder.withOldAddresses(oldAddresses.stateList);
+    public CustomerEncapsulator withOldAddresses(AddressEncapsulator... oldAddresses) {
+        AddressListCreator creator = new AddressListCreator(oldAddresses);
+        builder.withOldAddresses(creator.stateList);
         return this;
     }
 

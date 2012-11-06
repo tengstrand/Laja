@@ -18,8 +18,9 @@ public class TestForeheadEncapsulator {
         return (TestForehead)builder.as(new TestForeheadFactory.TestForeheadFactory_(builder));
     }
 
-    public TestForeheadEncapsulator withBrows(BrowListCreator brows) {
-        builder.withBrows(brows.stateList);
+    public TestForeheadEncapsulator withBrows(BrowEncapsulator... brows) {
+        BrowListCreator creator = new BrowListCreator(brows);
+        builder.withBrows(creator.stateList);
         return this;
     }
 

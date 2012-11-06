@@ -39,8 +39,9 @@ public class MonsterEncapsulator {
         return this;
     }
 
-    public MonsterEncapsulator withBrows(BrowListCreator brows) {
-        builder.withBrows(brows.stateList);
+    public MonsterEncapsulator withBrows(BrowEncapsulator... brows) {
+        BrowListCreator creator = new BrowListCreator(brows);
+        builder.withBrows(creator.stateList);
         return this;
     }
 
@@ -49,8 +50,9 @@ public class MonsterEncapsulator {
         return this;
     }
 
-    public MonsterEncapsulator withEars(EarListCreator ears) {
-        builder.withEars(ears.stateList);
+    public MonsterEncapsulator withEars(EarEncapsulator... ears) {
+        EarListCreator creator = new EarListCreator(ears);
+        builder.withEars(creator.stateList);
         return this;
     }
 

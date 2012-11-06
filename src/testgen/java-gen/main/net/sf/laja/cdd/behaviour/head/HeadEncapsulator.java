@@ -42,8 +42,9 @@ public class HeadEncapsulator {
         return this;
     }
 
-    public HeadEncapsulator withBrows(BrowListCreator brows) {
-        builder.withBrows(brows.stateList);
+    public HeadEncapsulator withBrows(BrowEncapsulator... brows) {
+        BrowListCreator creator = new BrowListCreator(brows);
+        builder.withBrows(creator.stateList);
         return this;
     }
 
@@ -52,8 +53,9 @@ public class HeadEncapsulator {
         return this;
     }
 
-    public HeadEncapsulator withEars(EarListCreator ears) {
-        builder.withEars(ears.stateList);
+    public HeadEncapsulator withEars(EarEncapsulator... ears) {
+        EarListCreator creator = new EarListCreator(ears);
+        builder.withEars(creator.stateList);
         return this;
     }
 
