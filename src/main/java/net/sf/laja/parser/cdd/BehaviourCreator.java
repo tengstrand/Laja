@@ -30,7 +30,7 @@ public class BehaviourCreator {
         asMethod.setMethodName("as" + template.classname);
         asMethod.setReturnclass(template.classname);
         Statement statement = new Statement();
-        statement.setInnerStatement("        return new " + behaviour.classname + "(state);");
+        statement.setInnerStatement("return new " + behaviour.classname + "(state);\n    ");
         asMethod.setStatement(statement);
         asMethod.setParameters(new Parameters());
         behaviour.addAsMethod(asMethod);
