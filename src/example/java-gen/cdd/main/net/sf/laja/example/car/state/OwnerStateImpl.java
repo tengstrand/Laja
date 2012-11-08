@@ -78,14 +78,14 @@ public class OwnerStateImpl implements OwnerState {
 
     @Override
     public int hashCode() {
-        int result = (int)ssn;
+        int result = (int)(ssn ^ (ssn >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
 
         return result;
     }
 
     public int valueHashCode() {
-        int result = (int)ssn;
+        int result = (int)(ssn ^ (ssn >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
 
         return result;

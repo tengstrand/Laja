@@ -32,5 +32,5 @@ public class HeadTest {
         System.out.println(head);
     }
 
-    Forehead forehead = Forehead.create().withBrows(Brow.createList(Brow.area(200))).asForehead();
+    Forehead forehead = Forehead.create().withBrows(Brow.area(200)).asForehead();
 }

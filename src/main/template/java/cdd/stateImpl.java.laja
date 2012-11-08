@@ -272,7 +272,7 @@
 #macro hashCodeBody(t, attributes, useGetter, tab)
   #set (first = true)
   #set (intTypes = ["byte", "char", "short", "int"])
-  #set (castTypes = ["long", "float", "double"])
+  #set (castTypes = ["float", "double"])
   #foreach (attribute in attributes)
     #set (variable = variable(useGetter))
     #if (first)
@@ -280,6 +280,8 @@
 {tab}    int result = {variable};
       #else if (castTypes.contains(attribute.type))
 {tab}    int result = (int){variable};
+      #else if (attribute.type == "long")
+{tab}    int result = (int)({variable} ^ ({variable} >>> 32));
       #else if (attribute.type == "boolean")
 {tab}    int result = {variable} ? 1 : 0;
       #else
@@ -290,6 +292,8 @@
 {tab}    result = 31 * result + {variable};
       #else if (castTypes.contains(attribute.type))
 {tab}    result = 31 * result + (int){variable};
+      #else if (attribute.type == "long")
+{tab}    result = (int)({variable} ^ ({variable} >>> 32));
       #else if (attribute.type == "boolean")
 {tab}    result = 31 * result + ({variable} ? 1 : 0);
       #else

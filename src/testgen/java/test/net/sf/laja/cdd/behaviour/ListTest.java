@@ -38,12 +38,6 @@ public class ListTest {
     }
 
     @Test
-    private void testing() {
-        Arm.armWeight(1).hands(Hand.area(1));
-
-    }
-
-    @Test
     public void remove_createdFromVarargConstructor() {
         AreaBrowList list = createBrowList();
 
@@ -68,7 +62,7 @@ public class ListTest {
 
     @Test
     public void remove_createdFromStateList() {
-        TestForehead forehead = TestForehead.create().withBrows(Brow.createList(Brow.area(1), Brow.area(2), Brow.area(3))).asTestForehead();
+        TestForehead forehead = TestForehead.create().withBrows(Brow.area(1), Brow.area(2), Brow.area(3)).asTestForehead();
 
         AreaBrowList list = new AreaBrowList(forehead.remove(1));
 

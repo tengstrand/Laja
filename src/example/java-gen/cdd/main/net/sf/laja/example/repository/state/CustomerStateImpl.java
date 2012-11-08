@@ -122,13 +122,13 @@ public class CustomerStateImpl implements CustomerState {
 
     @Override
     public int hashCode() {
-        int result = (int)ssn;
+        int result = (int)(ssn ^ (ssn >>> 32));
 
         return result;
     }
 
     public int valueHashCode() {
-        int result = (int)ssn;
+        int result = (int)(ssn ^ (ssn >>> 32));
         result = 31 * result + (givenName != null ? givenName.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + age;
