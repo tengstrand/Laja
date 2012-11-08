@@ -50,14 +50,16 @@ Reading file "myproject.laja"
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonElement.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBehaviourFactory.java" - OK
   Behaviour: Person
+  Writing to file "C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonAbstractList.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonList.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonArrayList.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonListCreator.java" - OK
-  Processed 19 classes: 19 new.
+  Processed 21 classes: 21 new.
 </source>
 
 If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.
