@@ -150,7 +150,7 @@ import com.myproject.state.SizeState;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class BMI extends BMIFactory {
+public class BMI extends SizeFactory {
     public BMI(SizeState state) {
         super(state);
     }
