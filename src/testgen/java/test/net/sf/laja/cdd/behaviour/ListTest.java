@@ -279,7 +279,7 @@ public class ListTest {
     }
 
     @Test
-    public void removeAtIndex() {
+        public void removeAtIndex() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.area(1), Hand.area(2), Hand.area(3)).asArm();
         arm1.hands.remove(1);
         Arm arm2 = arm1.asArm();

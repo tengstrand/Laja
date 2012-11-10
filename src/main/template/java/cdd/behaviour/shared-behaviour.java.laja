@@ -130,6 +130,7 @@ import {behaviourRef.packagename}.{attribute.listCreator};
     #if (behaviourRef.packagename != packagename)
 
 import {behaviourRef.packagename}.{m.returnclass};
+import {behaviourRef.packagename}.{m.listInterface};
 import {behaviourRef.packagename}.{m.arrayListClass};
     #end
   #end

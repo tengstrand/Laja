@@ -4,6 +4,7 @@ import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.behaviour.domain.*;
 
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
+import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcherList;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcherArrayList;
 import java.util.*;
 

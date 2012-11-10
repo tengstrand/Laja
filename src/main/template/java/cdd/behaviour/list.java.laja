@@ -8,7 +8,7 @@ import java.util.List;
 public interface {listInterface} extends List<{entryClass}> {
   #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName)
     #setArgumentsAndParameters(m, false)
-    {m.arrayListClass} {m.methodName}List({parameters});
+    {m.listInterface} {m.methodName}List({parameters});
   #end
 }
 #end

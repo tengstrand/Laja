@@ -4,6 +4,7 @@ import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.behaviour.*;
 
 import net.sf.laja.example.file.behaviour.text.TextDirectory;
+import net.sf.laja.example.file.behaviour.text.TextDirectoryList;
 import net.sf.laja.example.file.behaviour.text.TextDirectoryArrayList;
 import java.util.*;
 
