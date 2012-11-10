@@ -18,7 +18,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
         this.list.addAll(Arrays.asList(list));
     }
 
-    public MonsterArrayList(List<Monster> list) {
+    public MonsterArrayList(Collection<Monster> list) {
         this.list = new ArrayList<Monster>();
         this.list.addAll(list);
     }

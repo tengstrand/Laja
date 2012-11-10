@@ -18,7 +18,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
         this.list.addAll(Arrays.asList(list));
     }
 
-    public HairArrayList(List<Hair> list) {
+    public HairArrayList(Collection<Hair> list) {
         this.list = new ArrayList<Hair>();
         this.list.addAll(list);
     }

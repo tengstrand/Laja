@@ -18,7 +18,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ForeheadArrayList(List<Forehead> list) {
+    public ForeheadArrayList(Collection<Forehead> list) {
         this.list = new ArrayList<Forehead>();
         this.list.addAll(list);
     }

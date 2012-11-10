@@ -18,7 +18,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
         this.list.addAll(Arrays.asList(list));
     }
 
-    public AmigaArrayList(List<Amiga> list) {
+    public AmigaArrayList(Collection<Amiga> list) {
         this.list = new ArrayList<Amiga>();
         this.list.addAll(list);
     }

@@ -18,7 +18,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
         this.list.addAll(Arrays.asList(list));
     }
 
-    public OwnerArrayList(List<Owner> list) {
+    public OwnerArrayList(Collection<Owner> list) {
         this.list = new ArrayList<Owner>();
         this.list.addAll(list);
     }

@@ -18,7 +18,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TextFileArrayList(List<TextFile> list) {
+    public TextFileArrayList(Collection<TextFile> list) {
         this.list = new ArrayList<TextFile>();
         this.list.addAll(list);
     }

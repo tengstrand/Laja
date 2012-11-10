@@ -18,7 +18,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
         this.list.addAll(Arrays.asList(list));
     }
 
-    public AtariSTArrayList(List<AtariST> list) {
+    public AtariSTArrayList(Collection<AtariST> list) {
         this.list = new ArrayList<AtariST>();
         this.list.addAll(list);
     }

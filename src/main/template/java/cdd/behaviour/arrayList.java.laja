@@ -24,7 +24,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
         this.list.addAll(Arrays.asList(list));
     }
 
-    public {arrayListClass}(List<{entryClass}> list) {
+    public {arrayListClass}(Collection<{entryClass}> list) {
         this.list = new ArrayList<{entryClass}>();
         this.list.addAll(list);
     }

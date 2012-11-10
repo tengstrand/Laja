@@ -18,7 +18,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
         this.list.addAll(Arrays.asList(list));
     }
 
-    public FootArrayList(List<Foot> list) {
+    public FootArrayList(Collection<Foot> list) {
         this.list = new ArrayList<Foot>();
         this.list.addAll(list);
     }

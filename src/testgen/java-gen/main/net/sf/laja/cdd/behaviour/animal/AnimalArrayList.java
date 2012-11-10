@@ -18,7 +18,7 @@ public class AnimalArrayList implements AnimalList, RandomAccess, Cloneable, jav
         this.list.addAll(Arrays.asList(list));
     }
 
-    public AnimalArrayList(List<Animal> list) {
+    public AnimalArrayList(Collection<Animal> list) {
         this.list = new ArrayList<Animal>();
         this.list.addAll(list);
     }

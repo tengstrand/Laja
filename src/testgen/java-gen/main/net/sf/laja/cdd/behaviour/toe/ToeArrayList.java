@@ -18,7 +18,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ToeArrayList(List<Toe> list) {
+    public ToeArrayList(Collection<Toe> list) {
         this.list = new ArrayList<Toe>();
         this.list.addAll(list);
     }

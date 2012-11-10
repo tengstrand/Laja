@@ -18,7 +18,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
         this.list.addAll(Arrays.asList(list));
     }
 
-    public PersonArrayList(List<Person> list) {
+    public PersonArrayList(Collection<Person> list) {
         this.list = new ArrayList<Person>();
         this.list.addAll(list);
     }

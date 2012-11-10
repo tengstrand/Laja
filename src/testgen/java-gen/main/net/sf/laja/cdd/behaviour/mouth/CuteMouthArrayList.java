@@ -18,7 +18,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         this.list.addAll(Arrays.asList(list));
     }
 
-    public CuteMouthArrayList(List<CuteMouth> list) {
+    public CuteMouthArrayList(Collection<CuteMouth> list) {
         this.list = new ArrayList<CuteMouth>();
         this.list.addAll(list);
     }

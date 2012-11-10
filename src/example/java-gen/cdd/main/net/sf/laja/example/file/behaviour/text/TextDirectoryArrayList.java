@@ -21,7 +21,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TextDirectoryArrayList(List<TextDirectory> list) {
+    public TextDirectoryArrayList(Collection<TextDirectory> list) {
         this.list = new ArrayList<TextDirectory>();
         this.list.addAll(list);
     }

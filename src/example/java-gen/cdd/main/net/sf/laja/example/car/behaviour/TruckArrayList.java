@@ -18,7 +18,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TruckArrayList(List<Truck> list) {
+    public TruckArrayList(Collection<Truck> list) {
         this.list = new ArrayList<Truck>();
         this.list.addAll(list);
     }

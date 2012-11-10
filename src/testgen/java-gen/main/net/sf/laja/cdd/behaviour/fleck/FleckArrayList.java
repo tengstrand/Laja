@@ -18,7 +18,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
         this.list.addAll(Arrays.asList(list));
     }
 
-    public FleckArrayList(List<Fleck> list) {
+    public FleckArrayList(Collection<Fleck> list) {
         this.list = new ArrayList<Fleck>();
         this.list.addAll(list);
     }

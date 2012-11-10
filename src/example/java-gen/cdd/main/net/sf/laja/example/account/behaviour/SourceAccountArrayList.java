@@ -18,7 +18,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
         this.list.addAll(Arrays.asList(list));
     }
 
-    public SourceAccountArrayList(List<SourceAccount> list) {
+    public SourceAccountArrayList(Collection<SourceAccount> list) {
         this.list = new ArrayList<SourceAccount>();
         this.list.addAll(list);
     }

@@ -18,7 +18,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
         this.list.addAll(Arrays.asList(list));
     }
 
-    public BrowArrayList(List<Brow> list) {
+    public BrowArrayList(Collection<Brow> list) {
         this.list = new ArrayList<Brow>();
         this.list.addAll(list);
     }

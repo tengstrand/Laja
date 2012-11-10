@@ -18,7 +18,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         this.list.addAll(Arrays.asList(list));
     }
 
-    public WritableFileArrayList(List<WritableFile> list) {
+    public WritableFileArrayList(Collection<WritableFile> list) {
         this.list = new ArrayList<WritableFile>();
         this.list.addAll(list);
     }

@@ -18,7 +18,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
         this.list.addAll(Arrays.asList(list));
     }
 
-    public FakeHairArrayList(List<FakeHair> list) {
+    public FakeHairArrayList(Collection<FakeHair> list) {
         this.list = new ArrayList<FakeHair>();
         this.list.addAll(list);
     }

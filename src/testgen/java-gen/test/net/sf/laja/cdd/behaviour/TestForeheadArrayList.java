@@ -18,7 +18,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TestForeheadArrayList(List<TestForehead> list) {
+    public TestForeheadArrayList(Collection<TestForehead> list) {
         this.list = new ArrayList<TestForehead>();
         this.list.addAll(list);
     }

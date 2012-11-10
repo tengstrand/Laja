@@ -18,7 +18,7 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         this.list.addAll(Arrays.asList(list));
     }
 
-    public EarArrayList(List<Ear> list) {
+    public EarArrayList(Collection<Ear> list) {
         this.list = new ArrayList<Ear>();
         this.list.addAll(list);
     }

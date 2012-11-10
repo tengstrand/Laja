@@ -22,7 +22,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TestMouthArrayList(List<TestMouth> list) {
+    public TestMouthArrayList(Collection<TestMouth> list) {
         this.list = new ArrayList<TestMouth>();
         this.list.addAll(list);
     }

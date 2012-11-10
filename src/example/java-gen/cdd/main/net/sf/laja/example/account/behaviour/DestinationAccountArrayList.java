@@ -18,7 +18,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
         this.list.addAll(Arrays.asList(list));
     }
 
-    public DestinationAccountArrayList(List<DestinationAccount> list) {
+    public DestinationAccountArrayList(Collection<DestinationAccount> list) {
         this.list = new ArrayList<DestinationAccount>();
         this.list.addAll(list);
     }

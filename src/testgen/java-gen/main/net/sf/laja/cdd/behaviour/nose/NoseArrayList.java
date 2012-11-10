@@ -18,7 +18,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         this.list.addAll(Arrays.asList(list));
     }
 
-    public NoseArrayList(List<Nose> list) {
+    public NoseArrayList(Collection<Nose> list) {
         this.list = new ArrayList<Nose>();
         this.list.addAll(list);
     }

@@ -22,7 +22,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
         this.list.addAll(Arrays.asList(list));
     }
 
-    public DirectoryArrayList(List<Directory> list) {
+    public DirectoryArrayList(Collection<Directory> list) {
         this.list = new ArrayList<Directory>();
         this.list.addAll(list);
     }

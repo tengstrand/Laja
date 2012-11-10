@@ -18,7 +18,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TerrestrialArrayList(List<Terrestrial> list) {
+    public TerrestrialArrayList(Collection<Terrestrial> list) {
         this.list = new ArrayList<Terrestrial>();
         this.list.addAll(list);
     }

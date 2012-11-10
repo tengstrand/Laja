@@ -18,7 +18,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
         this.list.addAll(Arrays.asList(list));
     }
 
-    public BodyMassIndexArrayList(List<BodyMassIndex> list) {
+    public BodyMassIndexArrayList(Collection<BodyMassIndex> list) {
         this.list = new ArrayList<BodyMassIndex>();
         this.list.addAll(list);
     }

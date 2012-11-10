@@ -18,7 +18,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
         this.list.addAll(Arrays.asList(list));
     }
 
-    public HeadArrayList(List<Head> list) {
+    public HeadArrayList(Collection<Head> list) {
         this.list = new ArrayList<Head>();
         this.list.addAll(list);
     }

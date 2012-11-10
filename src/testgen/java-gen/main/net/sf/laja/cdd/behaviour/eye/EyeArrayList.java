@@ -22,7 +22,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
         this.list.addAll(Arrays.asList(list));
     }
 
-    public EyeArrayList(List<Eye> list) {
+    public EyeArrayList(Collection<Eye> list) {
         this.list = new ArrayList<Eye>();
         this.list.addAll(list);
     }

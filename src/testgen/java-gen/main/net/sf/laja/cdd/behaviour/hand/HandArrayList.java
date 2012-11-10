@@ -18,7 +18,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
         this.list.addAll(Arrays.asList(list));
     }
 
-    public HandArrayList(List<Hand> list) {
+    public HandArrayList(Collection<Hand> list) {
         this.list = new ArrayList<Hand>();
         this.list.addAll(list);
     }

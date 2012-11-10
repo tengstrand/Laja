@@ -18,7 +18,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
         this.list.addAll(Arrays.asList(list));
     }
 
-    public AtariFalcon030ArrayList(List<AtariFalcon030> list) {
+    public AtariFalcon030ArrayList(Collection<AtariFalcon030> list) {
         this.list = new ArrayList<AtariFalcon030>();
         this.list.addAll(list);
     }

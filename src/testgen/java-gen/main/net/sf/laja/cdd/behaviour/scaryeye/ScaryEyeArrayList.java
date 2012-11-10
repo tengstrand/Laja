@@ -21,7 +21,7 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ScaryEyeArrayList(List<ScaryEye> list) {
+    public ScaryEyeArrayList(Collection<ScaryEye> list) {
         this.list = new ArrayList<ScaryEye>();
         this.list.addAll(list);
     }

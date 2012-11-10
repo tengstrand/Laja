@@ -18,7 +18,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
         this.list.addAll(Arrays.asList(list));
     }
 
-    public CustomerMatcherArrayList(List<CustomerMatcher> list) {
+    public CustomerMatcherArrayList(Collection<CustomerMatcher> list) {
         this.list = new ArrayList<CustomerMatcher>();
         this.list.addAll(list);
     }

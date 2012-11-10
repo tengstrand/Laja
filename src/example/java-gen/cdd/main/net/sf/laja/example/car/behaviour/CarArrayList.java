@@ -18,7 +18,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
         this.list.addAll(Arrays.asList(list));
     }
 
-    public CarArrayList(List<Car> list) {
+    public CarArrayList(Collection<Car> list) {
         this.list = new ArrayList<Car>();
         this.list.addAll(list);
     }

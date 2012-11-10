@@ -22,7 +22,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
         this.list.addAll(Arrays.asList(list));
     }
 
-    public CustomerArrayList(List<Customer> list) {
+    public CustomerArrayList(Collection<Customer> list) {
         this.list = new ArrayList<Customer>();
         this.list.addAll(list);
     }

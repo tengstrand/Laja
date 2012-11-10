@@ -18,7 +18,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
         this.list.addAll(Arrays.asList(list));
     }
 
-    public OtherTerrestrialArrayList(List<OtherTerrestrial> list) {
+    public OtherTerrestrialArrayList(Collection<OtherTerrestrial> list) {
         this.list = new ArrayList<OtherTerrestrial>();
         this.list.addAll(list);
     }

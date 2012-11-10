@@ -18,7 +18,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
         this.list.addAll(Arrays.asList(list));
     }
 
-    public LegArrayList(List<Leg> list) {
+    public LegArrayList(Collection<Leg> list) {
         this.list = new ArrayList<Leg>();
         this.list.addAll(list);
     }

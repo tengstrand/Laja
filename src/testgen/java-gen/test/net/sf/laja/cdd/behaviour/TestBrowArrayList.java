@@ -18,7 +18,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
         this.list.addAll(Arrays.asList(list));
     }
 
-    public TestBrowArrayList(List<TestBrow> list) {
+    public TestBrowArrayList(Collection<TestBrow> list) {
         this.list = new ArrayList<TestBrow>();
         this.list.addAll(list);
     }

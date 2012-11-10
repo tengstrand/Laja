@@ -22,7 +22,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
         this.list.addAll(Arrays.asList(list));
     }
 
-    public ClosedFileArrayList(List<ClosedFile> list) {
+    public ClosedFileArrayList(Collection<ClosedFile> list) {
         this.list = new ArrayList<ClosedFile>();
         this.list.addAll(list);
     }

@@ -18,7 +18,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
         this.list.addAll(Arrays.asList(list));
     }
 
-    public VehicleSizeArrayList(List<VehicleSize> list) {
+    public VehicleSizeArrayList(Collection<VehicleSize> list) {
         this.list = new ArrayList<VehicleSize>();
         this.list.addAll(list);
     }

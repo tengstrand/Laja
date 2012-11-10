@@ -18,7 +18,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
         this.list.addAll(Arrays.asList(list));
     }
 
-    public AddressArrayList(List<Address> list) {
+    public AddressArrayList(Collection<Address> list) {
         this.list = new ArrayList<Address>();
         this.list.addAll(list);
     }

@@ -18,7 +18,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
         this.list.addAll(Arrays.asList(list));
     }
 
-    public BusArrayList(List<Bus> list) {
+    public BusArrayList(Collection<Bus> list) {
         this.list = new ArrayList<Bus>();
         this.list.addAll(list);
     }
