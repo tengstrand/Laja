@@ -3,13 +3,13 @@
 To consider ''context'' as a first-class citizens allow us to reason about software design in a more concise way.
 
 
-Context is divided into two parts where the first part ''context area'' has to do with the task to be performed and its location in the system:
+Context is divided into two groups, ''dynamic'' and ''static'' where the latter describes a task and its location in the system:
 
 
-[[File:CDD-context-area.png|400px]]
+[[File:CDD-static-context.png|400px]]
 
 
-The context area is actively selected or [[Context switching|switched]] by the developer when the code is written (''compile time'').
+The static context is actively selected or [[Context switching|switched]] by the developer when the code is written (''compile time'').
 
 If we look at the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/account account] example, it has two
 different account contexts, ''source'' and ''destination'':
@@ -19,14 +19,21 @@ DestinationAccount destinationAccount = Account.balance(100).asDestinationAccoun
 </source>
 
 
-The second type of context is optional and is something that can vary at ''runtime'' within a ''context area'' depending on a ''context variable''
-like ''configuration'' in [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/computer this] example (but hard coded here):
+The second type of context is ''dynamic'' which is optional and can vary ''within'' a static context at ''runtime'':
+
+
+[[File:CDD-dynamic-context.png|170px]]
+
+
+An example is the ''configuration'' variable in the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/computer computer example],
+which is hardcoded to ''STANDARD'' and ''FAST'' here, but could have been sent in as a variable:
+
 <source>
 Amiga standardAmiga = AmigaFactory.owner("Joakim").asAmiga(Configuration.STANDARD);
 Amiga fastAmiga = AmigaFactory.owner("Riku").asAmiga(Configuration.FAST);
 </source>
 
-When the configuration is set to ''STANDARD'' we will get a an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500],
+When the configuration is set to ''STANDARD'' we will get an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500],
 but when set to ''FAST'' we will get an [http://en.wikipedia.org/wiki/Amiga_4000 Amiga 4000].
 
 
@@ -34,10 +41,6 @@ The selected context is based on a ''context variable'' such as:
 * Current user role
 * Current time
 * Configurations, e.g. values from file or database
-
-
-[[File:CDD-context-runtime.png|170px]]
-
 
 Different aspects of ''context'' will gradually be covered by the rest of this documentation.
 

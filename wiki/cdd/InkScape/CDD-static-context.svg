@@ -67,7 +67,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
+     inkscape:zoom="1.4142136"
      inkscape:cx="188.50894"
      inkscape:cy="728.74879"
      inkscape:document-units="px"
@@ -242,6 +242,6 @@
          y="73.267326"
          x="284.54993"
          sodipodi:role="line"
-         id="tspan3844">Context area</tspan></text>
+         id="tspan3844">Static context</tspan></text>
   </g>
 </svg>

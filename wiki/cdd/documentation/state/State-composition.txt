@@ -14,7 +14,7 @@ public class AddressStateTemplate {
 }
 </source>
 
-...regenerate and add it to ''PersonState''. Note that the attribute ''address'' should not be named ''address'' and not ''addressState'':
+...regenerate and add it to ''PersonState''. Note that the attribute ''address'' should be named ''address'' and not ''addressState'':
 <source>
 package com.myproject.state;
 
