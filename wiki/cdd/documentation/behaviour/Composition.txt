@@ -15,7 +15,7 @@ with all its sub behaviours, can be specialized for different contexts:
 [[File:CDD-object-composition.png|400px]]
 
 
-Let's start by composing the state object of person with all its parts:
+Let's start by composing a person state object with all its parts:
 <source>
 package com.myproject.state;
 
@@ -23,7 +23,8 @@ public class PersonStateTemplate {
     String givenName;
     String surname;
     SizeState $size;
-    AddressState address;
+    AddressState address; // (optional)
+    PersonStateList children; // (optional)
 }
 </source>
 
@@ -101,21 +102,25 @@ public class Size extends SizeFactory {
 
 ...let's se how the code behaves so far by executing:
 <source>
-Person person = Person.givenName("Ingmar").surname("Bergman")
-        .heightCm(179).weightKg(75).address(
-        Address.streetName("First street").streetNumber(2).zipcode(123).city("Stockholm")).asPerson();
+Person person = Person.givenName("Anders").surname("Andersson").heightCm(179).weightKg(75)
+        .withAddress(Address.streetName("First street").streetNumber(2).zipcode(123).city("Stockholm"))
+        .withChildren(
+                Person.givenName("Carl").surname("Andersson").heightCm(110).weightKg(20),
+                Person.givenName("Eric").surname("Andersson").heightCm(130).weightKg(30)).asPerson();
 
 System.out.println(person);
 </source>
 
-...which gives the output (the director Ingmar Bergman lived on Fårö by the way):
+...output:
 <source>
-Person{givenName='Ingmar', surname='Bergman', heightCm=179, weightKg=75, address={streetName='First street', streetNumber=2, zipcode=123, city='Stockholm'}}
+Person{givenName='Anders', surname='Andersson', heightCm=179, weightKg=75,
+  address={streetName='First street', streetNumber=2, zipcode=123, city='Stockholm'},
+  children=[{givenName='Carl', surname='Andersson', heightCm=110, weightKg=20, address=null, children=[]},
+            {givenName='Eric', surname='Andersson', heightCm=130, weightKg=30, address=null, children=[]}]}
 </source>
 
-We can see that a person contains the five attributes ''givenName'', ''surname'', ''lengthCm'', ''weightKg'' and ''address'' as defined in ''PersonStateTemplate''.
 The size was marked as ''$size'' and therefore [[State expansion|expanded]] into the person state.
-The address has the attributes ''streetName'', ''streetNumber'', ''zipcode'' and ''city'' as defined in ''AddressStateTemplate''.
+The attributes ''address'' and ''children'' was marked as ''optional'' and therefore populated by builder with-methods.
 
 
 Let's add some behaviour to address:
@@ -141,7 +146,7 @@ public class Address extends AddressFactory {
 }
 </source>
 
-Rename ''Size'' to ''BMI'' and replace it with this content (and regenerate):
+Rename ''Size'' to ''BMI'' and replace it with this content (and regenerate to generate ''BMIFactory''):
 <source>
 package com.myproject.behaviour;
 
@@ -150,13 +155,13 @@ import com.myproject.state.SizeState;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class BMI extends SizeFactory {
+public class BMI extends BMIFactory {
     public BMI(SizeState state) {
         super(state);
     }
 
     // (factory)
-    public BMI asBmi() {
+    public BMI asBMI() {
         return new BMI(state);
     }
 
@@ -182,14 +187,19 @@ package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Person extends PersonFactory {
     private final BMI bmi;
     private final Address address;
+    private final PersonList children;
 
     public Person(PersonState state) {
         super(state);
         bmi = new BMI(state);
         address = new Address(state.getAddress());
+        children = new PersonArrayList(state.getChildren());
     }
 
     // (factory)
@@ -197,7 +207,7 @@ public class Person extends PersonFactory {
         return new Person(state);
     }
 
-    public String getName() {
+    public String name() {
         return state.getGivenName() + " " + state.getSurname();
     }
 
@@ -212,6 +222,14 @@ public class Person extends PersonFactory {
     public boolean hasNormalWeight() {
         return bmi.hasNormalWeight();
     }
+
+    public List<String> childrenNames() {
+        List<String> names = new ArrayList<String>();
+        for (Person child : children) {
+            names.add(child.name());
+        }
+        return names;
+    }
 }
 </source>
 
@@ -222,14 +240,17 @@ package com.myproject.behaviour;
 
 public class Main {
     public static void main(String[] args) {
-        Person person = Person.givenName("Ingmar").surname("Bergman")
-                .heightCm(179).weightKg(75).address(
-                Address.streetName("First street").streetNumber(2).zipcode(123).city("Stockholm")).asPerson();
+        Person person = Person.givenName("Anders").surname("Andersson").heightCm(179).weightKg(75)
+                .withAddress(Address.streetName("First street").streetNumber(2).zipcode(123).city("Stockholm"))
+                .withChildren(
+                        Person.givenName("Carl").surname("Andersson").heightCm(110).weightKg(20),
+                        Person.givenName("Eric").surname("Andersson").heightCm(130).weightKg(30)).asPerson();
 
-        System.out.println("Name: " + person.getName());
+        System.out.println("Name: " + person.name());
         System.out.println("Body Mass Index: " + person.calculateBmi());
         System.out.println("Has normal weight: " + person.hasNormalWeight());
         System.out.println("Registered in Ullared: " + person.isRegisteredInUllared());
+        System.out.println("Children: " + person.childrenNames());
     }
 }
 </source>
@@ -237,61 +258,12 @@ public class Main {
 ...we get the output:
 
 <source>
-Name: Ingmar Bergman
+Name: Anders Andersson
 Body Mass Index: 23.4
 Has normal weight: true
 Registered in Ullared: false
+Children: [Carl Andersson, Eric Andersson]
 </source>
 
 
-Let's say we now are asked to implement functionality that export persons to a file in a semicolon separated text format.
-
-This is a ''new context'' so let's create the class ''TextPerson'' (we don't want to mix responsibilities by adding this functionality to ''Person''):
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.AddressState;
-import com.myproject.state.PersonState;
-
-public class TextPerson extends PersonFactory {
-    public TextPerson(PersonState state) {
-        super(state);
-    }
-
-    public String getText() {
-        AddressState address = state.getAddress();
-
-        return state.getGivenName() + ";"
-                + state.getSurname() + ";"
-                + address.getStreetName() + " " + address.getStreetNumber() + ";"
-                + address.getZipcode() + ";"
-                + address.getCity();
-    }
-}
-</source>
-
-...add the switcher method ''asTextPerson'' to ''Person'':
-<source>
-...
-public TextPerson asTextPerson() {
-    return new TextPerson(state);
-}
-...
-</source>
-
-...when executing the statement:
-
-<source>
-System.out.println(person.asTextPerson().getText());
-</source>
-
-...we get:
-
-<source>
-Ingmar;Bergman;First street 2;123;Stockholm
-</source>
-
-So long, so good, but we are not finished with the export function yet
-and it would be great if we could operate on more than one person, which leads us to the next topic ''collections''.
-
-[[Populate substate|< Back]]
+[[Collections|< Back]]
