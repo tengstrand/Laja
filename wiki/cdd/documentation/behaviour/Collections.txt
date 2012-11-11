@@ -38,7 +38,7 @@ public class Person extends PersonFactory {
 }
 </source>
 
-...and a list interface in directory ''java-gen'' was also generated:
+...and a list interface in directory ''java-gen'' was also created:
 
 <source>
 package net.sf.laja.example.person.behaviour;
@@ -75,6 +75,7 @@ PersonArrayList{[Person{givenName='Anders', surname='Andersson'}, Person{givenNa
 </source>
 
 === Switching context ===
+__NOTOC__
 
 Let's say we need to implement functionality that export persons to a file in a semicolon separated text format.
 
@@ -293,8 +294,30 @@ Start exporting
 End
 </source>
 
-Collections in CDD (only represented by lists at the moment) is rather dumb. Behaviour is added by wrapping them like we did with the ''Exporter''
-which leads us into the next exciting subject, composition!
+=== Caution ===
+
+CDD is still in an alpha version and some functionality is still missing and more work needs to be done especially with the collections.
+
+
+If creating a list by sending in a ''state list'' in the constructor like we did in the ''Exporter'':
+
+<source>
+persons = new TextPersonArrayList(state.getPersons());
+</source>
+
+...CDD will ensure that the behaviour list ''persons'' and the underlying ''state list'' (state.persons) is always in sync if mutating ''persons''.
+This can be a problem if you have more than one behaviour representation of "person list".
+If you expose the internal list ''persons'' by adding a getter and the list is used outside the aggregate via that getter
+and context switched into another list that is sorted (or mutated in some way),
+the ''state list'' will also be sorted to keep them in sync but leaves ''persons'' and the ''state list'' out of sync.
+There is no functionality at the moment that automatically synchronizes behaviour lists when they fall out of sync with the state list.
+
+The other three ways a list can be created does not have this problem since they are not linked to a ''state list''.
+
+=== Summary ===
+
+Collections in CDD is rather dumb.
+The way we add behaviour to them is by creating a wrapper, like we did with the ''Exporter''. This leads us into the next exciting subject, composition!
 
 
 [[Populate substate|< Back]]
