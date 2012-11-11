@@ -1,0 +1,302 @@
+One of the main goals of CDD is to facilitate work in different contexts, and collections are no exception from this goal.
+The targeting language is Java and because the whole Java echo system is build around mutable state using
+[http://en.wikipedia.org/wiki/Mutator_method getters and setters] and mutable collections, the decision was taken to let mutable state be the default.
+Only lists are supported in this alpha version but support for sets and maps along with mechanisms preventing state
+to be simultaneously modified from different contexts will be added in a later version.
+
+
+When a new behaviour class is created, like ''Person'', a corresponding behaviour list interface ''PersonList'' and a concrete class ''PersonArrayList''
+are created the next time you generate.
+
+Let's add a state template for "person" (of modify the existing) to demonstrate this:
+
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String givenName;
+    String surname;
+}
+</source>
+
+...regenerate and the class ''Person'' in source directory ''java'' should now look like this (if it was generated for the first time):
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+}
+</source>
+
+...and a list interface in directory ''java-gen'' was also generated:
+
+<source>
+package net.sf.laja.example.person.behaviour;
+
+import java.util.List;
+
+public interface PersonList extends List<Person> {
+}
+</source>
+
+...and a list class in directory ''java-gen'':
+
+<source>
+public class PersonArrayList implements PersonList, RandomAccess, Cloneable, java.io.Serializable {
+    protected PersonStateList stateList;
+    protected final List<Person> list;
+
+    ...a lot of code goes here...
+}
+</source>
+
+An instance of ''PersonArrayList'' can now be created in this way:
+<source>
+PersonList persons = Person.createList(
+        Person.givenName("Anders").surname("Andersson"),
+        Person.givenName("Carl").surname("Carlsson")).asPersonList();
+
+System.out.println(persons);
+</source>
+
+...output:
+<source>
+PersonArrayList{[Person{givenName='Anders', surname='Andersson'}, Person{givenName='Carl', surname='Carlsson'}]}
+</source>
+
+=== Switching context ===
+
+Let's say we need to implement functionality that export persons to a file in a semicolon separated text format.
+
+This is a ''new context'' so let's create the class ''TextPerson''
+(we don't want to mix responsibilities by adding this functionality to ''Person''):
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class TextPerson extends PersonFactory {
+    public TextPerson(PersonState state) {
+        super(state);
+    }
+
+    public String getText() {
+        return state.getGivenName() + ";" + state.getSurname() + ";";
+    }
+}
+</source>
+
+...add the switcher method ''asTextPerson'' to ''Person'' and regenerate to create the corresponding list classes ''TextPersonList'' and ''TextPersonArrayList'':
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    // (factory)
+    public TextPerson asTextPerson() {
+        return new TextPerson(state);
+    }
+}
+</source>
+
+...create the class ''PersonExporter'':
+<source>
+package com.myproject.behaviour;
+
+public class PersonExporter {
+
+    public void export(TextPersonList persons) {
+        System.out.println("Start exporting");
+
+        for (TextPerson person : persons) {
+            System.out.println("  Exported: " + person);
+        }
+        System.out.println("End");
+    }
+}
+</source>
+
+...verify the exporter:
+<source>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        PersonExporter exporter = new PersonExporter();
+
+        PersonList persons = Person.createList(
+                Person.givenName("Anders").surname("Andersson"),
+                Person.givenName("Carl").surname("Carlsson")
+                ).asPersonList();
+
+        exporter.export(persons.asTextPersonList());
+    }
+}
+</source>
+
+...output:
+<source>
+Start exporting
+  Exported: TextPerson{givenName='Anders', surname='Andersson'}
+  Exported: TextPerson{givenName='Carl', surname='Carlsson'}
+End
+</source>
+
+The code seemed to work as expected!
+
+
+A convenient thing with the behaviour lists is that they contain all the corresponding switcher methods from the value/entity class.
+
+If we have a switcher method in ''Person'':
+<source>
+    // (factory)
+    public TextPerson asTextPerson() {
+        return new TextPerson(state);
+    }
+</source>
+
+...we also get a corresponding switcher method in ''PersonList'':
+<source>
+public interface PersonList extends List<Person> {
+    TextPersonList asTextPersonList();
+}
+</source>
+
+This allows us to ''switch context'' easily like we did in the exporter:
+<source>
+persons.asTextPersonList()
+</source>
+
+...which creates a list of ''TextPerson'' elements out of the list of ''Person'' elements.
+
+=== Creating lists ===
+
+We have already seen that a list can be created like this:
+<source>
+PersonList persons = Person.createList(
+        Person.givenName("Anders").surname("Andersson"),
+        Person.givenName("Carl").surname("Carlsson")).asPersonList();
+</source>
+
+...or like this, if an empty list:
+<source>
+PersonList persons = Person.createList();
+</source>
+
+A list can aso be created by instantiating ''PersonArrayList'' via one of its constructors:
+
+<source>
+public PersonArrayList(Person... list) { ... }
+public PersonArrayList(Collection<Person> list) { ... }
+public PersonArrayList(PersonStateList stateList) { ... }
+</source>
+
+...which allows us to create a list like this:
+<source>
+Person person = Person.givenName("Carl").surname("Carlsson").asPerson();
+PersonList persons = new PersonArrayList(person);
+</source>
+
+...or like this:
+<source>
+Person person = Person.givenName("Carl").surname("Carlsson").asPerson();
+
+Set<Person> set = new HashSet<Person>();
+set.add(person);
+
+PersonList persons = new PersonArrayList(set);
+</source>
+
+The last constructor:
+<source>
+public PersonArrayList(PersonStateList stateList) { ... }
+</source>
+
+...can only be called if we have access to the state and that should only be the case if we are inside a behaviour object!
+The state should never be exposed outside behaviour representations in CDD because that would break the encapsulation!
+Let's see how the exporter could look like if we use composition, start by creating a state template:
+
+<source>
+package com.myproject.state;
+
+public class ExporterStateTemplate {
+    PersonStateList persons;
+}
+</source>
+
+...regenerate and modify the newly created ''Exporter'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.ExporterState;
+
+public class Exporter extends ExporterFactory {
+    private final TextPersonList persons;
+
+    public Exporter(ExporterState state) {
+        super(state);
+        persons = new TextPersonArrayList(state.getPersons());
+    }
+
+    // (factory)
+    public Exporter asExporter() {
+        return new Exporter(state);
+    }
+
+    public void export() {
+        System.out.println("Start exporting");
+
+        for (TextPerson person : persons) {
+            System.out.println("  Exported: " + person);
+        }
+        System.out.println("End");
+    }
+}
+</source>
+
+...if executing:
+
+<source>
+Exporter.persons(
+        Person.givenName("Anders").surname("Andersson"),
+        Person.givenName("Carl").surname("Carlsson")
+).asExporter().export();
+</source>
+
+...we get the output:
+
+<source>
+Start exporting
+  Exported: TextPerson{givenName='Anders', surname='Andersson'}
+  Exported: TextPerson{givenName='Carl', surname='Carlsson'}
+End
+</source>
+
+Collections in CDD (only represented by lists at the moment) is rather dumb. Behaviour is added by wrapping them like we did with the ''Exporter''
+which leads us into the next exciting subject, composition!
+
+
+[[Populate substate|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Composition|Next >]]
