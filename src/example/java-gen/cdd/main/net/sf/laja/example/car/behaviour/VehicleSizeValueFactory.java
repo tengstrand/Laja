@@ -17,6 +17,7 @@ public class VehicleSizeValueFactory extends VehicleSizeValue {
         super(state, stateBuilder);
     }
 
+  // 1
     public static VehicleSizeEncapsulator lengthInCentimeters(int lengthInCentimeters) {
         return new VehicleSizeCreator().new LengthInCentimeters_().lengthInCentimeters(lengthInCentimeters);
     }

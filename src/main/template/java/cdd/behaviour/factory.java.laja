@@ -33,11 +33,23 @@ public class {factoryClass} extends {parentClass} {
     }
   #else
     #if (chainedReturnClass == null)
+      #if (firstChainedAttribute.isStateList)
+    public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator}... {firstChainedAttribute.variable}) {
+      #else if (firstChainedAttribute.isState)
+    public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator} {firstChainedAttribute.variable}) {
+      #else
     public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.type} {firstChainedAttribute.variable}) {
+      #end
         return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
     }
     #else
+      #if (firstChainedAttribute.isStateList)
+    public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator}... {firstChainedAttribute.variable}) {
+      #else if (firstChainedAttribute.isState)
+    public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator} {firstChainedAttribute.variable}) {
+      #else
     public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.type} {firstChainedAttribute.variable}) {
+      #end
         return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
     }
     #end

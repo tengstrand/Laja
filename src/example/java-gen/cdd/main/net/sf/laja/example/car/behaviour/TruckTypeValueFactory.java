@@ -17,6 +17,8 @@ public class TruckTypeValueFactory extends TruckTypeValue {
         super(state, stateBuilder);
     }
 
+// 2
+      // 2.3
     public static TruckTypeCreator.TruckName_ numberOfWheels(int numberOfWheels) {
         return new TruckTypeCreator().new NumberOfWheels_().numberOfWheels(numberOfWheels);
     }

@@ -159,9 +159,8 @@ Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', s
 </source>
 
 Voilà! The zipcode was populated and we now also have the class member ''address'' that can be used by ''Person''.
-That brings us naturally to the next exciting area ''composition''!
 
 
 [[Populate state|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Composition|Next >]]
+[[Collections|Next >]]
