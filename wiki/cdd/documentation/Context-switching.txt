@@ -39,7 +39,7 @@ public class Person extends PersonFactory {
 The context switching technique is and effective way to reduce the amount of code needed to integrate different parts of the system.
 The switching is performed without affecting the state format or breaking the [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation].
 It encourages putting ''behaviour'' inside objects close to its data so they can perform tasks themselves, which is good and follows the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
-In addition to a facilitated integration CDD also let us create objects that focus on one task at a time which allows us to be faithful to the [http://en.wikipedia.org/wiki/Single_responsibility_principle Single responsibility] principle.
+In addition to a facilitated integration CDD also let us create objects that focus on one task at a time, following the [http://en.wikipedia.org/wiki/Single_responsibility_principle Single responsibility] principle.
 
 
 Context switching can both mean switching task ''within'' an architectural layer as well as moving ''between'' architectural layers:
@@ -48,7 +48,7 @@ Context switching can both mean switching task ''within'' an architectural layer
 [[File:CDD-context-switching.png|400px]]
 
 
-The example above illustrates how different tasks can be performed by using context switching.
+The above example illustrates how different tasks can be performed by using context switching.
 Imagine that we start by retrieving an instance from a repository (Context 1), present it in the GUI (Context 2),
 perform some editing in the GUI (Context 3) followed by some domain operations (Context 4) and finishing by storing the state in the database (Context 5).
 
@@ -56,11 +56,11 @@ perform some editing in the GUI (Context 3) followed by some domain operations (
 Context switching allows our objects to perform well defined tasks in different parts of the system almost friction free.
 We don't need to convert between different state representations when crossing context borders because the state format never change.
 Conversion between state representations are a common source of errors that is almost eliminated in CDD.
-Support for letting objects cross physical context borders, by using a standardized text transport format, is not supported in this alpha version but may be added in a later version.
+Support for letting objects cross physical context borders, by using a standardized text transport format, is not supported in this alpha version but may be added in the future.
 
 === Layers and tier of deployment ===
-It's often a good thing to separate different responsibilities into different logical layers in the codebase (packages/modules) so that modularity and cohesion can be increased.
-Don't confuse architectural layers with tiers of deployment, which is well described in [http://gojko.net/2010/06/11/udi-dahan-the-biggest-mistakes-teams-make-when-applying-ddd this] blog post by Udi Dahan.
+It's often a good thing to separate different responsibilities into different logical layers in the codebase (packages/modules) to increase modularity and cohesion.
+Don't confuse architectural layers with tiers of deployment (well described [http://gojko.net/2010/06/11/udi-dahan-the-biggest-mistakes-teams-make-when-applying-ddd here]).
 Assume that you have control over all source code in your layered system.
 If the layers are physically separated (deployed to different physical locations) and a layer (for example the ''GUI'') need access to another layer (for example the ''Domain'')
 then the ''domain code'' should also be deployed to the ''GUI'' tier so that we don't need to duplicate our domain rules.
@@ -68,8 +68,8 @@ then the ''domain code'' should also be deployed to the ''GUI'' tier so that we 
 
 But is this not an example of mixing of responsibility? No, we only ''use'' the "core domain" business rules from the GUI layer, we don't add or duplicate the code.
 It's very similar to calling a service with the difference that instead of sending the state to a service and letting the service operate on it,
-we ''encapsulate'' the state so that we can work in a more object oriented way. For example ''person.save()'' instead of ''service.save(person)''.
-The latter breaks encapsulation (if not using techniques like reflection) which may lead to a situation where business rules are scattered around the system instead of gathered into one place.
+we ''encapsulate'' the state so that we can work in a more object oriented way. For example ''person.export()'' instead of ''service.export(person)''.
+The latter breaks encapsulation which may lead to a situation where business rules are scattered around the system instead of gathered into one place.
 
 The rule of thumb is that different parts of the codebase should be maintained in ''one place'' but is allowed to be deployed and used from ''several places''.
 This helps to keep the code clean and [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY].

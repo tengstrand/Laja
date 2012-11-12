@@ -25,7 +25,7 @@ The second type of context is ''dynamic'' which is optional and can vary ''withi
 [[File:CDD-dynamic-context.png|170px]]
 
 
-An example is the ''configuration'' variable in the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/computer computer example],
+An example is the ''configuration'' variable in the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/computer computer example]
 which is hardcoded to ''STANDARD'' and ''FAST'' here, but could have been sent in as a variable:
 
 <source>
@@ -33,14 +33,14 @@ Amiga standardAmiga = AmigaFactory.owner("Joakim").asAmiga(Configuration.STANDAR
 Amiga fastAmiga = AmigaFactory.owner("Riku").asAmiga(Configuration.FAST);
 </source>
 
-When the configuration is set to ''STANDARD'' we will get an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500],
+When the configuration is set to ''STANDARD'' we will get an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500]
 but when set to ''FAST'' we will get an [http://en.wikipedia.org/wiki/Amiga_4000 Amiga 4000].
 
 
 The selected context is based on a ''context variable'' such as:
 * Current user role
 * Current time
-* Configurations, e.g. values from file or database
+* Different configurations from e.g. file or database
 
 Different aspects of ''context'' will gradually be covered by the rest of this documentation.
 
