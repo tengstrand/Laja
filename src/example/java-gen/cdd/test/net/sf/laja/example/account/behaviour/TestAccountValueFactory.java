@@ -17,7 +17,6 @@ public class TestAccountValueFactory extends AccountValue {
         super(state, stateBuilder);
     }
 
-  // 1
     public static TestAccountEncapsulator balance(double balance) {
         return new TestAccountCreator().new Balance_().balance(balance);
     }

@@ -16,7 +16,6 @@ public class AmigaValueFactory extends ComputerValue {
         super(state, stateBuilder);
     }
 
-  // 1
     public static AmigaEncapsulator owner(String owner) {
         return new AmigaCreator().new Owner_().owner(owner);
     }

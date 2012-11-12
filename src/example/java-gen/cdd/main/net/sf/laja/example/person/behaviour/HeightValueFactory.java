@@ -17,7 +17,6 @@ public class HeightValueFactory extends HeightValue {
         super(state, stateBuilder);
     }
 
-  // 1
     public static HeightEncapsulator heightInCentimeters(int heightInCentimeters) {
         return new HeightCreator().new HeightInCentimeters_().heightInCentimeters(heightInCentimeters);
     }

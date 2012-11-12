@@ -12,16 +12,20 @@ import org.apache.commons.lang.Validate;
 public class BehaviourCreator {
     private DirectoryConverter directoryConverter = new DirectoryConverter();
 
-    public Behaviour asBehaviour(StateTemplate template) {
+    public Behaviour asBehaviour(StateTemplate template, boolean createInterface) {
         String packagename = asBehaviourPackage(template.rootStatePackage, template.packagename, template.rootBehaviourPackage);
 
+        String classname = template.classname;
+        if (createInterface) {
+            classname += "Impl";
+        }
         Behaviour behaviour = new Behaviour();
         behaviour.exists = false;
         behaviour.packagename = packagename;
         behaviour.sourceDir = directoryConverter.asDirectoryPath(template.rootSrcDir, packagename);
         behaviour.outputDir = directoryConverter.asDirectoryPath(template.rootOutDir, packagename);
-        behaviour.srcFilename = behaviour.sourceDir + "/" + template.classname + ".java";
-        behaviour.setClassname(template.classname);
+        behaviour.srcFilename = behaviour.sourceDir + "/" + classname + ".java";
+        behaviour.setClassname(classname);
         behaviour.setStateClass(template.classname + "State");
         behaviour.setParameters(new Parameters());
 
@@ -30,7 +34,7 @@ public class BehaviourCreator {
         asMethod.setMethodName("as" + template.classname);
         asMethod.setReturnclass(template.classname);
         Statement statement = new Statement();
-        statement.setInnerStatement("return new " + behaviour.classname + "(state);\n    ");
+        statement.setInnerStatement("return new " + classname + "(state);\n    ");
         asMethod.setStatement(statement);
         asMethod.setParameters(new Parameters());
         behaviour.addAsMethod(asMethod);

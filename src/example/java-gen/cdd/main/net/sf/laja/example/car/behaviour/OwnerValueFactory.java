@@ -17,8 +17,6 @@ public class OwnerValueFactory extends OwnerValue {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static OwnerCreator.Name_ ssn(long ssn) {
         return new OwnerCreator().new Ssn_().ssn(ssn);
     }

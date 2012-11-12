@@ -9,13 +9,21 @@ package {behaviour.packagename};
 
   #imports()
 
-public class {behaviourClass} extends {factoryClass} {
+  #set (implements = "")
+  #set (comment = "")
+  #set (returnclass = behaviourClass)
+  #if (behaviour.interfacename != null)
+    #set (implements = " implements {behaviour.interfacename}")
+    #set (returnclass = behaviour.interfacename)
+// TODO: Rename {behaviourClass} to something more descriptive!
+  #end
+public class {behaviourClass} extends {factoryClass}{implements} {
     public {behaviourClass}({stateClass} state) {
         super(state);
     }
 
     // (factory)
-    public {behaviourClass} as{behaviourClass}() {
+    public {returnclass} as{returnclass}() {
         return new {behaviourClass}(state);
     }
 }

@@ -58,6 +58,10 @@
 
     #$.putAll(parameterMap)
 
+    #if (interface == null)
+      #set(interface = false)
+    #end
+
     #if (parameterMap.srcDir == null)
       #error("Missing parameter: 'srcDir'")
     #end
@@ -262,6 +266,7 @@
       #createDirectoryPath(behaviour.outputDir)
     #end
     #import "{..}/../java/cdd/behaviour/shared-behaviour.java.laja"
+    #import "{..}/../java/cdd/behaviour/interface.java.laja"
     #import "{..}/../java/cdd/behaviour/behaviour.java.laja"
     #import "{..}/../java/cdd/behaviour/factory.java.laja"
     #import "{..}/../java/cdd/behaviour/builder.java.laja"
@@ -281,7 +286,7 @@
     #end
     #if (!found)
       ## Create missing behaviour!
-      #set (behaviour = behaviourCreator.asBehaviour(template))
+      #set (behaviour = behaviourCreator.asBehaviour(template, interface))
       #if (!directoryExists(behaviour.sourceDir))
         #createDirectoryPath(behaviour.sourceDir)
       #end

@@ -17,8 +17,6 @@ public class BusValueFactory extends BusValue {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static BusCreator.LengthInCentimeters_ name(String name) {
         return new BusCreator().new Name_().name(name);
     }

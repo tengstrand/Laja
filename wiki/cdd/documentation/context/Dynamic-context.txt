@@ -1,0 +1,95 @@
+Dynamic context is something that can vary at runtime because it's not known at compile time.
+Pretend we want to restrict access to phone numbers so that only users with the ADMIN role is allowed to see them.
+Let's illustrate this with a code example (the way this is done is quite cumbersome but will be improved in the next version).
+
+
+Start by creating 'UserRole' which is the ''context variable'' in this example:
+
+<source>
+package com.myproject.behaviour;
+
+public enum UserRole {
+    RESTRICTED, ADMIN
+}
+</source>
+
+...create and regenerate:
+
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    String name;
+    String phoneNumber;
+}
+</source>
+
+...rename the newly created class ''Person'' to ''PersonAdmin'', regenerate and modify it:
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class PersonAdmin extends PersonAdminFactory {
+    public PersonAdmin(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public PersonAdmin asPerson() {
+        return new PersonAdmin(state);
+    }
+
+    public String phoneNumber() {
+        return state.getPhoneNumber();
+    }
+}
+</source>
+
+...create the interface ''Person'':
+
+<source>
+package com.myproject.behaviour;
+
+public interface Person {
+}
+</source>
+
+...let ''PersonAdmin'' implement ''Person'':
+
+<source>
+...
+public class PersonAdmin extends PersonAdminFactory implements Person {
+...
+</source>
+
+...add the class ''PersonRestricted'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class PersonRestricted extends PersonAdminFactory implements Person {
+    public PersonRestricted(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public PersonRestricted asPersonRestricted() {
+        return new PersonRestricted(state);
+    }
+
+    public String phoneNumber() {
+        return "???";
+    }
+
+    @Override
+    public String toString() {
+        return "{name=" + (state.getName() == null ? null : '\'' + state.getName() + '\'' ) +
+                ", phoneNumber=???}";
+    }
+}
+</source>
+

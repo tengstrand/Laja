@@ -29,7 +29,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
 
         for (ComputerState state : stateList) {
             ComputerStateBuilder builder = new ComputerStateBuilderImpl(state);
-            AtariST entry = (AtariST) builder.as(new AtariFactory.AtariSTFactory_(builder));
+            AtariST entry = (AtariST) builder.as(new AtariSTFactory.AtariSTFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

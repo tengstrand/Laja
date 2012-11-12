@@ -29,7 +29,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         for (FileState state : stateList) {
             FileStateBuilder builder = new FileStateBuilderImpl(state);
-            WritableFile entry = (WritableFile) builder.as(new FileFactory.WritableFileFactory_(builder), directory, createIfNotExists);
+            WritableFile entry = (WritableFile) builder.as(new ClosedFileFactory.WritableFileFactory_(builder), directory, createIfNotExists);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

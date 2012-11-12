@@ -17,8 +17,6 @@ public class AddressValueFactory extends AddressValue {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static AddressCreator.Zipcode_ streetName(String streetName) {
         return new AddressCreator().new StreetName_().streetName(streetName);
     }

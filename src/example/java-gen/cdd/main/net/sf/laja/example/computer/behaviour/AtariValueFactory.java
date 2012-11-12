@@ -17,7 +17,6 @@ public class AtariValueFactory extends ComputerValue {
         super(state, stateBuilder);
     }
 
-  // 1
     public static AtariEncapsulator owner(String owner) {
         return new AtariCreator().new Owner_().owner(owner);
     }

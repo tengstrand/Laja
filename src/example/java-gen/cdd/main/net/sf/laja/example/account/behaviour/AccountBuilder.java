@@ -24,10 +24,10 @@ public class AccountBuilder {
     }
 
     public SourceAccount asSourceAccount() {
-        return (SourceAccount)builder.as(new AccountFactory.SourceAccountFactory_(builder));
+        return (SourceAccount)builder.as(new SourceAccountFactory.SourceAccountFactory_(builder));
     }
 
     public DestinationAccount asDestinationAccount() {
-        return (DestinationAccount)builder.as(new AccountFactory.DestinationAccountFactory_(builder));
+        return (DestinationAccount)builder.as(new SourceAccountFactory.DestinationAccountFactory_(builder));
     }
 }

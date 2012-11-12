@@ -17,8 +17,6 @@ public class PersonValueFactory extends PersonValue {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static PersonCreator.Surname_ givenName(String givenName) {
         return new PersonCreator().new GivenName_().givenName(givenName);
     }

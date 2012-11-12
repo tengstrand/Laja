@@ -19,8 +19,6 @@ public class BodyMassIndexValueFactory extends BmiValue {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static BodyMassIndexCreator.WeightInKilograms_ heightInCentimeters(int heightInCentimeters) {
         return new BodyMassIndexCreator().new HeightInCentimeters_().heightInCentimeters(heightInCentimeters);
     }

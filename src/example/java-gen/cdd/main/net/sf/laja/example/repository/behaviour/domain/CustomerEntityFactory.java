@@ -20,8 +20,6 @@ public class CustomerEntityFactory extends CustomerEntity {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static CustomerCreator.GivenName_ ssn(long ssn) {
         return new CustomerCreator().new Ssn_().ssn(ssn);
     }

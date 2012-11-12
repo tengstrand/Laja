@@ -5,6 +5,7 @@
 #set (outputDir = behaviour.outputDir)
 #set (behaviourFile = behaviour.srcFilename)
 #set (behaviourClass = behaviour.classname)
+#set (behaviourInterface = behaviour.interfacename)
 #set (builderClass = behaviour.builderClass)
 #set (factoryClass = behaviour.factoryClass)
 #set (constructorClass = "{behaviourClass}Constructor")

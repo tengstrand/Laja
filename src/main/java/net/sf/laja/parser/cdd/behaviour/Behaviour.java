@@ -17,6 +17,7 @@ public class Behaviour implements BehaviourParser.IBehaviour {
     public String outputDir;
     public String srcFilename;
     public String classname;
+    public String interfacename;
     public String builderClass;
     public String creatorClass;
     public String factoryClass;
@@ -85,9 +86,20 @@ public class Behaviour implements BehaviourParser.IBehaviour {
         }
         this.classname = classname;
 
+        if (classname.endsWith("Impl")) {
+            classname = classname.substring(0, classname.length() - 4);
+            interfacename = classname;
+        }
         builderClass = classname + "Builder";
         creatorClass = classname + "Creator";
         factoryClass = classname + "Factory";
+
+        for (AsMethod method : asMethods) {
+            if (method.isFactory) {
+                factoryClass = method.returnclass + "Factory";
+                break;
+            }
+        }
     }
 
     public void addAsMethod(BehaviourParser.IAsMethod iasMethod) {

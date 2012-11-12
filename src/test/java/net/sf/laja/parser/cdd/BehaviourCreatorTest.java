@@ -49,7 +49,7 @@ public class BehaviourCreatorTest {
         stateTemplate.setRootStatePackage("com.myproject.state");
         stateTemplate.setRootBehaviourPackage("com.myproject.behaviour");
 
-        creator.asBehaviour(stateTemplate);
+        creator.asBehaviour(stateTemplate, false);
     }
 
     private Attribute attribute(String type, String variable) {

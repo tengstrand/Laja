@@ -17,8 +17,6 @@ public class TruckValueFactory extends TruckValue {
         super(state, stateBuilder);
     }
 
-// 2
-      // 2.3
     public static TruckCreator.WeightInKilograms_ lengthInCentimeters(int lengthInCentimeters) {
         return new TruckCreator().new LengthInCentimeters_().lengthInCentimeters(lengthInCentimeters);
     }
