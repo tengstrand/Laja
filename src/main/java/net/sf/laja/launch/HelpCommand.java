@@ -8,7 +8,7 @@ public class HelpCommand implements ViewInfoCommand {
 		System.out.println("where option include:");
 		System.out.println("   -help | -?             display this help.");
 		System.out.println("   -version               display version information.");
-		System.out.println("   -<variable>            sets a variable to the boolean value true.");
+		System.out.println("   -<variable>            sets a variable to the boolean value true in default namespace.");
 		System.out.println("   <variable>=<value>     sets a value in default ($) namespace");
 		System.out.println("   <namespace>.<variable>=<value>");
 		System.out.println("                          sets a value in specified namespace.");
