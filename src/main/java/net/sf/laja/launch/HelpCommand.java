@@ -29,6 +29,6 @@ public class HelpCommand implements ViewInfoCommand {
 		System.out.println("   laja sysimp=\"c:\\Program Files\\mytemplates\\my-system-imports.laja\"");
 		System.out.println("                          surround with \" if the path contains spaces.");
 		System.out.println();
-		System.out.println("Project: http://laja.sf.net");
+		System.out.println("Project: http://laja.tengstrand.nu");
 	}
 }
