@@ -52,15 +52,15 @@
 
   #set (processedFiles = new net.sf.laja.parser.cdd.OutputDirectoryReader$Result())
 
+  #if (_i == null)
+    #set(_i = false)
+  #end
+
   #foreach (parameterMap in parameters)
     #set (templateFilesInDir = new java.util.ArrayList())
     #set (behaviourFilesInDir = new java.util.ArrayList())
 
     #$.putAll(parameterMap)
-
-    #if (interface == null)
-      #set(interface = false)
-    #end
 
     #if (parameterMap.srcDir == null)
       #error("Missing parameter: 'srcDir'")
@@ -286,7 +286,7 @@
     #end
     #if (!found)
       ## Create missing behaviour!
-      #set (behaviour = behaviourCreator.asBehaviour(template, interface))
+      #set (behaviour = behaviourCreator.asBehaviour(template, _i))
       #if (!directoryExists(behaviour.sourceDir))
         #createDirectoryPath(behaviour.sourceDir)
       #end

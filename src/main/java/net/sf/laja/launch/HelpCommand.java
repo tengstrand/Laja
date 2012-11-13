@@ -2,7 +2,6 @@ package net.sf.laja.launch;
 
 public class HelpCommand implements ViewInfoCommand {
 	
-	@Override
 	public void execute() {
 		System.out.println("Usage: laja [option(s)] [templatefile(s)]");
 		System.out.println();
@@ -21,7 +20,11 @@ public class HelpCommand implements ViewInfoCommand {
 		System.out.println("   laja a='A' $x.b=\"B\" t1 t2");
 		System.out.println("                          sets the variable 'a' to A in default namespace and 'b' to B");
 		System.out.println("                          in namespace x and generates 't1.laja' and 't2.laja'");
-		System.out.println("   laja sysimp=./system-imports.laja");
+        System.out.println("   laja -a -b             set the value true for the variables '_a' and '_b' and reads");
+        System.out.println("                          the template file 'generate.laja'");
+        System.out.println("   laja -i mytemplate     set the value true for variable '_i' and reads");
+        System.out.println("                          the template file 'mytemplate.laja'");
+        System.out.println("   laja sysimp=./system-imports.laja");
 		System.out.println("                          overrides the location of LAJA_HOME/template/system-imports.laja.");
 		System.out.println("   laja sysimp=\"c:\\Program Files\\mytemplates\\my-system-imports.laja\"");
 		System.out.println("                          surround with \" if the path contains spaces.");

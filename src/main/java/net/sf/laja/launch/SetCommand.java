@@ -3,9 +3,9 @@ package net.sf.laja.launch;
 import net.sf.laja.template.Template;
 
 public class SetCommand implements PrepareGenerateCommand {
-	private String variable;
-	private String value;
-	private Settings settings;
+	private final String variable;
+	private final String value;
+	private final Settings settings;
 
 	public SetCommand(String variable, String value, Settings settings) {
 		this.variable = variable;
@@ -14,7 +14,6 @@ public class SetCommand implements PrepareGenerateCommand {
 		this.value = value;
 	}
 
-	@Override
 	public void execute(Template template) {
 		settings.setValue(variable, value);
 	}

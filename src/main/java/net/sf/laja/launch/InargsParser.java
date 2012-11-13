@@ -71,8 +71,7 @@ public class InargsParser {
 					prepareGenerateCommands.add(new SetCommand(variable, value, settings));
 				}
 			} else if (argument.startsWith("-")) {
-				viewInfoCommand = new UnknownOptionCommand(argument);
-				return;
+				prepareGenerateCommands.add(new SingleParameterCommand(argument, settings));
 			} else {
 				generateCommands.add(new GenerateCommand(settings, argument));
 			}

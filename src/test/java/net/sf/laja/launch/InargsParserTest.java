@@ -2,15 +2,6 @@ package net.sf.laja.launch;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import net.sf.laja.launch.DefaultTemplateNotFoundCommand;
-import net.sf.laja.launch.GenerateCommand;
-import net.sf.laja.launch.HelpCommand;
-import net.sf.laja.launch.InargsParser;
-import net.sf.laja.launch.InargumentException;
-import net.sf.laja.launch.Settings;
-import net.sf.laja.launch.UnknownOptionCommand;
-import net.sf.laja.launch.VersionCommand;
-import net.sf.laja.launch.ViewExceptionCommand;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -91,14 +82,6 @@ public class InargsParserTest {
 	}
 
 	@Test
-	public void setValueWrongFormat() throws InargumentException {
-		InargsParser inargsParser = new InargsParser(settings, "-Dabcd");
-		
-		assertTrue(inargsParser.getViewInfoCommand() != null);
-		assertEquals(UnknownOptionCommand.class, inargsParser.getViewInfoCommand().getClass());
-	}
-
-	@Test
 	public void help() throws InargumentException {
 		InargsParser inargsParser = new InargsParser(settings, "-help");
 		
@@ -115,10 +98,11 @@ public class InargsParserTest {
 	}
 
 	@Test
-	public void unknownOption() throws InargumentException {
-		InargsParser inargsParser = new InargsParser(settings, "-x");
-		
-		assertTrue(inargsParser.getViewInfoCommand() != null);
-		assertEquals(UnknownOptionCommand.class, inargsParser.getViewInfoCommand().getClass());
+	public void singleParameter() throws InargumentException {
+		InargsParser inargsParser = new InargsParser(settings, "-i", "myfile.laja");
+
+        assertEquals(1, inargsParser.getGenerateCommands().size());
+        assertEquals(1, inargsParser.getPrepareGenerateCommands().size());
+        assertEquals(new SingleParameterCommand("-i", settings), inargsParser.getPrepareGenerateCommands().get(0));
 	}
 }
