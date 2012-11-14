@@ -14,8 +14,8 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 "
-   sodipodi:docname="CDD-dynamic-context.svg"
-   inkscape:export-filename="C:\Source\IDEA\Laja2\Laja\wiki\cdd\graphics\CDD-dynamic-context.png"
+   sodipodi:docname="CDD-context.svg"
+   inkscape:export-filename="C:\Source\IDEA\Laja2\Laja\wiki\cdd\graphics\CDD-context.png"
    inkscape:export-xdpi="180"
    inkscape:export-ydpi="180">
   <defs
@@ -129,7 +129,7 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1769"
+     inkscape:window-width="1774"
      inkscape:window-height="1058"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -150,6 +150,32 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       transform="matrix(0.50789397,0,0,0.50789397,257.57694,-145.64658)"
+       sodipodi:open="true"
+       sodipodi:end="10.995574"
+       sodipodi:start="4.712389"
+       d="m 406.5864,489.70718 a 108.5914,108.5914 0 1 1 -4e-5,0"
+       sodipodi:ry="108.5914"
+       sodipodi:rx="108.5914"
+       sodipodi:cy="598.29858"
+       sodipodi:cx="406.5864"
+       id="path5435"
+       style="color:#000000;fill:#a089c7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       sodipodi:type="arc" />
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#ac98ce;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path5437"
+       sodipodi:cx="406.5864"
+       sodipodi:cy="598.29858"
+       sodipodi:rx="108.5914"
+       sodipodi:ry="108.5914"
+       d="m 406.5864,489.70718 a 108.5914,108.5914 0 1 1 -4e-5,0"
+       sodipodi:start="4.712389"
+       sodipodi:end="10.995574"
+       sodipodi:open="true"
+       transform="matrix(0.5664986,0,0,0.5664986,221.04199,-168.67159)" />
     <path
        transform="matrix(0.50789397,0,0,0.50789397,101.57694,-145.64658)"
        sodipodi:open="true"
@@ -201,6 +227,32 @@
            y="446.64789" /></flowRegion><flowPara
          id="flowPara7624" /></flowRoot>    <path
        sodipodi:type="arc"
+       style="color:#000000;fill:#b8a6d5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3028"
+       sodipodi:cx="406.5864"
+       sodipodi:cy="598.29858"
+       sodipodi:rx="108.5914"
+       sodipodi:ry="108.5914"
+       d="m 406.5864,489.70718 a 108.5914,108.5914 0 1 1 -4e-5,0"
+       sodipodi:start="4.712389"
+       sodipodi:end="10.995574"
+       sodipodi:open="true"
+       transform="matrix(0.5925451,0,0,0.5925451,199.15895,-173.10085)" />
+    <path
+       transform="matrix(0.4037079,0,0,0.4037079,275.93815,-58.695174)"
+       sodipodi:open="true"
+       sodipodi:end="10.995574"
+       sodipodi:start="4.712389"
+       d="m 406.5864,514.22861 a 84.069969,84.069969 0 1 1 -3e-5,0"
+       sodipodi:ry="84.069969"
+       sodipodi:rx="84.069969"
+       sodipodi:cy="598.29858"
+       sodipodi:cx="406.5864"
+       id="path4327"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.71555781;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       sodipodi:type="arc" />
+    <path
+       sodipodi:type="arc"
        style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.71555781;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="path4461"
        sodipodi:cx="406.5864"
@@ -212,31 +264,62 @@
        sodipodi:end="10.995574"
        sodipodi:open="true"
        transform="matrix(0.4037079,0,0,0.4037079,115.93815,-58.695174)" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4291"
+       y="232.24847"
+       x="414.8642"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="232.24847"
+         x="414.8642"
+         sodipodi:role="line"
+         id="tspan4295">Context 2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="254.8642"
+       y="232.24847"
+       id="text4523"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan4525"
+         sodipodi:role="line"
+         x="254.8642"
+         y="232.24847">Context 1</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4539"
+       y="287.53503"
+       x="324.66141"
+       style="font-size:16.51434517px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="287.53503"
+         x="324.66141"
+         sodipodi:role="line"
+         id="tspan4541">Static context</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart);marker-end:url(#Arrow2Lend)"
-       d="M 339.74675,245.86592 418.35862,136.85567"
+       d="M 507.74675,245.86592 586.35862,136.85567"
        id="path6723"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-size:13.66831875px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="1.559415"
-       y="434.50854"
+       x="95.338547"
+       y="570.35791"
        id="text4585"
        sodipodi:linespacing="125%"
        transform="matrix(0.58272413,-0.80862658,0.83440008,0.55820911,0,0)"><tspan
          id="tspan4587"
          sodipodi:role="line"
-         x="1.559415"
-         y="434.50854">Dynamic context,</tspan><tspan
-         sodipodi:role="line"
-         x="1.559415"
-         y="451.59393"
-         id="tspan5143">based on</tspan><tspan
-         sodipodi:role="line"
-         x="1.559415"
-         y="468.67935"
-         id="tspan5145">context variable</tspan></text>
+         x="95.338547"
+         y="570.35791">Dynamic context</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart-5);marker-end:url(#Arrow2Lend-1)"
+       d="m 235.48737,270.81534 265.87214,0"
+       id="path3144"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>

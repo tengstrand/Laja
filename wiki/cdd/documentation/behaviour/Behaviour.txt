@@ -8,9 +8,9 @@ Lets say we create the class ''Person'' only containing methods related to the c
 * Add some getters to ''Person'' and delegate the work to e.g. ''PersonTextExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (which is about letting objects themselves perform tasks).
 
 
-The good news is that you don't need to do either of these two things and the solution is described in the next topic ''context switching''.
+The good news is that you don't need to do either of these two things in CDD!
 
 
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Context switching|Next >]]
+[[Factories|Next >]]

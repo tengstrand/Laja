@@ -65,11 +65,11 @@ public class RedHairedPerson extends RedHairedPersonFactory {
 ...regenerate and execute (note that ''hairColor'' is excluded from the chained creator):
 
 <source>
-    GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
-    RedHairedPerson tage = RedHairedPerson.givenName("Tage").surname("Danielsson").asRedHairedPerson();
+GreyHairedPerson hans = GreyHairedPerson.givenName("Hans").surname("Alfredson").asGreyHairedPerson();
+RedHairedPerson tage = RedHairedPerson.givenName("Tage").surname("Danielsson").asRedHairedPerson();
 
-    System.out.println(hans);
-    System.out.println(tage);
+System.out.println(hans);
+System.out.println(tage);
 </source>
 
 ...and we get the output (with the hair colors set):

@@ -199,4 +199,4 @@ By switching context from ''Person'' to ''OtherPerson'' we are not stuck compari
 
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Context switching|Next >]]
+[[Behaviour|Next >]]

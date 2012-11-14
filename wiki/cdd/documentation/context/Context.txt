@@ -1,50 +1,48 @@
-''Context'' is a key concepts in CDD alongside ''state'' and ''behaviour''.
-
-To consider ''context'' as a first-class citizens allow us to reason about software design in a more concise way.
+The concept ''context'' is divided into two groups,  ''static'' and ''dynamic'':
 
 
-Context is divided into two groups, ''dynamic'' and ''static'' where the latter describes a task and its location in the system:
+[[File:CDD-context.png|300px]]
 
-
-[[File:CDD-static-context.png|400px]]
-
-
-The static context is actively selected or [[Context switching|switched]] by the developer when the code is written (''compile time'').
+=== Static context ===
+Static context manifests itself as a task in the system.
+What distinguishes static from dynamic context is that it is known when the code is written (at ''compile time'').
+The technique [[Context switching|context switching]] is used when moving from one context to another.
 
 If we look at the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/account account] example, it has two
-different account contexts, ''source'' and ''destination'':
+different contexts, ''source'' and ''destination'':
 <source>
 SourceAccount sourceAccount = Account.balance(1000).asSourceAccount();
 DestinationAccount destinationAccount = Account.balance(100).asDestinationAccount();
 </source>
 
-
-The second type of context is ''dynamic'' which is optional and can vary ''within'' a static context at ''runtime'':
-
-
-[[File:CDD-dynamic-context.png|170px]]
-
-
-An example is the ''configuration'' variable in the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/computer computer example]
-which is hardcoded to ''STANDARD'' and ''FAST'' here, but could have been sent in as a variable:
+Each context only contains relevant operations for the context:
 
 <source>
-Amiga standardAmiga = AmigaFactory.owner("Joakim").asAmiga(Configuration.STANDARD);
-Amiga fastAmiga = AmigaFactory.owner("Riku").asAmiga(Configuration.FAST);
+public class SourceAccount extends AccountValue {
+    ...
+    public void transferTo(DestinationAccount destination, double amount) { ... }
+    ...
+}
 </source>
 
-When the configuration is set to ''STANDARD'' we will get an [http://en.wikipedia.org/wiki/Amiga_500 Amiga 500]
-but when set to ''FAST'' we will get an [http://en.wikipedia.org/wiki/Amiga_4000 Amiga 4000].
+<source>
+public class DestinationAccount extends AccountValue {
+    ...
+    public void deposit(double amount) { ... }
+    ...
+}
+</source>
 
+=== Dynamic context ===
+A dynamic context can vary at ''runtime'' within a static context. If we look at the [[Dynamic context|dynamic context]] code example:
 
-The selected context is based on a ''context variable'' such as:
-* Current user role
-* Current time
-* Different configurations from e.g. file or database
+<source>
+Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
+</source>
 
-Different aspects of ''context'' will gradually be covered by the rest of this documentation.
+...the context variable ''userRole'' is used by the factory to choose a suitable representation.
 
 
 [[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[State|Next >]]
+[[Context switching|Next >]]

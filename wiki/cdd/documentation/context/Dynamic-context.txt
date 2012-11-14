@@ -1,9 +1,18 @@
-Dynamic context is something that can vary at runtime because it's not known at compile time.
-Pretend we want to restrict access to phone numbers so that only users with the ADMIN role is allowed to see them.
-Let's illustrate this with a code example (the way this is done is quite cumbersome but will be improved in the next version).
+Dynamic context is something that can vary at runtime. If it can be determined at compile time,
+then it should probably be handled as ''static context'' using [[Context switching]].
 
+The dynamic context is based on a ''context variable'':
 
-Start by creating 'UserRole' which is the ''context variable'' in this example:
+[[File:CDD-dynamic-context.png|170px]]
+
+The context variable should be immutable and can be anything that represents a context, like:
+* Current user role
+* Current time
+* Different configurations, from e.g. file or database
+
+Let's write some code to show how ''dynamic context'' can be used.
+Pretend we want to restrict access to phone numbers so that only ADMIN users can see them,
+start by adding the dynamic context representation ''UserRole'':
 
 <source>
 package com.myproject.behaviour;
@@ -13,7 +22,7 @@ public enum UserRole {
 }
 </source>
 
-...create and regenerate:
+...continue by adding a template:
 
 <source>
 package com.myproject.state;
@@ -24,44 +33,64 @@ public class PersonStateTemplate {
 }
 </source>
 
-...rename the newly created class ''Person'' to ''PersonAdmin'', regenerate and modify it:
+...regenerate using the ''-i'' option, which is used when we want to generate both an interface and a concrete class:
+
+<source>
+laja -i myproject
+</source>
+
+...which will generate the interface ''Person'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+import com.myproject.state.PersonStateList;
+
+public interface Person {
+    PersonState getState(PersonStateList stateList);
+    boolean contains(PersonStateList stateList);
+    void addToList(PersonStateList stateList);
+}
+</source>
+
+...and the class ''PersonImpl'':
 
 <source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
-public class PersonAdmin extends PersonAdminFactory {
+// TODO: Rename PersonImpl to something more descriptive!
+public class PersonImpl extends PersonFactory implements Person {
+    public PersonImpl(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new PersonImpl(state);
+    }
+}
+</source>
+
+...follow the recommendation and rename it to ''PersonAdmin'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class PersonAdmin extends PersonFactory implements Person {
     public PersonAdmin(PersonState state) {
         super(state);
     }
 
     // (factory)
-    public PersonAdmin asPerson() {
+    public Person asPerson() {
         return new PersonAdmin(state);
     }
-
-    public String phoneNumber() {
-        return state.getPhoneNumber();
-    }
 }
-</source>
-
-...create the interface ''Person'':
-
-<source>
-package com.myproject.behaviour;
-
-public interface Person {
-}
-</source>
-
-...let ''PersonAdmin'' implement ''Person'':
-
-<source>
-...
-public class PersonAdmin extends PersonAdminFactory implements Person {
-...
 </source>
 
 ...add the class ''PersonRestricted'':
@@ -71,7 +100,7 @@ package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
-public class PersonRestricted extends PersonAdminFactory implements Person {
+public class PersonRestricted extends PersonFactory implements Person {
     public PersonRestricted(PersonState state) {
         super(state);
     }
@@ -81,15 +110,63 @@ public class PersonRestricted extends PersonAdminFactory implements Person {
         return new PersonRestricted(state);
     }
 
-    public String phoneNumber() {
-        return "???";
-    }
-
     @Override
     public String toString() {
-        return "{name=" + (state.getName() == null ? null : '\'' + state.getName() + '\'' ) +
+        return "PersonRestricted{name=" + (state.getName() == null ? null : '\'' + state.getName() + '\'' ) +
                 ", phoneNumber=???}";
     }
 }
 </source>
 
+...modify the method ''asPerson'' in ''PersonAdmin'':
+
+<source>
+// (factory)
+public Person asPerson(UserRole role) {
+    if (role == UserRole.ADMIN) {
+        return new PersonAdmin(state);
+    } else if (role == UserRole.RESTRICTED) {
+        return new PersonRestricted(state);
+    }
+    throw new IllegalArgumentException("Unsupported role: " + role);
+}
+</source>
+
+...regenerate and add:
+
+<source>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        Person admin = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(UserRole.ADMIN);
+        Person restricted = PersonFactory.name("Richard").phoneNumber("022-22222222").asPerson(UserRole.RESTRICTED);
+
+        System.out.println(admin);
+        System.out.println(restricted);
+    }
+}
+</source>
+
+...execute and we get the output:
+
+<source>
+PersonAdmin{name='Anders', phoneNumber='011-11111111'}
+PersonRestricted{name='Richard', phoneNumber=???}
+</source>
+
+The idea is not to send a hard coded value into ''asPerson'' but to send in a context variable like this:
+
+<source>
+UserRole userRole; // Populated in some way, e.g. injection.
+...
+Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
+</source>
+
+The decision which implementation to choose is delegated to the factory. This creates a loose coupling
+between the user role and the factory so that the factory can be changed without affecting the calling code.
+
+
+[[Context switching|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[State|Next >]]

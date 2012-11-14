@@ -9,7 +9,8 @@ person.asPersistable().save();
 
 ...which can be illustrated by this diagram:
 
-[[File:CDD-context-switch.png|160px]]
+
+[[File:CDD-context-switch.png|300px]]
 
 
 The switching was performed by the method ''asPersistable()'':
@@ -45,7 +46,7 @@ In addition to a facilitated integration CDD also let us create objects that foc
 Context switching can both mean switching task ''within'' an architectural layer as well as moving ''between'' architectural layers:
 
 
-[[File:CDD-context-switching.png|400px]]
+[[File:CDD-context-switching.png|550px]]
 
 
 The above example illustrates how different tasks can be performed by using context switching.
@@ -75,6 +76,6 @@ The rule of thumb is that different parts of the codebase should be maintained i
 This helps to keep the code clean and [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY].
 
 
-[[Behaviour|< Back]]
+[[Context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Factories|Next >]]
+[[Dynamic context|Next >]]
