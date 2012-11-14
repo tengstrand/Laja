@@ -6,6 +6,7 @@
 * context
 ** Context|Context
 ** Context switching|Context switching
+** Dynamic context|Dynamic context
 * state
 ** State|Introduction
 ** Define state|Define state
