@@ -47,11 +47,17 @@ public class DatabaseConnection {
 	}
 	
 	public List executeSql(String sql) {
-		Statement statement = con.createStatement();
-		
-		if (statement.execute(sql)) {
-			return getResultSet(statement)
-		} 
+        Statement statement = con.createStatement();
+
+        try {
+            if (statement.execute(sql)) {
+          		return getResultSet(statement)
+            }
+        } catch (Exception e) {
+            print("Could not execute SQL: " + sql + ". Exception: " + e);
+        } finally {
+            statement.close();
+        }
 		return null
 	}
 	
