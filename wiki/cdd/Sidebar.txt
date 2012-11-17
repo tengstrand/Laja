@@ -5,7 +5,7 @@
 ** Identity|Identity
 * context
 ** Context|Context
-** Context switching|Context switching
+** Static context|Static context
 ** Dynamic context|Dynamic context
 * state
 ** State|Introduction

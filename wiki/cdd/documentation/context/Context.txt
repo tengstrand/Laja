@@ -1,21 +1,20 @@
-The concept ''context'' is divided into two groups,  ''static'' and ''dynamic'':
+The concept ''context'' is used to describe i place in the system where a task can be performed (static context)
+which can vary depending on the context within the static context (dynamic context).
 
 
 [[File:CDD-context.png|300px]]
 
-=== Static context ===
-Static context manifests itself as a task in the system.
-What distinguishes static from dynamic context is that it is known when the code is written (at ''compile time'').
-The technique [[Context switching|context switching]] is used when moving from one context to another.
 
-If we look at the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/account account] example, it has two
-different contexts, ''source'' and ''destination'':
+What distinguishes static context from dynamic context is that ''static context'' is actively selected by the developer when the code is written
+(compile time) while ''dynamic context'' is selected based on a ''context variable'' that is only known at runtime.
+
+=== Static context ===
+If we look at the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/account account] example,
+it has behaviour representations for the two contexts ''source'' and ''destination'':
 <source>
 SourceAccount sourceAccount = Account.balance(1000).asSourceAccount();
 DestinationAccount destinationAccount = Account.balance(100).asDestinationAccount();
 </source>
-
-Each context only contains relevant operations for the context:
 
 <source>
 public class SourceAccount extends AccountValue {
@@ -33,14 +32,17 @@ public class DestinationAccount extends AccountValue {
 }
 </source>
 
+...where each representation contains the relevant operations to be used in each context.
+
 === Dynamic context ===
-A dynamic context can vary at ''runtime'' within a static context. If we look at the [[Dynamic context|dynamic context]] code example:
+A dynamic context can vary at ''runtime'' within a static context. In the [[Dynamic context|dynamic context]] code example:
 
 <source>
 Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
 </source>
 
-...the context variable ''userRole'' is used by the factory to choose a suitable representation.
+...the context variable ''userRole'' is used by the factory to choose a suitable representation
+which enables us to have different behaviour implementations for different contexts within the static context.
 
 
 [[Classes and objects|< Back]]

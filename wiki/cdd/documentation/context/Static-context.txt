@@ -1,8 +1,35 @@
-Context switching as known here was invented in 2011 and first described in this [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html blog post].
-It is now an important part of CDD and improved so that state and behavior are totally separated.
+Static context is used to represent a place in the system where a certain task can be performed.
+If we use ''person'' as an example, it can perform different tasks in various places in the system, for example:
+
+* answer if it's deceased
+* represent it as a row in an export format
+* persist to a database.
+
+Each of these three tasks represents a unique context where for example a ''person'' can operate.
+We can also have name for them like ''domain'', ''export'' and ''persistence'' context.
+The way we allow ''person'' (represented by ''PersonState'') to operate within a context is to have a
+behaviour representation for it like ''Person'', ''PersonAsRowInFile'' or ''PersistablePerson''.
+
+A static context is something that i known at the time the code is written (compile time). Let's take another example:
 
 
-In an earlier example we switched context to be able to perform the save operation:
+[[File:CDD-static-context.png|550px]]
+
+
+Imagine that we start by retrieving an instance from a repository (Context 1), present it in the GUI (Context 2),
+perform some editing in the GUI (Context 3) followed by some domain operations (Context 4)
+and finishing by writing the state to a file (Context 5).
+
+
+Context switching as known here was invented in 2011 and first described in this [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html blog post]
+but have been improved since then in a way that state and behaviour now are completely separated.
+The ability to have a set of different context representations is an effective way to reduce the amount of code needed to integrate different parts of the system.
+The switching is performed without affecting the state format or breaking the [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation].
+It encourages putting ''behaviour'' inside objects close to its data so they can perform tasks themselves, which is good and follows the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
+In addition to a facilitated integration CDD also let us create objects that focus on one task at a time, following the [http://en.wikipedia.org/wiki/Single_responsibility_principle Single responsibility] principle.
+
+
+Let us continue with yet another example. In an earlier example we switched context to be able to perform the save operation:
 <source>
 person.asPersistable().save();
 </source>
@@ -10,7 +37,7 @@ person.asPersistable().save();
 ...which can be illustrated by this diagram:
 
 
-[[File:CDD-context-switch.png|300px]]
+[[File:CDD-context-switch.png|350px]]
 
 
 The switching was performed by the method ''asPersistable()'':
@@ -35,24 +62,6 @@ public class Person extends PersonFactory {
     }
 }
 </source>
-
-
-The context switching technique is and effective way to reduce the amount of code needed to integrate different parts of the system.
-The switching is performed without affecting the state format or breaking the [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation].
-It encourages putting ''behaviour'' inside objects close to its data so they can perform tasks themselves, which is good and follows the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
-In addition to a facilitated integration CDD also let us create objects that focus on one task at a time, following the [http://en.wikipedia.org/wiki/Single_responsibility_principle Single responsibility] principle.
-
-
-Context switching can both mean switching task ''within'' an architectural layer as well as moving ''between'' architectural layers:
-
-
-[[File:CDD-context-switching.png|550px]]
-
-
-The above example illustrates how different tasks can be performed by using context switching.
-Imagine that we start by retrieving an instance from a repository (Context 1), present it in the GUI (Context 2),
-perform some editing in the GUI (Context 3) followed by some domain operations (Context 4) and finishing by storing the state in the database (Context 5).
-
 
 Context switching allows our objects to perform well defined tasks in different parts of the system almost friction free.
 We don't need to convert between different state representations when crossing context borders because the state format never change.

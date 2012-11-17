@@ -185,7 +185,7 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1774"
+     inkscape:window-width="1769"
      inkscape:window-height="1058"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -321,13 +321,24 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="143.52502"
+       x="123.52502"
        y="225.97113"
        id="text5139"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5141"
-         x="143.52502"
-         y="225.97113">isAdult()</tspan></text>
+         x="123.52502"
+         y="225.97113">isDecesed()</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.96132278px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="218.41376"
+       y="188.30283"
+       id="text7474"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7476"
+         x="218.41376"
+         y="188.30283">PersonState</tspan></text>
   </g>
 </svg>
