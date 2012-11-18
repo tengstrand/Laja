@@ -1,16 +1,17 @@
-Static context is used to represent a place in the system where a certain task can be performed.
-If we use ''person'' as an example, it can perform different tasks in various places in the system, for example:
+Static context is used to represent a place in the system where a certain task can be performed
+and is something that is known at the time the code is written (compile time).
+If we use ''person'' as an example, it can perform various tasks in different contexts:
 
 * answer if it's deceased
 * represent it as a row in an export format
-* persist to a database.
+* be persisted to a database.
 
-Each of these three tasks represents a unique context where for example a ''person'' can operate.
-We can also have name for them like ''domain'', ''export'' and ''persistence'' context.
+Each of these three tasks represents a unique context (''domain'', ''export'' and ''persistence'').
 The way we allow ''person'' (represented by ''PersonState'') to operate within a context is to have a
-behaviour representation for it like ''Person'', ''PersonAsRowInFile'' or ''PersistablePerson''.
+behaviour representation for it like ''Person'', ''PersonRowInFile'' or ''PersistablePerson''.
 
-A static context is something that i known at the time the code is written (compile time). Let's take another example:
+
+Let's take another example:
 
 
 [[File:CDD-static-context.png|550px]]
@@ -20,6 +21,7 @@ Imagine that we start by retrieving an instance from a repository (Context 1), p
 perform some editing in the GUI (Context 3) followed by some domain operations (Context 4)
 and finishing by writing the state to a file (Context 5).
 
+=== Context switching ===
 
 Context switching as known here was invented in 2011 and first described in this [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html blog post]
 but have been improved since then in a way that state and behaviour now are completely separated.
@@ -63,7 +65,7 @@ public class Person extends PersonFactory {
 }
 </source>
 
-Context switching allows our objects to perform well defined tasks in different parts of the system almost friction free.
+Context switching allows our objects to switch and perform well defined tasks in different parts of the system almost friction free.
 We don't need to convert between different state representations when crossing context borders because the state format never change.
 Conversion between state representations are a common source of errors that is almost eliminated in CDD.
 Support for letting objects cross physical context borders, by using a standardized text transport format, is not supported in this alpha version but may be added in the future.

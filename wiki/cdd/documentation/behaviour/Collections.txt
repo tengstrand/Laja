@@ -74,7 +74,7 @@ System.out.println(persons);
 PersonArrayList{[Person{givenName='Anders', surname='Andersson'}, Person{givenName='Carl', surname='Carlsson'}]}
 </source>
 
-=== Add a new context ===
+=== A new context ===
 __NOTOC__
 
 Let's say we need to implement functionality that export persons to a file in a semicolon separated text format.
@@ -165,12 +165,12 @@ End
 
 The code seemed to work as expected!
 
+=== Switching context ===
 
 A convenient thing with the behaviour lists is that they contain all the corresponding switcher methods from the value/entity class.
 
-If we have a switcher method in ''Person'':
+If we have a switcher method in ''Person'' (even if it's not a factory):
 <source>
-    // (factory)
     public PersonRowInFile asPersonRowInFile() {
         return new PersonRowInFile(state);
     }
@@ -183,7 +183,7 @@ public interface PersonList extends List<Person> {
 }
 </source>
 
-This allows us to ''switch context'' which allow us to write:
+...which allows us to write:
 
 <source>
 package com.myproject.behaviour;
@@ -192,13 +192,13 @@ public class Main {
     public static void main(String[] args) {
         PersonExporter exporter = new PersonExporter();
 
-        // 1. Create a list of Persons.
+        // 1. Create a list of Person elements.
         PersonList persons = Person.createList(
                 Person.givenName("Anders").surname("Andersson"),
                 Person.givenName("Carl").surname("Carlsson")
         ).asPersonList();
 
-        // 2. Context switch to a list of PersonRowInFile.
+        // 2. Context switch to a list of PersonRowInFile elements.
         exporter.export(persons.asPersonRowInFileList());
     }
 }
@@ -213,7 +213,7 @@ PersonList persons = Person.createList(
         Person.givenName("Carl").surname("Carlsson")).asPersonList();
 </source>
 
-...or like this, if an empty list:
+...or an empty list like this:
 <source>
 PersonList persons = Person.createList();
 </source>
@@ -226,13 +226,13 @@ public PersonArrayList(Collection<Person> list) { ... }
 public PersonArrayList(PersonStateList stateList) { ... }
 </source>
 
-...which allows us to create a list like this:
+...which allows us to create a list like this (using the first constructor):
 <source>
 Person person = Person.givenName("Carl").surname("Carlsson").asPerson();
 PersonList persons = new PersonArrayList(person);
 </source>
 
-...or like this:
+...or for example like this (using the second constructor):
 <source>
 Person person = Person.givenName("Carl").surname("Carlsson").asPerson();
 
@@ -259,7 +259,7 @@ public class ExporterStateTemplate {
 }
 </source>
 
-...regenerate and modify the newly created ''Exporter'':
+...regenerate and modify the newly created ''Exporter'' (the third constructor is called in the ''Exporter''s constructor):
 
 <source>
 package com.myproject.behaviour;
@@ -326,12 +326,12 @@ and context switched into another list that is sorted (or mutated in some way),
 the ''state list'' will also be sorted to keep them in sync but leaves ''persons'' and the ''state list'' out of sync.
 There is no functionality at the moment that automatically synchronizes behaviour lists when they fall out of sync with the state list.
 
-The other three ways a list can be created does not have this problem since they are not linked to a ''state list''.
+The other three ways a list can be created does not have this problem since they are not connected to a ''state list''.
 
 === Summary ===
 
 Collections in CDD is rather dumb.
-The way we add behaviour to them is by creating a wrapper, like we did with the ''Exporter''. This leads us into the next exciting subject, composition!
+The way we add behaviour to them is by using composition, like we did with the ''Exporter'', which leads us to the next exciting area, [[Composition|composition]]!
 
 
 [[Populate substate|< Back]]

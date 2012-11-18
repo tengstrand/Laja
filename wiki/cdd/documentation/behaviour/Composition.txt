@@ -146,7 +146,7 @@ public class Address extends AddressFactory {
 }
 </source>
 
-Rename ''Size'' to ''BMI'' and replace it with this content (and regenerate to generate ''BMIFactory''):
+Rename ''Size'' to ''BMI'' and replace it with this content (and regenerate to create ''BMIFactory''):
 <source>
 package com.myproject.behaviour;
 
