@@ -1,7 +1,10 @@
-package net.sf.laja.example.file.behaviour;
+package net.sf.laja.example.repository.behaviour.persistence;
 
-import net.sf.laja.example.file.state.*;
-import net.sf.laja.example.file.behaviour.*;
+import net.sf.laja.example.repository.state.*;
+import net.sf.laja.example.repository.behaviour.domain.*;
+
+import net.sf.laja.example.repository.behaviour.domain.Customer;
+import net.sf.laja.example.repository.behaviour.domain.CustomerFactory;
 import java.util.*;
 
 /**
@@ -9,56 +12,56 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class WritableFileArrayList implements WritableFileList, RandomAccess, Cloneable, java.io.Serializable {
-    protected FileStateList stateList;
-    protected final List<WritableFile> list;
+public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cloneable, java.io.Serializable {
+    protected CustomerStateList stateList;
+    protected final List<CustomerInDb> list;
 
-    public WritableFileArrayList(WritableFile... list) {
-        this.list = new ArrayList<WritableFile>();
+    public CustomerInDbArrayList(CustomerInDb... list) {
+        this.list = new ArrayList<CustomerInDb>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public WritableFileArrayList(Collection<WritableFile> list) {
-        this.list = new ArrayList<WritableFile>();
+    public CustomerInDbArrayList(Collection<CustomerInDb> list) {
+        this.list = new ArrayList<CustomerInDb>();
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<WritableFile> {
-        private final FileStateList stateList;
+    public static class StateInSyncList extends ArrayList<CustomerInDb> {
+        private final CustomerStateList stateList;
 
-        public StateInSyncList(FileStateList stateList, List<WritableFile> elements) {
+        public StateInSyncList(CustomerStateList stateList, List<CustomerInDb> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(WritableFile element) {
+        public boolean add(CustomerInDb element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, WritableFile element) {
+        public void add(int index, CustomerInDb element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends WritableFile> collection) {
+        public boolean addAll(Collection<? extends CustomerInDb> collection) {
             boolean modified = super.addAll(collection);
 
-            for (WritableFile element : collection) {
+            for (CustomerInDb element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends WritableFile> collection) {
+        public boolean addAll(int index, Collection<? extends CustomerInDb> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (WritableFile element : collection) {
+            for (CustomerInDb element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -68,10 +71,10 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof WritableFile)) {
+            if (!(element instanceof CustomerInDb)) {
                 return false;
             }
-            stateList.remove(((WritableFile) element).getState(stateList));
+            stateList.remove(((CustomerInDb) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -81,9 +84,9 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof WritableFile) {
+                if (element instanceof CustomerInDb) {
                     elements.add(element);
-                    states.add(((WritableFile)element).getState(stateList));
+                    states.add(((CustomerInDb)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -97,9 +100,9 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof WritableFile) {
+                if (element instanceof CustomerInDb) {
                     elements.add(element);
-                    states.add(((WritableFile)element).getState(stateList));
+                    states.add(((CustomerInDb)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -115,13 +118,13 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         }
 
         @Override
-        public WritableFile set(int index, WritableFile element) {
+        public CustomerInDb set(int index, CustomerInDb element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public WritableFile remove(int index) {
+        public CustomerInDb remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -139,7 +142,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         return list.contains(element);
     }
 
-    public Iterator<WritableFile> iterator() {
+    public Iterator<CustomerInDb> iterator() {
         return list.iterator();
     }
 
@@ -147,28 +150,28 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         return list.toArray();
     }
 
-    public <WritableFile> WritableFile[] toArray(WritableFile[] array) {
+    public <CustomerInDb> CustomerInDb[] toArray(CustomerInDb[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(WritableFile element) {
+    public boolean add(CustomerInDb element) {
         return list.add(element);
     }
 
-    public void add(int index, WritableFile element) {
+    public void add(int index, CustomerInDb element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends WritableFile> collection) {
+    public boolean addAll(Collection<? extends CustomerInDb> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends WritableFile> collection) {
+    public boolean addAll(int index, Collection<? extends CustomerInDb> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof WritableFile)) {
+        if (!(element instanceof CustomerInDb)) {
             return false;
         }
         return list.remove(element);
@@ -190,15 +193,15 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         list.clear();
     }
 
-    public WritableFile get(int index) {
+    public CustomerInDb get(int index) {
         return list.get(index);
     }
 
-    public WritableFile set(int index, WritableFile element) {
+    public CustomerInDb set(int index, CustomerInDb element) {
         return list.set(index, element);
     }
 
-    public WritableFile remove(int index) {
+    public CustomerInDb remove(int index) {
         return list.remove(index);
     }
 
@@ -210,15 +213,15 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<WritableFile> listIterator() {
+    public ListIterator<CustomerInDb> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<WritableFile> listIterator(int index) {
+    public ListIterator<CustomerInDb> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<WritableFile> subList(int fromIndex, int toIndex) {
+    public List<CustomerInDb> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

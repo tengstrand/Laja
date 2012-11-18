@@ -39,6 +39,14 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
         this.list = new StateInSyncList(stateList, elements);
     }
 
+    public WritableFileArrayList asWritableFileList(Directory directory, boolean createIfNotExists) {
+        List<WritableFile> result = new ArrayList<WritableFile>();
+        for (ClosedFile entry : list) {
+            result.add(entry.asWritableFile(directory, createIfNotExists));
+        }
+        return new WritableFileArrayList(result);
+    }
+
     public TextFileArrayList asTextFileList() {
         List<TextFile> result = new ArrayList<TextFile>();
         for (ClosedFile entry : list) {

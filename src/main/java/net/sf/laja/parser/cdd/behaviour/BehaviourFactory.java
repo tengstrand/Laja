@@ -41,6 +41,10 @@ public class BehaviourFactory implements BehaviourParser.IBehaviourFactory {
         return new AsMethod();
     }
 
+    public BehaviourParser.IBehaviourMethod createBehaviourMethod() {
+        return new BehaviourMethod();
+    }
+
     public BehaviourParser.IBehaviour createBehaviour() {
         return behaviour = new Behaviour();
     }

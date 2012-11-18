@@ -12,7 +12,9 @@ public class AsMethod implements BehaviourParser.IAsMethod {
     public String statement;
 
     public void setComment(String comment) {
-        isFactory = comment.contains("(factory)");
+        if (comment != null) {
+            isFactory = comment.contains("(factory)");
+        }
     }
 
     public void setReturnclass(String returnclass) {

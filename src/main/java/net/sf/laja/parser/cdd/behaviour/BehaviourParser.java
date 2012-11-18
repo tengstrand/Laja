@@ -28,7 +28,7 @@ import net.sf.laja.parser.engine2.source.StringSource;
 import net.sf.laja.parser.engine2.source.URLSource;
 
 /**
- * Auto generated 2012-08-23 by Laja:
+ * Auto generated 2012-11-18 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006
@@ -132,14 +132,16 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         Data.BehaviourStateStatementExtendsClass behaviourStateStatementExtendsClass = data2.new BehaviourStateStatementExtendsClass("behaviourStateStatementExtendsClass");
         Data.BehaviourStateConstructorStateClass behaviourStateConstructorStateClass = data2.new BehaviourStateConstructorStateClass("behaviourStateConstructorStateClass");
         Data.BehaviourStateConstructorParameters behaviourStateConstructorParameters = data2.new BehaviourStateConstructorParameters("behaviourStateConstructorParameters");
-        Data.AsMethodAsMethodComment asMethodAsMethodComment = data2.new AsMethodAsMethodComment("asMethodAsMethodComment");
         Data.AsMethodAsMethodReturnclass asMethodAsMethodReturnclass = data2.new AsMethodAsMethodReturnclass("asMethodAsMethodReturnclass");
         Data.AsMethodAsMethodMethodName asMethodAsMethodMethodName = data2.new AsMethodAsMethodMethodName("asMethodAsMethodMethodName");
         Data.AsMethodAsMethodParameters asMethodAsMethodParameters = data2.new AsMethodAsMethodParameters("asMethodAsMethodParameters");
         Data.AsMethodAsMethodStatement asMethodAsMethodStatement = data2.new AsMethodAsMethodStatement("asMethodAsMethodStatement");
-        Data.BehaviourBehaviourMethodAsMethod behaviourBehaviourMethodAsMethod = data2.new BehaviourBehaviourMethodAsMethod("behaviourBehaviourMethodAsMethod");
+        Data.BehaviourMethodBehaviourMethodComment behaviourMethodBehaviourMethodComment = data2.new BehaviourMethodBehaviourMethodComment("behaviourMethodBehaviourMethodComment");
+        Data.BehaviourMethodBehaviourMethodAsMethod behaviourMethodBehaviourMethodAsMethod = data2.new BehaviourMethodBehaviourMethodAsMethod("behaviourMethodBehaviourMethodAsMethod");
         Data.BehaviourBehaviourImports behaviourBehaviourImports = data2.new BehaviourBehaviourImports("behaviourBehaviourImports");
+        Data.BehaviourBehaviourMethod behaviourBehaviourMethod = data2.new BehaviourBehaviourMethod("behaviourBehaviourMethod");
         Data.StateConstructorStateConstructorStatement stateConstructorStateConstructorStatement = data2.new StateConstructorStateConstructorStatement("stateConstructorStateConstructorStatement");
+        Data.BehaviourBehaviourBehaviourMethod behaviourBehaviourBehaviourMethod = data2.new BehaviourBehaviourBehaviourMethod("behaviourBehaviourBehaviourMethod");
 
         // *** Declarations ***
         OrList newline = new OrList(1, "newline");
@@ -165,7 +167,7 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         ElementList stateStatement = new ElementList(21, "stateStatement");
         ElementList stateConstructor = new ElementList(22, "stateConstructor");
         ElementList asMethod = new ElementList(23, "asMethod");
-        ElementList behaviourMethod = new ElementList(24, "behaviourMethod");
+        OrList behaviourMethod = new OrList(24, "behaviourMethod");
         ElementList behaviour = new ElementList(25, "behaviour");
 
         // *** Statements ***
@@ -375,69 +377,66 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         stateConstructor.add(218, skipCurlyBrace);
         stateConstructor.add(219, statement, stateConstructorStateConstructorStatement);
 
-        // asMethod =
-        //   [!newline+ newline]:comment s
-        //   ["public"|"private" ws] uname:returnclass ws ("as" uname):methodName s "(" s parameters s ")" s statement
-        Optional asMethod_1 = new Optional(220, "asMethod_1", asMethodAsMethodComment);
-        Repeat asMethod_1_1 = new Repeat(221, "asMethod_1_1");
-        asMethod_1_1.add(222, newline, NOT);
-        asMethod_1.add(223, asMethod_1_1);
-        asMethod_1.add(224, newline);
-        asMethod.add(225, asMethod_1);
-        asMethod.add(226, s);
-        Optional asMethod_2 = new Optional(227, "asMethod_2");
-        OrList asMethod_2_1 = new OrList(228, "asMethod_2_1");
-        asMethod_2_1.add(230, new Str(229, "public"));
-        asMethod_2_1.add(232, new Str(231, "private"));
-        asMethod_2.add(233, asMethod_2_1);
-        asMethod_2.add(234, ws);
+        // asMethod = ["public"|"private" ws] uname:returnclass ws ("as" uname):methodName s "(" s parameters s ")" s statement
+        Optional asMethod_1 = new Optional(220, "asMethod_1");
+        OrList asMethod_1_1 = new OrList(221, "asMethod_1_1");
+        asMethod_1_1.add(223, new Str(222, "public"));
+        asMethod_1_1.add(225, new Str(224, "private"));
+        asMethod_1.add(226, asMethod_1_1);
+        asMethod_1.add(227, ws);
+        asMethod.add(228, asMethod_1);
+        asMethod.add(229, uname, asMethodAsMethodReturnclass);
+        asMethod.add(230, ws);
+        ElementList asMethod_2 = new ElementList(231, "asMethod_2", asMethodAsMethodMethodName);
+        asMethod_2.add(233, new Str(232, "as"));
+        asMethod_2.add(234, uname);
         asMethod.add(235, asMethod_2);
-        asMethod.add(236, uname, asMethodAsMethodReturnclass);
-        asMethod.add(237, ws);
-        ElementList asMethod_3 = new ElementList(238, "asMethod_3", asMethodAsMethodMethodName);
-        asMethod_3.add(240, new Str(239, "as"));
-        asMethod_3.add(241, uname);
-        asMethod.add(242, asMethod_3);
-        asMethod.add(243, s);
-        asMethod.add(245, new Str(244, "("));
-        asMethod.add(246, s);
-        asMethod.add(247, parameters, asMethodAsMethodParameters);
-        asMethod.add(248, s);
-        asMethod.add(250, new Str(249, ")"));
-        asMethod.add(251, s);
-        asMethod.add(252, statement, asMethodAsMethodStatement);
+        asMethod.add(236, s);
+        asMethod.add(238, new Str(237, "("));
+        asMethod.add(239, s);
+        asMethod.add(240, parameters, asMethodAsMethodParameters);
+        asMethod.add(241, s);
+        asMethod.add(243, new Str(242, ")"));
+        asMethod.add(244, s);
+        asMethod.add(245, statement, asMethodAsMethodStatement);
 
-        // behaviourMethod = "//" s asMethod
-        behaviourMethod.add(254, new Str(253, "//"));
-        behaviourMethod.add(255, s);
-        behaviourMethod.add(256, asMethod, behaviourBehaviourMethodAsMethod);
+        // behaviourMethod = ("//" (!newline+):comment s asMethod) | asMethod
+        ElementList behaviourMethod_1 = new ElementList(246, "behaviourMethod_1");
+        behaviourMethod_1.add(248, new Str(247, "//"));
+        Repeat behaviourMethod_1_1 = new Repeat(249, "behaviourMethod_1_1", behaviourMethodBehaviourMethodComment);
+        behaviourMethod_1_1.add(250, newline, NOT);
+        behaviourMethod_1.add(251, behaviourMethod_1_1);
+        behaviourMethod_1.add(252, s);
+        behaviourMethod_1.add(253, asMethod, behaviourMethodBehaviourMethodAsMethod);
+        behaviourMethod.add(254, behaviourMethod_1);
+        behaviourMethod.add(255, asMethod, behaviourMethodBehaviourMethodAsMethod);
 
-        // behaviour = [packagestatement] s [imports] s [stateStatement] [!behaviourMethod:x+|END [behaviourMethod]]+ *
-        Optional behaviour_1 = new Optional(257, "behaviour_1");
-        behaviour_1.add(258, packagestatement);
-        behaviour.add(259, behaviour_1);
-        behaviour.add(260, s);
-        Optional behaviour_2 = new Optional(261, "behaviour_2");
-        behaviour_2.add(262, imports, behaviourBehaviourImports);
-        behaviour.add(263, behaviour_2);
-        behaviour.add(264, s);
-        Optional behaviour_3 = new Optional(265, "behaviour_3");
-        behaviour_3.add(266, stateStatement);
-        behaviour.add(267, behaviour_3);
-        Optional behaviour_4 = new Optional(268, "behaviour_4");
-        Repeat behaviour_4_1 = new Repeat(269, "behaviour_4_1");
-        OrList behaviour_4_1_1 = new OrList(270, "behaviour_4_1_1");
-        Repeat behaviour_4_1_1_1 = new Repeat(271, "behaviour_4_1_1_1");
-        behaviour_4_1_1_1.add(272, behaviourMethod, NOT);
-        behaviour_4_1_1.add(273, behaviour_4_1_1_1);
-        behaviour_4_1_1.add(275, new End(274, "behaviour_4_1_1"));
-        behaviour_4_1.add(276, behaviour_4_1_1);
-        Optional behaviour_4_1_2 = new Optional(277, "behaviour_4_1_2");
-        behaviour_4_1_2.add(278, behaviourMethod);
-        behaviour_4_1.add(279, behaviour_4_1_2);
-        behaviour_4.add(280, behaviour_4_1);
-        behaviour.add(281, behaviour_4);
-        behaviour.add(283, new Complete(282, "behaviour"));
+        // behaviour = [packagestatement] s [imports] s [stateStatement] [!behaviourMethod:x+|END [behaviourMethod:method]]+ *
+        Optional behaviour_1 = new Optional(256, "behaviour_1");
+        behaviour_1.add(257, packagestatement);
+        behaviour.add(258, behaviour_1);
+        behaviour.add(259, s);
+        Optional behaviour_2 = new Optional(260, "behaviour_2");
+        behaviour_2.add(261, imports, behaviourBehaviourImports);
+        behaviour.add(262, behaviour_2);
+        behaviour.add(263, s);
+        Optional behaviour_3 = new Optional(264, "behaviour_3");
+        behaviour_3.add(265, stateStatement);
+        behaviour.add(266, behaviour_3);
+        Optional behaviour_4 = new Optional(267, "behaviour_4");
+        Repeat behaviour_4_1 = new Repeat(268, "behaviour_4_1");
+        OrList behaviour_4_1_1 = new OrList(269, "behaviour_4_1_1");
+        Repeat behaviour_4_1_1_1 = new Repeat(270, "behaviour_4_1_1_1");
+        behaviour_4_1_1_1.add(271, behaviourMethod, NOT, behaviourBehaviourBehaviourMethod);
+        behaviour_4_1_1.add(272, behaviour_4_1_1_1);
+        behaviour_4_1_1.add(274, new End(273, "behaviour_4_1_1"));
+        behaviour_4_1.add(275, behaviour_4_1_1);
+        Optional behaviour_4_1_2 = new Optional(276, "behaviour_4_1_2");
+        behaviour_4_1_2.add(277, behaviourMethod, behaviourBehaviourMethod);
+        behaviour_4_1.add(278, behaviour_4_1_2);
+        behaviour_4.add(279, behaviour_4_1);
+        behaviour.add(280, behaviour_4);
+        behaviour.add(282, new Complete(281, "behaviour"));
 
         return new TopElement(data2, behaviour);
     }
@@ -469,7 +468,7 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         ElementList stateStatement = new ElementList(21, "stateStatement");
         ElementList stateConstructor = new ElementList(22, "stateConstructor");
         ElementList asMethod = new ElementList(23, "asMethod");
-        ElementList behaviourMethod = new ElementList(24, "behaviourMethod");
+        OrList behaviourMethod = new OrList(24, "behaviourMethod");
         ElementList behaviour = new ElementList(25, "behaviour");
 
         // *** Statements ***
@@ -679,69 +678,66 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         stateConstructor.add(218, skipCurlyBrace);
         stateConstructor.add(219, statement);
 
-        // asMethod =
-        //   [!newline+ newline]:comment s
-        //   ["public"|"private" ws] uname:returnclass ws ("as" uname):methodName s "(" s parameters s ")" s statement
+        // asMethod = ["public"|"private" ws] uname:returnclass ws ("as" uname):methodName s "(" s parameters s ")" s statement
         Optional asMethod_1 = new Optional(220, "asMethod_1");
-        Repeat asMethod_1_1 = new Repeat(221, "asMethod_1_1");
-        asMethod_1_1.add(222, newline, NOT);
-        asMethod_1.add(223, asMethod_1_1);
-        asMethod_1.add(224, newline);
-        asMethod.add(225, asMethod_1);
-        asMethod.add(226, s);
-        Optional asMethod_2 = new Optional(227, "asMethod_2");
-        OrList asMethod_2_1 = new OrList(228, "asMethod_2_1");
-        asMethod_2_1.add(230, new Str(229, "public"));
-        asMethod_2_1.add(232, new Str(231, "private"));
-        asMethod_2.add(233, asMethod_2_1);
-        asMethod_2.add(234, ws);
+        OrList asMethod_1_1 = new OrList(221, "asMethod_1_1");
+        asMethod_1_1.add(223, new Str(222, "public"));
+        asMethod_1_1.add(225, new Str(224, "private"));
+        asMethod_1.add(226, asMethod_1_1);
+        asMethod_1.add(227, ws);
+        asMethod.add(228, asMethod_1);
+        asMethod.add(229, uname);
+        asMethod.add(230, ws);
+        ElementList asMethod_2 = new ElementList(231, "asMethod_2");
+        asMethod_2.add(233, new Str(232, "as"));
+        asMethod_2.add(234, uname);
         asMethod.add(235, asMethod_2);
-        asMethod.add(236, uname);
-        asMethod.add(237, ws);
-        ElementList asMethod_3 = new ElementList(238, "asMethod_3");
-        asMethod_3.add(240, new Str(239, "as"));
-        asMethod_3.add(241, uname);
-        asMethod.add(242, asMethod_3);
-        asMethod.add(243, s);
-        asMethod.add(245, new Str(244, "("));
-        asMethod.add(246, s);
-        asMethod.add(247, parameters);
-        asMethod.add(248, s);
-        asMethod.add(250, new Str(249, ")"));
-        asMethod.add(251, s);
-        asMethod.add(252, statement);
+        asMethod.add(236, s);
+        asMethod.add(238, new Str(237, "("));
+        asMethod.add(239, s);
+        asMethod.add(240, parameters);
+        asMethod.add(241, s);
+        asMethod.add(243, new Str(242, ")"));
+        asMethod.add(244, s);
+        asMethod.add(245, statement);
 
-        // behaviourMethod = "//" s asMethod
-        behaviourMethod.add(254, new Str(253, "//"));
-        behaviourMethod.add(255, s);
-        behaviourMethod.add(256, asMethod);
+        // behaviourMethod = ("//" (!newline+):comment s asMethod) | asMethod
+        ElementList behaviourMethod_1 = new ElementList(246, "behaviourMethod_1");
+        behaviourMethod_1.add(248, new Str(247, "//"));
+        Repeat behaviourMethod_1_1 = new Repeat(249, "behaviourMethod_1_1");
+        behaviourMethod_1_1.add(250, newline, NOT);
+        behaviourMethod_1.add(251, behaviourMethod_1_1);
+        behaviourMethod_1.add(252, s);
+        behaviourMethod_1.add(253, asMethod);
+        behaviourMethod.add(254, behaviourMethod_1);
+        behaviourMethod.add(255, asMethod);
 
-        // behaviour = [packagestatement] s [imports] s [stateStatement] [!behaviourMethod:x+|END [behaviourMethod]]+ *
-        Optional behaviour_1 = new Optional(257, "behaviour_1");
-        behaviour_1.add(258, packagestatement);
-        behaviour.add(259, behaviour_1);
-        behaviour.add(260, s);
-        Optional behaviour_2 = new Optional(261, "behaviour_2");
-        behaviour_2.add(262, imports);
-        behaviour.add(263, behaviour_2);
-        behaviour.add(264, s);
-        Optional behaviour_3 = new Optional(265, "behaviour_3");
-        behaviour_3.add(266, stateStatement);
-        behaviour.add(267, behaviour_3);
-        Optional behaviour_4 = new Optional(268, "behaviour_4");
-        Repeat behaviour_4_1 = new Repeat(269, "behaviour_4_1");
-        OrList behaviour_4_1_1 = new OrList(270, "behaviour_4_1_1");
-        Repeat behaviour_4_1_1_1 = new Repeat(271, "behaviour_4_1_1_1");
-        behaviour_4_1_1_1.add(272, behaviourMethod, NOT);
-        behaviour_4_1_1.add(273, behaviour_4_1_1_1);
-        behaviour_4_1_1.add(275, new End(274, "behaviour_4_1_1"));
-        behaviour_4_1.add(276, behaviour_4_1_1);
-        Optional behaviour_4_1_2 = new Optional(277, "behaviour_4_1_2");
-        behaviour_4_1_2.add(278, behaviourMethod);
-        behaviour_4_1.add(279, behaviour_4_1_2);
-        behaviour_4.add(280, behaviour_4_1);
-        behaviour.add(281, behaviour_4);
-        behaviour.add(283, new Complete(282, "behaviour"));
+        // behaviour = [packagestatement] s [imports] s [stateStatement] [!behaviourMethod:x+|END [behaviourMethod:method]]+ *
+        Optional behaviour_1 = new Optional(256, "behaviour_1");
+        behaviour_1.add(257, packagestatement);
+        behaviour.add(258, behaviour_1);
+        behaviour.add(259, s);
+        Optional behaviour_2 = new Optional(260, "behaviour_2");
+        behaviour_2.add(261, imports);
+        behaviour.add(262, behaviour_2);
+        behaviour.add(263, s);
+        Optional behaviour_3 = new Optional(264, "behaviour_3");
+        behaviour_3.add(265, stateStatement);
+        behaviour.add(266, behaviour_3);
+        Optional behaviour_4 = new Optional(267, "behaviour_4");
+        Repeat behaviour_4_1 = new Repeat(268, "behaviour_4_1");
+        OrList behaviour_4_1_1 = new OrList(269, "behaviour_4_1_1");
+        Repeat behaviour_4_1_1_1 = new Repeat(270, "behaviour_4_1_1_1");
+        behaviour_4_1_1_1.add(271, behaviourMethod, NOT);
+        behaviour_4_1_1.add(272, behaviour_4_1_1_1);
+        behaviour_4_1_1.add(274, new End(273, "behaviour_4_1_1"));
+        behaviour_4_1.add(275, behaviour_4_1_1);
+        Optional behaviour_4_1_2 = new Optional(276, "behaviour_4_1_2");
+        behaviour_4_1_2.add(277, behaviourMethod);
+        behaviour_4_1.add(278, behaviour_4_1_2);
+        behaviour_4.add(279, behaviour_4_1);
+        behaviour.add(280, behaviour_4);
+        behaviour.add(282, new Complete(281, "behaviour"));
 
         return new TopElement(data1, behaviour);
     }
@@ -784,6 +780,7 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         BehaviourParser.IStateConstructor createStateConstructor();
         BehaviourParser.IParameter createParameter();
         BehaviourParser.IAsMethod createAsMethod();
+        BehaviourParser.IBehaviourMethod createBehaviourMethod();
         BehaviourParser.IBehaviour createBehaviour();
     }
 
@@ -827,11 +824,16 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
 
     // AsMethod
     public interface IAsMethod {
-        public void setComment(String comment);
         public void setReturnclass(String returnclass);
         public void setMethodName(String methodName);
         public void setParameters(IParameters iparameters);
         public void setStatement(IStatement istatement);
+    }
+
+    // BehaviourMethod
+    public interface IBehaviourMethod {
+        public void setComment(String comment);
+        public void setAsMethod(IAsMethod iasMethod);
     }
 
     // Behaviour
@@ -841,7 +843,7 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         public void setExtendsClass(String extendsClass);
         public void setStateClass(String stateClass);
         public void setParameters(IParameters iparameters);
-        public void addAsMethod(IAsMethod iasMethod);
+        public void addMethod(IBehaviourMethod imethod);
     }
 
     // *** Data ***
@@ -855,6 +857,7 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         private Stack<IStateConstructor> stateConstructorStack = new Stack<IStateConstructor>();
         private Stack<IParameter> parameterStack = new Stack<IParameter>();
         private Stack<IAsMethod> asMethodStack = new Stack<IAsMethod>();
+        private Stack<IBehaviourMethod> behaviourMethodStack = new Stack<IBehaviourMethod>();
         private Stack<IBehaviour> behaviourStack = new Stack<IBehaviour>();
 
         public Data(BehaviourParser.IBehaviourFactory factory) {
@@ -923,6 +926,14 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
         public BehaviourParser.IAsMethod peekAsMethod() {
             if (asMethodStack.empty()) { return null; }
             return asMethodStack.peek();
+        }
+
+        // BehaviourMethod
+        public void pushBehaviourMethod() { behaviourMethodStack.push(factory.createBehaviourMethod()); }
+        public BehaviourParser.IBehaviourMethod popBehaviourMethod() { return (BehaviourParser.IBehaviourMethod)behaviourMethodStack.pop(); }
+        public BehaviourParser.IBehaviourMethod peekBehaviourMethod() {
+            if (behaviourMethodStack.empty()) { return null; }
+            return behaviourMethodStack.peek();
         }
 
         // Behaviour
@@ -1075,18 +1086,7 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
             }
         }
 
-        // AsMethod asMethod.setComment(String comment);
-        public class AsMethodAsMethodComment implements Output {
-            private String name;
-            public AsMethodAsMethodComment(String name) { this.name = name; }
-            public boolean receive() { return false; }
-            public void init(Source source) { }
-            public void set(Source source, int bookmark) {
-                peekAsMethod().setComment(source.get(bookmark));
-            }
-        }
-
-        // asMethod.setReturnclass(String returnclass);
+        // AsMethod asMethod.setReturnclass(String returnclass);
         public class AsMethodAsMethodReturnclass implements Output {
             private String name;
             public AsMethodAsMethodReturnclass(String name) { this.name = name; }
@@ -1130,14 +1130,25 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
             }
         }
 
-        // behaviour.addAsMethod(AsMethod behaviourMethod.asMethod);
-        public class BehaviourBehaviourMethodAsMethod implements Output {
+        // BehaviourMethod behaviourMethod.setComment(String comment);
+        public class BehaviourMethodBehaviourMethodComment implements Output {
             private String name;
-            public BehaviourBehaviourMethodAsMethod(String name) { this.name = name; }
+            public BehaviourMethodBehaviourMethodComment(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekBehaviourMethod().setComment(source.get(bookmark));
+            }
+        }
+
+        // behaviourMethod.setAsMethod(AsMethod asMethod);
+        public class BehaviourMethodBehaviourMethodAsMethod implements Output {
+            private String name;
+            public BehaviourMethodBehaviourMethodAsMethod(String name) { this.name = name; }
             public boolean receive() { return false; }
             public void init(Source source) { pushAsMethod(); }
             public void set(Source source, int bookmark) {
-                peekBehaviour().addAsMethod(popAsMethod());
+                peekBehaviourMethod().setAsMethod(popAsMethod());
             }
         }
 
@@ -1152,6 +1163,17 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
             }
         }
 
+        // behaviour.addMethod(BehaviourMethod method);
+        public class BehaviourBehaviourMethod implements Output {
+            private String name;
+            public BehaviourBehaviourMethod(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushBehaviourMethod(); }
+            public void set(Source source, int bookmark) {
+                peekBehaviour().addMethod(popBehaviourMethod());
+            }
+        }
+
         public class StateConstructorStateConstructorStatement implements Output {
             private String name;
             public StateConstructorStateConstructorStatement(String name) { this.name = name; }
@@ -1159,6 +1181,16 @@ public final class BehaviourParser implements net.sf.laja.parser.engine2.Parser 
             public void init(Source source) { pushStatement(); }
             public void set(Source source, int bookmark) {
                 popStatement();
+            }
+        }
+
+        public class BehaviourBehaviourBehaviourMethod implements Output {
+            private String name;
+            public BehaviourBehaviourBehaviourMethod(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushBehaviourMethod(); }
+            public void set(Source source, int bookmark) {
+                popBehaviourMethod();
             }
         }
     }

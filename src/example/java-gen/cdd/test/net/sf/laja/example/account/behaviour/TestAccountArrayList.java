@@ -1,7 +1,7 @@
-package net.sf.laja.example.file.behaviour;
+package net.sf.laja.example.account.behaviour;
 
-import net.sf.laja.example.file.state.*;
-import net.sf.laja.example.file.behaviour.*;
+import net.sf.laja.example.account.state.*;
+import net.sf.laja.example.account.behaviour.*;
 import java.util.*;
 
 /**
@@ -9,56 +9,84 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class WritableFileArrayList implements WritableFileList, RandomAccess, Cloneable, java.io.Serializable {
-    protected FileStateList stateList;
-    protected final List<WritableFile> list;
+public class TestAccountArrayList implements TestAccountList, RandomAccess, Cloneable, java.io.Serializable {
+    protected AccountStateList stateList;
+    protected final List<TestAccount> list;
 
-    public WritableFileArrayList(WritableFile... list) {
-        this.list = new ArrayList<WritableFile>();
+    public TestAccountArrayList(TestAccount... list) {
+        this.list = new ArrayList<TestAccount>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public WritableFileArrayList(Collection<WritableFile> list) {
-        this.list = new ArrayList<WritableFile>();
+    public TestAccountArrayList(Collection<TestAccount> list) {
+        this.list = new ArrayList<TestAccount>();
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<WritableFile> {
-        private final FileStateList stateList;
+    public TestAccountArrayList(AccountStateList stateList) {
+        this.stateList = stateList;
+        List<TestAccount> elements = new ArrayList<TestAccount>(stateList.size());
 
-        public StateInSyncList(FileStateList stateList, List<WritableFile> elements) {
+        for (AccountState state : stateList) {
+            AccountStateBuilder builder = new AccountStateBuilderImpl(state);
+            TestAccount entry = (TestAccount) builder.as(new TestAccountFactory.TestAccountFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public SourceAccountArrayList asSourceAccountList() {
+        List<SourceAccount> result = new ArrayList<SourceAccount>();
+        for (TestAccount entry : list) {
+            result.add(entry.asSourceAccount());
+        }
+        return new SourceAccountArrayList(result);
+    }
+
+    public DestinationAccountArrayList asDestinationAccountList() {
+        List<DestinationAccount> result = new ArrayList<DestinationAccount>();
+        for (TestAccount entry : list) {
+            result.add(entry.asDestinationAccount());
+        }
+        return new DestinationAccountArrayList(result);
+    }
+
+    public static class StateInSyncList extends ArrayList<TestAccount> {
+        private final AccountStateList stateList;
+
+        public StateInSyncList(AccountStateList stateList, List<TestAccount> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(WritableFile element) {
+        public boolean add(TestAccount element) {
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, WritableFile element) {
+        public void add(int index, TestAccount element) {
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends WritableFile> collection) {
+        public boolean addAll(Collection<? extends TestAccount> collection) {
             boolean modified = super.addAll(collection);
 
-            for (WritableFile element : collection) {
+            for (TestAccount element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends WritableFile> collection) {
+        public boolean addAll(int index, Collection<? extends TestAccount> collection) {
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (WritableFile element : collection) {
+            for (TestAccount element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -68,10 +96,10 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean remove(Object element) {
-            if (!(element instanceof WritableFile)) {
+            if (!(element instanceof TestAccount)) {
                 return false;
             }
-            stateList.remove(((WritableFile) element).getState(stateList));
+            stateList.remove(((TestAccount) element).getState(stateList));
 
             return super.remove(element);
         }
@@ -81,9 +109,9 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof WritableFile) {
+                if (element instanceof TestAccount) {
                     elements.add(element);
-                    states.add(((WritableFile)element).getState(stateList));
+                    states.add(((TestAccount)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -97,9 +125,9 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof WritableFile) {
+                if (element instanceof TestAccount) {
                     elements.add(element);
-                    states.add(((WritableFile)element).getState(stateList));
+                    states.add(((TestAccount)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -115,13 +143,13 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         }
 
         @Override
-        public WritableFile set(int index, WritableFile element) {
+        public TestAccount set(int index, TestAccount element) {
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public WritableFile remove(int index) {
+        public TestAccount remove(int index) {
             stateList.remove(index);
             return super.remove(index);
         }
@@ -139,7 +167,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         return list.contains(element);
     }
 
-    public Iterator<WritableFile> iterator() {
+    public Iterator<TestAccount> iterator() {
         return list.iterator();
     }
 
@@ -147,28 +175,28 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         return list.toArray();
     }
 
-    public <WritableFile> WritableFile[] toArray(WritableFile[] array) {
+    public <TestAccount> TestAccount[] toArray(TestAccount[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(WritableFile element) {
+    public boolean add(TestAccount element) {
         return list.add(element);
     }
 
-    public void add(int index, WritableFile element) {
+    public void add(int index, TestAccount element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends WritableFile> collection) {
+    public boolean addAll(Collection<? extends TestAccount> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends WritableFile> collection) {
+    public boolean addAll(int index, Collection<? extends TestAccount> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof WritableFile)) {
+        if (!(element instanceof TestAccount)) {
             return false;
         }
         return list.remove(element);
@@ -190,15 +218,15 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         list.clear();
     }
 
-    public WritableFile get(int index) {
+    public TestAccount get(int index) {
         return list.get(index);
     }
 
-    public WritableFile set(int index, WritableFile element) {
+    public TestAccount set(int index, TestAccount element) {
         return list.set(index, element);
     }
 
-    public WritableFile remove(int index) {
+    public TestAccount remove(int index) {
         return list.remove(index);
     }
 
@@ -210,15 +238,15 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<WritableFile> listIterator() {
+    public ListIterator<TestAccount> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<WritableFile> listIterator(int index) {
+    public ListIterator<TestAccount> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<WritableFile> subList(int fromIndex, int toIndex) {
+    public List<TestAccount> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

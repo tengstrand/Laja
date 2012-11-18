@@ -102,8 +102,9 @@ public class Behaviour implements BehaviourParser.IBehaviour {
         }
     }
 
-    public void addAsMethod(BehaviourParser.IAsMethod iasMethod) {
-        asMethods.add((AsMethod)iasMethod);
+    public void addMethod(BehaviourParser.IBehaviourMethod imethod) {
+        BehaviourMethod behaviourMethod = (BehaviourMethod)imethod;
+        asMethods.add(behaviourMethod.asMethod);
     }
 
     public boolean isFactory() {

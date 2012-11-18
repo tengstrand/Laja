@@ -2,6 +2,7 @@ package net.sf.laja.parser.cdd;
 
 import net.sf.laja.parser.cdd.behaviour.AsMethod;
 import net.sf.laja.parser.cdd.behaviour.Behaviour;
+import net.sf.laja.parser.cdd.behaviour.BehaviourMethod;
 import net.sf.laja.parser.cdd.behaviour.Imports;
 import net.sf.laja.parser.cdd.behaviour.Parameters;
 import net.sf.laja.parser.cdd.behaviour.Statement;
@@ -29,15 +30,18 @@ public class BehaviourCreator {
         behaviour.setStateClass(template.classname + "State");
         behaviour.setParameters(new Parameters());
 
+        BehaviourMethod behaviourMethod = new BehaviourMethod();
+
         AsMethod asMethod = new AsMethod();
-        asMethod.setComment("(factory)");
         asMethod.setMethodName("as" + template.classname);
         asMethod.setReturnclass(template.classname);
         Statement statement = new Statement();
         statement.setInnerStatement("return new " + classname + "(state);\n    ");
         asMethod.setStatement(statement);
         asMethod.setParameters(new Parameters());
-        behaviour.addAsMethod(asMethod);
+        behaviourMethod.setComment("(factory)");
+        behaviourMethod.setAsMethod(asMethod);
+        behaviour.addMethod(behaviourMethod);
 
         Imports imports = new Imports();
         Importstatement importstatement = new Importstatement();

@@ -74,20 +74,20 @@ System.out.println(persons);
 PersonArrayList{[Person{givenName='Anders', surname='Andersson'}, Person{givenName='Carl', surname='Carlsson'}]}
 </source>
 
-=== Switching context ===
+=== Add a new context ===
 __NOTOC__
 
 Let's say we need to implement functionality that export persons to a file in a semicolon separated text format.
 
-This is a ''new context'' so let's create the class ''TextPerson''
+This is a ''new context'' so let's create the class ''PersonRowInFile''
 (we don't want to mix responsibilities by adding this functionality to ''Person''):
 <source>
 package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
-public class TextPerson extends PersonFactory {
-    public TextPerson(PersonState state) {
+public class PersonRowInFile extends PersonFactory {
+    public PersonRowInFile(PersonState state) {
         super(state);
     }
 
@@ -97,7 +97,7 @@ public class TextPerson extends PersonFactory {
 }
 </source>
 
-...add the switcher method ''asTextPerson'' to ''Person'' and regenerate to create the corresponding list classes ''TextPersonList'' and ''TextPersonArrayList'':
+...add the switcher method ''asPersonRowInFile'' to ''Person'' and regenerate to create the corresponding list classes ''PersonRowInFileList'' and ''PersonRowInFileArrayList'':
 <source>
 package com.myproject.behaviour;
 
@@ -114,8 +114,8 @@ public class Person extends PersonFactory {
     }
 
     // (factory)
-    public TextPerson asTextPerson() {
-        return new TextPerson(state);
+    public PersonRowInFile asPersonRowInFile() {
+        return new PersonRowInFile(state);
     }
 }
 </source>
@@ -126,10 +126,10 @@ package com.myproject.behaviour;
 
 public class PersonExporter {
 
-    public void export(TextPersonList persons) {
+    public void export(PersonRowInFileList persons) {
         System.out.println("Start exporting");
 
-        for (TextPerson person : persons) {
+        for (PersonRowInFile person : persons) {
             System.out.println("  Exported: " + person);
         }
         System.out.println("End");
@@ -145,12 +145,12 @@ public class Main {
     public static void main(String[] args) {
         PersonExporter exporter = new PersonExporter();
 
-        PersonList persons = Person.createList(
+        PersonRowInFileList persons = Person.createList(
                 Person.givenName("Anders").surname("Andersson"),
                 Person.givenName("Carl").surname("Carlsson")
-                ).asPersonList();
+        ).asPersonRowInFileList();
 
-        exporter.export(persons.asTextPersonList());
+        exporter.export(persons);
     }
 }
 </source>
@@ -158,8 +158,8 @@ public class Main {
 ...output:
 <source>
 Start exporting
-  Exported: TextPerson{givenName='Anders', surname='Andersson'}
-  Exported: TextPerson{givenName='Carl', surname='Carlsson'}
+  Exported: PersonRowInFile{givenName='Anders', surname='Andersson'}
+  Exported: PersonRowInFile{givenName='Carl', surname='Carlsson'}
 End
 </source>
 
@@ -171,8 +171,8 @@ A convenient thing with the behaviour lists is that they contain all the corresp
 If we have a switcher method in ''Person'':
 <source>
     // (factory)
-    public TextPerson asTextPerson() {
-        return new TextPerson(state);
+    public PersonRowInFile asPersonRowInFile() {
+        return new PersonRowInFile(state);
     }
 </source>
 
@@ -183,12 +183,26 @@ public interface PersonList extends List<Person> {
 }
 </source>
 
-This allows us to ''switch context'' easily like we did in the exporter:
-<source>
-persons.asTextPersonList()
-</source>
+This allows us to ''switch context'' which allow us to write:
 
-...which creates a list of ''TextPerson'' elements out of the list of ''Person'' elements.
+<source>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        PersonExporter exporter = new PersonExporter();
+
+        // 1. Create a list of Persons.
+        PersonList persons = Person.createList(
+                Person.givenName("Anders").surname("Andersson"),
+                Person.givenName("Carl").surname("Carlsson")
+        ).asPersonList();
+
+        // 2. Context switch to a list of PersonRowInFile.
+        exporter.export(persons.asPersonRowInFileList());
+    }
+}
+</source>
 
 === Creating lists ===
 

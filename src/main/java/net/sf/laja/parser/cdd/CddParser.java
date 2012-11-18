@@ -26,7 +26,12 @@ public class CddParser {
     public static void main(String[] args) throws IOException {
         CddParser parser = new CddParser();
 
-        Behaviour behaviour = parser.parseBehaviour("C:/Source/IDEA/CSB/src/main/java/csb/domain/customer/Customer.java");
+        try {
+            Behaviour behaviour = parser.parseBehaviour("C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java");
+            System.out.println(behaviour);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public StateTemplate parseStateTemplate(final String filePath) {

@@ -27,11 +27,10 @@ grammar behaviour {
    stateStatement = public "class" ws name [ws "extends" ws uname:extendsClass] skipCurlyBrace "{" [!stateConstructor:x+] stateConstructor;
    stateConstructor = s public name s "(" s ["final" s] name:stateClass ws name parameters skipCurlyBrace statement;
 
-   asMethod = [!newline+ newline]:comment s
-              ["public"|"private" ws] uname:returnclass ws ("as" uname):methodName s "(" s parameters s ")" s statement;
+   asMethod = ["public"|"private" ws] uname:returnclass ws ("as" uname):methodName s "(" s parameters s ")" s statement;
 
-   behaviourMethod = "//" s asMethod;
-   behaviour = [packagestatement] s [imports] s [stateStatement] [!behaviourMethod:x+|END [behaviourMethod]]+ *;
+   behaviourMethod = ("//" (!newline+):comment s asMethod) | asMethod;
+   behaviour = [packagestatement] s [imports] s [stateStatement] [!behaviourMethod:x+|END [behaviourMethod:method]]+ *;
 
    Parameters parameters.addParameter(Parameter parameter);
 
@@ -50,16 +49,18 @@ grammar behaviour {
    Parameter parameter.setType(String type);
    parameter.setVariable(String variable);
 
-   AsMethod asMethod.setComment(String comment);
-   asMethod.setReturnclass(String returnclass);
+   AsMethod asMethod.setReturnclass(String returnclass);
    asMethod.setMethodName(String methodName);
    asMethod.setParameters(Parameters parameters);
    asMethod.setStatement(Statement statement);
+
+   BehaviourMethod behaviourMethod.setComment(String comment);
+   behaviourMethod.setAsMethod(AsMethod asMethod);
 
    Behaviour behaviour.setPackageStatement(String packagestatement.statement);
    behaviour.setImports(Imports imports);
    behaviour.setExtendsClass(String stateStatement.extendsClass);
    behaviour.setStateClass(String stateConstructor.stateClass);
    behaviour.setParameters(Parameters stateConstructor.parameters);
-   behaviour.addAsMethod(AsMethod behaviourMethod.asMethod);
+   behaviour.addMethod(BehaviourMethod method);
 }
