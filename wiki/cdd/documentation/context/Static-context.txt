@@ -31,7 +31,7 @@ It encourages putting ''behaviour'' inside objects close to its data so they can
 In addition to a facilitated integration CDD also let us create objects that focus on one task at a time, following the [http://en.wikipedia.org/wiki/Single_responsibility_principle Single responsibility] principle.
 
 
-Let us continue with yet another example. In an earlier example we switched context to be able to perform the save operation:
+In an earlier example we switched context to be able to perform the save operation:
 <source>
 person.asPersistable().save();
 </source>
