@@ -13,30 +13,7 @@ public class PersonStateTemplate {
 }
 </source>
 
-If we regenerate we can see that only new and changed files are created or modified, and 8 files are left untouched:
-
-<source>
-C:\Projects\MyProject\src\java>laja myproject
-Reading file "myproject.laja"
-  State: Person
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateImpl.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilder.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilderImpl.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateProjection.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonState.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonEntity.java" - OK
-  Behaviour: Person
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEntityFactory.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonAbstractList.java" - OK
-  Processed 21 classes: 2 new, 11 changed, 8 unchanged.
-</source>
-
-Modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
+...regenerate and modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
 <source>
     // The 'chained creator' starts here...
