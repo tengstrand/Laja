@@ -309,6 +309,46 @@ Start exporting
 End
 </source>
 
+All collection state members are initialized to empty lists and are ready to be used:
+
+<source>
+public class ExporterStateImpl implements ExporterState {
+    protected PersonStateList persons;
+    ...
+    ExporterStateImpl() {
+        persons = PersonStateListImpl.emptyList();
+    }
+    ...
+}
+</source>
+
+=== Dynamic context ===
+
+If you follow the instructions in the [[Dynamic context|dynamic context]] section by adding ''UserRole'', ''PersonStateTemplate'',
+''PersonAdmin'' and ''PersonRestricted'' and generate, then you will be able to create instances of person:
+
+<source>
+Person admin = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(UserRole.ADMIN);
+</source>
+
+...where 'Person' is an interface and the concrete classes is hidden behind a factory.
+The same technique can also be used for lists:
+
+<source>
+PersonList persons = PersonFactory.createList(
+        PersonFactory.name("Anders").phoneNumber("011-11111111"),
+        PersonFactory.name("Richard").phoneNumber("022-22222222")
+).asPersonList(UserRole.ADMIN);
+
+System.out.println(persons);
+</source>
+
+...output:
+
+<source>
+PersonArrayList{[PersonAdmin{name='Anders', phoneNumber='011-11111111'}, PersonAdmin{name='Richard', phoneNumber='022-22222222'}]}
+</source>
+
 === Caution ===
 
 CDD is still in an alpha version and some functionality is still missing and more work needs to be done especially with the collections.
