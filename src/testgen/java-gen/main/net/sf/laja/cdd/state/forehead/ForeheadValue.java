@@ -20,20 +20,12 @@ public class ForeheadValue implements ForeheadElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(ForeheadStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public ForeheadState getState(Certificate certificate) {
         return state;
     }
 
     public ForeheadState getState(ForeheadStateList stateList) {
         return state;
-    }
-
-    public void addToList(ForeheadStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

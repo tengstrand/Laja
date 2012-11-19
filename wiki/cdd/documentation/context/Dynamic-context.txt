@@ -44,8 +44,6 @@ import com.myproject.state.PersonStateList;
 
 public interface Person {
     PersonState getState(PersonStateList stateList);
-    boolean contains(PersonStateList stateList);
-    void addToList(PersonStateList stateList);
 }
 </source>
 

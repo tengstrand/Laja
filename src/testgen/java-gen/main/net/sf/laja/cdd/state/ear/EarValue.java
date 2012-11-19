@@ -20,20 +20,12 @@ public class EarValue implements EarElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(EarStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public EarState getState(Certificate certificate) {
         return state;
     }
 
     public EarState getState(EarStateList stateList) {
         return state;
-    }
-
-    public void addToList(EarStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

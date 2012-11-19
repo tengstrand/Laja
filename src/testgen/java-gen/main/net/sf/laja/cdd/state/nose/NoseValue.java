@@ -20,20 +20,12 @@ public class NoseValue implements NoseElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(NoseStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public NoseState getState(Certificate certificate) {
         return state;
     }
 
     public NoseState getState(NoseStateList stateList) {
         return state;
-    }
-
-    public void addToList(NoseStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

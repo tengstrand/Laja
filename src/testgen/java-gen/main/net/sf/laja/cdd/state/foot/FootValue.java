@@ -20,20 +20,12 @@ public class FootValue implements FootElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(FootStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public FootState getState(Certificate certificate) {
         return state;
     }
 
     public FootState getState(FootStateList stateList) {
         return state;
-    }
-
-    public void addToList(FootStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

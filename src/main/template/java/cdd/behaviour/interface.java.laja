@@ -7,8 +7,6 @@ import {template.packagename}.{stateListClass};
 
 public interface {behaviourInterface} {
     {stateClass} getState({stateListClass} stateList);
-    boolean contains({stateListClass} stateList);
-    void addToList({stateListClass} stateList);
 }
 #end
 

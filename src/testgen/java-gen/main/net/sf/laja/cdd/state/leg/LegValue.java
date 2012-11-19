@@ -20,20 +20,12 @@ public class LegValue implements LegElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(LegStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public LegState getState(Certificate certificate) {
         return state;
     }
 
     public LegState getState(LegStateList stateList) {
         return state;
-    }
-
-    public void addToList(LegStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

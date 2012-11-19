@@ -20,20 +20,12 @@ public class BrowValue implements BrowElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(BrowStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public BrowState getState(Certificate certificate) {
         return state;
     }
 
     public BrowState getState(BrowStateList stateList) {
         return state;
-    }
-
-    public void addToList(BrowStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

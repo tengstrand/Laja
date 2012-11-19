@@ -20,20 +20,12 @@ public class HandValue implements HandElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(HandStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public HandState getState(Certificate certificate) {
         return state;
     }
 
     public HandState getState(HandStateList stateList) {
         return state;
-    }
-
-    public void addToList(HandStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

@@ -20,20 +20,12 @@ public class HeadValue implements HeadElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(HeadStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public HeadState getState(Certificate certificate) {
         return state;
     }
 
     public HeadState getState(HeadStateList stateList) {
         return state;
-    }
-
-    public void addToList(HeadStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

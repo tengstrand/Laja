@@ -20,20 +20,12 @@ public class ArmValue implements ArmElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(ArmStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public ArmState getState(Certificate certificate) {
         return state;
     }
 
     public ArmState getState(ArmStateList stateList) {
         return state;
-    }
-
-    public void addToList(ArmStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

@@ -20,20 +20,12 @@ public class TerrestrialValue implements TerrestrialElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(TerrestrialStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public TerrestrialState getState(Certificate certificate) {
         return state;
     }
 
     public TerrestrialState getState(TerrestrialStateList stateList) {
         return state;
-    }
-
-    public void addToList(TerrestrialStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

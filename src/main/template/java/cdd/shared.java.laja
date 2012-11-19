@@ -239,19 +239,11 @@ import {certificatePackage}.{certificateClass};
 #end
 
 #macro elementMethods()
-    public boolean contains({stateListClass} stateList) {
-        return stateList.contains(state);
-    }
-
     public {stateClass} getState(Certificate certificate) {
         return state;
     }
 
     public {stateClass} getState({stateListClass} stateList) {
         return state;
-    }
-
-    public void addToList({stateListClass} stateList) {
-        stateList.add(state);
     }
 #end

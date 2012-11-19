@@ -20,20 +20,12 @@ public class FleckValue implements FleckElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(FleckStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public FleckState getState(Certificate certificate) {
         return state;
     }
 
     public FleckState getState(FleckStateList stateList) {
         return state;
-    }
-
-    public void addToList(FleckStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

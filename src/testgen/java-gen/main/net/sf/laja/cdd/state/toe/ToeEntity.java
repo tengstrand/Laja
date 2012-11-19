@@ -20,20 +20,12 @@ public class ToeEntity implements ToeElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(ToeStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public ToeState getState(Certificate certificate) {
         return state;
     }
 
     public ToeState getState(ToeStateList stateList) {
         return state;
-    }
-
-    public void addToList(ToeStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

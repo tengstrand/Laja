@@ -20,20 +20,12 @@ public class HairEntity implements HairElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(HairStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public HairState getState(Certificate certificate) {
         return state;
     }
 
     public HairState getState(HairStateList stateList) {
         return state;
-    }
-
-    public void addToList(HairStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

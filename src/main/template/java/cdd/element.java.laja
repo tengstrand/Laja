@@ -2,8 +2,6 @@
 #macro class()
 public interface {elementClass} {
     {stateClass} getState({stateListClass} stateList);
-    boolean contains({stateListClass} stateList);
-    void addToList({stateListClass} stateList);
 }
 #end
 
