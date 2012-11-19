@@ -24,7 +24,7 @@ public class CustomerStateImpl implements CustomerState {
     private boolean _encapsulated = false;
 
     CustomerStateImpl() {
-        oldAddresses = AddressStateListImpl.emptyList(Certificate.get(this));
+        oldAddresses = AddressStateListImpl.emptyList();
     }
 
     public static CustomerStateBuilder build() {

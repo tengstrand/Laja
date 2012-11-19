@@ -20,20 +20,12 @@ public class DirectoryValue implements DirectoryElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(DirectoryStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public DirectoryState getState(Certificate certificate) {
         return state;
     }
 
     public DirectoryState getState(DirectoryStateList stateList) {
         return state;
-    }
-
-    public void addToList(DirectoryStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

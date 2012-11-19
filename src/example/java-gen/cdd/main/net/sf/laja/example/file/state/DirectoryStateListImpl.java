@@ -14,7 +14,7 @@ public class DirectoryStateListImpl extends ArrayList<DirectoryState> implements
     public DirectoryStateListImpl() {
     }
 
-    public static DirectoryStateList emptyList(Certificate certificate) {
+    public static DirectoryStateList emptyList() {
         return new DirectoryStateListImpl();
     }
 

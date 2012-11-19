@@ -14,7 +14,7 @@ public class VehicleSizeStateListImpl extends ArrayList<VehicleSizeState> implem
     public VehicleSizeStateListImpl() {
     }
 
-    public static VehicleSizeStateList emptyList(Certificate certificate) {
+    public static VehicleSizeStateList emptyList() {
         return new VehicleSizeStateListImpl();
     }
 

@@ -20,20 +20,12 @@ public class TruckTypeValue implements TruckTypeElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(TruckTypeStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public TruckTypeState getState(Certificate certificate) {
         return state;
     }
 
     public TruckTypeState getState(TruckTypeStateList stateList) {
         return state;
-    }
-
-    public void addToList(TruckTypeStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

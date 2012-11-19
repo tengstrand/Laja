@@ -20,20 +20,12 @@ public class CustomerEntity implements CustomerElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(CustomerStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public CustomerState getState(Certificate certificate) {
         return state;
     }
 
     public CustomerState getState(CustomerStateList stateList) {
         return state;
-    }
-
-    public void addToList(CustomerStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

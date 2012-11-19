@@ -16,7 +16,7 @@ public final class HeadStateListBuilder {
 
     public HeadStateListBuilder() {
         certificate = Certificate.get(new HeadStateImpl());
-        states = HeadStateListImpl.emptyList(certificate);
+        states = HeadStateListImpl.emptyList();
     }
 
     public HeadStateListBuilder(HeadStateList states) {

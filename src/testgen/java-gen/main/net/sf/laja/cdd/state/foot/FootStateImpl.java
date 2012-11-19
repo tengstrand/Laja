@@ -17,7 +17,7 @@ public class FootStateImpl implements FootState {
     private boolean _encapsulated = false;
 
     FootStateImpl() {
-        toes = ToeStateListImpl.emptyList(Certificate.get(this));
+        toes = ToeStateListImpl.emptyList();
     }
 
     public static FootStateBuilder build() {

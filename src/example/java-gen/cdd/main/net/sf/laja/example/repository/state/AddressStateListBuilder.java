@@ -16,7 +16,7 @@ public final class AddressStateListBuilder {
 
     public AddressStateListBuilder() {
         certificate = Certificate.get(new AddressStateImpl());
-        states = AddressStateListImpl.emptyList(certificate);
+        states = AddressStateListImpl.emptyList();
     }
 
     public AddressStateListBuilder(AddressStateList states) {

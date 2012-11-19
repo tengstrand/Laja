@@ -20,20 +20,12 @@ public class CarValue implements CarElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(CarStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public CarState getState(Certificate certificate) {
         return state;
     }
 
     public CarState getState(CarStateList stateList) {
         return state;
-    }
-
-    public void addToList(CarStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

@@ -16,7 +16,7 @@ public final class ComputerStateListBuilder {
 
     public ComputerStateListBuilder() {
         certificate = Certificate.get(new ComputerStateImpl());
-        states = ComputerStateListImpl.emptyList(certificate);
+        states = ComputerStateListImpl.emptyList();
     }
 
     public ComputerStateListBuilder(ComputerStateList states) {

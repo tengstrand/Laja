@@ -14,7 +14,7 @@ public class BmiStateListImpl extends ArrayList<BmiState> implements BmiStateLis
     public BmiStateListImpl() {
     }
 
-    public static BmiStateList emptyList(Certificate certificate) {
+    public static BmiStateList emptyList() {
         return new BmiStateListImpl();
     }
 

@@ -16,7 +16,7 @@ public final class LegStateListBuilder {
 
     public LegStateListBuilder() {
         certificate = Certificate.get(new LegStateImpl());
-        states = LegStateListImpl.emptyList(certificate);
+        states = LegStateListImpl.emptyList();
     }
 
     public LegStateListBuilder(LegStateList states) {

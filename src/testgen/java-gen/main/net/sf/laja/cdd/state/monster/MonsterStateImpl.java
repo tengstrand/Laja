@@ -273,10 +273,10 @@ public class MonsterStateImpl implements MonsterState {
     }
 
     MonsterStateImpl() {
-        noses = NoseStateListImpl.emptyList(Certificate.get(this));
-        brows = BrowStateListImpl.emptyList(Certificate.get(this));
-        ears = EarStateListImpl.emptyList(Certificate.get(this));
-        mouths = MouthStateListImpl.emptyList(Certificate.get(this));
+        noses = NoseStateListImpl.emptyList();
+        brows = BrowStateListImpl.emptyList();
+        ears = EarStateListImpl.emptyList();
+        mouths = MouthStateListImpl.emptyList();
     }
 
     public static MonsterStateBuilder build() {

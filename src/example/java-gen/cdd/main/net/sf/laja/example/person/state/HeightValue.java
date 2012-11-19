@@ -20,20 +20,12 @@ public class HeightValue implements HeightElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(HeightStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public HeightState getState(Certificate certificate) {
         return state;
     }
 
     public HeightState getState(HeightStateList stateList) {
         return state;
-    }
-
-    public void addToList(HeightStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

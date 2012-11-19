@@ -14,7 +14,7 @@ public class CustomerStateListImpl extends ArrayList<CustomerState> implements C
     public CustomerStateListImpl() {
     }
 
-    public static CustomerStateList emptyList(Certificate certificate) {
+    public static CustomerStateList emptyList() {
         return new CustomerStateListImpl();
     }
 

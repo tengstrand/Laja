@@ -18,7 +18,7 @@ public class ArmStateImpl implements ArmState {
     private boolean _encapsulated = false;
 
     ArmStateImpl() {
-        hands = HandStateListImpl.emptyList(Certificate.get(this));
+        hands = HandStateListImpl.emptyList();
     }
 
     public static ArmStateBuilder build() {

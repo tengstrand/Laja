@@ -14,7 +14,7 @@ public class HeightStateListImpl extends ArrayList<HeightState> implements Heigh
     public HeightStateListImpl() {
     }
 
-    public static HeightStateList emptyList(Certificate certificate) {
+    public static HeightStateList emptyList() {
         return new HeightStateListImpl();
     }
 

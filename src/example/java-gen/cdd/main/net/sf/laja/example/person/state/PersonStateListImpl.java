@@ -14,7 +14,7 @@ public class PersonStateListImpl extends ArrayList<PersonState> implements Perso
     public PersonStateListImpl() {
     }
 
-    public static PersonStateList emptyList(Certificate certificate) {
+    public static PersonStateList emptyList() {
         return new PersonStateListImpl();
     }
 

@@ -14,7 +14,7 @@ public class HandStateListImpl extends ArrayList<HandState> implements HandState
     public HandStateListImpl() {
     }
 
-    public static HandStateList emptyList(Certificate certificate) {
+    public static HandStateList emptyList() {
         return new HandStateListImpl();
     }
 

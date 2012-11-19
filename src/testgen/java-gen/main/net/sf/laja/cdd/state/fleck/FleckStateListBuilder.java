@@ -16,7 +16,7 @@ public final class FleckStateListBuilder {
 
     public FleckStateListBuilder() {
         certificate = Certificate.get(new FleckStateImpl());
-        states = FleckStateListImpl.emptyList(certificate);
+        states = FleckStateListImpl.emptyList();
     }
 
     public FleckStateListBuilder(FleckStateList states) {

@@ -16,7 +16,7 @@ public final class EyeStateListBuilder {
 
     public EyeStateListBuilder() {
         certificate = Certificate.get(new EyeStateImpl());
-        states = EyeStateListImpl.emptyList(certificate);
+        states = EyeStateListImpl.emptyList();
     }
 
     public EyeStateListBuilder(EyeStateList states) {

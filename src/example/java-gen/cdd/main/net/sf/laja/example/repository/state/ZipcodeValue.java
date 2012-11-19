@@ -20,20 +20,12 @@ public class ZipcodeValue {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(ZipcodeStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public ZipcodeState getState(Certificate certificate) {
         return state;
     }
 
     public ZipcodeState getState(ZipcodeStateList stateList) {
         return state;
-    }
-
-    public void addToList(ZipcodeStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

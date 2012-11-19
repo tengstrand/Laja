@@ -6,7 +6,7 @@ public class {stateListImplClass} extends ArrayList<{stateClass}> implements {st
     public {stateListImplClass}() {
     }
 
-    public static {stateListClass} emptyList(Certificate certificate) {
+    public static {stateListClass} emptyList() {
         return new {stateListImplClass}();
     }
 

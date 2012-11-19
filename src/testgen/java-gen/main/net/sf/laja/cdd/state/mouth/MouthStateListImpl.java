@@ -14,7 +14,7 @@ public class MouthStateListImpl extends ArrayList<MouthState> implements MouthSt
     public MouthStateListImpl() {
     }
 
-    public static MouthStateList emptyList(Certificate certificate) {
+    public static MouthStateList emptyList() {
         return new MouthStateListImpl();
     }
 

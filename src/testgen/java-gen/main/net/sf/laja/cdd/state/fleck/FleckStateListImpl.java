@@ -14,7 +14,7 @@ public class FleckStateListImpl extends ArrayList<FleckState> implements FleckSt
     public FleckStateListImpl() {
     }
 
-    public static FleckStateList emptyList(Certificate certificate) {
+    public static FleckStateList emptyList() {
         return new FleckStateListImpl();
     }
 

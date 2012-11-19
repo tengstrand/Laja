@@ -16,7 +16,7 @@ public final class PersonStateListBuilder {
 
     public PersonStateListBuilder() {
         certificate = Certificate.get(new PersonStateImpl());
-        states = PersonStateListImpl.emptyList(certificate);
+        states = PersonStateListImpl.emptyList();
     }
 
     public PersonStateListBuilder(PersonStateList states) {

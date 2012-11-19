@@ -16,7 +16,7 @@ public final class CustomerStateListBuilder {
 
     public CustomerStateListBuilder() {
         certificate = Certificate.get(new CustomerStateImpl());
-        states = CustomerStateListImpl.emptyList(certificate);
+        states = CustomerStateListImpl.emptyList();
     }
 
     public CustomerStateListBuilder(CustomerStateList states) {

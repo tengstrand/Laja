@@ -14,7 +14,7 @@ public class OwnerStateListImpl extends ArrayList<OwnerState> implements OwnerSt
     public OwnerStateListImpl() {
     }
 
-    public static OwnerStateList emptyList(Certificate certificate) {
+    public static OwnerStateList emptyList() {
         return new OwnerStateListImpl();
     }
 

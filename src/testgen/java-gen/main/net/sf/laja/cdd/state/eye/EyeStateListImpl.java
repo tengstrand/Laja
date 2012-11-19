@@ -14,7 +14,7 @@ public class EyeStateListImpl extends ArrayList<EyeState> implements EyeStateLis
     public EyeStateListImpl() {
     }
 
-    public static EyeStateList emptyList(Certificate certificate) {
+    public static EyeStateList emptyList() {
         return new EyeStateListImpl();
     }
 

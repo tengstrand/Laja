@@ -50,10 +50,10 @@ public class HeadStateImpl implements HeadState {
     private boolean _encapsulated = false;
 
     HeadStateImpl() {
-        noses = NoseStateListImpl.emptyList(Certificate.get(this));
-        brows = BrowStateListImpl.emptyList(Certificate.get(this));
-        ears = EarStateListImpl.emptyList(Certificate.get(this));
-        mouths = MouthStateListImpl.emptyList(Certificate.get(this));
+        noses = NoseStateListImpl.emptyList();
+        brows = BrowStateListImpl.emptyList();
+        ears = EarStateListImpl.emptyList();
+        mouths = MouthStateListImpl.emptyList();
     }
 
     public static HeadStateBuilder build() {

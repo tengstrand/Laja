@@ -20,20 +20,12 @@ public class PersonValue implements PersonElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(PersonStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public PersonState getState(Certificate certificate) {
         return state;
     }
 
     public PersonState getState(PersonStateList stateList) {
         return state;
-    }
-
-    public void addToList(PersonStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

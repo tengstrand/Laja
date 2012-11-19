@@ -14,7 +14,7 @@ public class ZipcodeStateListImpl extends ArrayList<ZipcodeState> implements Zip
     public ZipcodeStateListImpl() {
     }
 
-    public static ZipcodeStateList emptyList(Certificate certificate) {
+    public static ZipcodeStateList emptyList() {
         return new ZipcodeStateListImpl();
     }
 

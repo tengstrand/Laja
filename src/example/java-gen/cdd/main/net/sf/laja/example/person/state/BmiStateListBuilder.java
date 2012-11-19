@@ -16,7 +16,7 @@ public final class BmiStateListBuilder {
 
     public BmiStateListBuilder() {
         certificate = Certificate.get(new BmiStateImpl());
-        states = BmiStateListImpl.emptyList(certificate);
+        states = BmiStateListImpl.emptyList();
     }
 
     public BmiStateListBuilder(BmiStateList states) {

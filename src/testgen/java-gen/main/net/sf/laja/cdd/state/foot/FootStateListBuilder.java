@@ -16,7 +16,7 @@ public final class FootStateListBuilder {
 
     public FootStateListBuilder() {
         certificate = Certificate.get(new FootStateImpl());
-        states = FootStateListImpl.emptyList(certificate);
+        states = FootStateListImpl.emptyList();
     }
 
     public FootStateListBuilder(FootStateList states) {

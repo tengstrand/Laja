@@ -14,7 +14,7 @@ public class HairStateListImpl extends ArrayList<HairState> implements HairState
     public HairStateListImpl() {
     }
 
-    public static HairStateList emptyList(Certificate certificate) {
+    public static HairStateList emptyList() {
         return new HairStateListImpl();
     }
 

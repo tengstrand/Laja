@@ -20,20 +20,12 @@ public class VehicleSizeValue implements VehicleSizeElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(VehicleSizeStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public VehicleSizeState getState(Certificate certificate) {
         return state;
     }
 
     public VehicleSizeState getState(VehicleSizeStateList stateList) {
         return state;
-    }
-
-    public void addToList(VehicleSizeStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

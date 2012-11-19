@@ -16,7 +16,7 @@ public final class ToeStateListBuilder {
 
     public ToeStateListBuilder() {
         certificate = Certificate.get(new ToeStateImpl());
-        states = ToeStateListImpl.emptyList(certificate);
+        states = ToeStateListImpl.emptyList();
     }
 
     public ToeStateListBuilder(ToeStateList states) {

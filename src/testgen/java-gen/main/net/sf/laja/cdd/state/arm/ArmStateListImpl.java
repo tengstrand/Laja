@@ -14,7 +14,7 @@ public class ArmStateListImpl extends ArrayList<ArmState> implements ArmStateLis
     public ArmStateListImpl() {
     }
 
-    public static ArmStateList emptyList(Certificate certificate) {
+    public static ArmStateList emptyList() {
         return new ArmStateListImpl();
     }
 

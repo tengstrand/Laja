@@ -14,7 +14,7 @@ public class LegStateListImpl extends ArrayList<LegState> implements LegStateLis
     public LegStateListImpl() {
     }
 
-    public static LegStateList emptyList(Certificate certificate) {
+    public static LegStateList emptyList() {
         return new LegStateListImpl();
     }
 

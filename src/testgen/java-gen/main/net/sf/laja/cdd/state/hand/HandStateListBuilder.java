@@ -16,7 +16,7 @@ public final class HandStateListBuilder {
 
     public HandStateListBuilder() {
         certificate = Certificate.get(new HandStateImpl());
-        states = HandStateListImpl.emptyList(certificate);
+        states = HandStateListImpl.emptyList();
     }
 
     public HandStateListBuilder(HandStateList states) {

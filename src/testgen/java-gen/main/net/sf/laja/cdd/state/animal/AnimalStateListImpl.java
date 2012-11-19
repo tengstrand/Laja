@@ -14,7 +14,7 @@ public class AnimalStateListImpl extends ArrayList<AnimalState> implements Anima
     public AnimalStateListImpl() {
     }
 
-    public static AnimalStateList emptyList(Certificate certificate) {
+    public static AnimalStateList emptyList() {
         return new AnimalStateListImpl();
     }
 

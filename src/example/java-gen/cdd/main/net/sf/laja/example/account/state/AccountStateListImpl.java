@@ -14,7 +14,7 @@ public class AccountStateListImpl extends ArrayList<AccountState> implements Acc
     public AccountStateListImpl() {
     }
 
-    public static AccountStateList emptyList(Certificate certificate) {
+    public static AccountStateList emptyList() {
         return new AccountStateListImpl();
     }
 

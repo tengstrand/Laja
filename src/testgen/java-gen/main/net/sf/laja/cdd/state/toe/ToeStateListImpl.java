@@ -14,7 +14,7 @@ public class ToeStateListImpl extends ArrayList<ToeState> implements ToeStateLis
     public ToeStateListImpl() {
     }
 
-    public static ToeStateList emptyList(Certificate certificate) {
+    public static ToeStateList emptyList() {
         return new ToeStateListImpl();
     }
 

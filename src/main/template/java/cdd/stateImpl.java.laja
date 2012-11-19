@@ -369,7 +369,7 @@ public class {stateImplClass} implements {stateClass} {
 
     {stateImplClass}() {
   #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
-        {attribute.variable} = {attribute.typeAsStateImpl}.emptyList(Certificate.get(this));
+        {attribute.variable} = {attribute.typeAsStateImpl}.emptyList();
   #end
     }
 

@@ -14,7 +14,7 @@ public class TerrestrialStateListImpl extends ArrayList<TerrestrialState> implem
     public TerrestrialStateListImpl() {
     }
 
-    public static TerrestrialStateList emptyList(Certificate certificate) {
+    public static TerrestrialStateList emptyList() {
         return new TerrestrialStateListImpl();
     }
 

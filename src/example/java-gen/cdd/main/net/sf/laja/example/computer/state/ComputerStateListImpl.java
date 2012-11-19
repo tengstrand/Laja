@@ -14,7 +14,7 @@ public class ComputerStateListImpl extends ArrayList<ComputerState> implements C
     public ComputerStateListImpl() {
     }
 
-    public static ComputerStateList emptyList(Certificate certificate) {
+    public static ComputerStateList emptyList() {
         return new ComputerStateListImpl();
     }
 

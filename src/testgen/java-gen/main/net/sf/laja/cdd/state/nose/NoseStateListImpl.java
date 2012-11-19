@@ -14,7 +14,7 @@ public class NoseStateListImpl extends ArrayList<NoseState> implements NoseState
     public NoseStateListImpl() {
     }
 
-    public static NoseStateList emptyList(Certificate certificate) {
+    public static NoseStateList emptyList() {
         return new NoseStateListImpl();
     }
 

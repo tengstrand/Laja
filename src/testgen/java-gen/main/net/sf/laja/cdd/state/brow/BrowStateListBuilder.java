@@ -16,7 +16,7 @@ public final class BrowStateListBuilder {
 
     public BrowStateListBuilder() {
         certificate = Certificate.get(new BrowStateImpl());
-        states = BrowStateListImpl.emptyList(certificate);
+        states = BrowStateListImpl.emptyList();
     }
 
     public BrowStateListBuilder(BrowStateList states) {

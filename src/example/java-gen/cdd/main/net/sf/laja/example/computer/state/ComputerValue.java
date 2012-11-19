@@ -20,20 +20,12 @@ public class ComputerValue implements ComputerElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(ComputerStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public ComputerState getState(Certificate certificate) {
         return state;
     }
 
     public ComputerState getState(ComputerStateList stateList) {
         return state;
-    }
-
-    public void addToList(ComputerStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class FileStateListImpl extends ArrayList<FileState> implements FileState
     public FileStateListImpl() {
     }
 
-    public static FileStateList emptyList(Certificate certificate) {
+    public static FileStateList emptyList() {
         return new FileStateListImpl();
     }
 

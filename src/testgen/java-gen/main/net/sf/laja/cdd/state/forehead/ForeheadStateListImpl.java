@@ -14,7 +14,7 @@ public class ForeheadStateListImpl extends ArrayList<ForeheadState> implements F
     public ForeheadStateListImpl() {
     }
 
-    public static ForeheadStateList emptyList(Certificate certificate) {
+    public static ForeheadStateList emptyList() {
         return new ForeheadStateListImpl();
     }
 

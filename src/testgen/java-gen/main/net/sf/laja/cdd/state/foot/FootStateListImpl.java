@@ -14,7 +14,7 @@ public class FootStateListImpl extends ArrayList<FootState> implements FootState
     public FootStateListImpl() {
     }
 
-    public static FootStateList emptyList(Certificate certificate) {
+    public static FootStateList emptyList() {
         return new FootStateListImpl();
     }
 

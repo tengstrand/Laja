@@ -16,7 +16,7 @@ public final class CarStateListBuilder {
 
     public CarStateListBuilder() {
         certificate = Certificate.get(new CarStateImpl());
-        states = CarStateListImpl.emptyList(certificate);
+        states = CarStateListImpl.emptyList();
     }
 
     public CarStateListBuilder(CarStateList states) {

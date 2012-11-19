@@ -16,7 +16,7 @@ public final class ZipcodeStateListBuilder {
 
     public ZipcodeStateListBuilder() {
         certificate = Certificate.get(new ZipcodeStateImpl());
-        states = ZipcodeStateListImpl.emptyList(certificate);
+        states = ZipcodeStateListImpl.emptyList();
     }
 
     public ZipcodeStateListBuilder(ZipcodeStateList states) {

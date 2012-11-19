@@ -16,7 +16,7 @@ public final class HeightStateListBuilder {
 
     public HeightStateListBuilder() {
         certificate = Certificate.get(new HeightStateImpl());
-        states = HeightStateListImpl.emptyList(certificate);
+        states = HeightStateListImpl.emptyList();
     }
 
     public HeightStateListBuilder(HeightStateList states) {

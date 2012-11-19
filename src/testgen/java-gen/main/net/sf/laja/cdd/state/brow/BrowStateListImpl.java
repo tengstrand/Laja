@@ -14,7 +14,7 @@ public class BrowStateListImpl extends ArrayList<BrowState> implements BrowState
     public BrowStateListImpl() {
     }
 
-    public static BrowStateList emptyList(Certificate certificate) {
+    public static BrowStateList emptyList() {
         return new BrowStateListImpl();
     }
 

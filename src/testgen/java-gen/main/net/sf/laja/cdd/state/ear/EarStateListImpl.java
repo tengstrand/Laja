@@ -14,7 +14,7 @@ public class EarStateListImpl extends ArrayList<EarState> implements EarStateLis
     public EarStateListImpl() {
     }
 
-    public static EarStateList emptyList(Certificate certificate) {
+    public static EarStateList emptyList() {
         return new EarStateListImpl();
     }
 

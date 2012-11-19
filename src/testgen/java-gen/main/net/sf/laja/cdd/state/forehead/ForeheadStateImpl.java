@@ -16,7 +16,7 @@ public class ForeheadStateImpl implements ForeheadState {
     private boolean _encapsulated = false;
 
     ForeheadStateImpl() {
-        brows = BrowStateListImpl.emptyList(Certificate.get(this));
+        brows = BrowStateListImpl.emptyList();
     }
 
     public static ForeheadStateBuilder build() {

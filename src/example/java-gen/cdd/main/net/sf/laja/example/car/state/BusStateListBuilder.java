@@ -16,7 +16,7 @@ public final class BusStateListBuilder {
 
     public BusStateListBuilder() {
         certificate = Certificate.get(new BusStateImpl());
-        states = BusStateListImpl.emptyList(certificate);
+        states = BusStateListImpl.emptyList();
     }
 
     public BusStateListBuilder(BusStateList states) {

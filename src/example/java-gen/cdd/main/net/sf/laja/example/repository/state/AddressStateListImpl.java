@@ -14,7 +14,7 @@ public class AddressStateListImpl extends ArrayList<AddressState> implements Add
     public AddressStateListImpl() {
     }
 
-    public static AddressStateList emptyList(Certificate certificate) {
+    public static AddressStateList emptyList() {
         return new AddressStateListImpl();
     }
 

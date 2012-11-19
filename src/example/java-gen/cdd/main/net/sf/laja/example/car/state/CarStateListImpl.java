@@ -14,7 +14,7 @@ public class CarStateListImpl extends ArrayList<CarState> implements CarStateLis
     public CarStateListImpl() {
     }
 
-    public static CarStateList emptyList(Certificate certificate) {
+    public static CarStateList emptyList() {
         return new CarStateListImpl();
     }
 

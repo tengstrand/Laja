@@ -16,7 +16,7 @@ public final class ArmStateListBuilder {
 
     public ArmStateListBuilder() {
         certificate = Certificate.get(new ArmStateImpl());
-        states = ArmStateListImpl.emptyList(certificate);
+        states = ArmStateListImpl.emptyList();
     }
 
     public ArmStateListBuilder(ArmStateList states) {

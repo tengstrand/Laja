@@ -16,7 +16,7 @@ public final class TerrestrialStateListBuilder {
 
     public TerrestrialStateListBuilder() {
         certificate = Certificate.get(new TerrestrialStateImpl());
-        states = TerrestrialStateListImpl.emptyList(certificate);
+        states = TerrestrialStateListImpl.emptyList();
     }
 
     public TerrestrialStateListBuilder(TerrestrialStateList states) {

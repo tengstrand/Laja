@@ -16,7 +16,7 @@ public final class DirectoryStateListBuilder {
 
     public DirectoryStateListBuilder() {
         certificate = Certificate.get(new DirectoryStateImpl());
-        states = DirectoryStateListImpl.emptyList(certificate);
+        states = DirectoryStateListImpl.emptyList();
     }
 
     public DirectoryStateListBuilder(DirectoryStateList states) {

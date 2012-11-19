@@ -16,7 +16,7 @@ public final class TruckStateListBuilder {
 
     public TruckStateListBuilder() {
         certificate = Certificate.get(new TruckStateImpl());
-        states = TruckStateListImpl.emptyList(certificate);
+        states = TruckStateListImpl.emptyList();
     }
 
     public TruckStateListBuilder(TruckStateList states) {

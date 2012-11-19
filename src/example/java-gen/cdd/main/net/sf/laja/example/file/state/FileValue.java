@@ -20,20 +20,12 @@ public class FileValue implements FileElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(FileStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public FileState getState(Certificate certificate) {
         return state;
     }
 
     public FileState getState(FileStateList stateList) {
         return state;
-    }
-
-    public void addToList(FileStateList stateList) {
-        stateList.add(state);
     }
 
     @Override

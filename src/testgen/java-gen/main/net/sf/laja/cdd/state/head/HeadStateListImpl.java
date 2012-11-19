@@ -14,7 +14,7 @@ public class HeadStateListImpl extends ArrayList<HeadState> implements HeadState
     public HeadStateListImpl() {
     }
 
-    public static HeadStateList emptyList(Certificate certificate) {
+    public static HeadStateList emptyList() {
         return new HeadStateListImpl();
     }
 

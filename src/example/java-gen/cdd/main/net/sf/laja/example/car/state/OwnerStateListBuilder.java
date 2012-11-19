@@ -16,7 +16,7 @@ public final class OwnerStateListBuilder {
 
     public OwnerStateListBuilder() {
         certificate = Certificate.get(new OwnerStateImpl());
-        states = OwnerStateListImpl.emptyList(certificate);
+        states = OwnerStateListImpl.emptyList();
     }
 
     public OwnerStateListBuilder(OwnerStateList states) {

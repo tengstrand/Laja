@@ -14,7 +14,7 @@ public class MonsterStateListImpl extends ArrayList<MonsterState> implements Mon
     public MonsterStateListImpl() {
     }
 
-    public static MonsterStateList emptyList(Certificate certificate) {
+    public static MonsterStateList emptyList() {
         return new MonsterStateListImpl();
     }
 

@@ -14,7 +14,7 @@ public class BusStateListImpl extends ArrayList<BusState> implements BusStateLis
     public BusStateListImpl() {
     }
 
-    public static BusStateList emptyList(Certificate certificate) {
+    public static BusStateList emptyList() {
         return new BusStateListImpl();
     }
 

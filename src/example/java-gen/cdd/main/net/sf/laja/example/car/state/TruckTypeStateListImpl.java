@@ -14,7 +14,7 @@ public class TruckTypeStateListImpl extends ArrayList<TruckTypeState> implements
     public TruckTypeStateListImpl() {
     }
 
-    public static TruckTypeStateList emptyList(Certificate certificate) {
+    public static TruckTypeStateList emptyList() {
         return new TruckTypeStateListImpl();
     }
 

@@ -20,20 +20,12 @@ public class BmiValue implements BmiElement {
         this.stateBuilder = stateBuilder;
     }
 
-    public boolean contains(BmiStateList stateList) {
-        return stateList.contains(state);
-    }
-
     public BmiState getState(Certificate certificate) {
         return state;
     }
 
     public BmiState getState(BmiStateList stateList) {
         return state;
-    }
-
-    public void addToList(BmiStateList stateList) {
-        stateList.add(state);
     }
 
     @Override
