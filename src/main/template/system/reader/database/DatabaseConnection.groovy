@@ -1,7 +1,5 @@
 
 import java.sql.*;
-import java.util.List;
-import java.util.Map;
 
 public class DatabaseConnection {
 	private Connection con;
@@ -46,20 +44,21 @@ public class DatabaseConnection {
 		return result
 	}
 	
-	public List executeSql(String sql) {
+    public List executeSql(String sql) {
+        List result = new ArrayList()
         Statement statement = con.createStatement();
 
         try {
             if (statement.execute(sql)) {
-          		return getResultSet(statement)
+                result = getResultSet(statement)
             }
         } catch (Exception e) {
             print("Could not execute SQL: " + sql + ". Exception: " + e);
-        } finally {
-            statement.close();
         }
-		return null
-	}
+        statement.close()
+
+        return result
+    }
 	
 	private List getResultSet(Statement statement) {
 		ResultSet rs = statement.getResultSet()
