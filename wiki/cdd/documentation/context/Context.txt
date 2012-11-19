@@ -32,7 +32,7 @@ public class DestinationAccount extends AccountValue {
 }
 </source>
 
-...where each representation contains the relevant operations to be used in each context.
+The two representations contains the relevant operations to be used in each context.
 
 === Dynamic context ===
 A dynamic context can vary at ''runtime'' within a static context. In the [[Dynamic context|dynamic context]] code example:
@@ -47,4 +47,4 @@ which enables us to have different behaviour implementations for different conte
 
 [[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Context switching|Next >]]
+[[Static context|Next >]]

@@ -222,6 +222,6 @@ public class DayOfWeek {
 </source>
 
 
-[[Context switching|< Back]]
+[[Static context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State|Next >]]
