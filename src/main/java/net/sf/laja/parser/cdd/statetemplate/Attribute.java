@@ -56,8 +56,8 @@ public class Attribute implements StateTemplateParser.IAttribute {
         return cleanedStateType + "Encapsulator";
     }
 
-    public String getListCreator() {
-        return cleanedStateType + "ListCreator";
+    public String getListEncapsulator() {
+        return cleanedStateType + "ListEncapsulator";
     }
 
     public String getStateBuilder() {

@@ -25,7 +25,7 @@ public class {creatorClass} {
             return new {nextClass}();
         }
 
-        public {nextClass} {attribute.variable}({attribute.listCreator} {attribute.variable}) {
+        public {nextClass} {attribute.variable}({attribute.listEncapsulator} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.stateList);
             return new {nextClass}();
         }
@@ -54,8 +54,8 @@ public class {creatorClass} {
     public class {currentClass} {
       #if (attribute.isStateList)
         public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
-            {attribute.listCreator} creator = new {attribute.listCreator}({attribute.variable});
-            builder.{attribute.withMethod}(creator.stateList);
+            {attribute.listEncapsulator} encapsulator = new {attribute.listEncapsulator}({attribute.variable});
+            builder.{attribute.withMethod}(encapsulator.stateList);
             return create();
         }
       #else if (attribute.isState)
@@ -101,7 +101,7 @@ package {behaviour.packagename};
     #importsBegin()
     #importsEncapsulator()
     #importsEncapsulatorRef()
-    #importsListCreator()
+    #importsListEncapsulator()
     #importsEnd()
     #class()
 #end

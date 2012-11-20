@@ -78,9 +78,14 @@ public class Behaviour implements BehaviourParser.IBehaviour {
     }
 
     public void setClassname(String classname) {
+        String original = classname;
+
+        boolean isTemplate = false;
+
         for (String template : StatementConverter.TEMPLATES) {
             if (classname.endsWith(template)) {
                 classname = classname.substring(0, classname.length() - template.length());
+                isTemplate = true;
                 break;
             }
         }
@@ -90,16 +95,29 @@ public class Behaviour implements BehaviourParser.IBehaviour {
             classname = classname.substring(0, classname.length() - 4);
             interfacename = classname;
         }
+
         builderClass = classname + "Builder";
         creatorClass = classname + "Creator";
         factoryClass = classname + "Factory";
 
-        for (AsMethod method : asMethods) {
-            if (method.isFactory) {
-                factoryClass = method.returnclass + "Factory";
-                break;
+        if (!isTemplate && !hasAsMethodReturningBehaviourClass(classname)) {
+            for (AsMethod method : asMethods) {
+                if (method.isFactory) {
+                    factoryClass = method.returnclass + "Factory";
+                    break;
+                }
             }
         }
+        System.out.println("#original=" + original + ", factory=" + factoryClass);
+    }
+
+    private boolean hasAsMethodReturningBehaviourClass(String behaviourClass) {
+        for (AsMethod method : asMethods) {
+            if (method.returnclass.equals(behaviourClass)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addMethod(BehaviourParser.IBehaviourMethod imethod) {
