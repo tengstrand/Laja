@@ -1,0 +1,10 @@
+
+#readProperties("{..}/../../laja.properties") into props
+
+#set (major = props.get("laja.major.version"))
+#set (minor = props.get("laja.minor.version"))
+
+#set (lajaVersion = "laja{major}-{minor}")
+
+#import "{.}/version.laja"
+#import "{.}/VersionCommand.java.laja"

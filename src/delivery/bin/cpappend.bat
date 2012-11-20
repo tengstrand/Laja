@@ -1,0 +1,2 @@
+@echo off
+set LAJA_CLASSPATH=%LAJA_CLASSPATH%%1;
