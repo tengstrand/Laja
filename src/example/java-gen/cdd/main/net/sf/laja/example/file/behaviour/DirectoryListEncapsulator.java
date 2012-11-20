@@ -6,7 +6,7 @@ import net.sf.laja.example.file.behaviour.text.TextDirectory;
 import net.sf.laja.example.file.state.DirectoryState;
 import java.io.File;
 
-public class DirectoryListCreator implements Iterable<DirectoryEncapsulator> {
+public class DirectoryListEncapsulator implements Iterable<DirectoryEncapsulator> {
     public DirectoryStateListBuilder stateList = new DirectoryStateListBuilder();
     private List<DirectoryEncapsulator> encapsulators = new ArrayList<DirectoryEncapsulator>();
 
@@ -15,7 +15,7 @@ public class DirectoryListCreator implements Iterable<DirectoryEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public DirectoryListCreator(DirectoryEncapsulator... encapsulators) {
+    public DirectoryListEncapsulator(DirectoryEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (DirectoryEncapsulator encapsulator : encapsulators) {

@@ -5,7 +5,7 @@ import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.CarState;
 import net.sf.laja.example.car.behaviour.CarColor;
 
-public class CarListCreator implements Iterable<CarEncapsulator> {
+public class CarListEncapsulator implements Iterable<CarEncapsulator> {
     public CarStateListBuilder stateList = new CarStateListBuilder();
     private List<CarEncapsulator> encapsulators = new ArrayList<CarEncapsulator>();
 
@@ -14,7 +14,7 @@ public class CarListCreator implements Iterable<CarEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public CarListCreator(CarEncapsulator... encapsulators) {
+    public CarListEncapsulator(CarEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (CarEncapsulator encapsulator : encapsulators) {

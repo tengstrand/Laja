@@ -6,7 +6,7 @@ import net.sf.laja.example.person.state.BmiState;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class BodyMassIndexListCreator implements Iterable<BodyMassIndexEncapsulator> {
+public class BodyMassIndexListEncapsulator implements Iterable<BodyMassIndexEncapsulator> {
     public BmiStateListBuilder stateList = new BmiStateListBuilder();
     private List<BodyMassIndexEncapsulator> encapsulators = new ArrayList<BodyMassIndexEncapsulator>();
 
@@ -15,7 +15,7 @@ public class BodyMassIndexListCreator implements Iterable<BodyMassIndexEncapsula
         stateList.add(encapsulator.builder);
     }
 
-    public BodyMassIndexListCreator(BodyMassIndexEncapsulator... encapsulators) {
+    public BodyMassIndexListEncapsulator(BodyMassIndexEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (BodyMassIndexEncapsulator encapsulator : encapsulators) {

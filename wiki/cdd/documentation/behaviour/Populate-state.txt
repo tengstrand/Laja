@@ -1,4 +1,5 @@
-Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword ''hide'':
+Sometimes one or more attributes are associated with the behaviour representation, indicated by the keyword ''hide''
+(the attribute will be hidden from the chained creator but still mandatory if not set to optional):
 <source>
 package com.myproject.state;
 

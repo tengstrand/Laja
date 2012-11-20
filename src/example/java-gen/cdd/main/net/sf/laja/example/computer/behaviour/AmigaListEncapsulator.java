@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.*;
 
-public class AmigaListCreator implements Iterable<AmigaEncapsulator> {
+public class AmigaListEncapsulator implements Iterable<AmigaEncapsulator> {
     public ComputerStateListBuilder stateList = new ComputerStateListBuilder();
     private List<AmigaEncapsulator> encapsulators = new ArrayList<AmigaEncapsulator>();
 
@@ -13,7 +13,7 @@ public class AmigaListCreator implements Iterable<AmigaEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public AmigaListCreator(AmigaEncapsulator... encapsulators) {
+    public AmigaListEncapsulator(AmigaEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AmigaEncapsulator encapsulator : encapsulators) {

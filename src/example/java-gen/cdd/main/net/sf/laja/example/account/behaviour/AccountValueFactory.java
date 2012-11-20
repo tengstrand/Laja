@@ -25,8 +25,8 @@ public class AccountValueFactory extends AccountValue {
         return new AccountBuilder();
     }
 
-    public static AccountListCreator createList(AccountEncapsulator... encapsulators) {
-        return new AccountListCreator(encapsulators);
+    public static AccountListEncapsulator createList(AccountEncapsulator... encapsulators) {
+        return new AccountListEncapsulator(encapsulators);
     }
 
     public static class SourceAccountFactory_ implements AccountStateBehaviourFactory {

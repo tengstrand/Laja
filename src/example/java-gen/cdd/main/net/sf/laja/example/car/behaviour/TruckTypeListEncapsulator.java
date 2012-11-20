@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.TruckTypeState;
 
-public class TruckTypeListCreator implements Iterable<TruckTypeEncapsulator> {
+public class TruckTypeListEncapsulator implements Iterable<TruckTypeEncapsulator> {
     public TruckTypeStateListBuilder stateList = new TruckTypeStateListBuilder();
     private List<TruckTypeEncapsulator> encapsulators = new ArrayList<TruckTypeEncapsulator>();
 
@@ -13,7 +13,7 @@ public class TruckTypeListCreator implements Iterable<TruckTypeEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public TruckTypeListCreator(TruckTypeEncapsulator... encapsulators) {
+    public TruckTypeListEncapsulator(TruckTypeEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TruckTypeEncapsulator encapsulator : encapsulators) {

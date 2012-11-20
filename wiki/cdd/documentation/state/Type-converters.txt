@@ -32,6 +32,6 @@ Person{ssn=456, givenName='Lars', surname='von Trier'}
 The ''ssn'' is in both cases internally stored as ''int'' which is the type of the attribute.
 
 
-[[Identity|< Back]]
+[[Define state|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State composition|Next >]]

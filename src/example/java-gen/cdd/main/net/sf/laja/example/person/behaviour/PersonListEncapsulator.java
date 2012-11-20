@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.PersonState;
 
-public class PersonListCreator implements Iterable<PersonEncapsulator> {
+public class PersonListEncapsulator implements Iterable<PersonEncapsulator> {
     public PersonStateListBuilder stateList = new PersonStateListBuilder();
     private List<PersonEncapsulator> encapsulators = new ArrayList<PersonEncapsulator>();
 
@@ -13,7 +13,7 @@ public class PersonListCreator implements Iterable<PersonEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public PersonListCreator(PersonEncapsulator... encapsulators) {
+    public PersonListEncapsulator(PersonEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (PersonEncapsulator encapsulator : encapsulators) {

@@ -1,6 +1,6 @@
 
 #macro class()
-public class {listCreatorClass} implements Iterable<{encapsulatorClass}> {
+public class {listEncapsulatorClass} implements Iterable<{encapsulatorClass}> {
     public {stateListBuilder} stateList = new {stateListBuilder}();
     private List<{encapsulatorClass}> encapsulators = new ArrayList<{encapsulatorClass}>();
 
@@ -9,7 +9,7 @@ public class {listCreatorClass} implements Iterable<{encapsulatorClass}> {
         stateList.add(encapsulator.builder);
     }
 
-    public {listCreatorClass}({encapsulatorClass}... encapsulators) {
+    public {listEncapsulatorClass}({encapsulatorClass}... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for ({encapsulatorClass} encapsulator : encapsulators) {
@@ -64,6 +64,6 @@ import java.util.*;
 #end
 
 #if (behaviour.isFactory)
-  #set (filename = "{outputDir}/{listCreatorClass}.java")
+  #set (filename = "{outputDir}/{listEncapsulatorClass}.java")
   #generateFile(filename, fileContent())
 #end

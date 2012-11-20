@@ -25,8 +25,8 @@ public class TestAccountValueFactory extends AccountValue {
         return new TestAccountBuilder();
     }
 
-    public static TestAccountListCreator createList(TestAccountEncapsulator... encapsulators) {
-        return new TestAccountListCreator(encapsulators);
+    public static TestAccountListEncapsulator createList(TestAccountEncapsulator... encapsulators) {
+        return new TestAccountListEncapsulator(encapsulators);
     }
 
     public static class TestAccountFactory_ implements AccountStateBehaviourFactory {

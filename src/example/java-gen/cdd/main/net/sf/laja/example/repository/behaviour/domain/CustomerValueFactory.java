@@ -28,8 +28,8 @@ public class CustomerValueFactory extends CustomerValue {
         return new CustomerBuilder();
     }
 
-    public static CustomerListCreator createList(CustomerEncapsulator... encapsulators) {
-        return new CustomerListCreator(encapsulators);
+    public static CustomerListEncapsulator createList(CustomerEncapsulator... encapsulators) {
+        return new CustomerListEncapsulator(encapsulators);
     }
 
     public static class CustomerFactory_ implements CustomerStateBehaviourFactory {

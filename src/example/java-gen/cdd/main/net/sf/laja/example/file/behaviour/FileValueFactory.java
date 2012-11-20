@@ -25,8 +25,8 @@ public class FileValueFactory extends FileValue {
         return new FileBuilder();
     }
 
-    public static FileListCreator createList(FileEncapsulator... encapsulators) {
-        return new FileListCreator(encapsulators);
+    public static FileListEncapsulator createList(FileEncapsulator... encapsulators) {
+        return new FileListEncapsulator(encapsulators);
     }
 
     public static class ClosedFileFactory_ implements FileStateBehaviourFactory {

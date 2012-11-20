@@ -1,0 +1,51 @@
+Add ''PersonStateTemplate'':
+
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String name;
+}
+</source>
+
+... and regenerate. If we write:
+
+<source>
+Person person = Person.age(18).name("Gordon").asPerson();
+</source>
+
+...then an instance of ''Person'' is created. But we are not forced to encapsulate in one step:
+
+<source>
+PersonEncapsulator encapsulator1 = Person.age(18).name("Gordon");
+PersonEncapsulator encapsulator2 = Person.age(19).name(null);
+
+System.out.println("Is valid (1): " + encapsulator1.isValid());
+System.out.println("Is valid (2): " + encapsulator2.isValid());
+
+Person person1 = encapsulator1.asPerson();
+System.out.println(person1);
+
+Person person2 = encapsulator2.asPerson();
+System.out.println(person2);
+</source>
+
+...if executed we get:
+
+<source>
+Is valid (1): true
+Is valid (2): false
+Person{age=18, name='Gordon'}
+Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
+	at com.myproject.behaviour.PersonValueFactory$PersonFactory_.create(PersonValueFactory.java:43)
+	at com.myproject.state.PersonStateBuilderImpl.as(PersonStateBuilderImpl.java:46)
+	at com.myproject.behaviour.PersonEncapsulator.asPerson(PersonEncapsulator.java:14)
+	at com.myproject.behaviour.Main.main(Main.java:15)
+</source>
+
+...the reason is that ''name'' is mandatory. This technique can be useful when building repositories, so let's do that:
+
+<source>
+
+<source>

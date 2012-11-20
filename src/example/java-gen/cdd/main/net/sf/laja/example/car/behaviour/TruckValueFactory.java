@@ -25,8 +25,8 @@ public class TruckValueFactory extends TruckValue {
         return new TruckBuilder();
     }
 
-    public static TruckListCreator createList(TruckEncapsulator... encapsulators) {
-        return new TruckListCreator(encapsulators);
+    public static TruckListEncapsulator createList(TruckEncapsulator... encapsulators) {
+        return new TruckListEncapsulator(encapsulators);
     }
 
     public static class TruckFactory_ implements TruckStateBehaviourFactory {

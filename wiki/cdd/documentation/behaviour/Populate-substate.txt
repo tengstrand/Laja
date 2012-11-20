@@ -73,8 +73,8 @@ Person{givenName='Ingmar', surname='Bergman', address={streetName='Thestreet', s
 
 We can choose between two constructors when implementing our behaviour representations:
 <source>
-    public Person(PersonState state)
-    public Person(PersonState state, PersonStateBuilder stateBuilder)
+public Person(PersonState state)
+public Person(PersonState state, PersonStateBuilder stateBuilder)
 </source>
 
 The second is used when we need to populate one or more substates from the aggregate root (as in this example).
@@ -95,7 +95,7 @@ public class Address extends AddressFactory {
         state.setZipcode(123);
     }
 
-    // (factory) (list)
+    // (factory)
     public Address asAddress() {
         return new Address(state);
     }
@@ -112,7 +112,7 @@ public class Person extends PersonFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public Person asPerson() {
         return new Person(state);
     }
@@ -146,7 +146,7 @@ public class Person extends PersonFactory {
         address = new Address(state.getAddress());
     }
 
-    // (factory) (list)
+    // (factory)
     public Person asPerson() {
         return new Person(state);
     }

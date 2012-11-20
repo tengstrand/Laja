@@ -2,7 +2,6 @@ package net.sf.laja.example.file.behaviour;
 
 import net.sf.laja.example.file.behaviour.text.TextFile;
 import net.sf.laja.example.file.state.FileState;
-import net.sf.laja.example.file.state.FileValue;
 
 public class ClosedFile extends FileFactory {
     private Directory directory;
@@ -17,7 +16,6 @@ public class ClosedFile extends FileFactory {
         return new WritableFile(state, directory, createIfNotExists);
     }
 
-    // (list)
     public TextFile asTextFile() {
         return new TextFile(state, directory);
     }

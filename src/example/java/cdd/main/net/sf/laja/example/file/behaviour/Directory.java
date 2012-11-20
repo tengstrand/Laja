@@ -24,12 +24,11 @@ public class Directory extends DirectoryFactory {
         init(this, fileOrDir);
     }
 
-    // (factory) (list)
+    // (factory)
     public Directory asDirectory() {
         return new Directory(state);
     }
 
-    // (list)
     public TextDirectory asTextDirectory() {
         return new TextDirectory(state, directoryPath, directories, files);
     }
@@ -45,19 +44,19 @@ public class Directory extends DirectoryFactory {
     }
 
     private void initDirectory(Directory directory, File dir) {
-        DirectoryListCreator directoryListCreator = Directory.createList();
-        FileListCreator fileListCreator = FileFactory.createList();
+        DirectoryListEncapsulator directoryListEncapsulator = Directory.createList();
+        FileListEncapsulator fileListEncapsulator = FileFactory.createList();
 
         for (File fileOrDir : dir.listFiles()) {
             if (fileOrDir.isDirectory()) {
-                directoryListCreator.add(Directory.directoryPath(fileOrDir.getPath()));
+                directoryListEncapsulator.add(Directory.directoryPath(fileOrDir.getPath()));
             } else {
-                fileListCreator.add(FileFactory.filename(fileOrDir.getName()));
+                fileListEncapsulator.add(FileFactory.filename(fileOrDir.getName()));
             }
         }
         directoryPath = dir.getAbsolutePath();
-        directories = directoryListCreator.asDirectoryList();
-        files = fileListCreator.asClosedFileList(directory);
+        directories = directoryListEncapsulator.asDirectoryList();
+        files = fileListEncapsulator.asClosedFileList(directory);
     }
 
     public static boolean isDirectory(String path) {

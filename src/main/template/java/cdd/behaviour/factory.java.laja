@@ -71,8 +71,8 @@ public class {factoryClass} extends {parentClass} {
         return new {builderClass}();
     }
 
-    public static {listCreatorClass} createList({encapsulatorClass}... encapsulators) {
-        return new {listCreatorClass}(encapsulators);
+    public static {listEncapsulatorClass} createList({encapsulatorClass}... encapsulators) {
+        return new {listEncapsulatorClass}(encapsulators);
     }
   #foreach (method in behaviour.asMethods where method.isFactory)
     #set (innerFactoryClass = "{method.returnclass}Factory_")

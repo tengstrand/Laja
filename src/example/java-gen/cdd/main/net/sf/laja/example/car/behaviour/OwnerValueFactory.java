@@ -29,8 +29,8 @@ public class OwnerValueFactory extends OwnerValue {
         return new OwnerBuilder();
     }
 
-    public static OwnerListCreator createList(OwnerEncapsulator... encapsulators) {
-        return new OwnerListCreator(encapsulators);
+    public static OwnerListEncapsulator createList(OwnerEncapsulator... encapsulators) {
+        return new OwnerListEncapsulator(encapsulators);
     }
 
     public static class OwnerFactory_ implements OwnerStateBehaviourFactory {

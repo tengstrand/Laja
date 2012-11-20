@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.ComputerState;
 
-public class AtariListCreator implements Iterable<AtariEncapsulator> {
+public class AtariListEncapsulator implements Iterable<AtariEncapsulator> {
     public ComputerStateListBuilder stateList = new ComputerStateListBuilder();
     private List<AtariEncapsulator> encapsulators = new ArrayList<AtariEncapsulator>();
 
@@ -13,7 +13,7 @@ public class AtariListCreator implements Iterable<AtariEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public AtariListCreator(AtariEncapsulator... encapsulators) {
+    public AtariListEncapsulator(AtariEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AtariEncapsulator encapsulator : encapsulators) {

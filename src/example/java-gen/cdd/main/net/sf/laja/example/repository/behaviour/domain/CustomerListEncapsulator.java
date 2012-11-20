@@ -9,7 +9,7 @@ import net.sf.laja.example.repository.state.CustomerState;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcherList;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcherArrayList;
 
-public class CustomerListCreator implements Iterable<CustomerEncapsulator> {
+public class CustomerListEncapsulator implements Iterable<CustomerEncapsulator> {
     public CustomerStateListBuilder stateList = new CustomerStateListBuilder();
     private List<CustomerEncapsulator> encapsulators = new ArrayList<CustomerEncapsulator>();
 
@@ -18,7 +18,7 @@ public class CustomerListCreator implements Iterable<CustomerEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public CustomerListCreator(CustomerEncapsulator... encapsulators) {
+    public CustomerListEncapsulator(CustomerEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (CustomerEncapsulator encapsulator : encapsulators) {

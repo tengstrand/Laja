@@ -11,7 +11,7 @@
 #set (constructorClass = "{behaviourClass}Constructor")
 #set (creatorClass = "{behaviour.classname}Creator")
 #set (encapsulatorClass = "{behaviour.classname}Encapsulator")
-#set (listCreatorClass = "{behaviour.classname}ListCreator")
+#set (listEncapsulatorClass = "{behaviour.classname}ListEncapsulator")
 
 #set (stateClass = behaviour.stateClass)
 #set (stateImplClass = behaviour.stateImplClass)
@@ -106,14 +106,14 @@ import {import};
   #end
 #end
 
-#macro importsListCreator()
+#macro importsListEncapsulator()
   #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateList)
     #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
     #if (behaviourRef == null)
       #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
     #end
     #if (behaviour.packagename != behaviourRef.packagename)
-import {behaviourRef.packagename}.{attribute.listCreator};
+import {behaviourRef.packagename}.{attribute.listEncapsulator};
     #end
   #end
 #end

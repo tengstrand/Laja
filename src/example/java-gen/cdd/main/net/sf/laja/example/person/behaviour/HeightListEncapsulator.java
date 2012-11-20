@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.HeightState;
 
-public class HeightListCreator implements Iterable<HeightEncapsulator> {
+public class HeightListEncapsulator implements Iterable<HeightEncapsulator> {
     public HeightStateListBuilder stateList = new HeightStateListBuilder();
     private List<HeightEncapsulator> encapsulators = new ArrayList<HeightEncapsulator>();
 
@@ -13,7 +13,7 @@ public class HeightListCreator implements Iterable<HeightEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public HeightListCreator(HeightEncapsulator... encapsulators) {
+    public HeightListEncapsulator(HeightEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (HeightEncapsulator encapsulator : encapsulators) {

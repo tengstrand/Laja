@@ -27,8 +27,8 @@ public class DirectoryValueFactory extends DirectoryValue {
         return new DirectoryBuilder();
     }
 
-    public static DirectoryListCreator createList(DirectoryEncapsulator... encapsulators) {
-        return new DirectoryListCreator(encapsulators);
+    public static DirectoryListEncapsulator createList(DirectoryEncapsulator... encapsulators) {
+        return new DirectoryListEncapsulator(encapsulators);
     }
 
     public static class DirectoryFactory_ implements DirectoryStateBehaviourFactory {

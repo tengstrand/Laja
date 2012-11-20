@@ -25,8 +25,8 @@ public class BusValueFactory extends BusValue {
         return new BusBuilder();
     }
 
-    public static BusListCreator createList(BusEncapsulator... encapsulators) {
-        return new BusListCreator(encapsulators);
+    public static BusListEncapsulator createList(BusEncapsulator... encapsulators) {
+        return new BusListEncapsulator(encapsulators);
     }
 
     public static class BusFactory_ implements BusStateBehaviourFactory {

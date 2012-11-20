@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.OwnerState;
 
-public class OwnerListCreator implements Iterable<OwnerEncapsulator> {
+public class OwnerListEncapsulator implements Iterable<OwnerEncapsulator> {
     public OwnerStateListBuilder stateList = new OwnerStateListBuilder();
     private List<OwnerEncapsulator> encapsulators = new ArrayList<OwnerEncapsulator>();
 
@@ -13,7 +13,7 @@ public class OwnerListCreator implements Iterable<OwnerEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public OwnerListCreator(OwnerEncapsulator... encapsulators) {
+    public OwnerListEncapsulator(OwnerEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (OwnerEncapsulator encapsulator : encapsulators) {

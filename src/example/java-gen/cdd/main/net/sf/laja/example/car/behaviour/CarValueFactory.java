@@ -25,8 +25,8 @@ public class CarValueFactory extends CarValue {
         return new CarBuilder();
     }
 
-    public static CarListCreator createList(CarEncapsulator... encapsulators) {
-        return new CarListCreator(encapsulators);
+    public static CarListEncapsulator createList(CarEncapsulator... encapsulators) {
+        return new CarListEncapsulator(encapsulators);
     }
 
     public static class CarFactory_ implements CarStateBehaviourFactory {

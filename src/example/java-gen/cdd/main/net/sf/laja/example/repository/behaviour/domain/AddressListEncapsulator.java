@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.state.AddressState;
 
-public class AddressListCreator implements Iterable<AddressEncapsulator> {
+public class AddressListEncapsulator implements Iterable<AddressEncapsulator> {
     public AddressStateListBuilder stateList = new AddressStateListBuilder();
     private List<AddressEncapsulator> encapsulators = new ArrayList<AddressEncapsulator>();
 
@@ -13,7 +13,7 @@ public class AddressListCreator implements Iterable<AddressEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public AddressListCreator(AddressEncapsulator... encapsulators) {
+    public AddressListEncapsulator(AddressEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AddressEncapsulator encapsulator : encapsulators) {

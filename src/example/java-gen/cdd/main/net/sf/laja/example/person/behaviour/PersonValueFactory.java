@@ -25,8 +25,8 @@ public class PersonValueFactory extends PersonValue {
         return new PersonBuilder();
     }
 
-    public static PersonListCreator createList(PersonEncapsulator... encapsulators) {
-        return new PersonListCreator(encapsulators);
+    public static PersonListEncapsulator createList(PersonEncapsulator... encapsulators) {
+        return new PersonListEncapsulator(encapsulators);
     }
 
     public static class PersonFactory_ implements PersonStateBehaviourFactory {

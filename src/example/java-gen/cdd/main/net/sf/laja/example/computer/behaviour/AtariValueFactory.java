@@ -25,8 +25,8 @@ public class AtariValueFactory extends ComputerValue {
         return new AtariBuilder();
     }
 
-    public static AtariListCreator createList(AtariEncapsulator... encapsulators) {
-        return new AtariListCreator(encapsulators);
+    public static AtariListEncapsulator createList(AtariEncapsulator... encapsulators) {
+        return new AtariListEncapsulator(encapsulators);
     }
 
     public static class AtariSTFactory_ implements ComputerStateBehaviourFactory {

@@ -25,8 +25,8 @@ public class TruckTypeValueFactory extends TruckTypeValue {
         return new TruckTypeBuilder();
     }
 
-    public static TruckTypeListCreator createList(TruckTypeEncapsulator... encapsulators) {
-        return new TruckTypeListCreator(encapsulators);
+    public static TruckTypeListEncapsulator createList(TruckTypeEncapsulator... encapsulators) {
+        return new TruckTypeListEncapsulator(encapsulators);
     }
 
     public static class TruckTypeFactory_ implements TruckTypeStateBehaviourFactory {

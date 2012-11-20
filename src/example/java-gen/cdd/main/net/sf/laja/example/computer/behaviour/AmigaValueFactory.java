@@ -24,8 +24,8 @@ public class AmigaValueFactory extends ComputerValue {
         return new AmigaBuilder();
     }
 
-    public static AmigaListCreator createList(AmigaEncapsulator... encapsulators) {
-        return new AmigaListCreator(encapsulators);
+    public static AmigaListEncapsulator createList(AmigaEncapsulator... encapsulators) {
+        return new AmigaListEncapsulator(encapsulators);
     }
 
     public static class AmigaFactory_ implements ComputerStateBehaviourFactory {

@@ -4,7 +4,7 @@ import java.util.*;
 import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.FileState;
 
-public class FileListCreator implements Iterable<FileEncapsulator> {
+public class FileListEncapsulator implements Iterable<FileEncapsulator> {
     public FileStateListBuilder stateList = new FileStateListBuilder();
     private List<FileEncapsulator> encapsulators = new ArrayList<FileEncapsulator>();
 
@@ -13,7 +13,7 @@ public class FileListCreator implements Iterable<FileEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public FileListCreator(FileEncapsulator... encapsulators) {
+    public FileListEncapsulator(FileEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (FileEncapsulator encapsulator : encapsulators) {

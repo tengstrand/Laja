@@ -25,8 +25,8 @@ public class AddressValueFactory extends AddressValue {
         return new AddressBuilder();
     }
 
-    public static AddressListCreator createList(AddressEncapsulator... encapsulators) {
-        return new AddressListCreator(encapsulators);
+    public static AddressListEncapsulator createList(AddressEncapsulator... encapsulators) {
+        return new AddressListEncapsulator(encapsulators);
     }
 
     public static class AddressFactory_ implements AddressStateBehaviourFactory {

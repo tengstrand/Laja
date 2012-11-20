@@ -25,8 +25,8 @@ public class HeightValueFactory extends HeightValue {
         return new HeightBuilder();
     }
 
-    public static HeightListCreator createList(HeightEncapsulator... encapsulators) {
-        return new HeightListCreator(encapsulators);
+    public static HeightListEncapsulator createList(HeightEncapsulator... encapsulators) {
+        return new HeightListEncapsulator(encapsulators);
     }
 
     public static class HeightFactory_ implements HeightStateBehaviourFactory {
