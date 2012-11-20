@@ -1,0 +1,5 @@
+
+#write "{..}/../main/template/system/version/version.laja"
+
+#>#set (lajaVersion = <#"{lajaVersion}")
+#end
