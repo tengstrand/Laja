@@ -12,7 +12,7 @@ public class {builderClass} {
   #foreach (attribute in template.attributes where attribute.isBuilderMethod)
 
     #if (attribute.isStateList)
-    public {builderClass} {attribute.withMethod}({attribute.listCreator} {attribute.variable}) {
+    public {builderClass} {attribute.withMethod}({attribute.listEncapsulator} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.stateList);
         return this;
     }
@@ -72,7 +72,7 @@ package {behaviour.packagename};
 
     #importsBegin()
     #importsBuilder()
-    #importsListCreator()
+    #importsListEncapsulator()
     #importsEnd()
     #class()
 #end

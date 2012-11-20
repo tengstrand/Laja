@@ -51,11 +51,7 @@ public class StatementConverter {
         final String suffix = ".java";
 
         String classname = file.getName();
-        for (String template : TEMPLATES) {
-            if (classname.endsWith(template + suffix)) {
-                return classname.substring(0, classname.length() - template.length() - suffix.length());
-            }
-        }
+
         return classname.substring(0, classname.length() - suffix.length());
     }
 }
