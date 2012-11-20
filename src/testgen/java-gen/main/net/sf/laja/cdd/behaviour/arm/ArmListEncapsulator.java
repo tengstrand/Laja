@@ -1,13 +1,13 @@
 package net.sf.laja.cdd.behaviour.arm;
 
-import java.util.*;
-import net.sf.laja.cdd.state.arm.*;
-import net.sf.laja.cdd.behaviour.hand.HandArrayList;
-import net.sf.laja.cdd.behaviour.hand.HandList;
-import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.arm.ArmStateListBuilder;
 
-public class ArmListCreator implements Iterable<ArmEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class ArmListEncapsulator implements Iterable<ArmEncapsulator> {
     public ArmStateListBuilder stateList = new ArmStateListBuilder();
     private List<ArmEncapsulator> encapsulators = new ArrayList<ArmEncapsulator>();
 
@@ -16,7 +16,7 @@ public class ArmListCreator implements Iterable<ArmEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public ArmListCreator(ArmEncapsulator... encapsulators) {
+    public ArmListEncapsulator(ArmEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (ArmEncapsulator encapsulator : encapsulators) {

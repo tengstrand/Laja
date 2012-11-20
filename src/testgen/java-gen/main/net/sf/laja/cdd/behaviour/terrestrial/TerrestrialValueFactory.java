@@ -1,13 +1,9 @@
 package net.sf.laja.cdd.behaviour.terrestrial;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.terrestrial.*;
-import java.util.ArrayList;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBehaviourFactory;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialValue;
 
 public class TerrestrialValueFactory extends TerrestrialValue {
 
@@ -27,8 +23,8 @@ public class TerrestrialValueFactory extends TerrestrialValue {
         return new TerrestrialBuilder();
     }
 
-    public static TerrestrialListCreator createList(TerrestrialEncapsulator... encapsulators) {
-        return new TerrestrialListCreator(encapsulators);
+    public static TerrestrialListEncapsulator createList(TerrestrialEncapsulator... encapsulators) {
+        return new TerrestrialListEncapsulator(encapsulators);
     }
 
     public static class TerrestrialFactory_ implements TerrestrialStateBehaviourFactory {

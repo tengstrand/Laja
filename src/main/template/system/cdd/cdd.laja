@@ -155,7 +155,8 @@
           #set (behaviour.outputDir = directoryConverter.convertSourceDirToOutputDir(behaviour.sourceDir, behaviourSrcDir, behaviourOutDir, errors))
           #set (behaviourClass = statementConverter.asClassname(file))
           #set (behaviour.classname = behaviourClass)
-          #addBehaviour(behaviourClass)
+          ## behaviour.classname is set in the previous statement (by calling setClassname).
+          #addBehaviour(behaviour.classname)
         #end
       #else
         #set (parserError = true)

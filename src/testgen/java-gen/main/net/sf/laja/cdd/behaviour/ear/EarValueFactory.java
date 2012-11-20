@@ -1,11 +1,9 @@
 package net.sf.laja.cdd.behaviour.ear;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.state.ear.*;
-import java.util.Arrays;
 import net.sf.laja.cdd.state.ear.EarState;
-import java.util.ArrayList;
+import net.sf.laja.cdd.state.ear.EarStateBehaviourFactory;
+import net.sf.laja.cdd.state.ear.EarStateBuilder;
+import net.sf.laja.cdd.state.ear.EarValue;
 
 public class EarValueFactory extends EarValue {
 
@@ -25,8 +23,8 @@ public class EarValueFactory extends EarValue {
         return new EarBuilder();
     }
 
-    public static EarListCreator createList(EarEncapsulator... encapsulators) {
-        return new EarListCreator(encapsulators);
+    public static EarListEncapsulator createList(EarEncapsulator... encapsulators) {
+        return new EarListEncapsulator(encapsulators);
     }
 
     public static class EarFactory_ implements EarStateBehaviourFactory {

@@ -1,11 +1,9 @@
 package net.sf.laja.cdd.behaviour.toe;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
-import java.util.Arrays;
-import java.util.ArrayList;
+import net.sf.laja.cdd.state.toe.ToeStateBehaviourFactory;
+import net.sf.laja.cdd.state.toe.ToeStateBuilder;
+import net.sf.laja.cdd.state.toe.ToeValue;
 
 public class ToeValueFactory extends ToeValue {
 
@@ -25,8 +23,8 @@ public class ToeValueFactory extends ToeValue {
         return new ToeBuilder();
     }
 
-    public static ToeListCreator createList(ToeEncapsulator... encapsulators) {
-        return new ToeListCreator(encapsulators);
+    public static ToeListEncapsulator createList(ToeEncapsulator... encapsulators) {
+        return new ToeListEncapsulator(encapsulators);
     }
 
     public static class ToeFactory_ implements ToeStateBehaviourFactory {

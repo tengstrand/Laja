@@ -1,10 +1,13 @@
 package net.sf.laja.cdd.behaviour.toe;
 
-import java.util.*;
-import net.sf.laja.cdd.state.toe.*;
-import net.sf.laja.cdd.state.toe.ToeState;
+import net.sf.laja.cdd.state.toe.ToeStateListBuilder;
 
-public class ToeListCreator implements Iterable<ToeEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class ToeListEncapsulator implements Iterable<ToeEncapsulator> {
     public ToeStateListBuilder stateList = new ToeStateListBuilder();
     private List<ToeEncapsulator> encapsulators = new ArrayList<ToeEncapsulator>();
 
@@ -13,7 +16,7 @@ public class ToeListCreator implements Iterable<ToeEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public ToeListCreator(ToeEncapsulator... encapsulators) {
+    public ToeListEncapsulator(ToeEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (ToeEncapsulator encapsulator : encapsulators) {

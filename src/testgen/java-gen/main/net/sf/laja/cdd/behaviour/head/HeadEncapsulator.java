@@ -1,25 +1,11 @@
 package net.sf.laja.cdd.behaviour.head;
 
-import net.sf.laja.cdd.state.head.*;
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
-import net.sf.laja.cdd.behaviour.mouth.MouthList;
-import net.sf.laja.cdd.behaviour.mouth.MouthSize;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
-import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
+import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
-import net.sf.laja.cdd.behaviour.nose.NoseListCreator;
-import net.sf.laja.cdd.behaviour.brow.BrowListCreator;
-import net.sf.laja.cdd.behaviour.ear.EarListCreator;
-import net.sf.laja.cdd.behaviour.mouth.MouthListCreator;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
 
 public class HeadEncapsulator {
     public final HeadStateBuilder builder;
@@ -43,8 +29,8 @@ public class HeadEncapsulator {
     }
 
     public HeadEncapsulator withBrows(BrowEncapsulator... brows) {
-        BrowListCreator creator = new BrowListCreator(brows);
-        builder.withBrows(creator.stateList);
+        BrowListEncapsulator encapsulator = new BrowListEncapsulator(brows);
+        builder.withBrows(encapsulator.stateList);
         return this;
     }
 
@@ -54,8 +40,8 @@ public class HeadEncapsulator {
     }
 
     public HeadEncapsulator withEars(EarEncapsulator... ears) {
-        EarListCreator creator = new EarListCreator(ears);
-        builder.withEars(creator.stateList);
+        EarListEncapsulator encapsulator = new EarListEncapsulator(ears);
+        builder.withEars(encapsulator.stateList);
         return this;
     }
 

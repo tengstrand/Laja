@@ -1,12 +1,13 @@
 package net.sf.laja.cdd.behaviour.eye;
 
-import java.util.*;
-import net.sf.laja.cdd.state.eye.*;
-import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
-import net.sf.laja.cdd.state.eye.EyeState;
-import java.math.BigDecimal;
+import net.sf.laja.cdd.state.eye.EyeStateListBuilder;
 
-public class EyeListCreator implements Iterable<EyeEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class EyeListEncapsulator implements Iterable<EyeEncapsulator> {
     public EyeStateListBuilder stateList = new EyeStateListBuilder();
     private List<EyeEncapsulator> encapsulators = new ArrayList<EyeEncapsulator>();
 
@@ -15,7 +16,7 @@ public class EyeListCreator implements Iterable<EyeEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public EyeListCreator(EyeEncapsulator... encapsulators) {
+    public EyeListEncapsulator(EyeEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (EyeEncapsulator encapsulator : encapsulators) {

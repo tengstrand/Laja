@@ -1,12 +1,9 @@
 package net.sf.laja.cdd.behaviour.arm;
 
-import net.sf.laja.cdd.state.arm.*;
-import net.sf.laja.cdd.behaviour.hand.HandArrayList;
-import net.sf.laja.cdd.behaviour.hand.HandList;
-import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.hand.HandStateList;
 import net.sf.laja.cdd.behaviour.hand.HandEncapsulator;
-import net.sf.laja.cdd.behaviour.hand.HandListCreator;
+import net.sf.laja.cdd.behaviour.hand.HandListEncapsulator;
+import net.sf.laja.cdd.state.arm.ArmStateBuilder;
+import net.sf.laja.cdd.state.arm.ArmStateImpl;
 
 public class ArmCreator {
     private final ArmStateBuilder builder = ArmStateImpl.build();
@@ -25,8 +22,8 @@ public class ArmCreator {
 
     public class Hands_ {
         public ArmEncapsulator hands(HandEncapsulator... hands) {
-            HandListCreator creator = new HandListCreator(hands);
-            builder.withHands(creator.stateList);
+            HandListEncapsulator encapsulator = new HandListEncapsulator(hands);
+            builder.withHands(encapsulator.stateList);
             return create();
         }
     }

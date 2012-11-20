@@ -8,12 +8,11 @@ public class TestMouth extends TestMouthFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public TestMouth asTestMouth() {
         return new TestMouth(state);
     }
 
-    // (list)
     public CuteMouth asCuteMouth() {
         return new CuteMouth(state);
     }

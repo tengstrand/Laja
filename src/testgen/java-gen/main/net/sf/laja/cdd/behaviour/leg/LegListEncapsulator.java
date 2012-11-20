@@ -1,10 +1,13 @@
 package net.sf.laja.cdd.behaviour.leg;
 
-import java.util.*;
-import net.sf.laja.cdd.state.leg.*;
-import net.sf.laja.cdd.state.leg.LegState;
+import net.sf.laja.cdd.state.leg.LegStateListBuilder;
 
-public class LegListCreator implements Iterable<LegEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class LegListEncapsulator implements Iterable<LegEncapsulator> {
     public LegStateListBuilder stateList = new LegStateListBuilder();
     private List<LegEncapsulator> encapsulators = new ArrayList<LegEncapsulator>();
 
@@ -13,7 +16,7 @@ public class LegListCreator implements Iterable<LegEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public LegListCreator(LegEncapsulator... encapsulators) {
+    public LegListEncapsulator(LegEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (LegEncapsulator encapsulator : encapsulators) {

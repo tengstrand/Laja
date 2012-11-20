@@ -1,10 +1,13 @@
 package net.sf.laja.cdd.behaviour;
 
-import java.util.*;
-import net.sf.laja.cdd.state.brow.*;
-import net.sf.laja.cdd.state.brow.BrowState;
+import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
 
-public class TestBrowListCreator implements Iterable<TestBrowEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class TestBrowListEncapsulator implements Iterable<TestBrowEncapsulator> {
     public BrowStateListBuilder stateList = new BrowStateListBuilder();
     private List<TestBrowEncapsulator> encapsulators = new ArrayList<TestBrowEncapsulator>();
 
@@ -13,7 +16,7 @@ public class TestBrowListCreator implements Iterable<TestBrowEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public TestBrowListCreator(TestBrowEncapsulator... encapsulators) {
+    public TestBrowListEncapsulator(TestBrowEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TestBrowEncapsulator encapsulator : encapsulators) {

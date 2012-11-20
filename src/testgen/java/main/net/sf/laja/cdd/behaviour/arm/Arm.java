@@ -12,7 +12,7 @@ public class Arm extends ArmFactory {
         hands = new HandArrayList(state.getHands());
     }
 
-    // (factory) (list)
+    // (factory)
     public Arm asArm() {
         return new Arm(state);
     }

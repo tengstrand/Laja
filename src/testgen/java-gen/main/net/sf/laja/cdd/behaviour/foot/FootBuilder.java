@@ -1,12 +1,9 @@
 package net.sf.laja.cdd.behaviour.foot;
 
-import net.sf.laja.cdd.state.foot.*;
-import net.sf.laja.cdd.behaviour.toe.ToeArrayList;
-import net.sf.laja.cdd.behaviour.toe.ToeList;
+import net.sf.laja.cdd.behaviour.toe.ToeListEncapsulator;
 import net.sf.laja.cdd.state.foot.FootState;
-import net.sf.laja.cdd.state.toe.ToeStateList;
-import net.sf.laja.cdd.behaviour.toe.ToeBuilder;
-import net.sf.laja.cdd.behaviour.toe.ToeListCreator;
+import net.sf.laja.cdd.state.foot.FootStateBuilder;
+import net.sf.laja.cdd.state.foot.FootStateImpl;
 
 public class FootBuilder {
     public final FootStateBuilder builder;
@@ -24,7 +21,7 @@ public class FootBuilder {
         return this;
     }
 
-    public FootBuilder withToes(ToeListCreator toes) {
+    public FootBuilder withToes(ToeListEncapsulator toes) {
         builder.withToes(toes.stateList);
         return this;
     }

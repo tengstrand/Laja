@@ -1,12 +1,8 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
-import java.util.List;
-import java.util.Iterator;
 import net.sf.laja.cdd.state.mouth.MouthState;
+import net.sf.laja.cdd.state.mouth.MouthStateBehaviourFactory;
 import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
-import java.util.Arrays;
-import java.util.ArrayList;
-import net.sf.laja.cdd.state.mouth.*;
 
 public class MouthEntityFactory extends MouthEntity {
 
@@ -26,8 +22,8 @@ public class MouthEntityFactory extends MouthEntity {
         return new MouthBuilder();
     }
 
-    public static MouthListCreator createList(MouthEncapsulator... encapsulators) {
-        return new MouthListCreator(encapsulators);
+    public static MouthListEncapsulator createList(MouthEncapsulator... encapsulators) {
+        return new MouthListEncapsulator(encapsulators);
     }
 
     public static class MouthFactory_ implements MouthStateBehaviourFactory {

@@ -7,7 +7,7 @@ public class TestBrow extends TestBrowFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     TestBrow asTestBrow() {
         return new TestBrow(state);
     }

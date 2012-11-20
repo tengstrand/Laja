@@ -9,12 +9,11 @@ public class Eye extends EyeFactory {
         state.setDecease("Healthy");
     }
 
-    // (factory) (list)
+    // (factory)
     public Eye asEye() {
         return new Eye(state);
     }
 
-    // (list)
     public ScaryEye asScaryEye() {
         return new ScaryEye(state);
     }

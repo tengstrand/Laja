@@ -1,10 +1,13 @@
 package net.sf.laja.cdd.behaviour.animal;
 
-import java.util.*;
-import net.sf.laja.cdd.state.animal.*;
-import net.sf.laja.cdd.state.animal.AnimalState;
+import net.sf.laja.cdd.state.animal.AnimalStateListBuilder;
 
-public class AnimalListCreator implements Iterable<AnimalEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class AnimalListEncapsulator implements Iterable<AnimalEncapsulator> {
     public AnimalStateListBuilder stateList = new AnimalStateListBuilder();
     private List<AnimalEncapsulator> encapsulators = new ArrayList<AnimalEncapsulator>();
 
@@ -13,7 +16,7 @@ public class AnimalListCreator implements Iterable<AnimalEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public AnimalListCreator(AnimalEncapsulator... encapsulators) {
+    public AnimalListEncapsulator(AnimalEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AnimalEncapsulator encapsulator : encapsulators) {

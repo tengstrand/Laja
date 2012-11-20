@@ -1,12 +1,13 @@
 package net.sf.laja.cdd.behaviour;
 
-import java.util.*;
-import net.sf.laja.cdd.state.forehead.*;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.forehead.ForeheadStateListBuilder;
 
-public class TestForeheadListCreator implements Iterable<TestForeheadEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class TestForeheadListEncapsulator implements Iterable<TestForeheadEncapsulator> {
     public ForeheadStateListBuilder stateList = new ForeheadStateListBuilder();
     private List<TestForeheadEncapsulator> encapsulators = new ArrayList<TestForeheadEncapsulator>();
 
@@ -15,7 +16,7 @@ public class TestForeheadListCreator implements Iterable<TestForeheadEncapsulato
         stateList.add(encapsulator.builder);
     }
 
-    public TestForeheadListCreator(TestForeheadEncapsulator... encapsulators) {
+    public TestForeheadListEncapsulator(TestForeheadEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TestForeheadEncapsulator encapsulator : encapsulators) {

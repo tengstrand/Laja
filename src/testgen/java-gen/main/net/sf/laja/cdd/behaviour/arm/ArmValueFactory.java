@@ -1,13 +1,9 @@
 package net.sf.laja.cdd.behaviour.arm;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.arm.*;
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.behaviour.hand.HandArrayList;
-import java.util.ArrayList;
-import net.sf.laja.cdd.behaviour.hand.HandList;
+import net.sf.laja.cdd.state.arm.ArmStateBehaviourFactory;
+import net.sf.laja.cdd.state.arm.ArmStateBuilder;
+import net.sf.laja.cdd.state.arm.ArmValue;
 
 public class ArmValueFactory extends ArmValue {
 
@@ -31,8 +27,8 @@ public class ArmValueFactory extends ArmValue {
         return new ArmBuilder();
     }
 
-    public static ArmListCreator createList(ArmEncapsulator... encapsulators) {
-        return new ArmListCreator(encapsulators);
+    public static ArmListEncapsulator createList(ArmEncapsulator... encapsulators) {
+        return new ArmListEncapsulator(encapsulators);
     }
 
     public static class ArmFactory_ implements ArmStateBehaviourFactory {

@@ -1,11 +1,9 @@
 package net.sf.laja.cdd.behaviour.leg;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.leg.*;
-import java.util.ArrayList;
 import net.sf.laja.cdd.state.leg.LegState;
+import net.sf.laja.cdd.state.leg.LegStateBehaviourFactory;
+import net.sf.laja.cdd.state.leg.LegStateBuilder;
+import net.sf.laja.cdd.state.leg.LegValue;
 
 public class LegValueFactory extends LegValue {
 
@@ -25,8 +23,8 @@ public class LegValueFactory extends LegValue {
         return new LegBuilder();
     }
 
-    public static LegListCreator createList(LegEncapsulator... encapsulators) {
-        return new LegListCreator(encapsulators);
+    public static LegListEncapsulator createList(LegEncapsulator... encapsulators) {
+        return new LegListEncapsulator(encapsulators);
     }
 
     public static class LegFactory_ implements LegStateBehaviourFactory {

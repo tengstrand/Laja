@@ -1,11 +1,9 @@
 package net.sf.laja.cdd.behaviour;
 
-import java.util.List;
-import java.util.Iterator;
 import net.sf.laja.cdd.state.brow.BrowState;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.brow.*;
-import java.util.ArrayList;
+import net.sf.laja.cdd.state.brow.BrowStateBehaviourFactory;
+import net.sf.laja.cdd.state.brow.BrowStateBuilder;
+import net.sf.laja.cdd.state.brow.BrowValue;
 
 public class TestBrowValueFactory extends BrowValue {
 
@@ -25,8 +23,8 @@ public class TestBrowValueFactory extends BrowValue {
         return new TestBrowBuilder();
     }
 
-    public static TestBrowListCreator createList(TestBrowEncapsulator... encapsulators) {
-        return new TestBrowListCreator(encapsulators);
+    public static TestBrowListEncapsulator createList(TestBrowEncapsulator... encapsulators) {
+        return new TestBrowListEncapsulator(encapsulators);
     }
 
     public static class TestBrowFactory_ implements BrowStateBehaviourFactory {

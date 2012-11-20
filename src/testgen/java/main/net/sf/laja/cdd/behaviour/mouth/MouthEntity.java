@@ -12,7 +12,7 @@ public class MouthEntity extends net.sf.laja.cdd.state.mouth.MouthEntity {
         super(state, stateBuilder);
     }
 
-    // (factory) (list)
+    // (factory)
     public Mouth asMouth(MouthSize size) {
         if (size == MouthSize.SMALL) {
             return new SmallMouth(state);
@@ -20,7 +20,6 @@ public class MouthEntity extends net.sf.laja.cdd.state.mouth.MouthEntity {
         return new BigMouth(state);
     }
 
-    // (list)
     public CuteMouth asCuteMouth(MouthSize size, int x) {
         return new CuteMouth(state);
     }

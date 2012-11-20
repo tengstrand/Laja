@@ -1,21 +1,13 @@
 package net.sf.laja.cdd.behaviour.head;
 
-import java.util.*;
-import net.sf.laja.cdd.state.head.*;
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
-import net.sf.laja.cdd.behaviour.mouth.MouthList;
-import net.sf.laja.cdd.behaviour.mouth.MouthSize;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
-import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.head.HeadStateListBuilder;
 
-public class HeadListCreator implements Iterable<HeadEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class HeadListEncapsulator implements Iterable<HeadEncapsulator> {
     public HeadStateListBuilder stateList = new HeadStateListBuilder();
     private List<HeadEncapsulator> encapsulators = new ArrayList<HeadEncapsulator>();
 
@@ -24,7 +16,7 @@ public class HeadListCreator implements Iterable<HeadEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public HeadListCreator(HeadEncapsulator... encapsulators) {
+    public HeadListEncapsulator(HeadEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (HeadEncapsulator encapsulator : encapsulators) {

@@ -1,11 +1,13 @@
 package net.sf.laja.cdd.behaviour;
 
-import java.util.*;
-import net.sf.laja.cdd.state.mouth.*;
-import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
-import net.sf.laja.cdd.state.mouth.MouthState;
+import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 
-public class TestMouthListCreator implements Iterable<TestMouthEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class TestMouthListEncapsulator implements Iterable<TestMouthEncapsulator> {
     public MouthStateListBuilder stateList = new MouthStateListBuilder();
     private List<TestMouthEncapsulator> encapsulators = new ArrayList<TestMouthEncapsulator>();
 
@@ -14,7 +16,7 @@ public class TestMouthListCreator implements Iterable<TestMouthEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public TestMouthListCreator(TestMouthEncapsulator... encapsulators) {
+    public TestMouthListEncapsulator(TestMouthEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TestMouthEncapsulator encapsulator : encapsulators) {

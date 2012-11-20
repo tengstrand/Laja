@@ -7,7 +7,7 @@ public class OtherTerrestrial extends OtherTerrestrialFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public OtherTerrestrial asOtherTerrestrial() {
         return new OtherTerrestrial(state);
     }

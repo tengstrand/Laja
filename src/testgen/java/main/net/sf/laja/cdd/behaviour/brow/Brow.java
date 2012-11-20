@@ -7,7 +7,7 @@ public class Brow extends BrowFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public Brow asBrow() {
         return new Brow(state);
     }

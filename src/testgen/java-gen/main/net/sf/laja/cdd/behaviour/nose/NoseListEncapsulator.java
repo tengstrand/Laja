@@ -1,10 +1,13 @@
 package net.sf.laja.cdd.behaviour.nose;
 
-import java.util.*;
-import net.sf.laja.cdd.state.nose.*;
-import net.sf.laja.cdd.state.nose.NoseState;
+import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
 
-public class NoseListCreator implements Iterable<NoseEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class NoseListEncapsulator implements Iterable<NoseEncapsulator> {
     public NoseStateListBuilder stateList = new NoseStateListBuilder();
     private List<NoseEncapsulator> encapsulators = new ArrayList<NoseEncapsulator>();
 
@@ -13,7 +16,7 @@ public class NoseListCreator implements Iterable<NoseEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public NoseListCreator(NoseEncapsulator... encapsulators) {
+    public NoseListEncapsulator(NoseEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (NoseEncapsulator encapsulator : encapsulators) {

@@ -1,10 +1,13 @@
 package net.sf.laja.cdd.behaviour.ear;
 
-import java.util.*;
-import net.sf.laja.cdd.state.ear.*;
-import net.sf.laja.cdd.state.ear.EarState;
+import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 
-public class EarListCreator implements Iterable<EarEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class EarListEncapsulator implements Iterable<EarEncapsulator> {
     public EarStateListBuilder stateList = new EarStateListBuilder();
     private List<EarEncapsulator> encapsulators = new ArrayList<EarEncapsulator>();
 
@@ -13,7 +16,7 @@ public class EarListCreator implements Iterable<EarEncapsulator> {
         stateList.add(encapsulator.builder);
     }
 
-    public EarListCreator(EarEncapsulator... encapsulators) {
+    public EarListEncapsulator(EarEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (EarEncapsulator encapsulator : encapsulators) {

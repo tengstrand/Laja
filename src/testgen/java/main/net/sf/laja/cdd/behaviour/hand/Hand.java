@@ -7,7 +7,7 @@ public class Hand extends HandFactory implements Comparable<Hand>{
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public Hand asHand() {
         return new Hand(state);
     }

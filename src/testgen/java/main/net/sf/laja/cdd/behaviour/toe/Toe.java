@@ -7,12 +7,12 @@ public class Toe extends ToeFactory {
         super(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public Toe asToe() {
         return new Toe(state);
     }
 
-    // (factory) (list)
+    // (factory)
     public ValToe asValToe() {
         return new ValToe(state);
     }

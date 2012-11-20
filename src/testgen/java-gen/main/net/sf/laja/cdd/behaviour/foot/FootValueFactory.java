@@ -1,13 +1,9 @@
 package net.sf.laja.cdd.behaviour.foot;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.foot.*;
-import net.sf.laja.cdd.behaviour.toe.ToeList;
-import net.sf.laja.cdd.behaviour.toe.ToeArrayList;
-import java.util.ArrayList;
 import net.sf.laja.cdd.state.foot.FootState;
+import net.sf.laja.cdd.state.foot.FootStateBehaviourFactory;
+import net.sf.laja.cdd.state.foot.FootStateBuilder;
+import net.sf.laja.cdd.state.foot.FootValue;
 
 public class FootValueFactory extends FootValue {
 
@@ -27,8 +23,8 @@ public class FootValueFactory extends FootValue {
         return new FootBuilder();
     }
 
-    public static FootListCreator createList(FootEncapsulator... encapsulators) {
-        return new FootListCreator(encapsulators);
+    public static FootListEncapsulator createList(FootEncapsulator... encapsulators) {
+        return new FootListEncapsulator(encapsulators);
     }
 
     public static class FootFactory_ implements FootStateBehaviourFactory {

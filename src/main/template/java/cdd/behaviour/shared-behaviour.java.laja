@@ -110,7 +110,7 @@ import {import};
   #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateList)
     #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
     #if (behaviourRef == null)
-      #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
+      #error("Could not find behaviour class '{attribute.cleanedStateType}' in {behaviours.keySet()}")
     #end
     #if (behaviour.packagename != behaviourRef.packagename)
 import {behaviourRef.packagename}.{attribute.listEncapsulator};

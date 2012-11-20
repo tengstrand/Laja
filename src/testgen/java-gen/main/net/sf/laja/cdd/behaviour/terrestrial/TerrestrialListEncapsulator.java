@@ -1,13 +1,13 @@
 package net.sf.laja.cdd.behaviour.terrestrial;
 
-import java.util.*;
-import net.sf.laja.cdd.state.terrestrial.*;
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
-import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateListBuilder;
 
-public class TerrestrialListCreator implements Iterable<TerrestrialEncapsulator> {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class TerrestrialListEncapsulator implements Iterable<TerrestrialEncapsulator> {
     public TerrestrialStateListBuilder stateList = new TerrestrialStateListBuilder();
     private List<TerrestrialEncapsulator> encapsulators = new ArrayList<TerrestrialEncapsulator>();
 
@@ -16,7 +16,7 @@ public class TerrestrialListCreator implements Iterable<TerrestrialEncapsulator>
         stateList.add(encapsulator.builder);
     }
 
-    public TerrestrialListCreator(TerrestrialEncapsulator... encapsulators) {
+    public TerrestrialListEncapsulator(TerrestrialEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TerrestrialEncapsulator encapsulator : encapsulators) {

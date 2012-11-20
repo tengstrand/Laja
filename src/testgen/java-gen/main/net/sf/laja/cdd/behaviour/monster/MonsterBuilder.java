@@ -1,30 +1,14 @@
 package net.sf.laja.cdd.behaviour.monster;
 
-import net.sf.laja.cdd.state.monster.*;
-import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
-import net.sf.laja.cdd.behaviour.head.Head;
-import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
-import net.sf.laja.cdd.state.monster.MonsterState;
-import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.eye.EyeStateProjection;
-import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.behaviour.ear.EarBuilder;
 import net.sf.laja.cdd.behaviour.arm.ArmBuilder;
-import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
-import net.sf.laja.cdd.behaviour.nose.NoseBuilder;
-import net.sf.laja.cdd.behaviour.mouth.MouthBuilder;
+import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
-import net.sf.laja.cdd.behaviour.nose.NoseListCreator;
-import net.sf.laja.cdd.behaviour.brow.BrowListCreator;
-import net.sf.laja.cdd.behaviour.ear.EarListCreator;
-import net.sf.laja.cdd.behaviour.mouth.MouthListCreator;
+import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
+import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
+import net.sf.laja.cdd.state.monster.MonsterState;
+import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
+import net.sf.laja.cdd.state.monster.MonsterStateImpl;
 
 public class MonsterBuilder {
     public final MonsterStateBuilder builder;
@@ -77,12 +61,12 @@ public class MonsterBuilder {
         return this;
     }
 
-    public MonsterBuilder withNoses(NoseListCreator noses) {
+    public MonsterBuilder withNoses(NoseListEncapsulator noses) {
         builder.withNoses(noses.stateList);
         return this;
     }
 
-    public MonsterBuilder withBrows(BrowListCreator brows) {
+    public MonsterBuilder withBrows(BrowListEncapsulator brows) {
         builder.withBrows(brows.stateList);
         return this;
     }
@@ -132,12 +116,12 @@ public class MonsterBuilder {
         return this;
     }
 
-    public MonsterBuilder withEars(EarListCreator ears) {
+    public MonsterBuilder withEars(EarListEncapsulator ears) {
         builder.withEars(ears.stateList);
         return this;
     }
 
-    public MonsterBuilder withMouths(MouthListCreator mouths) {
+    public MonsterBuilder withMouths(MouthListEncapsulator mouths) {
         builder.withMouths(mouths.stateList);
         return this;
     }

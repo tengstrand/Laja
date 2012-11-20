@@ -1,8 +1,6 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.state.mouth.*;
-import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
-import net.sf.laja.cdd.state.mouth.MouthState;
+import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
 
 public class TestMouthEncapsulator {
     public final MouthStateBuilder builder;
