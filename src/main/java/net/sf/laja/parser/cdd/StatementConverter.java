@@ -6,8 +6,6 @@ import org.apache.commons.lang.StringUtils;
 import java.io.File;
 
 public class StatementConverter {
-    public static final String[] TEMPLATES = new String[] { "Template", "Entity", "Value" };
-
     public String prefixAttribute(String prefix, String statement, String searchFor) {
         return new StatementPrefixer(prefix, statement, searchFor).prefixAttribute();
     }

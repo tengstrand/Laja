@@ -1,8 +1,7 @@
 package net.sf.laja.parser.cdd.behaviour;
 
-import net.sf.laja.parser.cdd.StatementConverter;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Behaviour implements BehaviourParser.IBehaviour {
@@ -78,14 +77,11 @@ public class Behaviour implements BehaviourParser.IBehaviour {
     }
 
     public void setClassname(String classname) {
-        String original = classname;
+        final String[] CLASS_SUFFIX = new String[] { "Template", "Entity", "Value" };
 
-        boolean isTemplate = false;
-
-        for (String template : StatementConverter.TEMPLATES) {
-            if (classname.endsWith(template)) {
-                classname = classname.substring(0, classname.length() - template.length());
-                isTemplate = true;
+        for (String suffix : CLASS_SUFFIX) {
+            if (classname.endsWith(suffix)) {
+                classname = classname.substring(0, classname.length() - suffix.length());
                 break;
             }
         }
@@ -99,8 +95,16 @@ public class Behaviour implements BehaviourParser.IBehaviour {
         builderClass = classname + "Builder";
         creatorClass = classname + "Creator";
         factoryClass = classname + "Factory";
+    }
 
-        if (!isTemplate && !hasAsMethodReturningBehaviourClass(classname)) {
+    /**
+     * Update the name of the factory class if the returning type of the
+     * first as-method is not a behaviour class (assumes it is an interface).
+     *
+     * @param behaviourClasses
+     */
+    public void updateFactoryClassIfNeeded(Collection<String> behaviourClasses) {
+        if (!behaviourClasses.contains(classname)) {
             for (AsMethod method : asMethods) {
                 if (method.isFactory) {
                     factoryClass = method.returnclass + "Factory";
@@ -108,16 +112,6 @@ public class Behaviour implements BehaviourParser.IBehaviour {
                 }
             }
         }
-        System.out.println("#original=" + original + ", factory=" + factoryClass);
-    }
-
-    private boolean hasAsMethodReturningBehaviourClass(String behaviourClass) {
-        for (AsMethod method : asMethods) {
-            if (method.returnclass.equals(behaviourClass)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void addMethod(BehaviourParser.IBehaviourMethod imethod) {

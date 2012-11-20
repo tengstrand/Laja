@@ -1,7 +1,8 @@
 package net.sf.laja.example.computer.behaviour;
 
-import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.ComputerState;
+import net.sf.laja.example.computer.state.ComputerStateBuilder;
+import net.sf.laja.example.computer.state.ComputerStateImpl;
 
 public class AtariBuilder {
     public final ComputerStateBuilder builder;
@@ -24,10 +25,10 @@ public class AtariBuilder {
     }
 
     public AtariST asAtariST() {
-        return (AtariST)builder.as(new AtariSTFactory.AtariSTFactory_(builder));
+        return (AtariST)builder.as(new AtariFactory.AtariSTFactory_(builder));
     }
 
     public AtariFalcon030 asAtariFalcon030() {
-        return (AtariFalcon030)builder.as(new AtariSTFactory.AtariFalcon030Factory_(builder));
+        return (AtariFalcon030)builder.as(new AtariFactory.AtariFalcon030Factory_(builder));
     }
 }

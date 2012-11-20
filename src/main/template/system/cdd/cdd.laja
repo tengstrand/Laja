@@ -161,6 +161,10 @@
         #set (parserError = true)
       #end
     #end
+
+    #foreach (behaviour in behaviours.values())
+      #behaviour.updateFactoryClassIfNeeded(behaviours)
+    #end
   #end
 
   #macro attributeError(errorMessage)

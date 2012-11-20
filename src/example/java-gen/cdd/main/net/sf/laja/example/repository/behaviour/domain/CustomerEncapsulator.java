@@ -1,10 +1,7 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
-import net.sf.laja.example.repository.state.*;
-import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
-import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
-import net.sf.laja.example.repository.state.CustomerState;
+import net.sf.laja.example.repository.state.CustomerStateBuilder;
 
 public class CustomerEncapsulator {
     public final CustomerStateBuilder builder;
@@ -37,8 +34,8 @@ public class CustomerEncapsulator {
     }
 
     public CustomerEncapsulator withOldAddresses(AddressEncapsulator... oldAddresses) {
-        AddressListCreator creator = new AddressListCreator(oldAddresses);
-        builder.withOldAddresses(creator.stateList);
+        AddressListEncapsulator encapsulator = new AddressListEncapsulator(oldAddresses);
+        builder.withOldAddresses(encapsulator.stateList);
         return this;
     }
 
