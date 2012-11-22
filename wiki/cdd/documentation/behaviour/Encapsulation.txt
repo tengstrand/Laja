@@ -168,6 +168,25 @@ Result: PersonArrayList{[Person{age=40, name='Cecilia'}, Person{age=60, name='Er
 ...which is all persons with a name containing the letter "c".
 
 
+Another advantage of writing a repository in this way is that the decision of which context to work in is made by the calling code,
+allowing us to write:
+
+<source>
+...
+System.out.println("Result: " + repository.findByName("c").asPersonMatcherList());
+...
+</source>
+
+...and if executed, we get:
+
+<source>
+Is valid: true
+Result: PersonMatcherArrayList{[PersonMatcher{age=40, name='Cecilia'}, PersonMatcher{age=60, name='Eric'}]}
+</source>
+
+...which wraps instances of ''PersonMatcher'' instead och instances of ''Person''.
+
+
 [[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Context|Next >]]
