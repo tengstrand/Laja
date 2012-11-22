@@ -165,6 +165,8 @@ Is valid: true
 Result: PersonArrayList{[Person{age=40, name='Cecilia'}, Person{age=60, name='Eric'}]}
 </source>
 
+...which is all persons with a name containing the letter "c".
+
 
 [[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
