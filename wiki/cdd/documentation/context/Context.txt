@@ -45,6 +45,6 @@ Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerso
 which enables us to have different behaviour implementations for different contexts within the static context.
 
 
-[[Classes and objects|< Back]]
+[[Encapsulation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Static context|Next >]]

@@ -2,6 +2,7 @@
 ** Getting started|Getting started
 ** mainpage|Introduction
 ** Classes and objects|Classes and objects
+** Encapsulation|Encapsulation
 ** Identity|Identity
 * context
 ** Context|Context
@@ -20,7 +21,6 @@
 * behaviour
 ** Behaviour|Introduction
 ** Factories|Factories
-** Encapsulators|Encapsulators
 ** Populate state|Populate state
 ** Populate substate|Populate substate
 ** Collections|Collections

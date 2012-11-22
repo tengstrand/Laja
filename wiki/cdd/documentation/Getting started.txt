@@ -58,7 +58,7 @@ Reading file "myproject.laja"
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonList.java" - OK
   Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonArrayList.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonListCreator.java" - OK
+  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonListEncapsulator.java" - OK
   Processed 21 classes: 21 new.
 </source>
 
