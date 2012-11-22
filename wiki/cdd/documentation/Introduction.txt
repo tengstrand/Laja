@@ -8,8 +8,20 @@ Context Driven Development (CDD) is a new approach to object orientation, which 
 The secret sauce that makes this possible is ''code generation''.
 Having all of the CDD foundation classes generated automatically frees developers to just focus on ''what'' the system does instead of ''how'' it does it - resulting in less code, cleaner code and more robust code.
 
+CDD is aiming to solve a number of problems related to object orientation.
+Some of the problems with OO of today is that it is inflexible at the object level and that it lacks the concept ''context''.
+
+=== CDD crash course ===
+
+Here are the most important ingredients of CDD:
+* The state is defined in a declarative so that every attribute has its own properties, like if it's optional or if it's part of the identity. The ''hashCode'', ''equals'' and ''toString'' is then generated based on that information making the code more robust and easier to maintain.
+* One behaviour representation per context can be created allowing us to have different representations that focus on one task at a time. This follows the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
+* The amount of code needed to be written when switching context is reduced to a minimum.
+* Every behaviour class has only one constructor containing the state. This is made possible by the clean separation between ''building state'' and ''encapsulation'' which also enables validation and context switching without breaking encapsulation.
+* The state is built in a readable, flexible and robust way using the patterns [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or the [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] instead of a number of constructors and/or hand written builders.
+
 === Code generation ===
-CDD is included in the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja] where the targeting language is Java.
+This implementation of CDD is included in the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja] where the targeting language is Java.
 There are no technical barriers to implement CDD in other languages such as C++, C# or Ruby but at the moment only Java is supported.
 
 
