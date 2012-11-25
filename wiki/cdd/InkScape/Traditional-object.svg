@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="744.09448819"
@@ -15,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.1 "
    sodipodi:docname="Traditional-object.svg"
-   inkscape:export-filename="C:\Source\IDEA\Laja2\Laja\wiki\cdd\graphics\Traditional-object.png"
+   inkscape:export-filename="C:\Source\IDEA\Laja\wiki\cdd\graphics\Traditional-object.png"
    inkscape:export-xdpi="359.96161"
    inkscape:export-ydpi="359.96161">
   <defs
@@ -95,13 +96,13 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="83.843642"
-     inkscape:cy="758.15882"
+     inkscape:zoom="1.4"
+     inkscape:cx="202.76124"
+     inkscape:cy="804.58739"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1774"
+     inkscape:window-width="1769"
      inkscape:window-height="1058"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
@@ -262,5 +263,90 @@
          x="93.488708"
          sodipodi:role="line"
          id="tspan7564">Context</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.71555781;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path4589"
+       sodipodi:cx="406.5864"
+       sodipodi:cy="598.29858"
+       sodipodi:rx="84.069969"
+       sodipodi:ry="84.069969"
+       d="m 406.5864,514.22861 a 84.069969,84.069969 0 1 1 -3e-5,0"
+       sodipodi:start="4.712389"
+       sodipodi:end="10.995574"
+       sodipodi:open="true"
+       transform="matrix(0.4037079,0,0,0.4037079,107.95735,-115.07506)" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       x="446.9733"
+       y="205.81107"
+       id="text4595"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan4597"
+         sodipodi:role="line"
+         x="446.9733"
+         y="205.81107">person</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       id="text5521"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.95576593,-0.29412835,0.29412835,0.95576593,-23.173785,81.413888)"><textPath
+         xlink:href="#path5560"
+         id="textPath5562"><tspan
+   id="tspan5523">isTeenager()</tspan></textPath></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       x="86.401871"
+       y="122.23962"
+       id="text5537"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan5539"
+         sodipodi:role="line"
+         x="86.401871"
+         y="122.23962">age</tspan><tspan
+         sodipodi:role="line"
+         x="86.401871"
+         y="137.23962"
+         id="tspan5541">name</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5543"
+       y="122.23962"
+       x="452.40186"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="122.23962"
+         x="452.40186"
+         sodipodi:role="line"
+         id="tspan5545">age</tspan><tspan
+         id="tspan5547"
+         y="137.23962"
+         x="452.40186"
+         sodipodi:role="line">name</tspan></text>
+    <path
+       transform="matrix(0.47167847,0,0,0.47167847,79.607155,-155.02747)"
+       sodipodi:open="true"
+       sodipodi:end="10.995574"
+       sodipodi:start="4.712389"
+       d="m 406.5864,514.22861 a 84.069969,84.069969 0 1 1 -3e-5,0"
+       sodipodi:ry="84.069969"
+       sodipodi:rx="84.069969"
+       sodipodi:cy="598.29858"
+       sodipodi:cx="406.5864"
+       id="path5560"
+       style="color:#000000;fill:none;fill-opacity:1;stroke:none;stroke-width:3.18013238999999980;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       sodipodi:type="arc" />
+    <text
+       transform="matrix(0.95576593,-0.29412835,0.29412835,0.95576593,171.39764,81.413888)"
+       sodipodi:linespacing="125%"
+       id="text5567"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans"
+       xml:space="preserve"><textPath
+         id="textPath5569"
+         xlink:href="#path5560"><tspan
+   id="tspan5571">isTeenager()</tspan></textPath></text>
   </g>
 </svg>
