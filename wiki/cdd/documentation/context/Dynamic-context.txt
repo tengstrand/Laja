@@ -4,12 +4,12 @@ A dynamic context is something that can vary at runtime within a static context:
 [[File:CDD-dynamic-context.png|400px]]
 
 
-One of the concrete classes ''PersonAdmin'' or ''PersonRestricted'' which both implements the interface ''Person'',
-will be used depending on the value of ''userRole'' and how the factory is implemented. This is best described by showing some code.
-Pretend we want to restrict access to phone numbers so that only ADMIN users can see them.
+Static context can use concrete classes directly but with dynamic context we have to go through an interface, in this example the interface ''Person''.
+We have the two concrete classes ''PersonAdmin'' and ''PersonRestricted'' which both implements the interface ''Person''.
+Which of the two implementations that should be used is decided by the factory using the context variable ''userRole''.
 
 
-Start by adding ''UserRole'':
+Pretend we want to restrict access to phone numbers so that only ADMIN users can see them:
 
 <source>
 package com.myproject.behaviour;
@@ -19,7 +19,7 @@ public enum UserRole {
 }
 </source>
 
-...add a state definition (template) for person:
+...add a state definition for person:
 
 <source>
 package com.myproject.state;
@@ -30,11 +30,13 @@ public class PersonStateTemplate {
 }
 </source>
 
-...regenerate using the ''-i'' option, which will tell ''Laja'' to generate the interface ''Person'':
+...regenerate using the ''-i'' option:
 
 <source>
 laja -i myproject
 </source>
+
+...which will tell Laja to generate the interface ''Person'':
 
 <source>
 package com.myproject.behaviour;
@@ -125,7 +127,7 @@ public Person asPerson(UserRole role) {
 }
 </source>
 
-...regenerate and add a ''Main'' class:
+...regenerate and add ''Main'':
 
 <source>
 package com.myproject.behaviour;
@@ -151,7 +153,7 @@ PersonRestricted{name='Richard', phoneNumber=???}
 However, the idea is not to send hard coded value into ''asPerson'' (as in the example) but to use a context variable like this:
 
 <source>
-UserRole userRole; // Populated in some way, e.g. injection.
+UserRole userRole; // Populated in some way.
 ...
 Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
 </source>
@@ -192,7 +194,7 @@ public class StandardPerson extends PersonFactory implements Person {
 }
 </source>
 
-...execute the ''Main'' class again to verify that the same result is produced:
+...execute the ''main'' method again to verify that the same result is produced:
 
 <source>
 PersonAdmin{name='Anders', phoneNumber='011-11111111'}
@@ -204,7 +206,7 @@ In this example we used an enumeration to hold the context variable.
 It's also possible to use a class instead of an enumeration to represent a context variable.
 
 If you choose to use a standard class instead of an enumeration as context variable then make sure it is immutable
-to prevent unpredictable side effects (by setting all class members to ''final''), e.g:
+to prevent unpredictable side effects by setting all class members to ''final'', e.g:
 
 <source>
 package com.myproject.behaviour;

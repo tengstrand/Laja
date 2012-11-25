@@ -1,24 +1,25 @@
 Encapsulation is essentially about hiding state and defining behaviour from the perspective of state.
 
 This can be illustrated by an example. Assume ''PersonState'' has the attribute ''age''.
-Now the behaviour "is middle age" can be defined from the perspective of "age":
+Now the behaviour "is teenager" can be defined from the perspective of "age":
 
 <source>
 public class Person ... {
     ...
 
-    public boolean isMiddleAge() {
-        return state.getAge() >= 40 && state.getAge() <= 55;
+    public boolean isTeenager() {
+        return state.getAge() >= 13 && state.getAge() <= 19;
     }
 }
 </source>
 
-The class ''Person'' only expose ''behaviour'' in its public API, via the method ''isMiddleAge'', and hides its
-inner representation held by ''state''. The ''state'' instance should never be exposed outside the object itself.
+The class ''Person'' only expose ''behaviour'' in its public API, via the method ''isTeenager'', and hides its
+inner representation held by ''state''. The ''state'' instance should never be exposed outside the object itself,
+which would break encapsulation.
 
 A good thing is that we can change how ''age'' is represented without changing the public API.
-Even more important is that we have a single definition of "is middle age" with the descriptive name ''isMiddleAge'',
-that keeps the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY].
+Even more important is that we have a single definition of "is teenager" with the descriptive name ''isTeenager''
+which help us keeping the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY] and easier to understand.
 
 All ''behavior'' is in one way or another related to some ''state'', either directly or indirectly, where
 state can be defined as "data at a given time".
@@ -35,17 +36,18 @@ public class PersonStateTemplate {
 }
 </source>
 
-... if we regenerate and write:
+... if we generate and write:
 
 <source>
-Person person = Person.age(18).name("Gordon").asPerson();
+Person person = Person.age(18).name("Thomas").asPerson();
 </source>
 
-...then an instance of ''Person'' is created. The state is first built by "Person.age(18).name("Gordon")"
-followed by encapsulation performed by "asPerson()", all in one statement. We could also have written:
+...then an instance of ''Person'' is created. The state is first built by the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]
+"Person.age(18).name("Thomas")" followed by encapsulation performed by "asPerson()", all in one statement.
+We could also have divided it into two statements:
 
 <source>
-PersonEncapsulator encapsulator = Person.age(18).name("Gordon");
+PersonEncapsulator encapsulator = Person.age(18).name("Thomas");
 Person person = encapsulator.asPerson();
 </source>
 
@@ -96,8 +98,8 @@ public class Person extends PersonFactory {
         return new PersonMatcher(state);
     }
 
-    public boolean isMiddleAge() {
-        return state.getAge() >= 40 && state.getAge() <= 55;
+    public boolean isTeenager() {
+        return state.getAge() >= 13 && state.getAge() <= 19;
     }
 }
 </source>
@@ -158,7 +160,7 @@ public class Main {
 }
 </source>
 
-...if executing ''Main'' we get:
+...if executing ''main()'' we get:
 
 <source>
 Is valid: true

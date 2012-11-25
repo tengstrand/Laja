@@ -1,111 +1,24 @@
-
+__NOTOC__
 === <span style="color:#FF0000">Under construction!</span> ===
 Will be released later in 2012.
 
 = Introduction =
 
-Context Driven Development (CDD) is a new approach to object orientation, which allows for a clean separation of ''state'' and ''behaviour''; enabling us to switch an object's [[Context|context]] without breaking its encapsulation.
+Context Driven Development (CDD) is a new approach to object orientation, which allows for a clean separation of ''state'' and ''behaviour''; enabling us to switch an object's context without breaking its encapsulation.
 The secret sauce that makes this possible is ''code generation''.
 Having all of the CDD foundation classes generated automatically frees developers to just focus on ''what'' the system does instead of ''how'' it does it - resulting in less code, cleaner code and more robust code.
 
-CDD is aiming to solve a number of problems related to object orientation.
-Some of the problems with OO of today is that it is inflexible at the object level and that it lacks the concept ''context''.
+=== Overview ===
 
-=== CDD crash course ===
+CDD is aiming to solve a number of problems related to object orientation of today.
+The inflexibility at the object level and the absence of the concept ''context'' are just two examples.
+Here comes a list of the most important ingredients of CDD:
 
-Here are the most important ingredients of CDD:
-* The state is defined in a declarative so that every attribute has its own properties, like if it's optional or if it's part of the identity. The ''hashCode'', ''equals'' and ''toString'' is then generated based on that information making the code more robust and easier to maintain.
+* The state is defined in a declarative way so that every attribute has its own properties, like if it's optional or if it's part of the identity. The ''hashCode'', ''equals'' and ''toString'' is then generated based on that information making the code more robust and easier to maintain.
 * One behaviour representation per context can be created allowing us to have different representations that focus on one task at a time. This follows the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-* The amount of code needed to be written when switching context is reduced to a minimum.
+* Facilitates integration of different parts of the codebase. The amount of code needed to be written when [[Static context|switching context]] is reduced to a minimum.
 * Every behaviour class has only one constructor containing the state. This is made possible by the clean separation between ''building state'' and ''encapsulation'' which also enables validation and context switching without breaking encapsulation.
 * The state is built in a readable, flexible and robust way using the patterns [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or the [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] instead of a number of constructors and/or hand written builders.
 
-=== Code generation ===
-This implementation of CDD is included in the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja] where the targeting language is Java.
-There are no technical barriers to implement CDD in other languages such as C++, C# or Ruby but at the moment only Java is supported.
 
-
-If we take a look at the [[Getting_started|Getting started]] example, it has the following structure in the IDE:
-
-[[File:project-directory-structure.png]]
-
-The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
-
-
-Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:
-
-<source>
-package com.myproject.state;
-
-public class PersonStateTemplate {
-    int age;
-    String givenName;
-    String surname;
-}
-</source>
-
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-public class Person extends PersonFactory {
-    public Person(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
-    }
-
-    public PersistablePerson asPersistable() {
-        return new PersistablePerson(state);
-    }
-
-    public boolean isAdult() {
-        return state.getAge() >= 18;
-    }
-}
-</source>
-
-<source>
-package com.myproject.behaviour;
-
-public class Main {
-
-    public static void main(String[] args) {
-        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
-        System.out.println("Is adult: " + person.isAdult());
-
-        person.asPersistable().save();
-    }
-}
-</source>
-
-output:
-<source>
-Is adult: false
-The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
-</source>
-
-
-If we take a closer look at the statement that creates an instance of ''Person'':
-<source>
-Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
-</source>
-
-...we can see that CDD starts by building ''state'' and ends with encapsulation by choosing a ''behaviour representation''.
-In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]: ''age(15).givenName("Ingmar").surname("Bergman")''.
-The attributes are defined in ''PersonStateTemplate'' which is the foundation that all generated code is based on, such as the ''chained creator'', ''hashCode()'', ''equals()'' and ''toString()''.
-
-
-The statement...
-<source>
-person.asPersistable().save();
-</source>
-
-...switches context and persists the instance in one statement! This will be described in more detail later.
-
-
-[[Classes and objects|Next >]]
+[[Code generation|Next >]]

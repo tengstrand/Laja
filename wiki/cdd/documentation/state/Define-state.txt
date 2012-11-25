@@ -1,4 +1,4 @@
-Let's extend ''PersonState'' by modifying the state template ''PersonStateTemplate'':
+Let's extend ''PersonState'' by modifying the template ''PersonStateTemplate'':
 <source>
 package com.myproject.state;
 
@@ -16,34 +16,28 @@ public class PersonStateTemplate {
 ...regenerate and modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
 <source>
-    // The 'chained creator' starts here...
-    Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
-            .withPersonId(1)                  // ...followed by builder methods
-            .withMiddleName("Ernst")
-            .withOccupation("Film director")
-            .asPerson();                      // ...and encapsulation
+// The 'chained creator' starts here...
+Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
+        .withPersonId(1)                  // ...followed by builder methods
+        .withMiddleName("Ernst")
+        .withOccupation("Film director")
+        .asPerson();                      // ...and encapsulation
 
-    System.out.println(person);
+System.out.println(person);
 </source>
 
 ...modify the constructor of ''Person'' (ensures that the hidden attribute ''length'' is set):
 <source>
-    public Person(PersonState state) {
-        super(state);
-        state.setLength(179);
-    }
+public Person(PersonState state) {
+    super(state);
+    state.setLength(179);
+}
 </source>
 
 ... gives the output:
 <source>
 Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ernst', surname='Bergman', occupation='Film director'}
 </source>
-
-
-If we look at how the instance of ''Person'' is created, it follows these steps:
-* '''Chained creator''': contains all ''mandatory'' attributes using the pattern [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html Chained Creator].
-* '''Builder methods''': all ''optional'' attributes, marked as ''(optional)'', ''(id)'' or ''(exclude)''. These methods are not mandatory and can be omitted.
-* '''Encapsulation''': encapsulates the state by choosing a behaviour representation.
 
 
 Each attribute can have one or several properties by ending the line with a comment. None of them are mandatory:

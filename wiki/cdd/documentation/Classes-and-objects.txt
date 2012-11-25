@@ -1,4 +1,46 @@
-In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects:
+In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects, like this:
+
+<source>
+package com.myproject.behaviour;
+
+public class Person {
+    private int age;
+    private String name;
+
+    public Person(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
+    public boolean isTeenager() {
+        return age >= 13 && age <= 19;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+</source>
+
+<source>
+Person person = new Person(56, "Ingemar Stenmark");
+System.out.println(person);
+System.out.println("Is teenager: " + person.isTeenager());
+</source>
+
+...if executed, we get:
+
+<source>
+Person{age=56, name='Ingemar Stenmark'}
+Is teenager: false
+</source>
+
+The ''state'' is here represented by the attributes ''age'' and ''name'' and the ''behaviour'' is represented by the method ''isTeenager'',
+which can be illustrated by this diagram:
 
 
 [[File:Traditional-object.png|400px]]
@@ -7,29 +49,72 @@ In traditional object oriented languages the ''state'' and ''behaviour'' are mer
 The merging of state and behavior makes it harder to reuse code and to work in different contexts.
 Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] is able to compose classes in a powerful way, but once instantiated the objects become quite static in its nature.
 
+=== Flexible objects ===
 
 CDD wants to bring the same level of flexibility to objects as for classes.
 The decoupling of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
-It also makes it easy to switch between contexts:
+Let's see how the previous example will look like in CDD:
+
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String name;
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    public boolean isTeenager() {
+        return state.getAge() >= 13 && state.getAge() <= 19;
+    }
+}
+</source>
+
+<source>
+Person person = Person.age(56).name("Ingemar Stenmark").asPerson();
+System.out.println(person);
+System.out.println("Is teenager: " + person.isTeenager());
+</source>
+
+...if generated and executed, we get:
+
+<source>
+Person{age=56, name='Ingemar Stenmark'}
+Is teenager: false
+</source>
+
+The cool thing with CDD is that we can have many behaviour representations (one per context), not just ''Person'' but
+also for example ''PersonRowInFile'' and ''PersistablePerson'':
 
 
 [[File:CDD-object.png|400px]]
 
 
-CDD is not the only attempt to improve the way of working with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
-The popular ''account example'' looks like [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
+CDD is not the only attempt to improve how to work with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
+The popular ''account example'' looks like [https://github.com/Qi4j/qi4j-sdk/tree/develop/samples/dci/src/main/java/org/qi4j/dci/moneytransfer this] in DCI (using [http://www.qi4j.org Qi4j]) and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
 
 
-An object is divided into state and behaviour and is looser coupled than "traditional OO" so that the behaviour can be changed depending on context:
-
+Here is an alternative way of illustrating object in CDD:
 
 [[File:CDD-object-layering.png|600px]]
 
 
-The state is also very modular and can be created in several ways:
-
+The state is also very modular and can be constructed in several ways:
 
 [[File:CDD-state-layering.png|600px]]
+
+
+How state can be constructed will be described in more detail in the [[State|state]] section.
 
 
 [[Main_Page|< Back]]

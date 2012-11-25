@@ -1,6 +1,7 @@
-* introduction
+* cdd
 ** Getting started|Getting started
 ** mainpage|Introduction
+** Code generation|Code generation
 ** Classes and objects|Classes and objects
 ** Encapsulation|Encapsulation
 ** Identity|Identity
@@ -8,6 +9,7 @@
 ** Context|Context
 ** Static context|Static context
 ** Dynamic context|Dynamic context
+** Context switching|Context switching
 * state
 ** State|Introduction
 ** Define state|Define state
