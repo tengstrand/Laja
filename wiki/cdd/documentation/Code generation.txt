@@ -1,0 +1,93 @@
+This implementation of CDD tries to use code generation in a way that facilitates writing code and that does not become a burden or get in the way of the developer.
+Code generation enables solutions that would not otherwise be possible, like [[Define state|declaratively defined state]] and [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creators].
+
+The code generation is performed by the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja].
+The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala but at the moment only Java is supported.
+
+
+If we take a look at the [[Getting_started|Getting started]] example, it has the following structure in the IDE:
+
+[[File:project-directory-structure.png]]
+
+The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
+
+
+Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:
+
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String givenName;
+    String surname;
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+
+    public boolean isAdult() {
+        return state.getAge() >= 18;
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
+        System.out.println("Is adult: " + person.isAdult());
+
+        person.asPersistable().save();
+    }
+}
+</source>
+
+output:
+<source>
+Is adult: false
+The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
+</source>
+
+
+If we take a closer look at the statement that creates an instance of ''Person'':
+<source>
+Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
+</source>
+
+...we can see that CDD starts by building ''state'' and ends with encapsulation by choosing a ''behaviour representation''.
+In this example all attributes are mandatory and therefore included in the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]: ''age(15).givenName("Ingmar").surname("Bergman")''.
+The attributes are defined in ''PersonStateTemplate'' which is the foundation that all generated code is based on, such as the ''chained creator'', ''hashCode()'', ''equals()'' and ''toString()''.
+
+
+The statement...
+<source>
+person.asPersistable().save();
+</source>
+
+...switches context and persists the instance in one statement! This will be described in more detail later.
+
+
+[[Main_Page|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Classes and objects|Next >]]

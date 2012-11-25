@@ -1,0 +1,62 @@
+Context switching as known here was invented in 2011 and first described in this [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html blog post]
+but have been improved since then in a way that state and behaviour now are completely separated.
+The ability to have a set of different context representations is an effective way to reduce the amount of code needed to integrate different parts of the system.
+The switching is performed without affecting the state format or breaking the [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation].
+It encourages putting ''behaviour'' inside objects close to its data so they can perform tasks themselves, which is good and follows the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
+In addition to a facilitated integration CDD also let us create objects that focus on one task at a time, following the [http://en.wikipedia.org/wiki/Single_responsibility_principle Single responsibility] principle.
+
+
+In an earlier example we switched context to be able to perform the save operation:
+<source>
+person.asPersistable().save();
+</source>
+
+...which can be illustrated by this diagram:
+
+
+[[File:CDD-context-switch.png|330px]]
+
+
+The switching was performed by the method ''asPersistable()'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public PersistablePerson asPersistable() {
+        return new PersistablePerson(state);
+    }
+}
+</source>
+
+Context switching allows our objects to switch and perform well defined tasks in different parts of the system almost friction free.
+We don't need to convert between different state representations when crossing context borders because the state format never change.
+Conversion between state representations are a common source of errors that is almost eliminated in CDD.
+Support for letting objects cross physical context borders, by using a standardized text transport format, is not supported in this alpha version but may be added in the future.
+
+
+Let's take a slightly lager example to illustrate the concept ''context switching''.
+
+
+[[File:CDD-static-context.png|550px]]
+
+
+Imagine that we start by retrieving an instance from a repository (Context 1), present it in the GUI (Context 2),
+perform some editing in the GUI (Context 3) followed by some domain operations (Context 4)
+and finishing by writing the state to a file (Context 5).
+
+
+[[Dynamic context|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[State|Next >]]
