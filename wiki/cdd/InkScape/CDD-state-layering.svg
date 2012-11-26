@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.1 "
    sodipodi:docname="CDD-state-layering.svg"
-   inkscape:export-filename="C:\Source\IDEA\Laja2\Laja\wiki\cdd\CDD-state-layering.png"
+   inkscape:export-filename="C:\Source\IDEA\Laja\wiki\cdd\graphics\CDD-state-layering.png"
    inkscape:export-xdpi="180"
    inkscape:export-ydpi="180">
   <defs
@@ -69,7 +69,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
      inkscape:cx="329.63139"
-     inkscape:cy="865.05409"
+     inkscape:cy="865.40764"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -88,7 +88,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

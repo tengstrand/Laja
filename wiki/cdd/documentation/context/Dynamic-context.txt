@@ -6,7 +6,7 @@ A dynamic context is something that can vary at runtime within a static context:
 
 Static context can use concrete classes directly but with dynamic context we have to go through an interface, in this example the interface ''Person''.
 We have the two concrete classes ''PersonAdmin'' and ''PersonRestricted'' which both implements the interface ''Person''.
-Which of the two implementations that should be used is decided by the factory using the context variable ''userRole''.
+Which of the two implementations that should be used is decided by the factory using the context variable ''userRole''
 
 
 Pretend we want to restrict access to phone numbers so that only ADMIN users can see them:
@@ -150,7 +150,7 @@ PersonAdmin{name='Anders', phoneNumber='011-11111111'}
 PersonRestricted{name='Richard', phoneNumber=???}
 </source>
 
-However, the idea is not to send hard coded value into ''asPerson'' (as in the example) but to use a context variable like this:
+However, the idea is not to send hard coded value into ''asPerson'' (as in the example) but to use a ''context variable'' like this:
 
 <source>
 UserRole userRole; // Populated in some way.
@@ -159,11 +159,11 @@ Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerso
 </source>
 
 The decision which implementation to choose is delegated to the factory. This creates a loose coupling
-between the user role and the factory so that the factory can be changed without affecting the calling code.
+between the ''context variable'' (user role) and the factory so that the factory can be changed without affecting the calling code.
 
 === A single representation ===
 
-An alternative to use one representation per context is to use a single representation:
+An alternative to use one representation per context is to use a single representation, like this:
 
 <source>
 package com.myproject.behaviour;
@@ -206,7 +206,7 @@ In this example we used an enumeration to hold the context variable.
 It's also possible to use a class instead of an enumeration to represent a context variable.
 
 If you choose to use a standard class instead of an enumeration as context variable then make sure it is immutable
-to prevent unpredictable side effects by setting all class members to ''final'', e.g:
+to prevent unpredictable side effects. This is done by setting all class members to ''final'', e.g:
 
 <source>
 package com.myproject.behaviour;

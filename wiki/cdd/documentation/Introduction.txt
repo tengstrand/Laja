@@ -15,10 +15,10 @@ The inflexibility at the object level and the absence of the concept ''context''
 Here comes a list of the most important ingredients of CDD:
 
 * The state is defined in a declarative way so that every attribute has its own properties, like if it's optional or if it's part of the identity. The ''hashCode'', ''equals'' and ''toString'' is then generated based on that information making the code more robust and easier to maintain.
-* One behaviour representation per context can be created allowing us to have different representations that focus on one task at a time. This follows the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
+* An object's state is built in a readable, flexible and robust way using the patterns [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or the [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] instead of a number of constructors and/or hand written builders.
+* Allows one behaviour representation per context focusing on one task which follows the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
 * Facilitates integration of different parts of the codebase. The amount of code needed to be written when [[Static context|switching context]] is reduced to a minimum.
 * Every behaviour class has only one constructor containing the state. This is made possible by the clean separation between ''building state'' and ''encapsulation'' which also enables validation and context switching without breaking encapsulation.
-* The state is built in a readable, flexible and robust way using the patterns [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or the [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] instead of a number of constructors and/or hand written builders.
 
 
 [[Code generation|Next >]]

@@ -1,4 +1,4 @@
-This implementation of CDD tries to use code generation in a way that facilitates writing code and that does not become a burden or get in the way of the developer.
+This implementation of CDD tries to use code generation in a way that it doesn't become a burden or get in the way of the developer.
 Code generation enables solutions that would not otherwise be possible, like [[Define state|declaratively defined state]] and [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creators].
 
 The code generation is performed by the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja].

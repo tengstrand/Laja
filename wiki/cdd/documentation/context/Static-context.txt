@@ -1,21 +1,21 @@
-Static context is used to represent a place in the system where a certain task can be performed
-and is something that is known at the time the code is written (compile time).
-If we use ''person'' as an example, it can perform various tasks in different contexts:
+Static context is something that is known at the time the code is written (compile time).
 
-* show it in the GUI
+If we use ''person'' as an example, it can perform various tasks in different contexts, e.g.:
+
+* show itself in the GUI
 * answer if he or she is a teenager
 * represent it as a row in an export format
 * be persisted to a database.
 
-Each of these tasks represents a unique context, e.g. ''show in GUI'', ''core domain'', ''export'' and ''persistence''.
-The way we allow ''personState'' to operate within a context is to have one or several
-behaviour representations for it like ''Person'', ''PersonInGui'', ''PersonRowInFile'' or ''PersistablePerson''.
-The context ''core domain'' has the behaviour representation ''Person'' (the other three representations are not included in the chart):
+Each of these tasks represents four different contexts: "show in GUI", "core domain", "export" and "persistence".
+The way we allow a "person state" to operate within a context is to create behaviour representations, like: ''Person'', ''PersonInGui'', ''PersonRowInFile'' or ''PersistablePerson''.
+The following chart shows the four contexts and the behaviour representation ''Person'' (the other three are left out):
 
 
 [[File:CDD-static-context.png|350px]]
 
-GUI, Domain and Infrastructure are examples of a layered architecture.
+
+GUI, Domain and Infrastructure are examples of a layers in a layered architecture.
 
 === Layers and tier of deployment ===
 It's often a good idea to separate different responsibilities into different logical layers in the codebase (packages/modules) to increase modularity and cohesion.

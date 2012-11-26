@@ -1,5 +1,6 @@
-The concept ''context'' is used to describe i place in the system where a task can be performed (static context)
-which can vary depending on the context within the static context (dynamic context).
+The site [http://dictionary.reference.com/browse/context?s=t dictionary.com] defines context as "the set of circumstances or facts that surround a particular event, situation, etc.".
+The snippet "a particular event, situation, etc" is very close to the definition of ''behaviour'' in CDD which is something that
+operates in a ''context'' and encloses ''state'' (state = data at a given point in time).
 
 
 [[File:CDD-context.png|300px]]
@@ -35,7 +36,8 @@ public class DestinationAccount extends AccountValue {
 The two representations contains the relevant operations to be used in each context.
 
 === Dynamic context ===
-A dynamic context can vary at ''runtime'' within a static context. In the [[Dynamic context|dynamic context]] code example:
+A dynamic context can vary at ''runtime'' within a static context.
+If we take a look at the [[Dynamic context|dynamic context]] code example:
 
 <source>
 Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
