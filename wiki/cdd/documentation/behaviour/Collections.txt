@@ -92,7 +92,7 @@ public class PersonRowInFile extends PersonFactory {
         super(state);
     }
 
-    public String getText() {
+    public String toText() {
         return state.getGivenName() + ";" + state.getSurname() + ";";
     }
 }

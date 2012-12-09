@@ -13,6 +13,9 @@ public class PersonStateTemplate {
 }
 </source>
 
+The method must begin with "convert" and the parameter name and method return type must match the attribute we are converting.
+By only use primitives we make sure the state classes only contains state related classes and no behaviour.
+
 This little trick allow us to select between ''int'' and ''String'' when giving the attribute ''ssn'':
 
 <source>

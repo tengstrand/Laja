@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="744.09448819"
@@ -15,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.1 "
    sodipodi:docname="CDD-context-switch.svg"
-   inkscape:export-filename="C:\Source\IDEA\Laja2\Laja\wiki\cdd\graphics\CDD-context-switch.png"
+   inkscape:export-filename="C:\Source\IDEA\Laja\wiki\cdd\graphics\CDD-context-switch.png"
    inkscape:export-xdpi="180"
    inkscape:export-ydpi="180">
   <defs
@@ -179,9 +180,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="292.58022"
-     inkscape:cy="764.44331"
+     inkscape:zoom="1"
+     inkscape:cx="273.42751"
+     inkscape:cy="724.24356"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -241,25 +242,14 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="315.52502"
-       y="105.97113"
+       x="311.52502"
+       y="109.97113"
        id="text4335"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4337"
-         x="315.52502"
-         y="105.97113">asPersistable()</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text4339"
-       y="225.97113"
-       x="471.52502"
-       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       xml:space="preserve"><tspan
-         y="225.97113"
-         x="471.52502"
-         id="tspan4341"
-         sodipodi:role="line">save()</tspan></text>
+         x="311.52502"
+         y="109.97113">asPersistable()</tspan></text>
     <path
        transform="matrix(0.5925451,0,0,0.5925451,8.1003968,-171.36305)"
        sodipodi:open="true"
@@ -321,24 +311,57 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="123.52502"
-       y="225.97113"
        id="text5139"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan5141"
-         x="123.52502"
-         y="225.97113">isDecesed()</tspan></text>
+       sodipodi:linespacing="125%"
+       transform="matrix(0.35645243,-0.93431347,0.93431347,0.35645243,-11.813711,351.07057)"><textPath
+         xlink:href="#path3033"
+         id="textPath3869"><tspan
+   id="tspan5141">isTeenager()</tspan></textPath></text>
     <text
        xml:space="preserve"
-       style="font-size:10.96132278px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:11px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="218.41376"
-       y="188.30283"
+       y="230.30283"
        id="text7474"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan7476"
          x="218.41376"
-         y="188.30283">PersonState</tspan></text>
+         y="230.30283">PersonState</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:none;fill-opacity:1;stroke:none;stroke-width:3.02280331000000000;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3033"
+       sodipodi:cx="406.5864"
+       sodipodi:cy="598.29858"
+       sodipodi:rx="84.069969"
+       sodipodi:ry="84.069969"
+       d="m 406.5864,514.22861 a 84.069969,84.069969 0 1 1 -3e-5,0"
+       sodipodi:start="4.712389"
+       sodipodi:end="10.995574"
+       sodipodi:open="true"
+       transform="matrix(0.49622815,0,0,0.49622815,47.262116,-112.3121)" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4339"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><textPath
+         xlink:href="#path3887"
+         id="textPath3889"><tspan
+   id="tspan4341"
+   style="stroke:none">save()</tspan></textPath></text>
+    <path
+       sodipodi:type="arc"
+       style="color:#000000;fill:none;fill-opacity:1;stroke:none;stroke-width:3.00681520000000010;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="path3887"
+       sodipodi:cx="406.5864"
+       sodipodi:cy="598.29858"
+       sodipodi:rx="84.069969"
+       sodipodi:ry="84.069969"
+       d="m 406.5864,514.22861 a 84.069969,84.069969 0 1 1 -3e-5,0"
+       sodipodi:start="4.712389"
+       sodipodi:end="10.995574"
+       sodipodi:open="true"
+       transform="matrix(0.49886673,0,0,0.49886673,206.1893,-113.89076)" />
   </g>
 </svg>

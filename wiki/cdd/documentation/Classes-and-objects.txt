@@ -39,7 +39,7 @@ Person{age=56, name='Ingemar Stenmark'}
 Is teenager: false
 </source>
 
-The ''state'' is here represented by the attributes ''age'' and ''name'' and the ''behaviour'' is represented by the method ''isTeenager'',
+The ''state'' is here represented by the attributes ''age'', ''name'' and the ''behaviour'' is represented by the method ''isTeenager'',
 which can be illustrated by this diagram:
 
 
@@ -52,7 +52,7 @@ Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_progr
 === Flexible objects ===
 
 CDD wants to bring the same level of flexibility to objects as for classes.
-The decoupling of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
+The separation of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
 Let's see how the previous example will look like in CDD:
 
 <source>
@@ -101,10 +101,10 @@ also for example ''PersonRowInFile'' and ''PersistablePerson'':
 
 
 CDD is not the only attempt to improve how to work with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
-The popular ''account example'' looks like [https://github.com/Qi4j/qi4j-sdk/tree/develop/samples/dci/src/main/java/org/qi4j/dci/moneytransfer this] in DCI (using [http://www.qi4j.org Qi4j]) and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
+If you want to compare the two you can have a look at the popular ''account example'' which looks like [https://github.com/Qi4j/qi4j-sdk/tree/develop/samples/dci/src/main/java/org/qi4j/dci/moneytransfer this] in DCI (using [http://www.qi4j.org Qi4j]) and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
 
 
-Here is an alternative way of illustrating object in CDD:
+Here is an alternative way of illustrating objects in CDD:
 
 [[File:CDD-object-layering.png|600px]]
 

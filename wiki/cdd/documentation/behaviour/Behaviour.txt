@@ -4,7 +4,7 @@ With CDD we are free to compose objects in a way similar to building with wood b
 
 In traditional OO, when you have created a class with a clear responsibility, the problems begin when you need to do some work in a different context.
 Lets say we create the class ''Person'' only containing methods related to the core domain. When you want to export an instance of ''Person'' as a text format, you are facing two bad alternatives:
-* Add the method ''asText()'' to ''Person'' resulting in braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
+* Add the method ''toText()'' to ''Person'' resulting in braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
 * Add some getters to ''Person'' and delegate the work to e.g. ''PersonTextExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (which is about letting objects themselves perform tasks).
 
 

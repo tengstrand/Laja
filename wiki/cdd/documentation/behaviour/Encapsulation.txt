@@ -1,7 +1,7 @@
 Encapsulation is essentially about hiding state and defining behaviour from the perspective of state.
 
 This can be illustrated by an example. Assume ''PersonState'' has the attribute ''age''.
-Now the behaviour "is teenager" can be defined from the perspective of "age":
+Now the behaviour "is teenager" can be defined from the perspective of ''age'':
 
 <source>
 public class Person ... {
@@ -15,17 +15,16 @@ public class Person ... {
 
 The class ''Person'' only expose ''behaviour'' in its public API, via the method ''isTeenager'', and hides its
 inner representation held by ''state''. The ''state'' instance should never be exposed outside the object itself,
-which would break encapsulation.
+which otherwise would break encapsulation.
 
 A good thing is that we can change how ''age'' is represented without changing the public API.
 Even more important is that we have a single definition of "is teenager" with the descriptive name ''isTeenager''
-which help us keeping the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY] and easier to understand.
+which help us keeping the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY] and easier to understand and maintain.
 
-All ''behavior'' is in one way or another related to some ''state'', either directly or indirectly, where
-state can be defined as "data at a given time".
+All ''behavior'' is in one way or another related to some ''state'', either directly or indirectly.
 
 
-Let's explore how encapsulation is handled in this implementation of CDD, start by adding:
+Let's explore how encapsulation is handled in this implementation of CDD, start by adding a state definition:
 
 <source>
 package com.myproject.state;
@@ -44,7 +43,7 @@ Person person = Person.age(18).name("Thomas").asPerson();
 
 ...then an instance of ''Person'' is created. The state is first built by the [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator]
 "Person.age(18).name("Thomas")" followed by encapsulation performed by "asPerson()", all in one statement.
-We could also have divided it into two statements:
+We could also have divided it into two statements (''PersonEncapsulator'' is code generated):
 
 <source>
 PersonEncapsulator encapsulator = Person.age(18).name("Thomas");
@@ -76,7 +75,9 @@ CDD prevents encapsulation of invalid state but offers an opportunity to validat
 This allows us to take appropriate actions if the state would prove to be wrong.
 
 
-We could apply this pattern when building a repository, start by modifying ''Person'':
+We could apply this pattern when building a repository.
+
+Start by modifying ''Person'':
 
 <source>
 package com.myproject.behaviour;
@@ -186,7 +187,7 @@ Is valid: true
 Result: PersonMatcherArrayList{[PersonMatcher{age=40, name='Cecilia'}, PersonMatcher{age=60, name='Eric'}]}
 </source>
 
-...which wraps instances of ''PersonMatcher'' instead och instances of ''Person''.
+...which returns instances of ''PersonMatcher'' instead och instances of ''Person''.
 
 
 [[Classes and objects|< Back]]
