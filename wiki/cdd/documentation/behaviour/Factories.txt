@@ -1,7 +1,7 @@
 In our examples we have used ''Person'' as factory when creating instances of ''Person''. We could also have used the generated class ''PersonFactory'':
 <source>
-    Person person1 = PersonFactory.givenName("Ingmar").surname("Bergman").asPerson();
-    Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
+Person person1 = PersonFactory.givenName("Ingmar").surname("Bergman").asPerson();
+Person person2 = PersonFactory.build().withGivenName("Ingmar").withSurname("Bergman").asPerson();
 </source>
 
 To make ''Person'' a factory we let it inherit from ''PersonFactory'':

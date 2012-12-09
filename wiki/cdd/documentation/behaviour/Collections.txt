@@ -168,7 +168,7 @@ The code seemed to work as expected!
 
 === Switching context ===
 
-A convenient thing with the behaviour lists is that they contain all the corresponding switcher methods from the value/entity class.
+A convenient thing with behaviour lists is that they contain all the corresponding switcher methods from the value/entity class.
 
 If we have a switcher method in ''Person'' (even if it's not a factory):
 <source>
@@ -180,7 +180,7 @@ If we have a switcher method in ''Person'' (even if it's not a factory):
 ...we also get a corresponding switcher method in ''PersonList'':
 <source>
 public interface PersonList extends List<Person> {
-    TextPersonList asTextPersonList();
+    PersonRowInFileList asPersonRowInFileList();
 }
 </source>
 
@@ -268,11 +268,11 @@ package com.myproject.behaviour;
 import com.myproject.state.ExporterState;
 
 public class Exporter extends ExporterFactory {
-    private final TextPersonList persons;
+    private final PersonRowInFileList persons;
 
     public Exporter(ExporterState state) {
         super(state);
-        persons = new TextPersonArrayList(state.getPersons());
+        persons = new PersonRowInFileArrayList(state.getPersons());
     }
 
     // (factory)
@@ -283,7 +283,7 @@ public class Exporter extends ExporterFactory {
     public void export() {
         System.out.println("Start exporting");
 
-        for (TextPerson person : persons) {
+        for (PersonRowInFile person : persons) {
             System.out.println("  Exported: " + person);
         }
         System.out.println("End");
@@ -304,8 +304,8 @@ Exporter.persons(
 
 <source>
 Start exporting
-  Exported: TextPerson{givenName='Anders', surname='Andersson'}
-  Exported: TextPerson{givenName='Carl', surname='Carlsson'}
+  Exported: PersonRowInFile{givenName='Anders', surname='Andersson'}
+  Exported: PersonRowInFile{givenName='Carl', surname='Carlsson'}
 End
 </source>
 
@@ -357,7 +357,7 @@ CDD is still in an alpha version and some functionality is still missing and mor
 If creating a list by sending in a ''state list'' in the constructor like we did in the ''Exporter'':
 
 <source>
-persons = new TextPersonArrayList(state.getPersons());
+persons = new PersonRowInFileArrayList(state.getPersons());
 </source>
 
 ...CDD will ensure that the behaviour list ''persons'' and the underlying ''state list'' (state.persons) is always in sync if mutating ''persons''.
