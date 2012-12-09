@@ -4,12 +4,12 @@ A dynamic context is something that can vary at runtime within a static context:
 [[File:CDD-dynamic-context.png|400px]]
 
 
-Static context can use concrete classes directly but with dynamic context we have to go through an interface, in this example the interface ''Person''.
-We have the two concrete classes ''PersonAdmin'' and ''PersonRestricted'' which both implements the interface ''Person''.
-Which of the two implementations that should be used is decided by the factory using the context variable ''userRole''
+Static context can use concrete classes directly but with dynamic context we have to go through an interface.
+In this example the interface is represented by ''Person'' and the concrete classes by ''PersonAdmin'' and ''PersonRestricted'' which both implements the interface ''Person''.
+Which of the two implementations that should be used is decided by the factory using the ''context variable'' "userRole".
 
 
-Pretend we want to restrict access to phone numbers so that only ADMIN users can see them:
+Pretend we want to restrict access to phone numbers so that only admin users can see them. Add some code, start by ''UserRole'':
 
 <source>
 package com.myproject.behaviour;
