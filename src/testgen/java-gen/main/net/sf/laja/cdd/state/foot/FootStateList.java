@@ -1,5 +1,7 @@
 package net.sf.laja.cdd.state.foot;
 
+import net.sf.laja.cdd.state.Certificate;
+
 import java.util.List;
 
 /**

@@ -4,6 +4,7 @@
 
     public {method.returnclass} {method.getter}() {
         return new {method.returnclass}() {
+            public Certificate certificate() { return certificate(); }
       #foreach (attribute in template.attributes)
         #set (statement = method.statements.get(attribute.variable))
         #if (statement == null)

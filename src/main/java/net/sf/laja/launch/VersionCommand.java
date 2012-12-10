@@ -5,7 +5,6 @@ package net.sf.laja.launch;
  */
 public class VersionCommand implements ViewInfoCommand {
 
-	@Override
 	public void execute() {
 		System.out.println("Version: laja2-006");
 	}

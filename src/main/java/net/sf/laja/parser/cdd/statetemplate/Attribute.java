@@ -30,7 +30,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     }
 
     public boolean isObject() {
-        return !isPrimitive();
+        return !isPrimitive() && !isState;
     }
 
     public boolean isBuilderMethod() {
