@@ -107,7 +107,7 @@ If you want to compare the two you can have a look at the popular ''account'' ex
 [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
 
 
-Here is an alternative way of illustrating objects in CDD where you can think of them as building blocks:
+Here is an alternative way of illustrating objects in CDD where we can think of them as building blocks:
 
 [[File:CDD-object-layering.png|600px]]
 

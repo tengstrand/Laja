@@ -74,10 +74,10 @@ The instance of ''Person'' could not be created due to the mandatory attribute '
 CDD prevents encapsulation of invalid state but offers an opportunity to validate state before encapsulation takes place.
 This allows us to take appropriate actions if the state would prove to be wrong.
 
+=== Building a repository ===
 
-We could apply this pattern when building a repository.
-
-Start by modifying ''Person'':
+Letting the repository return a ''PersonListEncapsulator'' will enabling both ''validation'' and selection of ''behavior representation'' from the calling code.
+Let's illustrate this by writing some code, start by modifying ''Person'':
 
 <source>
 package com.myproject.behaviour;
