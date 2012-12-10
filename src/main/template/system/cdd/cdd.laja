@@ -146,7 +146,6 @@
 
       #set (behaviour = cddParser.parseBehaviour(behaviourFile))
       #if (behaviour != null)
-        #println("##  Behaviour = {behaviour}")
         #if (behaviour.cleanedStateClass != null)
           #set (behaviour.srcFilename = behaviourFile)
           #set (file = new java.io.File(behaviourFile))
