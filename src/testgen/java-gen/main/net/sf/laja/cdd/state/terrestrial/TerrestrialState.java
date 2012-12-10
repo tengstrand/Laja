@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.terrestrial;
 
 import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -11,6 +12,7 @@ import net.sf.laja.cdd.state.eye.EyeState;
  *   http://laja.sf.net
  */
 public interface TerrestrialState {
+    Certificate certificate();
     int getNumberOfLegs();
     void setNumberOfLegs(int numberOfLegs);
 

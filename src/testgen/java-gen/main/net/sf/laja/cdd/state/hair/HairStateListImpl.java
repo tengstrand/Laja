@@ -18,6 +18,10 @@ public class HairStateListImpl extends ArrayList<HairState> implements HairState
         return new HairStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (HairState state : this) {
             if (!state.isValid()) {

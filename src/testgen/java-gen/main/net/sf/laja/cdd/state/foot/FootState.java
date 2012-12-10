@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.foot;
 
 import net.sf.laja.cdd.state.toe.ToeStateList;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.toe.ToeStateList;
 
 /**
@@ -9,6 +10,7 @@ import net.sf.laja.cdd.state.toe.ToeStateList;
  *   http://laja.sf.net
  */
 public interface FootState {
+    Certificate certificate();
     int getArea();
     void setArea(int area);
 

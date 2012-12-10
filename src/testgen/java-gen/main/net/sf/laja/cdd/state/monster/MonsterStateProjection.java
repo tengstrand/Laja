@@ -12,6 +12,7 @@ import net.sf.laja.cdd.state.mouth.MouthStateList;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;

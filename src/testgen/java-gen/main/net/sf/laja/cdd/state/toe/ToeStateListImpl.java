@@ -18,6 +18,10 @@ public class ToeStateListImpl extends ArrayList<ToeState> implements ToeStateLis
         return new ToeStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (ToeState state : this) {
             if (!state.isValid()) {

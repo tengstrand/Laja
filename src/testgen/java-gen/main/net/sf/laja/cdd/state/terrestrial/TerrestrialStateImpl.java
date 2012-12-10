@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.terrestrial;
 
 import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -30,6 +31,10 @@ public class TerrestrialStateImpl implements TerrestrialState {
 
     public static TerrestrialStateBuilder build(TerrestrialState state) {
         return new TerrestrialStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.foot;
 
 import net.sf.laja.cdd.state.toe.ToeStateList;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.toe.ToeStateList;
 import net.sf.laja.cdd.state.toe.ToeStateListImpl;
 

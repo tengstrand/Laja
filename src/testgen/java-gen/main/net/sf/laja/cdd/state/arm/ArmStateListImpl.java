@@ -18,6 +18,10 @@ public class ArmStateListImpl extends ArrayList<ArmState> implements ArmStateLis
         return new ArmStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (ArmState state : this) {
             if (!state.isValid()) {

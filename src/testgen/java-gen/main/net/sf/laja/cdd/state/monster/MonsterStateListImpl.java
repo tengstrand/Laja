@@ -18,6 +18,10 @@ public class MonsterStateListImpl extends ArrayList<MonsterState> implements Mon
         return new MonsterStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (MonsterState state : this) {
             if (!state.isValid()) {

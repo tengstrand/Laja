@@ -18,6 +18,10 @@ public class ForeheadStateListImpl extends ArrayList<ForeheadState> implements F
         return new ForeheadStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (ForeheadState state : this) {
             if (!state.isValid()) {

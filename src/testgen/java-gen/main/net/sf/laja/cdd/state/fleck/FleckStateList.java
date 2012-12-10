@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface FleckStateList extends List<FleckState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

@@ -15,6 +15,7 @@ import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -30,6 +31,7 @@ import net.sf.laja.cdd.state.arm.ArmState;
  *   http://laja.sf.net
  */
 public interface MonsterState extends HeadState {
+    Certificate certificate();
     int getNumberOfLegs();
     void setNumberOfLegs(int numberOfLegs);
 

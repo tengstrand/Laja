@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.foot;
 
 import net.sf.laja.cdd.state.toe.ToeStateList;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.toe.ToeStateList;
 import net.sf.laja.cdd.state.toe.ToeStateListImpl;
 import net.sf.laja.cdd.state.Certificate;
@@ -26,6 +27,10 @@ public class FootStateImpl implements FootState {
 
     public static FootStateBuilder build(FootState state) {
         return new FootStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

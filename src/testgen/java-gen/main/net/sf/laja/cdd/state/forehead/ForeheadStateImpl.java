@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.brow.BrowStateListImpl;
 import net.sf.laja.cdd.state.Certificate;
@@ -25,6 +26,10 @@ public class ForeheadStateImpl implements ForeheadState {
 
     public static ForeheadStateBuilder build(ForeheadState state) {
         return new ForeheadStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

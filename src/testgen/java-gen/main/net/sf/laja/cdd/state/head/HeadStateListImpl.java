@@ -18,6 +18,10 @@ public class HeadStateListImpl extends ArrayList<HeadState> implements HeadState
         return new HeadStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (HeadState state : this) {
             if (!state.isValid()) {

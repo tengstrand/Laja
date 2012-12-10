@@ -18,6 +18,10 @@ public class HandStateListImpl extends ArrayList<HandState> implements HandState
         return new HandStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (HandState state : this) {
             if (!state.isValid()) {

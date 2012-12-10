@@ -8,6 +8,7 @@
   #importEnd()
   #header()
 public interface {stateClass}{extends} {
+    Certificate certificate();
   #set (first = true)
   #foreach (attribute in attributes)
     #if (!first)

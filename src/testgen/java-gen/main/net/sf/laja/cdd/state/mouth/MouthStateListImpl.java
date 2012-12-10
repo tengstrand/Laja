@@ -18,6 +18,10 @@ public class MouthStateListImpl extends ArrayList<MouthState> implements MouthSt
         return new MouthStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (MouthState state : this) {
             if (!state.isValid()) {

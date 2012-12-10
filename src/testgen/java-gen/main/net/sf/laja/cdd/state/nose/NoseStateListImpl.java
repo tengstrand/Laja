@@ -18,6 +18,10 @@ public class NoseStateListImpl extends ArrayList<NoseState> implements NoseState
         return new NoseStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (NoseState state : this) {
             if (!state.isValid()) {

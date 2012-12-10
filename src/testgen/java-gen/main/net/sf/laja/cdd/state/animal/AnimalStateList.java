@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface AnimalStateList extends List<AnimalState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

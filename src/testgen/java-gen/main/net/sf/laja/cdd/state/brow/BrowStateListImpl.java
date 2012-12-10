@@ -18,6 +18,10 @@ public class BrowStateListImpl extends ArrayList<BrowState> implements BrowState
         return new BrowStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (BrowState state : this) {
             if (!state.isValid()) {

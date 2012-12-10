@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface EyeStateList extends List<EyeState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

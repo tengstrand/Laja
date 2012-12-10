@@ -18,6 +18,10 @@ public class AnimalStateListImpl extends ArrayList<AnimalState> implements Anima
         return new AnimalStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (AnimalState state : this) {
             if (!state.isValid()) {

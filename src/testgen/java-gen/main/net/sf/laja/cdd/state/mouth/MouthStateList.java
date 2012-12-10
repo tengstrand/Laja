@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface MouthStateList extends List<MouthState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

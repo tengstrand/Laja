@@ -380,6 +380,10 @@ public class {stateImplClass} implements {stateClass} {
     public static {builderClass} build({stateClass} state) {
         return new {builderImplClass}(state);
     }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
   #isValid($, false, "    ")
   #gettersAndSetters()
   #encapsulate()

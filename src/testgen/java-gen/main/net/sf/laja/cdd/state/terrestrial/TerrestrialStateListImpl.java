@@ -18,6 +18,10 @@ public class TerrestrialStateListImpl extends ArrayList<TerrestrialState> implem
         return new TerrestrialStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (TerrestrialState state : this) {
             if (!state.isValid()) {

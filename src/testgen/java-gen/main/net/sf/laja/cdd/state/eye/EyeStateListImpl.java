@@ -18,6 +18,10 @@ public class EyeStateListImpl extends ArrayList<EyeState> implements EyeStateLis
         return new EyeStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (EyeState state : this) {
             if (!state.isValid()) {

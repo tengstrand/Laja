@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface LegStateList extends List<LegState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

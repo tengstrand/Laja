@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface ArmStateList extends List<ArmState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

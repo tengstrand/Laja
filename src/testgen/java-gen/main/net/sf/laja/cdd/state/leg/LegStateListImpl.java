@@ -18,6 +18,10 @@ public class LegStateListImpl extends ArrayList<LegState> implements LegStateLis
         return new LegStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (LegState state : this) {
             if (!state.isValid()) {

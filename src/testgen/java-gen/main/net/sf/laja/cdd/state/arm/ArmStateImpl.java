@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.arm;
 
 import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.hand.HandStateList;
 import net.sf.laja.cdd.state.hand.HandStateListImpl;
 import net.sf.laja.cdd.state.Certificate;
@@ -27,6 +28,10 @@ public class ArmStateImpl implements ArmState {
 
     public static ArmStateBuilder build(ArmState state) {
         return new ArmStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

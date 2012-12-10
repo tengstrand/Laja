@@ -10,6 +10,10 @@ public class {stateListImplClass} extends ArrayList<{stateClass}> implements {st
         return new {stateListImplClass}();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for ({stateClass} state : this) {
             if (!state.isValid()) {

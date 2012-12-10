@@ -18,6 +18,10 @@ public class FootStateListImpl extends ArrayList<FootState> implements FootState
         return new FootStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (FootState state : this) {
             if (!state.isValid()) {

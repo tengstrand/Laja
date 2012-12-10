@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.arm;
 
 import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.hand.HandStateList;
 
 /**
@@ -9,6 +10,7 @@ import net.sf.laja.cdd.state.hand.HandStateList;
  *   http://laja.sf.net
  */
 public interface ArmState {
+    Certificate certificate();
     int getArmLength(); // (optional)
     void setArmLength(int armLength);
 

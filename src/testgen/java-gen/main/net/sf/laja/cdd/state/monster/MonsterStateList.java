@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface MonsterStateList extends List<MonsterState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

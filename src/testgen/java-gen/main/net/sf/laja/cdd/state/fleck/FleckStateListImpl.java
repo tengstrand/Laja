@@ -18,6 +18,10 @@ public class FleckStateListImpl extends ArrayList<FleckState> implements FleckSt
         return new FleckStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (FleckState state : this) {
             if (!state.isValid()) {

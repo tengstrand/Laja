@@ -18,6 +18,10 @@ public class EarStateListImpl extends ArrayList<EarState> implements EarStateLis
         return new EarStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (EarState state : this) {
             if (!state.isValid()) {

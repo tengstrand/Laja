@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface ForeheadStateList extends List<ForeheadState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }
