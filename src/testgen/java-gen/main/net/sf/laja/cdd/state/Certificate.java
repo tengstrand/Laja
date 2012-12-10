@@ -62,71 +62,78 @@ public class Certificate {
     Certificate() {
     }
 
-    public static Certificate get(ForeheadStateImpl state) { return new Certificate(); }
-    public static Certificate get(ForeheadStateListImpl state) { return new Certificate(); }
-    public static Certificate get(ForeheadStateBuilderImpl state) { return new Certificate(); }
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
 
-    public static Certificate get(EyeStateImpl state) { return new Certificate(); }
-    public static Certificate get(EyeStateListImpl state) { return new Certificate(); }
-    public static Certificate get(EyeStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(ForeheadStateImpl state) { return certificate(state); }
+    public static Certificate get(ForeheadStateListImpl state) { return certificate(state); }
+    public static Certificate get(ForeheadStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(HeadStateImpl state) { return new Certificate(); }
-    public static Certificate get(HeadStateListImpl state) { return new Certificate(); }
-    public static Certificate get(HeadStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(EyeStateImpl state) { return certificate(state); }
+    public static Certificate get(EyeStateListImpl state) { return certificate(state); }
+    public static Certificate get(EyeStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(MonsterStateImpl state) { return new Certificate(); }
-    public static Certificate get(MonsterStateListImpl state) { return new Certificate(); }
-    public static Certificate get(MonsterStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(HeadStateImpl state) { return certificate(state); }
+    public static Certificate get(HeadStateListImpl state) { return certificate(state); }
+    public static Certificate get(HeadStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(AnimalStateImpl state) { return new Certificate(); }
-    public static Certificate get(AnimalStateListImpl state) { return new Certificate(); }
-    public static Certificate get(AnimalStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(MonsterStateImpl state) { return certificate(state); }
+    public static Certificate get(MonsterStateListImpl state) { return certificate(state); }
+    public static Certificate get(MonsterStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(FleckStateImpl state) { return new Certificate(); }
-    public static Certificate get(FleckStateListImpl state) { return new Certificate(); }
-    public static Certificate get(FleckStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(AnimalStateImpl state) { return certificate(state); }
+    public static Certificate get(AnimalStateListImpl state) { return certificate(state); }
+    public static Certificate get(AnimalStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(HandStateImpl state) { return new Certificate(); }
-    public static Certificate get(HandStateListImpl state) { return new Certificate(); }
-    public static Certificate get(HandStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(FleckStateImpl state) { return certificate(state); }
+    public static Certificate get(FleckStateListImpl state) { return certificate(state); }
+    public static Certificate get(FleckStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(ArmStateImpl state) { return new Certificate(); }
-    public static Certificate get(ArmStateListImpl state) { return new Certificate(); }
-    public static Certificate get(ArmStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(HandStateImpl state) { return certificate(state); }
+    public static Certificate get(HandStateListImpl state) { return certificate(state); }
+    public static Certificate get(HandStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(EarStateImpl state) { return new Certificate(); }
-    public static Certificate get(EarStateListImpl state) { return new Certificate(); }
-    public static Certificate get(EarStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(ArmStateImpl state) { return certificate(state); }
+    public static Certificate get(ArmStateListImpl state) { return certificate(state); }
+    public static Certificate get(ArmStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(TerrestrialStateImpl state) { return new Certificate(); }
-    public static Certificate get(TerrestrialStateListImpl state) { return new Certificate(); }
-    public static Certificate get(TerrestrialStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(EarStateImpl state) { return certificate(state); }
+    public static Certificate get(EarStateListImpl state) { return certificate(state); }
+    public static Certificate get(EarStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(HairStateImpl state) { return new Certificate(); }
-    public static Certificate get(HairStateListImpl state) { return new Certificate(); }
-    public static Certificate get(HairStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(TerrestrialStateImpl state) { return certificate(state); }
+    public static Certificate get(TerrestrialStateListImpl state) { return certificate(state); }
+    public static Certificate get(TerrestrialStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(BrowStateImpl state) { return new Certificate(); }
-    public static Certificate get(BrowStateListImpl state) { return new Certificate(); }
-    public static Certificate get(BrowStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(HairStateImpl state) { return certificate(state); }
+    public static Certificate get(HairStateListImpl state) { return certificate(state); }
+    public static Certificate get(HairStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(LegStateImpl state) { return new Certificate(); }
-    public static Certificate get(LegStateListImpl state) { return new Certificate(); }
-    public static Certificate get(LegStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(BrowStateImpl state) { return certificate(state); }
+    public static Certificate get(BrowStateListImpl state) { return certificate(state); }
+    public static Certificate get(BrowStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(FootStateImpl state) { return new Certificate(); }
-    public static Certificate get(FootStateListImpl state) { return new Certificate(); }
-    public static Certificate get(FootStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(LegStateImpl state) { return certificate(state); }
+    public static Certificate get(LegStateListImpl state) { return certificate(state); }
+    public static Certificate get(LegStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(NoseStateImpl state) { return new Certificate(); }
-    public static Certificate get(NoseStateListImpl state) { return new Certificate(); }
-    public static Certificate get(NoseStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(FootStateImpl state) { return certificate(state); }
+    public static Certificate get(FootStateListImpl state) { return certificate(state); }
+    public static Certificate get(FootStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(MouthStateImpl state) { return new Certificate(); }
-    public static Certificate get(MouthStateListImpl state) { return new Certificate(); }
-    public static Certificate get(MouthStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(NoseStateImpl state) { return certificate(state); }
+    public static Certificate get(NoseStateListImpl state) { return certificate(state); }
+    public static Certificate get(NoseStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(ToeStateImpl state) { return new Certificate(); }
-    public static Certificate get(ToeStateListImpl state) { return new Certificate(); }
-    public static Certificate get(ToeStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(MouthStateImpl state) { return certificate(state); }
+    public static Certificate get(MouthStateListImpl state) { return certificate(state); }
+    public static Certificate get(MouthStateBuilderImpl state) { return certificate(state); }
+
+    public static Certificate get(ToeStateImpl state) { return certificate(state); }
+    public static Certificate get(ToeStateListImpl state) { return certificate(state); }
+    public static Certificate get(ToeStateBuilderImpl state) { return certificate(state); }
 }

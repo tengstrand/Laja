@@ -18,11 +18,18 @@ import {template.packagename}.{template.stateClass}BuilderImpl;
 public class {certificateClass} {
     Certificate() {
     }
+
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
   #foreach (template in templates.values())
 
-    public static Certificate get({template.stateImplClass} state) { return new Certificate(); }
-    public static Certificate get({template.stateClass}ListImpl state) { return new Certificate(); }
-    public static Certificate get({template.stateClass}BuilderImpl state) { return new Certificate(); }
+    public static Certificate get({template.stateImplClass} state) { return certificate(state); }
+    public static Certificate get({template.stateClass}ListImpl state) { return certificate(state); }
+    public static Certificate get({template.stateClass}BuilderImpl state) { return certificate(state); }
   #end
 }
 #end
