@@ -1,9 +1,11 @@
 package net.sf.laja.cdd.behaviour.leg;
 
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
+import net.sf.laja.cdd.state.leg.*;
+import java.util.ArrayList;
 import net.sf.laja.cdd.state.leg.LegState;
-import net.sf.laja.cdd.state.leg.LegStateBehaviourFactory;
-import net.sf.laja.cdd.state.leg.LegStateBuilder;
-import net.sf.laja.cdd.state.leg.LegValue;
 
 public class LegValueFactory extends LegValue {
 

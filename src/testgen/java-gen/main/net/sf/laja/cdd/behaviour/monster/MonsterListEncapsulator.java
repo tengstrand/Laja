@@ -1,11 +1,21 @@
 package net.sf.laja.cdd.behaviour.monster;
 
-import net.sf.laja.cdd.state.monster.MonsterStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.monster.*;
+import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
+import net.sf.laja.cdd.behaviour.head.Head;
+import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
+import net.sf.laja.cdd.state.monster.MonsterState;
+import net.sf.laja.cdd.state.arm.ArmState;
+import net.sf.laja.cdd.state.eye.EyeStateProjection;
+import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.nose.NoseStateList;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateList;
+import net.sf.laja.cdd.state.mouth.MouthStateList;
+import java.math.BigDecimal;
 
 public class MonsterListEncapsulator implements Iterable<MonsterEncapsulator> {
     public MonsterStateListBuilder stateList = new MonsterStateListBuilder();

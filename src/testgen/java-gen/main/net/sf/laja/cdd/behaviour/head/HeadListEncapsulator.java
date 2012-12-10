@@ -1,11 +1,19 @@
 package net.sf.laja.cdd.behaviour.head;
 
-import net.sf.laja.cdd.state.head.HeadStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.head.*;
+import net.sf.laja.cdd.behaviour.eye.Eye;
+import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
+import net.sf.laja.cdd.behaviour.mouth.MouthList;
+import net.sf.laja.cdd.behaviour.mouth.MouthSize;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
+import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.ear.EarStateList;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.state.mouth.MouthStateList;
+import net.sf.laja.cdd.state.nose.NoseStateList;
+import net.sf.laja.cdd.state.brow.BrowStateList;
 
 public class HeadListEncapsulator implements Iterable<HeadEncapsulator> {
     public HeadStateListBuilder stateList = new HeadStateListBuilder();

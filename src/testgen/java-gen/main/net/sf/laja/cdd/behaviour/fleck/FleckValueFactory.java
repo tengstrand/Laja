@@ -1,9 +1,11 @@
 package net.sf.laja.cdd.behaviour.fleck;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.fleck.FleckState;
-import net.sf.laja.cdd.state.fleck.FleckStateBehaviourFactory;
-import net.sf.laja.cdd.state.fleck.FleckStateBuilder;
-import net.sf.laja.cdd.state.fleck.FleckValue;
+import java.util.Arrays;
+import net.sf.laja.cdd.state.fleck.*;
+import java.util.ArrayList;
 
 public class FleckValueFactory extends FleckValue {
 

@@ -1,9 +1,11 @@
 package net.sf.laja.cdd.behaviour.nose;
 
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
+import net.sf.laja.cdd.state.nose.*;
+import java.util.ArrayList;
 import net.sf.laja.cdd.state.nose.NoseState;
-import net.sf.laja.cdd.state.nose.NoseStateBehaviourFactory;
-import net.sf.laja.cdd.state.nose.NoseStateBuilder;
-import net.sf.laja.cdd.state.nose.NoseValue;
 
 public class NoseValueFactory extends NoseValue {
 

@@ -1,11 +1,10 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.state.forehead.ForeheadStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.state.brow.BrowStateList;
 
 public class TestForeheadListEncapsulator implements Iterable<TestForeheadEncapsulator> {
     public ForeheadStateListBuilder stateList = new ForeheadStateListBuilder();

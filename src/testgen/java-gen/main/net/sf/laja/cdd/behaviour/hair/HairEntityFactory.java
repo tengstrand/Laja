@@ -1,9 +1,11 @@
 package net.sf.laja.cdd.behaviour.hair;
 
-import net.sf.laja.cdd.state.hair.HairEntity;
+import java.util.List;
+import java.util.Iterator;
+import java.util.Arrays;
+import net.sf.laja.cdd.state.hair.*;
+import java.util.ArrayList;
 import net.sf.laja.cdd.state.hair.HairState;
-import net.sf.laja.cdd.state.hair.HairStateBehaviourFactory;
-import net.sf.laja.cdd.state.hair.HairStateBuilder;
 
 public class HairEntityFactory extends HairEntity {
 

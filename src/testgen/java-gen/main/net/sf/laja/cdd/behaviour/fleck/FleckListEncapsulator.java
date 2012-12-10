@@ -1,11 +1,8 @@
 package net.sf.laja.cdd.behaviour.fleck;
 
-import net.sf.laja.cdd.state.fleck.FleckStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.fleck.*;
+import net.sf.laja.cdd.state.fleck.FleckState;
 
 public class FleckListEncapsulator implements Iterable<FleckEncapsulator> {
     public FleckStateListBuilder stateList = new FleckStateListBuilder();

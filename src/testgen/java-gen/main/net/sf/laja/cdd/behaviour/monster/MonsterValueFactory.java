@@ -1,9 +1,14 @@
 package net.sf.laja.cdd.behaviour.monster;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.monster.MonsterState;
-import net.sf.laja.cdd.state.monster.MonsterStateBehaviourFactory;
+import java.util.Arrays;
+import net.sf.laja.cdd.behaviour.head.Head;
+import net.sf.laja.cdd.state.monster.*;
+import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
+import java.util.ArrayList;
 import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
-import net.sf.laja.cdd.state.monster.MonsterValue;
 
 public class MonsterValueFactory extends MonsterValue {
 

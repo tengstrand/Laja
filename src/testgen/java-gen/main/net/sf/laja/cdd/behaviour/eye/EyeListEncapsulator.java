@@ -1,11 +1,10 @@
 package net.sf.laja.cdd.behaviour.eye;
 
-import net.sf.laja.cdd.state.eye.EyeStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.eye.*;
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
+import net.sf.laja.cdd.state.eye.EyeState;
+import java.math.BigDecimal;
 
 public class EyeListEncapsulator implements Iterable<EyeEncapsulator> {
     public EyeStateListBuilder stateList = new EyeStateListBuilder();

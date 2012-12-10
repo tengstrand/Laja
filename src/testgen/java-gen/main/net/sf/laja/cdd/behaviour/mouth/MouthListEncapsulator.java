@@ -1,11 +1,9 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
-import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.mouth.*;
+import net.sf.laja.cdd.state.mouth.MouthState;
+import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
 
 public class MouthListEncapsulator implements Iterable<MouthEncapsulator> {
     public MouthStateListBuilder stateList = new MouthStateListBuilder();

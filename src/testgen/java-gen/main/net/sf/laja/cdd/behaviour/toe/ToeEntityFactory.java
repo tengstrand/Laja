@@ -1,9 +1,11 @@
 package net.sf.laja.cdd.behaviour.toe;
 
-import net.sf.laja.cdd.state.toe.ToeEntity;
+import java.util.List;
+import java.util.Iterator;
+import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
-import net.sf.laja.cdd.state.toe.ToeStateBehaviourFactory;
-import net.sf.laja.cdd.state.toe.ToeStateBuilder;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 public class ToeEntityFactory extends ToeEntity {
 

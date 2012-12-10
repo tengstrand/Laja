@@ -1,9 +1,12 @@
 package net.sf.laja.cdd.behaviour.forehead;
 
-import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
+import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
+import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
-import net.sf.laja.cdd.state.forehead.ForeheadStateImpl;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
+import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 
 public class ForeheadBuilder {
     public final ForeheadStateBuilder builder;

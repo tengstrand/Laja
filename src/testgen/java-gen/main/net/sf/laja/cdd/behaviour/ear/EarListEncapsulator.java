@@ -1,11 +1,8 @@
 package net.sf.laja.cdd.behaviour.ear;
 
-import net.sf.laja.cdd.state.ear.EarStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.ear.*;
+import net.sf.laja.cdd.state.ear.EarState;
 
 public class EarListEncapsulator implements Iterable<EarEncapsulator> {
     public EarStateListBuilder stateList = new EarStateListBuilder();

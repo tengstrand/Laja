@@ -1,11 +1,11 @@
 package net.sf.laja.cdd.behaviour.arm;
 
-import net.sf.laja.cdd.state.arm.ArmStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.arm.*;
+import net.sf.laja.cdd.behaviour.hand.HandArrayList;
+import net.sf.laja.cdd.behaviour.hand.HandList;
+import net.sf.laja.cdd.state.arm.ArmState;
+import net.sf.laja.cdd.state.hand.HandStateList;
 
 public class ArmListEncapsulator implements Iterable<ArmEncapsulator> {
     public ArmStateListBuilder stateList = new ArmStateListBuilder();

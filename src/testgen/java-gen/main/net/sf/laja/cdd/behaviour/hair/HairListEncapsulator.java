@@ -1,11 +1,8 @@
 package net.sf.laja.cdd.behaviour.hair;
 
-import net.sf.laja.cdd.state.hair.HairStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.hair.*;
+import net.sf.laja.cdd.state.hair.HairState;
 
 public class HairListEncapsulator implements Iterable<HairEncapsulator> {
     public HairStateListBuilder stateList = new HairStateListBuilder();

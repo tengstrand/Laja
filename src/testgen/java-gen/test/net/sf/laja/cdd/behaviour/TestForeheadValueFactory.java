@@ -1,9 +1,12 @@
 package net.sf.laja.cdd.behaviour;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBehaviourFactory;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
-import net.sf.laja.cdd.state.forehead.ForeheadValue;
+import net.sf.laja.cdd.state.forehead.*;
+import java.util.Arrays;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import java.util.ArrayList;
 
 public class TestForeheadValueFactory extends ForeheadValue {
 

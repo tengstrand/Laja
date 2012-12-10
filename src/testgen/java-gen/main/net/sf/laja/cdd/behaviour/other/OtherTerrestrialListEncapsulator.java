@@ -1,11 +1,9 @@
 package net.sf.laja.cdd.behaviour.other;
 
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.terrestrial.*;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
+import net.sf.laja.cdd.state.eye.EyeState;
 
 public class OtherTerrestrialListEncapsulator implements Iterable<OtherTerrestrialEncapsulator> {
     public TerrestrialStateListBuilder stateList = new TerrestrialStateListBuilder();

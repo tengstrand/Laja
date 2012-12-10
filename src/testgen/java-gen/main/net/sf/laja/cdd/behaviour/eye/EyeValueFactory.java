@@ -1,9 +1,12 @@
 package net.sf.laja.cdd.behaviour.eye;
 
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateBehaviourFactory;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeValue;
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
+import java.util.Arrays;
+import java.util.ArrayList;
+import net.sf.laja.cdd.state.eye.*;
 
 public class EyeValueFactory extends EyeValue {
 

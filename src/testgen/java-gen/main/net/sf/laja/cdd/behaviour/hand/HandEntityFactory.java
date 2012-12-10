@@ -1,9 +1,11 @@
 package net.sf.laja.cdd.behaviour.hand;
 
-import net.sf.laja.cdd.state.hand.HandEntity;
+import java.util.List;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.hand.HandState;
-import net.sf.laja.cdd.state.hand.HandStateBehaviourFactory;
-import net.sf.laja.cdd.state.hand.HandStateBuilder;
+import java.util.Arrays;
+import net.sf.laja.cdd.state.hand.*;
+import java.util.ArrayList;
 
 public class HandEntityFactory extends HandEntity {
 

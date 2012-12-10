@@ -1,11 +1,8 @@
 package net.sf.laja.cdd.behaviour.animal;
 
-import net.sf.laja.cdd.state.animal.AnimalStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.animal.*;
+import net.sf.laja.cdd.state.animal.AnimalState;
 
 public class AnimalListEncapsulator implements Iterable<AnimalEncapsulator> {
     public AnimalStateListBuilder stateList = new AnimalStateListBuilder();

@@ -1,11 +1,11 @@
 package net.sf.laja.cdd.behaviour.foot;
 
-import net.sf.laja.cdd.state.foot.FootStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.cdd.state.foot.*;
+import net.sf.laja.cdd.behaviour.toe.ToeArrayList;
+import net.sf.laja.cdd.behaviour.toe.ToeList;
+import net.sf.laja.cdd.state.foot.FootState;
+import net.sf.laja.cdd.state.toe.ToeStateList;
 
 public class FootListEncapsulator implements Iterable<FootEncapsulator> {
     public FootStateListBuilder stateList = new FootStateListBuilder();
