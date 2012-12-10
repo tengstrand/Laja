@@ -1,5 +1,8 @@
-This implementation of CDD tries to use code generation in a way that it doesn't become a burden or get in the way of the developer.
-Code generation enables solutions that would not otherwise be possible, like [[Define state|declaratively defined state]] and [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creators].
+Many developers have bad experience with code generation.
+CDD try to change that by not being in the way of the developer.
+CDD generates essentially the code needed to assemble the different building blocks, which is the type of code that is both tedious and difficult to maintain.
+The code that remains to be written will focus on defining ''state'' and adding ''behavior'' suitable for different ''contexts''.
+The hope is that CDD will make you a better developer and the work easier and more fun!
 
 The code generation is performed by the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja].
 The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala but at the moment only Java is supported.
@@ -74,7 +77,7 @@ If we take a closer look at the statement that creates an instance of ''Person''
 Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
 </source>
 
-...we can see that CDD starts by building ''state'' and ends with encapsulation by choosing a ''behaviour representation''. The statement:
+...we can see that CDD starts by building ''state'' and ends with ''encapsulation'' by choosing a ''behaviour representation''. The statement:
 <source>
 person.asPersistable().save();
 </source>
