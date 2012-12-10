@@ -101,10 +101,13 @@ also for example ''PersonRowInFile'' and ''PersistablePerson'':
 
 
 CDD is not the only attempt to improve how to work with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
-If you want to compare the two you can have a look at the popular ''account example'' which looks like [https://github.com/Qi4j/qi4j-sdk/tree/develop/samples/dci/src/main/java/org/qi4j/dci/moneytransfer this] in DCI (using [http://www.qi4j.org Qi4j]) and like [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
+If you want to compare the two you can have a look at the popular ''account'' example which looks like
+[http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI using the Decorator pattern and traits or like
+[https://github.com/Qi4j/qi4j-sdk/tree/develop/samples/dci/src/main/java/org/qi4j/dci/moneytransfer this] using the framework [http://www.qi4j.org Qi4j] and like
+[https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account this] in CDD.
 
 
-Here is an alternative way of illustrating objects in CDD:
+Here is an alternative way of illustrating objects in CDD where you can think of them as building blocks:
 
 [[File:CDD-object-layering.png|600px]]
 
