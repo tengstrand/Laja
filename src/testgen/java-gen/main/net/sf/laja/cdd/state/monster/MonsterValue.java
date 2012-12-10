@@ -21,6 +21,9 @@ public class MonsterValue implements MonsterElement {
     }
 
     public MonsterState getState(Certificate certificate) {
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null!");
+        }
         return state;
     }
 

@@ -21,6 +21,9 @@ public class EyeValue implements EyeElement {
     }
 
     public EyeState getState(Certificate certificate) {
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null!");
+        }
         return state;
     }
 
