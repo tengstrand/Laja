@@ -1,27 +1,13 @@
 package net.sf.laja.cdd.behaviour.head;
 
-import net.sf.laja.cdd.state.head.*;
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
-import net.sf.laja.cdd.behaviour.mouth.MouthList;
-import net.sf.laja.cdd.behaviour.mouth.MouthSize;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
-import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.behaviour.ear.EarBuilder;
-import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
-import net.sf.laja.cdd.behaviour.nose.NoseBuilder;
-import net.sf.laja.cdd.behaviour.mouth.MouthBuilder;
-import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
-import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
+import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
 import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
+import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
+import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
+import net.sf.laja.cdd.state.head.HeadStateImpl;
 
 public class HeadBuilder {
     public final HeadStateBuilder builder;
