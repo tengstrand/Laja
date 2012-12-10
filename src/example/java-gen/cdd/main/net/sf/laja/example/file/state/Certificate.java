@@ -17,11 +17,18 @@ public class Certificate {
     Certificate() {
     }
 
-    public static Certificate get(FileStateImpl state) { return new Certificate(); }
-    public static Certificate get(FileStateListImpl state) { return new Certificate(); }
-    public static Certificate get(FileStateBuilderImpl state) { return new Certificate(); }
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
 
-    public static Certificate get(DirectoryStateImpl state) { return new Certificate(); }
-    public static Certificate get(DirectoryStateListImpl state) { return new Certificate(); }
-    public static Certificate get(DirectoryStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(FileStateImpl state) { return certificate(state); }
+    public static Certificate get(FileStateListImpl state) { return certificate(state); }
+    public static Certificate get(FileStateBuilderImpl state) { return certificate(state); }
+
+    public static Certificate get(DirectoryStateImpl state) { return certificate(state); }
+    public static Certificate get(DirectoryStateListImpl state) { return certificate(state); }
+    public static Certificate get(DirectoryStateBuilderImpl state) { return certificate(state); }
 }

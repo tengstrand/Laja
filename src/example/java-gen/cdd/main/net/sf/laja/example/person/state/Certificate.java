@@ -20,15 +20,22 @@ public class Certificate {
     Certificate() {
     }
 
-    public static Certificate get(BmiStateImpl state) { return new Certificate(); }
-    public static Certificate get(BmiStateListImpl state) { return new Certificate(); }
-    public static Certificate get(BmiStateBuilderImpl state) { return new Certificate(); }
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
 
-    public static Certificate get(HeightStateImpl state) { return new Certificate(); }
-    public static Certificate get(HeightStateListImpl state) { return new Certificate(); }
-    public static Certificate get(HeightStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(BmiStateImpl state) { return certificate(state); }
+    public static Certificate get(BmiStateListImpl state) { return certificate(state); }
+    public static Certificate get(BmiStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(PersonStateImpl state) { return new Certificate(); }
-    public static Certificate get(PersonStateListImpl state) { return new Certificate(); }
-    public static Certificate get(PersonStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(HeightStateImpl state) { return certificate(state); }
+    public static Certificate get(HeightStateListImpl state) { return certificate(state); }
+    public static Certificate get(HeightStateBuilderImpl state) { return certificate(state); }
+
+    public static Certificate get(PersonStateImpl state) { return certificate(state); }
+    public static Certificate get(PersonStateListImpl state) { return certificate(state); }
+    public static Certificate get(PersonStateBuilderImpl state) { return certificate(state); }
 }

@@ -20,15 +20,22 @@ public class Certificate {
     Certificate() {
     }
 
-    public static Certificate get(CustomerStateImpl state) { return new Certificate(); }
-    public static Certificate get(CustomerStateListImpl state) { return new Certificate(); }
-    public static Certificate get(CustomerStateBuilderImpl state) { return new Certificate(); }
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
 
-    public static Certificate get(AddressStateImpl state) { return new Certificate(); }
-    public static Certificate get(AddressStateListImpl state) { return new Certificate(); }
-    public static Certificate get(AddressStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(CustomerStateImpl state) { return certificate(state); }
+    public static Certificate get(CustomerStateListImpl state) { return certificate(state); }
+    public static Certificate get(CustomerStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(ZipcodeStateImpl state) { return new Certificate(); }
-    public static Certificate get(ZipcodeStateListImpl state) { return new Certificate(); }
-    public static Certificate get(ZipcodeStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(AddressStateImpl state) { return certificate(state); }
+    public static Certificate get(AddressStateListImpl state) { return certificate(state); }
+    public static Certificate get(AddressStateBuilderImpl state) { return certificate(state); }
+
+    public static Certificate get(ZipcodeStateImpl state) { return certificate(state); }
+    public static Certificate get(ZipcodeStateListImpl state) { return certificate(state); }
+    public static Certificate get(ZipcodeStateBuilderImpl state) { return certificate(state); }
 }

@@ -18,6 +18,10 @@ public class ZipcodeStateListImpl extends ArrayList<ZipcodeState> implements Zip
         return new ZipcodeStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (ZipcodeState state : this) {
             if (!state.isValid()) {

@@ -29,27 +29,34 @@ public class Certificate {
     Certificate() {
     }
 
-    public static Certificate get(OwnerStateImpl state) { return new Certificate(); }
-    public static Certificate get(OwnerStateListImpl state) { return new Certificate(); }
-    public static Certificate get(OwnerStateBuilderImpl state) { return new Certificate(); }
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
 
-    public static Certificate get(CarStateImpl state) { return new Certificate(); }
-    public static Certificate get(CarStateListImpl state) { return new Certificate(); }
-    public static Certificate get(CarStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(OwnerStateImpl state) { return certificate(state); }
+    public static Certificate get(OwnerStateListImpl state) { return certificate(state); }
+    public static Certificate get(OwnerStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(TruckStateImpl state) { return new Certificate(); }
-    public static Certificate get(TruckStateListImpl state) { return new Certificate(); }
-    public static Certificate get(TruckStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(CarStateImpl state) { return certificate(state); }
+    public static Certificate get(CarStateListImpl state) { return certificate(state); }
+    public static Certificate get(CarStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(TruckTypeStateImpl state) { return new Certificate(); }
-    public static Certificate get(TruckTypeStateListImpl state) { return new Certificate(); }
-    public static Certificate get(TruckTypeStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(TruckStateImpl state) { return certificate(state); }
+    public static Certificate get(TruckStateListImpl state) { return certificate(state); }
+    public static Certificate get(TruckStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(VehicleSizeStateImpl state) { return new Certificate(); }
-    public static Certificate get(VehicleSizeStateListImpl state) { return new Certificate(); }
-    public static Certificate get(VehicleSizeStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(TruckTypeStateImpl state) { return certificate(state); }
+    public static Certificate get(TruckTypeStateListImpl state) { return certificate(state); }
+    public static Certificate get(TruckTypeStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(BusStateImpl state) { return new Certificate(); }
-    public static Certificate get(BusStateListImpl state) { return new Certificate(); }
-    public static Certificate get(BusStateBuilderImpl state) { return new Certificate(); }
+    public static Certificate get(VehicleSizeStateImpl state) { return certificate(state); }
+    public static Certificate get(VehicleSizeStateListImpl state) { return certificate(state); }
+    public static Certificate get(VehicleSizeStateBuilderImpl state) { return certificate(state); }
+
+    public static Certificate get(BusStateImpl state) { return certificate(state); }
+    public static Certificate get(BusStateListImpl state) { return certificate(state); }
+    public static Certificate get(BusStateBuilderImpl state) { return certificate(state); }
 }

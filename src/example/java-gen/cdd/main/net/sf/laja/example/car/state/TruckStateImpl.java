@@ -2,6 +2,7 @@ package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.behaviour.CarColor;
 import net.sf.laja.example.car.state.CarState;
+import net.sf.laja.example.car.state.Certificate;
 import net.sf.laja.example.car.state.TruckTypeState;
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.Certificate;
@@ -127,6 +128,10 @@ public class TruckStateImpl implements TruckState {
 
     public static TruckStateBuilder build(TruckState state) {
         return new TruckStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

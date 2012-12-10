@@ -18,6 +18,10 @@ public class DirectoryStateListImpl extends ArrayList<DirectoryState> implements
         return new DirectoryStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (DirectoryState state : this) {
             if (!state.isValid()) {

@@ -1,6 +1,7 @@
 package net.sf.laja.example.computer.behaviour;
 
-import net.sf.laja.example.computer.state.ComputerStateBuilder;
+import net.sf.laja.example.computer.state.*;
+import net.sf.laja.example.computer.state.ComputerState;
 
 public class AtariEncapsulator {
     public final ComputerStateBuilder builder;

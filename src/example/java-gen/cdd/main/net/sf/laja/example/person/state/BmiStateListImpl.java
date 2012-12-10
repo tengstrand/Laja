@@ -18,6 +18,10 @@ public class BmiStateListImpl extends ArrayList<BmiState> implements BmiStateLis
         return new BmiStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (BmiState state : this) {
             if (!state.isValid()) {

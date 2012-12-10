@@ -1,5 +1,6 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.Certificate;
 import net.sf.laja.example.repository.state.AddressStateList;
 import net.sf.laja.example.repository.state.AddressStateListImpl;
 

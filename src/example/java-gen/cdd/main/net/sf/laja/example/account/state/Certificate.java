@@ -14,7 +14,14 @@ public class Certificate {
     Certificate() {
     }
 
-    public static Certificate get(AccountStateImpl state) { return new Certificate(); }
-    public static Certificate get(AccountStateListImpl state) { return new Certificate(); }
-    public static Certificate get(AccountStateBuilderImpl state) { return new Certificate(); }
+    private static Certificate certificate(Object state) {
+        if (state == null) {
+            throw new IllegalArgumentException();
+        }
+        return new Certificate();
+    }
+
+    public static Certificate get(AccountStateImpl state) { return certificate(state); }
+    public static Certificate get(AccountStateListImpl state) { return certificate(state); }
+    public static Certificate get(AccountStateBuilderImpl state) { return certificate(state); }
 }

@@ -18,6 +18,10 @@ public class AddressStateListImpl extends ArrayList<AddressState> implements Add
         return new AddressStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (AddressState state : this) {
             if (!state.isValid()) {

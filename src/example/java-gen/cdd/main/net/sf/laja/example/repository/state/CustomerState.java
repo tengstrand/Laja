@@ -2,6 +2,7 @@ package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.ZipcodeState;
+import net.sf.laja.example.repository.state.Certificate;
 import net.sf.laja.example.repository.state.AddressStateList;
 
 /**
@@ -10,6 +11,7 @@ import net.sf.laja.example.repository.state.AddressStateList;
  *   http://laja.sf.net
  */
 public interface CustomerState extends AddressState {
+    Certificate certificate();
     long getSsn(); // (key)
     void setSsn(long ssn);
 

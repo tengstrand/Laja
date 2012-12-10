@@ -18,6 +18,10 @@ public class CustomerStateListImpl extends ArrayList<CustomerState> implements C
         return new CustomerStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (CustomerState state : this) {
             if (!state.isValid()) {

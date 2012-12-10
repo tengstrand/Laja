@@ -18,6 +18,10 @@ public class HeightStateListImpl extends ArrayList<HeightState> implements Heigh
         return new HeightStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (HeightState state : this) {
             if (!state.isValid()) {

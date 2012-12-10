@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface ZipcodeStateList extends List<ZipcodeState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

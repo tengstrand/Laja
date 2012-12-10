@@ -1,9 +1,10 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
+import net.sf.laja.example.repository.state.*;
+import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
+import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
 import net.sf.laja.example.repository.state.CustomerState;
-import net.sf.laja.example.repository.state.CustomerStateBuilder;
-import net.sf.laja.example.repository.state.CustomerStateImpl;
 
 public class CustomerBuilder {
     public final CustomerStateBuilder builder;

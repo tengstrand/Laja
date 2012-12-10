@@ -21,6 +21,9 @@ public class TruckTypeValue implements TruckTypeElement {
     }
 
     public TruckTypeState getState(Certificate certificate) {
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null!");
+        }
         return state;
     }
 

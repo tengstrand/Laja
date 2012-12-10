@@ -18,6 +18,10 @@ public class TruckStateListImpl extends ArrayList<TruckState> implements TruckSt
         return new TruckStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (TruckState state : this) {
             if (!state.isValid()) {

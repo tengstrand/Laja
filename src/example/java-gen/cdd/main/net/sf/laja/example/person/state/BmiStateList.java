@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface BmiStateList extends List<BmiState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

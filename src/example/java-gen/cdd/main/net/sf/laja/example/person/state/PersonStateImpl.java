@@ -1,6 +1,7 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
+import net.sf.laja.example.person.state.Certificate;
 import net.sf.laja.example.person.state.HeightState;
 import net.sf.laja.example.person.state.Certificate;
 
@@ -96,6 +97,10 @@ public class PersonStateImpl implements PersonState {
 
     public static PersonStateBuilder build(PersonState state) {
         return new PersonStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

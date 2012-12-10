@@ -18,6 +18,10 @@ public class BusStateListImpl extends ArrayList<BusState> implements BusStateLis
         return new BusStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (BusState state : this) {
             if (!state.isValid()) {

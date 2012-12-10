@@ -18,6 +18,10 @@ public class FileStateListImpl extends ArrayList<FileState> implements FileState
         return new FileStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (FileState state : this) {
             if (!state.isValid()) {

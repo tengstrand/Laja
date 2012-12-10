@@ -2,6 +2,7 @@ package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.behaviour.CarColor;
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.Certificate;
 import net.sf.laja.example.car.state.OwnerState;
 
 /**
@@ -10,6 +11,7 @@ import net.sf.laja.example.car.state.OwnerState;
  *   http://laja.sf.net
  */
 public interface CarState extends VehicleSizeState {
+    Certificate certificate();
     int getLengthInCentimeters();
     void setLengthInCentimeters(int lengthInCentimeters);
 

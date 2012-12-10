@@ -1,8 +1,7 @@
 package net.sf.laja.example.file.behaviour;
 
+import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.FileState;
-import net.sf.laja.example.file.state.FileStateBuilder;
-import net.sf.laja.example.file.state.FileStateImpl;
 
 public class FileBuilder {
     public final FileStateBuilder builder;

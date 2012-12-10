@@ -1,6 +1,7 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
+import net.sf.laja.example.person.state.Certificate;
 import net.sf.laja.example.person.state.HeightState;
 
 /**
@@ -9,6 +10,7 @@ import net.sf.laja.example.person.state.HeightState;
  *   http://laja.sf.net
  */
 public interface PersonState {
+    Certificate certificate();
     String getGivenName();
     void setGivenName(String givenName);
 

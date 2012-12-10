@@ -1,5 +1,6 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.Certificate;
 import net.sf.laja.example.repository.state.AddressStateList;
 import net.sf.laja.example.repository.state.AddressStateListImpl;
 import net.sf.laja.example.repository.state.Certificate;
@@ -33,6 +34,10 @@ public class CustomerStateImpl implements CustomerState {
 
     public static CustomerStateBuilder build(CustomerState state) {
         return new CustomerStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
     }
 
     public boolean isValid() {

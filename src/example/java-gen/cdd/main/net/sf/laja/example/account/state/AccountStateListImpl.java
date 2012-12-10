@@ -18,6 +18,10 @@ public class AccountStateListImpl extends ArrayList<AccountState> implements Acc
         return new AccountStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (AccountState state : this) {
             if (!state.isValid()) {

@@ -18,6 +18,10 @@ public class CarStateListImpl extends ArrayList<CarState> implements CarStateLis
         return new CarStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (CarState state : this) {
             if (!state.isValid()) {

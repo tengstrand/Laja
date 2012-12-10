@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface AddressStateList extends List<AddressState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

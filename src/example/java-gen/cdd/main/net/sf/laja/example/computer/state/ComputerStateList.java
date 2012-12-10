@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface ComputerStateList extends List<ComputerState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

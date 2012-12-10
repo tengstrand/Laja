@@ -18,6 +18,10 @@ public class ComputerStateListImpl extends ArrayList<ComputerState> implements C
         return new ComputerStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (ComputerState state : this) {
             if (!state.isValid()) {

@@ -18,6 +18,10 @@ public class VehicleSizeStateListImpl extends ArrayList<VehicleSizeState> implem
         return new VehicleSizeStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (VehicleSizeState state : this) {
             if (!state.isValid()) {

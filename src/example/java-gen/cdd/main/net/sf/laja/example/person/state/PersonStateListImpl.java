@@ -18,6 +18,10 @@ public class PersonStateListImpl extends ArrayList<PersonState> implements Perso
         return new PersonStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (PersonState state : this) {
             if (!state.isValid()) {

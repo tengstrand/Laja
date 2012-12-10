@@ -18,6 +18,10 @@ public class OwnerStateListImpl extends ArrayList<OwnerState> implements OwnerSt
         return new OwnerStateListImpl();
     }
 
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
     public boolean isValid() {
         for (OwnerState state : this) {
             if (!state.isValid()) {

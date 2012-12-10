@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface VehicleSizeStateList extends List<VehicleSizeState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }

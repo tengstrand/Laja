@@ -8,6 +8,7 @@ import java.util.List;
  *   http://laja.sf.net
  */
 public interface TruckTypeStateList extends List<TruckTypeState> {
+    Certificate certificate();
     boolean isValid();
     void encapsulate();
 }
