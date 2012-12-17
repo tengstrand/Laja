@@ -5,6 +5,7 @@
   #importBegin(false)
   #importExpandedType("State")
   #importState()
+  #importCertificate()
   #importEnd()
   #header()
 public interface {stateClass}{extends} {

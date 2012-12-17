@@ -108,7 +108,6 @@ import {expandedType.importStatement}{suffix};
 #end
 
 #macro importState()
-import {certificatePackage}.Certificate;
   #foreach (attribute in attributes where attribute.isState)
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
