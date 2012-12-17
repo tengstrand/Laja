@@ -186,7 +186,7 @@
         #attributeError("Not possible to expanded a state lists")
       #end
       #if (attribute.isOptional && attribute.isExpand)
-        #attributeError("Not possible to expand an optional attributes")
+        #attributeError("Not possible to expand optional attributes")
       #end
     #end
     #if (cnt.isGreaterThan(1))
