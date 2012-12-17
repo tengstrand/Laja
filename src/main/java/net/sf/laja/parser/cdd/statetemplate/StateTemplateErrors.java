@@ -19,9 +19,10 @@ public class StateTemplateErrors {
     }
     
     public void printMessages() {
-        System.out.println();
+        String error = messages.size() == 1 ? "error" : "errors";
+        System.out.println("# " + messages.size() + " " + error + " found:");
         for (String message : messages) {
-            System.out.println(message);
+            System.out.println(" - " + message);
         }
     }
 

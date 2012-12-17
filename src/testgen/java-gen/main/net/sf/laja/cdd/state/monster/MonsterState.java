@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.state.monster;
 
-import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateList;
@@ -16,7 +15,6 @@ import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
  *   http://laja.sf.net
  */
 public interface MonsterState extends HeadState {
-    Certificate certificate();
     int getNumberOfLegs();
     void setNumberOfLegs(int numberOfLegs);
 

@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.state.forehead;
 
-import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 
@@ -10,7 +9,6 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
  *   http://laja.sf.net
  */
 public interface ForeheadState {
-    Certificate certificate();
     BrowStateList getBrows(); // (optional)
     void setBrows(BrowStateList brows);
 
@@ -19,4 +17,5 @@ public interface ForeheadState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

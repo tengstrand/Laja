@@ -87,6 +87,13 @@ public class PersonStateImpl implements PersonState {
     PersonStateImpl() {
     }
 
+    public PersonStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
     public static PersonStateBuilder build() {
         return new PersonStateBuilderImpl();
     }

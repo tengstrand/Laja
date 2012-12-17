@@ -48,6 +48,13 @@ public class HeadStateImpl implements HeadState {
         mouths = MouthStateListImpl.emptyList();
     }
 
+    public HeadStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
     public static HeadStateBuilder build() {
         return new HeadStateBuilderImpl();
     }

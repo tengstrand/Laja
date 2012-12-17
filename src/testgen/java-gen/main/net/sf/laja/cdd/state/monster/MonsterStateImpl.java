@@ -268,6 +268,13 @@ public class MonsterStateImpl implements MonsterState {
         mouths = MouthStateListImpl.emptyList();
     }
 
+    public MonsterStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
     public static MonsterStateBuilder build() {
         return new MonsterStateBuilderImpl();
     }

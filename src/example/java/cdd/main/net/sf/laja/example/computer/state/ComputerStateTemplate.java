@@ -2,7 +2,7 @@ package net.sf.laja.example.computer.state;
 
 public class ComputerStateTemplate extends ComputerStateImpl {
     String name; // (hide)
-    Processor processor; // (hide)
+    String processor; // (hide)
     int releaseYear; // (hide)
     int memoryInKilobytes; // (hide)
     String owner;

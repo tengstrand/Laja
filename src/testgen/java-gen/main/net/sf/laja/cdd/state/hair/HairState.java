@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface HairState {
-    Certificate certificate();
     int getLength(); // (key)
     void setLength(int length);
 
@@ -19,4 +18,5 @@ public interface HairState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

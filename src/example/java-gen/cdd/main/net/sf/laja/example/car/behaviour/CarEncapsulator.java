@@ -1,8 +1,6 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.*;
-import net.sf.laja.example.car.state.CarState;
-import net.sf.laja.example.car.behaviour.CarColor;
+import net.sf.laja.example.car.state.CarStateBuilder;
 
 public class CarEncapsulator {
     public final CarStateBuilder builder;

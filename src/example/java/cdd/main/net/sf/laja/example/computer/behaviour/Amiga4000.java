@@ -9,7 +9,7 @@ public class Amiga4000 extends ComputerValue implements Amiga {
         super(state);
         state.setName("Amiga 4000");
         state.setReleaseYear(1992);
-        state.setProcessor(Processor.M68040);
+        state.setProcessor(Processor.M68040.name());
         state.setMemoryInKilobytes(2048);
     }
 

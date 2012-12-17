@@ -9,7 +9,7 @@ public class AtariFalcon030 extends ComputerValue {
         super(state);
         state.setName("Atari Falcon030");
         state.setReleaseYear(1992);
-        state.setProcessor(Processor.M68030);
+        state.setProcessor(Processor.M68030.name());
         state.setMemoryInKilobytes(1024);
     }
 }

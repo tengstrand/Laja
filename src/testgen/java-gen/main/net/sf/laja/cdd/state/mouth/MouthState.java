@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface MouthState {
-    Certificate certificate();
     int getNumberOfTeeth(); // (id)
     void setNumberOfTeeth(int numberOfTeeth);
 
@@ -25,4 +24,5 @@ public interface MouthState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

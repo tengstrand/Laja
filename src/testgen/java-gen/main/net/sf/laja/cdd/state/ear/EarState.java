@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface EarState {
-    Certificate certificate();
     double getSize(); // (hide)
     void setSize(double size);
 
@@ -16,4 +15,5 @@ public interface EarState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

@@ -9,7 +9,7 @@ public class AtariST extends ComputerValue {
         super(state);
         state.setName("Atari ST");
         state.setReleaseYear(1985);
-        state.setProcessor(Processor.M68000);
+        state.setProcessor(Processor.M68000.name());
         state.setMemoryInKilobytes(512);
     }
 }

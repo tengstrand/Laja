@@ -226,7 +226,6 @@
 {tab}    {t.stateImplClass} state = ({t.stateImplClass})o;
   #end
 
-  #set (errorMessage = "")
   #foreach (attribute in attributes)
     #set (variable = variable(useGetter))
     #if (attribute.isPrimitive)
@@ -372,6 +371,13 @@ public class {stateImplClass} implements {stateClass} {
   #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
         {attribute.variable} = {attribute.typeAsStateImpl}.emptyList();
   #end
+    }
+
+    public {stateImplClass}(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
     }
 
     public static {builderClass} build() {

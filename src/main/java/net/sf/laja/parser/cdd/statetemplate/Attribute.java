@@ -25,8 +25,16 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isOptional;
     public boolean isMandatory = true;
 
+    public boolean isValidType() {
+        return isPrimitive() || isImmutableObject() || isState;
+    }
+
     public boolean isPrimitive() {
         return Type.isPrimitive(type);
+    }
+
+    public boolean isImmutableObject() {
+        return Type.isImmutableObject(type);
     }
 
     public boolean isObject() {

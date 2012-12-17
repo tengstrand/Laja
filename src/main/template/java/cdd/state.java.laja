@@ -8,7 +8,6 @@
   #importEnd()
   #header()
 public interface {stateClass}{extends} {
-    Certificate certificate();
   #set (first = true)
   #foreach (attribute in attributes)
     #if (!first)
@@ -31,6 +30,7 @@ public interface {stateClass}{extends} {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
   #end
 }
 #end

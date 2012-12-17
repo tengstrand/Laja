@@ -1,8 +1,7 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.*;
-import net.sf.laja.example.car.state.CarState;
-import net.sf.laja.example.car.behaviour.CarColor;
+import net.sf.laja.example.car.state.CarStateBuilder;
+import net.sf.laja.example.car.state.CarStateImpl;
 
 public class CarCreator {
     private final CarStateBuilder builder = CarStateImpl.build();
@@ -29,13 +28,8 @@ public class CarCreator {
     }
 
     public class Color_ {
-        public CarEncapsulator color(CarColor color) {
-            builder.withColor(color);
-            return create();
-        }
-
         public CarEncapsulator color(String color) {
-            builder.withColor(CarColor.valueOf(color.toUpperCase()));
+            builder.withColor(color);
             return create();
         }
     }

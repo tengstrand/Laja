@@ -6,6 +6,10 @@ public class {stateListImplClass} extends ArrayList<{stateClass}> implements {st
     public {stateListImplClass}() {
     }
 
+    public {stateListImplClass}(int size) {
+        super(size);
+    }
+
     public static {stateListClass} emptyList() {
         return new {stateListImplClass}();
     }

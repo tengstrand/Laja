@@ -1,8 +1,8 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.TruckState;
-import net.sf.laja.example.car.behaviour.CarColor;
+import net.sf.laja.example.car.state.TruckStateBuilder;
+import net.sf.laja.example.car.state.TruckStateImpl;
 
 public class TruckBuilder {
     public final TruckStateBuilder builder;
@@ -30,7 +30,7 @@ public class TruckBuilder {
         return this;
     }
 
-    public TruckBuilder withColor(CarColor color) {
+    public TruckBuilder withColor(String color) {
         builder.withColor(color);
         return this;
     }

@@ -1,12 +1,10 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.behaviour.CarColor;
-
 public class TruckStateTemplate extends TruckStateImpl {
     VehicleSizeState $size;
     int weightInKilograms;
     TruckTypeState type;
-    CarColor color;
+    String color;
     OwnerState owner;
 
     /**

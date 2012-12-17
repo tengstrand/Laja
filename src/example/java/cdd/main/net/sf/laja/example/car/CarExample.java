@@ -25,7 +25,7 @@ public class CarExample {
      */
     public static void main(String... args) {
         // Use the chained constructor to create the car.
-        Car volvo = Car.lengthInCentimeters(479).name("Volvo").owner(Owner.ssn(197506071234L).name("Bill")).color(RED).asCar();
+        Car volvo = Car.lengthInCentimeters(479).name("Volvo").owner(Owner.ssn(197506071234L).name("Bill")).color(RED.name()).asCar();
 
         // Use the builder to create the car.
         Car saab = Car.build().withLengthInCentimeters(434).withName("Saab").withColor("Blue").withOwner(

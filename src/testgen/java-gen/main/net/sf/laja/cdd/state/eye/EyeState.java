@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.state.eye;
 
-import java.math.BigDecimal;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -9,7 +8,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface EyeState {
-    Certificate certificate();
     int getEyeWeightInGrams();
     void setEyeWeightInGrams(int eyeWeightInGrams);
 
@@ -27,4 +25,5 @@ public interface EyeState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

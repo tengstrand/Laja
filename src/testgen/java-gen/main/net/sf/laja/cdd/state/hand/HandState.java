@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface HandState {
-    Certificate certificate();
     int getArea(); // (key)
     void setArea(int area);
 
@@ -16,4 +15,5 @@ public interface HandState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

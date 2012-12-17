@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface AnimalState {
-    Certificate certificate();
     boolean getIsTerrestrial();
     void setIsTerrestrial(boolean isTerrestrial);
 
@@ -16,4 +15,5 @@ public interface AnimalState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

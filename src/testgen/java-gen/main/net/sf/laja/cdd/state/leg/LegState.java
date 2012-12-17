@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public interface LegState {
-    Certificate certificate();
     String getLegDescription();
     void setLegDescription(String legDescription);
 
@@ -16,4 +15,5 @@ public interface LegState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    Certificate certificate();
 }

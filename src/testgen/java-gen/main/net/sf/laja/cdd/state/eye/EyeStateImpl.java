@@ -1,7 +1,5 @@
 package net.sf.laja.cdd.state.eye;
 
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -18,6 +16,13 @@ public class EyeStateImpl implements EyeState {
     private boolean _encapsulated = false;
 
     EyeStateImpl() {
+    }
+
+    public EyeStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
     }
 
     public static EyeStateBuilder build() {

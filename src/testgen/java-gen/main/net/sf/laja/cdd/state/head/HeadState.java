@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.state.head;
 
-import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -14,7 +13,6 @@ import net.sf.laja.cdd.state.nose.NoseStateList;
  *   http://laja.sf.net
  */
 public interface HeadState extends EyeState, ForeheadState {
-    Certificate certificate();
     double getHeadWeightInGrams();
     void setHeadWeightInGrams(double headWeightInGrams);
 
