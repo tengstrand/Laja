@@ -79,6 +79,6 @@ public final class EarStateListBuilder {
 
     @Override
     public String toString() {
-        return "EarStateListBuilder{states=" + states + "}";
+        return "EarStateListBuilder{" + states + "}";
     }
 }

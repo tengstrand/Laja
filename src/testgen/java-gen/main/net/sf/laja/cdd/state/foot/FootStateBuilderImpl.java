@@ -56,4 +56,9 @@ public class FootStateBuilderImpl implements FootStateBuilder {
     public FootState getFootState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

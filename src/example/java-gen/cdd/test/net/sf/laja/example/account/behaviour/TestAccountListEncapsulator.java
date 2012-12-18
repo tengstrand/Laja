@@ -5,19 +5,19 @@ import net.sf.laja.example.account.state.*;
 import net.sf.laja.example.account.state.AccountState;
 
 public class TestAccountListEncapsulator implements Iterable<TestAccountEncapsulator> {
-    public AccountStateListBuilder stateList = new AccountStateListBuilder();
+    public AccountStateListBuilder stateListBuilder = new AccountStateListBuilder();
     private List<TestAccountEncapsulator> encapsulators = new ArrayList<TestAccountEncapsulator>();
 
     public void add(TestAccountEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public TestAccountListEncapsulator(TestAccountEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TestAccountEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class TestAccountListEncapsulator implements Iterable<TestAccountEncapsul
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

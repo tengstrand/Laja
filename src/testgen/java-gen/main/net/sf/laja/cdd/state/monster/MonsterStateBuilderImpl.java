@@ -284,4 +284,9 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     public ForeheadState getForeheadState(Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

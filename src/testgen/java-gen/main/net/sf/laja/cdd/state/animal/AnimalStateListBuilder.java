@@ -79,6 +79,6 @@ public final class AnimalStateListBuilder {
 
     @Override
     public String toString() {
-        return "AnimalStateListBuilder{states=" + states + "}";
+        return "AnimalStateListBuilder{" + states + "}";
     }
 }

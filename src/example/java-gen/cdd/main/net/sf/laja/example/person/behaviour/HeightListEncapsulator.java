@@ -5,19 +5,19 @@ import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.HeightState;
 
 public class HeightListEncapsulator implements Iterable<HeightEncapsulator> {
-    public HeightStateListBuilder stateList = new HeightStateListBuilder();
+    public HeightStateListBuilder stateListBuilder = new HeightStateListBuilder();
     private List<HeightEncapsulator> encapsulators = new ArrayList<HeightEncapsulator>();
 
     public void add(HeightEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public HeightListEncapsulator(HeightEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (HeightEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class HeightListEncapsulator implements Iterable<HeightEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

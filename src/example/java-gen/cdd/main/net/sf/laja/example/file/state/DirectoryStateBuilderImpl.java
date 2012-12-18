@@ -42,4 +42,9 @@ public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
     public DirectoryState getDirectoryState(net.sf.laja.example.file.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

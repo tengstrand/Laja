@@ -24,7 +24,7 @@ public class ForeheadBuilder {
     }
 
     public ForeheadBuilder withBrows(BrowListEncapsulator brows) {
-        builder.withBrows(brows.stateList);
+        builder.withBrows(brows.stateListBuilder);
         return this;
     }
 

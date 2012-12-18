@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
 
 public class AnimalListEncapsulator implements Iterable<AnimalEncapsulator> {
-    public AnimalStateListBuilder stateList = new AnimalStateListBuilder();
+    public AnimalStateListBuilder stateListBuilder = new AnimalStateListBuilder();
     private List<AnimalEncapsulator> encapsulators = new ArrayList<AnimalEncapsulator>();
 
     public void add(AnimalEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public AnimalListEncapsulator(AnimalEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AnimalEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class AnimalListEncapsulator implements Iterable<AnimalEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

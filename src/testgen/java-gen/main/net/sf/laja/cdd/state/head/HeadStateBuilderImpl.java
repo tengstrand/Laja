@@ -227,4 +227,9 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
     public ForeheadState getForeheadState(Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

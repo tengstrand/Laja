@@ -7,19 +7,19 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import java.math.BigDecimal;
 
 public class EyeListEncapsulator implements Iterable<EyeEncapsulator> {
-    public EyeStateListBuilder stateList = new EyeStateListBuilder();
+    public EyeStateListBuilder stateListBuilder = new EyeStateListBuilder();
     private List<EyeEncapsulator> encapsulators = new ArrayList<EyeEncapsulator>();
 
     public void add(EyeEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public EyeListEncapsulator(EyeEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (EyeEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -43,5 +43,10 @@ public class EyeListEncapsulator implements Iterable<EyeEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

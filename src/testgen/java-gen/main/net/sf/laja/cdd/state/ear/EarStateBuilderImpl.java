@@ -42,4 +42,9 @@ public class EarStateBuilderImpl implements EarStateBuilder {
     public EarState getEarState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

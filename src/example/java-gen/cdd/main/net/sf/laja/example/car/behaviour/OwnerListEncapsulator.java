@@ -5,19 +5,19 @@ import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.OwnerState;
 
 public class OwnerListEncapsulator implements Iterable<OwnerEncapsulator> {
-    public OwnerStateListBuilder stateList = new OwnerStateListBuilder();
+    public OwnerStateListBuilder stateListBuilder = new OwnerStateListBuilder();
     private List<OwnerEncapsulator> encapsulators = new ArrayList<OwnerEncapsulator>();
 
     public void add(OwnerEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public OwnerListEncapsulator(OwnerEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (OwnerEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class OwnerListEncapsulator implements Iterable<OwnerEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

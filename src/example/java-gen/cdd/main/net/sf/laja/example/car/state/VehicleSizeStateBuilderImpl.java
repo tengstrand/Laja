@@ -42,4 +42,9 @@ public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
     public VehicleSizeState getVehicleSizeState(net.sf.laja.example.car.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

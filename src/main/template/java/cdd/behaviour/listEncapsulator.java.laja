@@ -1,19 +1,19 @@
 
 #macro class()
 public class {listEncapsulatorClass} implements Iterable<{encapsulatorClass}> {
-    public {stateListBuilder} stateList = new {stateListBuilder}();
+    public {stateListBuilder} stateListBuilder = new {stateListBuilder}();
     private List<{encapsulatorClass}> encapsulators = new ArrayList<{encapsulatorClass}>();
 
     public void add({encapsulatorClass} encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public {listEncapsulatorClass}({encapsulatorClass}... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for ({encapsulatorClass} encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -40,6 +40,11 @@ public class {listEncapsulatorClass} implements Iterable<{encapsulatorClass}> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }
 #end

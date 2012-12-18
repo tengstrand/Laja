@@ -21,7 +21,7 @@ public class FootCreator {
     public class Toes_ {
         public FootEncapsulator toes(ToeEncapsulator... toes) {
             ToeListEncapsulator encapsulator = new ToeListEncapsulator(toes);
-            builder.withToes(encapsulator.stateList);
+            builder.withToes(encapsulator.stateListBuilder);
             return create();
         }
     }

@@ -17,4 +17,9 @@ public class VehicleSizeEncapsulator {
     public boolean isValid() {
          return builder.isValid();
     }
+
+    @Override
+    public String toString() {
+        return builder.toString();
+    }
 }

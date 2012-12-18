@@ -79,6 +79,6 @@ public final class FileStateListBuilder {
 
     @Override
     public String toString() {
-        return "FileStateListBuilder{states=" + states + "}";
+        return "FileStateListBuilder{" + states + "}";
     }
 }

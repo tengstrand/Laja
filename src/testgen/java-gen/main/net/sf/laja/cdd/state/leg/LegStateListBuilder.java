@@ -79,6 +79,6 @@ public final class LegStateListBuilder {
 
     @Override
     public String toString() {
-        return "LegStateListBuilder{states=" + states + "}";
+        return "LegStateListBuilder{" + states + "}";
     }
 }

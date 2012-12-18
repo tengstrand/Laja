@@ -15,19 +15,19 @@ import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
 
 public class HeadListEncapsulator implements Iterable<HeadEncapsulator> {
-    public HeadStateListBuilder stateList = new HeadStateListBuilder();
+    public HeadStateListBuilder stateListBuilder = new HeadStateListBuilder();
     private List<HeadEncapsulator> encapsulators = new ArrayList<HeadEncapsulator>();
 
     public void add(HeadEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public HeadListEncapsulator(HeadEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (HeadEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -51,5 +51,10 @@ public class HeadListEncapsulator implements Iterable<HeadEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

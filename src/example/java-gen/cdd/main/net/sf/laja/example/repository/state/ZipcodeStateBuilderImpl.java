@@ -42,4 +42,9 @@ public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
     public ZipcodeState getZipcodeState(net.sf.laja.example.repository.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

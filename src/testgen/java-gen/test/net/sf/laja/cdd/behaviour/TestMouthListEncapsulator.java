@@ -6,19 +6,19 @@ import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
 import net.sf.laja.cdd.state.mouth.MouthState;
 
 public class TestMouthListEncapsulator implements Iterable<TestMouthEncapsulator> {
-    public MouthStateListBuilder stateList = new MouthStateListBuilder();
+    public MouthStateListBuilder stateListBuilder = new MouthStateListBuilder();
     private List<TestMouthEncapsulator> encapsulators = new ArrayList<TestMouthEncapsulator>();
 
     public void add(TestMouthEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public TestMouthListEncapsulator(TestMouthEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TestMouthEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -42,5 +42,10 @@ public class TestMouthListEncapsulator implements Iterable<TestMouthEncapsulator
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

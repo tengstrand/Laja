@@ -79,6 +79,6 @@ public final class TruckStateListBuilder {
 
     @Override
     public String toString() {
-        return "TruckStateListBuilder{states=" + states + "}";
+        return "TruckStateListBuilder{" + states + "}";
     }
 }

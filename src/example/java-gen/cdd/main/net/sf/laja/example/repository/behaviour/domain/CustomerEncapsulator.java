@@ -38,11 +38,16 @@ public class CustomerEncapsulator {
 
     public CustomerEncapsulator withOldAddresses(AddressEncapsulator... oldAddresses) {
         AddressListEncapsulator encapsulator = new AddressListEncapsulator(oldAddresses);
-        builder.withOldAddresses(encapsulator.stateList);
+        builder.withOldAddresses(encapsulator.stateListBuilder);
         return this;
     }
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public String toString() {
+        return builder.toString();
     }
 }

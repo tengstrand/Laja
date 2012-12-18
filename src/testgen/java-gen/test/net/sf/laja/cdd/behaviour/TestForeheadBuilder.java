@@ -23,7 +23,7 @@ public class TestForeheadBuilder {
     }
 
     public TestForeheadBuilder withBrows(BrowListEncapsulator brows) {
-        builder.withBrows(brows.stateList);
+        builder.withBrows(brows.stateListBuilder);
         return this;
     }
 

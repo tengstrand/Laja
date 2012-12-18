@@ -5,19 +5,19 @@ import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.state.AddressState;
 
 public class AddressListEncapsulator implements Iterable<AddressEncapsulator> {
-    public AddressStateListBuilder stateList = new AddressStateListBuilder();
+    public AddressStateListBuilder stateListBuilder = new AddressStateListBuilder();
     private List<AddressEncapsulator> encapsulators = new ArrayList<AddressEncapsulator>();
 
     public void add(AddressEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public AddressListEncapsulator(AddressEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AddressEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class AddressListEncapsulator implements Iterable<AddressEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

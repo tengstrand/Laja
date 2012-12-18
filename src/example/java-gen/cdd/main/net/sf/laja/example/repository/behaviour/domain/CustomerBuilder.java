@@ -67,7 +67,7 @@ public class CustomerBuilder {
     }
 
     public CustomerBuilder withOldAddresses(AddressListEncapsulator oldAddresses) {
-        builder.withOldAddresses(oldAddresses.stateList);
+        builder.withOldAddresses(oldAddresses.stateListBuilder);
         return this;
     }
 

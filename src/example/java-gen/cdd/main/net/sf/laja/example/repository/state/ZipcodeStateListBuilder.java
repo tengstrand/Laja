@@ -79,6 +79,6 @@ public final class ZipcodeStateListBuilder {
 
     @Override
     public String toString() {
-        return "ZipcodeStateListBuilder{states=" + states + "}";
+        return "ZipcodeStateListBuilder{" + states + "}";
     }
 }

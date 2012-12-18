@@ -29,7 +29,7 @@ public class FootBuilder {
     }
 
     public FootBuilder withToes(ToeListEncapsulator toes) {
-        builder.withToes(toes.stateList);
+        builder.withToes(toes.stateListBuilder);
         return this;
     }
 

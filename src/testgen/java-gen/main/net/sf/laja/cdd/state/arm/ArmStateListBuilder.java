@@ -79,6 +79,6 @@ public final class ArmStateListBuilder {
 
     @Override
     public String toString() {
-        return "ArmStateListBuilder{states=" + states + "}";
+        return "ArmStateListBuilder{" + states + "}";
     }
 }

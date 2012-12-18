@@ -42,4 +42,9 @@ public class HandStateBuilderImpl implements HandStateBuilder {
     public HandState getHandState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

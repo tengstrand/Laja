@@ -42,4 +42,9 @@ public class FileStateBuilderImpl implements FileStateBuilder {
     public FileState getFileState(net.sf.laja.example.file.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

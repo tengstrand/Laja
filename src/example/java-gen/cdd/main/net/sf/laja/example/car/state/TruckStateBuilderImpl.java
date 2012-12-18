@@ -95,4 +95,9 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     public VehicleSizeState getVehicleSizeState(Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

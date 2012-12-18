@@ -283,7 +283,7 @@
     #import "{..}/../java/cdd/behaviour/encapsulator.java.laja"
     #import "{..}/../java/cdd/behaviour/list.java.laja"
     #import "{..}/../java/cdd/behaviour/arrayList.java.laja"
-    #import "{..}/../java/cdd/behaviour/listCreator.java.laja"
+    #import "{..}/../java/cdd/behaviour/listEncapsulator.java.laja"
   #end
 #end
 

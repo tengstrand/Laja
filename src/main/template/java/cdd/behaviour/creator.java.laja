@@ -26,7 +26,7 @@ public class {creatorClass} {
         }
 
         public {nextClass} {attribute.variable}({attribute.listEncapsulator} {attribute.variable}) {
-            builder.{attribute.withMethod}({attribute.variable}.stateList);
+            builder.{attribute.withMethod}({attribute.variable}.stateListBuilder);
             return new {nextClass}();
         }
       #else if (attribute.isState)
@@ -55,7 +55,7 @@ public class {creatorClass} {
       #if (attribute.isStateList)
         public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
             {attribute.listEncapsulator} encapsulator = new {attribute.listEncapsulator}({attribute.variable});
-            builder.{attribute.withMethod}(encapsulator.stateList);
+            builder.{attribute.withMethod}(encapsulator.stateListBuilder);
             return create();
         }
       #else if (attribute.isState)

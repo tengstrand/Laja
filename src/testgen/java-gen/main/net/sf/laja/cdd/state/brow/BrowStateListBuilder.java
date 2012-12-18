@@ -79,6 +79,6 @@ public final class BrowStateListBuilder {
 
     @Override
     public String toString() {
-        return "BrowStateListBuilder{states=" + states + "}";
+        return "BrowStateListBuilder{" + states + "}";
     }
 }

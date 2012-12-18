@@ -79,6 +79,6 @@ public final class HairStateListBuilder {
 
     @Override
     public String toString() {
-        return "HairStateListBuilder{states=" + states + "}";
+        return "HairStateListBuilder{" + states + "}";
     }
 }

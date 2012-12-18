@@ -79,6 +79,6 @@ public final class ForeheadStateListBuilder {
 
     @Override
     public String toString() {
-        return "ForeheadStateListBuilder{states=" + states + "}";
+        return "ForeheadStateListBuilder{" + states + "}";
     }
 }

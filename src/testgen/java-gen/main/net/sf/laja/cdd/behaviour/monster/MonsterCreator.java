@@ -82,7 +82,7 @@ public class MonsterCreator {
         }
 
         public A_ noses(NoseListEncapsulator noses) {
-            builder.withNoses(noses.stateList);
+            builder.withNoses(noses.stateListBuilder);
             return new A_();
         }
     }
@@ -149,7 +149,7 @@ public class MonsterCreator {
         }
 
         public Weight_ mouths(MouthListEncapsulator mouths) {
-            builder.withMouths(mouths.stateList);
+            builder.withMouths(mouths.stateListBuilder);
             return new Weight_();
         }
     }

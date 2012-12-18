@@ -46,4 +46,9 @@ public class BmiStateBuilderImpl implements BmiStateBuilder {
     public BmiState getBmiState(net.sf.laja.example.person.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

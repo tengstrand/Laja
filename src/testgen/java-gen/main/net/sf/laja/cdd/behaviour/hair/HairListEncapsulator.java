@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.hair.*;
 import net.sf.laja.cdd.state.hair.HairState;
 
 public class HairListEncapsulator implements Iterable<HairEncapsulator> {
-    public HairStateListBuilder stateList = new HairStateListBuilder();
+    public HairStateListBuilder stateListBuilder = new HairStateListBuilder();
     private List<HairEncapsulator> encapsulators = new ArrayList<HairEncapsulator>();
 
     public void add(HairEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public HairListEncapsulator(HairEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (HairEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -50,5 +50,10 @@ public class HairListEncapsulator implements Iterable<HairEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

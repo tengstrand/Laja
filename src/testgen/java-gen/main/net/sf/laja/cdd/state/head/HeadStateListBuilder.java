@@ -79,6 +79,6 @@ public final class HeadStateListBuilder {
 
     @Override
     public String toString() {
-        return "HeadStateListBuilder{states=" + states + "}";
+        return "HeadStateListBuilder{" + states + "}";
     }
 }

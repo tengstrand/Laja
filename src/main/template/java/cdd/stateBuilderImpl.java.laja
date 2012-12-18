@@ -83,6 +83,11 @@ public class {builderImplClass} implements {builderClass} {
         return state;
     }
   #end
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }
 #end
 

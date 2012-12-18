@@ -79,6 +79,6 @@ public final class VehicleSizeStateListBuilder {
 
     @Override
     public String toString() {
-        return "VehicleSizeStateListBuilder{states=" + states + "}";
+        return "VehicleSizeStateListBuilder{" + states + "}";
     }
 }

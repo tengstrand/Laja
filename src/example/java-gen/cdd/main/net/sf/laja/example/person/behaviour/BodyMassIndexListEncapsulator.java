@@ -7,19 +7,19 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class BodyMassIndexListEncapsulator implements Iterable<BodyMassIndexEncapsulator> {
-    public BmiStateListBuilder stateList = new BmiStateListBuilder();
+    public BmiStateListBuilder stateListBuilder = new BmiStateListBuilder();
     private List<BodyMassIndexEncapsulator> encapsulators = new ArrayList<BodyMassIndexEncapsulator>();
 
     public void add(BodyMassIndexEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public BodyMassIndexListEncapsulator(BodyMassIndexEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (BodyMassIndexEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -43,5 +43,10 @@ public class BodyMassIndexListEncapsulator implements Iterable<BodyMassIndexEnca
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

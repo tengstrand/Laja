@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.leg.*;
 import net.sf.laja.cdd.state.leg.LegState;
 
 public class LegListEncapsulator implements Iterable<LegEncapsulator> {
-    public LegStateListBuilder stateList = new LegStateListBuilder();
+    public LegStateListBuilder stateListBuilder = new LegStateListBuilder();
     private List<LegEncapsulator> encapsulators = new ArrayList<LegEncapsulator>();
 
     public void add(LegEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public LegListEncapsulator(LegEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (LegEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class LegListEncapsulator implements Iterable<LegEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

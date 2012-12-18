@@ -79,6 +79,6 @@ public final class HandStateListBuilder {
 
     @Override
     public String toString() {
-        return "HandStateListBuilder{states=" + states + "}";
+        return "HandStateListBuilder{" + states + "}";
     }
 }

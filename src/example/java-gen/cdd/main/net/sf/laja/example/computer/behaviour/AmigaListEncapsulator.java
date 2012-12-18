@@ -5,19 +5,19 @@ import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.*;
 
 public class AmigaListEncapsulator implements Iterable<AmigaEncapsulator> {
-    public ComputerStateListBuilder stateList = new ComputerStateListBuilder();
+    public ComputerStateListBuilder stateListBuilder = new ComputerStateListBuilder();
     private List<AmigaEncapsulator> encapsulators = new ArrayList<AmigaEncapsulator>();
 
     public void add(AmigaEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public AmigaListEncapsulator(AmigaEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (AmigaEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class AmigaListEncapsulator implements Iterable<AmigaEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

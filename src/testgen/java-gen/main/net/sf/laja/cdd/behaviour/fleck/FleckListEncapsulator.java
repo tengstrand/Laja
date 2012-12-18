@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.fleck.*;
 import net.sf.laja.cdd.state.fleck.FleckState;
 
 public class FleckListEncapsulator implements Iterable<FleckEncapsulator> {
-    public FleckStateListBuilder stateList = new FleckStateListBuilder();
+    public FleckStateListBuilder stateListBuilder = new FleckStateListBuilder();
     private List<FleckEncapsulator> encapsulators = new ArrayList<FleckEncapsulator>();
 
     public void add(FleckEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public FleckListEncapsulator(FleckEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (FleckEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class FleckListEncapsulator implements Iterable<FleckEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

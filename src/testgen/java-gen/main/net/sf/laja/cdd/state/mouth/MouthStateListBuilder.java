@@ -79,6 +79,6 @@ public final class MouthStateListBuilder {
 
     @Override
     public String toString() {
-        return "MouthStateListBuilder{states=" + states + "}";
+        return "MouthStateListBuilder{" + states + "}";
     }
 }

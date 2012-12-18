@@ -46,4 +46,9 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
     public ToeState getToeState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

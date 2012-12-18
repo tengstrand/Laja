@@ -79,6 +79,6 @@ public final class PersonStateListBuilder {
 
     @Override
     public String toString() {
-        return "PersonStateListBuilder{states=" + states + "}";
+        return "PersonStateListBuilder{" + states + "}";
     }
 }

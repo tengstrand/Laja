@@ -79,6 +79,6 @@ public final class BusStateListBuilder {
 
     @Override
     public String toString() {
-        return "BusStateListBuilder{states=" + states + "}";
+        return "BusStateListBuilder{" + states + "}";
     }
 }

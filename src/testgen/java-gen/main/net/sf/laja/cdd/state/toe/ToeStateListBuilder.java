@@ -79,6 +79,6 @@ public final class ToeStateListBuilder {
 
     @Override
     public String toString() {
-        return "ToeStateListBuilder{states=" + states + "}";
+        return "ToeStateListBuilder{" + states + "}";
     }
 }

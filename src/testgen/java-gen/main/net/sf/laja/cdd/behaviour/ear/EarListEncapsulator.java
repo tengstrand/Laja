@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 
 public class EarListEncapsulator implements Iterable<EarEncapsulator> {
-    public EarStateListBuilder stateList = new EarStateListBuilder();
+    public EarStateListBuilder stateListBuilder = new EarStateListBuilder();
     private List<EarEncapsulator> encapsulators = new ArrayList<EarEncapsulator>();
 
     public void add(EarEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public EarListEncapsulator(EarEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (EarEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class EarListEncapsulator implements Iterable<EarEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

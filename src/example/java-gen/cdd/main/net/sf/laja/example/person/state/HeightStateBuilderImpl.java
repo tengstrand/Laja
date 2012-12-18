@@ -42,4 +42,9 @@ public class HeightStateBuilderImpl implements HeightStateBuilder {
     public HeightState getHeightState(net.sf.laja.example.person.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

@@ -71,4 +71,9 @@ public class EyeStateBuilderImpl implements EyeStateBuilder {
     public EyeState getEyeState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

@@ -8,19 +8,19 @@ import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.hand.HandStateList;
 
 public class ArmListEncapsulator implements Iterable<ArmEncapsulator> {
-    public ArmStateListBuilder stateList = new ArmStateListBuilder();
+    public ArmStateListBuilder stateListBuilder = new ArmStateListBuilder();
     private List<ArmEncapsulator> encapsulators = new ArrayList<ArmEncapsulator>();
 
     public void add(ArmEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public ArmListEncapsulator(ArmEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (ArmEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -44,5 +44,10 @@ public class ArmListEncapsulator implements Iterable<ArmEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

@@ -79,6 +79,6 @@ public final class DirectoryStateListBuilder {
 
     @Override
     public String toString() {
-        return "DirectoryStateListBuilder{states=" + states + "}";
+        return "DirectoryStateListBuilder{" + states + "}";
     }
 }

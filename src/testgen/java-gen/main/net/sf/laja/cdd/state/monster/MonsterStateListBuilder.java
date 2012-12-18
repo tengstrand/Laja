@@ -79,6 +79,6 @@ public final class MonsterStateListBuilder {
 
     @Override
     public String toString() {
-        return "MonsterStateListBuilder{states=" + states + "}";
+        return "MonsterStateListBuilder{" + states + "}";
     }
 }

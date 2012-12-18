@@ -39,7 +39,7 @@ public class ArmBuilder {
     }
 
     public ArmBuilder withHands(HandListEncapsulator hands) {
-        builder.withHands(hands.stateList);
+        builder.withHands(hands.stateListBuilder);
         return this;
     }
 

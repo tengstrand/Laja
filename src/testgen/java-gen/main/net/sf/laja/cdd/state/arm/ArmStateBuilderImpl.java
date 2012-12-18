@@ -64,4 +64,9 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
     public ArmState getArmState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

@@ -68,7 +68,7 @@ public class HeadCreator {
         }
 
         public A_ noses(NoseListEncapsulator noses) {
-            builder.withNoses(noses.stateList);
+            builder.withNoses(noses.stateListBuilder);
             return new A_();
         }
     }
@@ -132,7 +132,7 @@ public class HeadCreator {
     public class Mouths_ {
         public HeadEncapsulator mouths(MouthEncapsulator... mouths) {
             MouthListEncapsulator encapsulator = new MouthListEncapsulator(mouths);
-            builder.withMouths(encapsulator.stateList);
+            builder.withMouths(encapsulator.stateListBuilder);
             return create();
         }
     }

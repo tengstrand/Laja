@@ -46,4 +46,9 @@ public class TruckTypeStateBuilderImpl implements TruckTypeStateBuilder {
     public TruckTypeState getTruckTypeState(net.sf.laja.example.car.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

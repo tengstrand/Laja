@@ -5,19 +5,19 @@ import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.FileState;
 
 public class FileListEncapsulator implements Iterable<FileEncapsulator> {
-    public FileStateListBuilder stateList = new FileStateListBuilder();
+    public FileStateListBuilder stateListBuilder = new FileStateListBuilder();
     private List<FileEncapsulator> encapsulators = new ArrayList<FileEncapsulator>();
 
     public void add(FileEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public FileListEncapsulator(FileEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (FileEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -50,5 +50,10 @@ public class FileListEncapsulator implements Iterable<FileEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

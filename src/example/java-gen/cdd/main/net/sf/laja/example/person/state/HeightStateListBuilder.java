@@ -79,6 +79,6 @@ public final class HeightStateListBuilder {
 
     @Override
     public String toString() {
-        return "HeightStateListBuilder{states=" + states + "}";
+        return "HeightStateListBuilder{" + states + "}";
     }
 }

@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.brow.*;
 import net.sf.laja.cdd.state.brow.BrowState;
 
 public class BrowListEncapsulator implements Iterable<BrowEncapsulator> {
-    public BrowStateListBuilder stateList = new BrowStateListBuilder();
+    public BrowStateListBuilder stateListBuilder = new BrowStateListBuilder();
     private List<BrowEncapsulator> encapsulators = new ArrayList<BrowEncapsulator>();
 
     public void add(BrowEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public BrowListEncapsulator(BrowEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (BrowEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class BrowListEncapsulator implements Iterable<BrowEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

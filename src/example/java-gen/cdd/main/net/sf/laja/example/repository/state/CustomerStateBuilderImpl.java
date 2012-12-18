@@ -107,4 +107,9 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     public ZipcodeState getZipcodeState(Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

@@ -52,4 +52,9 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
     public ForeheadState getForeheadState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

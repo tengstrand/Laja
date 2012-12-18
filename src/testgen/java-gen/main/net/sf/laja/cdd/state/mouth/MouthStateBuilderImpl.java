@@ -54,4 +54,9 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
     public MouthState getMouthState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

@@ -79,6 +79,6 @@ public final class FleckStateListBuilder {
 
     @Override
     public String toString() {
-        return "FleckStateListBuilder{states=" + states + "}";
+        return "FleckStateListBuilder{" + states + "}";
     }
 }

@@ -79,6 +79,6 @@ public final class AccountStateListBuilder {
 
     @Override
     public String toString() {
-        return "AccountStateListBuilder{states=" + states + "}";
+        return "AccountStateListBuilder{" + states + "}";
     }
 }

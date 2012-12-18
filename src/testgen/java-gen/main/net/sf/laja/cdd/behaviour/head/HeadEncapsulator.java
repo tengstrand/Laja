@@ -43,7 +43,7 @@ public class HeadEncapsulator {
 
     public HeadEncapsulator withBrows(BrowEncapsulator... brows) {
         BrowListEncapsulator encapsulator = new BrowListEncapsulator(brows);
-        builder.withBrows(encapsulator.stateList);
+        builder.withBrows(encapsulator.stateListBuilder);
         return this;
     }
 
@@ -54,11 +54,16 @@ public class HeadEncapsulator {
 
     public HeadEncapsulator withEars(EarEncapsulator... ears) {
         EarListEncapsulator encapsulator = new EarListEncapsulator(ears);
-        builder.withEars(encapsulator.stateList);
+        builder.withEars(encapsulator.stateListBuilder);
         return this;
     }
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public String toString() {
+        return builder.toString();
     }
 }

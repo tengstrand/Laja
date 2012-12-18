@@ -42,4 +42,9 @@ public class AccountStateBuilderImpl implements AccountStateBuilder {
     public AccountState getAccountState(net.sf.laja.example.account.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

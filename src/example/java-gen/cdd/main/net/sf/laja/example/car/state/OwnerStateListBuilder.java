@@ -79,6 +79,6 @@ public final class OwnerStateListBuilder {
 
     @Override
     public String toString() {
-        return "OwnerStateListBuilder{states=" + states + "}";
+        return "OwnerStateListBuilder{" + states + "}";
     }
 }

@@ -6,19 +6,19 @@ import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.eye.EyeState;
 
 public class OtherTerrestrialListEncapsulator implements Iterable<OtherTerrestrialEncapsulator> {
-    public TerrestrialStateListBuilder stateList = new TerrestrialStateListBuilder();
+    public TerrestrialStateListBuilder stateListBuilder = new TerrestrialStateListBuilder();
     private List<OtherTerrestrialEncapsulator> encapsulators = new ArrayList<OtherTerrestrialEncapsulator>();
 
     public void add(OtherTerrestrialEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public OtherTerrestrialListEncapsulator(OtherTerrestrialEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (OtherTerrestrialEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -42,5 +42,10 @@ public class OtherTerrestrialListEncapsulator implements Iterable<OtherTerrestri
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

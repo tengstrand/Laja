@@ -79,6 +79,6 @@ public final class BmiStateListBuilder {
 
     @Override
     public String toString() {
-        return "BmiStateListBuilder{states=" + states + "}";
+        return "BmiStateListBuilder{" + states + "}";
     }
 }

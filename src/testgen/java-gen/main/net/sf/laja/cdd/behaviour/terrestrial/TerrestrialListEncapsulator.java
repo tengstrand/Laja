@@ -8,19 +8,19 @@ import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.eye.EyeState;
 
 public class TerrestrialListEncapsulator implements Iterable<TerrestrialEncapsulator> {
-    public TerrestrialStateListBuilder stateList = new TerrestrialStateListBuilder();
+    public TerrestrialStateListBuilder stateListBuilder = new TerrestrialStateListBuilder();
     private List<TerrestrialEncapsulator> encapsulators = new ArrayList<TerrestrialEncapsulator>();
 
     public void add(TerrestrialEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public TerrestrialListEncapsulator(TerrestrialEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TerrestrialEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -44,5 +44,10 @@ public class TerrestrialListEncapsulator implements Iterable<TerrestrialEncapsul
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

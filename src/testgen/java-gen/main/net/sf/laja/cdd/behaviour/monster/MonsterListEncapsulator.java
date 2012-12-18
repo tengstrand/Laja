@@ -14,19 +14,19 @@ import java.math.BigDecimal;
 import net.sf.laja.cdd.state.eye.EyeState;
 
 public class MonsterListEncapsulator implements Iterable<MonsterEncapsulator> {
-    public MonsterStateListBuilder stateList = new MonsterStateListBuilder();
+    public MonsterStateListBuilder stateListBuilder = new MonsterStateListBuilder();
     private List<MonsterEncapsulator> encapsulators = new ArrayList<MonsterEncapsulator>();
 
     public void add(MonsterEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public MonsterListEncapsulator(MonsterEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (MonsterEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -50,5 +50,10 @@ public class MonsterListEncapsulator implements Iterable<MonsterEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

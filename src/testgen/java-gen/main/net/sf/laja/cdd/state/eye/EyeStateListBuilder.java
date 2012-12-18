@@ -79,6 +79,6 @@ public final class EyeStateListBuilder {
 
     @Override
     public String toString() {
-        return "EyeStateListBuilder{states=" + states + "}";
+        return "EyeStateListBuilder{" + states + "}";
     }
 }

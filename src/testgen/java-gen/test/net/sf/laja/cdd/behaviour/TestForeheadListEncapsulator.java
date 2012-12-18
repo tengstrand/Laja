@@ -7,19 +7,19 @@ import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 
 public class TestForeheadListEncapsulator implements Iterable<TestForeheadEncapsulator> {
-    public ForeheadStateListBuilder stateList = new ForeheadStateListBuilder();
+    public ForeheadStateListBuilder stateListBuilder = new ForeheadStateListBuilder();
     private List<TestForeheadEncapsulator> encapsulators = new ArrayList<TestForeheadEncapsulator>();
 
     public void add(TestForeheadEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public TestForeheadListEncapsulator(TestForeheadEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (TestForeheadEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -43,5 +43,10 @@ public class TestForeheadListEncapsulator implements Iterable<TestForeheadEncaps
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

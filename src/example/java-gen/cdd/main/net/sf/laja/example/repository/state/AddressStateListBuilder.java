@@ -79,6 +79,6 @@ public final class AddressStateListBuilder {
 
     @Override
     public String toString() {
-        return "AddressStateListBuilder{states=" + states + "}";
+        return "AddressStateListBuilder{" + states + "}";
     }
 }

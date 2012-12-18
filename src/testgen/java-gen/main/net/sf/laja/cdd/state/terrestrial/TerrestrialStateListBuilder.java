@@ -79,6 +79,6 @@ public final class TerrestrialStateListBuilder {
 
     @Override
     public String toString() {
-        return "TerrestrialStateListBuilder{states=" + states + "}";
+        return "TerrestrialStateListBuilder{" + states + "}";
     }
 }

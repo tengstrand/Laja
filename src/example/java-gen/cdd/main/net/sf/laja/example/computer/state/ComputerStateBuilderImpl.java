@@ -58,4 +58,9 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
     public ComputerState getComputerState(net.sf.laja.example.computer.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

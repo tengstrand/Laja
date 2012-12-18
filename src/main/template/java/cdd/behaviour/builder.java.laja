@@ -17,7 +17,7 @@ public class {builderClass} {
 
     #if (attribute.isStateList)
     public {builderClass} {attribute.withMethod}({attribute.listEncapsulator} {attribute.variable}) {
-        builder.{attribute.withMethod}({attribute.variable}.stateList);
+        builder.{attribute.withMethod}({attribute.variable}.stateListBuilder);
         return this;
     }
     #else if (attribute.isState)

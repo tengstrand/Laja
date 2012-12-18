@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.hand.*;
 import net.sf.laja.cdd.state.hand.HandState;
 
 public class HandListEncapsulator implements Iterable<HandEncapsulator> {
-    public HandStateListBuilder stateList = new HandStateListBuilder();
+    public HandStateListBuilder stateListBuilder = new HandStateListBuilder();
     private List<HandEncapsulator> encapsulators = new ArrayList<HandEncapsulator>();
 
     public void add(HandEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public HandListEncapsulator(HandEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (HandEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -41,5 +41,10 @@ public class HandListEncapsulator implements Iterable<HandEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

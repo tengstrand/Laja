@@ -79,6 +79,6 @@ public final class FootStateListBuilder {
 
     @Override
     public String toString() {
-        return "FootStateListBuilder{states=" + states + "}";
+        return "FootStateListBuilder{" + states + "}";
     }
 }

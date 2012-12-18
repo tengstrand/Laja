@@ -5,19 +5,19 @@ import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
 
 public class ToeListEncapsulator implements Iterable<ToeEncapsulator> {
-    public ToeStateListBuilder stateList = new ToeStateListBuilder();
+    public ToeStateListBuilder stateListBuilder = new ToeStateListBuilder();
     private List<ToeEncapsulator> encapsulators = new ArrayList<ToeEncapsulator>();
 
     public void add(ToeEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
-        stateList.add(encapsulator.builder);
+        stateListBuilder.add(encapsulator.builder);
     }
 
     public ToeListEncapsulator(ToeEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
         for (ToeEncapsulator encapsulator : encapsulators) {
-            stateList.add(encapsulator.builder);
+            stateListBuilder.add(encapsulator.builder);
         }
     }
 
@@ -50,5 +50,10 @@ public class ToeListEncapsulator implements Iterable<ToeEncapsulator> {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return stateListBuilder.toString();
     }
 }

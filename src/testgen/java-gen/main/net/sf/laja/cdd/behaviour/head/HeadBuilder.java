@@ -73,12 +73,12 @@ public class HeadBuilder {
     }
 
     public HeadBuilder withNoses(NoseListEncapsulator noses) {
-        builder.withNoses(noses.stateList);
+        builder.withNoses(noses.stateListBuilder);
         return this;
     }
 
     public HeadBuilder withBrows(BrowListEncapsulator brows) {
-        builder.withBrows(brows.stateList);
+        builder.withBrows(brows.stateListBuilder);
         return this;
     }
 
@@ -128,12 +128,12 @@ public class HeadBuilder {
     }
 
     public HeadBuilder withEars(EarListEncapsulator ears) {
-        builder.withEars(ears.stateList);
+        builder.withEars(ears.stateListBuilder);
         return this;
     }
 
     public HeadBuilder withMouths(MouthListEncapsulator mouths) {
-        builder.withMouths(mouths.stateList);
+        builder.withMouths(mouths.stateListBuilder);
         return this;
     }
 

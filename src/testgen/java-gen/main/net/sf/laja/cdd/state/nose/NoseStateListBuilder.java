@@ -79,6 +79,6 @@ public final class NoseStateListBuilder {
 
     @Override
     public String toString() {
-        return "NoseStateListBuilder{states=" + states + "}";
+        return "NoseStateListBuilder{" + states + "}";
     }
 }

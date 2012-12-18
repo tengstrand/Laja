@@ -46,4 +46,9 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
     public FleckState getFleckState(net.sf.laja.cdd.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

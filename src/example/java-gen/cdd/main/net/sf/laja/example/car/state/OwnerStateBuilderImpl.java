@@ -50,4 +50,9 @@ public class OwnerStateBuilderImpl implements OwnerStateBuilder {
     public OwnerState getOwnerState(net.sf.laja.example.car.state.Certificate certificate) {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return state.toString();
+    }
 }

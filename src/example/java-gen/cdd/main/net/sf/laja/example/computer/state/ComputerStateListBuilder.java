@@ -79,6 +79,6 @@ public final class ComputerStateListBuilder {
 
     @Override
     public String toString() {
-        return "ComputerStateListBuilder{states=" + states + "}";
+        return "ComputerStateListBuilder{" + states + "}";
     }
 }
