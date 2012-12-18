@@ -28,6 +28,9 @@ public class ToeEntity implements ToeElement {
     }
 
     public ToeState getState(ToeStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("ToeStateList can not be null!");
+        }
         return state;
     }
 

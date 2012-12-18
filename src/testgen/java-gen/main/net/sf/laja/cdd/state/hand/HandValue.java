@@ -30,6 +30,9 @@ public class HandValue implements HandElement {
     }
 
     public HandState getState(HandStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("HandStateList can not be null!");
+        }
         return state;
     }
 

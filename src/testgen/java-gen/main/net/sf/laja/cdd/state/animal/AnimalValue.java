@@ -30,6 +30,9 @@ public class AnimalValue implements AnimalElement {
     }
 
     public AnimalState getState(AnimalStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("AnimalStateList can not be null!");
+        }
         return state;
     }
 

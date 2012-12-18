@@ -1,9 +1,9 @@
 package net.sf.laja.example.person.behaviour;
 
+import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.BmiState;
-import net.sf.laja.example.person.state.BmiStateBuilder;
-import net.sf.laja.example.person.state.BmiStateBuilderImpl;
-import net.sf.laja.example.person.state.BmiStateImpl;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class BodyMassIndexBuilder {
     public final BmiStateBuilder builder;

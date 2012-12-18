@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour;
 
+import net.sf.laja.cdd.state.brow.*;
 import net.sf.laja.cdd.state.brow.BrowState;
-import net.sf.laja.cdd.state.brow.BrowStateBuilder;
-import net.sf.laja.cdd.state.brow.BrowStateBuilderImpl;
-import net.sf.laja.cdd.state.brow.BrowStateImpl;
 
 public class TestBrowBuilder {
     public final BrowStateBuilder builder;

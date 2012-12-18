@@ -30,6 +30,9 @@ public class EyeValue implements EyeElement {
     }
 
     public EyeState getState(EyeStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("EyeStateList can not be null!");
+        }
         return state;
     }
 

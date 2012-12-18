@@ -1,11 +1,8 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.TruckStateListBuilder;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import net.sf.laja.example.car.state.*;
+import net.sf.laja.example.car.state.TruckState;
 
 public class TruckListEncapsulator implements Iterable<TruckEncapsulator> {
     public TruckStateListBuilder stateList = new TruckStateListBuilder();

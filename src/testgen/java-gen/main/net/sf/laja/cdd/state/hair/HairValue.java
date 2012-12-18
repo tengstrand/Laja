@@ -30,6 +30,9 @@ public class HairValue implements HairElement {
     }
 
     public HairState getState(HairStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("HairStateList can not be null!");
+        }
         return state;
     }
 

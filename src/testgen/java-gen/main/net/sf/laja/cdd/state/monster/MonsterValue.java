@@ -30,6 +30,9 @@ public class MonsterValue implements MonsterElement {
     }
 
     public MonsterState getState(MonsterStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("MonsterStateList can not be null!");
+        }
         return state;
     }
 

@@ -28,6 +28,9 @@ public class MouthEntity implements MouthElement {
     }
 
     public MouthState getState(MouthStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("MouthStateList can not be null!");
+        }
         return state;
     }
 

@@ -1,10 +1,9 @@
 package net.sf.laja.cdd.behaviour.other;
 
-import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
+import net.sf.laja.cdd.state.terrestrial.*;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilderImpl;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateImpl;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
 
 public class OtherTerrestrialBuilder {
     public final TerrestrialStateBuilder builder;

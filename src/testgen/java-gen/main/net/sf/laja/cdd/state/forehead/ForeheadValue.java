@@ -30,6 +30,9 @@ public class ForeheadValue implements ForeheadElement {
     }
 
     public ForeheadState getState(ForeheadStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("ForeheadStateList can not be null!");
+        }
         return state;
     }
 

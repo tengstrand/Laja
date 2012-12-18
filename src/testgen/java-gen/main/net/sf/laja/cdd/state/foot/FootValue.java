@@ -30,6 +30,9 @@ public class FootValue implements FootElement {
     }
 
     public FootState getState(FootStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("FootStateList can not be null!");
+        }
         return state;
     }
 

@@ -30,6 +30,9 @@ public class EarValue implements EarElement {
     }
 
     public EarState getState(EarStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("EarStateList can not be null!");
+        }
         return state;
     }
 

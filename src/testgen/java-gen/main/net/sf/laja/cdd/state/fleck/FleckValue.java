@@ -30,6 +30,9 @@ public class FleckValue implements FleckElement {
     }
 
     public FleckState getState(FleckStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("FleckStateList can not be null!");
+        }
         return state;
     }
 

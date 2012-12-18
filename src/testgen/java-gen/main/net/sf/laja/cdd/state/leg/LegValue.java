@@ -30,6 +30,9 @@ public class LegValue implements LegElement {
     }
 
     public LegState getState(LegStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("LegStateList can not be null!");
+        }
         return state;
     }
 

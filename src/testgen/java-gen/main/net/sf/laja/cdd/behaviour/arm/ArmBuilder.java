@@ -1,10 +1,12 @@
 package net.sf.laja.cdd.behaviour.arm;
 
-import net.sf.laja.cdd.behaviour.hand.HandListEncapsulator;
+import net.sf.laja.cdd.state.arm.*;
+import net.sf.laja.cdd.behaviour.hand.HandArrayList;
+import net.sf.laja.cdd.behaviour.hand.HandList;
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.arm.ArmStateBuilder;
-import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
-import net.sf.laja.cdd.state.arm.ArmStateImpl;
+import net.sf.laja.cdd.state.hand.HandStateList;
+import net.sf.laja.cdd.behaviour.hand.HandBuilder;
+import net.sf.laja.cdd.behaviour.hand.HandListEncapsulator;
 
 public class ArmBuilder {
     public final ArmStateBuilder builder;

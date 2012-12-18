@@ -28,6 +28,9 @@ public class CustomerEntity implements CustomerElement {
     }
 
     public CustomerState getState(CustomerStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("CustomerStateList can not be null!");
+        }
         return state;
     }
 

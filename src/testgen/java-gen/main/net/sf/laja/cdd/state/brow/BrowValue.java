@@ -30,6 +30,9 @@ public class BrowValue implements BrowElement {
     }
 
     public BrowState getState(BrowStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("BrowStateList can not be null!");
+        }
         return state;
     }
 

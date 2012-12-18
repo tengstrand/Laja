@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.fleck;
 
+import net.sf.laja.cdd.state.fleck.*;
 import net.sf.laja.cdd.state.fleck.FleckState;
-import net.sf.laja.cdd.state.fleck.FleckStateBuilder;
-import net.sf.laja.cdd.state.fleck.FleckStateBuilderImpl;
-import net.sf.laja.cdd.state.fleck.FleckStateImpl;
 
 public class FleckBuilder {
     public final FleckStateBuilder builder;

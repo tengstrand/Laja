@@ -28,6 +28,9 @@ public class HandEntity implements HandElement {
     }
 
     public HandState getState(HandStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("HandStateList can not be null!");
+        }
         return state;
     }
 

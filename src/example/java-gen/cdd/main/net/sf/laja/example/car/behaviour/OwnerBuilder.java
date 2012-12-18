@@ -1,9 +1,7 @@
 package net.sf.laja.example.car.behaviour;
 
+import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.OwnerState;
-import net.sf.laja.example.car.state.OwnerStateBuilder;
-import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
-import net.sf.laja.example.car.state.OwnerStateImpl;
 
 public class OwnerBuilder {
     public final OwnerStateBuilder builder;

@@ -30,6 +30,9 @@ public class NoseValue implements NoseElement {
     }
 
     public NoseState getState(NoseStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("NoseStateList can not be null!");
+        }
         return state;
     }
 

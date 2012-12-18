@@ -1,9 +1,7 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
+import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.state.AddressState;
-import net.sf.laja.example.repository.state.AddressStateBuilder;
-import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
-import net.sf.laja.example.repository.state.AddressStateImpl;
 
 public class AddressBuilder {
     public final AddressStateBuilder builder;

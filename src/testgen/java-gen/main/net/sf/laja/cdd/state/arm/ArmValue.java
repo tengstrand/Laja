@@ -30,6 +30,9 @@ public class ArmValue implements ArmElement {
     }
 
     public ArmState getState(ArmStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("ArmStateList can not be null!");
+        }
         return state;
     }
 

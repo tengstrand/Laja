@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.hand;
 
+import net.sf.laja.cdd.state.hand.*;
 import net.sf.laja.cdd.state.hand.HandState;
-import net.sf.laja.cdd.state.hand.HandStateBuilder;
-import net.sf.laja.cdd.state.hand.HandStateBuilderImpl;
-import net.sf.laja.cdd.state.hand.HandStateImpl;
 
 public class HandBuilder {
     public final HandStateBuilder builder;

@@ -1,9 +1,7 @@
 package net.sf.laja.example.account.behaviour;
 
+import net.sf.laja.example.account.state.*;
 import net.sf.laja.example.account.state.AccountState;
-import net.sf.laja.example.account.state.AccountStateBuilder;
-import net.sf.laja.example.account.state.AccountStateBuilderImpl;
-import net.sf.laja.example.account.state.AccountStateImpl;
 
 public class TestAccountBuilder {
     public final AccountStateBuilder builder;

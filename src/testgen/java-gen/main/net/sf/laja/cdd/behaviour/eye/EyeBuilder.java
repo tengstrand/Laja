@@ -1,10 +1,8 @@
 package net.sf.laja.cdd.behaviour.eye;
 
+import net.sf.laja.cdd.state.eye.*;
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
 import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
-import net.sf.laja.cdd.state.eye.EyeStateImpl;
-
 import java.math.BigDecimal;
 
 public class EyeBuilder {

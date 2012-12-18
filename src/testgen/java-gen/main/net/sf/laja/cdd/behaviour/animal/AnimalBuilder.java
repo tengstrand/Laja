@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.animal;
 
+import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
-import net.sf.laja.cdd.state.animal.AnimalStateBuilder;
-import net.sf.laja.cdd.state.animal.AnimalStateBuilderImpl;
-import net.sf.laja.cdd.state.animal.AnimalStateImpl;
 
 public class AnimalBuilder {
     public final AnimalStateBuilder builder;

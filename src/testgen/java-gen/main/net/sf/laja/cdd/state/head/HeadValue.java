@@ -30,6 +30,9 @@ public class HeadValue implements HeadElement {
     }
 
     public HeadState getState(HeadStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("HeadStateList can not be null!");
+        }
         return state;
     }
 

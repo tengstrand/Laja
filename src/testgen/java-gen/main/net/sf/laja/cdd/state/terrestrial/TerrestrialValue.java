@@ -30,6 +30,9 @@ public class TerrestrialValue implements TerrestrialElement {
     }
 
     public TerrestrialState getState(TerrestrialStateList stateList) {
+        if (stateList == null) {
+            throw new IllegalArgumentException("TerrestrialStateList can not be null!");
+        }
         return state;
     }
 

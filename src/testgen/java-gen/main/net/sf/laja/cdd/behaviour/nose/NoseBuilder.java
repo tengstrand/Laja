@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.nose;
 
+import net.sf.laja.cdd.state.nose.*;
 import net.sf.laja.cdd.state.nose.NoseState;
-import net.sf.laja.cdd.state.nose.NoseStateBuilder;
-import net.sf.laja.cdd.state.nose.NoseStateBuilderImpl;
-import net.sf.laja.cdd.state.nose.NoseStateImpl;
 
 public class NoseBuilder {
     public final NoseStateBuilder builder;

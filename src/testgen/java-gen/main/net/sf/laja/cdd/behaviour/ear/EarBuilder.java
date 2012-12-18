@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.ear;
 
+import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
-import net.sf.laja.cdd.state.ear.EarStateBuilder;
-import net.sf.laja.cdd.state.ear.EarStateBuilderImpl;
-import net.sf.laja.cdd.state.ear.EarStateImpl;
 
 public class EarBuilder {
     public final EarStateBuilder builder;

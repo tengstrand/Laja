@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.toe;
 
+import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
-import net.sf.laja.cdd.state.toe.ToeStateBuilder;
-import net.sf.laja.cdd.state.toe.ToeStateBuilderImpl;
-import net.sf.laja.cdd.state.toe.ToeStateImpl;
 
 public class ToeBuilder {
     public final ToeStateBuilder builder;

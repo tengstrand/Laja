@@ -1,7 +1,7 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.TruckStateBuilder;
-import net.sf.laja.example.car.state.TruckStateImpl;
+import net.sf.laja.example.car.state.*;
+import net.sf.laja.example.car.state.TruckState;
 
 public class TruckCreator {
     private final TruckStateBuilder builder = TruckStateImpl.build();

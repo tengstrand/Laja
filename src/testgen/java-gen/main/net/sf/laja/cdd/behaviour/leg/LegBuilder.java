@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour.leg;
 
+import net.sf.laja.cdd.state.leg.*;
 import net.sf.laja.cdd.state.leg.LegState;
-import net.sf.laja.cdd.state.leg.LegStateBuilder;
-import net.sf.laja.cdd.state.leg.LegStateBuilderImpl;
-import net.sf.laja.cdd.state.leg.LegStateImpl;
 
 public class LegBuilder {
     public final LegStateBuilder builder;

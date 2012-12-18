@@ -1,9 +1,7 @@
 package net.sf.laja.example.person.behaviour;
 
+import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.PersonState;
-import net.sf.laja.example.person.state.PersonStateBuilder;
-import net.sf.laja.example.person.state.PersonStateBuilderImpl;
-import net.sf.laja.example.person.state.PersonStateImpl;
 
 public class PersonBuilder {
     public final PersonStateBuilder builder;
