@@ -7,11 +7,11 @@ package net.sf.laja.example.car.state;
  */
 public interface BusState extends VehicleSizeState {
     String getName();
-    void setName(String name);
+    void setName(String name, Object mutator);
 
     int getLengthInCentimeters();
-    void setLengthInCentimeters(int lengthInCentimeters);
+    void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
 
     int getWeightInKilograms(); // (optional)
-    void setWeightInKilograms(int weightInKilograms);
+    void setWeightInKilograms(int weightInKilograms, Object mutator);
 }

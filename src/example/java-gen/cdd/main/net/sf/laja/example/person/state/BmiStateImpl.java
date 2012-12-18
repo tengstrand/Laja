@@ -10,6 +10,7 @@ public class BmiStateImpl implements BmiState {
     protected int weightInKilograms;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     BmiStateImpl() {
     }
@@ -50,11 +51,22 @@ public class BmiStateImpl implements BmiState {
     public int getWeightInKilograms() { return weightInKilograms; }
 
     // Setters
-    public void setHeightInCentimeters(int heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; }
+    public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { checkMutator(mutator); this.heightInCentimeters = heightInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

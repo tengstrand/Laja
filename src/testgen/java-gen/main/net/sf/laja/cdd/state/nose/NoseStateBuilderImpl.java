@@ -26,12 +26,12 @@ public class NoseStateBuilderImpl implements NoseStateBuilder {
 
     public void withNoseDescription(String noseDescription) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNoseDescription(noseDescription);
+        state.setNoseDescription(noseDescription, null);
     }
 
     public void withDetails(String details) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDetails(details);
+        state.setDetails(details, null);
     }
 
     private void throwEncapsulationException() {

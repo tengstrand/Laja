@@ -10,12 +10,13 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
  */
 public interface ForeheadState {
     BrowStateList getBrows(); // (optional)
-    void setBrows(BrowStateList brows);
+    void setBrows(BrowStateList brows, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

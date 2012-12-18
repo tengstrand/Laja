@@ -13,11 +13,13 @@ public class LegValue implements LegElement {
 
     public LegValue(LegState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public LegValue(LegState state, LegStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public LegState getState(Certificate certificate) {

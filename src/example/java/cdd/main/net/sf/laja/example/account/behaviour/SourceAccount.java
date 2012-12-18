@@ -23,6 +23,6 @@ public class SourceAccount extends AccountValue {
         if (state.getBalance() < amount) {
             throw new IllegalStateException("Not enough money on the source account");
         }
-        state.setBalance(state.getBalance() - amount);
+        state.setBalance(state.getBalance() - amount, this);
     }
 }

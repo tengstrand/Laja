@@ -26,7 +26,7 @@ public class EarStateBuilderImpl implements EarStateBuilder {
 
     public void withSize(double size) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setSize(size);
+        state.setSize(size, null);
     }
 
     private void throwEncapsulationException() {

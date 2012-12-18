@@ -11,6 +11,7 @@ public class BrowStateImpl implements BrowState {
     protected int area;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     BrowStateImpl() {
     }
@@ -50,10 +51,21 @@ public class BrowStateImpl implements BrowState {
     public int getArea() { return area; }
 
     // Setters
-    public void setArea(int area) { this.area = area; }
+    public void setArea(int area, Object mutator) { checkMutator(mutator); this.area = area; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

@@ -7,12 +7,13 @@ package net.sf.laja.example.car.state;
  */
 public interface VehicleSizeState {
     int getLengthInCentimeters();
-    void setLengthInCentimeters(int lengthInCentimeters);
+    void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

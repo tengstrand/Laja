@@ -17,6 +17,7 @@ public class TerrestrialStateImpl implements TerrestrialState {
     protected int weight; // (hide)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     TerrestrialStateImpl() {
     }
@@ -66,18 +67,26 @@ public class TerrestrialStateImpl implements TerrestrialState {
     public int getWeight() { return weight; }
 
     // Setters
-    public void setNumberOfLegs(int numberOfLegs) { this.numberOfLegs = numberOfLegs; }
-    public void setNumberOfWings(int numberOfWings) { this.numberOfWings = numberOfWings; }
-    public void setLeftEye(EyeState leftEye) { this.leftEye = leftEye; }
-    public void setRightEye(EyeState rightEye) { this.rightEye = rightEye; }
-    public void setMiddleEye(EyeState middleEye) { this.middleEye = middleEye; }
-    public void setWeight(int weight) { this.weight = weight; }
+    public void setNumberOfLegs(int numberOfLegs, Object mutator) { checkMutator(mutator); this.numberOfLegs = numberOfLegs; }
+    public void setNumberOfWings(int numberOfWings, Object mutator) { checkMutator(mutator); this.numberOfWings = numberOfWings; }
+    public void setLeftEye(EyeState leftEye, Object mutator) { checkMutator(mutator); this.leftEye = leftEye; }
+    public void setRightEye(EyeState rightEye, Object mutator) { checkMutator(mutator); this.rightEye = rightEye; }
+    public void setMiddleEye(EyeState middleEye, Object mutator) { checkMutator(mutator); this.middleEye = middleEye; }
+    public void setWeight(int weight, Object mutator) { checkMutator(mutator); this.weight = weight; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        leftEye.encapsulate();
-        rightEye.encapsulate();
-        if (middleEye != null) middleEye.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

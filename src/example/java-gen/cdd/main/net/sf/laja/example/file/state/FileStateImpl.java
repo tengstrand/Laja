@@ -9,6 +9,7 @@ public class FileStateImpl implements FileState {
     protected String filename;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     FileStateImpl() {
     }
@@ -51,10 +52,21 @@ public class FileStateImpl implements FileState {
     public String getFilename() { return filename; }
 
     // Setters
-    public void setFilename(String filename) { this.filename = filename; }
+    public void setFilename(String filename, Object mutator) { checkMutator(mutator); this.filename = filename; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

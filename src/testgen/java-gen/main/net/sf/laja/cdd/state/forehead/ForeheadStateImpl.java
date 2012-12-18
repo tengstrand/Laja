@@ -13,6 +13,7 @@ public class ForeheadStateImpl implements ForeheadState {
     protected BrowStateList brows; // (optional)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     ForeheadStateImpl() {
         brows = BrowStateListImpl.emptyList();
@@ -53,11 +54,21 @@ public class ForeheadStateImpl implements ForeheadState {
     public BrowStateList getBrows() { return brows; }
 
     // Setters
-    public void setBrows(BrowStateList brows) { this.brows.clear(); this.brows.addAll(brows); }
+    public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        if (brows != null) brows.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

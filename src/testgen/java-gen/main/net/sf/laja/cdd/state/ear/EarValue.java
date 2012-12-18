@@ -13,11 +13,13 @@ public class EarValue implements EarElement {
 
     public EarValue(EarState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public EarValue(EarState state, EarStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public EarState getState(Certificate certificate) {

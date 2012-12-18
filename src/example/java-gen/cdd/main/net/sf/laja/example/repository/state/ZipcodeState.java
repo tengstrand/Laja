@@ -7,12 +7,13 @@ package net.sf.laja.example.repository.state;
  */
 public interface ZipcodeState {
     int getZipcode();
-    void setZipcode(int zipcode);
+    void setZipcode(int zipcode, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

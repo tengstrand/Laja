@@ -13,23 +13,25 @@ public class TruckStateImpl implements TruckState {
     protected OwnerState owner;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     public CarState getCarState() {
         return new CarState() {
             public Certificate certificate() { return certificate(); }
             public int getLengthInCentimeters() { return TruckStateImpl.this.lengthInCentimeters; }
-            public void setLengthInCentimeters(int lengthInCentimeters) { TruckStateImpl.this.setLengthInCentimeters(lengthInCentimeters); }
+            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { TruckStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
 
             public String getName() { return TruckStateImpl.this.type.getTruckName(); }
-            public void setName(String name) { TruckStateImpl.this.type.setTruckName(name); }
+            public void setName(String name, Object mutator) { TruckStateImpl.this.type.setTruckName(name, mutator); }
 
             public OwnerState getOwner() { return TruckStateImpl.this.owner; }
-            public void setOwner(OwnerState owner) { TruckStateImpl.this.setOwner(owner); }
+            public void setOwner(OwnerState owner, Object mutator) { TruckStateImpl.this.setOwner(owner, mutator); }
 
             public String getColor() { return TruckStateImpl.this.color; }
-            public void setColor(String color) { TruckStateImpl.this.setColor(color); }
+            public void setColor(String color, Object mutator) { TruckStateImpl.this.setColor(color, mutator); }
 
             public void encapsulate() { TruckStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { TruckStateImpl.this.setEncapsulator(encapsulator); }
 
             public boolean isValid() {
                 return isValid(_encapsulated);
@@ -167,16 +169,25 @@ public class TruckStateImpl implements TruckState {
     public OwnerState getOwner() { return owner; }
 
     // Setters
-    public void setLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; }
-    public void setType(TruckTypeState type) { this.type = type; }
-    public void setColor(String color) { this.color = color; }
-    public void setOwner(OwnerState owner) { this.owner = owner; }
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
+    public void setType(TruckTypeState type, Object mutator) { checkMutator(mutator); this.type = type; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+    public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        type.encapsulate();
-        owner.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

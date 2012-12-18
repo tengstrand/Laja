@@ -13,11 +13,13 @@ public class EyeValue implements EyeElement {
 
     public EyeValue(EyeState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public EyeValue(EyeState state, EyeStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public EyeState getState(Certificate certificate) {

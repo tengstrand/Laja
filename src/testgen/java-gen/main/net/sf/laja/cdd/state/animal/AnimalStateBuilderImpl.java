@@ -26,7 +26,7 @@ public class AnimalStateBuilderImpl implements AnimalStateBuilder {
 
     public void withIsTerrestrial(boolean isTerrestrial) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setIsTerrestrial(isTerrestrial);
+        state.setIsTerrestrial(isTerrestrial, null);
     }
 
     private void throwEncapsulationException() {

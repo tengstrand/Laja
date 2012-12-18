@@ -47,23 +47,25 @@ public class MonsterStateImpl implements MonsterState {
     protected ArmState leftArm;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     public EyeState getEyeState() {
         return new EyeState() {
             public Certificate certificate() { return certificate(); }
             public int getEyeWeightInGrams() { return MonsterStateImpl.this.weight; }
-            public void setEyeWeightInGrams(int eyeWeightInGrams) { MonsterStateImpl.this.setWeight(eyeWeightInGrams); }
+            public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { MonsterStateImpl.this.setWeight(eyeWeightInGrams, mutator); }
 
             public String getColor() { return MonsterStateImpl.this.color; }
-            public void setColor(String color) { MonsterStateImpl.this.setColor(color); }
+            public void setColor(String color, Object mutator) { MonsterStateImpl.this.setColor(color, mutator); }
 
             public String getDecease() { return MonsterStateImpl.this.decease; }
-            public void setDecease(String decease) { MonsterStateImpl.this.setDecease(decease); }
+            public void setDecease(String decease, Object mutator) { MonsterStateImpl.this.setDecease(decease, mutator); }
 
             public Boolean getHasEar() { return MonsterStateImpl.this.hasEar; }
-            public void setHasEar(Boolean hasEar) { MonsterStateImpl.this.setHasEar(hasEar); }
+            public void setHasEar(Boolean hasEar, Object mutator) { MonsterStateImpl.this.setHasEar(hasEar, mutator); }
 
             public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
 
             public boolean isValid() {
                 return isValid(_encapsulated);
@@ -150,24 +152,25 @@ public class MonsterStateImpl implements MonsterState {
         return new TerrestrialState() {
             public Certificate certificate() { return certificate(); }
             public int getNumberOfLegs() { return MonsterStateImpl.this.numberOfLegs; }
-            public void setNumberOfLegs(int numberOfLegs) { MonsterStateImpl.this.setNumberOfLegs(numberOfLegs); }
+            public void setNumberOfLegs(int numberOfLegs, Object mutator) { MonsterStateImpl.this.setNumberOfLegs(numberOfLegs, mutator); }
 
             public int getNumberOfWings() { return MonsterStateImpl.this.numberOfOwnWings; }
-            public void setNumberOfWings(int numberOfWings) { MonsterStateImpl.this.setNumberOfOwnWings(numberOfWings); }
+            public void setNumberOfWings(int numberOfWings, Object mutator) { MonsterStateImpl.this.setNumberOfOwnWings(numberOfWings, mutator); }
 
             public EyeState getLeftEye() { return MonsterStateImpl.this.leftEye; }
-            public void setLeftEye(EyeState leftEye) { MonsterStateImpl.this.setLeftEye(leftEye); }
+            public void setLeftEye(EyeState leftEye, Object mutator) { MonsterStateImpl.this.setLeftEye(leftEye, mutator); }
 
             public EyeState getRightEye() { return MonsterStateImpl.this.rightEye; }
-            public void setRightEye(EyeState rightEye) { MonsterStateImpl.this.setRightEye(rightEye); }
+            public void setRightEye(EyeState rightEye, Object mutator) { MonsterStateImpl.this.setRightEye(rightEye, mutator); }
 
             public EyeState getMiddleEye() { return MonsterStateImpl.this.midEye; }
-            public void setMiddleEye(EyeState middleEye) { MonsterStateImpl.this.setMidEye(middleEye); }
+            public void setMiddleEye(EyeState middleEye, Object mutator) { MonsterStateImpl.this.setMidEye(middleEye, mutator); }
 
             public int getWeight() { return MonsterStateImpl.this.weight; }
-            public void setWeight(int weight) { MonsterStateImpl.this.setWeight(weight); }
+            public void setWeight(int weight, Object mutator) { MonsterStateImpl.this.setWeight(weight, mutator); }
 
             public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
 
             public boolean isValid() {
                 return isValid(_encapsulated);
@@ -348,43 +351,46 @@ public class MonsterStateImpl implements MonsterState {
     public ArmState getLeftArm() { return leftArm; }
 
     // Setters
-    public void setNumberOfLegs(int numberOfLegs) { this.numberOfLegs = numberOfLegs; }
-    public void setNumberOfOwnWings(int numberOfOwnWings) { this.numberOfOwnWings = numberOfOwnWings; }
-    public void setHeadWeightInGrams(double headWeightInGrams) { this.headWeightInGrams = headWeightInGrams; }
-    public void setLeftEye(EyeState leftEye) { this.leftEye = leftEye; }
-    public void setRightEye(EyeState rightEye) { this.rightEye = rightEye; }
-    public void setMidEye(EyeState midEye) { this.midEye = midEye; }
-    public void setEyeWeightInGrams(int eyeWeightInGrams) { this.eyeWeightInGrams = eyeWeightInGrams; }
-    public void setColor(String color) { this.color = color; }
-    public void setDecease(String decease) { this.decease = decease; }
-    public void setNoses(NoseStateList noses) { this.noses.clear(); this.noses.addAll(noses); }
-    public void setBrows(BrowStateList brows) { this.brows.clear(); this.brows.addAll(brows); }
-    public void setLength(int length) { this.length = length; }
-    public void setA(boolean a) { this.a = a; }
-    public void setB(byte b) { this.b = b; }
-    public void setC(short c) { this.c = c; }
-    public void setD(char d) { this.d = d; }
-    public void setE(int e) { this.e = e; }
-    public void setF(long f) { this.f = f; }
-    public void setG(float g) { this.g = g; }
-    public void setH(double h) { this.h = h; }
-    public void setEars(EarStateList ears) { this.ears.clear(); this.ears.addAll(ears); }
-    public void setMouths(MouthStateList mouths) { this.mouths.clear(); this.mouths.addAll(mouths); }
-    public void setWeight(int weight) { this.weight = weight; }
-    public void setHasEar(Boolean hasEar) { this.hasEar = hasEar; }
-    public void setHeadWeight(double headWeight) { this.headWeight = headWeight; }
-    public void setLeftArm(ArmState leftArm) { this.leftArm = leftArm; }
+    public void setNumberOfLegs(int numberOfLegs, Object mutator) { checkMutator(mutator); this.numberOfLegs = numberOfLegs; }
+    public void setNumberOfOwnWings(int numberOfOwnWings, Object mutator) { checkMutator(mutator); this.numberOfOwnWings = numberOfOwnWings; }
+    public void setHeadWeightInGrams(double headWeightInGrams, Object mutator) { checkMutator(mutator); this.headWeightInGrams = headWeightInGrams; }
+    public void setLeftEye(EyeState leftEye, Object mutator) { checkMutator(mutator); this.leftEye = leftEye; }
+    public void setRightEye(EyeState rightEye, Object mutator) { checkMutator(mutator); this.rightEye = rightEye; }
+    public void setMidEye(EyeState midEye, Object mutator) { checkMutator(mutator); this.midEye = midEye; }
+    public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { checkMutator(mutator); this.eyeWeightInGrams = eyeWeightInGrams; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+    public void setDecease(String decease, Object mutator) { checkMutator(mutator); this.decease = decease; }
+    public void setNoses(NoseStateList noses, Object mutator) { checkMutator(mutator); this.noses.clear(); this.noses.addAll(noses); }
+    public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
+    public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
+    public void setA(boolean a, Object mutator) { checkMutator(mutator); this.a = a; }
+    public void setB(byte b, Object mutator) { checkMutator(mutator); this.b = b; }
+    public void setC(short c, Object mutator) { checkMutator(mutator); this.c = c; }
+    public void setD(char d, Object mutator) { checkMutator(mutator); this.d = d; }
+    public void setE(int e, Object mutator) { checkMutator(mutator); this.e = e; }
+    public void setF(long f, Object mutator) { checkMutator(mutator); this.f = f; }
+    public void setG(float g, Object mutator) { checkMutator(mutator); this.g = g; }
+    public void setH(double h, Object mutator) { checkMutator(mutator); this.h = h; }
+    public void setEars(EarStateList ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
+    public void setMouths(MouthStateList mouths, Object mutator) { checkMutator(mutator); this.mouths.clear(); this.mouths.addAll(mouths); }
+    public void setWeight(int weight, Object mutator) { checkMutator(mutator); this.weight = weight; }
+    public void setHasEar(Boolean hasEar, Object mutator) { checkMutator(mutator); this.hasEar = hasEar; }
+    public void setHeadWeight(double headWeight, Object mutator) { checkMutator(mutator); this.headWeight = headWeight; }
+    public void setLeftArm(ArmState leftArm, Object mutator) { checkMutator(mutator); this.leftArm = leftArm; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        leftEye.encapsulate();
-        rightEye.encapsulate();
-        if (midEye != null) midEye.encapsulate();
-        noses.encapsulate();
-        if (brows != null) brows.encapsulate();
-        if (ears != null) ears.encapsulate();
-        mouths.encapsulate();
-        leftArm.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

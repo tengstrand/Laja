@@ -24,27 +24,27 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
 
     public void withName(String name) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setName(name);
+        state.setName(name, null);
     }
 
     public void withProcessor(String processor) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setProcessor(processor);
+        state.setProcessor(processor, null);
     }
 
     public void withReleaseYear(int releaseYear) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setReleaseYear(releaseYear);
+        state.setReleaseYear(releaseYear, null);
     }
 
     public void withMemoryInKilobytes(int memoryInKilobytes) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setMemoryInKilobytes(memoryInKilobytes);
+        state.setMemoryInKilobytes(memoryInKilobytes, null);
     }
 
     public void withOwner(String owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOwner(owner);
+        state.setOwner(owner, null);
     }
 
     private void throwEncapsulationException() {

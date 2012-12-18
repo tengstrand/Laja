@@ -11,11 +11,13 @@ public class {valueClass} {
 
     public {valueClass}({stateClass} state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public {valueClass}({stateClass} state, {builderClass} stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     #elementMethods()

@@ -13,11 +13,13 @@ public class ArmValue implements ArmElement {
 
     public ArmValue(ArmState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public ArmValue(ArmState state, ArmStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public ArmState getState(Certificate certificate) {

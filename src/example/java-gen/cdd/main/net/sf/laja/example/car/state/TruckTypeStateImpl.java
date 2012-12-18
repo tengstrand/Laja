@@ -10,6 +10,7 @@ public class TruckTypeStateImpl implements TruckTypeState {
     protected String truckName;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     TruckTypeStateImpl() {
     }
@@ -53,11 +54,22 @@ public class TruckTypeStateImpl implements TruckTypeState {
     public String getTruckName() { return truckName; }
 
     // Setters
-    public void setNumberOfWheels(int numberOfWheels) { this.numberOfWheels = numberOfWheels; }
-    public void setTruckName(String truckName) { this.truckName = truckName; }
+    public void setNumberOfWheels(int numberOfWheels, Object mutator) { checkMutator(mutator); this.numberOfWheels = numberOfWheels; }
+    public void setTruckName(String truckName, Object mutator) { checkMutator(mutator); this.truckName = truckName; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

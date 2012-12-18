@@ -18,6 +18,7 @@ public class CustomerStateImpl implements CustomerState {
     protected AddressStateList oldAddresses; // (optional)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     CustomerStateImpl() {
         oldAddresses = AddressStateListImpl.emptyList();
@@ -80,20 +81,30 @@ public class CustomerStateImpl implements CustomerState {
     public AddressStateList getOldAddresses() { return oldAddresses; }
 
     // Setters
-    public void setSsn(long ssn) { this.ssn = ssn; }
-    public void setGivenName(String givenName) { this.givenName = givenName; }
-    public void setSurname(String surname) { this.surname = surname; }
-    public void setAge(int age) { this.age = age; }
-    public void setPet(String pet) { this.pet = pet; }
-    public void setAddressId(int addressId) { this.addressId = addressId; }
-    public void setStreetName(String streetName) { this.streetName = streetName; }
-    public void setZipcode(int zipcode) { this.zipcode = zipcode; }
-    public void setCity(String city) { this.city = city; }
-    public void setOldAddresses(AddressStateList oldAddresses) { this.oldAddresses.clear(); this.oldAddresses.addAll(oldAddresses); }
+    public void setSsn(long ssn, Object mutator) { checkMutator(mutator); this.ssn = ssn; }
+    public void setGivenName(String givenName, Object mutator) { checkMutator(mutator); this.givenName = givenName; }
+    public void setSurname(String surname, Object mutator) { checkMutator(mutator); this.surname = surname; }
+    public void setAge(int age, Object mutator) { checkMutator(mutator); this.age = age; }
+    public void setPet(String pet, Object mutator) { checkMutator(mutator); this.pet = pet; }
+    public void setAddressId(int addressId, Object mutator) { checkMutator(mutator); this.addressId = addressId; }
+    public void setStreetName(String streetName, Object mutator) { checkMutator(mutator); this.streetName = streetName; }
+    public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
+    public void setCity(String city, Object mutator) { checkMutator(mutator); this.city = city; }
+    public void setOldAddresses(AddressStateList oldAddresses, Object mutator) { checkMutator(mutator); this.oldAddresses.clear(); this.oldAddresses.addAll(oldAddresses); }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        if (oldAddresses != null) oldAddresses.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

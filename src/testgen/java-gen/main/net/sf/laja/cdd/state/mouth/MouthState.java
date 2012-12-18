@@ -9,21 +9,22 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface MouthState {
     int getNumberOfTeeth(); // (id)
-    void setNumberOfTeeth(int numberOfTeeth);
+    void setNumberOfTeeth(int numberOfTeeth, Object mutator);
 
     int getWidth(); // (key)
-    void setWidth(int width);
+    void setWidth(int width, Object mutator);
 
     int getHeight(); // (key)
-    void setHeight(int height);
+    void setHeight(int height, Object mutator);
 
     String getColor();
-    void setColor(String color);
+    void setColor(String color, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

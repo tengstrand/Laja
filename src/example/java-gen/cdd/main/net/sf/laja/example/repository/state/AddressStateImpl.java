@@ -12,6 +12,7 @@ public class AddressStateImpl implements AddressState {
     protected String city;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     AddressStateImpl() {
     }
@@ -58,13 +59,24 @@ public class AddressStateImpl implements AddressState {
     public String getCity() { return city; }
 
     // Setters
-    public void setAddressId(int addressId) { this.addressId = addressId; }
-    public void setStreetName(String streetName) { this.streetName = streetName; }
-    public void setZipcode(int zipcode) { this.zipcode = zipcode; }
-    public void setCity(String city) { this.city = city; }
+    public void setAddressId(int addressId, Object mutator) { checkMutator(mutator); this.addressId = addressId; }
+    public void setStreetName(String streetName, Object mutator) { checkMutator(mutator); this.streetName = streetName; }
+    public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
+    public void setCity(String city, Object mutator) { checkMutator(mutator); this.city = city; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

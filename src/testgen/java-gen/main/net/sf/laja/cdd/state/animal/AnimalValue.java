@@ -13,11 +13,13 @@ public class AnimalValue implements AnimalElement {
 
     public AnimalValue(AnimalState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public AnimalValue(AnimalState state, AnimalStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public AnimalState getState(Certificate certificate) {

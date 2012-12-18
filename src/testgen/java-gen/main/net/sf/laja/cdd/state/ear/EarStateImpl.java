@@ -11,6 +11,7 @@ public class EarStateImpl implements EarState {
     protected double size; // (hide)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     EarStateImpl() {
     }
@@ -50,10 +51,21 @@ public class EarStateImpl implements EarState {
     public double getSize() { return size; }
 
     // Setters
-    public void setSize(double size) { this.size = size; }
+    public void setSize(double size, Object mutator) { checkMutator(mutator); this.size = size; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

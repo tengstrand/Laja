@@ -40,6 +40,7 @@ public class HeadStateImpl implements HeadState {
     protected MouthStateList mouths;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     HeadStateImpl() {
         noses = NoseStateListImpl.emptyList();
@@ -114,37 +115,41 @@ public class HeadStateImpl implements HeadState {
     public MouthStateList getMouths() { return mouths; }
 
     // Setters
-    public void setHeadWeightInGrams(double headWeightInGrams) { this.headWeightInGrams = headWeightInGrams; }
-    public void setLeftEye(EyeState leftEye) { this.leftEye = leftEye; }
-    public void setRightEye(EyeState rightEye) { this.rightEye = rightEye; }
-    public void setMidEye(EyeState midEye) { this.midEye = midEye; }
-    public void setEyeWeightInGrams(int eyeWeightInGrams) { this.eyeWeightInGrams = eyeWeightInGrams; }
-    public void setColor(String color) { this.color = color; }
-    public void setDecease(String decease) { this.decease = decease; }
-    public void setHasEar(Boolean hasEar) { this.hasEar = hasEar; }
-    public void setNoses(NoseStateList noses) { this.noses.clear(); this.noses.addAll(noses); }
-    public void setBrows(BrowStateList brows) { this.brows.clear(); this.brows.addAll(brows); }
-    public void setLength(int length) { this.length = length; }
-    public void setA(boolean a) { this.a = a; }
-    public void setB(byte b) { this.b = b; }
-    public void setC(short c) { this.c = c; }
-    public void setD(char d) { this.d = d; }
-    public void setE(int e) { this.e = e; }
-    public void setF(long f) { this.f = f; }
-    public void setG(float g) { this.g = g; }
-    public void setH(double h) { this.h = h; }
-    public void setEars(EarStateList ears) { this.ears.clear(); this.ears.addAll(ears); }
-    public void setMouths(MouthStateList mouths) { this.mouths.clear(); this.mouths.addAll(mouths); }
+    public void setHeadWeightInGrams(double headWeightInGrams, Object mutator) { checkMutator(mutator); this.headWeightInGrams = headWeightInGrams; }
+    public void setLeftEye(EyeState leftEye, Object mutator) { checkMutator(mutator); this.leftEye = leftEye; }
+    public void setRightEye(EyeState rightEye, Object mutator) { checkMutator(mutator); this.rightEye = rightEye; }
+    public void setMidEye(EyeState midEye, Object mutator) { checkMutator(mutator); this.midEye = midEye; }
+    public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { checkMutator(mutator); this.eyeWeightInGrams = eyeWeightInGrams; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+    public void setDecease(String decease, Object mutator) { checkMutator(mutator); this.decease = decease; }
+    public void setHasEar(Boolean hasEar, Object mutator) { checkMutator(mutator); this.hasEar = hasEar; }
+    public void setNoses(NoseStateList noses, Object mutator) { checkMutator(mutator); this.noses.clear(); this.noses.addAll(noses); }
+    public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
+    public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
+    public void setA(boolean a, Object mutator) { checkMutator(mutator); this.a = a; }
+    public void setB(byte b, Object mutator) { checkMutator(mutator); this.b = b; }
+    public void setC(short c, Object mutator) { checkMutator(mutator); this.c = c; }
+    public void setD(char d, Object mutator) { checkMutator(mutator); this.d = d; }
+    public void setE(int e, Object mutator) { checkMutator(mutator); this.e = e; }
+    public void setF(long f, Object mutator) { checkMutator(mutator); this.f = f; }
+    public void setG(float g, Object mutator) { checkMutator(mutator); this.g = g; }
+    public void setH(double h, Object mutator) { checkMutator(mutator); this.h = h; }
+    public void setEars(EarStateList ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
+    public void setMouths(MouthStateList mouths, Object mutator) { checkMutator(mutator); this.mouths.clear(); this.mouths.addAll(mouths); }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        leftEye.encapsulate();
-        rightEye.encapsulate();
-        if (midEye != null) midEye.encapsulate();
-        noses.encapsulate();
-        if (brows != null) brows.encapsulate();
-        if (ears != null) ears.encapsulate();
-        mouths.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

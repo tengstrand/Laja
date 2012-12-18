@@ -7,19 +7,19 @@ package net.sf.laja.example.car.state;
  */
 public interface TruckState extends VehicleSizeState {
     int getLengthInCentimeters();
-    void setLengthInCentimeters(int lengthInCentimeters);
+    void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
 
     int getWeightInKilograms();
-    void setWeightInKilograms(int weightInKilograms);
+    void setWeightInKilograms(int weightInKilograms, Object mutator);
 
     TruckTypeState getType();
-    void setType(TruckTypeState type);
+    void setType(TruckTypeState type, Object mutator);
 
     String getColor();
-    void setColor(String color);
+    void setColor(String color, Object mutator);
 
     OwnerState getOwner();
-    void setOwner(OwnerState owner);
+    void setOwner(OwnerState owner, Object mutator);
 
     CarState getCarState();
 }

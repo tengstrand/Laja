@@ -6,7 +6,7 @@ import net.sf.laja.cdd.state.eye.EyeState;
 public class Eye extends EyeFactory {
     public Eye(EyeState state) {
         super(state);
-        state.setDecease("Healthy");
+        state.setDecease("Healthy", this);
     }
 
     // (factory)

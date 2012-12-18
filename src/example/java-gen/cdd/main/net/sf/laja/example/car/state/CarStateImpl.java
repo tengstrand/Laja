@@ -12,6 +12,7 @@ public class CarStateImpl implements CarState {
     protected String color;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     CarStateImpl() {
     }
@@ -66,14 +67,24 @@ public class CarStateImpl implements CarState {
     public String getColor() { return color; }
 
     // Setters
-    public void setLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; }
-    public void setName(String name) { this.name = name; }
-    public void setOwner(OwnerState owner) { this.owner = owner; }
-    public void setColor(String color) { this.color = color; }
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+    public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        owner.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

@@ -9,12 +9,13 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface LegState {
     String getLegDescription();
-    void setLegDescription(String legDescription);
+    void setLegDescription(String legDescription, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

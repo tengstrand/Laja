@@ -31,22 +31,22 @@ public class {builderImplClass} implements {builderClass} {
       #set (template = templates.get(attribute.cleanedStateType))
     public void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}(listBuilder.getStateList(certificate));
+        state.{attribute.setter}(listBuilder.getStateList(certificate), null);
     #else if (attribute.isState)
     public void {attribute.withMethod}({attribute.stateBuilder} {attribute.variable}) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}({attribute.variable}.{attribute.stateMethod}(certificate));
+        state.{attribute.setter}({attribute.variable}.{attribute.stateMethod}(certificate), null);
     #else
     public void {attribute.withMethod}({attribute.type} {attribute.variable}) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}({attribute.variable});
+        state.{attribute.setter}({attribute.variable}, null);
     #end
     }
     #foreach (method in allConvertMethods where method.variable == attribute.variable)
 
     public void {attribute.withMethod}({method.type} {method.variable}) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}({method.statement});
+        state.{attribute.setter}({method.statement}, null);
     }
     #end
   #end

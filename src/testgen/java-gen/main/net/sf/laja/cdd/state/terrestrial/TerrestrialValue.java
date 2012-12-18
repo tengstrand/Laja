@@ -13,11 +13,13 @@ public class TerrestrialValue implements TerrestrialElement {
 
     public TerrestrialValue(TerrestrialState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public TerrestrialValue(TerrestrialState state, TerrestrialStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public TerrestrialState getState(Certificate certificate) {

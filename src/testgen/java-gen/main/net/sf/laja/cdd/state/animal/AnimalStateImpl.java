@@ -11,6 +11,7 @@ public class AnimalStateImpl implements AnimalState {
     protected boolean isTerrestrial;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     AnimalStateImpl() {
     }
@@ -50,10 +51,21 @@ public class AnimalStateImpl implements AnimalState {
     public boolean getIsTerrestrial() { return isTerrestrial; }
 
     // Setters
-    public void setIsTerrestrial(boolean isTerrestrial) { this.isTerrestrial = isTerrestrial; }
+    public void setIsTerrestrial(boolean isTerrestrial, Object mutator) { checkMutator(mutator); this.isTerrestrial = isTerrestrial; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

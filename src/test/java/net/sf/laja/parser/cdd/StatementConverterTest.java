@@ -15,11 +15,11 @@ public class StatementConverterTest {
 
     @Test
     public void calculateSetStatement() {
-        assertEquals("setTruckName(name)", converter.calculateSetStatement("truckName", "name"));
+        assertEquals("setTruckName(name, mutator)", converter.calculateSetStatement("truckName", "name"));
     }
 
     @Test
     public void calculateSetStatement_getMethod() {
-        assertEquals("height.setHeightInCentimeters(heightInCentimeters)", converter.calculateSetStatement("height.getHeightInCentimeters()", "heightInCentimeters"));
+        assertEquals("height.setHeightInCentimeters(heightInCentimeters, mutator)", converter.calculateSetStatement("height.getHeightInCentimeters()", "heightInCentimeters"));
     }
 }

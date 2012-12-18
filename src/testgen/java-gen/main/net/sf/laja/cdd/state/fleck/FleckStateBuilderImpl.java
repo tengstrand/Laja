@@ -26,12 +26,12 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
 
     public void withArea(int area) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setArea(area);
+        state.setArea(area, null);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color);
+        state.setColor(color, null);
     }
 
     private void throwEncapsulationException() {

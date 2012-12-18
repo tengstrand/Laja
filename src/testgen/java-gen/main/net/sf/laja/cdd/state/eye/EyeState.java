@@ -9,21 +9,22 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface EyeState {
     int getEyeWeightInGrams();
-    void setEyeWeightInGrams(int eyeWeightInGrams);
+    void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator);
 
     String getColor();
-    void setColor(String color);
+    void setColor(String color, Object mutator);
 
     String getDecease(); // (hide)
-    void setDecease(String decease);
+    void setDecease(String decease, Object mutator);
 
     Boolean getHasEar(); // (optional)
-    void setHasEar(Boolean hasEar);
+    void setHasEar(Boolean hasEar, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

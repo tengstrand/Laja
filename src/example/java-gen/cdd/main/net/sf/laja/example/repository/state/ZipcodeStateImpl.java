@@ -9,6 +9,7 @@ public class ZipcodeStateImpl implements ZipcodeState {
     protected int zipcode;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     ZipcodeStateImpl() {
     }
@@ -48,10 +49,21 @@ public class ZipcodeStateImpl implements ZipcodeState {
     public int getZipcode() { return zipcode; }
 
     // Setters
-    public void setZipcode(int zipcode) { this.zipcode = zipcode; }
+    public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

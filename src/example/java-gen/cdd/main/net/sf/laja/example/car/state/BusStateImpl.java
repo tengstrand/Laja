@@ -11,6 +11,7 @@ public class BusStateImpl implements BusState {
     protected int weightInKilograms; // (optional)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     BusStateImpl() {
     }
@@ -62,12 +63,23 @@ public class BusStateImpl implements BusState {
     public int getWeightInKilograms() { return weightInKilograms; }
 
     // Setters
-    public void setName(String name) { this.name = name; }
-    public void setLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; }
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

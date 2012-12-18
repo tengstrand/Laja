@@ -9,15 +9,16 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface HairState {
     int getLength(); // (key)
-    void setLength(int length);
+    void setLength(int length, Object mutator);
 
     String getColor();
-    void setColor(String color);
+    void setColor(String color, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

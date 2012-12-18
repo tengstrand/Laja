@@ -7,15 +7,16 @@ package net.sf.laja.example.car.state;
  */
 public interface TruckTypeState {
     int getNumberOfWheels();
-    void setNumberOfWheels(int numberOfWheels);
+    void setNumberOfWheels(int numberOfWheels, Object mutator);
 
     String getTruckName();
-    void setTruckName(String truckName);
+    void setTruckName(String truckName, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

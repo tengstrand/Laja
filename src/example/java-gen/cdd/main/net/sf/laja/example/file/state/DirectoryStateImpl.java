@@ -9,6 +9,7 @@ public class DirectoryStateImpl implements DirectoryState {
     protected String directoryPath;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     DirectoryStateImpl() {
     }
@@ -51,10 +52,21 @@ public class DirectoryStateImpl implements DirectoryState {
     public String getDirectoryPath() { return directoryPath; }
 
     // Setters
-    public void setDirectoryPath(String directoryPath) { this.directoryPath = directoryPath; }
+    public void setDirectoryPath(String directoryPath, Object mutator) { checkMutator(mutator); this.directoryPath = directoryPath; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

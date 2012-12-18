@@ -13,11 +13,13 @@ public class FootValue implements FootElement {
 
     public FootValue(FootState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public FootValue(FootState state, FootStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public FootState getState(Certificate certificate) {

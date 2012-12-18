@@ -7,12 +7,13 @@ package net.sf.laja.example.file.state;
  */
 public interface DirectoryState {
     String getDirectoryPath();
-    void setDirectoryPath(String directoryPath);
+    void setDirectoryPath(String directoryPath, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

@@ -7,15 +7,16 @@ package net.sf.laja.example.person.state;
  */
 public interface BmiState {
     int getHeightInCentimeters();
-    void setHeightInCentimeters(int heightInCentimeters);
+    void setHeightInCentimeters(int heightInCentimeters, Object mutator);
 
     int getWeightInKilograms();
-    void setWeightInKilograms(int weightInKilograms);
+    void setWeightInKilograms(int weightInKilograms, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

@@ -13,11 +13,13 @@ public class HeadValue implements HeadElement {
 
     public HeadValue(HeadState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public HeadValue(HeadState state, HeadStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public HeadState getState(Certificate certificate) {

@@ -10,15 +10,16 @@ import net.sf.laja.cdd.state.toe.ToeStateList;
  */
 public interface FootState {
     int getArea();
-    void setArea(int area);
+    void setArea(int area, Object mutator);
 
     ToeStateList getToes();
-    void setToes(ToeStateList toes);
+    void setToes(ToeStateList toes, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

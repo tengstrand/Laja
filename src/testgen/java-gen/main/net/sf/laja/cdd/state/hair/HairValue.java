@@ -13,11 +13,13 @@ public class HairValue implements HairElement {
 
     public HairValue(HairState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public HairValue(HairState state, HairStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public HairState getState(Certificate certificate) {

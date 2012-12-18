@@ -7,14 +7,14 @@ package net.sf.laja.example.repository.state;
  */
 public interface AddressState extends ZipcodeState {
     int getAddressId(); // (id)
-    void setAddressId(int addressId);
+    void setAddressId(int addressId, Object mutator);
 
     String getStreetName();
-    void setStreetName(String streetName);
+    void setStreetName(String streetName, Object mutator);
 
     int getZipcode();
-    void setZipcode(int zipcode);
+    void setZipcode(int zipcode, Object mutator);
 
     String getCity();
-    void setCity(String city);
+    void setCity(String city, Object mutator);
 }

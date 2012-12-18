@@ -22,9 +22,9 @@ public class StatementConverter {
 
         String replace;
         if (searchFor.length() >= 4 && searchFor.startsWith("get") && Character.isUpperCase(searchFor.charAt(3))) {
-            replace = "set" + searchFor.substring(3, searchFor.length() - 1) + variable + ")";
+            replace = "set" + searchFor.substring(3, searchFor.length() - 1) + variable + ", mutator)";
         } else {
-            replace = "set" + StringUtils.capitalize(searchFor) + "(" + variable + ")";
+            replace = "set" + StringUtils.capitalize(searchFor) + "(" + variable + ", mutator)";
         }
         return new StatementPrefixer("", statement, searchFor, replace).prefixAttribute();
     }

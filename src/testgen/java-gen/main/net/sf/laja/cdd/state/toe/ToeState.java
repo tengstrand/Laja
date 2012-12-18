@@ -9,15 +9,16 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface ToeState {
     int getLength(); // (key)
-    void setLength(int length);
+    void setLength(int length, Object mutator);
 
     int getWeight();
-    void setWeight(int weight);
+    void setWeight(int weight, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

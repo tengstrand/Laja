@@ -12,6 +12,7 @@ public class HairStateImpl implements HairState {
     protected String color;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     HairStateImpl() {
     }
@@ -55,11 +56,22 @@ public class HairStateImpl implements HairState {
     public String getColor() { return color; }
 
     // Setters
-    public void setLength(int length) { this.length = length; }
-    public void setColor(String color) { this.color = color; }
+    public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

@@ -13,11 +13,13 @@ public class ForeheadValue implements ForeheadElement {
 
     public ForeheadValue(ForeheadState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public ForeheadValue(ForeheadState state, ForeheadStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public ForeheadState getState(Certificate certificate) {

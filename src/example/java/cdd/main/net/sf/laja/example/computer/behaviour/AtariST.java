@@ -7,9 +7,9 @@ import net.sf.laja.example.computer.state.Processor;
 public class AtariST extends ComputerValue {
     public AtariST(ComputerState state) {
         super(state);
-        state.setName("Atari ST");
-        state.setReleaseYear(1985);
-        state.setProcessor(Processor.M68000.name());
-        state.setMemoryInKilobytes(512);
+        state.setName("Atari ST", this);
+        state.setReleaseYear(1985, this);
+        state.setProcessor(Processor.M68000.name(), this);
+        state.setMemoryInKilobytes(512, this);
     }
 }

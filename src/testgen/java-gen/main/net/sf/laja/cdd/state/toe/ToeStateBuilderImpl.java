@@ -26,12 +26,12 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
 
     public void withLength(int length) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLength(length);
+        state.setLength(length, null);
     }
 
     public void withWeight(int weight) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeight(weight);
+        state.setWeight(weight, null);
     }
 
     private void throwEncapsulationException() {

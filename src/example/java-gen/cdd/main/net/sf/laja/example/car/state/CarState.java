@@ -7,14 +7,14 @@ package net.sf.laja.example.car.state;
  */
 public interface CarState extends VehicleSizeState {
     int getLengthInCentimeters();
-    void setLengthInCentimeters(int lengthInCentimeters);
+    void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
 
     String getName();
-    void setName(String name);
+    void setName(String name, Object mutator);
 
     OwnerState getOwner();
-    void setOwner(OwnerState owner);
+    void setOwner(OwnerState owner, Object mutator);
 
     String getColor();
-    void setColor(String color);
+    void setColor(String color, Object mutator);
 }

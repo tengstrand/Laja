@@ -13,11 +13,13 @@ public class MouthValue implements MouthElement {
 
     public MouthValue(MouthState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public MouthValue(MouthState state, MouthStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public MouthState getState(Certificate certificate) {

@@ -13,11 +13,13 @@ public class FleckValue implements FleckElement {
 
     public FleckValue(FleckState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public FleckValue(FleckState state, FleckStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public FleckState getState(Certificate certificate) {

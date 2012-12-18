@@ -10,18 +10,19 @@ import net.sf.laja.cdd.state.hand.HandStateList;
  */
 public interface ArmState {
     int getArmLength(); // (optional)
-    void setArmLength(int armLength);
+    void setArmLength(int armLength, Object mutator);
 
     double getArmWeight();
-    void setArmWeight(double armWeight);
+    void setArmWeight(double armWeight, Object mutator);
 
     HandStateList getHands();
-    void setHands(HandStateList hands);
+    void setHands(HandStateList hands, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

@@ -30,27 +30,27 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
 
     public void withLengthInCentimeters(int lengthInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLengthInCentimeters(lengthInCentimeters);
+        state.setLengthInCentimeters(lengthInCentimeters, null);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeightInKilograms(weightInKilograms);
+        state.setWeightInKilograms(weightInKilograms, null);
     }
 
     public void withType(TruckTypeStateBuilder type) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setType(type.getTruckTypeState(certificate));
+        state.setType(type.getTruckTypeState(certificate), null);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color);
+        state.setColor(color, null);
     }
 
     public void withOwner(OwnerStateBuilder owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOwner(owner.getOwnerState(certificate));
+        state.setOwner(owner.getOwnerState(certificate), null);
     }
 
     public TruckTypeStateBuilder getTypeStateBuilder() {

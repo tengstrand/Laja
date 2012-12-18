@@ -26,12 +26,12 @@ public class HairStateBuilderImpl implements HairStateBuilder {
 
     public void withLength(int length) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLength(length);
+        state.setLength(length, null);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color);
+        state.setColor(color, null);
     }
 
     private void throwEncapsulationException() {

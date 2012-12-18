@@ -7,12 +7,13 @@ package net.sf.laja.example.account.state;
  */
 public interface AccountState {
     double getBalance();
-    void setBalance(double balance);
+    void setBalance(double balance, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

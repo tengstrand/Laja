@@ -14,6 +14,7 @@ public class EyeStateImpl implements EyeState {
     protected Boolean hasEar; // (optional)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     EyeStateImpl() {
     }
@@ -60,13 +61,24 @@ public class EyeStateImpl implements EyeState {
     public Boolean getHasEar() { return hasEar; }
 
     // Setters
-    public void setEyeWeightInGrams(int eyeWeightInGrams) { this.eyeWeightInGrams = eyeWeightInGrams; }
-    public void setColor(String color) { this.color = color; }
-    public void setDecease(String decease) { this.decease = decease; }
-    public void setHasEar(Boolean hasEar) { this.hasEar = hasEar; }
+    public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { checkMutator(mutator); this.eyeWeightInGrams = eyeWeightInGrams; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+    public void setDecease(String decease, Object mutator) { checkMutator(mutator); this.decease = decease; }
+    public void setHasEar(Boolean hasEar, Object mutator) { checkMutator(mutator); this.hasEar = hasEar; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

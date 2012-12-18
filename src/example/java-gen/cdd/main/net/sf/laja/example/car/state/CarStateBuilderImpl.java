@@ -25,22 +25,22 @@ public class CarStateBuilderImpl implements CarStateBuilder {
 
     public void withLengthInCentimeters(int lengthInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLengthInCentimeters(lengthInCentimeters);
+        state.setLengthInCentimeters(lengthInCentimeters, null);
     }
 
     public void withName(String name) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setName(name);
+        state.setName(name, null);
     }
 
     public void withOwner(OwnerStateBuilder owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOwner(owner.getOwnerState(certificate));
+        state.setOwner(owner.getOwnerState(certificate), null);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color);
+        state.setColor(color, null);
     }
 
     public OwnerStateBuilder getOwnerStateBuilder() {

@@ -9,6 +9,7 @@ public class HeightStateImpl implements HeightState {
     protected int heightInCentimeters;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     HeightStateImpl() {
     }
@@ -48,10 +49,21 @@ public class HeightStateImpl implements HeightState {
     public int getHeightInCentimeters() { return heightInCentimeters; }
 
     // Setters
-    public void setHeightInCentimeters(int heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; }
+    public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { checkMutator(mutator); this.heightInCentimeters = heightInCentimeters; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

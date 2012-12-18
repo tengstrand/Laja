@@ -37,7 +37,7 @@
 #end
 
 #function setter(attribute)
-  #return "{attribute.setter}({attribute.type} {attribute.variable})"
+  #return "{attribute.setter}({attribute.type} {attribute.variable}, Object mutator)"
 #end
 
 #set (mandatoryAttributes = new java.util.ArrayList())

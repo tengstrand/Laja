@@ -13,11 +13,13 @@ public class NoseValue implements NoseElement {
 
     public NoseValue(NoseState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public NoseValue(NoseState state, NoseStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public NoseState getState(Certificate certificate) {

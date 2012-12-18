@@ -13,11 +13,13 @@ public class BrowValue implements BrowElement {
 
     public BrowValue(BrowState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public BrowValue(BrowState state, BrowStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public BrowState getState(Certificate certificate) {

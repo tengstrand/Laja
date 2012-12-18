@@ -13,6 +13,7 @@ public class ComputerStateImpl implements ComputerState {
     protected String owner;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     ComputerStateImpl() {
     }
@@ -61,14 +62,25 @@ public class ComputerStateImpl implements ComputerState {
     public String getOwner() { return owner; }
 
     // Setters
-    public void setName(String name) { this.name = name; }
-    public void setProcessor(String processor) { this.processor = processor; }
-    public void setReleaseYear(int releaseYear) { this.releaseYear = releaseYear; }
-    public void setMemoryInKilobytes(int memoryInKilobytes) { this.memoryInKilobytes = memoryInKilobytes; }
-    public void setOwner(String owner) { this.owner = owner; }
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+    public void setProcessor(String processor, Object mutator) { checkMutator(mutator); this.processor = processor; }
+    public void setReleaseYear(int releaseYear, Object mutator) { checkMutator(mutator); this.releaseYear = releaseYear; }
+    public void setMemoryInKilobytes(int memoryInKilobytes, Object mutator) { checkMutator(mutator); this.memoryInKilobytes = memoryInKilobytes; }
+    public void setOwner(String owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

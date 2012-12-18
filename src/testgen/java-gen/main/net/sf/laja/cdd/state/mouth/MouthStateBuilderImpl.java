@@ -26,22 +26,22 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
 
     public void withNumberOfTeeth(int numberOfTeeth) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfTeeth(numberOfTeeth);
+        state.setNumberOfTeeth(numberOfTeeth, null);
     }
 
     public void withWidth(int width) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWidth(width);
+        state.setWidth(width, null);
     }
 
     public void withHeight(int height) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHeight(height);
+        state.setHeight(height, null);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color);
+        state.setColor(color, null);
     }
 
     private void throwEncapsulationException() {

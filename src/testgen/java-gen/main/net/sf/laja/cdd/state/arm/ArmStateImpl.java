@@ -15,6 +15,7 @@ public class ArmStateImpl implements ArmState {
     protected HandStateList hands;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     ArmStateImpl() {
         hands = HandStateListImpl.emptyList();
@@ -60,13 +61,23 @@ public class ArmStateImpl implements ArmState {
     public HandStateList getHands() { return hands; }
 
     // Setters
-    public void setArmLength(int armLength) { this.armLength = armLength; }
-    public void setArmWeight(double armWeight) { this.armWeight = armWeight; }
-    public void setHands(HandStateList hands) { this.hands.clear(); this.hands.addAll(hands); }
+    public void setArmLength(int armLength, Object mutator) { checkMutator(mutator); this.armLength = armLength; }
+    public void setArmWeight(double armWeight, Object mutator) { checkMutator(mutator); this.armWeight = armWeight; }
+    public void setHands(HandStateList hands, Object mutator) { checkMutator(mutator); this.hands.clear(); this.hands.addAll(hands); }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        hands.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

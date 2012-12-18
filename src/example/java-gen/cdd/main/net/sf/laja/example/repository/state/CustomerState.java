@@ -7,32 +7,32 @@ package net.sf.laja.example.repository.state;
  */
 public interface CustomerState extends AddressState {
     long getSsn(); // (key)
-    void setSsn(long ssn);
+    void setSsn(long ssn, Object mutator);
 
     String getGivenName();
-    void setGivenName(String givenName);
+    void setGivenName(String givenName, Object mutator);
 
     String getSurname(); // (optional)
-    void setSurname(String surname);
+    void setSurname(String surname, Object mutator);
 
     int getAge();
-    void setAge(int age);
+    void setAge(int age, Object mutator);
 
     String getPet(); // (optional)
-    void setPet(String pet);
+    void setPet(String pet, Object mutator);
 
     int getAddressId(); // (id)
-    void setAddressId(int addressId);
+    void setAddressId(int addressId, Object mutator);
 
     String getStreetName();
-    void setStreetName(String streetName);
+    void setStreetName(String streetName, Object mutator);
 
     int getZipcode();
-    void setZipcode(int zipcode);
+    void setZipcode(int zipcode, Object mutator);
 
     String getCity();
-    void setCity(String city);
+    void setCity(String city, Object mutator);
 
     AddressStateList getOldAddresses(); // (optional)
-    void setOldAddresses(AddressStateList oldAddresses);
+    void setOldAddresses(AddressStateList oldAddresses, Object mutator);
 }

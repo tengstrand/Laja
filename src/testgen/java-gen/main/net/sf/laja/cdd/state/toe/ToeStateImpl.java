@@ -12,6 +12,7 @@ public class ToeStateImpl implements ToeState {
     protected int weight;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     ToeStateImpl() {
     }
@@ -52,11 +53,22 @@ public class ToeStateImpl implements ToeState {
     public int getWeight() { return weight; }
 
     // Setters
-    public void setLength(int length) { this.length = length; }
-    public void setWeight(int weight) { this.weight = weight; }
+    public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
+    public void setWeight(int weight, Object mutator) { checkMutator(mutator); this.weight = weight; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

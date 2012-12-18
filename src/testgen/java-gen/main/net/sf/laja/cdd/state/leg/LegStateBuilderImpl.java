@@ -26,7 +26,7 @@ public class LegStateBuilderImpl implements LegStateBuilder {
 
     public void withLegDescription(String legDescription) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLegDescription(legDescription);
+        state.setLegDescription(legDescription, null);
     }
 
     private void throwEncapsulationException() {

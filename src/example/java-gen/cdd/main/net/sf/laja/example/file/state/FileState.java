@@ -7,12 +7,13 @@ package net.sf.laja.example.file.state;
  */
 public interface FileState {
     String getFilename();
-    void setFilename(String filename);
+    void setFilename(String filename, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

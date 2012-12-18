@@ -27,10 +27,11 @@
           #set (setStatement = "{stateImplClass}.this.{setStatement};")
         #end
             public {attribute.type} {attribute.getter}() { return {getStatement} }
-            public void {attribute.setter}({attribute.type} {attribute.variable}) { {setStatement} }
+            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {setStatement} }
 
       #end
             public void encapsulate() { {stateImplClass}.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
       #isValid(template, true, "            ")
       #equals(template, true, "            ")
       #valueEquals(template, true, "            ")
@@ -53,27 +54,36 @@
     // Setters
   #foreach (attribute in attributes)
     #if (attribute.isStateList)
-    public void {setter(attribute)} { this.{attribute.variable}.clear(); this.{attribute.variable}.addAll({attribute.variable}); }
+    public void {setter(attribute)} { checkMutator(mutator); this.{attribute.variable}.clear(); this.{attribute.variable}.addAll({attribute.variable}); }
     #else
-    public void {setter(attribute)} { this.{attribute.variable} = {attribute.variable}; }
+    public void {setter(attribute)} { checkMutator(mutator); this.{attribute.variable} = {attribute.variable}; }
     #end
   #end
+#end
+
+#macro checkMutator()
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 #end
 
 #macro encapsulate()
 
     public void encapsulate() {
         _encapsulated = true;
-  #foreach (attribute in attributes where attribute.isState)
-    #if (attribute.isOptional)
-        if ({attribute.variable} != null) {attribute.variable}.encapsulate();
-    #else
-        {attribute.variable}.encapsulate();
-    #end
-  #end
     }
 #end
 
+#macro setEncapsulator()
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+#end
 #macro isValid(t, useGetter, tab)
 
 {tab}public boolean isValid() {
@@ -365,6 +375,7 @@ public class {stateImplClass} implements {stateClass} {
   #declareAttributes()
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
   #declareStates()
 
     {stateImplClass}() {
@@ -393,7 +404,9 @@ public class {stateImplClass} implements {stateClass} {
     }
   #isValid($, false, "    ")
   #gettersAndSetters()
+  #checkMutator()
   #encapsulate()
+  #setEncapsulator()
   #equals($, false, "    ")
   #valueEquals($, false, "    ")
   #hashCode($, false, "    ")

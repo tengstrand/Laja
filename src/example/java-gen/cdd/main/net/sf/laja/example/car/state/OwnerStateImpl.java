@@ -10,6 +10,7 @@ public class OwnerStateImpl implements OwnerState {
     protected String name;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     OwnerStateImpl() {
     }
@@ -53,11 +54,22 @@ public class OwnerStateImpl implements OwnerState {
     public String getName() { return name; }
 
     // Setters
-    public void setSsn(long ssn) { this.ssn = ssn; }
-    public void setName(String name) { this.name = name; }
+    public void setSsn(long ssn, Object mutator) { checkMutator(mutator); this.ssn = ssn; }
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

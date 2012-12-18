@@ -7,16 +7,16 @@ package net.sf.laja.example.person.state;
  */
 public interface PersonState {
     String getGivenName();
-    void setGivenName(String givenName);
+    void setGivenName(String givenName, Object mutator);
 
     String getSurname();
-    void setSurname(String surname);
+    void setSurname(String surname, Object mutator);
 
     int getWeightInKilograms();
-    void setWeightInKilograms(int weightInKilograms);
+    void setWeightInKilograms(int weightInKilograms, Object mutator);
 
     HeightState getHeight();
-    void setHeight(HeightState height);
+    void setHeight(HeightState height, Object mutator);
 
     BmiState getBmiState();
 
@@ -25,5 +25,6 @@ public interface PersonState {
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

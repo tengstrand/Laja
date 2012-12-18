@@ -9,12 +9,13 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface AnimalState {
     boolean getIsTerrestrial();
-    void setIsTerrestrial(boolean isTerrestrial);
+    void setIsTerrestrial(boolean isTerrestrial, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

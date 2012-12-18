@@ -26,7 +26,7 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
 
     public void withArea(int area) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setArea(area);
+        state.setArea(area, null);
     }
 
     private void throwEncapsulationException() {

@@ -7,15 +7,16 @@ package net.sf.laja.example.car.state;
  */
 public interface OwnerState {
     long getSsn();
-    void setSsn(long ssn);
+    void setSsn(long ssn, Object mutator);
 
     String getName();
-    void setName(String name);
+    void setName(String name, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean valueEquals(Object o);
     int valueHashCode();
     void encapsulate();
+    void setEncapsulator(Object encapsulator);
     Certificate certificate();
 }

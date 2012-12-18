@@ -9,6 +9,7 @@ public class AccountStateImpl implements AccountState {
     protected double balance;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     AccountStateImpl() {
     }
@@ -48,10 +49,21 @@ public class AccountStateImpl implements AccountState {
     public double getBalance() { return balance; }
 
     // Setters
-    public void setBalance(double balance) { this.balance = balance; }
+    public void setBalance(double balance, Object mutator) { checkMutator(mutator); this.balance = balance; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

@@ -14,6 +14,7 @@ public class FootStateImpl implements FootState {
     protected ToeStateList toes;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     FootStateImpl() {
         toes = ToeStateListImpl.emptyList();
@@ -58,12 +59,22 @@ public class FootStateImpl implements FootState {
     public ToeStateList getToes() { return toes; }
 
     // Setters
-    public void setArea(int area) { this.area = area; }
-    public void setToes(ToeStateList toes) { this.toes.clear(); this.toes.addAll(toes); }
+    public void setArea(int area, Object mutator) { checkMutator(mutator); this.area = area; }
+    public void setToes(ToeStateList toes, Object mutator) { checkMutator(mutator); this.toes.clear(); this.toes.addAll(toes); }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
-        toes.encapsulate();
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

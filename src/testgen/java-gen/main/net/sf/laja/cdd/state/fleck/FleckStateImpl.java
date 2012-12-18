@@ -12,6 +12,7 @@ public class FleckStateImpl implements FleckState {
     protected String color; // (hide)
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     FleckStateImpl() {
     }
@@ -55,11 +56,22 @@ public class FleckStateImpl implements FleckState {
     public String getColor() { return color; }
 
     // Setters
-    public void setArea(int area) { this.area = area; }
-    public void setColor(String color) { this.color = color; }
+    public void setArea(int area, Object mutator) { checkMutator(mutator); this.area = area; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

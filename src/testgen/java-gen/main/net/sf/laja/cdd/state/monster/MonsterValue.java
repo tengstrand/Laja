@@ -13,11 +13,13 @@ public class MonsterValue implements MonsterElement {
 
     public MonsterValue(MonsterState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public MonsterValue(MonsterState state, MonsterStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public MonsterState getState(Certificate certificate) {

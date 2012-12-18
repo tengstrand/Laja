@@ -9,7 +9,7 @@ public class DestinationAccount extends AccountValue {
     }
 
     public void deposit(double amount) {
-        state.setBalance(state.getBalance() + amount);
+        state.setBalance(state.getBalance() + amount, this);
     }
 
     public void log(String message) {

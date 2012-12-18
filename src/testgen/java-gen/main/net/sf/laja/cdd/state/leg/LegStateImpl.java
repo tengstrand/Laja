@@ -11,6 +11,7 @@ public class LegStateImpl implements LegState {
     protected String legDescription;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     LegStateImpl() {
     }
@@ -53,10 +54,21 @@ public class LegStateImpl implements LegState {
     public String getLegDescription() { return legDescription; }
 
     // Setters
-    public void setLegDescription(String legDescription) { this.legDescription = legDescription; }
+    public void setLegDescription(String legDescription, Object mutator) { checkMutator(mutator); this.legDescription = legDescription; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override

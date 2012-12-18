@@ -14,65 +14,65 @@ import net.sf.laja.cdd.state.nose.NoseStateList;
  */
 public interface HeadState extends EyeState, ForeheadState {
     double getHeadWeightInGrams();
-    void setHeadWeightInGrams(double headWeightInGrams);
+    void setHeadWeightInGrams(double headWeightInGrams, Object mutator);
 
     EyeState getLeftEye();
-    void setLeftEye(EyeState leftEye);
+    void setLeftEye(EyeState leftEye, Object mutator);
 
     EyeState getRightEye();
-    void setRightEye(EyeState rightEye);
+    void setRightEye(EyeState rightEye, Object mutator);
 
     EyeState getMidEye(); // (optional)
-    void setMidEye(EyeState midEye);
+    void setMidEye(EyeState midEye, Object mutator);
 
     int getEyeWeightInGrams();
-    void setEyeWeightInGrams(int eyeWeightInGrams);
+    void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator);
 
     String getColor();
-    void setColor(String color);
+    void setColor(String color, Object mutator);
 
     String getDecease(); // (hide)
-    void setDecease(String decease);
+    void setDecease(String decease, Object mutator);
 
     Boolean getHasEar(); // (optional)
-    void setHasEar(Boolean hasEar);
+    void setHasEar(Boolean hasEar, Object mutator);
 
     NoseStateList getNoses();
-    void setNoses(NoseStateList noses);
+    void setNoses(NoseStateList noses, Object mutator);
 
     BrowStateList getBrows(); // (optional)
-    void setBrows(BrowStateList brows);
+    void setBrows(BrowStateList brows, Object mutator);
 
     int getLength(); // (optional)
-    void setLength(int length);
+    void setLength(int length, Object mutator);
 
     boolean getA();
-    void setA(boolean a);
+    void setA(boolean a, Object mutator);
 
     byte getB();
-    void setB(byte b);
+    void setB(byte b, Object mutator);
 
     short getC();
-    void setC(short c);
+    void setC(short c, Object mutator);
 
     char getD();
-    void setD(char d);
+    void setD(char d, Object mutator);
 
     int getE(); // (hidden)
-    void setE(int e);
+    void setE(int e, Object mutator);
 
     long getF();
-    void setF(long f);
+    void setF(long f, Object mutator);
 
     float getG();
-    void setG(float g);
+    void setG(float g, Object mutator);
 
     double getH();
-    void setH(double h);
+    void setH(double h, Object mutator);
 
     EarStateList getEars(); // (optional)
-    void setEars(EarStateList ears);
+    void setEars(EarStateList ears, Object mutator);
 
     MouthStateList getMouths();
-    void setMouths(MouthStateList mouths);
+    void setMouths(MouthStateList mouths, Object mutator);
 }

@@ -14,6 +14,7 @@ public class MouthStateImpl implements MouthState {
     protected String color;
 
     private boolean _encapsulated = false;
+    private Object _encapsulator;
 
     MouthStateImpl() {
     }
@@ -59,13 +60,24 @@ public class MouthStateImpl implements MouthState {
     public String getColor() { return color; }
 
     // Setters
-    public void setNumberOfTeeth(int numberOfTeeth) { this.numberOfTeeth = numberOfTeeth; }
-    public void setWidth(int width) { this.width = width; }
-    public void setHeight(int height) { this.height = height; }
-    public void setColor(String color) { this.color = color; }
+    public void setNumberOfTeeth(int numberOfTeeth, Object mutator) { checkMutator(mutator); this.numberOfTeeth = numberOfTeeth; }
+    public void setWidth(int width, Object mutator) { checkMutator(mutator); this.width = width; }
+    public void setHeight(int height, Object mutator) { checkMutator(mutator); this.height = height; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
 
     public void encapsulate() {
         _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
     }
 
     @Override
