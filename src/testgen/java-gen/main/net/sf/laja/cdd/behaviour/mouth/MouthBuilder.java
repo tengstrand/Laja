@@ -1,8 +1,9 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
-import net.sf.laja.cdd.state.mouth.*;
 import net.sf.laja.cdd.state.mouth.MouthState;
 import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
+import net.sf.laja.cdd.state.mouth.MouthStateBuilderImpl;
+import net.sf.laja.cdd.state.mouth.MouthStateImpl;
 
 public class MouthBuilder {
     public final MouthStateBuilder builder;
@@ -12,7 +13,11 @@ public class MouthBuilder {
     }
 
     public MouthBuilder(MouthState state) {
-        builder = MouthStateImpl.build(state);
+        builder = new MouthStateBuilderImpl(state);
+    }
+
+    public MouthBuilder(MouthState state, Object encapsulator) {
+        builder = new MouthStateBuilderImpl(state, encapsulator);
     }
 
     public MouthBuilder withNumberOfTeeth(int numberOfTeeth) {

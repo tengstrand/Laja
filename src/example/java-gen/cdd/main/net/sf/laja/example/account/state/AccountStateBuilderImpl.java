@@ -7,6 +7,7 @@ package net.sf.laja.example.account.state;
  */
 public class AccountStateBuilderImpl implements AccountStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private AccountState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,9 +23,14 @@ public class AccountStateBuilderImpl implements AccountStateBuilder {
         trusted = true;
     }
 
+    public AccountStateBuilderImpl(AccountState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withBalance(double balance) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setBalance(balance, null);
+        state.setBalance(balance, encapsulator);
     }
 
     private void throwEncapsulationException() {

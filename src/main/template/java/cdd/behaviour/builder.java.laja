@@ -7,7 +7,11 @@ public class {builderClass} {
     }
 
     public {builderClass}({stateClass} state) {
-        builder = {stateImplClass}.build(state);
+        builder = new {stateBuilderImplClass}(state);
+    }
+
+    public {builderClass}({stateClass} state, Object encapsulator) {
+        builder = new {stateBuilderImplClass}(state, encapsulator);
     }
   #foreach (attribute in template.attributes where attribute.isBuilderMethod)
 

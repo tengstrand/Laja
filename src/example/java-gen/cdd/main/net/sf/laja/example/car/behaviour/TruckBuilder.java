@@ -2,6 +2,7 @@ package net.sf.laja.example.car.behaviour;
 
 import net.sf.laja.example.car.state.TruckState;
 import net.sf.laja.example.car.state.TruckStateBuilder;
+import net.sf.laja.example.car.state.TruckStateBuilderImpl;
 import net.sf.laja.example.car.state.TruckStateImpl;
 
 public class TruckBuilder {
@@ -12,7 +13,11 @@ public class TruckBuilder {
     }
 
     public TruckBuilder(TruckState state) {
-        builder = TruckStateImpl.build(state);
+        builder = new TruckStateBuilderImpl(state);
+    }
+
+    public TruckBuilder(TruckState state, Object encapsulator) {
+        builder = new TruckStateBuilderImpl(state, encapsulator);
     }
 
     public TruckBuilder withLengthInCentimeters(int lengthInCentimeters) {

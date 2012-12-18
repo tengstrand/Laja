@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.behaviour.animal;
 
-import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
+import net.sf.laja.cdd.state.animal.AnimalStateBuilder;
+import net.sf.laja.cdd.state.animal.AnimalStateBuilderImpl;
+import net.sf.laja.cdd.state.animal.AnimalStateImpl;
 
 public class AnimalBuilder {
     public final AnimalStateBuilder builder;
@@ -11,7 +13,11 @@ public class AnimalBuilder {
     }
 
     public AnimalBuilder(AnimalState state) {
-        builder = AnimalStateImpl.build(state);
+        builder = new AnimalStateBuilderImpl(state);
+    }
+
+    public AnimalBuilder(AnimalState state, Object encapsulator) {
+        builder = new AnimalStateBuilderImpl(state, encapsulator);
     }
 
     public AnimalBuilder withIsTerrestrial(boolean isTerrestrial) {

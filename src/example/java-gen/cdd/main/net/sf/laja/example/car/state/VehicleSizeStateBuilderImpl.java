@@ -7,6 +7,7 @@ package net.sf.laja.example.car.state;
  */
 public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private VehicleSizeState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,9 +23,14 @@ public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
         trusted = true;
     }
 
+    public VehicleSizeStateBuilderImpl(VehicleSizeState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withLengthInCentimeters(int lengthInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLengthInCentimeters(lengthInCentimeters, null);
+        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
     }
 
     private void throwEncapsulationException() {

@@ -11,6 +11,7 @@ import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
  */
 public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private TerrestrialState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -29,34 +30,39 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
         trusted = true;
     }
 
+    public TerrestrialStateBuilderImpl(TerrestrialState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withNumberOfLegs(int numberOfLegs) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfLegs(numberOfLegs, null);
+        state.setNumberOfLegs(numberOfLegs, encapsulator);
     }
 
     public void withNumberOfWings(int numberOfWings) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfWings(numberOfWings, null);
+        state.setNumberOfWings(numberOfWings, encapsulator);
     }
 
     public void withLeftEye(EyeStateBuilder leftEye) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLeftEye(leftEye.getEyeState(certificate), null);
+        state.setLeftEye(leftEye.getEyeState(certificate), encapsulator);
     }
 
     public void withRightEye(EyeStateBuilder rightEye) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setRightEye(rightEye.getEyeState(certificate), null);
+        state.setRightEye(rightEye.getEyeState(certificate), encapsulator);
     }
 
     public void withMiddleEye(EyeStateBuilder middleEye) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setMiddleEye(middleEye.getEyeState(certificate), null);
+        state.setMiddleEye(middleEye.getEyeState(certificate), encapsulator);
     }
 
     public void withWeight(int weight) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeight(weight, null);
+        state.setWeight(weight, encapsulator);
     }
 
     public EyeStateBuilder getLeftEyeStateBuilder() {

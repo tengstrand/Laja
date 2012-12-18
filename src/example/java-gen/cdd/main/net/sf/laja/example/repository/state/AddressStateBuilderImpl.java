@@ -7,6 +7,7 @@ package net.sf.laja.example.repository.state;
  */
 public class AddressStateBuilderImpl implements AddressStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private AddressState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,24 +23,29 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
         trusted = true;
     }
 
+    public AddressStateBuilderImpl(AddressState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withAddressId(int addressId) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setAddressId(addressId, null);
+        state.setAddressId(addressId, encapsulator);
     }
 
     public void withStreetName(String streetName) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setStreetName(streetName, null);
+        state.setStreetName(streetName, encapsulator);
     }
 
     public void withZipcode(int zipcode) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setZipcode(zipcode, null);
+        state.setZipcode(zipcode, encapsulator);
     }
 
     public void withCity(String city) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setCity(city, null);
+        state.setCity(city, encapsulator);
     }
 
     private void throwEncapsulationException() {

@@ -7,6 +7,7 @@ package net.sf.laja.example.file.state;
  */
 public class FileStateBuilderImpl implements FileStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private FileState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,9 +23,14 @@ public class FileStateBuilderImpl implements FileStateBuilder {
         trusted = true;
     }
 
+    public FileStateBuilderImpl(FileState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withFilename(String filename) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setFilename(filename, null);
+        state.setFilename(filename, encapsulator);
     }
 
     private void throwEncapsulationException() {

@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.behaviour.nose;
 
-import net.sf.laja.cdd.state.nose.*;
 import net.sf.laja.cdd.state.nose.NoseState;
+import net.sf.laja.cdd.state.nose.NoseStateBuilder;
+import net.sf.laja.cdd.state.nose.NoseStateBuilderImpl;
+import net.sf.laja.cdd.state.nose.NoseStateImpl;
 
 public class NoseBuilder {
     public final NoseStateBuilder builder;
@@ -11,7 +13,11 @@ public class NoseBuilder {
     }
 
     public NoseBuilder(NoseState state) {
-        builder = NoseStateImpl.build(state);
+        builder = new NoseStateBuilderImpl(state);
+    }
+
+    public NoseBuilder(NoseState state, Object encapsulator) {
+        builder = new NoseStateBuilderImpl(state, encapsulator);
     }
 
     public NoseBuilder withNoseDescription(String noseDescription) {

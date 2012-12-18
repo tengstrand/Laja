@@ -7,6 +7,7 @@ package net.sf.laja.example.repository.state;
  */
 public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private CustomerState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -23,54 +24,59 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
         trusted = true;
     }
 
+    public CustomerStateBuilderImpl(CustomerState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withSsn(long ssn) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setSsn(ssn, null);
+        state.setSsn(ssn, encapsulator);
     }
 
     public void withGivenName(String givenName) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setGivenName(givenName, null);
+        state.setGivenName(givenName, encapsulator);
     }
 
     public void withSurname(String surname) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setSurname(surname, null);
+        state.setSurname(surname, encapsulator);
     }
 
     public void withAge(int age) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setAge(age, null);
+        state.setAge(age, encapsulator);
     }
 
     public void withPet(String pet) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setPet(pet, null);
+        state.setPet(pet, encapsulator);
     }
 
     public void withAddressId(int addressId) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setAddressId(addressId, null);
+        state.setAddressId(addressId, encapsulator);
     }
 
     public void withStreetName(String streetName) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setStreetName(streetName, null);
+        state.setStreetName(streetName, encapsulator);
     }
 
     public void withZipcode(int zipcode) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setZipcode(zipcode, null);
+        state.setZipcode(zipcode, encapsulator);
     }
 
     public void withCity(String city) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setCity(city, null);
+        state.setCity(city, encapsulator);
     }
 
     public void withOldAddresses(net.sf.laja.example.repository.state.AddressStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOldAddresses(listBuilder.getStateList(certificate), null);
+        state.setOldAddresses(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public AddressStateListBuilder getOldAddressesStateListBuilder() {

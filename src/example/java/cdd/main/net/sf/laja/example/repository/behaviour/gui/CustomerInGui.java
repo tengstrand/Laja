@@ -22,7 +22,7 @@ public class CustomerInGui extends CustomerValue {
         streetName = state.getStreetName();
         zipcode = new StringToIntConverter(state.getZipcode());
 
-        customerBuilder = new CustomerBuilder(state);
+        customerBuilder = new CustomerBuilder(state, this);
     }
 
     public void setGivenName(String givenName) {

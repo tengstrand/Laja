@@ -1,9 +1,9 @@
 package net.sf.laja.example.file.behaviour;
 
-import net.sf.laja.example.file.state.*;
-import net.sf.laja.example.file.behaviour.text.TextDirectory;
 import net.sf.laja.example.file.state.DirectoryState;
-import java.io.File;
+import net.sf.laja.example.file.state.DirectoryStateBuilder;
+import net.sf.laja.example.file.state.DirectoryStateBuilderImpl;
+import net.sf.laja.example.file.state.DirectoryStateImpl;
 
 public class DirectoryBuilder {
     public final DirectoryStateBuilder builder;
@@ -13,7 +13,11 @@ public class DirectoryBuilder {
     }
 
     public DirectoryBuilder(DirectoryState state) {
-        builder = DirectoryStateImpl.build(state);
+        builder = new DirectoryStateBuilderImpl(state);
+    }
+
+    public DirectoryBuilder(DirectoryState state, Object encapsulator) {
+        builder = new DirectoryStateBuilderImpl(state, encapsulator);
     }
 
     public DirectoryBuilder withDirectoryPath(String directoryPath) {

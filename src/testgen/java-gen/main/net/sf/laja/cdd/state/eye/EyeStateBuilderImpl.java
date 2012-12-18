@@ -11,6 +11,7 @@ import java.math.BigDecimal;
  */
 public class EyeStateBuilderImpl implements EyeStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private EyeState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -26,44 +27,49 @@ public class EyeStateBuilderImpl implements EyeStateBuilder {
         trusted = true;
     }
 
+    public EyeStateBuilderImpl(EyeState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withEyeWeightInGrams(int eyeWeightInGrams) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setEyeWeightInGrams(eyeWeightInGrams, null);
+        state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
     }
 
     public void withEyeWeightInGrams(String eyeWeightInGrams) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), null);
+        state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     public void withColor(BigDecimal color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color.toString(), null);
+        state.setColor(color.toString(), encapsulator);
     }
 
     public void withColor(int color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(String.valueOf(color), null);
+        state.setColor(String.valueOf(color), encapsulator);
     }
 
     public void withDecease(String decease) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDecease(decease, null);
+        state.setDecease(decease, encapsulator);
     }
 
     public void withDecease(int decease) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDecease(String.valueOf(decease), null);
+        state.setDecease(String.valueOf(decease), encapsulator);
     }
 
     public void withHasEar(Boolean hasEar) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHasEar(hasEar, null);
+        state.setHasEar(hasEar, encapsulator);
     }
 
     private void throwEncapsulationException() {

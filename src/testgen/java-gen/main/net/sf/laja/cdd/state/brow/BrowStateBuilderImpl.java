@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class BrowStateBuilderImpl implements BrowStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private BrowState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,9 +25,14 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
         trusted = true;
     }
 
+    public BrowStateBuilderImpl(BrowState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withArea(int area) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setArea(area, null);
+        state.setArea(area, encapsulator);
     }
 
     private void throwEncapsulationException() {

@@ -1,7 +1,9 @@
 package net.sf.laja.example.person.behaviour;
 
-import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.HeightState;
+import net.sf.laja.example.person.state.HeightStateBuilder;
+import net.sf.laja.example.person.state.HeightStateBuilderImpl;
+import net.sf.laja.example.person.state.HeightStateImpl;
 
 public class HeightBuilder {
     public final HeightStateBuilder builder;
@@ -11,7 +13,11 @@ public class HeightBuilder {
     }
 
     public HeightBuilder(HeightState state) {
-        builder = HeightStateImpl.build(state);
+        builder = new HeightStateBuilderImpl(state);
+    }
+
+    public HeightBuilder(HeightState state, Object encapsulator) {
+        builder = new HeightStateBuilderImpl(state, encapsulator);
     }
 
     public HeightBuilder withHeightInCentimeters(int heightInCentimeters) {

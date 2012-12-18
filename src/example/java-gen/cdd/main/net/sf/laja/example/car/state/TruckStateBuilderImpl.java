@@ -7,6 +7,7 @@ package net.sf.laja.example.car.state;
  */
 public class TruckStateBuilderImpl implements TruckStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private TruckState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,33 +25,38 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
         trusted = true;
     }
 
+    public TruckStateBuilderImpl(TruckState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public CarStateBuilder carStateBuilder() {
         return new CarStateBuilderImpl(state.getCarState());
     }
 
     public void withLengthInCentimeters(int lengthInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLengthInCentimeters(lengthInCentimeters, null);
+        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeightInKilograms(weightInKilograms, null);
+        state.setWeightInKilograms(weightInKilograms, encapsulator);
     }
 
     public void withType(TruckTypeStateBuilder type) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setType(type.getTruckTypeState(certificate), null);
+        state.setType(type.getTruckTypeState(certificate), encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     public void withOwner(OwnerStateBuilder owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOwner(owner.getOwnerState(certificate), null);
+        state.setOwner(owner.getOwnerState(certificate), encapsulator);
     }
 
     public TruckTypeStateBuilder getTypeStateBuilder() {

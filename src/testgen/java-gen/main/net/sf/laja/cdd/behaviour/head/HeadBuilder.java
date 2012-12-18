@@ -7,6 +7,7 @@ import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.head.HeadStateBuilder;
+import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
 import net.sf.laja.cdd.state.head.HeadStateImpl;
 
 public class HeadBuilder {
@@ -17,7 +18,11 @@ public class HeadBuilder {
     }
 
     public HeadBuilder(HeadState state) {
-        builder = HeadStateImpl.build(state);
+        builder = new HeadStateBuilderImpl(state);
+    }
+
+    public HeadBuilder(HeadState state, Object encapsulator) {
+        builder = new HeadStateBuilderImpl(state, encapsulator);
     }
 
     public HeadBuilder withHeadWeightInGrams(double headWeightInGrams) {

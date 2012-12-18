@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class LegStateBuilderImpl implements LegStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private LegState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,9 +25,14 @@ public class LegStateBuilderImpl implements LegStateBuilder {
         trusted = true;
     }
 
+    public LegStateBuilderImpl(LegState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withLegDescription(String legDescription) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLegDescription(legDescription, null);
+        state.setLegDescription(legDescription, encapsulator);
     }
 
     private void throwEncapsulationException() {

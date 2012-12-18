@@ -10,6 +10,7 @@ import net.sf.laja.cdd.state.toe.ToeStateListBuilder;
  */
 public class FootStateBuilderImpl implements FootStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private FootState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -26,14 +27,19 @@ public class FootStateBuilderImpl implements FootStateBuilder {
         trusted = true;
     }
 
+    public FootStateBuilderImpl(FootState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withArea(int area) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setArea(area, null);
+        state.setArea(area, encapsulator);
     }
 
     public void withToes(net.sf.laja.cdd.state.toe.ToeStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setToes(listBuilder.getStateList(certificate), null);
+        state.setToes(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public ToeStateListBuilder getToesStateListBuilder() {

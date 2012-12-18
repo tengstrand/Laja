@@ -7,6 +7,7 @@ package net.sf.laja.example.car.state;
  */
 public class BusStateBuilderImpl implements BusStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private BusState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,19 +23,24 @@ public class BusStateBuilderImpl implements BusStateBuilder {
         trusted = true;
     }
 
+    public BusStateBuilderImpl(BusState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withName(String name) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setName(name, null);
+        state.setName(name, encapsulator);
     }
 
     public void withLengthInCentimeters(int lengthInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLengthInCentimeters(lengthInCentimeters, null);
+        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeightInKilograms(weightInKilograms, null);
+        state.setWeightInKilograms(weightInKilograms, encapsulator);
     }
 
     private void throwEncapsulationException() {

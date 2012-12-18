@@ -2,6 +2,7 @@
   #header()
 public class {builderImplClass} implements {builderClass} {
     private boolean encapsulated;
+    private Object encapsulator;
     private {stateClass} state;
     private final {certificateClass} certificate;
     private boolean trusted;
@@ -19,6 +20,11 @@ public class {builderImplClass} implements {builderClass} {
         certificate = Certificate.get(this);
         trusted = true;
     }
+
+    public {builderImplClass}({stateClass} state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
   #foreach (method in stateMethods)
 
     public {method.stateBuilderClass} {method.stateBuilderVariable}() {
@@ -31,22 +37,22 @@ public class {builderImplClass} implements {builderClass} {
       #set (template = templates.get(attribute.cleanedStateType))
     public void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}(listBuilder.getStateList(certificate), null);
+        state.{attribute.setter}(listBuilder.getStateList(certificate), encapsulator);
     #else if (attribute.isState)
     public void {attribute.withMethod}({attribute.stateBuilder} {attribute.variable}) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}({attribute.variable}.{attribute.stateMethod}(certificate), null);
+        state.{attribute.setter}({attribute.variable}.{attribute.stateMethod}(certificate), encapsulator);
     #else
     public void {attribute.withMethod}({attribute.type} {attribute.variable}) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}({attribute.variable}, null);
+        state.{attribute.setter}({attribute.variable}, encapsulator);
     #end
     }
     #foreach (method in allConvertMethods where method.variable == attribute.variable)
 
     public void {attribute.withMethod}({method.type} {method.variable}) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.{attribute.setter}({method.statement}, null);
+        state.{attribute.setter}({method.statement}, encapsulator);
     }
     #end
   #end

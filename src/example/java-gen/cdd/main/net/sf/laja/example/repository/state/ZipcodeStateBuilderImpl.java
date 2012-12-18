@@ -7,6 +7,7 @@ package net.sf.laja.example.repository.state;
  */
 public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private ZipcodeState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,9 +23,14 @@ public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
         trusted = true;
     }
 
+    public ZipcodeStateBuilderImpl(ZipcodeState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withZipcode(int zipcode) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setZipcode(zipcode, null);
+        state.setZipcode(zipcode, encapsulator);
     }
 
     private void throwEncapsulationException() {

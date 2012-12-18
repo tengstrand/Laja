@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class NoseStateBuilderImpl implements NoseStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private NoseState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,14 +25,19 @@ public class NoseStateBuilderImpl implements NoseStateBuilder {
         trusted = true;
     }
 
+    public NoseStateBuilderImpl(NoseState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withNoseDescription(String noseDescription) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNoseDescription(noseDescription, null);
+        state.setNoseDescription(noseDescription, encapsulator);
     }
 
     public void withDetails(String details) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDetails(details, null);
+        state.setDetails(details, encapsulator);
     }
 
     private void throwEncapsulationException() {

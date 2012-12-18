@@ -7,6 +7,7 @@ package net.sf.laja.example.file.state;
  */
 public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private DirectoryState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,9 +23,14 @@ public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
         trusted = true;
     }
 
+    public DirectoryStateBuilderImpl(DirectoryState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withDirectoryPath(String directoryPath) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDirectoryPath(directoryPath, null);
+        state.setDirectoryPath(directoryPath, encapsulator);
     }
 
     private void throwEncapsulationException() {

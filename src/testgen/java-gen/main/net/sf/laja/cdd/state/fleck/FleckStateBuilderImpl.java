@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class FleckStateBuilderImpl implements FleckStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private FleckState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,14 +25,19 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
         trusted = true;
     }
 
+    public FleckStateBuilderImpl(FleckState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withArea(int area) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setArea(area, null);
+        state.setArea(area, encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     private void throwEncapsulationException() {

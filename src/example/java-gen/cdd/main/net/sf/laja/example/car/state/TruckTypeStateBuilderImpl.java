@@ -7,6 +7,7 @@ package net.sf.laja.example.car.state;
  */
 public class TruckTypeStateBuilderImpl implements TruckTypeStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private TruckTypeState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,14 +23,19 @@ public class TruckTypeStateBuilderImpl implements TruckTypeStateBuilder {
         trusted = true;
     }
 
+    public TruckTypeStateBuilderImpl(TruckTypeState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withNumberOfWheels(int numberOfWheels) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfWheels(numberOfWheels, null);
+        state.setNumberOfWheels(numberOfWheels, encapsulator);
     }
 
     public void withTruckName(String truckName) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setTruckName(truckName, null);
+        state.setTruckName(truckName, encapsulator);
     }
 
     private void throwEncapsulationException() {

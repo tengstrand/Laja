@@ -1,7 +1,9 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
 
 public class VehicleSizeBuilder {
     public final VehicleSizeStateBuilder builder;
@@ -11,7 +13,11 @@ public class VehicleSizeBuilder {
     }
 
     public VehicleSizeBuilder(VehicleSizeState state) {
-        builder = VehicleSizeStateImpl.build(state);
+        builder = new VehicleSizeStateBuilderImpl(state);
+    }
+
+    public VehicleSizeBuilder(VehicleSizeState state, Object encapsulator) {
+        builder = new VehicleSizeStateBuilderImpl(state, encapsulator);
     }
 
     public VehicleSizeBuilder withLengthInCentimeters(int lengthInCentimeters) {

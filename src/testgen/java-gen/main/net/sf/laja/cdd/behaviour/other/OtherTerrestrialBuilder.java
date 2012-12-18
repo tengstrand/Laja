@@ -1,9 +1,10 @@
 package net.sf.laja.cdd.behaviour.other;
 
-import net.sf.laja.cdd.state.terrestrial.*;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilderImpl;
+import net.sf.laja.cdd.state.terrestrial.TerrestrialStateImpl;
 
 public class OtherTerrestrialBuilder {
     public final TerrestrialStateBuilder builder;
@@ -13,7 +14,11 @@ public class OtherTerrestrialBuilder {
     }
 
     public OtherTerrestrialBuilder(TerrestrialState state) {
-        builder = TerrestrialStateImpl.build(state);
+        builder = new TerrestrialStateBuilderImpl(state);
+    }
+
+    public OtherTerrestrialBuilder(TerrestrialState state, Object encapsulator) {
+        builder = new TerrestrialStateBuilderImpl(state, encapsulator);
     }
 
     public OtherTerrestrialBuilder withNumberOfLegs(int numberOfLegs) {

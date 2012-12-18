@@ -7,6 +7,7 @@ package net.sf.laja.example.computer.state;
  */
 public class ComputerStateBuilderImpl implements ComputerStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private ComputerState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,29 +23,34 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
         trusted = true;
     }
 
+    public ComputerStateBuilderImpl(ComputerState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withName(String name) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setName(name, null);
+        state.setName(name, encapsulator);
     }
 
     public void withProcessor(String processor) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setProcessor(processor, null);
+        state.setProcessor(processor, encapsulator);
     }
 
     public void withReleaseYear(int releaseYear) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setReleaseYear(releaseYear, null);
+        state.setReleaseYear(releaseYear, encapsulator);
     }
 
     public void withMemoryInKilobytes(int memoryInKilobytes) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setMemoryInKilobytes(memoryInKilobytes, null);
+        state.setMemoryInKilobytes(memoryInKilobytes, encapsulator);
     }
 
     public void withOwner(String owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOwner(owner, null);
+        state.setOwner(owner, encapsulator);
     }
 
     private void throwEncapsulationException() {

@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class ToeStateBuilderImpl implements ToeStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private ToeState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,14 +25,19 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
         trusted = true;
     }
 
+    public ToeStateBuilderImpl(ToeState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withLength(int length) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLength(length, null);
+        state.setLength(length, encapsulator);
     }
 
     public void withWeight(int weight) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeight(weight, null);
+        state.setWeight(weight, encapsulator);
     }
 
     private void throwEncapsulationException() {

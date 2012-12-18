@@ -1,7 +1,9 @@
 package net.sf.laja.example.account.behaviour;
 
-import net.sf.laja.example.account.state.*;
 import net.sf.laja.example.account.state.AccountState;
+import net.sf.laja.example.account.state.AccountStateBuilder;
+import net.sf.laja.example.account.state.AccountStateBuilderImpl;
+import net.sf.laja.example.account.state.AccountStateImpl;
 
 public class TestAccountBuilder {
     public final AccountStateBuilder builder;
@@ -11,7 +13,11 @@ public class TestAccountBuilder {
     }
 
     public TestAccountBuilder(AccountState state) {
-        builder = AccountStateImpl.build(state);
+        builder = new AccountStateBuilderImpl(state);
+    }
+
+    public TestAccountBuilder(AccountState state, Object encapsulator) {
+        builder = new AccountStateBuilderImpl(state, encapsulator);
     }
 
     public TestAccountBuilder withBalance(double balance) {

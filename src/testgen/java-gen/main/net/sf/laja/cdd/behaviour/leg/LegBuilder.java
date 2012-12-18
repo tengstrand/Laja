@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.behaviour.leg;
 
-import net.sf.laja.cdd.state.leg.*;
 import net.sf.laja.cdd.state.leg.LegState;
+import net.sf.laja.cdd.state.leg.LegStateBuilder;
+import net.sf.laja.cdd.state.leg.LegStateBuilderImpl;
+import net.sf.laja.cdd.state.leg.LegStateImpl;
 
 public class LegBuilder {
     public final LegStateBuilder builder;
@@ -11,7 +13,11 @@ public class LegBuilder {
     }
 
     public LegBuilder(LegState state) {
-        builder = LegStateImpl.build(state);
+        builder = new LegStateBuilderImpl(state);
+    }
+
+    public LegBuilder(LegState state, Object encapsulator) {
+        builder = new LegStateBuilderImpl(state, encapsulator);
     }
 
     public LegBuilder withLegDescription(String legDescription) {

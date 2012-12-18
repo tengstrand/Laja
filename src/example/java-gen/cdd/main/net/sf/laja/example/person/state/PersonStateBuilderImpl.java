@@ -7,6 +7,7 @@ package net.sf.laja.example.person.state;
  */
 public class PersonStateBuilderImpl implements PersonStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private PersonState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -23,28 +24,33 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         trusted = true;
     }
 
+    public PersonStateBuilderImpl(PersonState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public BmiStateBuilder bmiStateBuilder() {
         return new BmiStateBuilderImpl(state.getBmiState());
     }
 
     public void withGivenName(String givenName) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setGivenName(givenName, null);
+        state.setGivenName(givenName, encapsulator);
     }
 
     public void withSurname(String surname) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setSurname(surname, null);
+        state.setSurname(surname, encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeightInKilograms(weightInKilograms, null);
+        state.setWeightInKilograms(weightInKilograms, encapsulator);
     }
 
     public void withHeight(HeightStateBuilder height) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHeight(height.getHeightState(certificate), null);
+        state.setHeight(height.getHeightState(certificate), encapsulator);
     }
 
     public HeightStateBuilder getHeightStateBuilder() {

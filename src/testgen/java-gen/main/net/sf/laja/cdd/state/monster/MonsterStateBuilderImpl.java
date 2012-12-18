@@ -27,6 +27,7 @@ import java.math.BigDecimal;
  */
 public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private MonsterState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -50,6 +51,11 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
         trusted = true;
     }
 
+    public MonsterStateBuilderImpl(MonsterState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public EyeStateBuilder eyeStateBuilder() {
         return new EyeStateBuilderImpl(state.getEyeState());
     }
@@ -60,152 +66,152 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
 
     public void withNumberOfLegs(int numberOfLegs) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfLegs(numberOfLegs, null);
+        state.setNumberOfLegs(numberOfLegs, encapsulator);
     }
 
     public void withNumberOfOwnWings(int numberOfOwnWings) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfOwnWings(numberOfOwnWings, null);
+        state.setNumberOfOwnWings(numberOfOwnWings, encapsulator);
     }
 
     public void withHeadWeightInGrams(double headWeightInGrams) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHeadWeightInGrams(headWeightInGrams, null);
+        state.setHeadWeightInGrams(headWeightInGrams, encapsulator);
     }
 
     public void withLeftEye(EyeStateBuilder leftEye) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLeftEye(leftEye.getEyeState(certificate), null);
+        state.setLeftEye(leftEye.getEyeState(certificate), encapsulator);
     }
 
     public void withRightEye(EyeStateBuilder rightEye) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setRightEye(rightEye.getEyeState(certificate), null);
+        state.setRightEye(rightEye.getEyeState(certificate), encapsulator);
     }
 
     public void withMidEye(EyeStateBuilder midEye) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setMidEye(midEye.getEyeState(certificate), null);
+        state.setMidEye(midEye.getEyeState(certificate), encapsulator);
     }
 
     public void withEyeWeightInGrams(int eyeWeightInGrams) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setEyeWeightInGrams(eyeWeightInGrams, null);
+        state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
     }
 
     public void withEyeWeightInGrams(String eyeWeightInGrams) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), null);
+        state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     public void withColor(BigDecimal color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color.toString(), null);
+        state.setColor(color.toString(), encapsulator);
     }
 
     public void withColor(int color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(String.valueOf(color), null);
+        state.setColor(String.valueOf(color), encapsulator);
     }
 
     public void withDecease(String decease) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDecease(decease, null);
+        state.setDecease(decease, encapsulator);
     }
 
     public void withDecease(int decease) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setDecease(String.valueOf(decease), null);
+        state.setDecease(String.valueOf(decease), encapsulator);
     }
 
     public void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNoses(listBuilder.getStateList(certificate), null);
+        state.setNoses(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setBrows(listBuilder.getStateList(certificate), null);
+        state.setBrows(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withLength(int length) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLength(length, null);
+        state.setLength(length, encapsulator);
     }
 
     public void withA(boolean a) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setA(a, null);
+        state.setA(a, encapsulator);
     }
 
     public void withB(byte b) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setB(b, null);
+        state.setB(b, encapsulator);
     }
 
     public void withC(short c) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setC(c, null);
+        state.setC(c, encapsulator);
     }
 
     public void withD(char d) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setD(d, null);
+        state.setD(d, encapsulator);
     }
 
     public void withE(int e) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setE(e, null);
+        state.setE(e, encapsulator);
     }
 
     public void withF(long f) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setF(f, null);
+        state.setF(f, encapsulator);
     }
 
     public void withG(float g) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setG(g, null);
+        state.setG(g, encapsulator);
     }
 
     public void withH(double h) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setH(h, null);
+        state.setH(h, encapsulator);
     }
 
     public void withEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setEars(listBuilder.getStateList(certificate), null);
+        state.setEars(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withMouths(net.sf.laja.cdd.state.mouth.MouthStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setMouths(listBuilder.getStateList(certificate), null);
+        state.setMouths(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withWeight(int weight) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWeight(weight, null);
+        state.setWeight(weight, encapsulator);
     }
 
     public void withHasEar(Boolean hasEar) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHasEar(hasEar, null);
+        state.setHasEar(hasEar, encapsulator);
     }
 
     public void withHeadWeight(double headWeight) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHeadWeight(headWeight, null);
+        state.setHeadWeight(headWeight, encapsulator);
     }
 
     public void withLeftArm(ArmStateBuilder leftArm) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLeftArm(leftArm.getArmState(certificate), null);
+        state.setLeftArm(leftArm.getArmState(certificate), encapsulator);
     }
 
     public EyeStateBuilder getLeftEyeStateBuilder() {

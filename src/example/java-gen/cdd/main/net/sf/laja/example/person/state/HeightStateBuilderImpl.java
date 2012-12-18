@@ -7,6 +7,7 @@ package net.sf.laja.example.person.state;
  */
 public class HeightStateBuilderImpl implements HeightStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private HeightState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -22,9 +23,14 @@ public class HeightStateBuilderImpl implements HeightStateBuilder {
         trusted = true;
     }
 
+    public HeightStateBuilderImpl(HeightState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withHeightInCentimeters(int heightInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHeightInCentimeters(heightInCentimeters, null);
+        state.setHeightInCentimeters(heightInCentimeters, encapsulator);
     }
 
     private void throwEncapsulationException() {

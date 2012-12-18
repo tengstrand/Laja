@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class AnimalStateBuilderImpl implements AnimalStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private AnimalState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,9 +25,14 @@ public class AnimalStateBuilderImpl implements AnimalStateBuilder {
         trusted = true;
     }
 
+    public AnimalStateBuilderImpl(AnimalState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withIsTerrestrial(boolean isTerrestrial) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setIsTerrestrial(isTerrestrial, null);
+        state.setIsTerrestrial(isTerrestrial, encapsulator);
     }
 
     private void throwEncapsulationException() {

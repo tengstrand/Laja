@@ -1,7 +1,9 @@
 package net.sf.laja.example.file.behaviour;
 
-import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.FileState;
+import net.sf.laja.example.file.state.FileStateBuilder;
+import net.sf.laja.example.file.state.FileStateBuilderImpl;
+import net.sf.laja.example.file.state.FileStateImpl;
 
 public class FileBuilder {
     public final FileStateBuilder builder;
@@ -11,7 +13,11 @@ public class FileBuilder {
     }
 
     public FileBuilder(FileState state) {
-        builder = FileStateImpl.build(state);
+        builder = new FileStateBuilderImpl(state);
+    }
+
+    public FileBuilder(FileState state, Object encapsulator) {
+        builder = new FileStateBuilderImpl(state, encapsulator);
     }
 
     public FileBuilder withFilename(String filename) {

@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class MouthStateBuilderImpl implements MouthStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private MouthState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,24 +25,29 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
         trusted = true;
     }
 
+    public MouthStateBuilderImpl(MouthState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withNumberOfTeeth(int numberOfTeeth) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setNumberOfTeeth(numberOfTeeth, null);
+        state.setNumberOfTeeth(numberOfTeeth, encapsulator);
     }
 
     public void withWidth(int width) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setWidth(width, null);
+        state.setWidth(width, encapsulator);
     }
 
     public void withHeight(int height) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setHeight(height, null);
+        state.setHeight(height, encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     private void throwEncapsulationException() {

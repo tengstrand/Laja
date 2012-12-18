@@ -7,6 +7,7 @@ package net.sf.laja.example.car.state;
  */
 public class CarStateBuilderImpl implements CarStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private CarState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -23,24 +24,29 @@ public class CarStateBuilderImpl implements CarStateBuilder {
         trusted = true;
     }
 
+    public CarStateBuilderImpl(CarState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withLengthInCentimeters(int lengthInCentimeters) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLengthInCentimeters(lengthInCentimeters, null);
+        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
     }
 
     public void withName(String name) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setName(name, null);
+        state.setName(name, encapsulator);
     }
 
     public void withOwner(OwnerStateBuilder owner) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setOwner(owner.getOwnerState(certificate), null);
+        state.setOwner(owner.getOwnerState(certificate), encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     public OwnerStateBuilder getOwnerStateBuilder() {

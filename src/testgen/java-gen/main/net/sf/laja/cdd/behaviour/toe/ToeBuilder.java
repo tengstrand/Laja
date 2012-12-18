@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.behaviour.toe;
 
-import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
+import net.sf.laja.cdd.state.toe.ToeStateBuilder;
+import net.sf.laja.cdd.state.toe.ToeStateBuilderImpl;
+import net.sf.laja.cdd.state.toe.ToeStateImpl;
 
 public class ToeBuilder {
     public final ToeStateBuilder builder;
@@ -11,7 +13,11 @@ public class ToeBuilder {
     }
 
     public ToeBuilder(ToeState state) {
-        builder = ToeStateImpl.build(state);
+        builder = new ToeStateBuilderImpl(state);
+    }
+
+    public ToeBuilder(ToeState state, Object encapsulator) {
+        builder = new ToeStateBuilderImpl(state, encapsulator);
     }
 
     public ToeBuilder withLength(int length) {

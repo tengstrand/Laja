@@ -8,6 +8,7 @@ import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
 import net.sf.laja.cdd.state.monster.MonsterState;
 import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
+import net.sf.laja.cdd.state.monster.MonsterStateBuilderImpl;
 import net.sf.laja.cdd.state.monster.MonsterStateImpl;
 
 public class MonsterBuilder {
@@ -18,7 +19,11 @@ public class MonsterBuilder {
     }
 
     public MonsterBuilder(MonsterState state) {
-        builder = MonsterStateImpl.build(state);
+        builder = new MonsterStateBuilderImpl(state);
+    }
+
+    public MonsterBuilder(MonsterState state, Object encapsulator) {
+        builder = new MonsterStateBuilderImpl(state, encapsulator);
     }
 
     public MonsterBuilder withNumberOfLegs(int numberOfLegs) {

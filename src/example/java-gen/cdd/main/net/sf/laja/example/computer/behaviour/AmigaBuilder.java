@@ -1,7 +1,9 @@
 package net.sf.laja.example.computer.behaviour;
 
-import net.sf.laja.example.computer.state.*;
-import net.sf.laja.example.computer.state.*;
+import net.sf.laja.example.computer.state.ComputerState;
+import net.sf.laja.example.computer.state.ComputerStateBuilder;
+import net.sf.laja.example.computer.state.ComputerStateBuilderImpl;
+import net.sf.laja.example.computer.state.ComputerStateImpl;
 
 public class AmigaBuilder {
     public final ComputerStateBuilder builder;
@@ -11,7 +13,11 @@ public class AmigaBuilder {
     }
 
     public AmigaBuilder(ComputerState state) {
-        builder = ComputerStateImpl.build(state);
+        builder = new ComputerStateBuilderImpl(state);
+    }
+
+    public AmigaBuilder(ComputerState state, Object encapsulator) {
+        builder = new ComputerStateBuilderImpl(state, encapsulator);
     }
 
     public AmigaBuilder withOwner(String owner) {

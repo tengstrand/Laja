@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class HairStateBuilderImpl implements HairStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private HairState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,14 +25,19 @@ public class HairStateBuilderImpl implements HairStateBuilder {
         trusted = true;
     }
 
+    public HairStateBuilderImpl(HairState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withLength(int length) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setLength(length, null);
+        state.setLength(length, encapsulator);
     }
 
     public void withColor(String color) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setColor(color, null);
+        state.setColor(color, encapsulator);
     }
 
     private void throwEncapsulationException() {

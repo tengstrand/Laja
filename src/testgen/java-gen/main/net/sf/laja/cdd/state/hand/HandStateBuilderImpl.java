@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class HandStateBuilderImpl implements HandStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private HandState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,9 +25,14 @@ public class HandStateBuilderImpl implements HandStateBuilder {
         trusted = true;
     }
 
+    public HandStateBuilderImpl(HandState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withArea(int area) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setArea(area, null);
+        state.setArea(area, encapsulator);
     }
 
     private void throwEncapsulationException() {

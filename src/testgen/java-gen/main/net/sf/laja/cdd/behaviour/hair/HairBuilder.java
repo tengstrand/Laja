@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.behaviour.hair;
 
-import net.sf.laja.cdd.state.hair.*;
 import net.sf.laja.cdd.state.hair.HairState;
+import net.sf.laja.cdd.state.hair.HairStateBuilder;
+import net.sf.laja.cdd.state.hair.HairStateBuilderImpl;
+import net.sf.laja.cdd.state.hair.HairStateImpl;
 
 public class HairBuilder {
     public final HairStateBuilder builder;
@@ -11,7 +13,11 @@ public class HairBuilder {
     }
 
     public HairBuilder(HairState state) {
-        builder = HairStateImpl.build(state);
+        builder = new HairStateBuilderImpl(state);
+    }
+
+    public HairBuilder(HairState state, Object encapsulator) {
+        builder = new HairStateBuilderImpl(state, encapsulator);
     }
 
     public HairBuilder withLength(int length) {

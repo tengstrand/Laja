@@ -1,10 +1,10 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
-import net.sf.laja.example.repository.state.*;
-import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
-import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
 import net.sf.laja.example.repository.state.CustomerState;
+import net.sf.laja.example.repository.state.CustomerStateBuilder;
+import net.sf.laja.example.repository.state.CustomerStateBuilderImpl;
+import net.sf.laja.example.repository.state.CustomerStateImpl;
 
 public class CustomerBuilder {
     public final CustomerStateBuilder builder;
@@ -14,7 +14,11 @@ public class CustomerBuilder {
     }
 
     public CustomerBuilder(CustomerState state) {
-        builder = CustomerStateImpl.build(state);
+        builder = new CustomerStateBuilderImpl(state);
+    }
+
+    public CustomerBuilder(CustomerState state, Object encapsulator) {
+        builder = new CustomerStateBuilderImpl(state, encapsulator);
     }
 
     public CustomerBuilder withSsn(long ssn) {

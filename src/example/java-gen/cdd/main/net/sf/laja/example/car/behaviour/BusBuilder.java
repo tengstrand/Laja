@@ -1,7 +1,9 @@
 package net.sf.laja.example.car.behaviour;
 
-import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.BusState;
+import net.sf.laja.example.car.state.BusStateBuilder;
+import net.sf.laja.example.car.state.BusStateBuilderImpl;
+import net.sf.laja.example.car.state.BusStateImpl;
 
 public class BusBuilder {
     public final BusStateBuilder builder;
@@ -11,7 +13,11 @@ public class BusBuilder {
     }
 
     public BusBuilder(BusState state) {
-        builder = BusStateImpl.build(state);
+        builder = new BusStateBuilderImpl(state);
+    }
+
+    public BusBuilder(BusState state, Object encapsulator) {
+        builder = new BusStateBuilderImpl(state, encapsulator);
     }
 
     public BusBuilder withName(String name) {

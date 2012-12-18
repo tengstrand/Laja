@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.behaviour.ear;
 
-import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
+import net.sf.laja.cdd.state.ear.EarStateBuilder;
+import net.sf.laja.cdd.state.ear.EarStateBuilderImpl;
+import net.sf.laja.cdd.state.ear.EarStateImpl;
 
 public class EarBuilder {
     public final EarStateBuilder builder;
@@ -11,7 +13,11 @@ public class EarBuilder {
     }
 
     public EarBuilder(EarState state) {
-        builder = EarStateImpl.build(state);
+        builder = new EarStateBuilderImpl(state);
+    }
+
+    public EarBuilder(EarState state, Object encapsulator) {
+        builder = new EarStateBuilderImpl(state, encapsulator);
     }
 
     public boolean isValid() {

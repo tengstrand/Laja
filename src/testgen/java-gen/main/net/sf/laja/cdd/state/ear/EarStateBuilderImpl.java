@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class EarStateBuilderImpl implements EarStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private EarState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -24,9 +25,14 @@ public class EarStateBuilderImpl implements EarStateBuilder {
         trusted = true;
     }
 
+    public EarStateBuilderImpl(EarState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withSize(double size) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setSize(size, null);
+        state.setSize(size, encapsulator);
     }
 
     private void throwEncapsulationException() {

@@ -10,6 +10,7 @@ import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
  */
 public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
     private boolean encapsulated;
+    private Object encapsulator;
     private ForeheadState state;
     private final Certificate certificate;
     private boolean trusted;
@@ -26,9 +27,14 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
         trusted = true;
     }
 
+    public ForeheadStateBuilderImpl(ForeheadState state, Object encapsulator) {
+        this(state);
+        this.encapsulator = encapsulator;
+    }
+
     public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
         if (!trusted && encapsulated) throwEncapsulationException();
-        state.setBrows(listBuilder.getStateList(certificate), null);
+        state.setBrows(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public BrowStateListBuilder getBrowsStateListBuilder() {
