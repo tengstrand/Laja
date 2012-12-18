@@ -20,11 +20,9 @@ import java.math.BigDecimal;
  *   http://laja.sf.net
  */
 public class HeadStateBuilderImpl implements HeadStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private HeadState state;
     private final Certificate certificate;
-    private boolean trusted;
     private EyeStateBuilder leftEyeStateBuilder;
     private EyeStateBuilder rightEyeStateBuilder;
     private EyeStateBuilder midEyeStateBuilder;
@@ -41,7 +39,6 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
     public HeadStateBuilderImpl(HeadState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public HeadStateBuilderImpl(HeadState state, Object encapsulator) {
@@ -50,127 +47,102 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
     }
 
     public void withHeadWeightInGrams(double headWeightInGrams) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHeadWeightInGrams(headWeightInGrams, encapsulator);
     }
 
     public void withLeftEye(EyeStateBuilder leftEye) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLeftEye(leftEye.getEyeState(certificate), encapsulator);
     }
 
     public void withRightEye(EyeStateBuilder rightEye) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setRightEye(rightEye.getEyeState(certificate), encapsulator);
     }
 
     public void withMidEye(EyeStateBuilder midEye) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setMidEye(midEye.getEyeState(certificate), encapsulator);
     }
 
     public void withEyeWeightInGrams(int eyeWeightInGrams) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
     }
 
     public void withEyeWeightInGrams(String eyeWeightInGrams) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), encapsulator);
     }
 
     public void withColor(String color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color, encapsulator);
     }
 
     public void withColor(BigDecimal color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color.toString(), encapsulator);
     }
 
     public void withColor(int color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(String.valueOf(color), encapsulator);
     }
 
     public void withDecease(String decease) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setDecease(decease, encapsulator);
     }
 
     public void withDecease(int decease) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setDecease(String.valueOf(decease), encapsulator);
     }
 
     public void withHasEar(Boolean hasEar) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHasEar(hasEar, encapsulator);
     }
 
     public void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setNoses(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setBrows(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withLength(int length) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLength(length, encapsulator);
     }
 
     public void withA(boolean a) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setA(a, encapsulator);
     }
 
     public void withB(byte b) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setB(b, encapsulator);
     }
 
     public void withC(short c) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setC(c, encapsulator);
     }
 
     public void withD(char d) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setD(d, encapsulator);
     }
 
     public void withE(int e) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setE(e, encapsulator);
     }
 
     public void withF(long f) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setF(f, encapsulator);
     }
 
     public void withG(float g) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setG(g, encapsulator);
     }
 
     public void withH(double h) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setH(h, encapsulator);
     }
 
     public void withEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setEars(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withMouths(net.sf.laja.cdd.state.mouth.MouthStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setMouths(listBuilder.getStateList(certificate), encapsulator);
     }
 
@@ -223,36 +195,20 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         return mouthsStateListBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Head\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(HeadStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public Object as(EyeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public Object as(ForeheadStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public HeadState getHeadState(net.sf.laja.cdd.state.Certificate certificate) {

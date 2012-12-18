@@ -6,11 +6,9 @@ package net.sf.laja.example.repository.state;
  *   http://laja.sf.net
  */
 public class AddressStateBuilderImpl implements AddressStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private AddressState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     AddressStateBuilderImpl() {
         state = new AddressStateImpl();
@@ -20,7 +18,6 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
     public AddressStateBuilderImpl(AddressState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public AddressStateBuilderImpl(AddressState state, Object encapsulator) {
@@ -29,27 +26,19 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
     }
 
     public void withAddressId(int addressId) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setAddressId(addressId, encapsulator);
     }
 
     public void withStreetName(String streetName) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setStreetName(streetName, encapsulator);
     }
 
     public void withZipcode(int zipcode) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setZipcode(zipcode, encapsulator);
     }
 
     public void withCity(String city) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setCity(city, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Address\"");
     }
 
     public boolean isValid() {
@@ -57,19 +46,11 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
     }
 
     public Object as(AddressStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public Object as(ZipcodeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public AddressState getAddressState(net.sf.laja.example.repository.state.Certificate certificate) {

@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class NoseStateBuilderImpl implements NoseStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private NoseState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     NoseStateBuilderImpl() {
         state = new NoseStateImpl();
@@ -22,7 +20,6 @@ public class NoseStateBuilderImpl implements NoseStateBuilder {
     public NoseStateBuilderImpl(NoseState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public NoseStateBuilderImpl(NoseState state, Object encapsulator) {
@@ -31,17 +28,11 @@ public class NoseStateBuilderImpl implements NoseStateBuilder {
     }
 
     public void withNoseDescription(String noseDescription) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setNoseDescription(noseDescription, encapsulator);
     }
 
     public void withDetails(String details) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setDetails(details, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Nose\"");
     }
 
     public boolean isValid() {
@@ -49,11 +40,7 @@ public class NoseStateBuilderImpl implements NoseStateBuilder {
     }
 
     public Object as(NoseStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public NoseState getNoseState(net.sf.laja.cdd.state.Certificate certificate) {

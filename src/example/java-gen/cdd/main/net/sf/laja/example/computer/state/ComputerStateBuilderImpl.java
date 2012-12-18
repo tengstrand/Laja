@@ -6,11 +6,9 @@ package net.sf.laja.example.computer.state;
  *   http://laja.sf.net
  */
 public class ComputerStateBuilderImpl implements ComputerStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private ComputerState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     ComputerStateBuilderImpl() {
         state = new ComputerStateImpl();
@@ -20,7 +18,6 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
     public ComputerStateBuilderImpl(ComputerState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public ComputerStateBuilderImpl(ComputerState state, Object encapsulator) {
@@ -29,32 +26,23 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
     }
 
     public void withName(String name) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setName(name, encapsulator);
     }
 
     public void withProcessor(String processor) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setProcessor(processor, encapsulator);
     }
 
     public void withReleaseYear(int releaseYear) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setReleaseYear(releaseYear, encapsulator);
     }
 
     public void withMemoryInKilobytes(int memoryInKilobytes) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setMemoryInKilobytes(memoryInKilobytes, encapsulator);
     }
 
     public void withOwner(String owner) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setOwner(owner, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Computer\"");
     }
 
     public boolean isValid() {
@@ -62,11 +50,7 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
     }
 
     public Object as(ComputerStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public ComputerState getComputerState(net.sf.laja.example.computer.state.Certificate certificate) {

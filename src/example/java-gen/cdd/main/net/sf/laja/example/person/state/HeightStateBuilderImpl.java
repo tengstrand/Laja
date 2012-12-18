@@ -6,11 +6,9 @@ package net.sf.laja.example.person.state;
  *   http://laja.sf.net
  */
 public class HeightStateBuilderImpl implements HeightStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private HeightState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     HeightStateBuilderImpl() {
         state = new HeightStateImpl();
@@ -20,7 +18,6 @@ public class HeightStateBuilderImpl implements HeightStateBuilder {
     public HeightStateBuilderImpl(HeightState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public HeightStateBuilderImpl(HeightState state, Object encapsulator) {
@@ -29,12 +26,7 @@ public class HeightStateBuilderImpl implements HeightStateBuilder {
     }
 
     public void withHeightInCentimeters(int heightInCentimeters) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHeightInCentimeters(heightInCentimeters, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Height\"");
     }
 
     public boolean isValid() {
@@ -42,11 +34,7 @@ public class HeightStateBuilderImpl implements HeightStateBuilder {
     }
 
     public Object as(HeightStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public HeightState getHeightState(net.sf.laja.example.person.state.Certificate certificate) {

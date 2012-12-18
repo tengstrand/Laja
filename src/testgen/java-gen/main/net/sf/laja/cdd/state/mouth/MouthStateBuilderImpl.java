@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class MouthStateBuilderImpl implements MouthStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private MouthState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     MouthStateBuilderImpl() {
         state = new MouthStateImpl();
@@ -22,7 +20,6 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
     public MouthStateBuilderImpl(MouthState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public MouthStateBuilderImpl(MouthState state, Object encapsulator) {
@@ -31,27 +28,19 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
     }
 
     public void withNumberOfTeeth(int numberOfTeeth) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setNumberOfTeeth(numberOfTeeth, encapsulator);
     }
 
     public void withWidth(int width) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setWidth(width, encapsulator);
     }
 
     public void withHeight(int height) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHeight(height, encapsulator);
     }
 
     public void withColor(String color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Mouth\"");
     }
 
     public boolean isValid() {
@@ -59,11 +48,7 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
     }
 
     public Object as(MouthStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public MouthState getMouthState(net.sf.laja.cdd.state.Certificate certificate) {

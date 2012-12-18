@@ -6,11 +6,9 @@ package net.sf.laja.example.car.state;
  *   http://laja.sf.net
  */
 public class OwnerStateBuilderImpl implements OwnerStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private OwnerState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     OwnerStateBuilderImpl() {
         state = new OwnerStateImpl();
@@ -20,7 +18,6 @@ public class OwnerStateBuilderImpl implements OwnerStateBuilder {
     public OwnerStateBuilderImpl(OwnerState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public OwnerStateBuilderImpl(OwnerState state, Object encapsulator) {
@@ -29,22 +26,15 @@ public class OwnerStateBuilderImpl implements OwnerStateBuilder {
     }
 
     public void withSsn(long ssn) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setSsn(ssn, encapsulator);
     }
 
     public void withSsn(String ssn) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setSsn(Long.parseLong(ssn), encapsulator);
     }
 
     public void withName(String name) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setName(name, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Owner\"");
     }
 
     public boolean isValid() {
@@ -52,11 +42,7 @@ public class OwnerStateBuilderImpl implements OwnerStateBuilder {
     }
 
     public Object as(OwnerStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public OwnerState getOwnerState(net.sf.laja.example.car.state.Certificate certificate) {

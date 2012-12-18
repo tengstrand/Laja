@@ -6,11 +6,9 @@ package net.sf.laja.example.account.state;
  *   http://laja.sf.net
  */
 public class AccountStateBuilderImpl implements AccountStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private AccountState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     AccountStateBuilderImpl() {
         state = new AccountStateImpl();
@@ -20,7 +18,6 @@ public class AccountStateBuilderImpl implements AccountStateBuilder {
     public AccountStateBuilderImpl(AccountState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public AccountStateBuilderImpl(AccountState state, Object encapsulator) {
@@ -29,12 +26,7 @@ public class AccountStateBuilderImpl implements AccountStateBuilder {
     }
 
     public void withBalance(double balance) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setBalance(balance, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Account\"");
     }
 
     public boolean isValid() {
@@ -42,11 +34,7 @@ public class AccountStateBuilderImpl implements AccountStateBuilder {
     }
 
     public Object as(AccountStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public AccountState getAccountState(net.sf.laja.example.account.state.Certificate certificate) {

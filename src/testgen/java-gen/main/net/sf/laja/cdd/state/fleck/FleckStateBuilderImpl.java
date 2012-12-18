@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class FleckStateBuilderImpl implements FleckStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private FleckState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     FleckStateBuilderImpl() {
         state = new FleckStateImpl();
@@ -22,7 +20,6 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
     public FleckStateBuilderImpl(FleckState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public FleckStateBuilderImpl(FleckState state, Object encapsulator) {
@@ -31,17 +28,11 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
     }
 
     public void withArea(int area) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArea(area, encapsulator);
     }
 
     public void withColor(String color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Fleck\"");
     }
 
     public boolean isValid() {
@@ -49,11 +40,7 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
     }
 
     public Object as(FleckStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public FleckState getFleckState(net.sf.laja.cdd.state.Certificate certificate) {

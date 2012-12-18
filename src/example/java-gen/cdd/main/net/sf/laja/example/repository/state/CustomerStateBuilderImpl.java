@@ -6,11 +6,9 @@ package net.sf.laja.example.repository.state;
  *   http://laja.sf.net
  */
 public class CustomerStateBuilderImpl implements CustomerStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private CustomerState state;
     private final Certificate certificate;
-    private boolean trusted;
     private AddressStateListBuilder oldAddressesStateListBuilder;
 
     CustomerStateBuilderImpl() {
@@ -21,7 +19,6 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     public CustomerStateBuilderImpl(CustomerState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public CustomerStateBuilderImpl(CustomerState state, Object encapsulator) {
@@ -30,52 +27,42 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     }
 
     public void withSsn(long ssn) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setSsn(ssn, encapsulator);
     }
 
     public void withGivenName(String givenName) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setGivenName(givenName, encapsulator);
     }
 
     public void withSurname(String surname) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setSurname(surname, encapsulator);
     }
 
     public void withAge(int age) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setAge(age, encapsulator);
     }
 
     public void withPet(String pet) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setPet(pet, encapsulator);
     }
 
     public void withAddressId(int addressId) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setAddressId(addressId, encapsulator);
     }
 
     public void withStreetName(String streetName) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setStreetName(streetName, encapsulator);
     }
 
     public void withZipcode(int zipcode) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setZipcode(zipcode, encapsulator);
     }
 
     public void withCity(String city) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setCity(city, encapsulator);
     }
 
     public void withOldAddresses(net.sf.laja.example.repository.state.AddressStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setOldAddresses(listBuilder.getStateList(certificate), encapsulator);
     }
 
@@ -86,36 +73,20 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
         return oldAddressesStateListBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Customer\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(CustomerStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public Object as(AddressStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public Object as(ZipcodeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public CustomerState getCustomerState(net.sf.laja.example.repository.state.Certificate certificate) {

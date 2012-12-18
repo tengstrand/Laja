@@ -6,11 +6,9 @@ package net.sf.laja.example.file.state;
  *   http://laja.sf.net
  */
 public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private DirectoryState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     DirectoryStateBuilderImpl() {
         state = new DirectoryStateImpl();
@@ -20,7 +18,6 @@ public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
     public DirectoryStateBuilderImpl(DirectoryState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public DirectoryStateBuilderImpl(DirectoryState state, Object encapsulator) {
@@ -29,12 +26,7 @@ public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
     }
 
     public void withDirectoryPath(String directoryPath) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setDirectoryPath(directoryPath, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Directory\"");
     }
 
     public boolean isValid() {
@@ -42,11 +34,7 @@ public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
     }
 
     public Object as(DirectoryStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public DirectoryState getDirectoryState(net.sf.laja.example.file.state.Certificate certificate) {

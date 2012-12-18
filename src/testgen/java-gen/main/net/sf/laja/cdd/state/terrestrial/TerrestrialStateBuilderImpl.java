@@ -10,11 +10,9 @@ import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
  *   http://laja.sf.net
  */
 public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private TerrestrialState state;
     private final Certificate certificate;
-    private boolean trusted;
     private EyeStateBuilder leftEyeStateBuilder;
     private EyeStateBuilder rightEyeStateBuilder;
     private EyeStateBuilder middleEyeStateBuilder;
@@ -27,7 +25,6 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
     public TerrestrialStateBuilderImpl(TerrestrialState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public TerrestrialStateBuilderImpl(TerrestrialState state, Object encapsulator) {
@@ -36,32 +33,26 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
     }
 
     public void withNumberOfLegs(int numberOfLegs) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setNumberOfLegs(numberOfLegs, encapsulator);
     }
 
     public void withNumberOfWings(int numberOfWings) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setNumberOfWings(numberOfWings, encapsulator);
     }
 
     public void withLeftEye(EyeStateBuilder leftEye) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLeftEye(leftEye.getEyeState(certificate), encapsulator);
     }
 
     public void withRightEye(EyeStateBuilder rightEye) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setRightEye(rightEye.getEyeState(certificate), encapsulator);
     }
 
     public void withMiddleEye(EyeStateBuilder middleEye) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setMiddleEye(middleEye.getEyeState(certificate), encapsulator);
     }
 
     public void withWeight(int weight) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setWeight(weight, encapsulator);
     }
 
@@ -86,20 +77,12 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
         return middleEyeStateBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Terrestrial\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(TerrestrialStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public TerrestrialState getTerrestrialState(net.sf.laja.cdd.state.Certificate certificate) {

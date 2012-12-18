@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class HairStateBuilderImpl implements HairStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private HairState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     HairStateBuilderImpl() {
         state = new HairStateImpl();
@@ -22,7 +20,6 @@ public class HairStateBuilderImpl implements HairStateBuilder {
     public HairStateBuilderImpl(HairState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public HairStateBuilderImpl(HairState state, Object encapsulator) {
@@ -31,17 +28,11 @@ public class HairStateBuilderImpl implements HairStateBuilder {
     }
 
     public void withLength(int length) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLength(length, encapsulator);
     }
 
     public void withColor(String color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Hair\"");
     }
 
     public boolean isValid() {
@@ -49,11 +40,7 @@ public class HairStateBuilderImpl implements HairStateBuilder {
     }
 
     public Object as(HairStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public HairState getHairState(net.sf.laja.cdd.state.Certificate certificate) {

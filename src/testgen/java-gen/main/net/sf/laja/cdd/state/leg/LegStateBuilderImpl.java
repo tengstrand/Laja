@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class LegStateBuilderImpl implements LegStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private LegState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     LegStateBuilderImpl() {
         state = new LegStateImpl();
@@ -22,7 +20,6 @@ public class LegStateBuilderImpl implements LegStateBuilder {
     public LegStateBuilderImpl(LegState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public LegStateBuilderImpl(LegState state, Object encapsulator) {
@@ -31,12 +28,7 @@ public class LegStateBuilderImpl implements LegStateBuilder {
     }
 
     public void withLegDescription(String legDescription) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLegDescription(legDescription, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Leg\"");
     }
 
     public boolean isValid() {
@@ -44,11 +36,7 @@ public class LegStateBuilderImpl implements LegStateBuilder {
     }
 
     public Object as(LegStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public LegState getLegState(net.sf.laja.cdd.state.Certificate certificate) {

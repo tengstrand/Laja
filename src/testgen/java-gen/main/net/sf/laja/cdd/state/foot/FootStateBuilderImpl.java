@@ -9,11 +9,9 @@ import net.sf.laja.cdd.state.toe.ToeStateListBuilder;
  *   http://laja.sf.net
  */
 public class FootStateBuilderImpl implements FootStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private FootState state;
     private final Certificate certificate;
-    private boolean trusted;
     private ToeStateListBuilder toesStateListBuilder;
 
     FootStateBuilderImpl() {
@@ -24,7 +22,6 @@ public class FootStateBuilderImpl implements FootStateBuilder {
     public FootStateBuilderImpl(FootState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public FootStateBuilderImpl(FootState state, Object encapsulator) {
@@ -33,12 +30,10 @@ public class FootStateBuilderImpl implements FootStateBuilder {
     }
 
     public void withArea(int area) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArea(area, encapsulator);
     }
 
     public void withToes(net.sf.laja.cdd.state.toe.ToeStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setToes(listBuilder.getStateList(certificate), encapsulator);
     }
 
@@ -49,20 +44,12 @@ public class FootStateBuilderImpl implements FootStateBuilder {
         return toesStateListBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Foot\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(FootStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public FootState getFootState(net.sf.laja.cdd.state.Certificate certificate) {

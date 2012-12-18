@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class ToeStateBuilderImpl implements ToeStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private ToeState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     ToeStateBuilderImpl() {
         state = new ToeStateImpl();
@@ -22,7 +20,6 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
     public ToeStateBuilderImpl(ToeState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public ToeStateBuilderImpl(ToeState state, Object encapsulator) {
@@ -31,17 +28,11 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
     }
 
     public void withLength(int length) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLength(length, encapsulator);
     }
 
     public void withWeight(int weight) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setWeight(weight, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Toe\"");
     }
 
     public boolean isValid() {
@@ -49,11 +40,7 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
     }
 
     public Object as(ToeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public ToeState getToeState(net.sf.laja.cdd.state.Certificate certificate) {

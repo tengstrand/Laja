@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class EarStateBuilderImpl implements EarStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private EarState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     EarStateBuilderImpl() {
         state = new EarStateImpl();
@@ -22,7 +20,6 @@ public class EarStateBuilderImpl implements EarStateBuilder {
     public EarStateBuilderImpl(EarState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public EarStateBuilderImpl(EarState state, Object encapsulator) {
@@ -31,12 +28,7 @@ public class EarStateBuilderImpl implements EarStateBuilder {
     }
 
     public void withSize(double size) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setSize(size, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Ear\"");
     }
 
     public boolean isValid() {
@@ -44,11 +36,7 @@ public class EarStateBuilderImpl implements EarStateBuilder {
     }
 
     public Object as(EarStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public EarState getEarState(net.sf.laja.cdd.state.Certificate certificate) {

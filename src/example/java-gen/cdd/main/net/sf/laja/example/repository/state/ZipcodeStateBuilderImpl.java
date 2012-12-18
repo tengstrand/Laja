@@ -6,11 +6,9 @@ package net.sf.laja.example.repository.state;
  *   http://laja.sf.net
  */
 public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private ZipcodeState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     ZipcodeStateBuilderImpl() {
         state = new ZipcodeStateImpl();
@@ -20,7 +18,6 @@ public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
     public ZipcodeStateBuilderImpl(ZipcodeState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public ZipcodeStateBuilderImpl(ZipcodeState state, Object encapsulator) {
@@ -29,12 +26,7 @@ public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
     }
 
     public void withZipcode(int zipcode) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setZipcode(zipcode, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Zipcode\"");
     }
 
     public boolean isValid() {
@@ -42,11 +34,7 @@ public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
     }
 
     public Object as(ZipcodeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public ZipcodeState getZipcodeState(net.sf.laja.example.repository.state.Certificate certificate) {

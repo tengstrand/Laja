@@ -6,11 +6,9 @@ package net.sf.laja.example.car.state;
  *   http://laja.sf.net
  */
 public class TruckStateBuilderImpl implements TruckStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private TruckState state;
     private final Certificate certificate;
-    private boolean trusted;
     private TruckTypeStateBuilder typeStateBuilder;
     private OwnerStateBuilder ownerStateBuilder;
 
@@ -22,7 +20,6 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     public TruckStateBuilderImpl(TruckState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public TruckStateBuilderImpl(TruckState state, Object encapsulator) {
@@ -35,27 +32,22 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     }
 
     public void withLengthInCentimeters(int lengthInCentimeters) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setWeightInKilograms(weightInKilograms, encapsulator);
     }
 
     public void withType(TruckTypeStateBuilder type) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setType(type.getTruckTypeState(certificate), encapsulator);
     }
 
     public void withColor(String color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color, encapsulator);
     }
 
     public void withOwner(OwnerStateBuilder owner) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setOwner(owner.getOwnerState(certificate), encapsulator);
     }
 
@@ -73,28 +65,16 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
         return ownerStateBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Truck\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(TruckStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public Object as(VehicleSizeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public TruckState getTruckState(net.sf.laja.example.car.state.Certificate certificate) {

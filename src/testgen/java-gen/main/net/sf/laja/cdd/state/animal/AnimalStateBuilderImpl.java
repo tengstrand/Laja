@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class AnimalStateBuilderImpl implements AnimalStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private AnimalState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     AnimalStateBuilderImpl() {
         state = new AnimalStateImpl();
@@ -22,7 +20,6 @@ public class AnimalStateBuilderImpl implements AnimalStateBuilder {
     public AnimalStateBuilderImpl(AnimalState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public AnimalStateBuilderImpl(AnimalState state, Object encapsulator) {
@@ -31,12 +28,7 @@ public class AnimalStateBuilderImpl implements AnimalStateBuilder {
     }
 
     public void withIsTerrestrial(boolean isTerrestrial) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setIsTerrestrial(isTerrestrial, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Animal\"");
     }
 
     public boolean isValid() {
@@ -44,11 +36,7 @@ public class AnimalStateBuilderImpl implements AnimalStateBuilder {
     }
 
     public Object as(AnimalStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public AnimalState getAnimalState(net.sf.laja.cdd.state.Certificate certificate) {

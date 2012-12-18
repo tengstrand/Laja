@@ -10,11 +10,9 @@ import java.math.BigDecimal;
  *   http://laja.sf.net
  */
 public class EyeStateBuilderImpl implements EyeStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private EyeState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     EyeStateBuilderImpl() {
         state = new EyeStateImpl();
@@ -24,7 +22,6 @@ public class EyeStateBuilderImpl implements EyeStateBuilder {
     public EyeStateBuilderImpl(EyeState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public EyeStateBuilderImpl(EyeState state, Object encapsulator) {
@@ -33,47 +30,35 @@ public class EyeStateBuilderImpl implements EyeStateBuilder {
     }
 
     public void withEyeWeightInGrams(int eyeWeightInGrams) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
     }
 
     public void withEyeWeightInGrams(String eyeWeightInGrams) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), encapsulator);
     }
 
     public void withColor(String color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color, encapsulator);
     }
 
     public void withColor(BigDecimal color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(color.toString(), encapsulator);
     }
 
     public void withColor(int color) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setColor(String.valueOf(color), encapsulator);
     }
 
     public void withDecease(String decease) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setDecease(decease, encapsulator);
     }
 
     public void withDecease(int decease) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setDecease(String.valueOf(decease), encapsulator);
     }
 
     public void withHasEar(Boolean hasEar) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHasEar(hasEar, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Eye\"");
     }
 
     public boolean isValid() {
@@ -81,11 +66,7 @@ public class EyeStateBuilderImpl implements EyeStateBuilder {
     }
 
     public Object as(EyeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public EyeState getEyeState(net.sf.laja.cdd.state.Certificate certificate) {

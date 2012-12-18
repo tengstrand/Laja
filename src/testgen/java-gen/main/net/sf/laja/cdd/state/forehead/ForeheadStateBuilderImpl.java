@@ -9,11 +9,9 @@ import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
  *   http://laja.sf.net
  */
 public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private ForeheadState state;
     private final Certificate certificate;
-    private boolean trusted;
     private BrowStateListBuilder browsStateListBuilder;
 
     ForeheadStateBuilderImpl() {
@@ -24,7 +22,6 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
     public ForeheadStateBuilderImpl(ForeheadState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public ForeheadStateBuilderImpl(ForeheadState state, Object encapsulator) {
@@ -33,7 +30,6 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
     }
 
     public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setBrows(listBuilder.getStateList(certificate), encapsulator);
     }
 
@@ -44,20 +40,12 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
         return browsStateListBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Forehead\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(ForeheadStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public ForeheadState getForeheadState(net.sf.laja.cdd.state.Certificate certificate) {

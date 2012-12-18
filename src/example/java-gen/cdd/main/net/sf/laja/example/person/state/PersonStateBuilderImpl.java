@@ -6,11 +6,9 @@ package net.sf.laja.example.person.state;
  *   http://laja.sf.net
  */
 public class PersonStateBuilderImpl implements PersonStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private PersonState state;
     private final Certificate certificate;
-    private boolean trusted;
     private HeightStateBuilder heightStateBuilder;
 
     PersonStateBuilderImpl() {
@@ -21,7 +19,6 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     public PersonStateBuilderImpl(PersonState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public PersonStateBuilderImpl(PersonState state, Object encapsulator) {
@@ -34,22 +31,18 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     }
 
     public void withGivenName(String givenName) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setGivenName(givenName, encapsulator);
     }
 
     public void withSurname(String surname) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setSurname(surname, encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setWeightInKilograms(weightInKilograms, encapsulator);
     }
 
     public void withHeight(HeightStateBuilder height) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHeight(height.getHeightState(certificate), encapsulator);
     }
 
@@ -60,20 +53,12 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         return heightStateBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Person\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(PersonStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public PersonState getPersonState(net.sf.laja.example.person.state.Certificate certificate) {

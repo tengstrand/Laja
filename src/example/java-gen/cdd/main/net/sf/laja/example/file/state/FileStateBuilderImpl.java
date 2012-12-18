@@ -6,11 +6,9 @@ package net.sf.laja.example.file.state;
  *   http://laja.sf.net
  */
 public class FileStateBuilderImpl implements FileStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private FileState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     FileStateBuilderImpl() {
         state = new FileStateImpl();
@@ -20,7 +18,6 @@ public class FileStateBuilderImpl implements FileStateBuilder {
     public FileStateBuilderImpl(FileState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public FileStateBuilderImpl(FileState state, Object encapsulator) {
@@ -29,12 +26,7 @@ public class FileStateBuilderImpl implements FileStateBuilder {
     }
 
     public void withFilename(String filename) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setFilename(filename, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"File\"");
     }
 
     public boolean isValid() {
@@ -42,11 +34,7 @@ public class FileStateBuilderImpl implements FileStateBuilder {
     }
 
     public Object as(FileStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public FileState getFileState(net.sf.laja.example.file.state.Certificate certificate) {

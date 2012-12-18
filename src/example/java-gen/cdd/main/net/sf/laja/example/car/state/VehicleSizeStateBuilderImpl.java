@@ -6,11 +6,9 @@ package net.sf.laja.example.car.state;
  *   http://laja.sf.net
  */
 public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private VehicleSizeState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     VehicleSizeStateBuilderImpl() {
         state = new VehicleSizeStateImpl();
@@ -20,7 +18,6 @@ public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
     public VehicleSizeStateBuilderImpl(VehicleSizeState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public VehicleSizeStateBuilderImpl(VehicleSizeState state, Object encapsulator) {
@@ -29,12 +26,7 @@ public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
     }
 
     public void withLengthInCentimeters(int lengthInCentimeters) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"VehicleSize\"");
     }
 
     public boolean isValid() {
@@ -42,11 +34,7 @@ public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
     }
 
     public Object as(VehicleSizeStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public VehicleSizeState getVehicleSizeState(net.sf.laja.example.car.state.Certificate certificate) {

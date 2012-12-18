@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class HandStateBuilderImpl implements HandStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private HandState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     HandStateBuilderImpl() {
         state = new HandStateImpl();
@@ -22,7 +20,6 @@ public class HandStateBuilderImpl implements HandStateBuilder {
     public HandStateBuilderImpl(HandState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public HandStateBuilderImpl(HandState state, Object encapsulator) {
@@ -31,12 +28,7 @@ public class HandStateBuilderImpl implements HandStateBuilder {
     }
 
     public void withArea(int area) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArea(area, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Hand\"");
     }
 
     public boolean isValid() {
@@ -44,11 +36,7 @@ public class HandStateBuilderImpl implements HandStateBuilder {
     }
 
     public Object as(HandStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public HandState getHandState(net.sf.laja.cdd.state.Certificate certificate) {

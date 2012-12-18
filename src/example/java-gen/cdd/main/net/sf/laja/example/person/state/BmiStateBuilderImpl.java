@@ -6,11 +6,9 @@ package net.sf.laja.example.person.state;
  *   http://laja.sf.net
  */
 public class BmiStateBuilderImpl implements BmiStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private BmiState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     BmiStateBuilderImpl() {
         state = new BmiStateImpl();
@@ -20,7 +18,6 @@ public class BmiStateBuilderImpl implements BmiStateBuilder {
     public BmiStateBuilderImpl(BmiState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public BmiStateBuilderImpl(BmiState state, Object encapsulator) {
@@ -29,17 +26,11 @@ public class BmiStateBuilderImpl implements BmiStateBuilder {
     }
 
     public void withHeightInCentimeters(int heightInCentimeters) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHeightInCentimeters(heightInCentimeters, encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setWeightInKilograms(weightInKilograms, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Bmi\"");
     }
 
     public boolean isValid() {
@@ -47,11 +38,7 @@ public class BmiStateBuilderImpl implements BmiStateBuilder {
     }
 
     public Object as(BmiStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public BmiState getBmiState(net.sf.laja.example.person.state.Certificate certificate) {

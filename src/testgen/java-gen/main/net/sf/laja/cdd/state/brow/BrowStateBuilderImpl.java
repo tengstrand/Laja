@@ -8,11 +8,9 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class BrowStateBuilderImpl implements BrowStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private BrowState state;
     private final Certificate certificate;
-    private boolean trusted;
 
     BrowStateBuilderImpl() {
         state = new BrowStateImpl();
@@ -22,7 +20,6 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
     public BrowStateBuilderImpl(BrowState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public BrowStateBuilderImpl(BrowState state, Object encapsulator) {
@@ -31,12 +28,7 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
     }
 
     public void withArea(int area) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArea(area, encapsulator);
-    }
-
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Brow\"");
     }
 
     public boolean isValid() {
@@ -44,11 +36,7 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
     }
 
     public Object as(BrowStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public BrowState getBrowState(net.sf.laja.cdd.state.Certificate certificate) {

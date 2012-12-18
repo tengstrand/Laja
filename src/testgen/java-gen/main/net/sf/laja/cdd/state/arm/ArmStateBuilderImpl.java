@@ -9,11 +9,9 @@ import net.sf.laja.cdd.state.hand.HandStateListBuilder;
  *   http://laja.sf.net
  */
 public class ArmStateBuilderImpl implements ArmStateBuilder {
-    private boolean encapsulated;
     private Object encapsulator;
     private ArmState state;
     private final Certificate certificate;
-    private boolean trusted;
     private HandStateListBuilder handsStateListBuilder;
 
     ArmStateBuilderImpl() {
@@ -24,7 +22,6 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
     public ArmStateBuilderImpl(ArmState state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public ArmStateBuilderImpl(ArmState state, Object encapsulator) {
@@ -33,22 +30,18 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
     }
 
     public void withArmLength(int armLength) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArmLength(armLength, encapsulator);
     }
 
     public void withArmWeight(double armWeight) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArmWeight(armWeight, encapsulator);
     }
 
     public void withArmWeight(String armWeight) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setArmWeight(Double.valueOf(armWeight), encapsulator);
     }
 
     public void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.setHands(listBuilder.getStateList(certificate), encapsulator);
     }
 
@@ -59,20 +52,12 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
         return handsStateListBuilder;
     }
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"Arm\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as(ArmStateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
 
     public ArmState getArmState(net.sf.laja.cdd.state.Certificate certificate) {

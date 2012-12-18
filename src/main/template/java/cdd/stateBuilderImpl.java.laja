@@ -1,11 +1,9 @@
 #macro class()
   #header()
 public class {builderImplClass} implements {builderClass} {
-    private boolean encapsulated;
     private Object encapsulator;
     private {stateClass} state;
     private final {certificateClass} certificate;
-    private boolean trusted;
   #foreach (attribute in attributes where attribute.isState)
     private {attribute.stateBuilder} {attribute.stateBuilderVariable};
   #end
@@ -18,7 +16,6 @@ public class {builderImplClass} implements {builderClass} {
     public {builderImplClass}({stateClass} state) {
         this.state = state;
         certificate = Certificate.get(this);
-        trusted = true;
     }
 
     public {builderImplClass}({stateClass} state, Object encapsulator) {
@@ -36,22 +33,18 @@ public class {builderImplClass} implements {builderClass} {
     #if (attribute.isStateList)
       #set (template = templates.get(attribute.cleanedStateType))
     public void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.{attribute.setter}(listBuilder.getStateList(certificate), encapsulator);
     #else if (attribute.isState)
     public void {attribute.withMethod}({attribute.stateBuilder} {attribute.variable}) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.{attribute.setter}({attribute.variable}.{attribute.stateMethod}(certificate), encapsulator);
     #else
     public void {attribute.withMethod}({attribute.type} {attribute.variable}) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.{attribute.setter}({attribute.variable}, encapsulator);
     #end
     }
     #foreach (method in allConvertMethods where method.variable == attribute.variable)
 
     public void {attribute.withMethod}({method.type} {method.variable}) {
-        if (!trusted && encapsulated) throwEncapsulationException();
         state.{attribute.setter}({method.statement}, encapsulator);
     }
     #end
@@ -66,29 +59,17 @@ public class {builderImplClass} implements {builderClass} {
     }
   #end
 
-    private void throwEncapsulationException() {
-        throw new IllegalStateException("The state has been encapsulated and can only be changed from within behaviour classes of type \"{classname}\"");
-    }
-
     public boolean isValid() {
         return state.isValid();
     }
 
     public Object as({stateBehaviourFactoryClass} factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
   #foreach (expandedType in allExpandedTypes)
 
     public Object as({expandedType.type}StateBehaviourFactory factory, Object... args) {
-        Object encapsulatedObject = factory.create(state, args);
-        if (!trusted) {
-            encapsulated = true;
-        }
-        return encapsulatedObject;
+        return factory.create(state, args);
     }
   #end
 
