@@ -29,6 +29,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
     public DirectoryArrayList(DirectoryStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Directory> elements = new ArrayList<Directory>(stateList.size());
 
         for (DirectoryState state : stateList) {
@@ -47,7 +48,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
         return new TextDirectoryArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Directory> {
+    public class StateInSyncList extends ArrayList<Directory> {
         private final DirectoryStateList stateList;
 
         public StateInSyncList(DirectoryStateList stateList, List<Directory> elements) {
@@ -57,18 +58,21 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         @Override
         public boolean add(Directory element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Directory element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Directory> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Directory element : collection) {
@@ -79,6 +83,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         @Override
         public boolean addAll(int index, Collection<? extends Directory> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -92,6 +97,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             if (!(element instanceof Directory)) {
                 return false;
             }
@@ -102,6 +108,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -118,6 +125,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -134,18 +142,21 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Directory set(int index, Directory element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Directory remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

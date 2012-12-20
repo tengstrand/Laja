@@ -29,6 +29,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
     public EyeArrayList(EyeStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Eye> elements = new ArrayList<Eye>(stateList.size());
 
         for (EyeState state : stateList) {
@@ -47,7 +48,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
         return new ScaryEyeArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Eye> {
+    public class StateInSyncList extends ArrayList<Eye> {
         private final EyeStateList stateList;
 
         public StateInSyncList(EyeStateList stateList, List<Eye> elements) {
@@ -57,18 +58,21 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean add(Eye element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Eye element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Eye> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Eye element : collection) {
@@ -79,6 +83,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean addAll(int index, Collection<? extends Eye> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -92,6 +97,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             if (!(element instanceof Eye)) {
                 return false;
             }
@@ -102,6 +108,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -118,6 +125,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -134,18 +142,21 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Eye set(int index, Eye element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Eye remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(EyeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

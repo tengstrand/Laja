@@ -25,6 +25,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
     public ForeheadArrayList(ForeheadStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Forehead> elements = new ArrayList<Forehead>(stateList.size());
 
         for (ForeheadState state : stateList) {
@@ -35,7 +36,18 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Forehead> {
+    public ForeheadWithBigBrowsArrayList asForeheadWithBigBrowsList() {
+        if (stateList != null) {
+            return new ForeheadWithBigBrowsArrayList(stateList);
+        }
+        List<ForeheadWithBigBrows> result = new ArrayList<ForeheadWithBigBrows>();
+        for (Forehead entry : list) {
+            result.add(entry.asForeheadWithBigBrows());
+        }
+        return new ForeheadWithBigBrowsArrayList(result);
+    }
+
+    public class StateInSyncList extends ArrayList<Forehead> {
         private final ForeheadStateList stateList;
 
         public StateInSyncList(ForeheadStateList stateList, List<Forehead> elements) {
@@ -45,18 +57,21 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         @Override
         public boolean add(Forehead element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Forehead element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Forehead> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Forehead element : collection) {
@@ -67,6 +82,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         @Override
         public boolean addAll(int index, Collection<? extends Forehead> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +96,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             if (!(element instanceof Forehead)) {
                 return false;
             }
@@ -90,6 +107,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +124,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +141,21 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Forehead set(int index, Forehead element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Forehead remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

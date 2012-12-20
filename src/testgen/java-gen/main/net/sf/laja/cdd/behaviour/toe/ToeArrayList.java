@@ -25,6 +25,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
     public ToeArrayList(ToeStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Toe> elements = new ArrayList<Toe>(stateList.size());
 
         for (ToeState state : stateList) {
@@ -36,6 +37,9 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
     }
 
     public ValToeArrayList asValToeList() {
+        if (stateList != null) {
+            return new ValToeArrayList(stateList);
+        }
         List<ValToe> result = new ArrayList<ValToe>();
         for (Toe entry : list) {
             result.add(entry.asValToe());
@@ -43,7 +47,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
         return new ValToeArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Toe> {
+    public class StateInSyncList extends ArrayList<Toe> {
         private final ToeStateList stateList;
 
         public StateInSyncList(ToeStateList stateList, List<Toe> elements) {
@@ -53,18 +57,21 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean add(Toe element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Toe element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Toe> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Toe element : collection) {
@@ -75,6 +82,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean addAll(int index, Collection<? extends Toe> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -88,6 +96,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             if (!(element instanceof Toe)) {
                 return false;
             }
@@ -98,6 +107,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -114,6 +124,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -130,18 +141,21 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Toe set(int index, Toe element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Toe remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

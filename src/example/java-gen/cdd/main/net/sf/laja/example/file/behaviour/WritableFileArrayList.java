@@ -23,7 +23,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<WritableFile> {
+    public class StateInSyncList extends ArrayList<WritableFile> {
         private final FileStateList stateList;
 
         public StateInSyncList(FileStateList stateList, List<WritableFile> elements) {
@@ -33,18 +33,21 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean add(WritableFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, WritableFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends WritableFile> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (WritableFile element : collection) {
@@ -55,6 +58,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean addAll(int index, Collection<? extends WritableFile> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -68,6 +72,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             if (!(element instanceof WritableFile)) {
                 return false;
             }
@@ -78,6 +83,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -94,6 +100,7 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -110,18 +117,21 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public WritableFile set(int index, WritableFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public WritableFile remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(WritableFileArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

@@ -25,6 +25,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
     public FootArrayList(FootStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Foot> elements = new ArrayList<Foot>(stateList.size());
 
         for (FootState state : stateList) {
@@ -35,7 +36,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Foot> {
+    public class StateInSyncList extends ArrayList<Foot> {
         private final FootStateList stateList;
 
         public StateInSyncList(FootStateList stateList, List<Foot> elements) {
@@ -45,18 +46,21 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean add(Foot element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Foot element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Foot> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Foot element : collection) {
@@ -67,6 +71,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean addAll(int index, Collection<? extends Foot> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             if (!(element instanceof Foot)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Foot set(int index, Foot element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Foot remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

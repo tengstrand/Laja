@@ -9,7 +9,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *   http://laja.sf.net
  */
 public class AddressStateListImpl extends ArrayList<AddressState> implements AddressStateList {
-    private boolean _encapsulated = false;
+    private Object encapsulator;
 
     public AddressStateListImpl() {
     }
@@ -35,11 +35,13 @@ public class AddressStateListImpl extends ArrayList<AddressState> implements Add
         return true;
     }
 
-    public void encapsulate() {
-        _encapsulated = true;
+    public void encapsulate(Object encapsulator) {
+        this.encapsulator = encapsulator;
+    }
 
-        for (AddressState state : this) {
-            state.encapsulate();
+    public void throwExceptionIfNotEncapsulatedBy(Object encapsulator) {
+        if (encapsulator != this.encapsulator) {
+            throw new IllegalStateException("The state has been encapsulated by an instance of " + this.encapsulator.getClass().getSimpleName() + " and can not be operated by " + encapsulator.getClass().getSimpleName());
         }
     }
 }

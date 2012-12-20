@@ -25,6 +25,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
     public OwnerArrayList(OwnerStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Owner> elements = new ArrayList<Owner>(stateList.size());
 
         for (OwnerState state : stateList) {
@@ -35,7 +36,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Owner> {
+    public class StateInSyncList extends ArrayList<Owner> {
         private final OwnerStateList stateList;
 
         public StateInSyncList(OwnerStateList stateList, List<Owner> elements) {
@@ -45,18 +46,21 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean add(Owner element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Owner element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Owner> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Owner element : collection) {
@@ -67,6 +71,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean addAll(int index, Collection<? extends Owner> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             if (!(element instanceof Owner)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Owner set(int index, Owner element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Owner remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

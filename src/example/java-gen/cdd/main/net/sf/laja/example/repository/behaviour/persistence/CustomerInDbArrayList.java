@@ -26,7 +26,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<CustomerInDb> {
+    public class StateInSyncList extends ArrayList<CustomerInDb> {
         private final CustomerStateList stateList;
 
         public StateInSyncList(CustomerStateList stateList, List<CustomerInDb> elements) {
@@ -36,18 +36,21 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
         @Override
         public boolean add(CustomerInDb element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, CustomerInDb element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends CustomerInDb> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (CustomerInDb element : collection) {
@@ -58,6 +61,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
         @Override
         public boolean addAll(int index, Collection<? extends CustomerInDb> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -71,6 +75,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             if (!(element instanceof CustomerInDb)) {
                 return false;
             }
@@ -81,6 +86,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -97,6 +103,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -113,18 +120,21 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public CustomerInDb set(int index, CustomerInDb element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public CustomerInDb remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

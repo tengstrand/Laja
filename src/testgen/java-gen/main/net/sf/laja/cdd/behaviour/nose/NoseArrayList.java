@@ -25,6 +25,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
     public NoseArrayList(NoseStateList stateList, int extraParameter) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Nose> elements = new ArrayList<Nose>(stateList.size());
 
         for (NoseState state : stateList) {
@@ -35,7 +36,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Nose> {
+    public class StateInSyncList extends ArrayList<Nose> {
         private final NoseStateList stateList;
 
         public StateInSyncList(NoseStateList stateList, List<Nose> elements) {
@@ -45,18 +46,21 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean add(Nose element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Nose element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Nose> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Nose element : collection) {
@@ -67,6 +71,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean addAll(int index, Collection<? extends Nose> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             if (!(element instanceof Nose)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Nose set(int index, Nose element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Nose remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

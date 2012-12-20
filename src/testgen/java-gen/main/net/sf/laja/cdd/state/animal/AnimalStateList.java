@@ -11,5 +11,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface AnimalStateList extends List<AnimalState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

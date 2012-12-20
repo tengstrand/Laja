@@ -25,6 +25,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
     public FakeHairArrayList(HairStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<FakeHair> elements = new ArrayList<FakeHair>(stateList.size());
 
         for (HairState state : stateList) {
@@ -35,7 +36,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<FakeHair> {
+    public class StateInSyncList extends ArrayList<FakeHair> {
         private final HairStateList stateList;
 
         public StateInSyncList(HairStateList stateList, List<FakeHair> elements) {
@@ -45,18 +46,21 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         @Override
         public boolean add(FakeHair element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, FakeHair element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends FakeHair> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (FakeHair element : collection) {
@@ -67,6 +71,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         @Override
         public boolean addAll(int index, Collection<? extends FakeHair> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             if (!(element instanceof FakeHair)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public FakeHair set(int index, FakeHair element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public FakeHair remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

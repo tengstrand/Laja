@@ -11,5 +11,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface BrowStateList extends List<BrowState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

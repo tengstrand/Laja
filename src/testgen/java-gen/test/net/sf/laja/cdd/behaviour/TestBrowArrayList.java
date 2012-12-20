@@ -25,6 +25,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
     public TestBrowArrayList(BrowStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<TestBrow> elements = new ArrayList<TestBrow>(stateList.size());
 
         for (BrowState state : stateList) {
@@ -35,7 +36,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<TestBrow> {
+    public class StateInSyncList extends ArrayList<TestBrow> {
         private final BrowStateList stateList;
 
         public StateInSyncList(BrowStateList stateList, List<TestBrow> elements) {
@@ -45,18 +46,21 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         @Override
         public boolean add(TestBrow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestBrow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TestBrow> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TestBrow element : collection) {
@@ -67,6 +71,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         @Override
         public boolean addAll(int index, Collection<? extends TestBrow> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             if (!(element instanceof TestBrow)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TestBrow set(int index, TestBrow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TestBrow remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

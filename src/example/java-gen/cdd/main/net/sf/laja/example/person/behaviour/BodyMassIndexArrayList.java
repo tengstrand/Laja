@@ -25,6 +25,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
     public BodyMassIndexArrayList(BmiStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<BodyMassIndex> elements = new ArrayList<BodyMassIndex>(stateList.size());
 
         for (BmiState state : stateList) {
@@ -35,7 +36,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<BodyMassIndex> {
+    public class StateInSyncList extends ArrayList<BodyMassIndex> {
         private final BmiStateList stateList;
 
         public StateInSyncList(BmiStateList stateList, List<BodyMassIndex> elements) {
@@ -45,18 +46,21 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         @Override
         public boolean add(BodyMassIndex element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, BodyMassIndex element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends BodyMassIndex> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (BodyMassIndex element : collection) {
@@ -67,6 +71,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         @Override
         public boolean addAll(int index, Collection<? extends BodyMassIndex> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             if (!(element instanceof BodyMassIndex)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public BodyMassIndex set(int index, BodyMassIndex element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public BodyMassIndex remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

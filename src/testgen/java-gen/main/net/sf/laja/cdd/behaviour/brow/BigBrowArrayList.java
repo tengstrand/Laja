@@ -1,7 +1,7 @@
-package net.sf.laja.cdd.behaviour.mouth;
+package net.sf.laja.cdd.behaviour.brow;
 
-import net.sf.laja.cdd.state.mouth.*;
-import net.sf.laja.cdd.behaviour.mouth.*;
+import net.sf.laja.cdd.state.brow.*;
+import net.sf.laja.cdd.behaviour.brow.*;
 import java.util.*;
 
 /**
@@ -9,60 +9,73 @@ import java.util.*;
  *
  *   http://laja.sf.net
  */
-public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateList;
-    protected final List<CuteMouth> list;
+public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, java.io.Serializable {
+    protected BrowStateList stateList;
+    protected final List<BigBrow> list;
 
-    public CuteMouthArrayList(CuteMouth... list) {
-        this.list = new ArrayList<CuteMouth>();
+    public BigBrowArrayList(BigBrow... list) {
+        this.list = new ArrayList<BigBrow>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public CuteMouthArrayList(Collection<CuteMouth> list) {
-        this.list = new ArrayList<CuteMouth>();
+    public BigBrowArrayList(Collection<BigBrow> list) {
+        this.list = new ArrayList<BigBrow>();
         this.list.addAll(list);
     }
 
-    public class StateInSyncList extends ArrayList<CuteMouth> {
-        private final MouthStateList stateList;
+    public BigBrowArrayList(BrowStateList stateList) {
+        this.stateList = stateList;
+        this.stateList.encapsulate(this);
+        List<BigBrow> elements = new ArrayList<BigBrow>(stateList.size());
 
-        public StateInSyncList(MouthStateList stateList, List<CuteMouth> elements) {
+        for (BrowState state : stateList) {
+            BrowStateBuilder builder = new BrowStateBuilderImpl(state);
+            BigBrow entry = (BigBrow) builder.as(new BrowFactory.BigBrowFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
+    }
+
+    public class StateInSyncList extends ArrayList<BigBrow> {
+        private final BrowStateList stateList;
+
+        public StateInSyncList(BrowStateList stateList, List<BigBrow> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(CuteMouth element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+        public boolean add(BigBrow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, CuteMouth element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+        public void add(int index, BigBrow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends CuteMouth> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+        public boolean addAll(Collection<? extends BigBrow> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             boolean modified = super.addAll(collection);
 
-            for (CuteMouth element : collection) {
+            for (BigBrow element : collection) {
                 stateList.add(element.getState(stateList));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+        public boolean addAll(int index, Collection<? extends BigBrow> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (CuteMouth element : collection) {
+            for (BigBrow element : collection) {
                 elements.add(element.getState(stateList));
             }
             stateList.addAll(index, elements);
@@ -72,24 +85,24 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean remove(Object element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
-            if (!(element instanceof CuteMouth)) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
+            if (!(element instanceof BigBrow)) {
                 return false;
             }
-            stateList.remove(((CuteMouth) element).getState(stateList));
+            stateList.remove(((BigBrow) element).getState(stateList));
 
             return super.remove(element);
         }
 
         @Override
         public boolean removeAll(Collection<?> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof CuteMouth) {
+                if (element instanceof BigBrow) {
                     elements.add(element);
-                    states.add(((CuteMouth)element).getState(stateList));
+                    states.add(((BigBrow)element).getState(stateList));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -100,13 +113,13 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof CuteMouth) {
+                if (element instanceof BigBrow) {
                     elements.add(element);
-                    states.add(((CuteMouth)element).getState(stateList));
+                    states.add(((BigBrow)element).getState(stateList));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -117,21 +130,21 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
 
         @Override
         public void clear() {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
-        public CuteMouth set(int index, CuteMouth element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+        public BigBrow set(int index, BigBrow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
-        public CuteMouth remove(int index) {
-            stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
+        public BigBrow remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }
@@ -149,7 +162,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         return list.contains(element);
     }
 
-    public Iterator<CuteMouth> iterator() {
+    public Iterator<BigBrow> iterator() {
         return list.iterator();
     }
 
@@ -157,28 +170,28 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         return list.toArray();
     }
 
-    public <CuteMouth> CuteMouth[] toArray(CuteMouth[] array) {
+    public <BigBrow> BigBrow[] toArray(BigBrow[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(CuteMouth element) {
+    public boolean add(BigBrow element) {
         return list.add(element);
     }
 
-    public void add(int index, CuteMouth element) {
+    public void add(int index, BigBrow element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends CuteMouth> collection) {
+    public boolean addAll(Collection<? extends BigBrow> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends CuteMouth> collection) {
+    public boolean addAll(int index, Collection<? extends BigBrow> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof CuteMouth)) {
+        if (!(element instanceof BigBrow)) {
             return false;
         }
         return list.remove(element);
@@ -200,15 +213,15 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         list.clear();
     }
 
-    public CuteMouth get(int index) {
+    public BigBrow get(int index) {
         return list.get(index);
     }
 
-    public CuteMouth set(int index, CuteMouth element) {
+    public BigBrow set(int index, BigBrow element) {
         return list.set(index, element);
     }
 
-    public CuteMouth remove(int index) {
+    public BigBrow remove(int index) {
         return list.remove(index);
     }
 
@@ -220,15 +233,15 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<CuteMouth> listIterator() {
+    public ListIterator<BigBrow> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<CuteMouth> listIterator(int index) {
+    public ListIterator<BigBrow> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<CuteMouth> subList(int fromIndex, int toIndex) {
+    public List<BigBrow> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

@@ -11,5 +11,6 @@ import net.sf.laja.example.person.state.Certificate;
 public interface HeightStateList extends List<HeightState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

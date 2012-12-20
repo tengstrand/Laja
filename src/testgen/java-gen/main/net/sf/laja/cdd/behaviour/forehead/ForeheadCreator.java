@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.behaviour.forehead;
 
 import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;

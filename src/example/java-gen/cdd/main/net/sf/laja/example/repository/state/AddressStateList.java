@@ -11,5 +11,6 @@ import net.sf.laja.example.repository.state.Certificate;
 public interface AddressStateList extends List<AddressState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

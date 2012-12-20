@@ -9,7 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class FootStateListImpl extends ArrayList<FootState> implements FootStateList {
-    private boolean _encapsulated = false;
+    private Object encapsulator;
 
     public FootStateListImpl() {
     }
@@ -35,11 +35,13 @@ public class FootStateListImpl extends ArrayList<FootState> implements FootState
         return true;
     }
 
-    public void encapsulate() {
-        _encapsulated = true;
+    public void encapsulate(Object encapsulator) {
+        this.encapsulator = encapsulator;
+    }
 
-        for (FootState state : this) {
-            state.encapsulate();
+    public void throwExceptionIfNotEncapsulatedBy(Object encapsulator) {
+        if (encapsulator != this.encapsulator) {
+            throw new IllegalStateException("The state has been encapsulated by an instance of " + this.encapsulator.getClass().getSimpleName() + " and can not be operated by " + encapsulator.getClass().getSimpleName());
         }
     }
 }

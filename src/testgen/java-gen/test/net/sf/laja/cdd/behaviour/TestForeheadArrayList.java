@@ -25,6 +25,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
     public TestForeheadArrayList(ForeheadStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<TestForehead> elements = new ArrayList<TestForehead>(stateList.size());
 
         for (ForeheadState state : stateList) {
@@ -35,7 +36,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<TestForehead> {
+    public class StateInSyncList extends ArrayList<TestForehead> {
         private final ForeheadStateList stateList;
 
         public StateInSyncList(ForeheadStateList stateList, List<TestForehead> elements) {
@@ -45,18 +46,21 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         @Override
         public boolean add(TestForehead element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestForehead element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TestForehead> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TestForehead element : collection) {
@@ -67,6 +71,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         @Override
         public boolean addAll(int index, Collection<? extends TestForehead> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             if (!(element instanceof TestForehead)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TestForehead set(int index, TestForehead element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TestForehead remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

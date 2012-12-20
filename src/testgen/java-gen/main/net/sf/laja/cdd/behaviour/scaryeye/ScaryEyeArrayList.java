@@ -26,7 +26,7 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<ScaryEye> {
+    public class StateInSyncList extends ArrayList<ScaryEye> {
         private final EyeStateList stateList;
 
         public StateInSyncList(EyeStateList stateList, List<ScaryEye> elements) {
@@ -36,18 +36,21 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
 
         @Override
         public boolean add(ScaryEye element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, ScaryEye element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends ScaryEye> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (ScaryEye element : collection) {
@@ -58,6 +61,7 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
 
         @Override
         public boolean addAll(int index, Collection<? extends ScaryEye> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -71,6 +75,7 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             if (!(element instanceof ScaryEye)) {
                 return false;
             }
@@ -81,6 +86,7 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -97,6 +103,7 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -113,18 +120,21 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public ScaryEye set(int index, ScaryEye element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public ScaryEye remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ScaryEyeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

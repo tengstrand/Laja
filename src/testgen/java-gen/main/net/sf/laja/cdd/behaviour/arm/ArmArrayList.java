@@ -25,6 +25,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
     public ArmArrayList(ArmStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Arm> elements = new ArrayList<Arm>(stateList.size());
 
         for (ArmState state : stateList) {
@@ -35,7 +36,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Arm> {
+    public class StateInSyncList extends ArrayList<Arm> {
         private final ArmStateList stateList;
 
         public StateInSyncList(ArmStateList stateList, List<Arm> elements) {
@@ -45,18 +46,21 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean add(Arm element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Arm element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Arm> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Arm element : collection) {
@@ -67,6 +71,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean addAll(int index, Collection<? extends Arm> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             if (!(element instanceof Arm)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Arm set(int index, Arm element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Arm remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ArmArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

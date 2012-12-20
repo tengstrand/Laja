@@ -23,7 +23,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<TextFile> {
+    public class StateInSyncList extends ArrayList<TextFile> {
         private final FileStateList stateList;
 
         public StateInSyncList(FileStateList stateList, List<TextFile> elements) {
@@ -33,18 +33,21 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
         @Override
         public boolean add(TextFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TextFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TextFile> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TextFile element : collection) {
@@ -55,6 +58,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
         @Override
         public boolean addAll(int index, Collection<? extends TextFile> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -68,6 +72,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             if (!(element instanceof TextFile)) {
                 return false;
             }
@@ -78,6 +83,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -94,6 +100,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -110,18 +117,21 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TextFile set(int index, TextFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TextFile remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

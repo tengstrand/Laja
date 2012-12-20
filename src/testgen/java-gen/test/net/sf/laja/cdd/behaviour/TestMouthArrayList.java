@@ -29,6 +29,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
     public TestMouthArrayList(MouthStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<TestMouth> elements = new ArrayList<TestMouth>(stateList.size());
 
         for (MouthState state : stateList) {
@@ -47,7 +48,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
         return new CuteMouthArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<TestMouth> {
+    public class StateInSyncList extends ArrayList<TestMouth> {
         private final MouthStateList stateList;
 
         public StateInSyncList(MouthStateList stateList, List<TestMouth> elements) {
@@ -57,18 +58,21 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean add(TestMouth element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestMouth element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TestMouth> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TestMouth element : collection) {
@@ -79,6 +83,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean addAll(int index, Collection<? extends TestMouth> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -92,6 +97,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             if (!(element instanceof TestMouth)) {
                 return false;
             }
@@ -102,6 +108,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -118,6 +125,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -134,18 +142,21 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TestMouth set(int index, TestMouth element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TestMouth remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

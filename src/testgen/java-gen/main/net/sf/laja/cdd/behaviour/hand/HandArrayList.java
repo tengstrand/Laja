@@ -25,6 +25,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
     public HandArrayList(HandStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Hand> elements = new ArrayList<Hand>(stateList.size());
 
         for (HandState state : stateList) {
@@ -35,7 +36,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Hand> {
+    public class StateInSyncList extends ArrayList<Hand> {
         private final HandStateList stateList;
 
         public StateInSyncList(HandStateList stateList, List<Hand> elements) {
@@ -45,18 +46,21 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean add(Hand element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Hand element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Hand> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Hand element : collection) {
@@ -67,6 +71,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean addAll(int index, Collection<? extends Hand> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             if (!(element instanceof Hand)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Hand set(int index, Hand element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Hand remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

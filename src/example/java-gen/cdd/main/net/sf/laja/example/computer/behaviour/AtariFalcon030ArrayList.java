@@ -25,6 +25,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
     public AtariFalcon030ArrayList(ComputerStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<AtariFalcon030> elements = new ArrayList<AtariFalcon030>(stateList.size());
 
         for (ComputerState state : stateList) {
@@ -35,7 +36,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<AtariFalcon030> {
+    public class StateInSyncList extends ArrayList<AtariFalcon030> {
         private final ComputerStateList stateList;
 
         public StateInSyncList(ComputerStateList stateList, List<AtariFalcon030> elements) {
@@ -45,18 +46,21 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         @Override
         public boolean add(AtariFalcon030 element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, AtariFalcon030 element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends AtariFalcon030> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (AtariFalcon030 element : collection) {
@@ -67,6 +71,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         @Override
         public boolean addAll(int index, Collection<? extends AtariFalcon030> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             if (!(element instanceof AtariFalcon030)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public AtariFalcon030 set(int index, AtariFalcon030 element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public AtariFalcon030 remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AtariFalcon030ArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

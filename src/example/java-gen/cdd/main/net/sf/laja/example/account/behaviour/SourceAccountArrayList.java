@@ -25,6 +25,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
     public SourceAccountArrayList(AccountStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<SourceAccount> elements = new ArrayList<SourceAccount>(stateList.size());
 
         for (AccountState state : stateList) {
@@ -35,7 +36,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<SourceAccount> {
+    public class StateInSyncList extends ArrayList<SourceAccount> {
         private final AccountStateList stateList;
 
         public StateInSyncList(AccountStateList stateList, List<SourceAccount> elements) {
@@ -45,18 +46,21 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         @Override
         public boolean add(SourceAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, SourceAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends SourceAccount> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (SourceAccount element : collection) {
@@ -67,6 +71,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         @Override
         public boolean addAll(int index, Collection<? extends SourceAccount> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             if (!(element instanceof SourceAccount)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public SourceAccount set(int index, SourceAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public SourceAccount remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

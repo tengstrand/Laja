@@ -13,11 +13,13 @@ public class HandEntity implements HandElement {
 
     public HandEntity(HandState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public HandEntity(HandState state, HandStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public HandState getState(Certificate certificate) {

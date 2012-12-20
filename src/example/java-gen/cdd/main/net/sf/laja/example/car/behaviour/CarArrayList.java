@@ -25,6 +25,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
     public CarArrayList(CarStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Car> elements = new ArrayList<Car>(stateList.size());
 
         for (CarState state : stateList) {
@@ -35,7 +36,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Car> {
+    public class StateInSyncList extends ArrayList<Car> {
         private final CarStateList stateList;
 
         public StateInSyncList(CarStateList stateList, List<Car> elements) {
@@ -45,18 +46,21 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean add(Car element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Car element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Car> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Car element : collection) {
@@ -67,6 +71,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean addAll(int index, Collection<? extends Car> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             if (!(element instanceof Car)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Car set(int index, Car element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Car remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CarArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

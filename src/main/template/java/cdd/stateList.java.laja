@@ -8,7 +8,8 @@ import {certificatePackage}.Certificate;
 public interface {stateListClass} extends List<{stateClass}> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }
 #end
 

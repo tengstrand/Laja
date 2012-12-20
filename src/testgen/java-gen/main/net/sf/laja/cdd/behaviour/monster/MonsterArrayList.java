@@ -29,6 +29,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
     public MonsterArrayList(MonsterStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Monster> elements = new ArrayList<Monster>(stateList.size());
 
         for (MonsterState state : stateList) {
@@ -47,7 +48,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
         return new TerrestrialArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Monster> {
+    public class StateInSyncList extends ArrayList<Monster> {
         private final MonsterStateList stateList;
 
         public StateInSyncList(MonsterStateList stateList, List<Monster> elements) {
@@ -57,18 +58,21 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         @Override
         public boolean add(Monster element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Monster element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Monster> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Monster element : collection) {
@@ -79,6 +83,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         @Override
         public boolean addAll(int index, Collection<? extends Monster> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -92,6 +97,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             if (!(element instanceof Monster)) {
                 return false;
             }
@@ -102,6 +108,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -118,6 +125,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -134,18 +142,21 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Monster set(int index, Monster element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Monster remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

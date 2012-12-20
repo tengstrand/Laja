@@ -25,6 +25,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
     public DestinationAccountArrayList(AccountStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<DestinationAccount> elements = new ArrayList<DestinationAccount>(stateList.size());
 
         for (AccountState state : stateList) {
@@ -35,7 +36,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<DestinationAccount> {
+    public class StateInSyncList extends ArrayList<DestinationAccount> {
         private final AccountStateList stateList;
 
         public StateInSyncList(AccountStateList stateList, List<DestinationAccount> elements) {
@@ -45,18 +46,21 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         @Override
         public boolean add(DestinationAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, DestinationAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends DestinationAccount> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (DestinationAccount element : collection) {
@@ -67,6 +71,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         @Override
         public boolean addAll(int index, Collection<? extends DestinationAccount> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             if (!(element instanceof DestinationAccount)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public DestinationAccount set(int index, DestinationAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public DestinationAccount remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

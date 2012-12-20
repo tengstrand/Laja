@@ -25,6 +25,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
     public MouthArrayList(MouthStateList stateList, MouthSize size) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Mouth> elements = new ArrayList<Mouth>(stateList.size());
 
         for (MouthState state : stateList) {
@@ -43,7 +44,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
         return new CuteMouthArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Mouth> {
+    public class StateInSyncList extends ArrayList<Mouth> {
         private final MouthStateList stateList;
 
         public StateInSyncList(MouthStateList stateList, List<Mouth> elements) {
@@ -53,18 +54,21 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean add(Mouth element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Mouth element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Mouth> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Mouth element : collection) {
@@ -75,6 +79,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean addAll(int index, Collection<? extends Mouth> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -88,6 +93,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             if (!(element instanceof Mouth)) {
                 return false;
             }
@@ -98,6 +104,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -114,6 +121,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -130,18 +138,21 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Mouth set(int index, Mouth element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Mouth remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(MouthArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

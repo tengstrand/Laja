@@ -11,5 +11,6 @@ import net.sf.laja.example.file.state.Certificate;
 public interface DirectoryStateList extends List<DirectoryState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

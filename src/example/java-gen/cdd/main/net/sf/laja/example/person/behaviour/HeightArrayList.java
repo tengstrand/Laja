@@ -25,6 +25,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
     public HeightArrayList(HeightStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Height> elements = new ArrayList<Height>(stateList.size());
 
         for (HeightState state : stateList) {
@@ -35,7 +36,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Height> {
+    public class StateInSyncList extends ArrayList<Height> {
         private final HeightStateList stateList;
 
         public StateInSyncList(HeightStateList stateList, List<Height> elements) {
@@ -45,18 +46,21 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean add(Height element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Height element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Height> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Height element : collection) {
@@ -67,6 +71,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean addAll(int index, Collection<? extends Height> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             if (!(element instanceof Height)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Height set(int index, Height element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Height remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

@@ -25,6 +25,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
     public HairArrayList(HairStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Hair> elements = new ArrayList<Hair>(stateList.size());
 
         for (HairState state : stateList) {
@@ -36,6 +37,9 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
     }
 
     public FakeHairArrayList asFakeHairList() {
+        if (stateList != null) {
+            return new FakeHairArrayList(stateList);
+        }
         List<FakeHair> result = new ArrayList<FakeHair>();
         for (Hair entry : list) {
             result.add(entry.asFakeHair());
@@ -43,7 +47,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
         return new FakeHairArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Hair> {
+    public class StateInSyncList extends ArrayList<Hair> {
         private final HairStateList stateList;
 
         public StateInSyncList(HairStateList stateList, List<Hair> elements) {
@@ -53,18 +57,21 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean add(Hair element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Hair element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Hair> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Hair element : collection) {
@@ -75,6 +82,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean addAll(int index, Collection<? extends Hair> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -88,6 +96,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             if (!(element instanceof Hair)) {
                 return false;
             }
@@ -98,6 +107,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -114,6 +124,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -130,18 +141,21 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Hair set(int index, Hair element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Hair remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

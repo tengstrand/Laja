@@ -2,6 +2,7 @@ package net.sf.laja.cdd.behaviour.forehead;
 
 import java.util.*;
 import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
@@ -35,6 +36,15 @@ public class ForeheadListEncapsulator implements Iterable<ForeheadEncapsulator> 
             result.add(encapsulator.asForehead());
         }
         return new ForeheadArrayList(result);
+    }
+
+    public ForeheadWithBigBrowsList asForeheadWithBigBrowsList() {
+        List<ForeheadWithBigBrows> result = new ArrayList<ForeheadWithBigBrows>();
+
+        for (ForeheadEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asForeheadWithBigBrows());
+        }
+        return new ForeheadWithBigBrowsArrayList(result);
     }
 
     public boolean isValid() {

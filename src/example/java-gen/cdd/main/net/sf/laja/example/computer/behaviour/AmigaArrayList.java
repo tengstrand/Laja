@@ -25,6 +25,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
     public AmigaArrayList(ComputerStateList stateList, Configuration context) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Amiga> elements = new ArrayList<Amiga>(stateList.size());
 
         for (ComputerState state : stateList) {
@@ -35,7 +36,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Amiga> {
+    public class StateInSyncList extends ArrayList<Amiga> {
         private final ComputerStateList stateList;
 
         public StateInSyncList(ComputerStateList stateList, List<Amiga> elements) {
@@ -45,18 +46,21 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean add(Amiga element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Amiga element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Amiga> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Amiga element : collection) {
@@ -67,6 +71,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean addAll(int index, Collection<? extends Amiga> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             if (!(element instanceof Amiga)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Amiga set(int index, Amiga element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Amiga remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

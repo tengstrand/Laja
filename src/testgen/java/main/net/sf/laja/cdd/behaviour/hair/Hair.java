@@ -16,4 +16,8 @@ public class Hair extends HairFactory {
     public FakeHair asFakeHair() {
         return new FakeHair(state);
     }
+
+    public void mutate() {
+        state.setLength(1, this);
+    }
 }

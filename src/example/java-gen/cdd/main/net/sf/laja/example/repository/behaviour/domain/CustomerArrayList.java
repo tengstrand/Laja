@@ -37,6 +37,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
     public CustomerArrayList(CustomerStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Customer> elements = new ArrayList<Customer>(stateList.size());
 
         for (CustomerState state : stateList) {
@@ -48,6 +49,9 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
     }
 
     public CustomerMatcherArrayList asCustomerMatcherList() {
+        if (stateList != null) {
+            return new CustomerMatcherArrayList(stateList);
+        }
         List<CustomerMatcher> result = new ArrayList<CustomerMatcher>();
         for (Customer entry : list) {
             result.add(entry.asCustomerMatcher());
@@ -71,7 +75,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
         return new CustomerInGuiArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<Customer> {
+    public class StateInSyncList extends ArrayList<Customer> {
         private final CustomerStateList stateList;
 
         public StateInSyncList(CustomerStateList stateList, List<Customer> elements) {
@@ -81,18 +85,21 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         @Override
         public boolean add(Customer element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Customer element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Customer> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Customer element : collection) {
@@ -103,6 +110,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         @Override
         public boolean addAll(int index, Collection<? extends Customer> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -116,6 +124,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             if (!(element instanceof Customer)) {
                 return false;
             }
@@ -126,6 +135,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -142,6 +152,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -158,18 +169,21 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Customer set(int index, Customer element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Customer remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

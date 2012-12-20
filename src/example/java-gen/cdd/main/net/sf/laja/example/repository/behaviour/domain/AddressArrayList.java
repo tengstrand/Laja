@@ -25,6 +25,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
     public AddressArrayList(AddressStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Address> elements = new ArrayList<Address>(stateList.size());
 
         for (AddressState state : stateList) {
@@ -35,7 +36,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Address> {
+    public class StateInSyncList extends ArrayList<Address> {
         private final AddressStateList stateList;
 
         public StateInSyncList(AddressStateList stateList, List<Address> elements) {
@@ -45,18 +46,21 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         @Override
         public boolean add(Address element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Address element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Address> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Address element : collection) {
@@ -67,6 +71,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         @Override
         public boolean addAll(int index, Collection<? extends Address> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             if (!(element instanceof Address)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Address set(int index, Address element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Address remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

@@ -14,6 +14,10 @@ public class BrowEncapsulator {
         return (Brow)builder.as(new BrowFactory.BrowFactory_(builder));
     }
 
+    public BigBrow asBigBrow() {
+        return (BigBrow)builder.as(new BrowFactory.BigBrowFactory_(builder));
+    }
+
     public boolean isValid() {
          return builder.isValid();
     }

@@ -25,6 +25,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
     public PersonArrayList(PersonStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Person> elements = new ArrayList<Person>(stateList.size());
 
         for (PersonState state : stateList) {
@@ -35,7 +36,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Person> {
+    public class StateInSyncList extends ArrayList<Person> {
         private final PersonStateList stateList;
 
         public StateInSyncList(PersonStateList stateList, List<Person> elements) {
@@ -45,18 +46,21 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean add(Person element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Person element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Person> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Person element : collection) {
@@ -67,6 +71,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean addAll(int index, Collection<? extends Person> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             if (!(element instanceof Person)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Person set(int index, Person element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Person remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

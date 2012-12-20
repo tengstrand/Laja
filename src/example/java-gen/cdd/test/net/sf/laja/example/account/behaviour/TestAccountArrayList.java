@@ -25,6 +25,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
     public TestAccountArrayList(AccountStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<TestAccount> elements = new ArrayList<TestAccount>(stateList.size());
 
         for (AccountState state : stateList) {
@@ -51,7 +52,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
         return new DestinationAccountArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<TestAccount> {
+    public class StateInSyncList extends ArrayList<TestAccount> {
         private final AccountStateList stateList;
 
         public StateInSyncList(AccountStateList stateList, List<TestAccount> elements) {
@@ -61,18 +62,21 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         @Override
         public boolean add(TestAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TestAccount> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TestAccount element : collection) {
@@ -83,6 +87,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         @Override
         public boolean addAll(int index, Collection<? extends TestAccount> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -96,6 +101,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             if (!(element instanceof TestAccount)) {
                 return false;
             }
@@ -106,6 +112,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,6 +129,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -138,18 +146,21 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TestAccount set(int index, TestAccount element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TestAccount remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

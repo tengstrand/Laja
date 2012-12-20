@@ -9,7 +9,7 @@ import net.sf.laja.example.file.state.Certificate;
  *   http://laja.sf.net
  */
 public class FileStateListImpl extends ArrayList<FileState> implements FileStateList {
-    private boolean _encapsulated = false;
+    private Object encapsulator;
 
     public FileStateListImpl() {
     }
@@ -35,11 +35,13 @@ public class FileStateListImpl extends ArrayList<FileState> implements FileState
         return true;
     }
 
-    public void encapsulate() {
-        _encapsulated = true;
+    public void encapsulate(Object encapsulator) {
+        this.encapsulator = encapsulator;
+    }
 
-        for (FileState state : this) {
-            state.encapsulate();
+    public void throwExceptionIfNotEncapsulatedBy(Object encapsulator) {
+        if (encapsulator != this.encapsulator) {
+            throw new IllegalStateException("The state has been encapsulated by an instance of " + this.encapsulator.getClass().getSimpleName() + " and can not be operated by " + encapsulator.getClass().getSimpleName());
         }
     }
 }

@@ -26,7 +26,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
         this.list.addAll(list);
     }
 
-    public static class StateInSyncList extends ArrayList<TextDirectory> {
+    public class StateInSyncList extends ArrayList<TextDirectory> {
         private final DirectoryStateList stateList;
 
         public StateInSyncList(DirectoryStateList stateList, List<TextDirectory> elements) {
@@ -36,18 +36,21 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
         @Override
         public boolean add(TextDirectory element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TextDirectory element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TextDirectory> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TextDirectory element : collection) {
@@ -58,6 +61,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
         @Override
         public boolean addAll(int index, Collection<? extends TextDirectory> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -71,6 +75,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             if (!(element instanceof TextDirectory)) {
                 return false;
             }
@@ -81,6 +86,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -97,6 +103,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -113,18 +120,21 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TextDirectory set(int index, TextDirectory element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TextDirectory remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

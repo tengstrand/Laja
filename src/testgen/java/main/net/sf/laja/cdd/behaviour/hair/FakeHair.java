@@ -11,4 +11,8 @@ public class FakeHair extends HairValue {
     public boolean hasColor(String color) {
         return state.getColor().equals(color);
     }
+
+    public void mutate() {
+        state.setLength(1, this);
+    }
 }

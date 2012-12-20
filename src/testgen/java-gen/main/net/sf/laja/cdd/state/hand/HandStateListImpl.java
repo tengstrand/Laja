@@ -9,7 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.sf.net
  */
 public class HandStateListImpl extends ArrayList<HandState> implements HandStateList {
-    private boolean _encapsulated = false;
+    private Object encapsulator;
 
     public HandStateListImpl() {
     }
@@ -35,11 +35,13 @@ public class HandStateListImpl extends ArrayList<HandState> implements HandState
         return true;
     }
 
-    public void encapsulate() {
-        _encapsulated = true;
+    public void encapsulate(Object encapsulator) {
+        this.encapsulator = encapsulator;
+    }
 
-        for (HandState state : this) {
-            state.encapsulate();
+    public void throwExceptionIfNotEncapsulatedBy(Object encapsulator) {
+        if (encapsulator != this.encapsulator) {
+            throw new IllegalStateException("The state has been encapsulated by an instance of " + this.encapsulator.getClass().getSimpleName() + " and can not be operated by " + encapsulator.getClass().getSimpleName());
         }
     }
 }

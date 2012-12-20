@@ -25,6 +25,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
     public HeadArrayList(HeadStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Head> elements = new ArrayList<Head>(stateList.size());
 
         for (HeadState state : stateList) {
@@ -35,7 +36,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Head> {
+    public class StateInSyncList extends ArrayList<Head> {
         private final HeadStateList stateList;
 
         public StateInSyncList(HeadStateList stateList, List<Head> elements) {
@@ -45,18 +46,21 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean add(Head element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Head element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Head> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Head element : collection) {
@@ -67,6 +71,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean addAll(int index, Collection<? extends Head> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             if (!(element instanceof Head)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Head set(int index, Head element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Head remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

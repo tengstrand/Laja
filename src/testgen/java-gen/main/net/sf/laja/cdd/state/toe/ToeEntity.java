@@ -13,11 +13,13 @@ public class ToeEntity implements ToeElement {
 
     public ToeEntity(ToeState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public ToeEntity(ToeState state, ToeStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public ToeState getState(Certificate certificate) {

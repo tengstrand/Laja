@@ -25,6 +25,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
     public FleckArrayList(FleckStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Fleck> elements = new ArrayList<Fleck>(stateList.size());
 
         for (FleckState state : stateList) {
@@ -35,7 +36,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Fleck> {
+    public class StateInSyncList extends ArrayList<Fleck> {
         private final FleckStateList stateList;
 
         public StateInSyncList(FleckStateList stateList, List<Fleck> elements) {
@@ -45,18 +46,21 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean add(Fleck element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Fleck element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Fleck> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Fleck element : collection) {
@@ -67,6 +71,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean addAll(int index, Collection<? extends Fleck> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             if (!(element instanceof Fleck)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Fleck set(int index, Fleck element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Fleck remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(FleckArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

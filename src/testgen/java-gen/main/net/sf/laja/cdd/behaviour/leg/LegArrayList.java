@@ -25,6 +25,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
     public LegArrayList(LegStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Leg> elements = new ArrayList<Leg>(stateList.size());
 
         for (LegState state : stateList) {
@@ -35,7 +36,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Leg> {
+    public class StateInSyncList extends ArrayList<Leg> {
         private final LegStateList stateList;
 
         public StateInSyncList(LegStateList stateList, List<Leg> elements) {
@@ -45,18 +46,21 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean add(Leg element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Leg element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Leg> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Leg element : collection) {
@@ -67,6 +71,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean addAll(int index, Collection<? extends Leg> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             if (!(element instanceof Leg)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Leg set(int index, Leg element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Leg remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

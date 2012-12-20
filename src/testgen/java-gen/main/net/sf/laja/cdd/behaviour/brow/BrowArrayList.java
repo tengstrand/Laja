@@ -25,6 +25,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
     public BrowArrayList(BrowStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Brow> elements = new ArrayList<Brow>(stateList.size());
 
         for (BrowState state : stateList) {
@@ -35,7 +36,18 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Brow> {
+    public BigBrowArrayList asBigBrowList() {
+        if (stateList != null) {
+            return new BigBrowArrayList(stateList);
+        }
+        List<BigBrow> result = new ArrayList<BigBrow>();
+        for (Brow entry : list) {
+            result.add(entry.asBigBrow());
+        }
+        return new BigBrowArrayList(result);
+    }
+
+    public class StateInSyncList extends ArrayList<Brow> {
         private final BrowStateList stateList;
 
         public StateInSyncList(BrowStateList stateList, List<Brow> elements) {
@@ -45,18 +57,21 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean add(Brow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Brow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Brow> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Brow element : collection) {
@@ -67,6 +82,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean addAll(int index, Collection<? extends Brow> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +96,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             if (!(element instanceof Brow)) {
                 return false;
             }
@@ -90,6 +107,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +124,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +141,21 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Brow set(int index, Brow element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Brow remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

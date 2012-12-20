@@ -5,6 +5,7 @@ import java.util.Iterator;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.forehead.*;
 import java.util.Arrays;
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import java.util.ArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
@@ -51,6 +52,30 @@ public class ForeheadValueFactory extends ForeheadValue {
 
       private Object create_(ForeheadState state, Object... args) {
         return new Forehead(state);
+    
+      }
+    }
+
+    public static class ForeheadWithBigBrowsFactory_ implements ForeheadStateBehaviourFactory {
+        private final ForeheadStateBuilder builder;
+
+        public ForeheadWithBigBrowsFactory_(ForeheadStateBuilder builder) {
+            this.builder = builder;
+        }
+
+        public Object create(ForeheadState state, Object... args) {
+            Object result = create_(state, args);
+
+            if (!state.isValidAsEncapsulated()) {
+                throw new IllegalStateException("Illegal state, could not create behaviour class 'ForeheadWithBigBrows'");
+            }
+            state.encapsulate();
+
+            return result;
+        }
+
+      private Object create_(ForeheadState state, Object... args) {
+        return new ForeheadWithBigBrows(state);
     
       }
     }

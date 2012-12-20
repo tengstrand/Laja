@@ -34,6 +34,15 @@ public class BrowListEncapsulator implements Iterable<BrowEncapsulator> {
         return new BrowArrayList(result);
     }
 
+    public BigBrowList asBigBrowList() {
+        List<BigBrow> result = new ArrayList<BigBrow>();
+
+        for (BrowEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asBigBrow());
+        }
+        return new BigBrowArrayList(result);
+    }
+
     public boolean isValid() {
         for (BrowEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {

@@ -25,6 +25,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
     public VehicleSizeArrayList(VehicleSizeStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<VehicleSize> elements = new ArrayList<VehicleSize>(stateList.size());
 
         for (VehicleSizeState state : stateList) {
@@ -35,7 +36,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<VehicleSize> {
+    public class StateInSyncList extends ArrayList<VehicleSize> {
         private final VehicleSizeStateList stateList;
 
         public StateInSyncList(VehicleSizeStateList stateList, List<VehicleSize> elements) {
@@ -45,18 +46,21 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         @Override
         public boolean add(VehicleSize element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, VehicleSize element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends VehicleSize> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (VehicleSize element : collection) {
@@ -67,6 +71,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         @Override
         public boolean addAll(int index, Collection<? extends VehicleSize> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             if (!(element instanceof VehicleSize)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public VehicleSize set(int index, VehicleSize element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public VehicleSize remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

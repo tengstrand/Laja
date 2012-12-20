@@ -25,6 +25,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
     public TruckArrayList(TruckStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Truck> elements = new ArrayList<Truck>(stateList.size());
 
         for (TruckState state : stateList) {
@@ -35,7 +36,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Truck> {
+    public class StateInSyncList extends ArrayList<Truck> {
         private final TruckStateList stateList;
 
         public StateInSyncList(TruckStateList stateList, List<Truck> elements) {
@@ -45,18 +46,21 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean add(Truck element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Truck element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Truck> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Truck element : collection) {
@@ -67,6 +71,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean addAll(int index, Collection<? extends Truck> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             if (!(element instanceof Truck)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class TruckArrayList implements TruckList, RandomAccess, Cloneable, java.
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Truck set(int index, Truck element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Truck remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

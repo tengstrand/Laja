@@ -25,6 +25,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
     public TruckTypeArrayList(TruckTypeStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<TruckType> elements = new ArrayList<TruckType>(stateList.size());
 
         for (TruckTypeState state : stateList) {
@@ -35,7 +36,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<TruckType> {
+    public class StateInSyncList extends ArrayList<TruckType> {
         private final TruckTypeStateList stateList;
 
         public StateInSyncList(TruckTypeStateList stateList, List<TruckType> elements) {
@@ -45,18 +46,21 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         @Override
         public boolean add(TruckType element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TruckType element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TruckType> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (TruckType element : collection) {
@@ -67,6 +71,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         @Override
         public boolean addAll(int index, Collection<? extends TruckType> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             if (!(element instanceof TruckType)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public TruckType set(int index, TruckType element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public TruckType remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

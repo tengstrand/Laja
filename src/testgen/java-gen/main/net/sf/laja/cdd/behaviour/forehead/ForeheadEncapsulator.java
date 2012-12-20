@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.behaviour.forehead;
 
 import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
@@ -17,6 +18,10 @@ public class ForeheadEncapsulator {
 
     public Forehead asForehead() {
         return (Forehead)builder.as(new ForeheadFactory.ForeheadFactory_(builder));
+    }
+
+    public ForeheadWithBigBrows asForeheadWithBigBrows() {
+        return (ForeheadWithBigBrows)builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_(builder));
     }
 
     public ForeheadEncapsulator withBrows(BrowEncapsulator... brows) {

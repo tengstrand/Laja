@@ -11,5 +11,6 @@ import net.sf.laja.example.car.state.Certificate;
 public interface OwnerStateList extends List<OwnerState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

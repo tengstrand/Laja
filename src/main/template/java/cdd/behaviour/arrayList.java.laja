@@ -33,6 +33,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
     #setArgumentsAndParameters(method, true)
     public {arrayListClass}({stateListClass} stateList{parameters}) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<{entryClass}> elements = new ArrayList<{entryClass}>(stateList.size());
 
         for ({stateClass} state : stateList) {
@@ -47,6 +48,11 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
     #setArgumentsAndParameters(m, false)
 
     public {m.arrayListClass} {m.methodName}List({parameters}) {
+    #if (m.isFactory)
+        if (stateList != null) {
+            return new {m.arrayListClass}(stateList);
+        }
+    #end
         List<{m.returnclass}> result = new ArrayList<{m.returnclass}>();
         for ({entryClass} entry : list) {
             result.add(entry.{m.methodName}({arguments}));
@@ -55,7 +61,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
     }
   #end
 
-    public static class StateInSyncList extends ArrayList<{entryClass}> {
+    public class StateInSyncList extends ArrayList<{entryClass}> {
         private final {stateListClass} stateList;
 
         public StateInSyncList({stateListClass} stateList, List<{entryClass}> elements) {
@@ -65,18 +71,21 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
         @Override
         public boolean add({entryClass} element) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, {entryClass} element) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends {entryClass}> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             boolean modified = super.addAll(collection);
 
             for ({entryClass} element : collection) {
@@ -87,6 +96,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
         @Override
         public boolean addAll(int index, Collection<? extends {entryClass}> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -100,6 +110,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             if (!(element instanceof {entryClass})) {
                 return false;
             }
@@ -110,6 +121,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -126,6 +138,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -142,18 +155,21 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public {entryClass} set(int index, {entryClass} element) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public {entryClass} remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
             stateList.remove(index);
             return super.remove(index);
         }

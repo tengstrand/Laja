@@ -11,5 +11,6 @@ import net.sf.laja.example.person.state.Certificate;
 public interface BmiStateList extends List<BmiState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

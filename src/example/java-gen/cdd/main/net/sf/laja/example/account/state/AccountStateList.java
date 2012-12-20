@@ -11,5 +11,6 @@ import net.sf.laja.example.account.state.Certificate;
 public interface AccountStateList extends List<AccountState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

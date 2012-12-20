@@ -11,5 +11,6 @@ import net.sf.laja.example.computer.state.Certificate;
 public interface ComputerStateList extends List<ComputerState> {
     Certificate certificate();
     boolean isValid();
-    void encapsulate();
+    void encapsulate(Object encapsulator);
+    void throwExceptionIfNotEncapsulatedBy(Object encapsulator);
 }

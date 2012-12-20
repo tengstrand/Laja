@@ -25,6 +25,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
     public ValToeArrayList(ToeStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<ValToe> elements = new ArrayList<ValToe>(stateList.size());
 
         for (ToeState state : stateList) {
@@ -35,7 +36,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<ValToe> {
+    public class StateInSyncList extends ArrayList<ValToe> {
         private final ToeStateList stateList;
 
         public StateInSyncList(ToeStateList stateList, List<ValToe> elements) {
@@ -45,18 +46,21 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean add(ValToe element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, ValToe element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends ValToe> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (ValToe element : collection) {
@@ -67,6 +71,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean addAll(int index, Collection<? extends ValToe> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             if (!(element instanceof ValToe)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public ValToe set(int index, ValToe element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public ValToe remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

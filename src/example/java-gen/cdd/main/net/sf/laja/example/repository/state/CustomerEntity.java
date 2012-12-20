@@ -13,11 +13,13 @@ public class CustomerEntity implements CustomerElement {
 
     public CustomerEntity(CustomerState state) {
         this.state = state;
+        state.setEncapsulator(this);
     }
 
     public CustomerEntity(CustomerState state, CustomerStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
+        state.setEncapsulator(this);
     }
 
     public CustomerState getState(Certificate certificate) {

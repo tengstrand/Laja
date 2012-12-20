@@ -25,6 +25,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
     public CustomerMatcherArrayList(CustomerStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<CustomerMatcher> elements = new ArrayList<CustomerMatcher>(stateList.size());
 
         for (CustomerState state : stateList) {
@@ -35,7 +36,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<CustomerMatcher> {
+    public class StateInSyncList extends ArrayList<CustomerMatcher> {
         private final CustomerStateList stateList;
 
         public StateInSyncList(CustomerStateList stateList, List<CustomerMatcher> elements) {
@@ -45,18 +46,21 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         @Override
         public boolean add(CustomerMatcher element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, CustomerMatcher element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends CustomerMatcher> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (CustomerMatcher element : collection) {
@@ -67,6 +71,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         @Override
         public boolean addAll(int index, Collection<? extends CustomerMatcher> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             if (!(element instanceof CustomerMatcher)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public CustomerMatcher set(int index, CustomerMatcher element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public CustomerMatcher remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

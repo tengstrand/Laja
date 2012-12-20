@@ -12,6 +12,12 @@ public class Brow extends BrowFactory {
         return new Brow(state);
     }
 
+
+    // (factory)
+    public BigBrow asBigBrow() {
+        return new BigBrow(state);
+    }
+
     public int area() {
         return state.getArea();
     }

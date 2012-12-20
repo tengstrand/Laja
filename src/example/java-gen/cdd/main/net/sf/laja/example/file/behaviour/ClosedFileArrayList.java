@@ -29,6 +29,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
     public ClosedFileArrayList(FileStateList stateList, Directory directory) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<ClosedFile> elements = new ArrayList<ClosedFile>(stateList.size());
 
         for (FileState state : stateList) {
@@ -55,7 +56,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
         return new TextFileArrayList(result);
     }
 
-    public static class StateInSyncList extends ArrayList<ClosedFile> {
+    public class StateInSyncList extends ArrayList<ClosedFile> {
         private final FileStateList stateList;
 
         public StateInSyncList(FileStateList stateList, List<ClosedFile> elements) {
@@ -65,18 +66,21 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         @Override
         public boolean add(ClosedFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, ClosedFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends ClosedFile> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (ClosedFile element : collection) {
@@ -87,6 +91,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         @Override
         public boolean addAll(int index, Collection<? extends ClosedFile> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -100,6 +105,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             if (!(element instanceof ClosedFile)) {
                 return false;
             }
@@ -110,6 +116,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -126,6 +133,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -142,18 +150,21 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public ClosedFile set(int index, ClosedFile element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public ClosedFile remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }

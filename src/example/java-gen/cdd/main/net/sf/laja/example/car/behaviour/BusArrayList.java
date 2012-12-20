@@ -25,6 +25,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
     public BusArrayList(BusStateList stateList) {
         this.stateList = stateList;
+        this.stateList.encapsulate(this);
         List<Bus> elements = new ArrayList<Bus>(stateList.size());
 
         for (BusState state : stateList) {
@@ -35,7 +36,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public static class StateInSyncList extends ArrayList<Bus> {
+    public class StateInSyncList extends ArrayList<Bus> {
         private final BusStateList stateList;
 
         public StateInSyncList(BusStateList stateList, List<Bus> elements) {
@@ -45,18 +46,21 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean add(Bus element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             stateList.add(element.getState(stateList));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Bus element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             stateList.add(index, element.getState(stateList));
             super.add(index, element);
         }
 
         @Override
         public boolean addAll(Collection<? extends Bus> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             boolean modified = super.addAll(collection);
 
             for (Bus element : collection) {
@@ -67,6 +71,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean addAll(int index, Collection<? extends Bus> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
@@ -80,6 +85,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean remove(Object element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             if (!(element instanceof Bus)) {
                 return false;
             }
@@ -90,6 +96,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean removeAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -106,6 +113,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public boolean retainAll(Collection<?> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
@@ -122,18 +130,21 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         @Override
         public void clear() {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
         public Bus set(int index, Bus element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             stateList.set(index, element.getState(stateList));
             return super.set(index, element);
         }
 
         @Override
         public Bus remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BusArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }
