@@ -42,7 +42,7 @@ public class EncapsulationTest {
     }
 
     @Test
-    public void shouldBePossibleToMutateStateInCurrentContext() {
+    public void shouldBePossibleToMutateStateListFromCurrentContext() {
         Hair hair = Hair.length(10).color("red").asHair();
 
         hair.mutate();
@@ -59,8 +59,16 @@ public class EncapsulationTest {
         hair.mutate();
     }
 
+    public void shouldNotBePossibleToMutateUnencapsulatedStateListFromAnotherContext() {
+        HairList hairs = Hair.createList(Hair.length(1).color("red")).asHairList();
+
+        hairs.asFakeHairList();
+
+        hairs.add(Hair.length(2).color("black").asHair());
+    }
+
     @Test
-    public void shouldBePossibleToMutateStateListFromCurrentContext() {
+    public void shouldBePossibleToMutateEncapsulatedStateListFromCurrentContext() {
         Forehead forehead = Forehead.create().withBrows(Brow.area(1)).asForehead();
 
         // Switch context.
@@ -71,7 +79,7 @@ public class EncapsulationTest {
     }
 
     @Test (expected = IllegalStateException.class)
-    public void shouldNotBePossibleToMutateStateListFromAnotherContext() {
+    public void shouldNotBePossibleToMutateEncapsulatedStateListFromAnotherContext() {
         Forehead forehead = Forehead.create().withBrows(Brow.area(1)).asForehead();
 
         // Switch context.
