@@ -30,10 +30,10 @@ public class CarValueFactory extends CarValue {
     }
 
     public static class CarFactory_ implements CarStateBehaviourFactory {
-        private final CarStateBuilder builder;
+        private final CarStateBuilder stateBuilder;
 
-        public CarFactory_(CarStateBuilder builder) {
-            this.builder = builder;
+        public CarFactory_(CarStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(CarState state, Object... args) {

@@ -30,10 +30,10 @@ public class HairEntityFactory extends HairEntity {
     }
 
     public static class HairFactory_ implements HairStateBehaviourFactory {
-        private final HairStateBuilder builder;
+        private final HairStateBuilder stateBuilder;
 
-        public HairFactory_(HairStateBuilder builder) {
-            this.builder = builder;
+        public HairFactory_(HairStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(HairState state, Object... args) {
@@ -54,10 +54,10 @@ public class HairEntityFactory extends HairEntity {
     }
 
     public static class FakeHairFactory_ implements HairStateBehaviourFactory {
-        private final HairStateBuilder builder;
+        private final HairStateBuilder stateBuilder;
 
-        public FakeHairFactory_(HairStateBuilder builder) {
-            this.builder = builder;
+        public FakeHairFactory_(HairStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(HairState state, Object... args) {

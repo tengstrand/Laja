@@ -33,10 +33,10 @@ public class ForeheadValueFactory extends ForeheadValue {
     }
 
     public static class ForeheadFactory_ implements ForeheadStateBehaviourFactory {
-        private final ForeheadStateBuilder builder;
+        private final ForeheadStateBuilder stateBuilder;
 
-        public ForeheadFactory_(ForeheadStateBuilder builder) {
-            this.builder = builder;
+        public ForeheadFactory_(ForeheadStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ForeheadState state, Object... args) {
@@ -57,10 +57,10 @@ public class ForeheadValueFactory extends ForeheadValue {
     }
 
     public static class ForeheadWithBigBrowsFactory_ implements ForeheadStateBehaviourFactory {
-        private final ForeheadStateBuilder builder;
+        private final ForeheadStateBuilder stateBuilder;
 
-        public ForeheadWithBigBrowsFactory_(ForeheadStateBuilder builder) {
-            this.builder = builder;
+        public ForeheadWithBigBrowsFactory_(ForeheadStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ForeheadState state, Object... args) {

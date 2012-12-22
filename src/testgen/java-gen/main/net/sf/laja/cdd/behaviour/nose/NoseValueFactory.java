@@ -30,10 +30,10 @@ public class NoseValueFactory extends NoseValue {
     }
 
     public static class NoseFactory_ implements NoseStateBehaviourFactory {
-        private final NoseStateBuilder builder;
+        private final NoseStateBuilder stateBuilder;
 
-        public NoseFactory_(NoseStateBuilder builder) {
-            this.builder = builder;
+        public NoseFactory_(NoseStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(NoseState state, Object... args) {

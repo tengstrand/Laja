@@ -29,10 +29,10 @@ public class AmigaValueFactory extends ComputerValue {
     }
 
     public static class AmigaFactory_ implements ComputerStateBehaviourFactory {
-        private final ComputerStateBuilder builder;
+        private final ComputerStateBuilder stateBuilder;
 
-        public AmigaFactory_(ComputerStateBuilder builder) {
-            this.builder = builder;
+        public AmigaFactory_(ComputerStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ComputerState state, Object... args) {

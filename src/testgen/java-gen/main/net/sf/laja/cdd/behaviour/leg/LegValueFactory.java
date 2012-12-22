@@ -30,10 +30,10 @@ public class LegValueFactory extends LegValue {
     }
 
     public static class LegFactory_ implements LegStateBehaviourFactory {
-        private final LegStateBuilder builder;
+        private final LegStateBuilder stateBuilder;
 
-        public LegFactory_(LegStateBuilder builder) {
-            this.builder = builder;
+        public LegFactory_(LegStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(LegState state, Object... args) {

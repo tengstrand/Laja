@@ -30,10 +30,10 @@ public class TestAccountValueFactory extends AccountValue {
     }
 
     public static class TestAccountFactory_ implements AccountStateBehaviourFactory {
-        private final AccountStateBuilder builder;
+        private final AccountStateBuilder stateBuilder;
 
-        public TestAccountFactory_(AccountStateBuilder builder) {
-            this.builder = builder;
+        public TestAccountFactory_(AccountStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(AccountState state, Object... args) {

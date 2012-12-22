@@ -30,10 +30,10 @@ public class BrowValueFactory extends BrowValue {
     }
 
     public static class BrowFactory_ implements BrowStateBehaviourFactory {
-        private final BrowStateBuilder builder;
+        private final BrowStateBuilder stateBuilder;
 
-        public BrowFactory_(BrowStateBuilder builder) {
-            this.builder = builder;
+        public BrowFactory_(BrowStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(BrowState state, Object... args) {
@@ -54,10 +54,10 @@ public class BrowValueFactory extends BrowValue {
     }
 
     public static class BigBrowFactory_ implements BrowStateBehaviourFactory {
-        private final BrowStateBuilder builder;
+        private final BrowStateBuilder stateBuilder;
 
-        public BigBrowFactory_(BrowStateBuilder builder) {
-            this.builder = builder;
+        public BigBrowFactory_(BrowStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(BrowState state, Object... args) {

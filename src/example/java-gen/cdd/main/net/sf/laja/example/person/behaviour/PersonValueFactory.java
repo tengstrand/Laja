@@ -30,10 +30,10 @@ public class PersonValueFactory extends PersonValue {
     }
 
     public static class PersonFactory_ implements PersonStateBehaviourFactory {
-        private final PersonStateBuilder builder;
+        private final PersonStateBuilder stateBuilder;
 
-        public PersonFactory_(PersonStateBuilder builder) {
-            this.builder = builder;
+        public PersonFactory_(PersonStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(PersonState state, Object... args) {

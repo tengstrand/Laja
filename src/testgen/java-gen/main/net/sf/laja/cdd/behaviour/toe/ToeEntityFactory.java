@@ -30,10 +30,10 @@ public class ToeEntityFactory extends ToeEntity {
     }
 
     public static class ToeFactory_ implements ToeStateBehaviourFactory {
-        private final ToeStateBuilder builder;
+        private final ToeStateBuilder stateBuilder;
 
-        public ToeFactory_(ToeStateBuilder builder) {
-            this.builder = builder;
+        public ToeFactory_(ToeStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ToeState state, Object... args) {
@@ -54,10 +54,10 @@ public class ToeEntityFactory extends ToeEntity {
     }
 
     public static class ValToeFactory_ implements ToeStateBehaviourFactory {
-        private final ToeStateBuilder builder;
+        private final ToeStateBuilder stateBuilder;
 
-        public ValToeFactory_(ToeStateBuilder builder) {
-            this.builder = builder;
+        public ValToeFactory_(ToeStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ToeState state, Object... args) {

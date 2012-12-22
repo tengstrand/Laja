@@ -31,10 +31,10 @@ public class MouthValueFactory extends MouthValue {
     }
 
     public static class MouthFactory_ implements MouthStateBehaviourFactory {
-        private final MouthStateBuilder builder;
+        private final MouthStateBuilder stateBuilder;
 
-        public MouthFactory_(MouthStateBuilder builder) {
-            this.builder = builder;
+        public MouthFactory_(MouthStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(MouthState state, Object... args) {

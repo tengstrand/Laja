@@ -30,10 +30,10 @@ public class AnimalValueFactory extends AnimalValue {
     }
 
     public static class AnimalFactory_ implements AnimalStateBehaviourFactory {
-        private final AnimalStateBuilder builder;
+        private final AnimalStateBuilder stateBuilder;
 
-        public AnimalFactory_(AnimalStateBuilder builder) {
-            this.builder = builder;
+        public AnimalFactory_(AnimalStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(AnimalState state, Object... args) {

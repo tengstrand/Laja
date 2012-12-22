@@ -30,10 +30,10 @@ public class HeightValueFactory extends HeightValue {
     }
 
     public static class HeightFactory_ implements HeightStateBehaviourFactory {
-        private final HeightStateBuilder builder;
+        private final HeightStateBuilder stateBuilder;
 
-        public HeightFactory_(HeightStateBuilder builder) {
-            this.builder = builder;
+        public HeightFactory_(HeightStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(HeightState state, Object... args) {

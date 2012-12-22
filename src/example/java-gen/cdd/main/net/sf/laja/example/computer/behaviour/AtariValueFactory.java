@@ -30,10 +30,10 @@ public class AtariValueFactory extends ComputerValue {
     }
 
     public static class AtariSTFactory_ implements ComputerStateBehaviourFactory {
-        private final ComputerStateBuilder builder;
+        private final ComputerStateBuilder stateBuilder;
 
-        public AtariSTFactory_(ComputerStateBuilder builder) {
-            this.builder = builder;
+        public AtariSTFactory_(ComputerStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ComputerState state, Object... args) {
@@ -54,10 +54,10 @@ public class AtariValueFactory extends ComputerValue {
     }
 
     public static class AtariFalcon030Factory_ implements ComputerStateBehaviourFactory {
-        private final ComputerStateBuilder builder;
+        private final ComputerStateBuilder stateBuilder;
 
-        public AtariFalcon030Factory_(ComputerStateBuilder builder) {
-            this.builder = builder;
+        public AtariFalcon030Factory_(ComputerStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ComputerState state, Object... args) {

@@ -32,14 +32,14 @@ public class TerrestrialValueFactory extends TerrestrialValue {
     }
 
     public static class TerrestrialFactory_ implements TerrestrialStateBehaviourFactory {
-        private final TerrestrialStateBuilder builder;
+        private final TerrestrialStateBuilder stateBuilder;
 
-        public TerrestrialFactory_(TerrestrialStateBuilder builder) {
-            this.builder = builder;
+        public TerrestrialFactory_(TerrestrialStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(TerrestrialState state, Object... args) {
-            Object result = create_(state, builder, args);
+            Object result = create_(state, stateBuilder, args);
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class 'Terrestrial'");

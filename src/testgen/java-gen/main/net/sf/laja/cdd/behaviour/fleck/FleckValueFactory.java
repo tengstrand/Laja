@@ -30,10 +30,10 @@ public class FleckValueFactory extends FleckValue {
     }
 
     public static class FleckFactory_ implements FleckStateBehaviourFactory {
-        private final FleckStateBuilder builder;
+        private final FleckStateBuilder stateBuilder;
 
-        public FleckFactory_(FleckStateBuilder builder) {
-            this.builder = builder;
+        public FleckFactory_(FleckStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(FleckState state, Object... args) {

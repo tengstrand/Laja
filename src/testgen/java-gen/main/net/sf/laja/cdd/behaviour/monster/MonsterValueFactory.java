@@ -33,14 +33,14 @@ public class MonsterValueFactory extends MonsterValue {
     }
 
     public static class MonsterFactory_ implements MonsterStateBehaviourFactory {
-        private final MonsterStateBuilder builder;
+        private final MonsterStateBuilder stateBuilder;
 
-        public MonsterFactory_(MonsterStateBuilder builder) {
-            this.builder = builder;
+        public MonsterFactory_(MonsterStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(MonsterState state, Object... args) {
-            Object result = create_(state, builder, args);
+            Object result = create_(state, stateBuilder, args);
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class 'Monster'");

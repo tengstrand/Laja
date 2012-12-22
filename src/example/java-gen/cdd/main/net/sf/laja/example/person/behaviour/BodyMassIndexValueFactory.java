@@ -32,10 +32,10 @@ public class BodyMassIndexValueFactory extends BmiValue {
     }
 
     public static class BodyMassIndexFactory_ implements BmiStateBehaviourFactory {
-        private final BmiStateBuilder builder;
+        private final BmiStateBuilder stateBuilder;
 
-        public BodyMassIndexFactory_(BmiStateBuilder builder) {
-            this.builder = builder;
+        public BodyMassIndexFactory_(BmiStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(BmiState state, Object... args) {

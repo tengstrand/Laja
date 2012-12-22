@@ -36,10 +36,10 @@ public class ArmValueFactory extends ArmValue {
     }
 
     public static class ArmFactory_ implements ArmStateBehaviourFactory {
-        private final ArmStateBuilder builder;
+        private final ArmStateBuilder stateBuilder;
 
-        public ArmFactory_(ArmStateBuilder builder) {
-            this.builder = builder;
+        public ArmFactory_(ArmStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ArmState state, Object... args) {

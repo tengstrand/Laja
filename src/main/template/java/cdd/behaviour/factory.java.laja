@@ -78,17 +78,17 @@ public class {factoryClass} extends {parentClass} {
     #set (innerFactoryClass = "{method.returnclass}Factory_")
 
     public static class {innerFactoryClass} implements {template.classname}StateBehaviourFactory {
-        private final {stateBuilderClass} builder;
+        private final {stateBuilderClass} stateBuilder;
 
-        public {innerFactoryClass}({stateBuilderClass} builder) {
-            this.builder = builder;
+        public {innerFactoryClass}({stateBuilderClass} stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create({template.stateClass} state, Object... args) {
     #if (!behaviour.isStateBuilderConstructor)
             Object result = create_(state, args);
     #else
-            Object result = create_(state, builder, args);
+            Object result = create_(state, stateBuilder, args);
     #end
 
             if (!state.isValidAsEncapsulated()) {

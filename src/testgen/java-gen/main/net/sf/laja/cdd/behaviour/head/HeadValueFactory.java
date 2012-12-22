@@ -35,14 +35,14 @@ public class HeadValueFactory extends HeadValue {
     }
 
     public static class HeadFactory_ implements HeadStateBehaviourFactory {
-        private final HeadStateBuilder builder;
+        private final HeadStateBuilder stateBuilder;
 
-        public HeadFactory_(HeadStateBuilder builder) {
-            this.builder = builder;
+        public HeadFactory_(HeadStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(HeadState state, Object... args) {
-            Object result = create_(state, builder, args);
+            Object result = create_(state, stateBuilder, args);
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class 'Head'");

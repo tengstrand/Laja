@@ -35,10 +35,10 @@ public class EyeValueFactory extends EyeValue {
     }
 
     public static class EyeFactory_ implements EyeStateBehaviourFactory {
-        private final EyeStateBuilder builder;
+        private final EyeStateBuilder stateBuilder;
 
-        public EyeFactory_(EyeStateBuilder builder) {
-            this.builder = builder;
+        public EyeFactory_(EyeStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(EyeState state, Object... args) {

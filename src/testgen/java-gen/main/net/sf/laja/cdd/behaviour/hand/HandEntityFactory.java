@@ -30,10 +30,10 @@ public class HandEntityFactory extends HandEntity {
     }
 
     public static class HandFactory_ implements HandStateBehaviourFactory {
-        private final HandStateBuilder builder;
+        private final HandStateBuilder stateBuilder;
 
-        public HandFactory_(HandStateBuilder builder) {
-            this.builder = builder;
+        public HandFactory_(HandStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(HandState state, Object... args) {

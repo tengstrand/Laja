@@ -30,10 +30,10 @@ public class VehicleSizeValueFactory extends VehicleSizeValue {
     }
 
     public static class VehicleSizeFactory_ implements VehicleSizeStateBehaviourFactory {
-        private final VehicleSizeStateBuilder builder;
+        private final VehicleSizeStateBuilder stateBuilder;
 
-        public VehicleSizeFactory_(VehicleSizeStateBuilder builder) {
-            this.builder = builder;
+        public VehicleSizeFactory_(VehicleSizeStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(VehicleSizeState state, Object... args) {

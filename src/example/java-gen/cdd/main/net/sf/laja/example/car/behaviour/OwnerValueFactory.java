@@ -34,10 +34,10 @@ public class OwnerValueFactory extends OwnerValue {
     }
 
     public static class OwnerFactory_ implements OwnerStateBehaviourFactory {
-        private final OwnerStateBuilder builder;
+        private final OwnerStateBuilder stateBuilder;
 
-        public OwnerFactory_(OwnerStateBuilder builder) {
-            this.builder = builder;
+        public OwnerFactory_(OwnerStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(OwnerState state, Object... args) {

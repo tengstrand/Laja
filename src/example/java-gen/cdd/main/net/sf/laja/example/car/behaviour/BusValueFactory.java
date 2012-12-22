@@ -30,10 +30,10 @@ public class BusValueFactory extends BusValue {
     }
 
     public static class BusFactory_ implements BusStateBehaviourFactory {
-        private final BusStateBuilder builder;
+        private final BusStateBuilder stateBuilder;
 
-        public BusFactory_(BusStateBuilder builder) {
-            this.builder = builder;
+        public BusFactory_(BusStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(BusState state, Object... args) {

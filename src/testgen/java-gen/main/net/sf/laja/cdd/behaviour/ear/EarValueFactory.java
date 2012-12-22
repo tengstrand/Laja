@@ -30,10 +30,10 @@ public class EarValueFactory extends EarValue {
     }
 
     public static class EarFactory_ implements EarStateBehaviourFactory {
-        private final EarStateBuilder builder;
+        private final EarStateBuilder stateBuilder;
 
-        public EarFactory_(EarStateBuilder builder) {
-            this.builder = builder;
+        public EarFactory_(EarStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(EarState state, Object... args) {

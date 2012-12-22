@@ -31,10 +31,10 @@ public class TestForeheadValueFactory extends ForeheadValue {
     }
 
     public static class TestForeheadFactory_ implements ForeheadStateBehaviourFactory {
-        private final ForeheadStateBuilder builder;
+        private final ForeheadStateBuilder stateBuilder;
 
-        public TestForeheadFactory_(ForeheadStateBuilder builder) {
-            this.builder = builder;
+        public TestForeheadFactory_(ForeheadStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(ForeheadState state, Object... args) {

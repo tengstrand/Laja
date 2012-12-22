@@ -32,10 +32,10 @@ public class DirectoryValueFactory extends DirectoryValue {
     }
 
     public static class DirectoryFactory_ implements DirectoryStateBehaviourFactory {
-        private final DirectoryStateBuilder builder;
+        private final DirectoryStateBuilder stateBuilder;
 
-        public DirectoryFactory_(DirectoryStateBuilder builder) {
-            this.builder = builder;
+        public DirectoryFactory_(DirectoryStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(DirectoryState state, Object... args) {

@@ -30,10 +30,10 @@ public class FileValueFactory extends FileValue {
     }
 
     public static class ClosedFileFactory_ implements FileStateBehaviourFactory {
-        private final FileStateBuilder builder;
+        private final FileStateBuilder stateBuilder;
 
-        public ClosedFileFactory_(FileStateBuilder builder) {
-            this.builder = builder;
+        public ClosedFileFactory_(FileStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(FileState state, Object... args) {
@@ -56,10 +56,10 @@ public class FileValueFactory extends FileValue {
     }
 
     public static class WritableFileFactory_ implements FileStateBehaviourFactory {
-        private final FileStateBuilder builder;
+        private final FileStateBuilder stateBuilder;
 
-        public WritableFileFactory_(FileStateBuilder builder) {
-            this.builder = builder;
+        public WritableFileFactory_(FileStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(FileState state, Object... args) {

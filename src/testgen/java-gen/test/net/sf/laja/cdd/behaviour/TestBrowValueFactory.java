@@ -30,10 +30,10 @@ public class TestBrowValueFactory extends BrowValue {
     }
 
     public static class TestBrowFactory_ implements BrowStateBehaviourFactory {
-        private final BrowStateBuilder builder;
+        private final BrowStateBuilder stateBuilder;
 
-        public TestBrowFactory_(BrowStateBuilder builder) {
-            this.builder = builder;
+        public TestBrowFactory_(BrowStateBuilder stateBuilder) {
+            this.stateBuilder = stateBuilder;
         }
 
         public Object create(BrowState state, Object... args) {
