@@ -5,6 +5,7 @@
 ** Classes and objects|Classes and objects
 ** Encapsulation|Encapsulation
 ** Identity|Identity
+** Examples|Examples
 * context
 ** Context|Context
 ** Static context|Static context

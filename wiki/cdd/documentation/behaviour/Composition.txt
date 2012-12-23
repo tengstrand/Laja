@@ -267,3 +267,5 @@ Children: [Carl Andersson, Eric Andersson]
 
 
 [[Collections|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Examples|Next >]]
