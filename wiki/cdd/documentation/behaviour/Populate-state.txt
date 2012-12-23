@@ -22,7 +22,7 @@ import com.myproject.state.PersonState;
 public class GreyHairedPerson extends PersonFactory {
     public GreyHairedPerson(PersonState state) {
         super(state);
-        state.setHairColor("Grey");
+        state.setHairColor("Grey", this);
     }
 
     // (factory)
@@ -40,7 +40,7 @@ import com.myproject.state.PersonState;
 public class RedHairedPerson extends PersonFactory {
     public RedHairedPerson(PersonState state) {
         super(state);
-        state.setHairColor("Red");
+        state.setHairColor("Red", this);
     }
 
     // (factory)

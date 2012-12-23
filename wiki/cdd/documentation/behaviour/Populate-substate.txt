@@ -92,7 +92,7 @@ import com.myproject.state.AddressState;
 public class Address extends AddressFactory {
     public Address(AddressState state) {
         super(state);
-        state.setZipcode(123);
+        state.setZipcode(123, this);
     }
 
     // (factory)

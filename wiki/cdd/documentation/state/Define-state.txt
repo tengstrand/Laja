@@ -30,11 +30,11 @@ System.out.println(person);
 <source>
 public Person(PersonState state) {
     super(state);
-    state.setLength(179);
+    state.setLength(179, this);
 }
 </source>
 
-... gives the output:
+...gives the output:
 <source>
 Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ernst', surname='Bergman', occupation='Film director'}
 </source>

@@ -1,6 +1,6 @@
 Substates can be "expanded" and merged into the state (the light grey area represents the ''address'' in the following example):
 
-[[File:CDD-state-expansion.png|250px]]
+[[File:CDD-state-expansion.png|200px]]
 
 
 A dollar sign ($) marks a substate for expansion ($ is a valid character for variable names in Java!):

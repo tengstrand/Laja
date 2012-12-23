@@ -131,7 +131,7 @@ public class PersonExporter {
         System.out.println("Start exporting");
 
         for (PersonRowInFile person : persons) {
-            System.out.println("  Exported: " + person);
+            System.out.println("  " + person.toText());
         }
         System.out.println("End");
     }
@@ -159,8 +159,8 @@ public class Main {
 ...output:
 <source>
 Start exporting
-  Exported: PersonRowInFile{givenName='Anders', surname='Andersson'}
-  Exported: PersonRowInFile{givenName='Carl', surname='Carlsson'}
+  Anders;Andersson;
+  Carl;Carlsson;
 End
 </source>
 
@@ -284,7 +284,7 @@ public class Exporter extends ExporterFactory {
         System.out.println("Start exporting");
 
         for (PersonRowInFile person : persons) {
-            System.out.println("  Exported: " + person);
+            System.out.println("  " + person.toText());
         }
         System.out.println("End");
     }
@@ -304,10 +304,12 @@ Exporter.persons(
 
 <source>
 Start exporting
-  Exported: PersonRowInFile{givenName='Anders', surname='Andersson'}
-  Exported: PersonRowInFile{givenName='Carl', surname='Carlsson'}
+  Anders;Andersson;
+  Carl;Carlsson;
 End
 </source>
+
+=== Initialization ===
 
 All collection state members are initialized to empty lists and are ready to be used:
 
@@ -348,26 +350,6 @@ System.out.println(persons);
 <source>
 PersonArrayList{[PersonAdmin{name='Anders', phoneNumber='011-11111111'}, PersonAdmin{name='Richard', phoneNumber='022-22222222'}]}
 </source>
-
-=== Caution ===
-
-CDD is still in an alpha version and some functionality is still missing and more work needs to be done especially with the collections.
-
-
-If creating a list by sending in a ''state list'' in the constructor like we did in the ''Exporter'':
-
-<source>
-persons = new PersonRowInFileArrayList(state.getPersons());
-</source>
-
-...CDD will ensure that the behaviour list ''persons'' and the underlying ''state list'' (state.persons) is always in sync if mutating ''persons''.
-This can be a problem if you have more than one behaviour representation of "person list".
-If you expose the internal list ''persons'' by adding a getter and the list is used outside the aggregate via that getter
-and context switched into another list that is sorted (or mutated in some way),
-the ''state list'' will also be sorted to keep them in sync but leaves ''persons'' and the ''state list'' out of sync.
-There is no functionality at the moment that automatically synchronizes behaviour lists when they fall out of sync with the state list.
-
-The other three ways a list can be created does not have this problem since they are not connected to a ''state list''.
 
 === Summary ===
 
