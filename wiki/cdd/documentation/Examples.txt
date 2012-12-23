@@ -1,0 +1,122 @@
+
+This documentation contains a lot of examples and you can find more in the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd repository].
+
+=== Building a repository ===
+
+Here is an example of how the encapsulation decision can be postponed and made by the calling call when building a repository.
+By letting the repository return a ''PersonListEncapsulator'' will enabling both ''validation'' and selection of ''behavior representation'' from the calling code.
+Let's illustrate this by writing some code, start by modifying ''Person'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    // (factory)
+    public PersonMatcher asPersonMatcher() {
+        return new PersonMatcher(state);
+    }
+
+    public boolean isTeenager() {
+        return state.getAge() >= 13 && state.getAge() <= 19;
+    }
+}
+</source>
+
+...add ''PersonMatcher'', ''PersonRepository'' and ''Main'':
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class PersonMatcher extends PersonFactory {
+    public PersonMatcher(PersonState state) {
+        super(state);
+    }
+
+    public boolean isNameContaining(String searchFor) {
+        return state.getName().contains(searchFor);
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+public class PersonRepository {
+    private PersonListEncapsulator encapsulators = Person.createList(
+            Person.age(20).name("Anders"),
+            Person.age(30).name("Bert"),
+            Person.age(40).name("Cecilia"),
+            Person.age(50).name("David"),
+            Person.age(60).name("Eric")
+    );
+
+    public PersonListEncapsulator findByName(String searchFor) {
+        PersonListEncapsulator result = Person.createList();
+
+        for (PersonEncapsulator encapsulator : encapsulators) {
+            if (encapsulator.asPersonMatcher().isNameContaining(searchFor)) {
+                result.add(encapsulator);
+            }
+        }
+        return result;
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+public class Main {
+    public static void main(String[] args) {
+        PersonRepository repository = new PersonRepository();
+
+        System.out.println("Is valid: " + repository.findByName("c").isValid());
+        System.out.println("Result: " + repository.findByName("c").asPersonList());
+    }
+}
+</source>
+
+...if executing ''main()'' we get:
+
+<source>
+Is valid: true
+Result: PersonArrayList{[Person{age=40, name='Cecilia'}, Person{age=60, name='Eric'}]}
+</source>
+
+...which is all persons with a name containing the letter "c".
+
+
+Another advantage of writing a repository in this way is that the decision of which context to work in is made by the calling code,
+allowing us to write:
+
+<source>
+...
+System.out.println("Result: " + repository.findByName("c").asPersonMatcherList());
+...
+</source>
+
+...and if executed, we get:
+
+<source>
+Is valid: true
+Result: PersonMatcherArrayList{[PersonMatcher{age=40, name='Cecilia'}, PersonMatcher{age=60, name='Eric'}]}
+</source>
+
+...which returns instances of ''PersonMatcher'' instead och instances of ''Person''.
+
+
+[[Composition|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
