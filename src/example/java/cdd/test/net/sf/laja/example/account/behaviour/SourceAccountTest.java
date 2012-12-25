@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class SourceAccountTest {
 
     @Test
-    public void transferTo() {
+    public void shouldBePossibleToTransferMoneyFromSourceAccountToDestinationAccount() {
         TestAccount destinationTestAccount = TestAccount.balance(400).asTestAccount();
         DestinationAccount destinationAccount = destinationTestAccount.asDestinationAccount();
 
