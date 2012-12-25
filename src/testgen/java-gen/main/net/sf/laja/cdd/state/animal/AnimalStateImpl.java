@@ -55,7 +55,7 @@ public class AnimalStateImpl implements AnimalState {
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
         }
     }
 
