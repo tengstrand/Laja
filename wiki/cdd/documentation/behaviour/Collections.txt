@@ -2,8 +2,7 @@ One of the main goals of CDD is to facilitate work in different contexts, and co
 The targeting language is Java and because the whole Java echo system is build around mutable state using
 [http://en.wikipedia.org/wiki/Mutator_method getters and setters] and mutable collections, the decision was taken to
 let mutable state be the default in this implementation of CDD.
-Only lists are supported in this alpha version but support for sets and maps along with mechanisms preventing state
-to be simultaneously modified from different contexts will be added in a later version.
+Only lists are supported in this alpha version but support for sets and maps will be added in a later version.
 
 
 When a new behaviour class is created, like ''Person'', a corresponding behaviour list interface ''PersonList'' and a concrete class ''PersonArrayList''
