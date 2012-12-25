@@ -39,7 +39,7 @@ Person{age=56, name='Ingemar Stenmark'}
 Is teenager: false
 </source>
 
-The ''state'' is here represented by the attributes ''age'', ''name'' and the ''behaviour'' is represented by the method ''isTeenager'',
+The ''state'' is here represented by the attributes ''age'' ande ''name'', and the ''behaviour'' is represented by the method ''isTeenager'',
 which can be illustrated by this diagram:
 
 
