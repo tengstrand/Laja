@@ -87,6 +87,73 @@ If all attributes are optional, then the chained creator can be accessed via the
 Person person = Person.create().withAge(16).asPerson();
 </source>
 
+=== Types ===
+
+The following types are supported:
+
+{| class="wikitable"
+! Type !! Description
+|-
+|
+boolean, Boolean
+||
+true / false
+|-
+|
+byte, Byte
+||
+8 bit signed integer, range: -128 to 127
+|-
+|
+short, Short
+||
+16 bit signed integer, range: -32,768 to 32,767
+|-
+|
+char, Character
+||
+16 bit unsigned integer, range: 0 to 65,535
+|-
+|
+int, Integer
+||
+32 bit signed integer, range: -2,147,483,648 to 2,147,483,647
+|-
+|
+long, Long
+||
+64 bit signed integer, range: -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
+|-
+|
+float, Float
+||
+Single-precision 32-bit IEEE 754 floating point
+|-
+|
+double, Double
+||
+Double-precision 64-bit IEEE 754 floating point
+|-
+|
+BigInteger
+||
+Arbitrary-precision integer (java.math.BigInteger)
+|-
+|
+BigDecimal
+||
+Arbitrary-precision signed decimal number (java.math.BigDecimal)
+|-
+|
+String
+||
+Standard Java character string
+|}
+
+All the supported types are [http://en.wikipedia.org/wiki/Immutable_object immutable]. A common type that is missing at the moment is ''Date''.
+The reason is that it's mutable and therefore not suitable for building reliable and stable systems!
+Composite state types are also supported in terms of other state objects.
+
 
 [[State|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
