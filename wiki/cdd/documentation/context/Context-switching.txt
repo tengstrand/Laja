@@ -56,6 +56,19 @@ Imagine that we start by retrieving an instance from a repository (Context 1), p
 perform some editing in the GUI (Context 3) followed by some domain operations (Context 4)
 and finishing by writing the state to a file (Context 5).
 
+=== Dependencies ===
+
+When we add the method ''asPersistable'' to ''Person'':
+<source>
+person.asPersistable()
+</source>
+
+...we introduce a connection to ''PersistablePerson''.
+This will facilitate integration between the two contexts.
+The good thing is that ''Person'' and ''PersistablePerson'' can be changed independently without affecting each other.
+Even though ''Person'' has a direct knowledge of the existence of ''PersistablePerson'' the coupling is still very low.
+With this programming style we share what should be shared and keep the rest apart!
+
 
 [[Dynamic context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
