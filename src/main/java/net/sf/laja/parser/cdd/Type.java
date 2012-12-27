@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Type {
-    private static final List<String> types = Arrays.asList("byte", "short", "int", "long", "float", "double", "boolean", "char");
-    private static final List<String> immutableObjects = Arrays.asList("Byte", "Short", "Integer", "Long", "Float", "Double", "Boolean", "Character", "BigInteger", "BigDecimal", "String");
+    private static final List<String> types = Arrays.asList("boolean", "byte", "short", "char", "int", "long", "float", "double");
+    private static final List<String> immutableObjects = Arrays.asList("Boolean", "Byte", "Short", "Character", "Integer", "Long", "Float", "Double", "BigInteger", "BigDecimal", "String");
 
     public static boolean isPrimitive(String type) {
         return types.contains(type);
