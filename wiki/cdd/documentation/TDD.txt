@@ -1,0 +1,122 @@
+CDD is very well suited for use with "test first" development.
+
+Let's create the unit test ''PersonTest'' and verify the method ''moveToAddress'' in ''Person'':
+
+<source>
+package com.myproject.state;
+
+public class AddressStateTemplate {
+    String streetName;
+    int streetNumber;
+    String city;
+}
+</source>
+
+<source>
+package com.myproject.state;
+
+public class PersonStateTemplate {
+    int age;
+    String name;
+    AddressState homeAddress;
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.AddressState;
+
+public class Address extends AddressFactory {
+    public Address(AddressState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Address asAddress() {
+        return new Address(state);
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class Person extends PersonFactory {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    public void moveToAddress(Address address) {
+        state.setHomeAddress(address.getState(state.certificate()), this);
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import com.myproject.state.PersonState;
+
+public class TestPerson extends TestPersonFactory {
+    public TestPerson(PersonState state) {
+        super(state);
+    }
+
+    // (factory)
+    public TestPerson asTestPerson() {
+        return new TestPerson(state);
+    }
+
+    public Person asPerson() {
+        return new Person(state);
+    }
+
+    // Getter used by the test
+    public Address getAddress() {
+        return new Address(state.getHomeAddress());
+    }
+}
+</source>
+
+<source>
+package com.myproject.behaviour;
+
+import org.junit.Test;
+
+import static junit.framework.Assert.assertEquals;
+
+public class PersonTest {
+
+    @Test
+    public void shouldChangeAddressWhenMovingToNewAddress() {
+
+        // 1. Create a person
+        TestPerson person = TestPerson.age(10).name("Carl").homeAddress(
+                Address.streetName("First street").streetNumber(1).city("Stockholm")).asTestPerson();
+
+        // 2. Move to a new address
+        Address newAddress = Address.streetName("Second street").streetNumber(2).city("Uppsala").asAddress();
+        person.asPerson().moveToAddress(newAddress);
+
+        // 3. Check that the address has been changed
+        assertEquals(newAddress, person.getAddress());
+    }
+}
+</source>
+
+''PersonTest'' is our test class that is executed by JUnit.
+''TestPerson'' is the test context of "person" and used to verify that ''moveToAddress'' is working as expected.
+We can allow us to break encapsulation by adding the getter ''getAddress'' because it's only used by test code.
+We don't have any switcher methods from ''Person'' or other contexts to ''TestPerson'' which make it safe to add the getter.
+If we do, we mix production code with test code and run the risk that the state is changed in an uncontrolled manner.
+
+A good thing is that we can take advantage of the fact that we have a test context behaviour representation ''TestPerson''
+and put code that naturally belongs there and thus making the code more readable.
