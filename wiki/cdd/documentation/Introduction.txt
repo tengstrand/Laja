@@ -13,7 +13,7 @@ Having all of the CDD foundation classes generated automatically frees developer
 I have for quite a long time observed a number of problems in object orientation:
 
 * The absence of the concept ''context'' which makes it hard to work in different contexts and leads to non-object-oriented solutions that force you to break encapsulation and violate the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
-* Objects have no connection between its attributes/properties and how the state is built (constructors) and how identity is implemented (''hashCode/equals'').
+* There is no correlation between an objects attributes/properties and how the state is built (constructors) and how identity is implemented (''hashCode/equals'').
 * Poor flexibility at the object level when it comes to composing objects, switching context and code reuse.
 
 
