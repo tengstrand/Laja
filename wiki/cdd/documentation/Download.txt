@@ -1,0 +1,9 @@
+
+CDD is included in the combined code and parser generator [http://laja.tengstrand.nu Laja].
+A version Laja2-007-alpha that includes CDD is planned to be released early 2013, probably january 2013.
+
+In the meantime, you can read the CDD documentation or play around with the code generator and the parser generator that is included in Laja!
+
+The latest version Laja2-005-beta.zip can be downloaded from [http://sourceforge.net/projects/laja here].
+
+All releases can be found [http://laja.tengstrand.nu/index.php/Releases here].
