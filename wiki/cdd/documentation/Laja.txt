@@ -1,0 +1,147 @@
+
+=== Laja crash course ===
+
+All code generation and parsing is performed by [http://laja.tengstrand.nu Laja].
+If you haven't read all the documentation yet, here comes a crash course!
+
+The project file ''myproject.laja'' in the [[Getting started]] example looks like this:
+<source>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }]
+)
+</source>
+
+When Laja is installed you can write (from the directory where we have put ''myproject.laja'')
+<source>
+laja myproject
+</source>
+
+or:
+<source>
+laja myproject.laja
+</source>
+
+Laja is a [http://en.wikipedia.org/wiki/Template_processor template engine] that is specialized to produce text files based on templates and data.
+All files that ends with ".laja" will be handled as templates by Laja and ''myproject.laja'' is no exception.
+
+
+Laja will parse the file ''myproject.laja'' and "execute" the macro ''generateCdd''.
+The macro is included from ''LAJA_HOME/template/system-imports.laja'' when Laja is started which has the following import:
+<source>
+#import "{.}/system/cdd/cdd.laja"
+</source>
+
+...and ''cdd.laja'' defines the macro:
+<source>
+...
+#macro generateCdd(parameters)
+  ...
+#end
+...
+</source>
+
+The macro is taking one argument. The argument we was sending in to ''generateCdd'' looked like this:
+<source>
+[{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }]
+</source>
+
+The square brackets is a List syntax in Laja. Everything between [ and ] will be added to an instance of ''java.util.ArrayList''.
+
+If we for example need to have more than one source directory, for example a test directory, we can write:
+<source>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }, {
+
+  srcDir: "{.}/test"
+  outDir: "{..}/java-gen/test" } ]
+)
+</source>
+
+The list element are comma separated:
+<source>
+[ {...}, {...} ]
+</source>
+
+Curly braces is the Map syntax in Laja. Everything between { and } will be added to an instance of ''java.util.LinkedHashMap'',
+so we are actually sending in a list of maps as argument to the macro!
+
+
+The elements ''statePackage'' and ''behaviourPackage'' does not need to be repeated by the trailing elements in the list because the
+last setting will always be reused by the following elements if not overridden.
+
+
+White spaces are ignored by Laja and this is equivalent:
+<source>
+#generateCdd([{srcDir: "{.}/main" outDir: "{..}/java-gen/main" statePackage: "com.myproject.state" behaviourPackage: "com.myproject.behaviour"},
+              {srcDir: "{.}/test" outDir: "{..}/java-gen/test"}])
+</source>
+
+The project file ''myproject.laja'' is an ordinary Laja template file. All valid Laja instructions can be included, not just the call to ''generateCdd''.
+We can for example have comments and generate more than one project as it is done in [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/example.laja example.laja].
+<source>
+##------------------------------
+## Generate all examples
+##------------------------------
+
+#import "{.}/account.laja"
+#import "{.}/car.laja"
+#import "{.}/computer.laja"
+#import "{.}/file.laja"
+#import "{.}/person.laja"
+#import "{.}/repository.laja"
+</source>
+
+=== Project settings ===
+
+Let's dig a little deeper into the "project settings" represented by the arguments to the macro ''generateCdd''.
+
+{| class="wikitable"
+! argument !! Description
+|-
+|
+srcDir
+||
+Source dir...
+|-
+|
+outDir
+||
+Output dir...
+|-
+|
+statePackage
+||
+State package...
+|-
+|
+behaviourPackage
+||
+Behaviour package...
+|-
+|
+verbose
+||
+Verbose...
+|-
+|
+{.}
+||
+Current directory
+|-
+|
+{..}
+||
+Parent directory
+|}
+
+<span style="color:#FF0000">Work in progress...</span>
