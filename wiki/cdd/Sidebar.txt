@@ -1,5 +1,4 @@
 * cdd
-** Getting started|Getting started
 ** mainpage|Introduction
 ** Code generation|Code generation
 ** Classes and objects|Classes and objects
@@ -7,6 +6,7 @@
 ** Identity|Identity
 ** TDD|TDD
 ** Laja|Laja
+** Quick-start guide|Quick-start guide
 ** Examples|Examples
 ** Download|Download CDD
 * context
