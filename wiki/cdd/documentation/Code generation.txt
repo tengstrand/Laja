@@ -7,13 +7,13 @@ The hope is that CDD will make you a better developer and the work easier and mo
 The code generation is performed by the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja].
 The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala, but at the moment only Java is supported.
 
-If we take a look at the [[Getting_started|Getting started]] example, it has the following structure in the IDE:
+If we take a look at the [[Quick-start guide|Quick-start guide]], it has the following structure in the IDE:
 
 [[File:project-directory-structure.png]]
 
 The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
 
-Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:
+Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Quick-start guide|Quick-start guide]] example:
 
 <source>
 package com.myproject.state;

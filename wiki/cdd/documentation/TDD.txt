@@ -120,3 +120,8 @@ If we do, we mix production code with test code and run the risk that the state 
 
 A good thing is that we can take advantage of the fact that we have a test context behaviour representation ''TestPerson''
 and put code that naturally belongs there and thus making the code more readable.
+
+
+[[Composition|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Laja|Next >]]

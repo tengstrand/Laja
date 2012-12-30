@@ -118,5 +118,5 @@ Result: PersonMatcherArrayList{[PersonMatcher{age=40, name='Cecilia'}, PersonMat
 ...which returns instances of ''PersonMatcher'' instead och instances of ''Person''.
 
 
-[[Composition|< Back]]
+[[Laja|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
