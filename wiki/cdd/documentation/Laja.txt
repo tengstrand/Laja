@@ -2,9 +2,9 @@
 === Laja crash course ===
 
 All code generation and parsing is performed by [http://laja.tengstrand.nu Laja].
-If you haven't read all the documentation yet, here comes a crash course!
+If you haven't read all the [http://laja.tengstrand.nu/index.php/Code_generator_-_Documentation documentation] yet, here comes a crash course!
 
-The project file ''myproject.laja'' in the [[Getting started]] example looks like this:
+The project file ''myproject.laja'' in the [[Quick-start guide|Quick-start guide]] looks like this:
 <source>
 #generateCdd([{
   srcDir: "{.}/main"
@@ -43,7 +43,7 @@ The macro is included from ''LAJA_HOME/template/system-imports.laja'' when Laja 
 ...
 </source>
 
-The macro is taking one argument. The argument we was sending in to ''generateCdd'' looked like this:
+The macro is taking one argument, e.g:
 <source>
 [{
   srcDir: "{.}/main"
@@ -52,9 +52,12 @@ The macro is taking one argument. The argument we was sending in to ''generateCd
   behaviourPackage: "com.myproject.behaviour" }]
 </source>
 
-The square brackets is a List syntax in Laja. Everything between [ and ] will be added to an instance of ''java.util.ArrayList''.
+The square brackets is a List syntax in Laja. Everything between [ and ] will be added to an instance of ''java.util.ArrayList''. The elements are comma separated:
+<source>
+[ {...}, {...} ]
+</source>
 
-If we for example need to have more than one source directory, for example a test directory, we can write:
+...so if we need more than one source directory, for example a test directory, we can write:
 <source>
 #generateCdd([{
   srcDir: "{.}/main"
@@ -67,27 +70,21 @@ If we for example need to have more than one source directory, for example a tes
 )
 </source>
 
-The list element are comma separated:
-<source>
-[ {...}, {...} ]
-</source>
-
-Curly braces is the Map syntax in Laja. Everything between { and } will be added to an instance of ''java.util.LinkedHashMap'',
+Curly braces is the Map syntax in Laja. Everything between { and } will be added to an instance of ''java.util.LinkedHashMap'' (ordered hash map),
 so we are actually sending in a list of maps as argument to the macro!
 
 
-The elements ''statePackage'' and ''behaviourPackage'' does not need to be repeated by the trailing elements in the list because the
-last setting will always be reused by the following elements if not overridden.
+The elements ''statePackage'' and ''behaviourPackage'' don't need to be repeated because the last setting will be "remembered" and reused by the following elements.
 
 
-White spaces are ignored by Laja and this is equivalent:
+White spaces are ignored by Laja, so we could have written (if we like a more compact style!):
 <source>
 #generateCdd([{srcDir: "{.}/main" outDir: "{..}/java-gen/main" statePackage: "com.myproject.state" behaviourPackage: "com.myproject.behaviour"},
               {srcDir: "{.}/test" outDir: "{..}/java-gen/test"}])
 </source>
 
-The project file ''myproject.laja'' is an ordinary Laja template file. All valid Laja instructions can be included, not just the call to ''generateCdd''.
-We can for example have comments and generate more than one project as it is done in [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/example.laja example.laja].
+The project file ''myproject.laja'' is an ordinary Laja template file. All valid Laja commands can be included, not just the call to ''generateCdd''.
+We can for example have comments and generate more than one project as in [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/example.laja example.laja]:
 <source>
 ##------------------------------
 ## Generate all examples
@@ -103,45 +100,99 @@ We can for example have comments and generate more than one project as it is don
 
 === Project settings ===
 
-Let's dig a little deeper into the "project settings" represented by the arguments to the macro ''generateCdd''.
+It's time to dig a little deeper into the "project settings" which is represented by the list argument to the macro ''generateCdd''.
+
+Let's say we have the following structure:
+<source>
+/projectroot/src/java/myproject.laja
+/projectroot/src/java/main/com/myproject/state
+/projectroot/src/java/main/com/myproject/behaviour
+/projectroot/src/java/test/com/myproject/state
+/projectroot/src/java/test/com/myproject/behaviour
+/projectroot/src/java-gen/main/com/myproject/state
+/projectroot/src/java-gen/main/com/myproject/behaviour
+/projectroot/src/java-gen/test/com/myproject/state
+/projectroot/src/java-gen/test/com/myproject/behaviour
+</source>
+
+...and the content of ''myproject.laja'' is:
+<source>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }, {
+
+  srcDir: "{.}/test"
+  outDir: "{..}/java-gen/test" } ]
+)
+</source>
+
+Based on that, let's explain the supported arguments:
 
 {| class="wikitable"
-! argument !! Description
+! Argument !! Description
 |-
 |
 srcDir
 ||
-Source dir...
+Full path to the root of the Java source directory (''/projectroot/src/java'').
 |-
 |
 outDir
 ||
-Output dir...
+Full path to the root directory for all generated Java files (''/projectroot/src/java-gen'').
 |-
 |
 statePackage
 ||
-State package...
+The root state package (''com.myproject.state'').
 |-
 |
 behaviourPackage
 ||
-Behaviour package...
+The root behaviour package (''com.myproject.behaviour'').
+|-
+|
+autoRemove
+||
+If set to ''true'' (which is the default) then all unused files (Java classes) in the ''outDir'' directory structure will be automatically removed.
+If set to ''false'' then classes, that are no longer used, need to be removed manually.
+This mode is used in the development of CDD, which has chosen to put generated classes under version control.
+It's normally not recommended to put generated classes under version control!
 |-
 |
 verbose
 ||
-Verbose...
+Set to ''true'' to show all affected files (default is ''false''), e.g.:
+<source>
+#generateCdd([{
+  verbose: true
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }]
+)
+</source>
+|}
+
+Strings can contain special elements:
+
+{| class="wikitable"
+! Element !! Description
 |-
 |
 {.}
 ||
-Current directory
+Same directory as the current template. If the current template is ''/projectroot/src/java/myproject.laja'' then "{.}" will be replaced by "/projectroot/src/java".
 |-
 |
 {..}
 ||
-Parent directory
+Parent directory of the current template. If the current template is ''/projectroot/src/java/myproject.laja'' then "{..}" will be replaced by "/projectroot/src".
 |}
 
-<span style="color:#FF0000">Work in progress...</span>
+
+[[CDD|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Examples|Next >]]
