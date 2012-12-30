@@ -82,6 +82,7 @@ person.asPersistable().save();
 
 ...switches context and persists the instance in one statement! This will be described in more detail later.
 
+
 [[Main_Page|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Classes and objects|Next >]]
