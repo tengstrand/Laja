@@ -1,8 +1,6 @@
-Behaviour is an important part of CDD as well as in traditional OO. Developing a system without behavior would nevertheless be quite pointless!
-With CDD we are free to compose objects in a way similar to building with wood bricks or Lego.
+Defining behaviour is an important part of CDD, just as it is in traditional OO. The difference is that with CDD we are free to compose objects in a way similar to building with toy bricks or Lego.
 
 Behaviour is something that allows a particular ''state'' to work in a certain ''context'' and we start by showing how it's [[Factories|created]].
-
 
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

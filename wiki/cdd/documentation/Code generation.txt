@@ -1,19 +1,17 @@
-Many developers have bad experience with code generation.
-CDD try to change that by not being in the way of the developer.
-CDD generates essentially the code needed to assemble the different building blocks, which is the type of code that is both tedious and difficult to maintain.
-The code that remains to be written will focus on defining ''state'' and adding ''behavior'' suitable for different ''contexts''.
+Many developers have had bad experience with code generation.
+CDD tries to change that by not getting in the way of the developer.
+CDD generates the code needed to assemble the different building blocks, which is the type of code that is both tedious and difficult to maintain.
+The code that remains to be written is focused on defining ''state'' and adding ''behavior'' suitable for different ''contexts''.
 The hope is that CDD will make you a better developer and the work easier and more fun!
 
 The code generation is performed by the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja].
-The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala but at the moment only Java is supported.
-
+The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala, but at the moment only Java is supported.
 
 If we take a look at the [[Getting_started|Getting started]] example, it has the following structure in the IDE:
 
 [[File:project-directory-structure.png]]
 
 The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
-
 
 Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Getting_started|Getting started]] example:
 
@@ -83,7 +81,6 @@ person.asPersistable().save();
 </source>
 
 ...switches context and persists the instance in one statement! This will be described in more detail later.
-
 
 [[Main_Page|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -1,5 +1,5 @@
 __NOTOC__
-Encapsulation is essentially about hiding state and to work in different contexts by defining behaviour from the perspective of state.
+Encapsulation is essentially about hiding state behind behaviour.
 
 This can be illustrated by an example. Assume ''PersonState'' has the attribute ''age''.
 Now the behaviour "is teenager" can be defined from the perspective of ''age'':
@@ -14,29 +14,28 @@ public class Person ... {
 }
 </source>
 
-The class ''Person'' only expose ''behaviour'' in its public API, via the method ''isTeenager'', and hides the
+The class ''Person'' only exposes ''behaviour'' in its public API, via the method ''isTeenager'', and hides the
 inner representation held by ''state''. The ''state'' instance should never be exposed outside the object itself
 (except from within other person representations) which otherwise would break encapsulation.
 
-A good thing is that we can change how ''age'' is represented without changing the public API.
+A good thing about this approach to encapsulation is that we can change how ''age'' is represented without changing the public API.
 Even more important is that we have a single definition of "is teenager" with the descriptive name ''isTeenager''
-which help us keeping the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY] and easier to understand and maintain.
+which helps us keep the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY] and easier to understand and maintain.
 
 All ''behavior'' is in one way or another related to some ''state'', either directly or indirectly.
 
 === The problem ===
 
-In traditional OO, when you have created a class with a clear responsibility, the problems begin when you need to do some work in a different context.
+In traditional OO, you can create a class with clear encapsulated responsibility, but the problem begins when you need to work with that class in a different context.
 Lets say we create the class ''Person'' only containing methods related to the core domain. When you want to export an instance of ''Person'' as a text format, you are facing two bad alternatives:
 * Add the method ''toText()'' to ''Person'' (which converts the state to a text row to be used by the exporter) resulting in braking the [http://en.wikipedia.org/wiki/Single_responsibility_principle single responsibility principle].
-* Add some getters to ''Person'' and delegate the work to e.g. ''PersonTextExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (which is about letting objects themselves perform tasks).
+* Add some getters to ''Person'' and delegate the work to e.g. ''PersonTextExporter'' leading to broken encapsulation and violation of the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle (which is about letting objects perform their own tasks).
 
-
-The good news is that you don't need to do either of these two things in CDD!
+The good news is that you don't need to make either of these two compromises in CDD!
 
 === The solution ===
 
-Let's explore how encapsulation is handled in this implementation of CDD, start by adding a state definition:
+Let's explore how encapsulation is handled with CDD, start by adding a state definition:
 
 <source>
 package com.myproject.state;
@@ -163,7 +162,7 @@ Exception in thread "main" java.lang.IllegalStateException: The state can only b
 	...
 </source>
 
-If we switch context back to ''person'' then it's possible to mutate state again:
+If we switch back context to ''person'' then it's possible to mutate state again:
 <source>
 Person person = Person.age(18).name("Thomas").asPerson();
 person.mutate();

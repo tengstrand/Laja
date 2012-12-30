@@ -8,18 +8,16 @@ Context Driven Development (CDD) is a new approach to object orientation, which 
 The secret sauce that makes this possible is ''code generation''.
 Having all of the CDD foundation classes generated automatically frees developers to just focus on ''what'' the system does instead of ''how'' it does it - resulting in less code, cleaner code and more robust code.
 
-=== Problems ===
+=== Why CDD? ===
 
-I have for quite a long time observed a number of problems in object orientation:
+There are a number of issues with standard object orientation:
 
-* The absence of the concept ''context'' which makes it hard to work in different contexts and leads to non-object-oriented solutions that force you to break encapsulation and violate the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
+* The absence of the concept of ''context'' which makes it difficult to use objects in different contexts and which leads to non-object-oriented solutions that force you to break encapsulation and violate the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
 * There is no correlation between an objects attributes/properties and how the state is built (constructors) and how identity is implemented (''hashCode/equals'').
 * Poor flexibility at the object level when it comes to composing objects, switching context and code reuse.
-
 
 Want to avoid these problems? - read on!
 
 Joakim Tengstrand
-
 
 [[Code generation|Next >]]

@@ -47,13 +47,13 @@ which can be illustrated by this diagram:
 
 
 The merging of state and behavior makes it harder to reuse code and to work in different contexts.
-Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] is able to compose classes in a powerful way, but once instantiated the objects become quite static in its nature.
+Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] are able to compose classes in a powerful way, but once instantiated the objects become static.
 
 === Flexible objects ===
 
-CDD wants to bring the same level of flexibility to objects as for classes.
+CDD wants to bring the same level of flexibility to objects as we get for classes.
 The separation of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
-Let's see how the previous example will look like in CDD:
+Let's see how the previous example would look like in CDD:
 
 <source>
 package com.myproject.state;
@@ -100,7 +100,7 @@ also for example ''PersonRowInFile'' and ''PersistablePerson'':
 [[File:CDD-object.png|400px]]
 
 
-CDD is not the only attempt to improve how to work with objects, you may also find interest in the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
+CDD is not the only attempt to improve how to work with objects, you may also find it interesting to read about the [http://en.wikipedia.org/wiki/Data,_context_and_interaction DCI] paradigm.
 If you want to compare the two you can have a look at the popular ''account'' example which looks like
 [http://www.jroller.com/sebastianKuebeck/entry/object_oriented_programming_2_0 this] in DCI using the Decorator pattern and traits or like
 [https://github.com/Qi4j/qi4j-sdk/tree/develop/samples/dci/src/main/java/org/qi4j/dci/moneytransfer this] using the framework [http://www.qi4j.org Qi4j] and like

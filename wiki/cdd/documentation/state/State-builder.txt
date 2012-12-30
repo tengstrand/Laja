@@ -1,5 +1,5 @@
 So far we have used ''chained creators'' to build state.
-In some situations, if you for example don't have control of in which order the attributes are going to be set,  a ''builder'' can be more convenient.
+In situations when you don't have control of in which order the attributes are going to be set, a ''builder'' can be more convenient.
 
 
 Let's start with an example:

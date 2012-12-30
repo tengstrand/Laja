@@ -4,7 +4,7 @@ This documentation contains a lot of examples and you can find even more [https:
 === Building a repository ===
 
 Here is an example of how the encapsulation decision can be postponed and made by the calling code when building a repository.
-By letting the repository return a ''PersonListEncapsulator'' will enabling both ''validation'' and selection of ''behavior representation'' from the calling code.
+By letting the repository return a ''PersonListEncapsulator'' will enable both ''validation'' and selection of ''behavior representation'' from the calling code.
 Let's illustrate this by writing some code, start by modifying ''Person'':
 
 <source>
