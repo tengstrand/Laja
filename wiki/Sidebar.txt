@@ -16,9 +16,7 @@
 ** Parser generator - Architecture|Architecture
 ** Parser generator - Documentation|Documentation
 * cdd
-** CDD - Getting started|Getting started
-** CDD - Architecture|Architecture
-** CDD - Documentation|Documentation
+** http://cdd.tengstrand.nu|CDD Wiki
 Sidebar
 * SEARCH
 * TOOLBOX
