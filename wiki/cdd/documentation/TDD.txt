@@ -1,6 +1,20 @@
-CDD is very well suited for use with "test first" development.
+CDD is very well suited for use with "test first" development (Test Driven Development).
 
-Let's create the unit test ''PersonTest'' and verify the method ''moveToAddress'' in ''Person'':
+When writing unit tests we need to update the project file ''myproject.laja'' with the new test directory:
+
+<source>
+#generateCdd([{
+  srcDir: "{.}/main"
+  outDir: "{..}/java-gen/main"
+  statePackage: "com.myproject.state"
+  behaviourPackage: "com.myproject.behaviour" }, {
+
+  srcDir: "{.}/test"
+  outDir: "{..}/java-gen/test" } ]
+)
+</source>
+
+...continue by creating the unit test ''PersonTest'' with the goal to verify the method ''moveToAddress'' in ''Person''.
 
 <source>
 package com.myproject.state;
