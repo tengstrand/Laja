@@ -61,7 +61,7 @@ Example:
    laja sysimp="c:\Program Files\mytemplates\my-system-imports.laja"
                           surround with " if the path contains spaces.
 
-Project: http://laja.sf.net
+Project: http://laja.tengstrand.nu
 </pre>
 
 == Run Laja from Ant ==

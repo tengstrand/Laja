@@ -127,7 +127,6 @@ public class TemplateFactory implements ITemplateFactory {
 	 * via template.
 	 * 
 	 * @param itemplate
-	 * @param imacrobody
 	 * @return
 	 */
 	private Context getContext(ITemplate itemplate, IMacro imacro, IFunction ifunction) {
