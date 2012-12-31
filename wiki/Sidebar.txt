@@ -2,7 +2,7 @@
 ** mainpage|Overview
 ** https://sourceforge.net/projects/laja|Download Laja
 ** Install|Install Laja
-** http://laja.svn.sourceforge.net/viewvc/laja/trunk/Laja|Browse code
+** https://github.com/tengstrand/Laja|Browse code
 ** Releases|Releases
 ** http://www.gnu.org/copyleft/gpl.html|License
 ** Development|Developing Laja
