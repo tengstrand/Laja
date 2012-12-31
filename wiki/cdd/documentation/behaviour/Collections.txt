@@ -350,8 +350,7 @@ PersonArrayList{[PersonAdmin{name='Anders', phoneNumber='011-11111111'}, PersonA
 
 === Summary ===
 
-Collections in CDD are currently rather dumb.
-The way we add behaviour to them is by using composition, like we did with the ''Exporter'', which leads us to the next exciting area, [[Composition|composition]]!
+The way we add behaviour to collections is by using composition, like we did with the ''Exporter'', which leads us to the next exciting area, [[Composition|composition]]!
 
 
 [[Populate substate|< Back]]
