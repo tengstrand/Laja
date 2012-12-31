@@ -4,7 +4,7 @@ CDD generates the code needed to assemble the different building blocks, which i
 The code that remains to be written is focused on defining ''state'' and adding ''behavior'' suitable for different ''contexts''.
 The hope is that CDD will make you a better developer and the work easier and more fun!
 
-The code generation is performed by the combined code and parser generator [http://laja.tengstrand.nu/index.php/Main_Page Laja].
+The code generation is performed by the combined code and parser generator [[Laja]].
 The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala, but at the moment only Java is supported.
 
 If we take a look at the [[Quick-start guide|Quick-start guide]], it has the following structure in the IDE:
