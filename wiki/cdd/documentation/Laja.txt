@@ -1,8 +1,8 @@
 
-=== Laja crash course ===
-
 All code generation and parsing is performed by [http://laja.tengstrand.nu Laja].
 If you haven't read all the [http://laja.tengstrand.nu/index.php/Code_generator_-_Documentation documentation] yet, here comes a crash course!
+
+=== Laja crash course ===
 
 The project file ''myproject.laja'' in the [[Quick-start guide|Quick-start guide]] looks like this:
 <source>
