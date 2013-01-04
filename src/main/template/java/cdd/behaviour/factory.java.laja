@@ -53,18 +53,6 @@ public class {factoryClass} extends {parentClass} {
         return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
     }
     #end
-    #if (firstChainedIsConverter)
-
-      #foreach (method in template.convertMethods where method.variable == firstChainedAttribute.variable)
-        #if (chainedReturnClass == null)
-    public static {encapsulatorClass} {method.variable}({method.type} {method.variable}) {
-        #else
-    public static {creatorClass}.{chainedReturnClass} {method.variable}({method.type} {method.variable}) {
-        #end
-        return new {creatorClass}().new {firstChainedParameterClass}().{method.variable}({method.variable});
-    }
-      #end
-    #end
   #end
 
     public static {builderClass} build() {

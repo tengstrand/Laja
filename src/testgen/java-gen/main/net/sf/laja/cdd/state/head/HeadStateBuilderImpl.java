@@ -71,28 +71,12 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
     }
 
-    public void withEyeWeightInGrams(String eyeWeightInGrams) {
-        state.setEyeWeightInGrams(Integer.valueOf(eyeWeightInGrams), encapsulator);
-    }
-
     public void withColor(String color) {
         state.setColor(color, encapsulator);
     }
 
-    public void withColor(BigDecimal color) {
-        state.setColor(color.toString(), encapsulator);
-    }
-
-    public void withColor(int color) {
-        state.setColor(String.valueOf(color), encapsulator);
-    }
-
     public void withDecease(String decease) {
         state.setDecease(decease, encapsulator);
-    }
-
-    public void withDecease(int decease) {
-        state.setDecease(String.valueOf(decease), encapsulator);
     }
 
     public void withHasEar(Boolean hasEar) {

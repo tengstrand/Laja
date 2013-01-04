@@ -25,22 +25,7 @@ public class EyeBuilder {
         return this;
     }
 
-    public EyeBuilder withEyeWeightInGrams(String eyeWeightInGrams) {
-        builder.withEyeWeightInGrams(eyeWeightInGrams);
-        return this;
-    }
-
     public EyeBuilder withColor(String color) {
-        builder.withColor(color);
-        return this;
-    }
-
-    public EyeBuilder withColor(BigDecimal color) {
-        builder.withColor(color);
-        return this;
-    }
-
-    public EyeBuilder withColor(int color) {
         builder.withColor(color);
         return this;
     }

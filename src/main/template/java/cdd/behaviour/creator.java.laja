@@ -40,13 +40,6 @@ public class {creatorClass} {
             return new {nextClass}();
         }
       #end
-      #foreach (method in template.convertMethods where method.variable == attribute.variable)
-
-        public {nextClass} {attribute.variable}({method.type} {method.variable}) {
-            builder.{attribute.withMethod}({attribute.variable});
-            return new {nextClass}();
-        }
-      #end
       #set (attribute = nextAttribute)
       #set (currentClass = nextClass)
     #else
@@ -66,13 +59,6 @@ public class {creatorClass} {
       #else
         public {encapsulatorClass} {attribute.variable}({attribute.type} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable});
-            return create();
-        }
-      #end
-      #foreach (method in template.convertMethods where method.variable == attribute.variable)
-
-        public {encapsulatorClass} {attribute.variable}({method.type} {method.variable}) {
-            builder.{attribute.withMethod}({method.statement});
             return create();
         }
       #end

@@ -34,13 +34,6 @@ public class {builderClass} {
         return this;
     }
     #end
-    #foreach (method in template.convertMethods where method.variable == attribute.variable)
-
-    public {builderClass} {attribute.withMethod}({method.type} {method.variable}) {
-        builder.{attribute.withMethod}({attribute.variable});
-        return this;
-    }
-    #end
   #end
 
     public boolean isValid() {

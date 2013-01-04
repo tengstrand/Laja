@@ -29,7 +29,7 @@ public class CarExample {
 
         // Use the builder to create the car.
         Car saab = Car.build().withLengthInCentimeters(434).withName("Saab").withColor("Blue").withOwner(
-                Owner.build().withSsn("197707071122").withName("Bull")).asCar();
+                Owner.build().withSsn(197707071122L).withName("Bull")).asCar();
 
         // Name and lengthInCentimeters are mandatory, weightInKilograms is optional.
         Bus bus = Bus.name("Some").lengthInCentimeters(5100).withWeightInKilograms(3200).asBus();

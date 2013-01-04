@@ -12,7 +12,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface ArmStateBuilder {
     void withArmLength(int armLength);
     void withArmWeight(double armWeight);
-    void withArmWeight(String armWeight);
     void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder);
     HandStateListBuilder getHandsStateListBuilder();
     boolean isValid();

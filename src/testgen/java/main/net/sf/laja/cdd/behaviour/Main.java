@@ -19,6 +19,6 @@ public class Main {
 
         System.out.println(list3);
 
-        ScaryEyeList eyes = Eye.createList(Eye.eyeWeightInGrams(1).color(1)).asEyeList().asScaryEyeList();
+        ScaryEyeList eyes = Eye.createList(Eye.eyeWeightInGrams(1).color("1")).asEyeList().asScaryEyeList();
     }
 }

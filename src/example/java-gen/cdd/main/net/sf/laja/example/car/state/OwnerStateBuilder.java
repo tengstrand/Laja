@@ -9,7 +9,6 @@ import net.sf.laja.example.car.state.Certificate;
  */
 public interface OwnerStateBuilder {
     void withSsn(long ssn);
-    void withSsn(String ssn);
     void withName(String name);
     boolean isValid();
     Object as(OwnerStateBehaviourFactory factory, Object... args);

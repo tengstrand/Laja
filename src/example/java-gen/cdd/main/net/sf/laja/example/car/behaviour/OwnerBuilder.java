@@ -23,11 +23,6 @@ public class OwnerBuilder {
         return this;
     }
 
-    public OwnerBuilder withSsn(String ssn) {
-        builder.withSsn(ssn);
-        return this;
-    }
-
     public OwnerBuilder withName(String name) {
         builder.withName(name);
         return this;

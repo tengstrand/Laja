@@ -13,26 +13,11 @@ public class EyeCreator {
             builder.withEyeWeightInGrams(eyeWeightInGrams);
             return new Color_();
         }
-
-        public Color_ eyeWeightInGrams(String eyeWeightInGrams) {
-            builder.withEyeWeightInGrams(eyeWeightInGrams);
-            return new Color_();
-        }
     }
 
     public class Color_ {
         public EyeEncapsulator color(String color) {
             builder.withColor(color);
-            return create();
-        }
-
-        public EyeEncapsulator color(BigDecimal color) {
-            builder.withColor(color.toString());
-            return create();
-        }
-
-        public EyeEncapsulator color(int color) {
-            builder.withColor(String.valueOf(color));
             return create();
         }
     }

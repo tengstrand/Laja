@@ -16,9 +16,6 @@ public interface {builderClass}{extends} {
     #else
     void {attribute.withMethod}({attribute.type} {attribute.variable});
     #end
-    #foreach (method in convertMethods where method.variable == attribute.variable)
-    void {attribute.withMethod}({method.type} {method.variable});
-    #end
   #end
   #foreach (attribute in attributes where attribute.isState)
     {attribute.stateBuilder} {attribute.stateBuilderGetter}();

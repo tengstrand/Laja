@@ -33,11 +33,6 @@ public class ArmBuilder {
         return this;
     }
 
-    public ArmBuilder withArmWeight(String armWeight) {
-        builder.withArmWeight(armWeight);
-        return this;
-    }
-
     public ArmBuilder withHands(HandListEncapsulator hands) {
         builder.withHands(hands.stateListBuilder);
         return this;

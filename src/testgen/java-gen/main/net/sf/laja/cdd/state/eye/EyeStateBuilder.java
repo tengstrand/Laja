@@ -10,12 +10,8 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface EyeStateBuilder {
     void withEyeWeightInGrams(int eyeWeightInGrams);
-    void withEyeWeightInGrams(String eyeWeightInGrams);
     void withColor(String color);
-    void withColor(BigDecimal color);
-    void withColor(int color);
     void withDecease(String decease);
-    void withDecease(int decease);
     void withHasEar(Boolean hasEar);
     boolean isValid();
     Object as(EyeStateBehaviourFactory factory, Object... args);

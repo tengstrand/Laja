@@ -64,22 +64,20 @@ public class Expander {
             stateTemplateMap.put(stateTemplate.classname, stateTemplate);
         }
         for (StateTemplate stateTemplate : stateTemplates) {
-            stateTemplate.allConvertMethods.addAll(stateTemplate.convertMethods);
             for (ExpandedType expandedType : stateTemplate.expandedTypes) {
-                addExpandedType(expandedType, stateTemplate.allExpandedTypes, stateTemplate.allConvertMethods, stateTemplate.allImports);
+                addExpandedType(expandedType, stateTemplate.allExpandedTypes, stateTemplate.allImports);
             }
         }
     }
 
-    private void addExpandedType(ExpandedType expandedType, Set<ExpandedType> allExpandedTypes, Set<ConvertMethod> allConvertMethods, Imports allImports) {
+    private void addExpandedType(ExpandedType expandedType, Set<ExpandedType> allExpandedTypes, Imports allImports) {
         if (!allExpandedTypes.contains(expandedType)) {
             allExpandedTypes.add(expandedType);
             StateTemplate stateTemplate = stateTemplateMap.get(expandedType.type);
-            allConvertMethods.addAll(stateTemplate.convertMethods);
             allImports.addImports(stateTemplate.imports);
 
             for (ExpandedType expType : stateTemplate.expandedTypes) {
-                addExpandedType(expType, allExpandedTypes, allConvertMethods, allImports);
+                addExpandedType(expType, allExpandedTypes, allImports);
             }
         }
     }

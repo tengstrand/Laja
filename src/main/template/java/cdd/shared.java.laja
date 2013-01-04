@@ -53,10 +53,6 @@
       #if (firstChainedAttribute == null)
         #set (firstChainedAttribute = attribute)
         #set (firstChainedParameterClass = "{strings.capitalize(attribute.variable)}_")
-        #set (firstChainedIsConverter = false)
-        #foreach (convertMethod in template.convertMethods where convertMethod.variable == attribute.variable)
-          #set (firstChainedIsConverter = true)
-        #end
       #else
         #set (chainedReturnClass = "{strings.capitalize(attribute.variable)}_")
       #end

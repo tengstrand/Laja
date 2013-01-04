@@ -21,10 +21,6 @@ public class OwnerValueFactory extends OwnerValue {
         return new OwnerCreator().new Ssn_().ssn(ssn);
     }
 
-    public static OwnerCreator.Name_ ssn(String ssn) {
-        return new OwnerCreator().new Ssn_().ssn(ssn);
-    }
-
     public static OwnerBuilder build() {
         return new OwnerBuilder();
     }

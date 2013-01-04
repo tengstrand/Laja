@@ -36,10 +36,6 @@ public class StateTemplateFactory implements StateTemplateParser.IStateTemplateF
         return new StateMethod(stateTemplate);
     }
 
-    public StateTemplateParser.IConvertMethod createConvertMethod() {
-        return new ConvertMethod();
-    }
-
     public StateTemplateParser.IClassStatement createClassStatement() {
         return new ClassStatement();
     }

@@ -38,10 +38,6 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
         state.setArmWeight(armWeight, encapsulator);
     }
 
-    public void withArmWeight(String armWeight) {
-        state.setArmWeight(Double.valueOf(armWeight), encapsulator);
-    }
-
     public void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder) {
         state.setHands(listBuilder.getStateList(certificate), encapsulator);
     }

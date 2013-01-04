@@ -168,4 +168,4 @@ Composite types are also supported in terms of sub states.
 
 [[State|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Type converters|Next >]]
+[[State composition|Next >]]

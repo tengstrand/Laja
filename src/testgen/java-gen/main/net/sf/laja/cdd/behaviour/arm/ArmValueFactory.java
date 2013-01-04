@@ -23,10 +23,6 @@ public class ArmValueFactory extends ArmValue {
         return new ArmCreator().new ArmWeight_().armWeight(armWeight);
     }
 
-    public static ArmCreator.Hands_ armWeight(String armWeight) {
-        return new ArmCreator().new ArmWeight_().armWeight(armWeight);
-    }
-
     public static ArmBuilder build() {
         return new ArmBuilder();
     }

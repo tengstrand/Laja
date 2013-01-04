@@ -35,9 +35,7 @@ grammar stateTemplate {
    method = s "." s name:variable s "(" s argument s ")";
    stateMethod = public name:returnclass ws "state" uname s "(" parameters ")" s "{" s  "return" ws name:implclass s method+ s ";" s "}";
 
-   convertMethod = public name ws "convert" [uname] s "(" s name:type ws name:variable s ")" s "{" s "return" ws !";"+:statement ";" s "}";
-
-   classStatement = public "class" ws name:classname s ["extends" ws name s] "{" [s attribute | isvalid | convertMethod | stateMethod]+ s "}";
+   classStatement = public "class" ws name:classname s ["extends" ws name s] "{" [s attribute | isvalid | stateMethod]+ s "}";
 
    stateTemplate = s packagestatement s imports s classStatement s;
 
@@ -65,15 +63,10 @@ grammar stateTemplate {
    stateMethod.setImplClass(String implclass);
    stateMethod.addMethod(Method method, String statement);
 
-   ConvertMethod convertMethod.setType(String type);
-   convertMethod.setVariable(String variable);
-   convertMethod.setStatement(String statement);
-
    ClassStatement classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);
    classStatement.setIsValid(IsValid isvalid);
    classStatement.addStateMethod(StateMethod stateMethod);
-   classStatement.addConvertMethod(ConvertMethod convertMethod);
 
    StateTemplate stateTemplate.setPackagename(String packagestatement.packagename);
    stateTemplate.setImports(Imports imports);

@@ -11,11 +11,6 @@ public class OwnerCreator {
             builder.withSsn(ssn);
             return new Name_();
         }
-
-        public Name_ ssn(String ssn) {
-            builder.withSsn(ssn);
-            return new Name_();
-        }
     }
 
     public class Name_ {

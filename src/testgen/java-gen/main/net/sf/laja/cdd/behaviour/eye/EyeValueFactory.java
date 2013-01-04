@@ -22,10 +22,6 @@ public class EyeValueFactory extends EyeValue {
         return new EyeCreator().new EyeWeightInGrams_().eyeWeightInGrams(eyeWeightInGrams);
     }
 
-    public static EyeCreator.Color_ eyeWeightInGrams(String eyeWeightInGrams) {
-        return new EyeCreator().new EyeWeightInGrams_().eyeWeightInGrams(eyeWeightInGrams);
-    }
-
     public static EyeBuilder build() {
         return new EyeBuilder();
     }

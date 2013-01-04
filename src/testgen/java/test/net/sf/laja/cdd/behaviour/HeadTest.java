@@ -20,8 +20,8 @@ public class HeadTest {
         NoseListEncapsulator noses = Nose.createList(Nose.noseDescription("sd").details(""));
         Head head = Head
                 .headWeightInGrams(200)
-                .leftEye(Eye.eyeWeightInGrams(50).color(1))
-                .rightEye(Eye.eyeWeightInGrams(51).color(2))
+                .leftEye(Eye.eyeWeightInGrams(50).color("1"))
+                .rightEye(Eye.eyeWeightInGrams(51).color("2"))
                 .eyeWeightInGrams(40)
                 .color("RED")
                 .noses(noses)

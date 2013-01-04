@@ -16,11 +16,6 @@ public class ArmCreator {
             builder.withArmWeight(armWeight);
             return new Hands_();
         }
-
-        public Hands_ armWeight(String armWeight) {
-            builder.withArmWeight(armWeight);
-            return new Hands_();
-        }
     }
 
     public class Hands_ {

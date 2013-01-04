@@ -31,10 +31,6 @@ public class OwnerStateBuilderImpl implements OwnerStateBuilder {
         state.setSsn(ssn, encapsulator);
     }
 
-    public void withSsn(String ssn) {
-        state.setSsn(Long.parseLong(ssn), encapsulator);
-    }
-
     public void withName(String name) {
         state.setName(name, encapsulator);
     }

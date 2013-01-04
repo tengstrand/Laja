@@ -133,7 +133,6 @@ public class ExpanderTest {
         stateTemplate.setClassname(templateClassName);
         stateTemplate.stateClass = stateClass;
         stateTemplate.attributes = new ArrayList<Attribute>();
-        stateTemplate.convertMethods = new ArrayList<ConvertMethod>();
         stateTemplate.imports = new Imports();
         stateTemplate.allImports = new Imports();
         return stateTemplate;

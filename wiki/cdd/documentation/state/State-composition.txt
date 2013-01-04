@@ -43,6 +43,6 @@ Substates can include other substates (including itself if representing a parent
 If you're curious about how to work with composition, you can go directly to the section [[Composition]].
 
 
-[[Type converters|< Back]]
+[[Define state|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State expansion|Next >]]

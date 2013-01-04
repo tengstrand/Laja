@@ -17,7 +17,6 @@
 * state
 ** State|Introduction
 ** Define state|Define state
-** Type converters|Type converters
 ** State composition|State composition
 ** State expansion|State expansion
 ** State projection|State projection

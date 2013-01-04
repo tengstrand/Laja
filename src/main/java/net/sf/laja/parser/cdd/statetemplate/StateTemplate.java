@@ -19,8 +19,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String isValidStatement;
     public List<Attribute> attributes;
     public List<StateMethod> stateMethods = new ArrayList<StateMethod>();
-    public List<ConvertMethod> convertMethods;
-    public Set<ConvertMethod> allConvertMethods = new LinkedHashSet<ConvertMethod>();
 
     public String rootSrcDir;
     public String rootOutDir;
@@ -89,7 +87,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
         stateImplClass = classname + "StateImpl";
         attributes = classStatement.attributes;
         stateMethods = classStatement.stateMethods;
-        convertMethods = classStatement.convertMethods;
         isValidStatement = classStatement.isValid != null ? classStatement.isValid.getStatement() : null;
     }
 
@@ -162,7 +159,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
                 ", isValidStatement='" + isValidStatement + '\'' +
                 ", attributes=" + attributes +
                 ", stateMethods=" + stateMethods +
-                ", convertMethods=" + convertMethods +
                 ", sourceDir='" + sourceDir + '\'' +
                 ", outputDir='" + outputDir + '\'' +
                 ", templateClassname='" + templateClassname + '\'' +
