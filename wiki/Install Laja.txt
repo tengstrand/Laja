@@ -18,8 +18,8 @@ laja
 +--- template/system    // contains functions and Groovy code imported by system-imports.laja.
 </pre>
 
-[https://sourceforge.net/projects/laja Download] the latest binary distribution of Laja, for example ''laja2-005-beta.zip''.
-Unzip and rename the directory to ''laja'' (or create the link ''laja'' to ''laja2-005-beta''), this directory will be known as LAJA_HOME.
+[https://sourceforge.net/projects/laja Download] the latest binary distribution of Laja, for example ''laja2-006-alpha.zip''.
+Unzip and rename the directory to ''laja'' (or create the link ''laja'' to ''laja2-006-alpha''), this directory will be known as LAJA_HOME.
 It's recommended to always have the same name of the Laja home directory. It will facilitate future upgrades and the integration with [http://ant.apache.org Ant].
 
 Before you can run Laja there is some additional set up you will need to do:
