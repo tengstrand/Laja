@@ -1681,10 +1681,7 @@ Laja2
     laja2-006-alpha-source.jar
     laja2-006-alpha-javadoc.zip
   laja2-005-beta
-    laja2-005-beta.zip
-    laja-parser-engine2-005-beta.jar
-    laja2-005-beta-source.jar
-    laja2-005-beta-javadoc.zip
+    ...
 Laja1
   laja1-004-alpha
     laja1-004-alpha.zip
