@@ -1,7 +1,4 @@
 __NOTOC__
-=== <span style="color:#FF0000">Under construction!</span> ===
-Will be released early 2013
-
 = Introduction =
 
 Context Driven Development (CDD) is a new approach to object orientation, which allows for a clean separation of ''state'' and ''behaviour''; enabling us to switch an object's context without breaking its encapsulation.
