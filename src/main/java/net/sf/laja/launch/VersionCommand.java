@@ -7,6 +7,6 @@ public class VersionCommand implements ViewInfoCommand {
 
 	@Override
 	public void execute() {
-		System.out.println("Version: laja2-006");
+		System.out.println("Version: laja2-006-alpha");
 	}
 }

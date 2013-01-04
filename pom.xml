@@ -6,7 +6,7 @@
 	<name>Laja</name>
 	<url>http://sourceforge.net/projects/laja</url>
 	<packaging>jar</packaging>
-	<version>006</version>
+	<version>006-alpha</version>
 	<description>A combined code generator and a parser generator</description>
 	<build>
 		<plugins>

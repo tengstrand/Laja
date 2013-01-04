@@ -20,13 +20,9 @@
   <property name="maven.build.dir" value="target"/>
   <property name="maven.build.outputDir" value="${maven.build.dir}/classes"/>
   <property name="maven.build.srcDir.0" value="src/main/java"/>
-  <property name="maven.build.srcDir.1" value="src/testgen/java/main"/>
-  <property name="maven.build.srcDir.2" value="src/testgen/java-gen/main"/>
   <property name="maven.build.resourceDir.0" value="src/main/resources"/>
   <property name="maven.build.testOutputDir" value="${maven.build.dir}/test-classes"/>
   <property name="maven.build.testDir.0" value="src/test/java"/>
-  <property name="maven.build.testDir.1" value="src/testgen/java/test"/>
-  <property name="maven.build.testDir.2" value="src/testgen/java-gen/test"/>
   <property name="maven.build.testResourceDir.0" value="src/test/resources"/>
   <property name="maven.test.reports" value="${maven.build.dir}/test-reports"/>
   <property name="maven.reporting.outputDirectory" value="${maven.build.dir}/site"/>
@@ -146,8 +142,6 @@
            source="1.5">
       <src>
         <pathelement location="${maven.build.srcDir.0}"/>
-        <pathelement location="${maven.build.srcDir.1}"/>
-        <pathelement location="${maven.build.srcDir.2}"/>
       </src>
       <classpath refid="build.classpath"/>
     </javac>
@@ -176,8 +170,6 @@
            source="1.5">
       <src>
         <pathelement location="${maven.build.testDir.0}"/>
-        <pathelement location="${maven.build.testDir.1}"/>
-        <pathelement location="${maven.build.testDir.2}"/>
       </src>
       <classpath>
         <path refid="build.test.classpath"/>

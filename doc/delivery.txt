@@ -10,7 +10,7 @@ If any jar files has been added:
 > mvn source:jar             // Generates target/laja1-001-alpha-sources.jar
 > ant                        // Generates target/laja1-001-alpha.zip
 > mvn javadoc:javadoc        // Generates target/site/apidocs
-                                zip to laja1-001-alpha-javadoc.
+                                zip to laja1-001-alpha-javadoc.zip.
 
 > cd laja-parser-engine
 > mvn clean install
