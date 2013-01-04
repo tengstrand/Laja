@@ -2,7 +2,7 @@
 
 * Laja is a [http://en.wikipedia.org/wiki/Template_processor code generator].
 * Laja is a [http://en.wikipedia.org/wiki/Compiler-compiler parser generator] that uses the code generator and generates parsers for Java.
-* Laja supports Context Driven Development (CDD) where the target language is Java.
+* Laja supports Context Driven Development ([http://cdd.tengstrand.nu CDD]) where the target language is Java.
 * It should be possible to run Laja on most variants of Windows, Unix/Linux.
 * Laja is Open Source, using [http://www.gnu.org/licenses/gpl-3.0-standalone.html GNU General Publi License version 3.0].
 * Laja is written to be used by developers with easy of use as the primary goal. Generating text files or creating [http://en.wikipedia.org/wiki/Domain-specific_language DSL]'s should be both easy and fun!
