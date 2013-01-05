@@ -22,7 +22,7 @@ A good thing about this approach to encapsulation is that we can change how ''ag
 Even more important is that we have a single definition of "is teenager" with the descriptive name ''isTeenager''
 which helps us keep the code [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY] and easier to understand and maintain.
 
-All ''behavior'' is in one way or another related to some ''state'', either directly or indirectly.
+All ''behavior'' that is not constant is in one way or another related to some ''state'', either directly or indirectly.
 
 === The problem ===
 
