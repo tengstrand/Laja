@@ -1,6 +1,12 @@
 
-CDD is included in the combined code and parser generator [http://laja.tengstrand.nu Laja]
-and can be downloaded from [https://sourceforge.net/projects/laja here].
+CDD is included in the combined code and parser generator [http://laja.tengstrand.nu Laja].
+
+Just [https://sourceforge.net/projects/laja download] it and follow the [http://laja.tengstrand.nu/index.php/Install installation] instructions.
 Support for CDD starts in release Laja2-006-alpha (click the green download button to get the latest version).
 
 What's included in the different releases are listed [http://laja.tengstrand.nu/index.php/Releases here].
+
+=== Source code ===
+
+All code is hosted at [https://github.com/tengstrand/Laja GitHub] and can be downloaded in
+[https://github.com/tengstrand/Laja/archive/master.zip one zip file] (3.3 MB).
