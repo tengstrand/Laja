@@ -9,4 +9,4 @@ Some functionality is missing in the first alpha release and is described [http:
 === Source code ===
 
 All code is hosted at [https://github.com/tengstrand/Laja GitHub] and can be downloaded in
-[https://github.com/tengstrand/Laja/archive/master.zip one zip file] (3.3 MB).
+[https://github.com/tengstrand/Laja/archive/master.zip one zip file] (3.1 MB).
