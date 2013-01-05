@@ -3,7 +3,7 @@ Released: 2013-01-04
 
 Includes:
 * This release is backward compatible with version Laja2-005-beta and is marked as alpha as support for CDD is incomplete and contains some bugs.
-* Supports the basic concepts of Context Driven Development (CDD).
+* Support for the basic concepts of Context Driven Development (CDD).
 * Known limitations and bugs in CDD before it can become a beta version are:
 ** Lists are the only supported collection type, support for sets and maps are missing.
 ** State and behaviour classes has to be unique. Classes with same name in different packages are not supported.
