@@ -101,7 +101,7 @@ Check if environment variable JAVA_HOME is set with:
   $> set
 
 If it wasn't set, you can do one of three things:
-* Set JAVA_HOME to to point to your Java 1.5 installation
+* Set JAVA_HOME to point to your Java 1.5 installation
 * Include the Java 1.5 (or higher) executable in your path.
 * If it's not possible to change to Java 1.5 or higher, then you need to edit the starting script in the LAJA_HOME/bin directory manually:
 ** If running Unix/Linux, edit the file ''laja'' and change the row that starts with ''exec "$JAVACMD"'' and hardcode the path to the ''java.exe'' (>= Java 1.5) file.
