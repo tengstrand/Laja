@@ -2,14 +2,12 @@
 Released: 2013-01-04
 
 Includes:
-* This release is backward compatible with version Laja2-005-beta and is marked as alpha as support for CDD is incomplete and contains some bugs.
-* Support for the basic concepts of Context Driven Development (CDD).
-* Known limitations and bugs in CDD before it can become a beta version are:
-** Lists are the only supported collection type, support for sets and maps are missing.
+* This release is backward compatible with version Laja2-005-beta and is marked as alpha as the support for CDD contains bugs and has some limitations:
+** Lists are the only supported collection type, support for sets and maps will be added in the next version.
 ** State and behaviour classes has to be unique. Classes with same name in different packages are not supported.
 ** If an entity has both (id) and (key) columns, the id should in some situations be used in hashCode() and equals(), now only (key) attributes are included.
 ** State projection has some limitations.
-** If a state has more than one behaviour representation then all behaviour classes has to have the same type of constructor. It's not supported to have one behaviour representation with a constructor that takes a ''state'' and another class that takes both a ''state'' and a ''stateBuilder''.
+** If a state has more than one behaviour representation then all behaviour classes must have the same type of constructor. It's not supported to have one behaviour representation with a constructor that takes a ''state'' and another class that takes both a ''state'' and a ''stateBuilder''.
 ** If a substate is a list of entities and if the list is encapsulated by a list of values and the list contains duplicates then if an element is removed from the behaviour list, the state list and the behaviour list can get out of sync.
 * Fixed a bug in DatabaseConnection.groovy, method executeSql, the connection was not always closed (problem with finally blocks in Groovy).
 
