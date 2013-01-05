@@ -8,6 +8,7 @@
 ** Laja|Laja
 ** Quick-start guide|Quick-start guide
 ** Examples|Examples
+** http://natureofcode.blogspot.se/2013/01/context-driven-development.html|Blog
 ** Download|Download CDD
 * context
 ** Context|Context
