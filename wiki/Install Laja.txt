@@ -11,6 +11,9 @@ laja
 |
 +--- doc/lajatemplate.grammar  // grammar for the Laja template files
 |
++--- example/cdd  // different examples of how to use Context Driven Development
++--- example/parsergenerator  // example of a simple parser
+|
 +--- template/java/system-imports.laja // this file is always imported when running Laja.
 +--- template/java/examples/code-generator-integration-tests  // contains the templates used by Laja in the Maven integration-test phase.
 +--- template/java/examples/expression  // contains an example of a parser used to calculate expressions.
