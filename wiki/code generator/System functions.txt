@@ -533,6 +533,10 @@ Example:
 </pre>
 |}
 
+=== generateCdd ===
+
+The command ''generateCdd'' is generating all classes needed for Context Driven Development and is described [http://cdd.tengstrand.nu/index.php/Laja here].
+
 === generateParser ===
 
 The command ''generateParser'' is used to generate parsers in Java. The parser [[Parser generator - Documentation|generator documentation]] has not been written yet!
