@@ -28,7 +28,7 @@ then the ''domain code'' should also be deployed to the ''GUI'' tier so that we 
 But is this not an example of mixing of responsibility? No, we only ''use'' the "core domain" business rules from the GUI layer, we don't duplicate the code.
 It's very similar to calling a service with the difference that instead of sending the state to a service and letting the service operate on it,
 we ''encapsulate'' the state so that we can work in a more object oriented way. For example ''person.export()'' instead of ''service.export(person)''.
-The latter breaks encapsulation which may lead to a situation where business rules are scattered around the system instead of gathered into one place.
+The latter breaks encapsulation (if not using [http://docs.oracle.com/javase/tutorial/reflect/index.html reflection]) which may lead to a situation where business rules are scattered around the system instead of gathered into one place.
 
 The rule of thumb is that different parts of the codebase should be maintained in ''one place'' but is allowed to be deployed and used from ''many places''.
 This helps to keep the code clean and [http://en.wikipedia.org/wiki/Don%27t_repeat_yourself DRY].
