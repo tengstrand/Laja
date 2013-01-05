@@ -62,12 +62,15 @@ This is the testing macro.
 The file ''system-imports.laja'' looks like this:
 
 <pre>
-#import "{.}/system/print/print.laja"
+#import "{.}/system/cdd/cdd.laja"
 #import "{.}/system/class/class.laja"
+#import "{.}/system/common/common.laja"
 #import "{.}/system/env/env.laja"
 #import "{.}/system/file/file.laja"
+#import "{.}/system/print/print.laja"
 #import "{.}/system/reader/reader.laja"
 #import "{.}/system/time/time.laja"
+#import "{.}/system/version/version.laja"
 #import "{.}/system/parser/parser.laja"
 
 #set (home = env().LAJA_HOME)
