@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HairValue implements HairElement {
+public class HairValue {
     protected final HairState state;
     protected HairStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class HairValue implements HairElement {
     public HairState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public HairState getState(HairStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("HairStateList can not be null!");
         }
         return state;
     }

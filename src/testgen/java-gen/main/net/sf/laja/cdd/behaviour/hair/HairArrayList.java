@@ -58,14 +58,14 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
         @Override
         public boolean add(Hair element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Hair element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -75,7 +75,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
             boolean modified = super.addAll(collection);
 
             for (Hair element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -87,7 +87,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
             List elements = new ArrayList(collection.size());
             for (Hair element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -100,7 +100,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
             if (!(element instanceof Hair)) {
                 return false;
             }
-            stateList.remove(((Hair) element).getState(stateList));
+            stateList.remove(((Hair) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -113,7 +113,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Hair) {
                     elements.add(element);
-                    states.add(((Hair)element).getState(stateList));
+                    states.add(((Hair)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -130,7 +130,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Hair) {
                     elements.add(element);
-                    states.add(((Hair)element).getState(stateList));
+                    states.add(((Hair)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -149,7 +149,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
         @Override
         public Hair set(int index, Hair element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HairArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -67,14 +67,14 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
         @Override
         public boolean add(ClosedFile element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, ClosedFile element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -84,7 +84,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
             boolean modified = super.addAll(collection);
 
             for (ClosedFile element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -96,7 +96,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
             List elements = new ArrayList(collection.size());
             for (ClosedFile element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -109,7 +109,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
             if (!(element instanceof ClosedFile)) {
                 return false;
             }
-            stateList.remove(((ClosedFile) element).getState(stateList));
+            stateList.remove(((ClosedFile) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -122,7 +122,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
             for (Object element : collection) {
                 if (element instanceof ClosedFile) {
                     elements.add(element);
-                    states.add(((ClosedFile)element).getState(stateList));
+                    states.add(((ClosedFile)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -139,7 +139,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
             for (Object element : collection) {
                 if (element instanceof ClosedFile) {
                     elements.add(element);
-                    states.add(((ClosedFile)element).getState(stateList));
+                    states.add(((ClosedFile)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -158,7 +158,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
         @Override
         public ClosedFile set(int index, ClosedFile element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ClosedFileArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HeadValue implements HeadElement {
+public class HeadValue {
     protected final HeadState state;
     protected HeadStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class HeadValue implements HeadElement {
     public HeadState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public HeadState getState(HeadStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("HeadStateList can not be null!");
         }
         return state;
     }

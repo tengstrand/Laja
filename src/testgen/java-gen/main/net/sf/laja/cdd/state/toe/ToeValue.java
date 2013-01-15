@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ToeValue implements ToeElement {
+public class ToeValue {
     protected final ToeState state;
     protected ToeStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class ToeValue implements ToeElement {
     public ToeState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public ToeState getState(ToeStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("ToeStateList can not be null!");
         }
         return state;
     }

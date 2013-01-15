@@ -47,14 +47,14 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
         @Override
         public boolean add(Foot element) {
             stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Foot element) {
             stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
             boolean modified = super.addAll(collection);
 
             for (Foot element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
             List elements = new ArrayList(collection.size());
             for (Foot element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
             if (!(element instanceof Foot)) {
                 return false;
             }
-            stateList.remove(((Foot) element).getState(stateList));
+            stateList.remove(((Foot) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Foot) {
                     elements.add(element);
-                    states.add(((Foot)element).getState(stateList));
+                    states.add(((Foot)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Foot) {
                     elements.add(element);
-                    states.add(((Foot)element).getState(stateList));
+                    states.add(((Foot)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
         @Override
         public Foot set(int index, Foot element) {
             stateList.throwExceptionIfNotEncapsulatedBy(FootArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

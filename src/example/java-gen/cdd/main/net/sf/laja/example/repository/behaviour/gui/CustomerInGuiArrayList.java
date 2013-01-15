@@ -37,14 +37,14 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
         @Override
         public boolean add(CustomerInGui element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerInGuiArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, CustomerInGui element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerInGuiArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -54,7 +54,7 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
             boolean modified = super.addAll(collection);
 
             for (CustomerInGui element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -66,7 +66,7 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
 
             List elements = new ArrayList(collection.size());
             for (CustomerInGui element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -79,7 +79,7 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
             if (!(element instanceof CustomerInGui)) {
                 return false;
             }
-            stateList.remove(((CustomerInGui) element).getState(stateList));
+            stateList.remove(((CustomerInGui) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -92,7 +92,7 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof CustomerInGui) {
                     elements.add(element);
-                    states.add(((CustomerInGui)element).getState(stateList));
+                    states.add(((CustomerInGui)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,7 +109,7 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof CustomerInGui) {
                     elements.add(element);
-                    states.add(((CustomerInGui)element).getState(stateList));
+                    states.add(((CustomerInGui)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -128,7 +128,7 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
         @Override
         public CustomerInGui set(int index, CustomerInGui element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerInGuiArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

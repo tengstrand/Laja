@@ -47,14 +47,14 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
         @Override
         public boolean add(TestBrow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestBrow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
             boolean modified = super.addAll(collection);
 
             for (TestBrow element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
             List elements = new ArrayList(collection.size());
             for (TestBrow element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
             if (!(element instanceof TestBrow)) {
                 return false;
             }
-            stateList.remove(((TestBrow) element).getState(stateList));
+            stateList.remove(((TestBrow) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof TestBrow) {
                     elements.add(element);
-                    states.add(((TestBrow)element).getState(stateList));
+                    states.add(((TestBrow)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof TestBrow) {
                     elements.add(element);
-                    states.add(((TestBrow)element).getState(stateList));
+                    states.add(((TestBrow)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
         @Override
         public TestBrow set(int index, TestBrow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestBrowArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -47,14 +47,14 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
         @Override
         public boolean add(Leg element) {
             stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Leg element) {
             stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
             boolean modified = super.addAll(collection);
 
             for (Leg element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
             List elements = new ArrayList(collection.size());
             for (Leg element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
             if (!(element instanceof Leg)) {
                 return false;
             }
-            stateList.remove(((Leg) element).getState(stateList));
+            stateList.remove(((Leg) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
             for (Object element : collection) {
                 if (element instanceof Leg) {
                     elements.add(element);
-                    states.add(((Leg)element).getState(stateList));
+                    states.add(((Leg)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
             for (Object element : collection) {
                 if (element instanceof Leg) {
                     elements.add(element);
-                    states.add(((Leg)element).getState(stateList));
+                    states.add(((Leg)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
         @Override
         public Leg set(int index, Leg element) {
             stateList.throwExceptionIfNotEncapsulatedBy(LegArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

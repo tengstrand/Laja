@@ -59,14 +59,14 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
         @Override
         public boolean add(Directory element) {
             stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Directory element) {
             stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -76,7 +76,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
             boolean modified = super.addAll(collection);
 
             for (Directory element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -88,7 +88,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
             List elements = new ArrayList(collection.size());
             for (Directory element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -101,7 +101,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
             if (!(element instanceof Directory)) {
                 return false;
             }
-            stateList.remove(((Directory) element).getState(stateList));
+            stateList.remove(((Directory) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -114,7 +114,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof Directory) {
                     elements.add(element);
-                    states.add(((Directory)element).getState(stateList));
+                    states.add(((Directory)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -131,7 +131,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof Directory) {
                     elements.add(element);
-                    states.add(((Directory)element).getState(stateList));
+                    states.add(((Directory)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -150,7 +150,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
         @Override
         public Directory set(int index, Directory element) {
             stateList.throwExceptionIfNotEncapsulatedBy(DirectoryArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

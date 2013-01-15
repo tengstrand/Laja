@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class BmiValue implements BmiElement {
+public class BmiValue {
     protected final BmiState state;
     protected BmiStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class BmiValue implements BmiElement {
     public BmiState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public BmiState getState(BmiStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("BmiStateList can not be null!");
         }
         return state;
     }

@@ -58,14 +58,14 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
         @Override
         public boolean add(Toe element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Toe element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -75,7 +75,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
             boolean modified = super.addAll(collection);
 
             for (Toe element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -87,7 +87,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
             List elements = new ArrayList(collection.size());
             for (Toe element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -100,7 +100,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
             if (!(element instanceof Toe)) {
                 return false;
             }
-            stateList.remove(((Toe) element).getState(stateList));
+            stateList.remove(((Toe) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -113,7 +113,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
             for (Object element : collection) {
                 if (element instanceof Toe) {
                     elements.add(element);
-                    states.add(((Toe)element).getState(stateList));
+                    states.add(((Toe)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -130,7 +130,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
             for (Object element : collection) {
                 if (element instanceof Toe) {
                     elements.add(element);
-                    states.add(((Toe)element).getState(stateList));
+                    states.add(((Toe)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -149,7 +149,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
         @Override
         public Toe set(int index, Toe element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ToeArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FootValue implements FootElement {
+public class FootValue {
     protected final FootState state;
     protected FootStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class FootValue implements FootElement {
     public FootState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public FootState getState(FootStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("FootStateList can not be null!");
         }
         return state;
     }

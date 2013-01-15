@@ -58,14 +58,14 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
         @Override
         public boolean add(Forehead element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Forehead element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -75,7 +75,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
             boolean modified = super.addAll(collection);
 
             for (Forehead element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -87,7 +87,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
             List elements = new ArrayList(collection.size());
             for (Forehead element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -100,7 +100,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
             if (!(element instanceof Forehead)) {
                 return false;
             }
-            stateList.remove(((Forehead) element).getState(stateList));
+            stateList.remove(((Forehead) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -113,7 +113,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof Forehead) {
                     elements.add(element);
-                    states.add(((Forehead)element).getState(stateList));
+                    states.add(((Forehead)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -130,7 +130,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof Forehead) {
                     elements.add(element);
-                    states.add(((Forehead)element).getState(stateList));
+                    states.add(((Forehead)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -149,7 +149,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
         @Override
         public Forehead set(int index, Forehead element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ForeheadArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

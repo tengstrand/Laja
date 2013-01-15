@@ -59,14 +59,14 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
         @Override
         public boolean add(TestMouth element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestMouth element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -76,7 +76,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
             boolean modified = super.addAll(collection);
 
             for (TestMouth element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -88,7 +88,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
             List elements = new ArrayList(collection.size());
             for (TestMouth element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -101,7 +101,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
             if (!(element instanceof TestMouth)) {
                 return false;
             }
-            stateList.remove(((TestMouth) element).getState(stateList));
+            stateList.remove(((TestMouth) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -114,7 +114,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof TestMouth) {
                     elements.add(element);
-                    states.add(((TestMouth)element).getState(stateList));
+                    states.add(((TestMouth)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -131,7 +131,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof TestMouth) {
                     elements.add(element);
-                    states.add(((TestMouth)element).getState(stateList));
+                    states.add(((TestMouth)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -150,7 +150,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
         @Override
         public TestMouth set(int index, TestMouth element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestMouthArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

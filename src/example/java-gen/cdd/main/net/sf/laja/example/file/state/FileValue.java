@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FileValue implements FileElement {
+public class FileValue {
     protected final FileState state;
     protected FileStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class FileValue implements FileElement {
     public FileState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public FileState getState(FileStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("FileStateList can not be null!");
         }
         return state;
     }

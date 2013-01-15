@@ -7,7 +7,7 @@ import net.sf.laja.example.account.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class AccountValue implements AccountElement {
+public class AccountValue {
     protected final AccountState state;
     protected AccountStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class AccountValue implements AccountElement {
     public AccountState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public AccountState getState(AccountStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("AccountStateList can not be null!");
         }
         return state;
     }

@@ -47,14 +47,14 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
         @Override
         public boolean add(ValToe element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, ValToe element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
             boolean modified = super.addAll(collection);
 
             for (ValToe element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
 
             List elements = new ArrayList(collection.size());
             for (ValToe element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
             if (!(element instanceof ValToe)) {
                 return false;
             }
-            stateList.remove(((ValToe) element).getState(stateList));
+            stateList.remove(((ValToe) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
             for (Object element : collection) {
                 if (element instanceof ValToe) {
                     elements.add(element);
-                    states.add(((ValToe)element).getState(stateList));
+                    states.add(((ValToe)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
             for (Object element : collection) {
                 if (element instanceof ValToe) {
                     elements.add(element);
-                    states.add(((ValToe)element).getState(stateList));
+                    states.add(((ValToe)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
         @Override
         public ValToe set(int index, ValToe element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ValToeArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

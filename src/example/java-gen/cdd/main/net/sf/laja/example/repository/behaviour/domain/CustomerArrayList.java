@@ -86,14 +86,14 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
         @Override
         public boolean add(Customer element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Customer element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -103,7 +103,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
             boolean modified = super.addAll(collection);
 
             for (Customer element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -115,7 +115,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
             List elements = new ArrayList(collection.size());
             for (Customer element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -128,7 +128,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
             if (!(element instanceof Customer)) {
                 return false;
             }
-            stateList.remove(((Customer) element).getState(stateList));
+            stateList.remove(((Customer) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -141,7 +141,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof Customer) {
                     elements.add(element);
-                    states.add(((Customer)element).getState(stateList));
+                    states.add(((Customer)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -158,7 +158,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof Customer) {
                     elements.add(element);
-                    states.add(((Customer)element).getState(stateList));
+                    states.add(((Customer)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -177,7 +177,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
         @Override
         public Customer set(int index, Customer element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

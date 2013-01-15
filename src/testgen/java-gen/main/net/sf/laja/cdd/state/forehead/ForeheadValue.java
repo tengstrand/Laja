@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ForeheadValue implements ForeheadElement {
+public class ForeheadValue {
     protected final ForeheadState state;
     protected ForeheadStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class ForeheadValue implements ForeheadElement {
     public ForeheadState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public ForeheadState getState(ForeheadStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("ForeheadStateList can not be null!");
         }
         return state;
     }

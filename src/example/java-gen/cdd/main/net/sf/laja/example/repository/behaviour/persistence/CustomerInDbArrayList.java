@@ -37,14 +37,14 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
         @Override
         public boolean add(CustomerInDb element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, CustomerInDb element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -54,7 +54,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
             boolean modified = super.addAll(collection);
 
             for (CustomerInDb element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -66,7 +66,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
 
             List elements = new ArrayList(collection.size());
             for (CustomerInDb element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -79,7 +79,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
             if (!(element instanceof CustomerInDb)) {
                 return false;
             }
-            stateList.remove(((CustomerInDb) element).getState(stateList));
+            stateList.remove(((CustomerInDb) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -92,7 +92,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
             for (Object element : collection) {
                 if (element instanceof CustomerInDb) {
                     elements.add(element);
-                    states.add(((CustomerInDb)element).getState(stateList));
+                    states.add(((CustomerInDb)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,7 +109,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
             for (Object element : collection) {
                 if (element instanceof CustomerInDb) {
                     elements.add(element);
-                    states.add(((CustomerInDb)element).getState(stateList));
+                    states.add(((CustomerInDb)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -128,7 +128,7 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
         @Override
         public CustomerInDb set(int index, CustomerInDb element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerInDbArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

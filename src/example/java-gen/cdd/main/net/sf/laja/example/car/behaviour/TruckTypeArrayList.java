@@ -47,14 +47,14 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
         @Override
         public boolean add(TruckType element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TruckType element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
             boolean modified = super.addAll(collection);
 
             for (TruckType element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
             List elements = new ArrayList(collection.size());
             for (TruckType element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
             if (!(element instanceof TruckType)) {
                 return false;
             }
-            stateList.remove(((TruckType) element).getState(stateList));
+            stateList.remove(((TruckType) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof TruckType) {
                     elements.add(element);
-                    states.add(((TruckType)element).getState(stateList));
+                    states.add(((TruckType)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof TruckType) {
                     elements.add(element);
-                    states.add(((TruckType)element).getState(stateList));
+                    states.add(((TruckType)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
         @Override
         public TruckType set(int index, TruckType element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TruckTypeArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -47,14 +47,14 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
         @Override
         public boolean add(SourceAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, SourceAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
             boolean modified = super.addAll(collection);
 
             for (SourceAccount element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
             List elements = new ArrayList(collection.size());
             for (SourceAccount element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
             if (!(element instanceof SourceAccount)) {
                 return false;
             }
-            stateList.remove(((SourceAccount) element).getState(stateList));
+            stateList.remove(((SourceAccount) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof SourceAccount) {
                     elements.add(element);
-                    states.add(((SourceAccount)element).getState(stateList));
+                    states.add(((SourceAccount)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof SourceAccount) {
                     elements.add(element);
-                    states.add(((SourceAccount)element).getState(stateList));
+                    states.add(((SourceAccount)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
         @Override
         public SourceAccount set(int index, SourceAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(SourceAccountArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

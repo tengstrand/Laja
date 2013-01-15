@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class MouthEntity implements MouthElement {
+public class MouthEntity {
     protected final MouthState state;
     protected MouthStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class MouthEntity implements MouthElement {
     public MouthState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public MouthState getState(MouthStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("MouthStateList can not be null!");
         }
         return state;
     }

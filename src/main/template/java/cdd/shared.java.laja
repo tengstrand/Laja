@@ -11,7 +11,6 @@
 #set (stateListBuilder = "{stateListClass}Builder")
 #set (valueClass = "{classname}Value")
 #set (entityClass = "{classname}Entity")
-#set (elementClass = "{classname}Element")
 #set (stateBehaviourFactoryClass = "{stateClass}BehaviourFactory")
 
 #macro oldFileContent(filename)
@@ -234,20 +233,11 @@ import {certificatePackage}.{certificateClass};
   #return behavioursFactories.containsKey(theclassname)
 #end
 
-#macro certificateCanNotBeNull(argClass, arg)
-        if ({arg} == null) {
-            throw new IllegalArgumentException("{argClass} can not be null!");
-        }
-#end
-
 #macro elementMethods()
     public {stateClass} getState(Certificate certificate) {
-  #certificateCanNotBeNull("Certificate", "certificate")
-        return state;
-    }
-
-    public {stateClass} getState({stateListClass} stateList) {
-  #certificateCanNotBeNull(stateListClass, "stateList")
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null!");
+        }
         return state;
     }
 #end

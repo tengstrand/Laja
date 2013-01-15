@@ -29,13 +29,6 @@ public class ZipcodeValue {
         return state;
     }
 
-    public ZipcodeState getState(ZipcodeStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("ZipcodeStateList can not be null!");
-        }
-        return state;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

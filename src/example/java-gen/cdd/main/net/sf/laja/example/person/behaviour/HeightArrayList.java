@@ -47,14 +47,14 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
         @Override
         public boolean add(Height element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Height element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
             boolean modified = super.addAll(collection);
 
             for (Height element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
 
             List elements = new ArrayList(collection.size());
             for (Height element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
             if (!(element instanceof Height)) {
                 return false;
             }
-            stateList.remove(((Height) element).getState(stateList));
+            stateList.remove(((Height) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
             for (Object element : collection) {
                 if (element instanceof Height) {
                     elements.add(element);
-                    states.add(((Height)element).getState(stateList));
+                    states.add(((Height)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
             for (Object element : collection) {
                 if (element instanceof Height) {
                     elements.add(element);
-                    states.add(((Height)element).getState(stateList));
+                    states.add(((Height)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
         @Override
         public Height set(int index, Height element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HeightArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

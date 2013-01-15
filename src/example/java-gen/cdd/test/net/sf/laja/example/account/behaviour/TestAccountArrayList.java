@@ -63,14 +63,14 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
         @Override
         public boolean add(TestAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -80,7 +80,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
             boolean modified = super.addAll(collection);
 
             for (TestAccount element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -92,7 +92,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
             List elements = new ArrayList(collection.size());
             for (TestAccount element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -105,7 +105,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
             if (!(element instanceof TestAccount)) {
                 return false;
             }
-            stateList.remove(((TestAccount) element).getState(stateList));
+            stateList.remove(((TestAccount) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -118,7 +118,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
             for (Object element : collection) {
                 if (element instanceof TestAccount) {
                     elements.add(element);
-                    states.add(((TestAccount)element).getState(stateList));
+                    states.add(((TestAccount)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -135,7 +135,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
             for (Object element : collection) {
                 if (element instanceof TestAccount) {
                     elements.add(element);
-                    states.add(((TestAccount)element).getState(stateList));
+                    states.add(((TestAccount)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -154,7 +154,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
         @Override
         public TestAccount set(int index, TestAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestAccountArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

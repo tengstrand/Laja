@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FleckValue implements FleckElement {
+public class FleckValue {
     protected final FleckState state;
     protected FleckStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class FleckValue implements FleckElement {
     public FleckState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public FleckState getState(FleckStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("FleckStateList can not be null!");
         }
         return state;
     }

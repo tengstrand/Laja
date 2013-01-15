@@ -47,14 +47,14 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
         @Override
         public boolean add(ForeheadWithBigBrows element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ForeheadWithBigBrowsArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, ForeheadWithBigBrows element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ForeheadWithBigBrowsArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
             boolean modified = super.addAll(collection);
 
             for (ForeheadWithBigBrows element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
 
             List elements = new ArrayList(collection.size());
             for (ForeheadWithBigBrows element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
             if (!(element instanceof ForeheadWithBigBrows)) {
                 return false;
             }
-            stateList.remove(((ForeheadWithBigBrows) element).getState(stateList));
+            stateList.remove(((ForeheadWithBigBrows) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
             for (Object element : collection) {
                 if (element instanceof ForeheadWithBigBrows) {
                     elements.add(element);
-                    states.add(((ForeheadWithBigBrows)element).getState(stateList));
+                    states.add(((ForeheadWithBigBrows)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
             for (Object element : collection) {
                 if (element instanceof ForeheadWithBigBrows) {
                     elements.add(element);
-                    states.add(((ForeheadWithBigBrows)element).getState(stateList));
+                    states.add(((ForeheadWithBigBrows)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
         @Override
         public ForeheadWithBigBrows set(int index, ForeheadWithBigBrows element) {
             stateList.throwExceptionIfNotEncapsulatedBy(ForeheadWithBigBrowsArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

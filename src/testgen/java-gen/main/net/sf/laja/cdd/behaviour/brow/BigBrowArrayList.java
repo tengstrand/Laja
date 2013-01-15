@@ -47,14 +47,14 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
         @Override
         public boolean add(BigBrow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, BigBrow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
             boolean modified = super.addAll(collection);
 
             for (BigBrow element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
 
             List elements = new ArrayList(collection.size());
             for (BigBrow element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
             if (!(element instanceof BigBrow)) {
                 return false;
             }
-            stateList.remove(((BigBrow) element).getState(stateList));
+            stateList.remove(((BigBrow) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof BigBrow) {
                     elements.add(element);
-                    states.add(((BigBrow)element).getState(stateList));
+                    states.add(((BigBrow)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof BigBrow) {
                     elements.add(element);
-                    states.add(((BigBrow)element).getState(stateList));
+                    states.add(((BigBrow)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
         @Override
         public BigBrow set(int index, BigBrow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BigBrowArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -37,14 +37,14 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
         @Override
         public boolean add(Terrestrial element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TerrestrialArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Terrestrial element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TerrestrialArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -54,7 +54,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
             boolean modified = super.addAll(collection);
 
             for (Terrestrial element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -66,7 +66,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
 
             List elements = new ArrayList(collection.size());
             for (Terrestrial element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -79,7 +79,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
             if (!(element instanceof Terrestrial)) {
                 return false;
             }
-            stateList.remove(((Terrestrial) element).getState(stateList));
+            stateList.remove(((Terrestrial) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -92,7 +92,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
             for (Object element : collection) {
                 if (element instanceof Terrestrial) {
                     elements.add(element);
-                    states.add(((Terrestrial)element).getState(stateList));
+                    states.add(((Terrestrial)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,7 +109,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
             for (Object element : collection) {
                 if (element instanceof Terrestrial) {
                     elements.add(element);
-                    states.add(((Terrestrial)element).getState(stateList));
+                    states.add(((Terrestrial)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -128,7 +128,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
         @Override
         public Terrestrial set(int index, Terrestrial element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TerrestrialArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

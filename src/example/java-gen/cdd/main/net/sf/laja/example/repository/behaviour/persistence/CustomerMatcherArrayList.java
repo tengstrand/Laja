@@ -47,14 +47,14 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
         @Override
         public boolean add(CustomerMatcher element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, CustomerMatcher element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
             boolean modified = super.addAll(collection);
 
             for (CustomerMatcher element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
             List elements = new ArrayList(collection.size());
             for (CustomerMatcher element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
             if (!(element instanceof CustomerMatcher)) {
                 return false;
             }
-            stateList.remove(((CustomerMatcher) element).getState(stateList));
+            stateList.remove(((CustomerMatcher) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
             for (Object element : collection) {
                 if (element instanceof CustomerMatcher) {
                     elements.add(element);
-                    states.add(((CustomerMatcher)element).getState(stateList));
+                    states.add(((CustomerMatcher)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
             for (Object element : collection) {
                 if (element instanceof CustomerMatcher) {
                     elements.add(element);
-                    states.add(((CustomerMatcher)element).getState(stateList));
+                    states.add(((CustomerMatcher)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
         @Override
         public CustomerMatcher set(int index, CustomerMatcher element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CustomerMatcherArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

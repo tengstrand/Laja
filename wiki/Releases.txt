@@ -1,3 +1,9 @@
+== Laja2-007-beta ==
+Released: 2013-??-??
+
+Includes:
+* Behaviour interface ''XElement'' are no longer generated (where X is what is wrapped).
+
 == Laja2-006-alpha ==
 Released: 2013-01-04
 

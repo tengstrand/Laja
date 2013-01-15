@@ -47,14 +47,14 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
         @Override
         public boolean add(BodyMassIndex element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, BodyMassIndex element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
             boolean modified = super.addAll(collection);
 
             for (BodyMassIndex element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
             List elements = new ArrayList(collection.size());
             for (BodyMassIndex element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
             if (!(element instanceof BodyMassIndex)) {
                 return false;
             }
-            stateList.remove(((BodyMassIndex) element).getState(stateList));
+            stateList.remove(((BodyMassIndex) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof BodyMassIndex) {
                     elements.add(element);
-                    states.add(((BodyMassIndex)element).getState(stateList));
+                    states.add(((BodyMassIndex)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof BodyMassIndex) {
                     elements.add(element);
-                    states.add(((BodyMassIndex)element).getState(stateList));
+                    states.add(((BodyMassIndex)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
         @Override
         public BodyMassIndex set(int index, BodyMassIndex element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BodyMassIndexArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

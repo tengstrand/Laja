@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class NoseValue implements NoseElement {
+public class NoseValue {
     protected final NoseState state;
     protected NoseStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class NoseValue implements NoseElement {
     public NoseState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public NoseState getState(NoseStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("NoseStateList can not be null!");
         }
         return state;
     }

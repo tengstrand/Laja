@@ -47,14 +47,14 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
         @Override
         public boolean add(Person element) {
             stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Person element) {
             stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
             boolean modified = super.addAll(collection);
 
             for (Person element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
             List elements = new ArrayList(collection.size());
             for (Person element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
             if (!(element instanceof Person)) {
                 return false;
             }
-            stateList.remove(((Person) element).getState(stateList));
+            stateList.remove(((Person) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
             for (Object element : collection) {
                 if (element instanceof Person) {
                     elements.add(element);
-                    states.add(((Person)element).getState(stateList));
+                    states.add(((Person)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
             for (Object element : collection) {
                 if (element instanceof Person) {
                     elements.add(element);
-                    states.add(((Person)element).getState(stateList));
+                    states.add(((Person)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
         @Override
         public Person set(int index, Person element) {
             stateList.throwExceptionIfNotEncapsulatedBy(PersonArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

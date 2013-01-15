@@ -2,7 +2,7 @@
 #macro newElements()
             {stateListClass} newElements = new {stateListImplClass}();
             for ({entryClass} element : collection) {
-                newElements.add(element.getState(stateList));
+                newElements.add(element.getState(stateList.certificate()));
             }
 #end
 
@@ -72,14 +72,14 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
         @Override
         public boolean add({entryClass} element) {
             stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, {entryClass} element) {
             stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -89,7 +89,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
             boolean modified = super.addAll(collection);
 
             for ({entryClass} element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -101,7 +101,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 
             List elements = new ArrayList(collection.size());
             for ({entryClass} element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -114,7 +114,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
             if (!(element instanceof {entryClass})) {
                 return false;
             }
-            stateList.remove((({entryClass}) element).getState(stateList));
+            stateList.remove((({entryClass}) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -127,7 +127,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof {entryClass}) {
                     elements.add(element);
-                    states.add((({entryClass})element).getState(stateList));
+                    states.add((({entryClass})element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -144,7 +144,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof {entryClass}) {
                     elements.add(element);
-                    states.add((({entryClass})element).getState(stateList));
+                    states.add((({entryClass})element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -163,7 +163,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
         @Override
         public {entryClass} set(int index, {entryClass} element) {
             stateList.throwExceptionIfNotEncapsulatedBy({arrayListClass}.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class PersonValue implements PersonElement {
+public class PersonValue {
     protected final PersonState state;
     protected PersonStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class PersonValue implements PersonElement {
     public PersonState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public PersonState getState(PersonStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("PersonStateList can not be null!");
         }
         return state;
     }

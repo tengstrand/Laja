@@ -47,14 +47,14 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
         @Override
         public boolean add(Owner element) {
             stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Owner element) {
             stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
             boolean modified = super.addAll(collection);
 
             for (Owner element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
             List elements = new ArrayList(collection.size());
             for (Owner element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
             if (!(element instanceof Owner)) {
                 return false;
             }
-            stateList.remove(((Owner) element).getState(stateList));
+            stateList.remove(((Owner) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
             for (Object element : collection) {
                 if (element instanceof Owner) {
                     elements.add(element);
-                    states.add(((Owner)element).getState(stateList));
+                    states.add(((Owner)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
             for (Object element : collection) {
                 if (element instanceof Owner) {
                     elements.add(element);
-                    states.add(((Owner)element).getState(stateList));
+                    states.add(((Owner)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
         @Override
         public Owner set(int index, Owner element) {
             stateList.throwExceptionIfNotEncapsulatedBy(OwnerArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

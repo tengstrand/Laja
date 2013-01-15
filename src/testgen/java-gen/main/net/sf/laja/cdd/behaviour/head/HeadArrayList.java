@@ -47,14 +47,14 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
         @Override
         public boolean add(Head element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Head element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
             boolean modified = super.addAll(collection);
 
             for (Head element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
             List elements = new ArrayList(collection.size());
             for (Head element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
             if (!(element instanceof Head)) {
                 return false;
             }
-            stateList.remove(((Head) element).getState(stateList));
+            stateList.remove(((Head) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Head) {
                     elements.add(element);
-                    states.add(((Head)element).getState(stateList));
+                    states.add(((Head)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Head) {
                     elements.add(element);
-                    states.add(((Head)element).getState(stateList));
+                    states.add(((Head)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
         @Override
         public Head set(int index, Head element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HeadArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class EyeValue implements EyeElement {
+public class EyeValue {
     protected final EyeState state;
     protected EyeStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class EyeValue implements EyeElement {
     public EyeState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public EyeState getState(EyeStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("EyeStateList can not be null!");
         }
         return state;
     }

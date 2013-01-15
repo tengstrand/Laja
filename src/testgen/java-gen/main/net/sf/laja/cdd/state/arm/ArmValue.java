@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ArmValue implements ArmElement {
+public class ArmValue {
     protected final ArmState state;
     protected ArmStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class ArmValue implements ArmElement {
     public ArmState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public ArmState getState(ArmStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("ArmStateList can not be null!");
         }
         return state;
     }

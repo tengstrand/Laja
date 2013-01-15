@@ -2,7 +2,7 @@
 
   #header()
 #if (isFactory(classname))
-public class {valueClass} implements {elementClass} {
+public class {valueClass} {
 #else
 public class {valueClass} {
 #end

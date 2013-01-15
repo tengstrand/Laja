@@ -58,14 +58,14 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
         @Override
         public boolean add(Brow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Brow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -75,7 +75,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
             boolean modified = super.addAll(collection);
 
             for (Brow element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -87,7 +87,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
             List elements = new ArrayList(collection.size());
             for (Brow element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -100,7 +100,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
             if (!(element instanceof Brow)) {
                 return false;
             }
-            stateList.remove(((Brow) element).getState(stateList));
+            stateList.remove(((Brow) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -113,7 +113,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Brow) {
                     elements.add(element);
-                    states.add(((Brow)element).getState(stateList));
+                    states.add(((Brow)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -130,7 +130,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Brow) {
                     elements.add(element);
-                    states.add(((Brow)element).getState(stateList));
+                    states.add(((Brow)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -149,7 +149,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
         @Override
         public Brow set(int index, Brow element) {
             stateList.throwExceptionIfNotEncapsulatedBy(BrowArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

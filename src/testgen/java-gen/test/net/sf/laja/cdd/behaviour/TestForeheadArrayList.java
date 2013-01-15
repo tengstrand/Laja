@@ -47,14 +47,14 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
         @Override
         public boolean add(TestForehead element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TestForehead element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
             boolean modified = super.addAll(collection);
 
             for (TestForehead element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
             List elements = new ArrayList(collection.size());
             for (TestForehead element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
             if (!(element instanceof TestForehead)) {
                 return false;
             }
-            stateList.remove(((TestForehead) element).getState(stateList));
+            stateList.remove(((TestForehead) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
             for (Object element : collection) {
                 if (element instanceof TestForehead) {
                     elements.add(element);
-                    states.add(((TestForehead)element).getState(stateList));
+                    states.add(((TestForehead)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
             for (Object element : collection) {
                 if (element instanceof TestForehead) {
                     elements.add(element);
-                    states.add(((TestForehead)element).getState(stateList));
+                    states.add(((TestForehead)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
         @Override
         public TestForehead set(int index, TestForehead element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TestForeheadArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

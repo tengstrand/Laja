@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HeightValue implements HeightElement {
+public class HeightValue {
     protected final HeightState state;
     protected HeightStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class HeightValue implements HeightElement {
     public HeightState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public HeightState getState(HeightStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("HeightStateList can not be null!");
         }
         return state;
     }

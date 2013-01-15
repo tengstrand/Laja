@@ -47,14 +47,14 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
         @Override
         public boolean add(Address element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Address element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
             boolean modified = super.addAll(collection);
 
             for (Address element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
             List elements = new ArrayList(collection.size());
             for (Address element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
             if (!(element instanceof Address)) {
                 return false;
             }
-            stateList.remove(((Address) element).getState(stateList));
+            stateList.remove(((Address) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof Address) {
                     elements.add(element);
-                    states.add(((Address)element).getState(stateList));
+                    states.add(((Address)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof Address) {
                     elements.add(element);
-                    states.add(((Address)element).getState(stateList));
+                    states.add(((Address)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
         @Override
         public Address set(int index, Address element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AddressArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

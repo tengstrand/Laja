@@ -47,14 +47,14 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         @Override
         public boolean add(Nose element) {
             stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Nose element) {
             stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
             boolean modified = super.addAll(collection);
 
             for (Nose element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
             List elements = new ArrayList(collection.size());
             for (Nose element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
             if (!(element instanceof Nose)) {
                 return false;
             }
-            stateList.remove(((Nose) element).getState(stateList));
+            stateList.remove(((Nose) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Nose) {
                     elements.add(element);
-                    states.add(((Nose)element).getState(stateList));
+                    states.add(((Nose)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Nose) {
                     elements.add(element);
-                    states.add(((Nose)element).getState(stateList));
+                    states.add(((Nose)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         @Override
         public Nose set(int index, Nose element) {
             stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

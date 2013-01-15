@@ -47,14 +47,14 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
         @Override
         public boolean add(Hand element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Hand element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
             boolean modified = super.addAll(collection);
 
             for (Hand element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
             List elements = new ArrayList(collection.size());
             for (Hand element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
             if (!(element instanceof Hand)) {
                 return false;
             }
-            stateList.remove(((Hand) element).getState(stateList));
+            stateList.remove(((Hand) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Hand) {
                     elements.add(element);
-                    states.add(((Hand)element).getState(stateList));
+                    states.add(((Hand)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
             for (Object element : collection) {
                 if (element instanceof Hand) {
                     elements.add(element);
-                    states.add(((Hand)element).getState(stateList));
+                    states.add(((Hand)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
         @Override
         public Hand set(int index, Hand element) {
             stateList.throwExceptionIfNotEncapsulatedBy(HandArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

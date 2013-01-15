@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class BrowValue implements BrowElement {
+public class BrowValue {
     protected final BrowState state;
     protected BrowStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class BrowValue implements BrowElement {
     public BrowState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public BrowState getState(BrowStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("BrowStateList can not be null!");
         }
         return state;
     }

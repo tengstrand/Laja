@@ -59,14 +59,14 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
         @Override
         public boolean add(Monster element) {
             stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Monster element) {
             stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -76,7 +76,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
             boolean modified = super.addAll(collection);
 
             for (Monster element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -88,7 +88,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
             List elements = new ArrayList(collection.size());
             for (Monster element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -101,7 +101,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
             if (!(element instanceof Monster)) {
                 return false;
             }
-            stateList.remove(((Monster) element).getState(stateList));
+            stateList.remove(((Monster) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -114,7 +114,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof Monster) {
                     elements.add(element);
-                    states.add(((Monster)element).getState(stateList));
+                    states.add(((Monster)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -131,7 +131,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof Monster) {
                     elements.add(element);
-                    states.add(((Monster)element).getState(stateList));
+                    states.add(((Monster)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -150,7 +150,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
         @Override
         public Monster set(int index, Monster element) {
             stateList.throwExceptionIfNotEncapsulatedBy(MonsterArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

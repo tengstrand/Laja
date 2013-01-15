@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class OwnerValue implements OwnerElement {
+public class OwnerValue {
     protected final OwnerState state;
     protected OwnerStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class OwnerValue implements OwnerElement {
     public OwnerState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public OwnerState getState(OwnerStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("OwnerStateList can not be null!");
         }
         return state;
     }

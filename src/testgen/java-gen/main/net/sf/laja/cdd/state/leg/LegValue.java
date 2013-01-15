@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class LegValue implements LegElement {
+public class LegValue {
     protected final LegState state;
     protected LegStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class LegValue implements LegElement {
     public LegState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public LegState getState(LegStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("LegStateList can not be null!");
         }
         return state;
     }

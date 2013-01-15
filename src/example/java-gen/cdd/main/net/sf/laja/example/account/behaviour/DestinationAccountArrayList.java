@@ -47,14 +47,14 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
         @Override
         public boolean add(DestinationAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, DestinationAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
             boolean modified = super.addAll(collection);
 
             for (DestinationAccount element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
             List elements = new ArrayList(collection.size());
             for (DestinationAccount element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
             if (!(element instanceof DestinationAccount)) {
                 return false;
             }
-            stateList.remove(((DestinationAccount) element).getState(stateList));
+            stateList.remove(((DestinationAccount) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
             for (Object element : collection) {
                 if (element instanceof DestinationAccount) {
                     elements.add(element);
-                    states.add(((DestinationAccount)element).getState(stateList));
+                    states.add(((DestinationAccount)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
             for (Object element : collection) {
                 if (element instanceof DestinationAccount) {
                     elements.add(element);
-                    states.add(((DestinationAccount)element).getState(stateList));
+                    states.add(((DestinationAccount)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
         @Override
         public DestinationAccount set(int index, DestinationAccount element) {
             stateList.throwExceptionIfNotEncapsulatedBy(DestinationAccountArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

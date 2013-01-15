@@ -47,14 +47,14 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
         @Override
         public boolean add(FakeHair element) {
             stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, FakeHair element) {
             stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
             boolean modified = super.addAll(collection);
 
             for (FakeHair element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
             List elements = new ArrayList(collection.size());
             for (FakeHair element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
             if (!(element instanceof FakeHair)) {
                 return false;
             }
-            stateList.remove(((FakeHair) element).getState(stateList));
+            stateList.remove(((FakeHair) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof FakeHair) {
                     elements.add(element);
-                    states.add(((FakeHair)element).getState(stateList));
+                    states.add(((FakeHair)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof FakeHair) {
                     elements.add(element);
-                    states.add(((FakeHair)element).getState(stateList));
+                    states.add(((FakeHair)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
         @Override
         public FakeHair set(int index, FakeHair element) {
             stateList.throwExceptionIfNotEncapsulatedBy(FakeHairArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

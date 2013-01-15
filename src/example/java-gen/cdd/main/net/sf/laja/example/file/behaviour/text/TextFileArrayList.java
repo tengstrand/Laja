@@ -34,14 +34,14 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
         @Override
         public boolean add(TextFile element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TextFile element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -51,7 +51,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
             boolean modified = super.addAll(collection);
 
             for (TextFile element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -63,7 +63,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
 
             List elements = new ArrayList(collection.size());
             for (TextFile element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -76,7 +76,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
             if (!(element instanceof TextFile)) {
                 return false;
             }
-            stateList.remove(((TextFile) element).getState(stateList));
+            stateList.remove(((TextFile) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -89,7 +89,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof TextFile) {
                     elements.add(element);
-                    states.add(((TextFile)element).getState(stateList));
+                    states.add(((TextFile)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -106,7 +106,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
             for (Object element : collection) {
                 if (element instanceof TextFile) {
                     elements.add(element);
-                    states.add(((TextFile)element).getState(stateList));
+                    states.add(((TextFile)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -125,7 +125,7 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
         @Override
         public TextFile set(int index, TextFile element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TextFileArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

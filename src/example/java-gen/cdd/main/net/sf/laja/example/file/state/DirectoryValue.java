@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class DirectoryValue implements DirectoryElement {
+public class DirectoryValue {
     protected final DirectoryState state;
     protected DirectoryStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class DirectoryValue implements DirectoryElement {
     public DirectoryState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public DirectoryState getState(DirectoryStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("DirectoryStateList can not be null!");
         }
         return state;
     }

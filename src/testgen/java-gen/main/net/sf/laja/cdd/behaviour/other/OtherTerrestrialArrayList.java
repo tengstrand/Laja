@@ -47,14 +47,14 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
         @Override
         public boolean add(OtherTerrestrial element) {
             stateList.throwExceptionIfNotEncapsulatedBy(OtherTerrestrialArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, OtherTerrestrial element) {
             stateList.throwExceptionIfNotEncapsulatedBy(OtherTerrestrialArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
             boolean modified = super.addAll(collection);
 
             for (OtherTerrestrial element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
 
             List elements = new ArrayList(collection.size());
             for (OtherTerrestrial element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
             if (!(element instanceof OtherTerrestrial)) {
                 return false;
             }
-            stateList.remove(((OtherTerrestrial) element).getState(stateList));
+            stateList.remove(((OtherTerrestrial) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
             for (Object element : collection) {
                 if (element instanceof OtherTerrestrial) {
                     elements.add(element);
-                    states.add(((OtherTerrestrial)element).getState(stateList));
+                    states.add(((OtherTerrestrial)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
             for (Object element : collection) {
                 if (element instanceof OtherTerrestrial) {
                     elements.add(element);
-                    states.add(((OtherTerrestrial)element).getState(stateList));
+                    states.add(((OtherTerrestrial)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
         @Override
         public OtherTerrestrial set(int index, OtherTerrestrial element) {
             stateList.throwExceptionIfNotEncapsulatedBy(OtherTerrestrialArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

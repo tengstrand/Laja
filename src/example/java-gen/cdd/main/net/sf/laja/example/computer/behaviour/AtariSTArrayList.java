@@ -47,14 +47,14 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
         @Override
         public boolean add(AtariST element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AtariSTArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, AtariST element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AtariSTArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
             boolean modified = super.addAll(collection);
 
             for (AtariST element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
 
             List elements = new ArrayList(collection.size());
             for (AtariST element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
             if (!(element instanceof AtariST)) {
                 return false;
             }
-            stateList.remove(((AtariST) element).getState(stateList));
+            stateList.remove(((AtariST) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof AtariST) {
                     elements.add(element);
-                    states.add(((AtariST)element).getState(stateList));
+                    states.add(((AtariST)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
             for (Object element : collection) {
                 if (element instanceof AtariST) {
                     elements.add(element);
-                    states.add(((AtariST)element).getState(stateList));
+                    states.add(((AtariST)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
         @Override
         public AtariST set(int index, AtariST element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AtariSTArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

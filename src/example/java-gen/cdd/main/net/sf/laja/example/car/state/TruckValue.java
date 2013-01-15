@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class TruckValue implements TruckElement {
+public class TruckValue {
     protected final TruckState state;
     protected TruckStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class TruckValue implements TruckElement {
     public TruckState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public TruckState getState(TruckStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("TruckStateList can not be null!");
         }
         return state;
     }

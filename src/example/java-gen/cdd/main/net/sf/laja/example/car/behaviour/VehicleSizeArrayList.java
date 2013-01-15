@@ -47,14 +47,14 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
         @Override
         public boolean add(VehicleSize element) {
             stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, VehicleSize element) {
             stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
             boolean modified = super.addAll(collection);
 
             for (VehicleSize element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
             List elements = new ArrayList(collection.size());
             for (VehicleSize element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
             if (!(element instanceof VehicleSize)) {
                 return false;
             }
-            stateList.remove(((VehicleSize) element).getState(stateList));
+            stateList.remove(((VehicleSize) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
             for (Object element : collection) {
                 if (element instanceof VehicleSize) {
                     elements.add(element);
-                    states.add(((VehicleSize)element).getState(stateList));
+                    states.add(((VehicleSize)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
             for (Object element : collection) {
                 if (element instanceof VehicleSize) {
                     elements.add(element);
-                    states.add(((VehicleSize)element).getState(stateList));
+                    states.add(((VehicleSize)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
         @Override
         public VehicleSize set(int index, VehicleSize element) {
             stateList.throwExceptionIfNotEncapsulatedBy(VehicleSizeArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

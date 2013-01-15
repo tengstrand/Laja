@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class EarValue implements EarElement {
+public class EarValue {
     protected final EarState state;
     protected EarStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class EarValue implements EarElement {
     public EarState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public EarState getState(EarStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("EarStateList can not be null!");
         }
         return state;
     }

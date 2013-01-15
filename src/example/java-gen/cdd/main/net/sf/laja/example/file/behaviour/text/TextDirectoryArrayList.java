@@ -37,14 +37,14 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
         @Override
         public boolean add(TextDirectory element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, TextDirectory element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -54,7 +54,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
             boolean modified = super.addAll(collection);
 
             for (TextDirectory element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -66,7 +66,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
 
             List elements = new ArrayList(collection.size());
             for (TextDirectory element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -79,7 +79,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
             if (!(element instanceof TextDirectory)) {
                 return false;
             }
-            stateList.remove(((TextDirectory) element).getState(stateList));
+            stateList.remove(((TextDirectory) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -92,7 +92,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof TextDirectory) {
                     elements.add(element);
-                    states.add(((TextDirectory)element).getState(stateList));
+                    states.add(((TextDirectory)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -109,7 +109,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
             for (Object element : collection) {
                 if (element instanceof TextDirectory) {
                     elements.add(element);
-                    states.add(((TextDirectory)element).getState(stateList));
+                    states.add(((TextDirectory)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -128,7 +128,7 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
         @Override
         public TextDirectory set(int index, TextDirectory element) {
             stateList.throwExceptionIfNotEncapsulatedBy(TextDirectoryArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

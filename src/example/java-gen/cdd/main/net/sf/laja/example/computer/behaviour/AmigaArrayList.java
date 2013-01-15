@@ -47,14 +47,14 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
         @Override
         public boolean add(Amiga element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, Amiga element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -64,7 +64,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
             boolean modified = super.addAll(collection);
 
             for (Amiga element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -76,7 +76,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
             List elements = new ArrayList(collection.size());
             for (Amiga element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -89,7 +89,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
             if (!(element instanceof Amiga)) {
                 return false;
             }
-            stateList.remove(((Amiga) element).getState(stateList));
+            stateList.remove(((Amiga) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -102,7 +102,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
             for (Object element : collection) {
                 if (element instanceof Amiga) {
                     elements.add(element);
-                    states.add(((Amiga)element).getState(stateList));
+                    states.add(((Amiga)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -119,7 +119,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
             for (Object element : collection) {
                 if (element instanceof Amiga) {
                     elements.add(element);
-                    states.add(((Amiga)element).getState(stateList));
+                    states.add(((Amiga)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -138,7 +138,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
         @Override
         public Amiga set(int index, Amiga element) {
             stateList.throwExceptionIfNotEncapsulatedBy(AmigaArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

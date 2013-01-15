@@ -34,14 +34,14 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         @Override
         public boolean add(CuteMouth element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
-            stateList.add(element.getState(stateList));
+            stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
         public void add(int index, CuteMouth element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
-            stateList.add(index, element.getState(stateList));
+            stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
@@ -51,7 +51,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
             boolean modified = super.addAll(collection);
 
             for (CuteMouth element : collection) {
-                stateList.add(element.getState(stateList));
+                stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
@@ -63,7 +63,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
 
             List elements = new ArrayList(collection.size());
             for (CuteMouth element : collection) {
-                elements.add(element.getState(stateList));
+                elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
 
@@ -76,7 +76,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
             if (!(element instanceof CuteMouth)) {
                 return false;
             }
-            stateList.remove(((CuteMouth) element).getState(stateList));
+            stateList.remove(((CuteMouth) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -89,7 +89,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof CuteMouth) {
                     elements.add(element);
-                    states.add(((CuteMouth)element).getState(stateList));
+                    states.add(((CuteMouth)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -106,7 +106,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
             for (Object element : collection) {
                 if (element instanceof CuteMouth) {
                     elements.add(element);
-                    states.add(((CuteMouth)element).getState(stateList));
+                    states.add(((CuteMouth)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -125,7 +125,7 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
         @Override
         public CuteMouth set(int index, CuteMouth element) {
             stateList.throwExceptionIfNotEncapsulatedBy(CuteMouthArrayList.this);
-            stateList.set(index, element.getState(stateList));
+            stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 

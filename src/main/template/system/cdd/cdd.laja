@@ -262,7 +262,6 @@
     #import "{..}/../java/cdd/stateList.java.laja"
     #import "{..}/../java/cdd/value.java.laja"
     #import "{..}/../java/cdd/entity.java.laja"
-    #import "{..}/../java/cdd/element.java.laja"
     #import "{..}/../java/cdd/stateBehaviourFactory.java.laja"
   #end
 #end

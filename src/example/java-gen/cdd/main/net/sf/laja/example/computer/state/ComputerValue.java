@@ -7,7 +7,7 @@ import net.sf.laja.example.computer.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ComputerValue implements ComputerElement {
+public class ComputerValue {
     protected final ComputerState state;
     protected ComputerStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class ComputerValue implements ComputerElement {
     public ComputerState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public ComputerState getState(ComputerStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("ComputerStateList can not be null!");
         }
         return state;
     }

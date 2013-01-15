@@ -1,10 +1,6 @@
 #macro class()
   #header()
-#if (isFactory(classname))
-public class {entityClass} implements {elementClass} {
-#else
 public class {entityClass} {
-#end
     protected final {stateClass} state;
     protected {builderClass} stateBuilder;
 

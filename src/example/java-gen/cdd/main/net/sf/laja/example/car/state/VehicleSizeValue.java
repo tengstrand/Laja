@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class VehicleSizeValue implements VehicleSizeElement {
+public class VehicleSizeValue {
     protected final VehicleSizeState state;
     protected VehicleSizeStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class VehicleSizeValue implements VehicleSizeElement {
     public VehicleSizeState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public VehicleSizeState getState(VehicleSizeStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("VehicleSizeStateList can not be null!");
         }
         return state;
     }

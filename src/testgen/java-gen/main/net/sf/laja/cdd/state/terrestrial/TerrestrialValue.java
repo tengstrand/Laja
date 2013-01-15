@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class TerrestrialValue implements TerrestrialElement {
+public class TerrestrialValue {
     protected final TerrestrialState state;
     protected TerrestrialStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class TerrestrialValue implements TerrestrialElement {
     public TerrestrialState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public TerrestrialState getState(TerrestrialStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("TerrestrialStateList can not be null!");
         }
         return state;
     }

@@ -7,7 +7,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class CustomerEntity implements CustomerElement {
+public class CustomerEntity {
     protected final CustomerState state;
     protected CustomerStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class CustomerEntity implements CustomerElement {
     public CustomerState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public CustomerState getState(CustomerStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("CustomerStateList can not be null!");
         }
         return state;
     }

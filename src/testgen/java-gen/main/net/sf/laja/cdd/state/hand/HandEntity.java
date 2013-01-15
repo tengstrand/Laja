@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HandEntity implements HandElement {
+public class HandEntity {
     protected final HandState state;
     protected HandStateBuilder stateBuilder;
 
@@ -25,13 +25,6 @@ public class HandEntity implements HandElement {
     public HandState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
-
-    public HandState getState(HandStateList stateList) {
-        if (stateList == null) {
-            throw new IllegalArgumentException("HandStateList can not be null!");
         }
         return state;
     }
