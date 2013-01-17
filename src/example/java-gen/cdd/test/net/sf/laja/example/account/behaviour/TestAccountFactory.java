@@ -3,7 +3,7 @@ package net.sf.laja.example.account.behaviour;
 import net.sf.laja.example.account.state.AccountState;
 import net.sf.laja.example.account.state.AccountStateBuilder;
 
-public class TestAccountFactory extends TestAccountValueFactory {
+public class TestAccountFactory extends TestAccountEntityFactory {
     public TestAccountFactory(AccountState state) {
         super(state);
     }

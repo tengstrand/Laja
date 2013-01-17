@@ -6,5 +6,7 @@
   srcDir: "{.}/main"
   outDir: "{..}/../java-gen/cdd/main"
   statePackage: "net.sf.laja.example.car.state"
-  behaviourPackage: "net.sf.laja.example.car.behaviour" }]
+  behaviourPackage: "net.sf.laja.example.car.behaviour" }, {
+  srcDir: "{.}/test"
+  outDir: "{..}/../java-gen/cdd/test" }]
 )

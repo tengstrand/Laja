@@ -10,6 +10,12 @@ public class Car extends CarFactory {
         size = new VehicleSize(state);
     }
 
+    // Used by test context to inject mocks.
+    public Car(CarState state, VehicleSize size) {
+        super(state);
+        this.size = size;
+    }
+
     // (factory)
     public Car asCar() {
         return new Car(state);

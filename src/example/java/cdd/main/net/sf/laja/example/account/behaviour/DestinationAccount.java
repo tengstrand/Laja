@@ -1,9 +1,9 @@
 package net.sf.laja.example.account.behaviour;
 
+import net.sf.laja.example.account.state.AccountBehaviour;
 import net.sf.laja.example.account.state.AccountState;
-import net.sf.laja.example.account.state.AccountValue;
 
-public class DestinationAccount extends AccountValue {
+public class DestinationAccount extends AccountBehaviour {
     public DestinationAccount(final AccountState state) {
         super(state);
     }
