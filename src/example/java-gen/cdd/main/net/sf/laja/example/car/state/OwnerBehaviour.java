@@ -7,16 +7,16 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class OwnerValue {
+public class OwnerBehaviour {
     protected final OwnerState state;
     protected OwnerStateBuilder stateBuilder;
 
-    public OwnerValue(OwnerState state) {
+    public OwnerBehaviour(OwnerState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public OwnerValue(OwnerState state, OwnerStateBuilder stateBuilder) {
+    public OwnerBehaviour(OwnerState state, OwnerStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
@@ -33,12 +33,12 @@ public class OwnerValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((OwnerValue)o).state);
+        return state.equals(((OwnerBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

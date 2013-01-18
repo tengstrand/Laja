@@ -15,8 +15,8 @@
 
 #end
 
-#macro class(factoryClass, parentClass)
-public class {factoryClass} extends {parentClass} {
+#macro class()
+public class {factoryClass} extends {stateBehaviourClass} {
 
     public {factoryClass}({stateClass} state) {
         super(state);
@@ -106,53 +106,14 @@ public class {factoryClass} extends {parentClass} {
 }
 #end
 
-#macro basicFactoryContent(parentClass)
-package {behaviour.packagename};
-
-import {template.packagename}.{stateClass};
-import {template.packagename}.{stateBuilderClass};
-
-public class {factoryClass} extends {parentClass} {
-    public {factoryClass}({stateClass} state) {
-        super(state);
-    }
-
-    public {factoryClass}({stateClass} state, {stateBuilderClass} stateBuilder) {
-        super(state, stateBuilder);
-    }
-}
-#end
-
-#macro createBasicFactory(parentClass)
-  #set (factoryClass = behaviour.factoryClass)
-
-  #set (filename = "{outputDir}/{factoryClass}.java")
-  #generateFile(filename, basicFactoryContent(parentClass))
-#end
-
-#macro factoryContent(factoryClass, parentClass)
+#macro factoryContent()
 package {behaviour.packagename};
 
     #imports()
-    #class(factoryClass, parentClass)
-#end
-
-#macro createFactory(factoryClass, parentClass)
-  #set (filename = "{outputDir}/{factoryClass}.java")
-  #generateFile(filename, factoryContent(factoryClass, parentClass))
+    #class()
 #end
 
 #if (behaviour.isFactory)
-  #set (valueFactory = "{behaviour.classname}ValueFactory")
-  #set (entityFactory = "{behaviour.classname}EntityFactory")
-
-  #if (template.isEntity)
-    #set (parentFactory = entityFactory)
-    #createFactory(entityFactory, entityClass)
-  #else
-    #set (parentFactory = valueFactory)
-  #end
-
-  #createBasicFactory(parentFactory)
-  #createFactory(valueFactory, valueClass)
+  #set (filename = "{outputDir}/{factoryClass}.java")
+  #generateFile(filename, factoryContent())
 #end

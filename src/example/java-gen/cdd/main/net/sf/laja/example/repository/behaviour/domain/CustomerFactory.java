@@ -1,8 +1,14 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
+import java.util.List;
+import java.util.Iterator;
+import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
 import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
+import java.util.Arrays;
 import net.sf.laja.example.repository.state.CustomerState;
+import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
+import java.util.ArrayList;
 
 public class CustomerFactory extends CustomerBehaviour {
 
@@ -44,10 +50,10 @@ public class CustomerFactory extends CustomerBehaviour {
             return result;
         }
 
-        private Object create_(CustomerState state, Object... args) {
-            return new Customer(state);
-
-        }
+      private Object create_(CustomerState state, Object... args) {
+        return new Customer(state);
+    
+      }
     }
 
     public static class CustomerMatcherFactory_ implements CustomerStateBehaviourFactory {
@@ -68,9 +74,9 @@ public class CustomerFactory extends CustomerBehaviour {
             return result;
         }
 
-        private Object create_(CustomerState state, Object... args) {
-            return new CustomerMatcher(state);
-
-        }
+      private Object create_(CustomerState state, Object... args) {
+        return new CustomerMatcher(state);
+    
+      }
     }
 }

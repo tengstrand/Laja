@@ -9,8 +9,7 @@
 #set (builderImplClass = "{stateClass}BuilderImpl")
 #set (stateProjectionClass = "{stateClass}Projection")
 #set (stateListBuilder = "{stateListClass}Builder")
-#set (valueClass = "{classname}Value")
-#set (entityClass = "{classname}Entity")
+#set (stateBehaviourClass = "{classname}Behaviour")
 #set (stateBehaviourFactoryClass = "{stateClass}BehaviourFactory")
 
 #macro oldFileContent(filename)
@@ -231,13 +230,4 @@ import {certificatePackage}.{certificateClass};
 
 #function isFactory(theclassname)
   #return behavioursFactories.containsKey(theclassname)
-#end
-
-#macro elementMethods()
-    public {stateClass} getState(Certificate certificate) {
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null!");
-        }
-        return state;
-    }
 #end

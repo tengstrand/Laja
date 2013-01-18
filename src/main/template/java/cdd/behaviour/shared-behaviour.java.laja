@@ -20,8 +20,7 @@
 
 #set (stateBuilderClass = "{stateClass}Builder")
 #set (stateBuilderImplClass = "{stateBuilderClass}Impl")
-#set (valueClass = "{behaviour.cleanedStateClass}Value")
-#set (entityClass = "{behaviour.cleanedStateClass}Entity")
+#set (stateBehaviourClass = "{behaviour.cleanedStateClass}Behaviour")
 #set (stateListBuilder = "{stateClass}ListBuilder")
 
 #set (template = templates.get(behaviour.cleanedStateClass))

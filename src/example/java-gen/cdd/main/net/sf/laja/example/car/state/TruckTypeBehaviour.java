@@ -7,16 +7,16 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class TruckTypeValue {
+public class TruckTypeBehaviour {
     protected final TruckTypeState state;
     protected TruckTypeStateBuilder stateBuilder;
 
-    public TruckTypeValue(TruckTypeState state) {
+    public TruckTypeBehaviour(TruckTypeState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public TruckTypeValue(TruckTypeState state, TruckTypeStateBuilder stateBuilder) {
+    public TruckTypeBehaviour(TruckTypeState state, TruckTypeStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
@@ -33,12 +33,12 @@ public class TruckTypeValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((TruckTypeValue)o).state);
+        return state.equals(((TruckTypeBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

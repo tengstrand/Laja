@@ -1,9 +1,9 @@
 package net.sf.laja.example.repository.behaviour.persistence;
 
+import net.sf.laja.example.repository.state.CustomerBehaviour;
 import net.sf.laja.example.repository.state.CustomerState;
-import net.sf.laja.example.repository.state.CustomerValue;
 
-public class CustomerMatcher extends CustomerValue {
+public class CustomerMatcher extends CustomerBehaviour {
     public CustomerMatcher(CustomerState state) {
         super(state);
     }

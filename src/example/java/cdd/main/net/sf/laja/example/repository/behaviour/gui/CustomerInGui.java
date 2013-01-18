@@ -1,10 +1,10 @@
 package net.sf.laja.example.repository.behaviour.gui;
 
 import net.sf.laja.example.repository.behaviour.domain.CustomerBuilder;
+import net.sf.laja.example.repository.state.CustomerBehaviour;
 import net.sf.laja.example.repository.state.CustomerState;
-import net.sf.laja.example.repository.state.CustomerValue;
 
-public class CustomerInGui extends CustomerValue {
+public class CustomerInGui extends CustomerBehaviour {
     private String givenName;
     private String surname;
     private StringToIntConverter age;
