@@ -2,7 +2,7 @@ package net.sf.laja.example.computer.behaviour;
 
 import net.sf.laja.example.computer.state.*;
 
-public class AmigaTemplate extends ComputerValue {
+public class AmigaTemplate extends ComputerBehaviour {
     public AmigaTemplate(ComputerState state) {
         super(state);
     }

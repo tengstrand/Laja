@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.toe;
+package net.sf.laja.cdd.state.fleck;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ToeValue {
-    protected final ToeState state;
-    protected ToeStateBuilder stateBuilder;
+public class FleckBehaviour {
+    protected final FleckState state;
+    protected FleckStateBuilder stateBuilder;
 
-    public ToeValue(ToeState state) {
+    public FleckBehaviour(FleckState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public ToeValue(ToeState state, ToeStateBuilder stateBuilder) {
+    public FleckBehaviour(FleckState state, FleckStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public ToeState getState(Certificate certificate) {
+    public FleckState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class ToeValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((ToeValue)o).state);
+        return state.equals(((FleckBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

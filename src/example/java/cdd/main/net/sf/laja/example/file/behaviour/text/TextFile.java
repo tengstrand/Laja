@@ -3,8 +3,8 @@ package net.sf.laja.example.file.behaviour.text;
 import net.sf.laja.example.file.behaviour.Directory;
 import net.sf.laja.example.file.behaviour.FileExceptions;
 import net.sf.laja.example.file.behaviour.FileOperations;
+import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
-import net.sf.laja.example.file.state.FileValue;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static net.sf.laja.example.file.behaviour.text.TextDirectory.FILE;
 
-public class TextFile extends FileValue {
+public class TextFile extends FileBehaviour {
     private final FileOperations fileOperations;
     private final FileExceptions fileExceptions;
 

@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.foot;
+package net.sf.laja.cdd.state.eye;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FootValue {
-    protected final FootState state;
-    protected FootStateBuilder stateBuilder;
+public class EyeBehaviour {
+    protected final EyeState state;
+    protected EyeStateBuilder stateBuilder;
 
-    public FootValue(FootState state) {
+    public EyeBehaviour(EyeState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public FootValue(FootState state, FootStateBuilder stateBuilder) {
+    public EyeBehaviour(EyeState state, EyeStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public FootState getState(Certificate certificate) {
+    public EyeState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class FootValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((FootValue)o).state);
+        return state.equals(((EyeBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

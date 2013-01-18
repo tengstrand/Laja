@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.head;
+package net.sf.laja.cdd.state.nose;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HeadValue {
-    protected final HeadState state;
-    protected HeadStateBuilder stateBuilder;
+public class NoseBehaviour {
+    protected final NoseState state;
+    protected NoseStateBuilder stateBuilder;
 
-    public HeadValue(HeadState state) {
+    public NoseBehaviour(NoseState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public HeadValue(HeadState state, HeadStateBuilder stateBuilder) {
+    public NoseBehaviour(NoseState state, NoseStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public HeadState getState(Certificate certificate) {
+    public NoseState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class HeadValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((HeadValue)o).state);
+        return state.equals(((NoseBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

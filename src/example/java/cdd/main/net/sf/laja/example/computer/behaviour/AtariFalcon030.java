@@ -1,10 +1,10 @@
 package net.sf.laja.example.computer.behaviour;
 
+import net.sf.laja.example.computer.state.ComputerBehaviour;
 import net.sf.laja.example.computer.state.ComputerState;
-import net.sf.laja.example.computer.state.ComputerValue;
 import net.sf.laja.example.computer.state.Processor;
 
-public class AtariFalcon030 extends ComputerValue {
+public class AtariFalcon030 extends ComputerBehaviour {
     public AtariFalcon030(ComputerState state) {
         super(state);
         state.setName("Atari Falcon030", this);

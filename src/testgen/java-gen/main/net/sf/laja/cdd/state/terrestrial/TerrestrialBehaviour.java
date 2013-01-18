@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.brow;
+package net.sf.laja.cdd.state.terrestrial;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class BrowValue {
-    protected final BrowState state;
-    protected BrowStateBuilder stateBuilder;
+public class TerrestrialBehaviour {
+    protected final TerrestrialState state;
+    protected TerrestrialStateBuilder stateBuilder;
 
-    public BrowValue(BrowState state) {
+    public TerrestrialBehaviour(TerrestrialState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public BrowValue(BrowState state, BrowStateBuilder stateBuilder) {
+    public TerrestrialBehaviour(TerrestrialState state, TerrestrialStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public BrowState getState(Certificate certificate) {
+    public TerrestrialState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class BrowValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((BrowValue)o).state);
+        return state.equals(((TerrestrialBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

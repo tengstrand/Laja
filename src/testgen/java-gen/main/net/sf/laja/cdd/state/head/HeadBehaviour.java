@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.hand;
+package net.sf.laja.cdd.state.head;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HandEntity {
-    protected final HandState state;
-    protected HandStateBuilder stateBuilder;
+public class HeadBehaviour {
+    protected final HeadState state;
+    protected HeadStateBuilder stateBuilder;
 
-    public HandEntity(HandState state) {
+    public HeadBehaviour(HeadState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public HandEntity(HandState state, HandStateBuilder stateBuilder) {
+    public HeadBehaviour(HeadState state, HeadStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public HandState getState(Certificate certificate) {
+    public HeadState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,7 +33,7 @@ public class HandEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.equals(((HandEntity)o).state);
+        return state.equals(((HeadBehaviour)o).state);
     }
 
     @Override

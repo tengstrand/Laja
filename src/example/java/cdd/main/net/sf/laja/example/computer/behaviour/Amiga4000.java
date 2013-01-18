@@ -1,10 +1,10 @@
 package net.sf.laja.example.computer.behaviour;
 
+import net.sf.laja.example.computer.state.ComputerBehaviour;
 import net.sf.laja.example.computer.state.ComputerState;
-import net.sf.laja.example.computer.state.ComputerValue;
 import net.sf.laja.example.computer.state.Processor;
 
-public class Amiga4000 extends ComputerValue implements Amiga {
+public class Amiga4000 extends ComputerBehaviour implements Amiga {
     public Amiga4000(ComputerState state) {
         super(state);
         state.setName("Amiga 4000", this);

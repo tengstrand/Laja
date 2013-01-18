@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.hair;
+package net.sf.laja.cdd.state.animal;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HairValue {
-    protected final HairState state;
-    protected HairStateBuilder stateBuilder;
+public class AnimalBehaviour {
+    protected final AnimalState state;
+    protected AnimalStateBuilder stateBuilder;
 
-    public HairValue(HairState state) {
+    public AnimalBehaviour(AnimalState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public HairValue(HairState state, HairStateBuilder stateBuilder) {
+    public AnimalBehaviour(AnimalState state, AnimalStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public HairState getState(Certificate certificate) {
+    public AnimalState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class HairValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((HairValue)o).state);
+        return state.equals(((AnimalBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

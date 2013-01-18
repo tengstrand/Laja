@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.toe;
+package net.sf.laja.cdd.state.ear;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ToeEntity {
-    protected final ToeState state;
-    protected ToeStateBuilder stateBuilder;
+public class EarBehaviour {
+    protected final EarState state;
+    protected EarStateBuilder stateBuilder;
 
-    public ToeEntity(ToeState state) {
+    public EarBehaviour(EarState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public ToeEntity(ToeState state, ToeStateBuilder stateBuilder) {
+    public EarBehaviour(EarState state, EarStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public ToeState getState(Certificate certificate) {
+    public EarState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,7 +33,7 @@ public class ToeEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.equals(((ToeEntity)o).state);
+        return state.equals(((EarBehaviour)o).state);
     }
 
     @Override

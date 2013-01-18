@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.terrestrial;
+package net.sf.laja.cdd.state.toe;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class TerrestrialValue {
-    protected final TerrestrialState state;
-    protected TerrestrialStateBuilder stateBuilder;
+public class ToeBehaviour {
+    protected final ToeState state;
+    protected ToeStateBuilder stateBuilder;
 
-    public TerrestrialValue(TerrestrialState state) {
+    public ToeBehaviour(ToeState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public TerrestrialValue(TerrestrialState state, TerrestrialStateBuilder stateBuilder) {
+    public ToeBehaviour(ToeState state, ToeStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public TerrestrialState getState(Certificate certificate) {
+    public ToeState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class TerrestrialValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((TerrestrialValue)o).state);
+        return state.equals(((ToeBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

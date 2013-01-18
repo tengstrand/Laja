@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.hair;
+package net.sf.laja.cdd.state.brow;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HairEntity {
-    protected final HairState state;
-    protected HairStateBuilder stateBuilder;
+public class BrowBehaviour {
+    protected final BrowState state;
+    protected BrowStateBuilder stateBuilder;
 
-    public HairEntity(HairState state) {
+    public BrowBehaviour(BrowState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public HairEntity(HairState state, HairStateBuilder stateBuilder) {
+    public BrowBehaviour(BrowState state, BrowStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public HairState getState(Certificate certificate) {
+    public BrowState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,7 +33,7 @@ public class HairEntity {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.equals(((HairEntity)o).state);
+        return state.equals(((BrowBehaviour)o).state);
     }
 
     @Override

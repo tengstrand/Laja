@@ -2,10 +2,10 @@ package net.sf.laja.example.file.behaviour.text;
 
 import net.sf.laja.example.file.behaviour.ClosedFileList;
 import net.sf.laja.example.file.behaviour.DirectoryList;
+import net.sf.laja.example.file.state.DirectoryBehaviour;
 import net.sf.laja.example.file.state.DirectoryState;
-import net.sf.laja.example.file.state.DirectoryValue;
 
-public class TextDirectory extends DirectoryValue {
+public class TextDirectory extends DirectoryBehaviour {
     private final String directoryPath;
     private final TextDirectoryList directories;
     private final TextFileList files;

@@ -7,16 +7,16 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ForeheadValue {
+public class ForeheadBehaviour {
     protected final ForeheadState state;
     protected ForeheadStateBuilder stateBuilder;
 
-    public ForeheadValue(ForeheadState state) {
+    public ForeheadBehaviour(ForeheadState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public ForeheadValue(ForeheadState state, ForeheadStateBuilder stateBuilder) {
+    public ForeheadBehaviour(ForeheadState state, ForeheadStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
@@ -33,12 +33,12 @@ public class ForeheadValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((ForeheadValue)o).state);
+        return state.equals(((ForeheadBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

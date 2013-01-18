@@ -1,7 +1,7 @@
 package net.sf.laja.example.file.behaviour;
 
+import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
-import net.sf.laja.example.file.state.FileValue;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.io.IOException;
  * In Scala this class would have been a trait. Because Java does not have traits,
  * the functionality in this class is accessed by using composition.
  */
-public class FileOperations extends FileValue {
+public class FileOperations extends FileBehaviour {
     private final Directory directory;
     private final FileExceptions fileExceptions;
 

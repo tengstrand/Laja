@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.mouth;
+package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class MouthValue {
-    protected final MouthState state;
-    protected MouthStateBuilder stateBuilder;
+public class MonsterBehaviour {
+    protected final MonsterState state;
+    protected MonsterStateBuilder stateBuilder;
 
-    public MouthValue(MouthState state) {
+    public MonsterBehaviour(MonsterState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public MouthValue(MouthState state, MouthStateBuilder stateBuilder) {
+    public MonsterBehaviour(MonsterState state, MonsterStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public MouthState getState(Certificate certificate) {
+    public MonsterState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class MouthValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((MouthValue)o).state);
+        return state.equals(((MonsterBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package net.sf.laja.example.file.behaviour;
 
+import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
-import net.sf.laja.example.file.state.FileValue;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-public class WritableFile extends FileValue {
+public class WritableFile extends FileBehaviour {
     private boolean isOpen;
     private final Directory directory;
     private final FileOperations fileOperations;

@@ -1,9 +1,9 @@
 package net.sf.laja.example.file.behaviour;
 
+import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
-import net.sf.laja.example.file.state.FileValue;
 
-public class FileExceptions extends FileValue {
+public class FileExceptions extends FileBehaviour {
     private final Directory directory;
 
     public FileExceptions(FileState state, Directory directory) {

@@ -1,9 +1,10 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
+import net.sf.laja.cdd.state.mouth.MouthBehaviour;
 import net.sf.laja.cdd.state.mouth.MouthState;
 import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
 
-public class MouthEntity extends net.sf.laja.cdd.state.mouth.MouthEntity {
+public class MouthEntity extends MouthBehaviour {
     public MouthEntity(MouthState state) {
         super(state);
     }

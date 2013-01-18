@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state.fleck;
+package net.sf.laja.cdd.state.arm;
 
 import net.sf.laja.cdd.state.Certificate;
 
@@ -7,22 +7,22 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FleckValue {
-    protected final FleckState state;
-    protected FleckStateBuilder stateBuilder;
+public class ArmBehaviour {
+    protected final ArmState state;
+    protected ArmStateBuilder stateBuilder;
 
-    public FleckValue(FleckState state) {
+    public ArmBehaviour(ArmState state) {
         this.state = state;
         state.setEncapsulator(this);
     }
 
-    public FleckValue(FleckState state, FleckStateBuilder stateBuilder) {
+    public ArmBehaviour(ArmState state, ArmStateBuilder stateBuilder) {
         this.state = state;
         this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 
-    public FleckState getState(Certificate certificate) {
+    public ArmState getState(Certificate certificate) {
         if (certificate == null) {
             throw new IllegalArgumentException("Certificate can not be null!");
         }
@@ -33,12 +33,12 @@ public class FleckValue {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        return state.valueEquals(((FleckValue)o).state);
+        return state.equals(((ArmBehaviour)o).state);
     }
 
     @Override
     public int hashCode() {
-        return state.valueHashCode();
+        return state.hashCode();
     }
 
     @Override
