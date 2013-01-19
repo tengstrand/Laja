@@ -32,7 +32,7 @@ public class CustomerFactory extends CustomerBehaviour {
         return new CustomerListEncapsulator(encapsulators);
     }
 
-    public static class CustomerFactory_ implements CustomerStateBehaviourFactory {
+    public static class CustomerFactory_ implements CustomerBehaviourFactory {
         private final CustomerStateBuilder stateBuilder;
 
         public CustomerFactory_(CustomerStateBuilder stateBuilder) {
@@ -56,7 +56,7 @@ public class CustomerFactory extends CustomerBehaviour {
       }
     }
 
-    public static class CustomerMatcherFactory_ implements CustomerStateBehaviourFactory {
+    public static class CustomerMatcherFactory_ implements CustomerBehaviourFactory {
         private final CustomerStateBuilder stateBuilder;
 
         public CustomerMatcherFactory_(CustomerStateBuilder stateBuilder) {

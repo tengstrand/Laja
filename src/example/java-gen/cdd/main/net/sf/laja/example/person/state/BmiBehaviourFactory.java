@@ -5,6 +5,6 @@ package net.sf.laja.example.person.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeightStateBehaviourFactory {
-    Object create(HeightState state, Object... args);
+public interface BmiBehaviourFactory {
+    Object create(BmiState state, Object... args);
 }

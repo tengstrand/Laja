@@ -5,6 +5,6 @@ package net.sf.laja.example.computer.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ComputerStateBehaviourFactory {
+public interface ComputerBehaviourFactory {
     Object create(ComputerState state, Object... args);
 }

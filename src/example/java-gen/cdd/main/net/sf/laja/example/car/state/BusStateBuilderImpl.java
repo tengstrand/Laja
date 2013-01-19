@@ -1,6 +1,6 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.VehicleSizeStateBehaviourFactory;
+import net.sf.laja.example.car.state.VehicleSizeBehaviourFactory;
 import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.Certificate;
 
@@ -45,11 +45,11 @@ public class BusStateBuilderImpl implements BusStateBuilder {
         return state.isValid();
     }
 
-    public Object as(BusStateBehaviourFactory factory, Object... args) {
+    public Object as(BusBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 
-    public Object as(VehicleSizeStateBehaviourFactory factory, Object... args) {
+    public Object as(VehicleSizeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

@@ -11,6 +11,6 @@ public interface BmiStateBuilder {
     void withHeightInCentimeters(int heightInCentimeters);
     void withWeightInKilograms(int weightInKilograms);
     boolean isValid();
-    Object as(BmiStateBehaviourFactory factory, Object... args);
+    Object as(BmiBehaviourFactory factory, Object... args);
     BmiState getBmiState(net.sf.laja.example.person.state.Certificate certificate);
 }

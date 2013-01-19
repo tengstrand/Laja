@@ -39,7 +39,7 @@ public class OwnerStateBuilderImpl implements OwnerStateBuilder {
         return state.isValid();
     }
 
-    public Object as(OwnerStateBehaviourFactory factory, Object... args) {
+    public Object as(OwnerBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

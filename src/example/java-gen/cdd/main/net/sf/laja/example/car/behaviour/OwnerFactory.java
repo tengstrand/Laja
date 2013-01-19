@@ -29,7 +29,7 @@ public class OwnerFactory extends OwnerBehaviour {
         return new OwnerListEncapsulator(encapsulators);
     }
 
-    public static class OwnerFactory_ implements OwnerStateBehaviourFactory {
+    public static class OwnerFactory_ implements OwnerBehaviourFactory {
         private final OwnerStateBuilder stateBuilder;
 
         public OwnerFactory_(OwnerStateBuilder stateBuilder) {

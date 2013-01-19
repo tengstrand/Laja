@@ -39,7 +39,7 @@ public class TruckTypeStateBuilderImpl implements TruckTypeStateBuilder {
         return state.isValid();
     }
 
-    public Object as(TruckTypeStateBehaviourFactory factory, Object... args) {
+    public Object as(TruckTypeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

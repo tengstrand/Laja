@@ -1,6 +1,6 @@
 package net.sf.laja.example.repository.state;
 
-import net.sf.laja.example.repository.state.ZipcodeStateBehaviourFactory;
+import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
 import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.Certificate;
 
@@ -49,11 +49,11 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
         return state.isValid();
     }
 
-    public Object as(AddressStateBehaviourFactory factory, Object... args) {
+    public Object as(AddressBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 
-    public Object as(ZipcodeStateBehaviourFactory factory, Object... args) {
+    public Object as(ZipcodeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

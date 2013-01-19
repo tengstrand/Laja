@@ -14,6 +14,6 @@ public interface ComputerStateBuilder {
     void withMemoryInKilobytes(int memoryInKilobytes);
     void withOwner(String owner);
     boolean isValid();
-    Object as(ComputerStateBehaviourFactory factory, Object... args);
+    Object as(ComputerBehaviourFactory factory, Object... args);
     ComputerState getComputerState(net.sf.laja.example.computer.state.Certificate certificate);
 }

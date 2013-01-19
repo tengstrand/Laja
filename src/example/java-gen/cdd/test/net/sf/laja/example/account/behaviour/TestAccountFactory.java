@@ -29,7 +29,7 @@ public class TestAccountFactory extends AccountBehaviour {
         return new TestAccountListEncapsulator(encapsulators);
     }
 
-    public static class TestAccountFactory_ implements AccountStateBehaviourFactory {
+    public static class TestAccountFactory_ implements AccountBehaviourFactory {
         private final AccountStateBuilder stateBuilder;
 
         public TestAccountFactory_(AccountStateBuilder stateBuilder) {

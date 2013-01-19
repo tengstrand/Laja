@@ -10,6 +10,6 @@ import net.sf.laja.example.person.state.Certificate;
 public interface HeightStateBuilder {
     void withHeightInCentimeters(int heightInCentimeters);
     boolean isValid();
-    Object as(HeightStateBehaviourFactory factory, Object... args);
+    Object as(HeightBehaviourFactory factory, Object... args);
     HeightState getHeightState(net.sf.laja.example.person.state.Certificate certificate);
 }

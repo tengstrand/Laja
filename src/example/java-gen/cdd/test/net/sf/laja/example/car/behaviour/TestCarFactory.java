@@ -29,7 +29,7 @@ public class TestCarFactory extends CarBehaviour {
         return new TestCarListEncapsulator(encapsulators);
     }
 
-    public static class CarFactory_ implements CarStateBehaviourFactory {
+    public static class CarFactory_ implements CarBehaviourFactory {
         private final CarStateBuilder stateBuilder;
 
         public CarFactory_(CarStateBuilder stateBuilder) {

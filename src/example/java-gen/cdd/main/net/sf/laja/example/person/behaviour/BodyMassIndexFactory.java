@@ -31,7 +31,7 @@ public class BodyMassIndexFactory extends BmiBehaviour {
         return new BodyMassIndexListEncapsulator(encapsulators);
     }
 
-    public static class BodyMassIndexFactory_ implements BmiStateBehaviourFactory {
+    public static class BodyMassIndexFactory_ implements BmiBehaviourFactory {
         private final BmiStateBuilder stateBuilder;
 
         public BodyMassIndexFactory_(BmiStateBuilder stateBuilder) {

@@ -35,7 +35,7 @@ public class HeightStateBuilderImpl implements HeightStateBuilder {
         return state.isValid();
     }
 
-    public Object as(HeightStateBehaviourFactory factory, Object... args) {
+    public Object as(HeightBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

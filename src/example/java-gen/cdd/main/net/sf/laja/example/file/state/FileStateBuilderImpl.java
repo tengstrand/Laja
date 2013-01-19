@@ -35,7 +35,7 @@ public class FileStateBuilderImpl implements FileStateBuilder {
         return state.isValid();
     }
 
-    public Object as(FileStateBehaviourFactory factory, Object... args) {
+    public Object as(FileBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

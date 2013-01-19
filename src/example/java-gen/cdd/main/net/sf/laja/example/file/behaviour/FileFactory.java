@@ -29,7 +29,7 @@ public class FileFactory extends FileBehaviour {
         return new FileListEncapsulator(encapsulators);
     }
 
-    public static class ClosedFileFactory_ implements FileStateBehaviourFactory {
+    public static class ClosedFileFactory_ implements FileBehaviourFactory {
         private final FileStateBuilder stateBuilder;
 
         public ClosedFileFactory_(FileStateBuilder stateBuilder) {
@@ -55,7 +55,7 @@ public class FileFactory extends FileBehaviour {
       }
     }
 
-    public static class WritableFileFactory_ implements FileStateBehaviourFactory {
+    public static class WritableFileFactory_ implements FileBehaviourFactory {
         private final FileStateBuilder stateBuilder;
 
         public WritableFileFactory_(FileStateBuilder stateBuilder) {

@@ -29,7 +29,7 @@ public class AccountFactory extends AccountBehaviour {
         return new AccountListEncapsulator(encapsulators);
     }
 
-    public static class SourceAccountFactory_ implements AccountStateBehaviourFactory {
+    public static class SourceAccountFactory_ implements AccountBehaviourFactory {
         private final AccountStateBuilder stateBuilder;
 
         public SourceAccountFactory_(AccountStateBuilder stateBuilder) {
@@ -53,7 +53,7 @@ public class AccountFactory extends AccountBehaviour {
       }
     }
 
-    public static class DestinationAccountFactory_ implements AccountStateBehaviourFactory {
+    public static class DestinationAccountFactory_ implements AccountBehaviourFactory {
         private final AccountStateBuilder stateBuilder;
 
         public DestinationAccountFactory_(AccountStateBuilder stateBuilder) {

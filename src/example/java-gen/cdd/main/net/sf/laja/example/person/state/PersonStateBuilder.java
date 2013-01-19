@@ -18,6 +18,6 @@ public interface PersonStateBuilder {
     void withHeight(HeightStateBuilder height);
     HeightStateBuilder getHeightStateBuilder();
     boolean isValid();
-    Object as(PersonStateBehaviourFactory factory, Object... args);
+    Object as(PersonBehaviourFactory factory, Object... args);
     PersonState getPersonState(net.sf.laja.example.person.state.Certificate certificate);
 }

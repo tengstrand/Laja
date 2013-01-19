@@ -29,7 +29,7 @@ public class TruckFactory extends TruckBehaviour {
         return new TruckListEncapsulator(encapsulators);
     }
 
-    public static class TruckFactory_ implements TruckStateBehaviourFactory {
+    public static class TruckFactory_ implements TruckBehaviourFactory {
         private final TruckStateBuilder stateBuilder;
 
         public TruckFactory_(TruckStateBuilder stateBuilder) {

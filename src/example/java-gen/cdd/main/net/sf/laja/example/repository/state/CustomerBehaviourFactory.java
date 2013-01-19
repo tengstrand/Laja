@@ -5,6 +5,6 @@ package net.sf.laja.example.repository.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CustomerStateBehaviourFactory {
+public interface CustomerBehaviourFactory {
     Object create(CustomerState state, Object... args);
 }

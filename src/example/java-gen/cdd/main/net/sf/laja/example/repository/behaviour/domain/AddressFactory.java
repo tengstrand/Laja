@@ -29,7 +29,7 @@ public class AddressFactory extends AddressBehaviour {
         return new AddressListEncapsulator(encapsulators);
     }
 
-    public static class AddressFactory_ implements AddressStateBehaviourFactory {
+    public static class AddressFactory_ implements AddressBehaviourFactory {
         private final AddressStateBuilder stateBuilder;
 
         public AddressFactory_(AddressStateBuilder stateBuilder) {

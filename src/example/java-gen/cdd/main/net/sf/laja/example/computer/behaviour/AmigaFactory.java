@@ -28,7 +28,7 @@ public class AmigaFactory extends ComputerBehaviour {
         return new AmigaListEncapsulator(encapsulators);
     }
 
-    public static class AmigaFactory_ implements ComputerStateBehaviourFactory {
+    public static class AmigaFactory_ implements ComputerBehaviourFactory {
         private final ComputerStateBuilder stateBuilder;
 
         public AmigaFactory_(ComputerStateBuilder stateBuilder) {

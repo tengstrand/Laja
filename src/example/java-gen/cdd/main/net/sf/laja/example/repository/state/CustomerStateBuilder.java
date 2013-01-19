@@ -23,6 +23,6 @@ public interface CustomerStateBuilder extends AddressStateBuilder {
     void withOldAddresses(net.sf.laja.example.repository.state.AddressStateListBuilder listBuilder);
     AddressStateListBuilder getOldAddressesStateListBuilder();
     boolean isValid();
-    Object as(CustomerStateBehaviourFactory factory, Object... args);
+    Object as(CustomerBehaviourFactory factory, Object... args);
     CustomerState getCustomerState(net.sf.laja.example.repository.state.Certificate certificate);
 }

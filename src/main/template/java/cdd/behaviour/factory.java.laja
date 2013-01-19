@@ -65,7 +65,7 @@ public class {factoryClass} extends {stateBehaviourClass} {
   #foreach (method in behaviour.asMethods where method.isFactory)
     #set (innerFactoryClass = "{method.returnclass}Factory_")
 
-    public static class {innerFactoryClass} implements {template.classname}StateBehaviourFactory {
+    public static class {innerFactoryClass} implements {template.classname}BehaviourFactory {
         private final {stateBuilderClass} stateBuilder;
 
         public {innerFactoryClass}({stateBuilderClass} stateBuilder) {

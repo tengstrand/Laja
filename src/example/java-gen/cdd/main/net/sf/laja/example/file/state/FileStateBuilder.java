@@ -10,6 +10,6 @@ import net.sf.laja.example.file.state.Certificate;
 public interface FileStateBuilder {
     void withFilename(String filename);
     boolean isValid();
-    Object as(FileStateBehaviourFactory factory, Object... args);
+    Object as(FileBehaviourFactory factory, Object... args);
     FileState getFileState(net.sf.laja.example.file.state.Certificate certificate);
 }

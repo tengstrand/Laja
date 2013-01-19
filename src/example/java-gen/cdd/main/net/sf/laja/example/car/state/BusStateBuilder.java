@@ -13,6 +13,6 @@ public interface BusStateBuilder extends VehicleSizeStateBuilder {
     void withLengthInCentimeters(int lengthInCentimeters);
     void withWeightInKilograms(int weightInKilograms);
     boolean isValid();
-    Object as(BusStateBehaviourFactory factory, Object... args);
+    Object as(BusBehaviourFactory factory, Object... args);
     BusState getBusState(net.sf.laja.example.car.state.Certificate certificate);
 }

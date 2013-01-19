@@ -10,7 +10,7 @@
 #set (stateProjectionClass = "{stateClass}Projection")
 #set (stateListBuilder = "{stateListClass}Builder")
 #set (stateBehaviourClass = "{classname}Behaviour")
-#set (stateBehaviourFactoryClass = "{stateClass}BehaviourFactory")
+#set (stateBehaviourFactoryClass = "{classname}BehaviourFactory")
 
 #macro oldFileContent(filename)
   #import "{filename}" as text

@@ -10,6 +10,6 @@ import net.sf.laja.example.file.state.Certificate;
 public interface DirectoryStateBuilder {
     void withDirectoryPath(String directoryPath);
     boolean isValid();
-    Object as(DirectoryStateBehaviourFactory factory, Object... args);
+    Object as(DirectoryBehaviourFactory factory, Object... args);
     DirectoryState getDirectoryState(net.sf.laja.example.file.state.Certificate certificate);
 }

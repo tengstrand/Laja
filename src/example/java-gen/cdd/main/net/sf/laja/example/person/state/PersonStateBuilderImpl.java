@@ -64,7 +64,7 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         return state.isValid();
     }
 
-    public Object as(PersonStateBehaviourFactory factory, Object... args) {
+    public Object as(PersonBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

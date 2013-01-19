@@ -29,7 +29,7 @@ public class AtariFactory extends ComputerBehaviour {
         return new AtariListEncapsulator(encapsulators);
     }
 
-    public static class AtariSTFactory_ implements ComputerStateBehaviourFactory {
+    public static class AtariSTFactory_ implements ComputerBehaviourFactory {
         private final ComputerStateBuilder stateBuilder;
 
         public AtariSTFactory_(ComputerStateBuilder stateBuilder) {
@@ -53,7 +53,7 @@ public class AtariFactory extends ComputerBehaviour {
       }
     }
 
-    public static class AtariFalcon030Factory_ implements ComputerStateBehaviourFactory {
+    public static class AtariFalcon030Factory_ implements ComputerBehaviourFactory {
         private final ComputerStateBuilder stateBuilder;
 
         public AtariFalcon030Factory_(ComputerStateBuilder stateBuilder) {

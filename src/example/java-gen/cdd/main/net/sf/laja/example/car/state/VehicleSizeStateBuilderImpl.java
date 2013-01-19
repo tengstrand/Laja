@@ -35,7 +35,7 @@ public class VehicleSizeStateBuilderImpl implements VehicleSizeStateBuilder {
         return state.isValid();
     }
 
-    public Object as(VehicleSizeStateBehaviourFactory factory, Object... args) {
+    public Object as(VehicleSizeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

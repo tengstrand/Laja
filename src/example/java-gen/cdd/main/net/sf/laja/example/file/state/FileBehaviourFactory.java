@@ -5,6 +5,6 @@ package net.sf.laja.example.file.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FileStateBehaviourFactory {
+public interface FileBehaviourFactory {
     Object create(FileState state, Object... args);
 }

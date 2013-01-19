@@ -29,7 +29,7 @@ public class VehicleSizeFactory extends VehicleSizeBehaviour {
         return new VehicleSizeListEncapsulator(encapsulators);
     }
 
-    public static class VehicleSizeFactory_ implements VehicleSizeStateBehaviourFactory {
+    public static class VehicleSizeFactory_ implements VehicleSizeBehaviourFactory {
         private final VehicleSizeStateBuilder stateBuilder;
 
         public VehicleSizeFactory_(VehicleSizeStateBuilder stateBuilder) {

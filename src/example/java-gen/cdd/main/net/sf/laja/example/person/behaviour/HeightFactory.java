@@ -29,7 +29,7 @@ public class HeightFactory extends HeightBehaviour {
         return new HeightListEncapsulator(encapsulators);
     }
 
-    public static class HeightFactory_ implements HeightStateBehaviourFactory {
+    public static class HeightFactory_ implements HeightBehaviourFactory {
         private final HeightStateBuilder stateBuilder;
 
         public HeightFactory_(HeightStateBuilder stateBuilder) {

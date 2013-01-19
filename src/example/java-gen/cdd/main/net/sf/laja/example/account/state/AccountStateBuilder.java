@@ -10,6 +10,6 @@ import net.sf.laja.example.account.state.Certificate;
 public interface AccountStateBuilder {
     void withBalance(double balance);
     boolean isValid();
-    Object as(AccountStateBehaviourFactory factory, Object... args);
+    Object as(AccountBehaviourFactory factory, Object... args);
     AccountState getAccountState(net.sf.laja.example.account.state.Certificate certificate);
 }

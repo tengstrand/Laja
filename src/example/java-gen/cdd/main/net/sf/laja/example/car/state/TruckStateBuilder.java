@@ -22,6 +22,6 @@ public interface TruckStateBuilder extends VehicleSizeStateBuilder {
     TruckTypeStateBuilder getTypeStateBuilder();
     OwnerStateBuilder getOwnerStateBuilder();
     boolean isValid();
-    Object as(TruckStateBehaviourFactory factory, Object... args);
+    Object as(TruckBehaviourFactory factory, Object... args);
     TruckState getTruckState(net.sf.laja.example.car.state.Certificate certificate);
 }

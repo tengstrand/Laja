@@ -5,6 +5,6 @@ package net.sf.laja.example.car.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CarStateBehaviourFactory {
+public interface CarBehaviourFactory {
     Object create(CarState state, Object... args);
 }

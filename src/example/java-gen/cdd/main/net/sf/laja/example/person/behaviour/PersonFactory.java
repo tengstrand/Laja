@@ -29,7 +29,7 @@ public class PersonFactory extends PersonBehaviour {
         return new PersonListEncapsulator(encapsulators);
     }
 
-    public static class PersonFactory_ implements PersonStateBehaviourFactory {
+    public static class PersonFactory_ implements PersonBehaviourFactory {
         private final PersonStateBuilder stateBuilder;
 
         public PersonFactory_(PersonStateBuilder stateBuilder) {

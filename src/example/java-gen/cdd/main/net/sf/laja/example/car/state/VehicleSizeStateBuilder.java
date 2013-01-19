@@ -10,6 +10,6 @@ import net.sf.laja.example.car.state.Certificate;
 public interface VehicleSizeStateBuilder {
     void withLengthInCentimeters(int lengthInCentimeters);
     boolean isValid();
-    Object as(VehicleSizeStateBehaviourFactory factory, Object... args);
+    Object as(VehicleSizeBehaviourFactory factory, Object... args);
     VehicleSizeState getVehicleSizeState(net.sf.laja.example.car.state.Certificate certificate);
 }

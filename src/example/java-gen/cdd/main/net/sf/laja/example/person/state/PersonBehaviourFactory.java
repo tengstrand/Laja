@@ -5,6 +5,6 @@ package net.sf.laja.example.person.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface PersonStateBehaviourFactory {
+public interface PersonBehaviourFactory {
     Object create(PersonState state, Object... args);
 }

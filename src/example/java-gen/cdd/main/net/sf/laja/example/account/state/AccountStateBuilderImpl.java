@@ -35,7 +35,7 @@ public class AccountStateBuilderImpl implements AccountStateBuilder {
         return state.isValid();
     }
 
-    public Object as(AccountStateBehaviourFactory factory, Object... args) {
+    public Object as(AccountBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

@@ -29,7 +29,7 @@ public class BusFactory extends BusBehaviour {
         return new BusListEncapsulator(encapsulators);
     }
 
-    public static class BusFactory_ implements BusStateBehaviourFactory {
+    public static class BusFactory_ implements BusBehaviourFactory {
         private final BusStateBuilder stateBuilder;
 
         public BusFactory_(BusStateBuilder stateBuilder) {

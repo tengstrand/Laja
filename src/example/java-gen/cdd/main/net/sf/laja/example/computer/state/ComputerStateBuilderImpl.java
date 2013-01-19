@@ -51,7 +51,7 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
         return state.isValid();
     }
 
-    public Object as(ComputerStateBehaviourFactory factory, Object... args) {
+    public Object as(ComputerBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

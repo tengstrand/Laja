@@ -35,7 +35,7 @@ public class DirectoryStateBuilderImpl implements DirectoryStateBuilder {
         return state.isValid();
     }
 
-    public Object as(DirectoryStateBehaviourFactory factory, Object... args) {
+    public Object as(DirectoryBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

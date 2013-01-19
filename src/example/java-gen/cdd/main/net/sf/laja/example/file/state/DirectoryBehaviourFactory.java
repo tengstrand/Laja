@@ -5,6 +5,6 @@ package net.sf.laja.example.file.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface DirectoryStateBehaviourFactory {
+public interface DirectoryBehaviourFactory {
     Object create(DirectoryState state, Object... args);
 }

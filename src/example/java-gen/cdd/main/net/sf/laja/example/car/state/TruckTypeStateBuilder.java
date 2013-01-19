@@ -11,6 +11,6 @@ public interface TruckTypeStateBuilder {
     void withNumberOfWheels(int numberOfWheels);
     void withTruckName(String truckName);
     boolean isValid();
-    Object as(TruckTypeStateBehaviourFactory factory, Object... args);
+    Object as(TruckTypeBehaviourFactory factory, Object... args);
     TruckTypeState getTruckTypeState(net.sf.laja.example.car.state.Certificate certificate);
 }

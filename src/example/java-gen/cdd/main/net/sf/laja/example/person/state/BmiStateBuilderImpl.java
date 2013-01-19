@@ -39,7 +39,7 @@ public class BmiStateBuilderImpl implements BmiStateBuilder {
         return state.isValid();
     }
 
-    public Object as(BmiStateBehaviourFactory factory, Object... args) {
+    public Object as(BmiBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

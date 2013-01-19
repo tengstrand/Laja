@@ -11,6 +11,6 @@ public interface OwnerStateBuilder {
     void withSsn(long ssn);
     void withName(String name);
     boolean isValid();
-    Object as(OwnerStateBehaviourFactory factory, Object... args);
+    Object as(OwnerBehaviourFactory factory, Object... args);
     OwnerState getOwnerState(net.sf.laja.example.car.state.Certificate certificate);
 }

@@ -5,6 +5,6 @@ package net.sf.laja.example.account.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AccountStateBehaviourFactory {
+public interface AccountBehaviourFactory {
     Object create(AccountState state, Object... args);
 }

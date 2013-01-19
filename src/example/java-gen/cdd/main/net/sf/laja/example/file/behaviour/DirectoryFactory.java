@@ -31,7 +31,7 @@ public class DirectoryFactory extends DirectoryBehaviour {
         return new DirectoryListEncapsulator(encapsulators);
     }
 
-    public static class DirectoryFactory_ implements DirectoryStateBehaviourFactory {
+    public static class DirectoryFactory_ implements DirectoryBehaviourFactory {
         private final DirectoryStateBuilder stateBuilder;
 
         public DirectoryFactory_(DirectoryStateBuilder stateBuilder) {

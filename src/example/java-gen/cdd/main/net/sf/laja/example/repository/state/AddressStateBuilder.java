@@ -14,6 +14,6 @@ public interface AddressStateBuilder extends ZipcodeStateBuilder {
     void withZipcode(int zipcode);
     void withCity(String city);
     boolean isValid();
-    Object as(AddressStateBehaviourFactory factory, Object... args);
+    Object as(AddressBehaviourFactory factory, Object... args);
     AddressState getAddressState(net.sf.laja.example.repository.state.Certificate certificate);
 }
