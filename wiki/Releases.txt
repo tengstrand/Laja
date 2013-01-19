@@ -2,11 +2,12 @@
 Released: 2013-??-??
 
 Includes:
-* The interface ''XElement'' (where X is the behaviour class) is no longer generated.
-* Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
+* The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
 * Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have the problems that previously existed in terms of keeping state and behavior in sync.
 ** The generation of XValue and XBehaviour has been replaced by XBehaviour and XValueFactory (where X is the behaviour class).
 ** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
+* Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
+* The (id) and (key) property are now removed from expanded attributes.
 
 == Laja2-006-alpha ==
 Released: 2013-01-04
