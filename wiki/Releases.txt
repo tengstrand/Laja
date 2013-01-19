@@ -1,8 +1,12 @@
-== Laja2-007-beta ==
+== Laja2-007-alpha ==
 Released: 2013-??-??
 
 Includes:
-* Behaviour interface ''XElement'' are no longer generated (where X is what is wrapped).
+* The interface ''XElement'' (where X is the behaviour class) is no longer generated.
+* Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
+* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have the problems that previously existed in terms of keeping state and behavior in sync.
+** The generation of XValue and XBehaviour has been replaced by XBehaviour and XValueFactory (where X is the behaviour class).
+** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
 
 == Laja2-006-alpha ==
 Released: 2013-01-04
