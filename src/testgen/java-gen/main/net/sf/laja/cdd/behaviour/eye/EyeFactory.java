@@ -30,7 +30,7 @@ public class EyeFactory extends EyeBehaviour {
         return new EyeListEncapsulator(encapsulators);
     }
 
-    public static class EyeFactory_ implements EyeStateBehaviourFactory {
+    public static class EyeFactory_ implements EyeBehaviourFactory {
         private final EyeStateBuilder stateBuilder;
 
         public EyeFactory_(EyeStateBuilder stateBuilder) {

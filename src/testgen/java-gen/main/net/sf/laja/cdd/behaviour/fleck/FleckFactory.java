@@ -29,7 +29,7 @@ public class FleckFactory extends FleckBehaviour {
         return new FleckListEncapsulator(encapsulators);
     }
 
-    public static class FleckFactory_ implements FleckStateBehaviourFactory {
+    public static class FleckFactory_ implements FleckBehaviourFactory {
         private final FleckStateBuilder stateBuilder;
 
         public FleckFactory_(FleckStateBuilder stateBuilder) {

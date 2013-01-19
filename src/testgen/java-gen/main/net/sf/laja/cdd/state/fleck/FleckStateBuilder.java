@@ -11,6 +11,6 @@ public interface FleckStateBuilder {
     void withArea(int area);
     void withColor(String color);
     boolean isValid();
-    Object as(FleckStateBehaviourFactory factory, Object... args);
+    Object as(FleckBehaviourFactory factory, Object... args);
     FleckState getFleckState(net.sf.laja.cdd.state.Certificate certificate);
 }

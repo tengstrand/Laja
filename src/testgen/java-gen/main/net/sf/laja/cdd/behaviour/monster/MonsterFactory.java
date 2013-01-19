@@ -32,7 +32,7 @@ public class MonsterFactory extends MonsterBehaviour {
         return new MonsterListEncapsulator(encapsulators);
     }
 
-    public static class MonsterFactory_ implements MonsterStateBehaviourFactory {
+    public static class MonsterFactory_ implements MonsterBehaviourFactory {
         private final MonsterStateBuilder stateBuilder;
 
         public MonsterFactory_(MonsterStateBuilder stateBuilder) {

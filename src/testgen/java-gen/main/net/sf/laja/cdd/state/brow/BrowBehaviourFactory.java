@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.brow;
  *
  *   http://laja.tengstrand.nu
  */
-public interface BrowStateBehaviourFactory {
+public interface BrowBehaviourFactory {
     Object create(BrowState state, Object... args);
 }

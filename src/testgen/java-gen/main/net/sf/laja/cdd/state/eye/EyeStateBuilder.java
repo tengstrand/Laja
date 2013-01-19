@@ -14,6 +14,6 @@ public interface EyeStateBuilder {
     void withDecease(String decease);
     void withHasEar(Boolean hasEar);
     boolean isValid();
-    Object as(EyeStateBehaviourFactory factory, Object... args);
+    Object as(EyeBehaviourFactory factory, Object... args);
     EyeState getEyeState(net.sf.laja.cdd.state.Certificate certificate);
 }

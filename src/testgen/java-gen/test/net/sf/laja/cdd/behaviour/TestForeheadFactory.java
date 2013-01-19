@@ -30,7 +30,7 @@ public class TestForeheadFactory extends ForeheadBehaviour {
         return new TestForeheadListEncapsulator(encapsulators);
     }
 
-    public static class TestForeheadFactory_ implements ForeheadStateBehaviourFactory {
+    public static class TestForeheadFactory_ implements ForeheadBehaviourFactory {
         private final ForeheadStateBuilder stateBuilder;
 
         public TestForeheadFactory_(ForeheadStateBuilder stateBuilder) {

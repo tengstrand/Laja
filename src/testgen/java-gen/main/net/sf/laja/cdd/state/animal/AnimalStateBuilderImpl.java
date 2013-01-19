@@ -35,7 +35,7 @@ public class AnimalStateBuilderImpl implements AnimalStateBuilder {
         return state.isValid();
     }
 
-    public Object as(AnimalStateBehaviourFactory factory, Object... args) {
+    public Object as(AnimalBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

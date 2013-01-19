@@ -39,7 +39,7 @@ public class FleckStateBuilderImpl implements FleckStateBuilder {
         return state.isValid();
     }
 
-    public Object as(FleckStateBehaviourFactory factory, Object... args) {
+    public Object as(FleckBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

@@ -35,7 +35,7 @@ public class HandStateBuilderImpl implements HandStateBuilder {
         return state.isValid();
     }
 
-    public Object as(HandStateBehaviourFactory factory, Object... args) {
+    public Object as(HandBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

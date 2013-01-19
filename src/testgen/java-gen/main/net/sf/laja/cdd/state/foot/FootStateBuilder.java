@@ -14,6 +14,6 @@ public interface FootStateBuilder {
     void withToes(net.sf.laja.cdd.state.toe.ToeStateListBuilder listBuilder);
     ToeStateListBuilder getToesStateListBuilder();
     boolean isValid();
-    Object as(FootStateBehaviourFactory factory, Object... args);
+    Object as(FootBehaviourFactory factory, Object... args);
     FootState getFootState(net.sf.laja.cdd.state.Certificate certificate);
 }

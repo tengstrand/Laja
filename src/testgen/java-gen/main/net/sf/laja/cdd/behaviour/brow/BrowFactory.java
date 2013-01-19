@@ -29,7 +29,7 @@ public class BrowFactory extends BrowBehaviour {
         return new BrowListEncapsulator(encapsulators);
     }
 
-    public static class BrowFactory_ implements BrowStateBehaviourFactory {
+    public static class BrowFactory_ implements BrowBehaviourFactory {
         private final BrowStateBuilder stateBuilder;
 
         public BrowFactory_(BrowStateBuilder stateBuilder) {
@@ -53,7 +53,7 @@ public class BrowFactory extends BrowBehaviour {
       }
     }
 
-    public static class BigBrowFactory_ implements BrowStateBehaviourFactory {
+    public static class BigBrowFactory_ implements BrowBehaviourFactory {
         private final BrowStateBuilder stateBuilder;
 
         public BigBrowFactory_(BrowStateBuilder stateBuilder) {

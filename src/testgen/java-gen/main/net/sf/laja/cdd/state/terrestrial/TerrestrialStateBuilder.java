@@ -20,6 +20,6 @@ public interface TerrestrialStateBuilder {
     EyeStateBuilder getRightEyeStateBuilder();
     EyeStateBuilder getMiddleEyeStateBuilder();
     boolean isValid();
-    Object as(TerrestrialStateBehaviourFactory factory, Object... args);
+    Object as(TerrestrialBehaviourFactory factory, Object... args);
     TerrestrialState getTerrestrialState(net.sf.laja.cdd.state.Certificate certificate);
 }

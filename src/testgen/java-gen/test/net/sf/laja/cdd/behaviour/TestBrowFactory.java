@@ -29,7 +29,7 @@ public class TestBrowFactory extends BrowBehaviour {
         return new TestBrowListEncapsulator(encapsulators);
     }
 
-    public static class TestBrowFactory_ implements BrowStateBehaviourFactory {
+    public static class TestBrowFactory_ implements BrowBehaviourFactory {
         private final BrowStateBuilder stateBuilder;
 
         public TestBrowFactory_(BrowStateBuilder stateBuilder) {

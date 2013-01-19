@@ -64,6 +64,6 @@ public interface MonsterStateBuilder extends HeadStateBuilder {
     MouthStateListBuilder getMouthsStateListBuilder();
     ArmStateBuilder getLeftArmStateBuilder();
     boolean isValid();
-    Object as(MonsterStateBehaviourFactory factory, Object... args);
+    Object as(MonsterBehaviourFactory factory, Object... args);
     MonsterState getMonsterState(net.sf.laja.cdd.state.Certificate certificate);
 }

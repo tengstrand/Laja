@@ -7,9 +7,9 @@ import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.eye.EyeStateBehaviourFactory;
+import net.sf.laja.cdd.state.eye.EyeBehaviourFactory;
 import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBehaviourFactory;
+import net.sf.laja.cdd.state.forehead.ForeheadBehaviourFactory;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
@@ -188,15 +188,15 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         return state.isValid();
     }
 
-    public Object as(HeadStateBehaviourFactory factory, Object... args) {
+    public Object as(HeadBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 
-    public Object as(EyeStateBehaviourFactory factory, Object... args) {
+    public Object as(EyeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 
-    public Object as(ForeheadStateBehaviourFactory factory, Object... args) {
+    public Object as(ForeheadBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.monster;
  *
  *   http://laja.tengstrand.nu
  */
-public interface MonsterStateBehaviourFactory {
+public interface MonsterBehaviourFactory {
     Object create(MonsterState state, Object... args);
 }

@@ -11,6 +11,6 @@ public interface NoseStateBuilder {
     void withNoseDescription(String noseDescription);
     void withDetails(String details);
     boolean isValid();
-    Object as(NoseStateBehaviourFactory factory, Object... args);
+    Object as(NoseBehaviourFactory factory, Object... args);
     NoseState getNoseState(net.sf.laja.cdd.state.Certificate certificate);
 }

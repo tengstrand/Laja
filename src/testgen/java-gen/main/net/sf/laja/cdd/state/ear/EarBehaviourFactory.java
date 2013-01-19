@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.ear;
  *
  *   http://laja.tengstrand.nu
  */
-public interface EarStateBehaviourFactory {
+public interface EarBehaviourFactory {
     Object create(EarState state, Object... args);
 }

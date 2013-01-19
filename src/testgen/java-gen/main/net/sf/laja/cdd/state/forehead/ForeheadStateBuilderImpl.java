@@ -45,7 +45,7 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
         return state.isValid();
     }
 
-    public Object as(ForeheadStateBehaviourFactory factory, Object... args) {
+    public Object as(ForeheadBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

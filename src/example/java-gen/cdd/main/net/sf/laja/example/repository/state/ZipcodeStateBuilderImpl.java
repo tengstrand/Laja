@@ -35,7 +35,7 @@ public class ZipcodeStateBuilderImpl implements ZipcodeStateBuilder {
         return state.isValid();
     }
 
-    public Object as(ZipcodeStateBehaviourFactory factory, Object... args) {
+    public Object as(ZipcodeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

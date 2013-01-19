@@ -29,7 +29,7 @@ public class NoseFactory extends NoseBehaviour {
         return new NoseListEncapsulator(encapsulators);
     }
 
-    public static class NoseFactory_ implements NoseStateBehaviourFactory {
+    public static class NoseFactory_ implements NoseBehaviourFactory {
         private final NoseStateBuilder stateBuilder;
 
         public NoseFactory_(NoseStateBuilder stateBuilder) {

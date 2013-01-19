@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.toe;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ToeStateBehaviourFactory {
+public interface ToeBehaviourFactory {
     Object create(ToeState state, Object... args);
 }

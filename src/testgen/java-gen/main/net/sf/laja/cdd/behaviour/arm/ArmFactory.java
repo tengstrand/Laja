@@ -31,7 +31,7 @@ public class ArmFactory extends ArmBehaviour {
         return new ArmListEncapsulator(encapsulators);
     }
 
-    public static class ArmFactory_ implements ArmStateBehaviourFactory {
+    public static class ArmFactory_ implements ArmBehaviourFactory {
         private final ArmStateBuilder stateBuilder;
 
         public ArmFactory_(ArmStateBuilder stateBuilder) {

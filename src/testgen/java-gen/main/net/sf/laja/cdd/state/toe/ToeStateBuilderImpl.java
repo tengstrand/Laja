@@ -39,7 +39,7 @@ public class ToeStateBuilderImpl implements ToeStateBuilder {
         return state.isValid();
     }
 
-    public Object as(ToeStateBehaviourFactory factory, Object... args) {
+    public Object as(ToeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

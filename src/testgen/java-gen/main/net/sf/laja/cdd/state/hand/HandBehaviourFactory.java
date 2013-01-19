@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.hand;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HandStateBehaviourFactory {
+public interface HandBehaviourFactory {
     Object create(HandState state, Object... args);
 }

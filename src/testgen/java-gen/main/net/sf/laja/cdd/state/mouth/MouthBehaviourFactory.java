@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.mouth;
  *
  *   http://laja.tengstrand.nu
  */
-public interface MouthStateBehaviourFactory {
+public interface MouthBehaviourFactory {
     Object create(MouthState state, Object... args);
 }

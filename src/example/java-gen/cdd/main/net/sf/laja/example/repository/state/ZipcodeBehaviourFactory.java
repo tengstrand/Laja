@@ -5,6 +5,6 @@ package net.sf.laja.example.repository.state;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ZipcodeStateBehaviourFactory {
+public interface ZipcodeBehaviourFactory {
     Object create(ZipcodeState state, Object... args);
 }

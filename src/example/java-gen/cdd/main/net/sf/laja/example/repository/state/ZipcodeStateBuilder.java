@@ -10,6 +10,6 @@ import net.sf.laja.example.repository.state.Certificate;
 public interface ZipcodeStateBuilder {
     void withZipcode(int zipcode);
     boolean isValid();
-    Object as(ZipcodeStateBehaviourFactory factory, Object... args);
+    Object as(ZipcodeBehaviourFactory factory, Object... args);
     ZipcodeState getZipcodeState(net.sf.laja.example.repository.state.Certificate certificate);
 }

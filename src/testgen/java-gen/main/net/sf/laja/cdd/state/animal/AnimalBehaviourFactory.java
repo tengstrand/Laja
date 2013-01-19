@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.animal;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AnimalStateBehaviourFactory {
+public interface AnimalBehaviourFactory {
     Object create(AnimalState state, Object... args);
 }

@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.fleck;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FleckStateBehaviourFactory {
+public interface FleckBehaviourFactory {
     Object create(FleckState state, Object... args);
 }

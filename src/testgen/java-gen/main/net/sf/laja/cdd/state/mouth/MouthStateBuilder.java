@@ -13,6 +13,6 @@ public interface MouthStateBuilder {
     void withHeight(int height);
     void withColor(String color);
     boolean isValid();
-    Object as(MouthStateBehaviourFactory factory, Object... args);
+    Object as(MouthBehaviourFactory factory, Object... args);
     MouthState getMouthState(net.sf.laja.cdd.state.Certificate certificate);
 }

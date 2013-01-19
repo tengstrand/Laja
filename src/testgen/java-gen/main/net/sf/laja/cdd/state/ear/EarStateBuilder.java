@@ -10,6 +10,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface EarStateBuilder {
     void withSize(double size);
     boolean isValid();
-    Object as(EarStateBehaviourFactory factory, Object... args);
+    Object as(EarBehaviourFactory factory, Object... args);
     EarState getEarState(net.sf.laja.cdd.state.Certificate certificate);
 }

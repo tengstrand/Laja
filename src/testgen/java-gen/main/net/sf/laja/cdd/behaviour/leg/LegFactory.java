@@ -29,7 +29,7 @@ public class LegFactory extends LegBehaviour {
         return new LegListEncapsulator(encapsulators);
     }
 
-    public static class LegFactory_ implements LegStateBehaviourFactory {
+    public static class LegFactory_ implements LegBehaviourFactory {
         private final LegStateBuilder stateBuilder;
 
         public LegFactory_(LegStateBuilder stateBuilder) {

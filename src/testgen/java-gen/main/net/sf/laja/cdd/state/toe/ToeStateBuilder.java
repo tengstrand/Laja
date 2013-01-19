@@ -11,6 +11,6 @@ public interface ToeStateBuilder {
     void withLength(int length);
     void withWeight(int weight);
     boolean isValid();
-    Object as(ToeStateBehaviourFactory factory, Object... args);
+    Object as(ToeBehaviourFactory factory, Object... args);
     ToeState getToeState(net.sf.laja.cdd.state.Certificate certificate);
 }

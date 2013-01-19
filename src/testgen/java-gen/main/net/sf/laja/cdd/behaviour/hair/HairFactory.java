@@ -29,7 +29,7 @@ public class HairFactory extends HairBehaviour {
         return new HairListEncapsulator(encapsulators);
     }
 
-    public static class HairFactory_ implements HairStateBehaviourFactory {
+    public static class HairFactory_ implements HairBehaviourFactory {
         private final HairStateBuilder stateBuilder;
 
         public HairFactory_(HairStateBuilder stateBuilder) {
@@ -53,7 +53,7 @@ public class HairFactory extends HairBehaviour {
       }
     }
 
-    public static class FakeHairFactory_ implements HairStateBehaviourFactory {
+    public static class FakeHairFactory_ implements HairBehaviourFactory {
         private final HairStateBuilder stateBuilder;
 
         public FakeHairFactory_(HairStateBuilder stateBuilder) {

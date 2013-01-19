@@ -30,7 +30,7 @@ public class TestMouthFactory extends MouthBehaviour {
         return new TestMouthListEncapsulator(encapsulators);
     }
 
-    public static class TestMouthFactory_ implements MouthStateBehaviourFactory {
+    public static class TestMouthFactory_ implements MouthBehaviourFactory {
         private final MouthStateBuilder stateBuilder;
 
         public TestMouthFactory_(MouthStateBuilder stateBuilder) {

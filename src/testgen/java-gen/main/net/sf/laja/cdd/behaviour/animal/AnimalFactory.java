@@ -29,7 +29,7 @@ public class AnimalFactory extends AnimalBehaviour {
         return new AnimalListEncapsulator(encapsulators);
     }
 
-    public static class AnimalFactory_ implements AnimalStateBehaviourFactory {
+    public static class AnimalFactory_ implements AnimalBehaviourFactory {
         private final AnimalStateBuilder stateBuilder;
 
         public AnimalFactory_(AnimalStateBuilder stateBuilder) {

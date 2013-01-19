@@ -11,6 +11,6 @@ public interface HairStateBuilder {
     void withLength(int length);
     void withColor(String color);
     boolean isValid();
-    Object as(HairStateBehaviourFactory factory, Object... args);
+    Object as(HairBehaviourFactory factory, Object... args);
     HairState getHairState(net.sf.laja.cdd.state.Certificate certificate);
 }

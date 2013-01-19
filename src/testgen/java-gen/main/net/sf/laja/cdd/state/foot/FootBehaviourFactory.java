@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.foot;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FootStateBehaviourFactory {
+public interface FootBehaviourFactory {
     Object create(FootState state, Object... args);
 }

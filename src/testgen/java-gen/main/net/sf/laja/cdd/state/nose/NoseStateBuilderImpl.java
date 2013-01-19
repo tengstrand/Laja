@@ -39,7 +39,7 @@ public class NoseStateBuilderImpl implements NoseStateBuilder {
         return state.isValid();
     }
 
-    public Object as(NoseStateBehaviourFactory factory, Object... args) {
+    public Object as(NoseBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

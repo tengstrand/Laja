@@ -35,7 +35,7 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
         return state.isValid();
     }
 
-    public Object as(BrowStateBehaviourFactory factory, Object... args) {
+    public Object as(BrowBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

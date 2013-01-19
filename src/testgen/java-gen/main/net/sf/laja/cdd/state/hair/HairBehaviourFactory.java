@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.hair;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HairStateBehaviourFactory {
+public interface HairBehaviourFactory {
     Object create(HairState state, Object... args);
 }

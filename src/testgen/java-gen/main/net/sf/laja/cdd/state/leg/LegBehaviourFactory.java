@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.leg;
  *
  *   http://laja.tengstrand.nu
  */
-public interface LegStateBehaviourFactory {
+public interface LegBehaviourFactory {
     Object create(LegState state, Object... args);
 }

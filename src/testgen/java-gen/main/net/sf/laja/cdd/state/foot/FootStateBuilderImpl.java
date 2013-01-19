@@ -49,7 +49,7 @@ public class FootStateBuilderImpl implements FootStateBuilder {
         return state.isValid();
     }
 
-    public Object as(FootStateBehaviourFactory factory, Object... args) {
+    public Object as(FootBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

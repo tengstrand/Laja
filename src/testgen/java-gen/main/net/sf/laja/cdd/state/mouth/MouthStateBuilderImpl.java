@@ -47,7 +47,7 @@ public class MouthStateBuilderImpl implements MouthStateBuilder {
         return state.isValid();
     }
 
-    public Object as(MouthStateBehaviourFactory factory, Object... args) {
+    public Object as(MouthBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

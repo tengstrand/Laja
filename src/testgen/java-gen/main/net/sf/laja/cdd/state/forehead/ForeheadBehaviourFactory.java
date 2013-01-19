@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.forehead;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ForeheadStateBehaviourFactory {
+public interface ForeheadBehaviourFactory {
     Object create(ForeheadState state, Object... args);
 }

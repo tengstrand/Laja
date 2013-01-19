@@ -29,7 +29,7 @@ public class OtherTerrestrialFactory extends TerrestrialBehaviour {
         return new OtherTerrestrialListEncapsulator(encapsulators);
     }
 
-    public static class OtherTerrestrialFactory_ implements TerrestrialStateBehaviourFactory {
+    public static class OtherTerrestrialFactory_ implements TerrestrialBehaviourFactory {
         private final TerrestrialStateBuilder stateBuilder;
 
         public OtherTerrestrialFactory_(TerrestrialStateBuilder stateBuilder) {

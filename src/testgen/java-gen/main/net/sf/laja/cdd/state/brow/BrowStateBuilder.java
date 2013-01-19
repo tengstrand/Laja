@@ -10,6 +10,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface BrowStateBuilder {
     void withArea(int area);
     boolean isValid();
-    Object as(BrowStateBehaviourFactory factory, Object... args);
+    Object as(BrowBehaviourFactory factory, Object... args);
     BrowState getBrowState(net.sf.laja.cdd.state.Certificate certificate);
 }

@@ -49,6 +49,6 @@ public interface HeadStateBuilder extends EyeStateBuilder, ForeheadStateBuilder 
     EarStateListBuilder getEarsStateListBuilder();
     MouthStateListBuilder getMouthsStateListBuilder();
     boolean isValid();
-    Object as(HeadStateBehaviourFactory factory, Object... args);
+    Object as(HeadBehaviourFactory factory, Object... args);
     HeadState getHeadState(net.sf.laja.cdd.state.Certificate certificate);
 }

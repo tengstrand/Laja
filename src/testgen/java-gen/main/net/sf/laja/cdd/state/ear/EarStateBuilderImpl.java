@@ -35,7 +35,7 @@ public class EarStateBuilderImpl implements EarStateBuilder {
         return state.isValid();
     }
 
-    public Object as(EarStateBehaviourFactory factory, Object... args) {
+    public Object as(EarBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

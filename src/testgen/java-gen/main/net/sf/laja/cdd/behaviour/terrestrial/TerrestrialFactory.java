@@ -31,7 +31,7 @@ public class TerrestrialFactory extends TerrestrialBehaviour {
         return new TerrestrialListEncapsulator(encapsulators);
     }
 
-    public static class TerrestrialFactory_ implements TerrestrialStateBehaviourFactory {
+    public static class TerrestrialFactory_ implements TerrestrialBehaviourFactory {
         private final TerrestrialStateBuilder stateBuilder;
 
         public TerrestrialFactory_(TerrestrialStateBuilder stateBuilder) {

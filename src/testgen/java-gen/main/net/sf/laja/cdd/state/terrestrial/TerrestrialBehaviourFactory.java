@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.terrestrial;
  *
  *   http://laja.tengstrand.nu
  */
-public interface TerrestrialStateBehaviourFactory {
+public interface TerrestrialBehaviourFactory {
     Object create(TerrestrialState state, Object... args);
 }

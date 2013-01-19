@@ -13,6 +13,6 @@ public interface ForeheadStateBuilder {
     void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
     BrowStateListBuilder getBrowsStateListBuilder();
     boolean isValid();
-    Object as(ForeheadStateBehaviourFactory factory, Object... args);
+    Object as(ForeheadBehaviourFactory factory, Object... args);
     ForeheadState getForeheadState(net.sf.laja.cdd.state.Certificate certificate);
 }

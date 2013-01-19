@@ -32,7 +32,7 @@ public class ForeheadFactory extends ForeheadBehaviour {
         return new ForeheadListEncapsulator(encapsulators);
     }
 
-    public static class ForeheadFactory_ implements ForeheadStateBehaviourFactory {
+    public static class ForeheadFactory_ implements ForeheadBehaviourFactory {
         private final ForeheadStateBuilder stateBuilder;
 
         public ForeheadFactory_(ForeheadStateBuilder stateBuilder) {
@@ -56,7 +56,7 @@ public class ForeheadFactory extends ForeheadBehaviour {
       }
     }
 
-    public static class ForeheadWithBigBrowsFactory_ implements ForeheadStateBehaviourFactory {
+    public static class ForeheadWithBigBrowsFactory_ implements ForeheadBehaviourFactory {
         private final ForeheadStateBuilder stateBuilder;
 
         public ForeheadWithBigBrowsFactory_(ForeheadStateBuilder stateBuilder) {

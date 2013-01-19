@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.arm;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ArmStateBehaviourFactory {
+public interface ArmBehaviourFactory {
     Object create(ArmState state, Object... args);
 }

@@ -48,7 +48,7 @@ public class EyeStateBuilderImpl implements EyeStateBuilder {
         return state.isValid();
     }
 
-    public Object as(EyeStateBehaviourFactory factory, Object... args) {
+    public Object as(EyeBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

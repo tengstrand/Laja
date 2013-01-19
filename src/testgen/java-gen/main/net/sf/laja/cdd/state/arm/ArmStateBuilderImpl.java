@@ -53,7 +53,7 @@ public class ArmStateBuilderImpl implements ArmStateBuilder {
         return state.isValid();
     }
 
-    public Object as(ArmStateBehaviourFactory factory, Object... args) {
+    public Object as(ArmBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

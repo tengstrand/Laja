@@ -10,6 +10,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface AnimalStateBuilder {
     void withIsTerrestrial(boolean isTerrestrial);
     boolean isValid();
-    Object as(AnimalStateBehaviourFactory factory, Object... args);
+    Object as(AnimalBehaviourFactory factory, Object... args);
     AnimalState getAnimalState(net.sf.laja.cdd.state.Certificate certificate);
 }

@@ -34,7 +34,7 @@ public class HeadFactory extends HeadBehaviour {
         return new HeadListEncapsulator(encapsulators);
     }
 
-    public static class HeadFactory_ implements HeadStateBehaviourFactory {
+    public static class HeadFactory_ implements HeadBehaviourFactory {
         private final HeadStateBuilder stateBuilder;
 
         public HeadFactory_(HeadStateBuilder stateBuilder) {

@@ -29,7 +29,7 @@ public class ToeFactory extends ToeBehaviour {
         return new ToeListEncapsulator(encapsulators);
     }
 
-    public static class ToeFactory_ implements ToeStateBehaviourFactory {
+    public static class ToeFactory_ implements ToeBehaviourFactory {
         private final ToeStateBuilder stateBuilder;
 
         public ToeFactory_(ToeStateBuilder stateBuilder) {
@@ -53,7 +53,7 @@ public class ToeFactory extends ToeBehaviour {
       }
     }
 
-    public static class ValToeFactory_ implements ToeStateBehaviourFactory {
+    public static class ValToeFactory_ implements ToeBehaviourFactory {
         private final ToeStateBuilder stateBuilder;
 
         public ValToeFactory_(ToeStateBuilder stateBuilder) {

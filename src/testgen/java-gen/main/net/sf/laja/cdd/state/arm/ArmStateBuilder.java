@@ -15,6 +15,6 @@ public interface ArmStateBuilder {
     void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder);
     HandStateListBuilder getHandsStateListBuilder();
     boolean isValid();
-    Object as(ArmStateBehaviourFactory factory, Object... args);
+    Object as(ArmBehaviourFactory factory, Object... args);
     ArmState getArmState(net.sf.laja.cdd.state.Certificate certificate);
 }

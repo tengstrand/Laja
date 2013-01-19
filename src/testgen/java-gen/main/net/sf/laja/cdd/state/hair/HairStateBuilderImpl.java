@@ -39,7 +39,7 @@ public class HairStateBuilderImpl implements HairStateBuilder {
         return state.isValid();
     }
 
-    public Object as(HairStateBehaviourFactory factory, Object... args) {
+    public Object as(HairBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

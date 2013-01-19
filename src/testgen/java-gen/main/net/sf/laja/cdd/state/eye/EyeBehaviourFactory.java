@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.eye;
  *
  *   http://laja.tengstrand.nu
  */
-public interface EyeStateBehaviourFactory {
+public interface EyeBehaviourFactory {
     Object create(EyeState state, Object... args);
 }

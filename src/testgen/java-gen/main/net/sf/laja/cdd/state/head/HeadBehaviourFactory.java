@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.head;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeadStateBehaviourFactory {
+public interface HeadBehaviourFactory {
     Object create(HeadState state, Object... args);
 }

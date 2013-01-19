@@ -29,7 +29,7 @@ public class HandFactory extends HandBehaviour {
         return new HandListEncapsulator(encapsulators);
     }
 
-    public static class HandFactory_ implements HandStateBehaviourFactory {
+    public static class HandFactory_ implements HandBehaviourFactory {
         private final HandStateBuilder stateBuilder;
 
         public HandFactory_(HandStateBuilder stateBuilder) {

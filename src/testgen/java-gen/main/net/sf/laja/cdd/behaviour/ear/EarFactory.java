@@ -29,7 +29,7 @@ public class EarFactory extends EarBehaviour {
         return new EarListEncapsulator(encapsulators);
     }
 
-    public static class EarFactory_ implements EarStateBehaviourFactory {
+    public static class EarFactory_ implements EarBehaviourFactory {
         private final EarStateBuilder stateBuilder;
 
         public EarFactory_(EarStateBuilder stateBuilder) {

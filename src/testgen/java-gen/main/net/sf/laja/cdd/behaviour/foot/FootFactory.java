@@ -32,7 +32,7 @@ public class FootFactory extends FootBehaviour {
         return new FootListEncapsulator(encapsulators);
     }
 
-    public static class FootFactory_ implements FootStateBehaviourFactory {
+    public static class FootFactory_ implements FootBehaviourFactory {
         private final FootStateBuilder stateBuilder;
 
         public FootFactory_(FootStateBuilder stateBuilder) {

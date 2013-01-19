@@ -5,6 +5,6 @@ package net.sf.laja.cdd.state.nose;
  *
  *   http://laja.tengstrand.nu
  */
-public interface NoseStateBehaviourFactory {
+public interface NoseBehaviourFactory {
     Object create(NoseState state, Object... args);
 }

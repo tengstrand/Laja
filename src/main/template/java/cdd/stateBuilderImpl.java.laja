@@ -68,7 +68,7 @@ public class {builderImplClass} implements {builderClass} {
     }
   #foreach (expandedType in allExpandedTypes)
 
-    public Object as({expandedType.type}StateBehaviourFactory factory, Object... args) {
+    public Object as({expandedType.type}BehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
   #end
@@ -94,7 +94,7 @@ public class {builderImplClass} implements {builderClass} {
 #macro fileContent()
   #package()
   #importBegin(true)
-  #importExpandedType("StateBehaviourFactory,State")
+  #importExpandedType("BehaviourFactory,State")
   #prepareStateImports()
   #importStateBuilder()
   #importStateBuilderImpl()

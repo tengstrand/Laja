@@ -10,6 +10,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface LegStateBuilder {
     void withLegDescription(String legDescription);
     boolean isValid();
-    Object as(LegStateBehaviourFactory factory, Object... args);
+    Object as(LegBehaviourFactory factory, Object... args);
     LegState getLegState(net.sf.laja.cdd.state.Certificate certificate);
 }

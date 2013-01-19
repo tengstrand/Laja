@@ -82,7 +82,7 @@ public class TerrestrialStateBuilderImpl implements TerrestrialStateBuilder {
         return state.isValid();
     }
 
-    public Object as(TerrestrialStateBehaviourFactory factory, Object... args) {
+    public Object as(TerrestrialBehaviourFactory factory, Object... args) {
         return factory.create(state, args);
     }
 

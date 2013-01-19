@@ -10,6 +10,6 @@ import net.sf.laja.cdd.state.Certificate;
 public interface HandStateBuilder {
     void withArea(int area);
     boolean isValid();
-    Object as(HandStateBehaviourFactory factory, Object... args);
+    Object as(HandBehaviourFactory factory, Object... args);
     HandState getHandState(net.sf.laja.cdd.state.Certificate certificate);
 }
