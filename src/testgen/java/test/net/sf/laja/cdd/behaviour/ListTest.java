@@ -303,24 +303,4 @@ public class ListTest {
         assertEquals(expectedList, arm1.getHands());
         assertEquals(expectedList, arm2.getHands());
     }
-
-    @Test
-    @Ignore
-    /**
-     * Toe is an entity and has 'length' as id.
-     * ValToe is a value and has 'length' + 'weight' as id.
-     *
-     * !!! Removing an entity from a value list can cause problem if there are entity duplicates in the value list !!!
-     */
-    public void removeValueFromEntityStateList() {
-        Foot foot = Foot.area(10).toes(Toe.length(1).weight(1), Toe.length(1).weight(2)).asFoot();
-        ValToeList valToes = foot.valToes(); // valToes is wrapping state (ToeStateList)
-        valToes.remove(Toe.length(1).weight(2).asValToe()); // valToes is a list of entities, remove first element with matching length (1,1) leaving (1,2).
-
-        assertEquals(Toe.createList(Toe.length(1).weight(1)).asValToeList(), valToes);
-        assertEquals(Toe.createList(Toe.length(1).weight(1)).asValToeList(), foot.toes().asValToeList());
-
-        System.out.println("valToes: " + valToes);
-        System.out.println("foot.toes: " + foot.toes());
-    }
 }
