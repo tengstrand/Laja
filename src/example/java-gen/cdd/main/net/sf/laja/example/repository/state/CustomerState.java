@@ -26,7 +26,7 @@ public interface CustomerState extends AddressState {
     String getPet(); // (optional)
     void setPet(String pet, Object mutator);
 
-    int getAddressId(); // (id)
+    int getAddressId();
     void setAddressId(int addressId, Object mutator);
 
     String getStreetName();

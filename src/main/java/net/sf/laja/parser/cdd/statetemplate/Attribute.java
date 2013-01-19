@@ -25,6 +25,41 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isOptional;
     public boolean isMandatory = true;
 
+    public Attribute copyAllAttributesExceptIdAndKey() {
+        Attribute result = new Attribute();
+        result.type = type;
+        result.cleanedStateType = cleanedStateType;
+        result.variable = variable;
+        result.variableAsClass = variableAsClass;
+        result.getter = getter;
+        result.setter = setter;
+        result.withMethod = withMethod;
+        result.stateMethod = stateMethod;
+        result.initialValue = initialValue;
+        result.initialStatement = initialStatement;
+        result.comment  = comment;
+        result.isExpand = isExpand;
+        result.isExclude = isExclude;
+        result.isState = isState;
+        result.isStateList = isStateList;
+        result.isHidden = isHidden;
+        result.isOptional = isOptional;
+        result.isMandatory = isMandatory;
+
+        return result;
+    }
+
+    public void cleanCommentFromIdAndKey() {
+        String whiteSpaces = comment.indexOf("//") >= 0 ? comment.substring(0, comment.indexOf("//")) : "";
+        comment = comment.replaceAll("\\(id\\)", "");
+        comment = comment.replaceAll("\\(key\\)", "");
+        comment = comment.replaceAll("//", "").trim();
+
+        if (comment.length() > 0) {
+            comment = whiteSpaces + "// " + comment;
+        }
+    }
+
     public boolean isValidType() {
         return isPrimitive() || isImmutableObject() || isState;
     }

@@ -15,7 +15,7 @@ public class CustomerStateImpl implements CustomerState {
     protected String surname; // (optional)
     protected int age;
     protected String pet; // (optional)
-    protected int addressId; // (id)
+    protected int addressId;
     protected String streetName;
     protected int zipcode;
     protected String city;

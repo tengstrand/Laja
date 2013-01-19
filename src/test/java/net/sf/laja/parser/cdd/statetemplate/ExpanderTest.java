@@ -13,7 +13,7 @@ public class ExpanderTest {
     @Test
     public void calculateExpansionForHierarchy() {
         StateTemplate a = createStateTemplate("AState");
-        addAttribute(a, "x", "int", false);
+        addAttribute(a, "x", "int", false, " // (key) (id) (x)");
         addAttribute(a, "y", "int", false);
         expander.add(a);
         
@@ -31,18 +31,18 @@ public class ExpanderTest {
         Map<String, EResult> expectedClassMap = new LinkedHashMap<String, EResult>();
         Imports imports = new Imports();
         List<Attr> attrs = new ArrayList<Attr>();
-        attrs.add(new Attr("int", "x"));
+        attrs.add(new Attr("int", "x", " // (key) (id) (x)"));
         attrs.add(new Attr("int", "y"));
         expectedClassMap.put("AState", new EResult(imports, attrs));
 
         attrs = new ArrayList<Attr>();
-        attrs.add(new Attr("int", "x"));
+        attrs.add(new Attr("int", "x", " // (x)"));
         attrs.add(new Attr("int", "y"));
         attrs.add(new Attr("int", "z"));
         expectedClassMap.put("BState", new EResult(imports, attrs));
 
         attrs = new ArrayList<Attr>();
-        attrs.add(new Attr("int", "x"));
+        attrs.add(new Attr("int", "x", " // (x)"));
         attrs.add(new Attr("int", "y"));
         attrs.add(new Attr("int", "z"));
         expectedClassMap.put("CState", new EResult(imports, attrs));
@@ -138,16 +138,21 @@ public class ExpanderTest {
         return stateTemplate;
     }
     
-    private Attribute createAttribute(String variable, String type, boolean isExpand) {
+    private Attribute createAttribute(String variable, String type, boolean isExpand, String comment) {
         Attribute attribute = new Attribute();
         attribute.setVariable(variable);
         attribute.setType(type);
         attribute.isExpand = isExpand;
+        attribute.setComment(comment);
         return  attribute;
     }
-    
+
     private void addAttribute(StateTemplate stateTemplate, String variable, String type, boolean isMerge) {
-        Attribute attribute = createAttribute(variable, type, isMerge);
+        addAttribute(stateTemplate, variable, type, isMerge, "");
+    }
+
+    private void addAttribute(StateTemplate stateTemplate, String variable, String type, boolean isMerge, String comment) {
+        Attribute attribute = createAttribute(variable, type, isMerge, comment);
         stateTemplate.addAttribute(attribute);
     }
 
@@ -193,15 +198,22 @@ public class ExpanderTest {
     public class Attr {
         String type;
         String variable;
+        String comment;
 
         public Attr(String type, String variable) {
+            this(type, variable, "");
+        }
+
+        public Attr(String type, String variable, String comment) {
             this.type = type;
             this.variable = variable;
+            this.comment = comment;
         }
-        
+
         public Attr(Attribute attribute) {
             type = attribute.type;
             variable = attribute.variable;
+            comment = attribute.comment;
         }
 
         @Override
@@ -211,6 +223,7 @@ public class ExpanderTest {
 
             Attr attr = (Attr) o;
 
+            if (comment != null ? !comment.equals(attr.comment) : attr.comment != null) return false;
             if (type != null ? !type.equals(attr.type) : attr.type != null) return false;
             if (variable != null ? !variable.equals(attr.variable) : attr.variable != null) return false;
 
@@ -222,6 +235,7 @@ public class ExpanderTest {
             return "Attr{" +
                     "type='" + type + '\'' +
                     ", variable='" + variable + '\'' +
+                    ", comment='" + comment + '\'' +
                     '}';
         }
     }

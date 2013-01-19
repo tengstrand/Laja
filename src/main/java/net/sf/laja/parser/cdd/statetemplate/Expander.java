@@ -50,7 +50,7 @@ public class Expander {
             attributesResult = new ArrayList<Attribute>();
             List<String> expandingTypes = new ArrayList<String>();
 
-            expand(stateTemplate.stateClass, expandingTypes);
+            expand(stateTemplate.stateClass, false, expandingTypes);
             stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, importsResult));
         }
         calculateAllExpandedTypes();
@@ -82,7 +82,7 @@ public class Expander {
         }
     }
 
-    private void expand(String type, List<String> expandingTypes) {
+    private void expand(String type, boolean isExpanded, List<String> expandingTypes) {
         if (cyclic) {
             return;
         }
@@ -104,24 +104,35 @@ public class Expander {
             for (Attribute attribute : stateTemplate.attributes) {
                 if (attribute.isExpand) {
                     addExpandedImports(stateTemplate, attribute);
-                    expand(attribute.type, expandingTypes);
+                    expand(attribute.type, true, expandingTypes);
                 } else {
                     if (attribute.isObject() && !attribute.isExpand) {
                         addImportForStandardObjects(attribute.type, stateTemplate.imports);
                     }
                     if (!attributesResult.contains(attribute)) {
-                        attributesResult.add(attribute);
+                        addAttributeToResult(attribute, isExpanded);
                     } else {
                         Attribute existingAttribute = attributesResult.get(attributesResult.indexOf(attribute));
                         if (existingAttribute.isOptional && attribute.isMandatory) {
                             // Replace the attribute to the one that is mandatory.
                             attributesResult.remove(attribute);
-                            attributesResult.add(attribute);
+                            addAttributeToResult(attribute, isExpanded);
                         }
                     }
                 }
             }
             addImportsForViews(stateTemplate);
+        }
+    }
+
+    private void addAttributeToResult(Attribute attribute, boolean isExpanded) {
+        if (isExpanded) {
+            Attribute copy = attribute.copyAllAttributesExceptIdAndKey();
+            copy.cleanCommentFromIdAndKey();
+            attributesResult.add(copy);
+
+        } else {
+            attributesResult.add(attribute);
         }
     }
 
