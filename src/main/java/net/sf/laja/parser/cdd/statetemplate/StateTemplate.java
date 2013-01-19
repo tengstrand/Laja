@@ -118,15 +118,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
         isValidStatement = statement;
     }
 
-    public boolean isEntity() {
-        for (Attribute attribute : attributes) {
-            if (attribute.isKey) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -164,7 +155,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
                 ", templateClassname='" + templateClassname + '\'' +
                 ", expandedTypes=" + expandedTypes +
                 ", errors=" + errors +
-                ", isEntity=" + isEntity() +
                 '}';
     }
 }
