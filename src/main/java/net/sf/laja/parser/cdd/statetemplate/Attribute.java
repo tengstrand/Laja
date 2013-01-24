@@ -18,6 +18,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isId;
     public boolean isKey;
     public boolean isExpand;
+    public boolean isInclude;
     public boolean isExclude;
     public boolean isState;
     public boolean isStateList;
@@ -25,7 +26,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isOptional;
     public boolean isMandatory = true;
 
-    public Attribute copyAllAttributesExceptIdAndKey() {
+    public Attribute copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude() {
         Attribute result = new Attribute();
         result.type = type;
         result.cleanedStateType = cleanedStateType;
@@ -39,12 +40,14 @@ public class Attribute implements StateTemplateParser.IAttribute {
         result.initialStatement = initialStatement;
         result.comment  = comment;
         result.isExpand = isExpand;
-        result.isExclude = isExclude;
+        result.isInclude = isInclude;
+        result.isExclude = isExclude || isId;
         result.isState = isState;
         result.isStateList = isStateList;
         result.isHidden = isHidden;
         result.isOptional = isOptional;
-        result.isMandatory = isMandatory;
+
+        postSetProperties(result);
 
         return result;
     }
@@ -157,9 +160,16 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isId = comment.contains("(id)");
         isKey = comment.contains("(key)");
         isHidden = comment.contains("(hide)");
-        isExclude = comment.contains("(exclude)") || isId;
-        isOptional = isExclude || comment.contains("(optional)");
-        isMandatory = !isOptional;
+        isInclude = comment.contains("(include)");
+        isExclude = comment.contains("(exclude)");
+        isOptional = comment.contains("(optional)");
+        postSetProperties(this);
+    }
+
+    private void postSetProperties(Attribute attribute) {
+        attribute.isExclude |= attribute.isId;
+        attribute.isOptional |= attribute.isExclude;
+        attribute.isMandatory = !attribute.isOptional;
     }
 
     @Override
@@ -197,6 +207,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
                 ", initialStatement='" + initialStatement + '\'' +
                 ", comment='" + comment + '\'' +
                 ", isExpand=" + isExpand +
+                ", isInclude=" + isInclude +
                 ", isExclude=" + isExclude +
                 ", isState=" + isState +
                 ", isStateList=" + isStateList +

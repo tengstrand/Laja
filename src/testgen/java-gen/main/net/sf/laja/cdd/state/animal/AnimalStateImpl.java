@@ -69,22 +69,22 @@ public class AnimalStateImpl implements AnimalState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        AnimalStateImpl state = (AnimalStateImpl)o;
+        AnimalStateImpl state = (AnimalStateImpl)obj;
 
         if (isTerrestrial != state.getIsTerrestrial()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        AnimalStateImpl state = (AnimalStateImpl)o;
+        AnimalStateImpl state = (AnimalStateImpl)obj;
 
         if (isTerrestrial != state.getIsTerrestrial()) return false;
 
@@ -93,12 +93,6 @@ public class AnimalStateImpl implements AnimalState {
 
     @Override
     public int hashCode() {
-        int result = isTerrestrial ? 1 : 0;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = isTerrestrial ? 1 : 0;
 
         return result;

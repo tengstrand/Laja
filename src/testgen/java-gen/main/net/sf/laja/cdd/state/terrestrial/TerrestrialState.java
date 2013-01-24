@@ -32,8 +32,7 @@ public interface TerrestrialState {
 
     boolean isValid();
     boolean isValidAsEncapsulated();
-    boolean valueEquals(Object o);
-    int valueHashCode();
+    boolean equalsValue(Object obj);
     void encapsulate();
     void setEncapsulator(Object encapsulator);
     Certificate certificate();

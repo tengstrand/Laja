@@ -93,11 +93,11 @@ public class TerrestrialStateImpl implements TerrestrialState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        TerrestrialStateImpl state = (TerrestrialStateImpl)o;
+        TerrestrialStateImpl state = (TerrestrialStateImpl)obj;
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfWings != state.getNumberOfWings()) return false;
@@ -109,11 +109,11 @@ public class TerrestrialStateImpl implements TerrestrialState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        TerrestrialStateImpl state = (TerrestrialStateImpl)o;
+        TerrestrialStateImpl state = (TerrestrialStateImpl)obj;
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfWings != state.getNumberOfWings()) return false;
@@ -127,17 +127,6 @@ public class TerrestrialStateImpl implements TerrestrialState {
 
     @Override
     public int hashCode() {
-        int result = numberOfLegs;
-        result = 31 * result + numberOfWings;
-        result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
-        result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
-        result = 31 * result + (middleEye != null ? middleEye.hashCode() : 0);
-        result = 31 * result + weight;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = numberOfLegs;
         result = 31 * result + numberOfWings;
         result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);

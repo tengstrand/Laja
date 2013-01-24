@@ -72,11 +72,11 @@ public class BmiStateImpl implements BmiState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        BmiStateImpl state = (BmiStateImpl)o;
+        BmiStateImpl state = (BmiStateImpl)obj;
 
         if (heightInCentimeters != state.getHeightInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -84,11 +84,11 @@ public class BmiStateImpl implements BmiState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        BmiStateImpl state = (BmiStateImpl)o;
+        BmiStateImpl state = (BmiStateImpl)obj;
 
         if (heightInCentimeters != state.getHeightInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -98,13 +98,6 @@ public class BmiStateImpl implements BmiState {
 
     @Override
     public int hashCode() {
-        int result = heightInCentimeters;
-        result = 31 * result + weightInKilograms;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = heightInCentimeters;
         result = 31 * result + weightInKilograms;
 

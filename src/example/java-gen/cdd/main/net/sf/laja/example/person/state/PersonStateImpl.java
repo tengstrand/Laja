@@ -43,11 +43,11 @@ public class PersonStateImpl implements PersonState {
             }
 
             @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equals(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)o;
+                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)obj;
 
                 if (height.getHeightInCentimeters() != state.getHeightInCentimeters()) return false;
                 if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -55,11 +55,11 @@ public class PersonStateImpl implements PersonState {
                 return true;
             }
 
-            public boolean valueEquals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equalsValue(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)o;
+                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)obj;
 
                 if (height.getHeightInCentimeters() != state.getHeightInCentimeters()) return false;
                 if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -69,13 +69,6 @@ public class PersonStateImpl implements PersonState {
 
             @Override
             public int hashCode() {
-                int result = height.getHeightInCentimeters();
-                result = 31 * result + weightInKilograms;
-
-                return result;
-            }
-
-            public int valueHashCode() {
                 int result = height.getHeightInCentimeters();
                 result = 31 * result + weightInKilograms;
 
@@ -157,11 +150,11 @@ public class PersonStateImpl implements PersonState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        PersonStateImpl state = (PersonStateImpl)o;
+        PersonStateImpl state = (PersonStateImpl)obj;
 
         if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
         if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
@@ -171,11 +164,11 @@ public class PersonStateImpl implements PersonState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        PersonStateImpl state = (PersonStateImpl)o;
+        PersonStateImpl state = (PersonStateImpl)obj;
 
         if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
         if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
@@ -187,15 +180,6 @@ public class PersonStateImpl implements PersonState {
 
     @Override
     public int hashCode() {
-        int result = givenName != null ? givenName.hashCode() : 0;
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + weightInKilograms;
-        result = 31 * result + (height != null ? height.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = givenName != null ? givenName.hashCode() : 0;
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + weightInKilograms;

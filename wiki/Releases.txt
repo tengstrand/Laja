@@ -3,11 +3,18 @@ Released: 2013-??-??
 
 Includes:
 * The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
-* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have the problems that previously existed in terms of keeping state and behavior in sync.
-** The generation of XValue and XBehaviour has been replaced by XBehaviour and XValueFactory (where X is the behaviour class).
+6* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problem to keeping state and behavior in sync.
+** The generation of XValue and XEntity has been replaced by XBehaviour (where X is the behaviour class).
 ** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
 * Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
 * The (id) and (key) property are now removed from expanded attributes.
+* Renamed state method valueEquals to equalsValue + removed valueHashCode.
+* Improved management of identity:
+** Added support for the state attribute "(include)".
+** If no columns are marked as natural key then collections are no longer included in hashCode and equals (earlier, all attributes except 'id' and 'exclude' was included if no natural key was given).
+** (id) is now included in method equalsValue, hashCodeValue has been removed.
+** If no attributes is included in hashCode and equals, then super.hashCode and super.equals is executed.
+
 
 == Laja2-006-alpha ==
 Released: 2013-01-04

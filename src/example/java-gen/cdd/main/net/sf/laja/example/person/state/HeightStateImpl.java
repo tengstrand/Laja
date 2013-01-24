@@ -69,22 +69,22 @@ public class HeightStateImpl implements HeightState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HeightStateImpl state = (HeightStateImpl)o;
+        HeightStateImpl state = (HeightStateImpl)obj;
 
         if (heightInCentimeters != state.getHeightInCentimeters()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HeightStateImpl state = (HeightStateImpl)o;
+        HeightStateImpl state = (HeightStateImpl)obj;
 
         if (heightInCentimeters != state.getHeightInCentimeters()) return false;
 
@@ -93,12 +93,6 @@ public class HeightStateImpl implements HeightState {
 
     @Override
     public int hashCode() {
-        int result = heightInCentimeters;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = heightInCentimeters;
 
         return result;

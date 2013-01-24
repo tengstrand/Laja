@@ -76,11 +76,11 @@ public class NoseStateImpl implements NoseState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        NoseStateImpl state = (NoseStateImpl)o;
+        NoseStateImpl state = (NoseStateImpl)obj;
 
         if (noseDescription != null ? !noseDescription.equals(state.noseDescription) : state.noseDescription != null) return false;
         if (details != null ? !details.equals(state.details) : state.details != null) return false;
@@ -88,11 +88,11 @@ public class NoseStateImpl implements NoseState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        NoseStateImpl state = (NoseStateImpl)o;
+        NoseStateImpl state = (NoseStateImpl)obj;
 
         if (noseDescription != null ? !noseDescription.equals(state.noseDescription) : state.noseDescription != null) return false;
         if (details != null ? !details.equals(state.details) : state.details != null) return false;
@@ -102,13 +102,6 @@ public class NoseStateImpl implements NoseState {
 
     @Override
     public int hashCode() {
-        int result = noseDescription != null ? noseDescription.hashCode() : 0;
-        result = 31 * result + (details != null ? details.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = noseDescription != null ? noseDescription.hashCode() : 0;
         result = 31 * result + (details != null ? details.hashCode() : 0);
 

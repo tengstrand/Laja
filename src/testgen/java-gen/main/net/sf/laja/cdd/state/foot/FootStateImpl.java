@@ -79,23 +79,22 @@ public class FootStateImpl implements FootState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        FootStateImpl state = (FootStateImpl)o;
+        FootStateImpl state = (FootStateImpl)obj;
 
         if (area != state.getArea()) return false;
-        if (toes != null ? !toes.equals(state.toes) : state.toes != null) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        FootStateImpl state = (FootStateImpl)o;
+        FootStateImpl state = (FootStateImpl)obj;
 
         if (area != state.getArea()) return false;
         if (toes != null ? !toes.equals(state.toes) : state.toes != null) return false;
@@ -106,14 +105,6 @@ public class FootStateImpl implements FootState {
     @Override
     public int hashCode() {
         int result = area;
-        result = 31 * result + (toes != null ? toes.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = area;
-        result = 31 * result + (toes != null ? toes.hashCode() : 0);
 
         return result;
     }

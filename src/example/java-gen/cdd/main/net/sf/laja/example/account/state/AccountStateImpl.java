@@ -69,22 +69,22 @@ public class AccountStateImpl implements AccountState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        AccountStateImpl state = (AccountStateImpl)o;
+        AccountStateImpl state = (AccountStateImpl)obj;
 
         if (balance != state.getBalance()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        AccountStateImpl state = (AccountStateImpl)o;
+        AccountStateImpl state = (AccountStateImpl)obj;
 
         if (balance != state.getBalance()) return false;
 
@@ -93,12 +93,6 @@ public class AccountStateImpl implements AccountState {
 
     @Override
     public int hashCode() {
-        int result = (int)balance;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = (int)balance;
 
         return result;

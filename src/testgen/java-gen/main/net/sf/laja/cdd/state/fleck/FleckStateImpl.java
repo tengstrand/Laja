@@ -75,11 +75,11 @@ public class FleckStateImpl implements FleckState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        FleckStateImpl state = (FleckStateImpl)o;
+        FleckStateImpl state = (FleckStateImpl)obj;
 
         if (area != state.getArea()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
@@ -87,11 +87,11 @@ public class FleckStateImpl implements FleckState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        FleckStateImpl state = (FleckStateImpl)o;
+        FleckStateImpl state = (FleckStateImpl)obj;
 
         if (area != state.getArea()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
@@ -101,13 +101,6 @@ public class FleckStateImpl implements FleckState {
 
     @Override
     public int hashCode() {
-        int result = area;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = area;
         result = 31 * result + (color != null ? color.hashCode() : 0);
 

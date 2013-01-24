@@ -72,22 +72,22 @@ public class FileStateImpl implements FileState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        FileStateImpl state = (FileStateImpl)o;
+        FileStateImpl state = (FileStateImpl)obj;
 
         if (filename != null ? !filename.equals(state.filename) : state.filename != null) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        FileStateImpl state = (FileStateImpl)o;
+        FileStateImpl state = (FileStateImpl)obj;
 
         if (filename != null ? !filename.equals(state.filename) : state.filename != null) return false;
 
@@ -96,12 +96,6 @@ public class FileStateImpl implements FileState {
 
     @Override
     public int hashCode() {
-        int result = filename != null ? filename.hashCode() : 0;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = filename != null ? filename.hashCode() : 0;
 
         return result;

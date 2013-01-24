@@ -81,11 +81,11 @@ public class MouthStateImpl implements MouthState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        MouthStateImpl state = (MouthStateImpl)o;
+        MouthStateImpl state = (MouthStateImpl)obj;
 
         if (width != state.getWidth()) return false;
         if (height != state.getHeight()) return false;
@@ -93,11 +93,11 @@ public class MouthStateImpl implements MouthState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        MouthStateImpl state = (MouthStateImpl)o;
+        MouthStateImpl state = (MouthStateImpl)obj;
 
         if (width != state.getWidth()) return false;
         if (height != state.getHeight()) return false;
@@ -110,14 +110,6 @@ public class MouthStateImpl implements MouthState {
     public int hashCode() {
         int result = width;
         result = 31 * result + height;
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = width;
-        result = 31 * result + height;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
 
         return result;
     }

@@ -75,11 +75,11 @@ public class TruckTypeStateImpl implements TruckTypeState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        TruckTypeStateImpl state = (TruckTypeStateImpl)o;
+        TruckTypeStateImpl state = (TruckTypeStateImpl)obj;
 
         if (numberOfWheels != state.getNumberOfWheels()) return false;
         if (truckName != null ? !truckName.equals(state.truckName) : state.truckName != null) return false;
@@ -87,11 +87,11 @@ public class TruckTypeStateImpl implements TruckTypeState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        TruckTypeStateImpl state = (TruckTypeStateImpl)o;
+        TruckTypeStateImpl state = (TruckTypeStateImpl)obj;
 
         if (numberOfWheels != state.getNumberOfWheels()) return false;
         if (truckName != null ? !truckName.equals(state.truckName) : state.truckName != null) return false;
@@ -101,13 +101,6 @@ public class TruckTypeStateImpl implements TruckTypeState {
 
     @Override
     public int hashCode() {
-        int result = numberOfWheels;
-        result = 31 * result + (truckName != null ? truckName.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = numberOfWheels;
         result = 31 * result + (truckName != null ? truckName.hashCode() : 0);
 

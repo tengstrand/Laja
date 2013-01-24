@@ -83,11 +83,11 @@ public class EyeStateImpl implements EyeState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        EyeStateImpl state = (EyeStateImpl)o;
+        EyeStateImpl state = (EyeStateImpl)obj;
 
         if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
@@ -97,11 +97,11 @@ public class EyeStateImpl implements EyeState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        EyeStateImpl state = (EyeStateImpl)o;
+        EyeStateImpl state = (EyeStateImpl)obj;
 
         if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
@@ -113,15 +113,6 @@ public class EyeStateImpl implements EyeState {
 
     @Override
     public int hashCode() {
-        int result = eyeWeightInGrams;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + (decease != null ? decease.hashCode() : 0);
-        result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = eyeWeightInGrams;
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (decease != null ? decease.hashCode() : 0);

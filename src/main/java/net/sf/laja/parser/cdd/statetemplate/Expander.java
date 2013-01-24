@@ -127,7 +127,7 @@ public class Expander {
 
     private void addAttributeToResult(Attribute attribute, boolean isExpanded) {
         if (isExpanded) {
-            Attribute copy = attribute.copyAllAttributesExceptIdAndKey();
+            Attribute copy = attribute.copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude();
             copy.cleanCommentFromIdAndKey();
             attributesResult.add(copy);
 

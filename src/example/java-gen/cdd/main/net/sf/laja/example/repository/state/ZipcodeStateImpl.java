@@ -69,22 +69,22 @@ public class ZipcodeStateImpl implements ZipcodeState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ZipcodeStateImpl state = (ZipcodeStateImpl)o;
+        ZipcodeStateImpl state = (ZipcodeStateImpl)obj;
 
         if (zipcode != state.getZipcode()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ZipcodeStateImpl state = (ZipcodeStateImpl)o;
+        ZipcodeStateImpl state = (ZipcodeStateImpl)obj;
 
         if (zipcode != state.getZipcode()) return false;
 
@@ -93,12 +93,6 @@ public class ZipcodeStateImpl implements ZipcodeState {
 
     @Override
     public int hashCode() {
-        int result = zipcode;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = zipcode;
 
         return result;

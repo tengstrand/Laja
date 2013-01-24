@@ -63,11 +63,11 @@ public class TruckStateImpl implements TruckState {
     }
 
             @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equals(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)o;
+                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)obj;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
                 if (type.getTruckName() != null ? !type.getTruckName().equals(state.getName()) : state.getName() != null) return false;
@@ -77,11 +77,11 @@ public class TruckStateImpl implements TruckState {
                 return true;
             }
 
-            public boolean valueEquals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equalsValue(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)o;
+                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)obj;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
                 if (type.getTruckName() != null ? !type.getTruckName().equals(state.getName()) : state.getName() != null) return false;
@@ -93,15 +93,6 @@ public class TruckStateImpl implements TruckState {
 
             @Override
             public int hashCode() {
-                int result = lengthInCentimeters;
-                result = 31 * result + (type.getTruckName() != null ? type.getTruckName().hashCode() : 0);
-                result = 31 * result + (owner != null ? owner.hashCode() : 0);
-                result = 31 * result + (color != null ? color.hashCode() : 0);
-
-                return result;
-            }
-
-            public int valueHashCode() {
                 int result = lengthInCentimeters;
                 result = 31 * result + (type.getTruckName() != null ? type.getTruckName().hashCode() : 0);
                 result = 31 * result + (owner != null ? owner.hashCode() : 0);
@@ -196,11 +187,11 @@ public class TruckStateImpl implements TruckState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        TruckStateImpl state = (TruckStateImpl)o;
+        TruckStateImpl state = (TruckStateImpl)obj;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -211,11 +202,11 @@ public class TruckStateImpl implements TruckState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        TruckStateImpl state = (TruckStateImpl)o;
+        TruckStateImpl state = (TruckStateImpl)obj;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -228,16 +219,6 @@ public class TruckStateImpl implements TruckState {
 
     @Override
     public int hashCode() {
-        int result = lengthInCentimeters;
-        result = 31 * result + weightInKilograms;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = lengthInCentimeters;
         result = 31 * result + weightInKilograms;
         result = 31 * result + (type != null ? type.hashCode() : 0);

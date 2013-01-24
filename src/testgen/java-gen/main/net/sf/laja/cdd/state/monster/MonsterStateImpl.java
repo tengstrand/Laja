@@ -100,11 +100,11 @@ public class MonsterStateImpl implements MonsterState {
     }
 
             @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equals(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)o;
+                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)obj;
 
                 if (weight != state.getEyeWeightInGrams()) return false;
                 if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
@@ -114,11 +114,11 @@ public class MonsterStateImpl implements MonsterState {
                 return true;
             }
 
-            public boolean valueEquals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equalsValue(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)o;
+                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)obj;
 
                 if (weight != state.getEyeWeightInGrams()) return false;
                 if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
@@ -130,15 +130,6 @@ public class MonsterStateImpl implements MonsterState {
 
             @Override
             public int hashCode() {
-                int result = weight;
-                result = 31 * result + (color != null ? color.hashCode() : 0);
-                result = 31 * result + (decease != null ? decease.hashCode() : 0);
-                result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-
-                return result;
-            }
-
-            public int valueHashCode() {
                 int result = weight;
                 result = 31 * result + (color != null ? color.hashCode() : 0);
                 result = 31 * result + (decease != null ? decease.hashCode() : 0);
@@ -206,11 +197,11 @@ public class MonsterStateImpl implements MonsterState {
     }
 
             @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equals(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)o;
+                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)obj;
 
                 if (numberOfLegs != state.getNumberOfLegs()) return false;
                 if (numberOfOwnWings != state.getNumberOfWings()) return false;
@@ -222,11 +213,11 @@ public class MonsterStateImpl implements MonsterState {
                 return true;
             }
 
-            public boolean valueEquals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
+            public boolean equalsValue(Object obj) {
+                if (this == obj) return true;
+                if (obj == null || getClass() != obj.getClass()) return false;
 
-                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)o;
+                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)obj;
 
                 if (numberOfLegs != state.getNumberOfLegs()) return false;
                 if (numberOfOwnWings != state.getNumberOfWings()) return false;
@@ -240,17 +231,6 @@ public class MonsterStateImpl implements MonsterState {
 
             @Override
             public int hashCode() {
-                int result = numberOfLegs;
-                result = 31 * result + numberOfOwnWings;
-                result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
-                result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
-                result = 31 * result + (midEye != null ? midEye.hashCode() : 0);
-                result = 31 * result + weight;
-
-                return result;
-            }
-
-            public int valueHashCode() {
                 int result = numberOfLegs;
                 result = 31 * result + numberOfOwnWings;
                 result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
@@ -403,11 +383,11 @@ public class MonsterStateImpl implements MonsterState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        MonsterStateImpl state = (MonsterStateImpl)o;
+        MonsterStateImpl state = (MonsterStateImpl)obj;
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfOwnWings != state.getNumberOfOwnWings()) return false;
@@ -418,8 +398,6 @@ public class MonsterStateImpl implements MonsterState {
         if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
         if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
-        if (noses != null ? !noses.equals(state.noses) : state.noses != null) return false;
-        if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
         if (length != state.getLength()) return false;
         if (a != state.getA()) return false;
         if (b != state.getB()) return false;
@@ -429,8 +407,6 @@ public class MonsterStateImpl implements MonsterState {
         if (f != state.getF()) return false;
         if (g != state.getG()) return false;
         if (h != state.getH()) return false;
-        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
-        if (mouths != null ? !mouths.equals(state.mouths) : state.mouths != null) return false;
         if (weight != state.getWeight()) return false;
         if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
         if (headWeight != state.getHeadWeight()) return false;
@@ -439,11 +415,11 @@ public class MonsterStateImpl implements MonsterState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        MonsterStateImpl state = (MonsterStateImpl)o;
+        MonsterStateImpl state = (MonsterStateImpl)obj;
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfOwnWings != state.getNumberOfOwnWings()) return false;
@@ -486,8 +462,6 @@ public class MonsterStateImpl implements MonsterState {
         result = 31 * result + eyeWeightInGrams;
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (decease != null ? decease.hashCode() : 0);
-        result = 31 * result + (noses != null ? noses.hashCode() : 0);
-        result = 31 * result + (brows != null ? brows.hashCode() : 0);
         result = 31 * result + length;
         result = 31 * result + (a ? 1 : 0);
         result = 31 * result + b;
@@ -497,39 +471,6 @@ public class MonsterStateImpl implements MonsterState {
         result = (int)(f ^ (f >>> 32));
         result = 31 * result + (int)g;
         result = 31 * result + (int)h;
-        result = 31 * result + (ears != null ? ears.hashCode() : 0);
-        result = 31 * result + (mouths != null ? mouths.hashCode() : 0);
-        result = 31 * result + weight;
-        result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-        result = 31 * result + (int)headWeight;
-        result = 31 * result + (leftArm != null ? leftArm.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = numberOfLegs;
-        result = 31 * result + numberOfOwnWings;
-        result = 31 * result + (int)headWeightInGrams;
-        result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
-        result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
-        result = 31 * result + (midEye != null ? midEye.hashCode() : 0);
-        result = 31 * result + eyeWeightInGrams;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + (decease != null ? decease.hashCode() : 0);
-        result = 31 * result + (noses != null ? noses.hashCode() : 0);
-        result = 31 * result + (brows != null ? brows.hashCode() : 0);
-        result = 31 * result + length;
-        result = 31 * result + (a ? 1 : 0);
-        result = 31 * result + b;
-        result = 31 * result + c;
-        result = 31 * result + d;
-        result = 31 * result + e;
-        result = (int)(f ^ (f >>> 32));
-        result = 31 * result + (int)g;
-        result = 31 * result + (int)h;
-        result = 31 * result + (ears != null ? ears.hashCode() : 0);
-        result = 31 * result + (mouths != null ? mouths.hashCode() : 0);
         result = 31 * result + weight;
         result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
         result = 31 * result + (int)headWeight;

@@ -69,22 +69,22 @@ public class HandStateImpl implements HandState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HandStateImpl state = (HandStateImpl)o;
+        HandStateImpl state = (HandStateImpl)obj;
 
         if (area != state.getArea()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HandStateImpl state = (HandStateImpl)o;
+        HandStateImpl state = (HandStateImpl)obj;
 
         if (area != state.getArea()) return false;
 
@@ -93,12 +93,6 @@ public class HandStateImpl implements HandState {
 
     @Override
     public int hashCode() {
-        int result = area;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = area;
 
         return result;

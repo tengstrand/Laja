@@ -160,11 +160,11 @@ public class HeadStateImpl implements HeadState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HeadStateImpl state = (HeadStateImpl)o;
+        HeadStateImpl state = (HeadStateImpl)obj;
 
         if (headWeightInGrams != state.getHeadWeightInGrams()) return false;
         if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;
@@ -174,8 +174,6 @@ public class HeadStateImpl implements HeadState {
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
         if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
         if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
-        if (noses != null ? !noses.equals(state.noses) : state.noses != null) return false;
-        if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
         if (length != state.getLength()) return false;
         if (a != state.getA()) return false;
         if (b != state.getB()) return false;
@@ -185,17 +183,15 @@ public class HeadStateImpl implements HeadState {
         if (f != state.getF()) return false;
         if (g != state.getG()) return false;
         if (h != state.getH()) return false;
-        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
-        if (mouths != null ? !mouths.equals(state.mouths) : state.mouths != null) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HeadStateImpl state = (HeadStateImpl)o;
+        HeadStateImpl state = (HeadStateImpl)obj;
 
         if (headWeightInGrams != state.getHeadWeightInGrams()) return false;
         if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;
@@ -232,8 +228,6 @@ public class HeadStateImpl implements HeadState {
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (decease != null ? decease.hashCode() : 0);
         result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-        result = 31 * result + (noses != null ? noses.hashCode() : 0);
-        result = 31 * result + (brows != null ? brows.hashCode() : 0);
         result = 31 * result + length;
         result = 31 * result + (a ? 1 : 0);
         result = 31 * result + b;
@@ -243,34 +237,6 @@ public class HeadStateImpl implements HeadState {
         result = (int)(f ^ (f >>> 32));
         result = 31 * result + (int)g;
         result = 31 * result + (int)h;
-        result = 31 * result + (ears != null ? ears.hashCode() : 0);
-        result = 31 * result + (mouths != null ? mouths.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = (int)headWeightInGrams;
-        result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
-        result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
-        result = 31 * result + (midEye != null ? midEye.hashCode() : 0);
-        result = 31 * result + eyeWeightInGrams;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + (decease != null ? decease.hashCode() : 0);
-        result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-        result = 31 * result + (noses != null ? noses.hashCode() : 0);
-        result = 31 * result + (brows != null ? brows.hashCode() : 0);
-        result = 31 * result + length;
-        result = 31 * result + (a ? 1 : 0);
-        result = 31 * result + b;
-        result = 31 * result + c;
-        result = 31 * result + d;
-        result = 31 * result + e;
-        result = (int)(f ^ (f >>> 32));
-        result = 31 * result + (int)g;
-        result = 31 * result + (int)h;
-        result = 31 * result + (ears != null ? ears.hashCode() : 0);
-        result = 31 * result + (mouths != null ? mouths.hashCode() : 0);
 
         return result;
     }

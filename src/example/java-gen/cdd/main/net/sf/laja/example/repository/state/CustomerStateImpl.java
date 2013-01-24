@@ -112,22 +112,22 @@ public class CustomerStateImpl implements CustomerState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        CustomerStateImpl state = (CustomerStateImpl)o;
+        CustomerStateImpl state = (CustomerStateImpl)obj;
 
         if (ssn != state.getSsn()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        CustomerStateImpl state = (CustomerStateImpl)o;
+        CustomerStateImpl state = (CustomerStateImpl)obj;
 
         if (ssn != state.getSsn()) return false;
         if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
@@ -145,20 +145,6 @@ public class CustomerStateImpl implements CustomerState {
     @Override
     public int hashCode() {
         int result = (int)(ssn ^ (ssn >>> 32));
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = (int)(ssn ^ (ssn >>> 32));
-        result = 31 * result + (givenName != null ? givenName.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + age;
-        result = 31 * result + (pet != null ? pet.hashCode() : 0);
-        result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
-        result = 31 * result + zipcode;
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
 
         return result;
     }

@@ -82,11 +82,11 @@ public class AddressStateImpl implements AddressState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        AddressStateImpl state = (AddressStateImpl)o;
+        AddressStateImpl state = (AddressStateImpl)obj;
 
         if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
         if (zipcode != state.getZipcode()) return false;
@@ -95,11 +95,11 @@ public class AddressStateImpl implements AddressState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        AddressStateImpl state = (AddressStateImpl)o;
+        AddressStateImpl state = (AddressStateImpl)obj;
 
         if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
         if (zipcode != state.getZipcode()) return false;
@@ -110,14 +110,6 @@ public class AddressStateImpl implements AddressState {
 
     @Override
     public int hashCode() {
-        int result = streetName != null ? streetName.hashCode() : 0;
-        result = 31 * result + zipcode;
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = streetName != null ? streetName.hashCode() : 0;
         result = 31 * result + zipcode;
         result = 31 * result + (city != null ? city.hashCode() : 0);

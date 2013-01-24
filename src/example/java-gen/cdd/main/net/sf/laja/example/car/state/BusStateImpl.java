@@ -85,11 +85,11 @@ public class BusStateImpl implements BusState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        BusStateImpl state = (BusStateImpl)o;
+        BusStateImpl state = (BusStateImpl)obj;
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
@@ -98,11 +98,11 @@ public class BusStateImpl implements BusState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        BusStateImpl state = (BusStateImpl)o;
+        BusStateImpl state = (BusStateImpl)obj;
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
@@ -113,14 +113,6 @@ public class BusStateImpl implements BusState {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + lengthInCentimeters;
-        result = 31 * result + weightInKilograms;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + lengthInCentimeters;
         result = 31 * result + weightInKilograms;

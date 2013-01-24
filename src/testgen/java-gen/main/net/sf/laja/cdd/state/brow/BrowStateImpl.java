@@ -69,22 +69,22 @@ public class BrowStateImpl implements BrowState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        BrowStateImpl state = (BrowStateImpl)o;
+        BrowStateImpl state = (BrowStateImpl)obj;
 
         if (area != state.getArea()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        BrowStateImpl state = (BrowStateImpl)o;
+        BrowStateImpl state = (BrowStateImpl)obj;
 
         if (area != state.getArea()) return false;
 
@@ -93,12 +93,6 @@ public class BrowStateImpl implements BrowState {
 
     @Override
     public int hashCode() {
-        int result = area;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = area;
 
         return result;

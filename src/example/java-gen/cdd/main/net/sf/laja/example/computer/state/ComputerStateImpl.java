@@ -86,11 +86,11 @@ public class ComputerStateImpl implements ComputerState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ComputerStateImpl state = (ComputerStateImpl)o;
+        ComputerStateImpl state = (ComputerStateImpl)obj;
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (processor != null ? !processor.equals(state.processor) : state.processor != null) return false;
@@ -101,11 +101,11 @@ public class ComputerStateImpl implements ComputerState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ComputerStateImpl state = (ComputerStateImpl)o;
+        ComputerStateImpl state = (ComputerStateImpl)obj;
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (processor != null ? !processor.equals(state.processor) : state.processor != null) return false;
@@ -118,16 +118,6 @@ public class ComputerStateImpl implements ComputerState {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (processor != null ? processor.hashCode() : 0);
-        result = 31 * result + releaseYear;
-        result = 31 * result + memoryInKilobytes;
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (processor != null ? processor.hashCode() : 0);
         result = 31 * result + releaseYear;

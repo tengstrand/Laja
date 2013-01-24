@@ -69,22 +69,22 @@ public class VehicleSizeStateImpl implements VehicleSizeState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        VehicleSizeStateImpl state = (VehicleSizeStateImpl)o;
+        VehicleSizeStateImpl state = (VehicleSizeStateImpl)obj;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        VehicleSizeStateImpl state = (VehicleSizeStateImpl)o;
+        VehicleSizeStateImpl state = (VehicleSizeStateImpl)obj;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
 
@@ -93,12 +93,6 @@ public class VehicleSizeStateImpl implements VehicleSizeState {
 
     @Override
     public int hashCode() {
-        int result = lengthInCentimeters;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = lengthInCentimeters;
 
         return result;

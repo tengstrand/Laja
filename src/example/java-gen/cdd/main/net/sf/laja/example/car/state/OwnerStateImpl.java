@@ -75,11 +75,11 @@ public class OwnerStateImpl implements OwnerState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        OwnerStateImpl state = (OwnerStateImpl)o;
+        OwnerStateImpl state = (OwnerStateImpl)obj;
 
         if (ssn != state.getSsn()) return false;
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
@@ -87,11 +87,11 @@ public class OwnerStateImpl implements OwnerState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        OwnerStateImpl state = (OwnerStateImpl)o;
+        OwnerStateImpl state = (OwnerStateImpl)obj;
 
         if (ssn != state.getSsn()) return false;
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
@@ -101,13 +101,6 @@ public class OwnerStateImpl implements OwnerState {
 
     @Override
     public int hashCode() {
-        int result = (int)(ssn ^ (ssn >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = (int)(ssn ^ (ssn >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
 

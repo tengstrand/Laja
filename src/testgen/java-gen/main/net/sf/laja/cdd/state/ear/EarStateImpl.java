@@ -69,22 +69,22 @@ public class EarStateImpl implements EarState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        EarStateImpl state = (EarStateImpl)o;
+        EarStateImpl state = (EarStateImpl)obj;
 
         if (size != state.getSize()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        EarStateImpl state = (EarStateImpl)o;
+        EarStateImpl state = (EarStateImpl)obj;
 
         if (size != state.getSize()) return false;
 
@@ -93,12 +93,6 @@ public class EarStateImpl implements EarState {
 
     @Override
     public int hashCode() {
-        int result = (int)size;
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = (int)size;
 
         return result;

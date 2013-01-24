@@ -73,22 +73,15 @@ public class ForeheadStateImpl implements ForeheadState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ForeheadStateImpl state = (ForeheadStateImpl)o;
-
-        if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
-
-        return true;
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ForeheadStateImpl state = (ForeheadStateImpl)o;
+        ForeheadStateImpl state = (ForeheadStateImpl)obj;
 
         if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
 
@@ -97,15 +90,7 @@ public class ForeheadStateImpl implements ForeheadState {
 
     @Override
     public int hashCode() {
-        int result = brows != null ? brows.hashCode() : 0;
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = brows != null ? brows.hashCode() : 0;
-
-        return result;
+        return super.hashCode();
     }
 
     @Override

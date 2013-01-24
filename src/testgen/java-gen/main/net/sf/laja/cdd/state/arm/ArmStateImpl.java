@@ -82,24 +82,23 @@ public class ArmStateImpl implements ArmState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ArmStateImpl state = (ArmStateImpl)o;
+        ArmStateImpl state = (ArmStateImpl)obj;
 
         if (armLength != state.getArmLength()) return false;
         if (armWeight != state.getArmWeight()) return false;
-        if (hands != null ? !hands.equals(state.hands) : state.hands != null) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        ArmStateImpl state = (ArmStateImpl)o;
+        ArmStateImpl state = (ArmStateImpl)obj;
 
         if (armLength != state.getArmLength()) return false;
         if (armWeight != state.getArmWeight()) return false;
@@ -112,15 +111,6 @@ public class ArmStateImpl implements ArmState {
     public int hashCode() {
         int result = armLength;
         result = 31 * result + (int)armWeight;
-        result = 31 * result + (hands != null ? hands.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = armLength;
-        result = 31 * result + (int)armWeight;
-        result = 31 * result + (hands != null ? hands.hashCode() : 0);
 
         return result;
     }

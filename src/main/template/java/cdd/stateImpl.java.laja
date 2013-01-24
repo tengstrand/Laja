@@ -34,9 +34,8 @@
             public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
       #isValid(template, true, "            ")
       #equals(template, true, "            ")
-      #valueEquals(template, true, "            ")
+      #equalsValue(template, true, "            ")
       #hashCode(template, true, "            ")
-      #valueHashCode(template, true, "            ")
       #toString(template, true, "            ")
         };
     }
@@ -196,7 +195,15 @@
 
 #function valueAttributes(t)
   #set (keys = new java.util.ArrayList())
-  #foreach (attribute in t.attributes where !attribute.isExclude)
+  #foreach (attribute in t.attributes where !attribute.isExclude || attribute.isInclude)
+    #keys.add(attribute)
+  #end
+  #return keys
+#end
+
+#function valueKeyAttributes(t)
+  #set (keys = new java.util.ArrayList())
+  #foreach (attribute in t.attributes where !attribute.isExclude && !attribute.isStateList)
     #keys.add(attribute)
   #end
   #return keys
@@ -204,11 +211,11 @@
 
 #function entityAttributes(t)
   #set (keys = new java.util.ArrayList())
-  #foreach (attribute in t.attributes where attribute.isKey)
+  #foreach (attribute in t.attributes where attribute.isKey || attribute.isInclude)
     #keys.add(attribute)
   #end
   #if (keys.size == 0)
-    #return valueAttributes(t)
+    #return valueKeyAttributes(t)
   #end
   #return keys
 #end
@@ -216,40 +223,44 @@
 #macro equals(t, useGetter, tab)
 
 {tab}@Override
-{tab}public boolean equals(Object o) {
+{tab}public boolean equals(Object obj) {
   #equalsBody(t, entityAttributes(t), useGetter, tab)
 #end
 
-#macro valueEquals(t, useGetter, tab)
+#macro equalsValue(t, useGetter, tab)
 
-{tab}public boolean valueEquals(Object o) {
+{tab}public boolean equalsValue(Object obj) {
   #equalsBody(t, valueAttributes(t), useGetter, tab)
 #end
 
 #macro equalsBody(t, attributes, useGetter, tab)
-{tab}    if (this == o) return true;
-{tab}    if (o == null || getClass() != o.getClass()) return false;
-
-  #if (useGetter)
-{tab}    {t.packagename}.{t.stateClass} state = ({t.packagename}.{t.stateClass})o;
+  #if (attributes.isEmpty)
+{tab}    return super.equals(obj);
   #else
-{tab}    {t.stateImplClass} state = ({t.stateImplClass})o;
-  #end
+{tab}    if (this == obj) return true;
+{tab}    if (obj == null || getClass() != obj.getClass()) return false;
 
-  #foreach (attribute in attributes)
-    #set (variable = variable(useGetter))
-    #if (attribute.isPrimitive)
-{tab}    if ({variable} != state.{attribute.getter}()) return false;
+    #if (useGetter)
+{tab}    {t.packagename}.{t.stateClass} state = ({t.packagename}.{t.stateClass})obj;
     #else
-      #if (useGetter)
-{tab}    if ({variable} != null ? !{variable}.equals(state.{attribute.getter}()) : state.{attribute.getter}() != null) return false;
+{tab}    {t.stateImplClass} state = ({t.stateImplClass})obj;
+    #end
+
+    #foreach (attribute in attributes)
+      #set (variable = variable(useGetter))
+      #if (attribute.isPrimitive)
+{tab}    if ({variable} != state.{attribute.getter}()) return false;
       #else
+        #if (useGetter)
+{tab}    if ({variable} != null ? !{variable}.equals(state.{attribute.getter}()) : state.{attribute.getter}() != null) return false;
+        #else
 {tab}    if ({variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
+        #end
       #end
     #end
-  #end
 
 {tab}    return true;
+  #end
 {tab}}
 #end
 
@@ -273,51 +284,49 @@
   #hashCodeBody(t, entityAttributes(t), useGetter, tab)
 #end
 
-#macro valueHashCode(t, useGetter, tab)
-
-{tab}public int valueHashCode() {
-  #hashCodeBody(t, valueAttributes(t), useGetter, tab)
-#end
-
 #macro hashCodeBody(t, attributes, useGetter, tab)
-  #set (first = true)
-  #set (intTypes = ["byte", "char", "short", "int"])
-  #set (castTypes = ["float", "double"])
-  #foreach (attribute in attributes)
-    #set (variable = variable(useGetter))
-    #if (first)
-      #if (intTypes.contains(attribute.type))
+  #if (attributes.isEmpty)
+{tab}    return super.hashCode();
+  #else
+    #set (first = true)
+    #set (intTypes = ["byte", "char", "short", "int"])
+    #set (castTypes = ["float", "double"])
+    #foreach (attribute in attributes)
+      #set (variable = variable(useGetter))
+      #if (first)
+        #if (intTypes.contains(attribute.type))
 {tab}    int result = {variable};
-      #else if (castTypes.contains(attribute.type))
+        #else if (castTypes.contains(attribute.type))
 {tab}    int result = (int){variable};
-      #else if (attribute.type == "long")
+        #else if (attribute.type == "long")
 {tab}    int result = (int)({variable} ^ ({variable} >>> 32));
-      #else if (attribute.type == "boolean")
+        #else if (attribute.type == "boolean")
 {tab}    int result = {variable} ? 1 : 0;
-      #else
-{tab}    int result = {variable} != null ? {variable}.hashCode() : 0;
-      #end
-    #else
-      #if (intTypes.contains(attribute.type))
-{tab}    result = 31 * result + {variable};
-      #else if (castTypes.contains(attribute.type))
-{tab}    result = 31 * result + (int){variable};
-      #else if (attribute.type == "long")
-{tab}    result = (int)({variable} ^ ({variable} >>> 32));
-      #else if (attribute.type == "boolean")
-{tab}    result = 31 * result + ({variable} ? 1 : 0);
-      #else
-        #if (useGetter)
-{tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
         #else
+{tab}    int result = {variable} != null ? {variable}.hashCode() : 0;
+        #end
+      #else
+        #if (intTypes.contains(attribute.type))
+{tab}    result = 31 * result + {variable};
+        #else if (castTypes.contains(attribute.type))
+{tab}    result = 31 * result + (int){variable};
+        #else if (attribute.type == "long")
+{tab}    result = (int)({variable} ^ ({variable} >>> 32));
+        #else if (attribute.type == "boolean")
+{tab}    result = 31 * result + ({variable} ? 1 : 0);
+        #else
+          #if (useGetter)
 {tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
+          #else
+{tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
+          #end
         #end
       #end
-    #end
     #set (first = false)
   #end
 
 {tab}    return result;
+  #end
 {tab}}
 #end
 
@@ -408,9 +417,8 @@ public class {stateImplClass} implements {stateClass} {
   #encapsulate()
   #setEncapsulator()
   #equals($, false, "    ")
-  #valueEquals($, false, "    ")
+  #equalsValue($, false, "    ")
   #hashCode($, false, "    ")
-  #valueHashCode($, false, "    ")
   #toString($, false, "    ")
 }
 #end

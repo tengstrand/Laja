@@ -91,11 +91,11 @@ public class CarStateImpl implements CarState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        CarStateImpl state = (CarStateImpl)o;
+        CarStateImpl state = (CarStateImpl)obj;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
@@ -105,11 +105,11 @@ public class CarStateImpl implements CarState {
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        CarStateImpl state = (CarStateImpl)o;
+        CarStateImpl state = (CarStateImpl)obj;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
@@ -121,15 +121,6 @@ public class CarStateImpl implements CarState {
 
     @Override
     public int hashCode() {
-        int result = lengthInCentimeters;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-
-        return result;
-    }
-
-    public int valueHashCode() {
         int result = lengthInCentimeters;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (owner != null ? owner.hashCode() : 0);

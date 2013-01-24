@@ -75,22 +75,22 @@ public class HairStateImpl implements HairState {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HairStateImpl state = (HairStateImpl)o;
+        HairStateImpl state = (HairStateImpl)obj;
 
         if (length != state.getLength()) return false;
 
         return true;
     }
 
-    public boolean valueEquals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsValue(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
-        HairStateImpl state = (HairStateImpl)o;
+        HairStateImpl state = (HairStateImpl)obj;
 
         if (length != state.getLength()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
@@ -101,13 +101,6 @@ public class HairStateImpl implements HairState {
     @Override
     public int hashCode() {
         int result = length;
-
-        return result;
-    }
-
-    public int valueHashCode() {
-        int result = length;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
 
         return result;
     }
