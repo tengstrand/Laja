@@ -58,7 +58,7 @@ import net.sf.laja.cdd.state.toe.ToeStateBuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class Certificate {
+public final class Certificate {
     Certificate() {
     }
 

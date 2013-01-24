@@ -13,7 +13,7 @@ import net.sf.laja.example.file.state.DirectoryStateBuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class Certificate {
+public final class Certificate {
     Certificate() {
     }
 

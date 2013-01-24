@@ -13,7 +13,7 @@ import net.sf.laja.example.account.state.AccountStateBuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class Certificate {
+public final class Certificate {
     Certificate() {
     }
 

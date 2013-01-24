@@ -15,7 +15,7 @@ import {template.packagename}.{template.stateClass}BuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class {certificateClass} {
+public final class {certificateClass} {
     Certificate() {
     }
 

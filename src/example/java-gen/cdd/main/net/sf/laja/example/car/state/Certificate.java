@@ -25,7 +25,7 @@ import net.sf.laja.example.car.state.BusStateBuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class Certificate {
+public final class Certificate {
     Certificate() {
     }
 

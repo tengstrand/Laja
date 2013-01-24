@@ -16,7 +16,7 @@ import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class Certificate {
+public final class Certificate {
     Certificate() {
     }
 

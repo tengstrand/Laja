@@ -10,7 +10,7 @@ import net.sf.laja.example.computer.state.ComputerStateBuilderImpl;
  *
  *   http://laja.tengstrand.nu
  */
-public class Certificate {
+public final class Certificate {
     Certificate() {
     }
 
