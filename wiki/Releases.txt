@@ -8,6 +8,7 @@ Includes:
 ** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
 * Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
 * The (id) and (key) properties are now removed from expanded attributes.
+* Renamed XStateListImpl to XStateArrayList (where X is the state class).
 * Renamed state method valueEquals to equalsValue + removed valueHashCode.
 * Improved management of identity:
 ** Added support for the state attribute "(include)".
