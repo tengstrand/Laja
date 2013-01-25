@@ -9,84 +9,73 @@ import java.util.*;
  *
  *   http://laja.tengstrand.nu
  */
-public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io.Serializable {
+public class BigNoseArrayList implements BigNoseList, RandomAccess, Cloneable, java.io.Serializable {
     protected NoseStateList stateList;
-    protected final List<Nose> list;
+    protected final List<BigNose> list;
 
-    public NoseArrayList(Nose... list) {
-        this.list = new ArrayList<Nose>();
+    public BigNoseArrayList(BigNose... list) {
+        this.list = new ArrayList<BigNose>();
         this.list.addAll(Arrays.asList(list));
     }
 
-    public NoseArrayList(Collection<Nose> list) {
-        this.list = new ArrayList<Nose>();
+    public BigNoseArrayList(Collection<BigNose> list) {
+        this.list = new ArrayList<BigNose>();
         this.list.addAll(list);
     }
 
-    public NoseArrayList(NoseStateList stateList, int extraParameter) {
+    public BigNoseArrayList(NoseStateList stateList) {
         this.stateList = stateList;
         this.stateList.encapsulate(this);
-        List<Nose> elements = new ArrayList<Nose>(stateList.size());
+        List<BigNose> elements = new ArrayList<BigNose>(stateList.size());
 
         for (NoseState state : stateList) {
             NoseStateBuilder builder = new NoseStateBuilderImpl(state);
-            Nose entry = (Nose) builder.as(new NoseFactory.NoseFactory_(builder), extraParameter);
+            BigNose entry = (BigNose) builder.as(new NoseFactory.BigNoseFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public BigNoseArrayList asBigNoseList() {
-        if (stateList != null) {
-            return new BigNoseArrayList(stateList);
-        }
-        List<BigNose> result = new ArrayList<BigNose>();
-        for (Nose entry : list) {
-            result.add(entry.asBigNose());
-        }
-        return new BigNoseArrayList(result);
-    }
-
-    public class StateInSyncList extends ArrayList<Nose> {
+    public class StateInSyncList extends ArrayList<BigNose> {
         private final NoseStateList stateList;
 
-        public StateInSyncList(NoseStateList stateList, List<Nose> elements) {
+        public StateInSyncList(NoseStateList stateList, List<BigNose> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Nose element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+        public boolean add(BigNose element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Nose element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+        public void add(int index, BigNose element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Nose> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+        public boolean addAll(Collection<? extends BigNose> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             boolean modified = super.addAll(collection);
 
-            for (Nose element : collection) {
+            for (BigNose element : collection) {
                 stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Nose> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+        public boolean addAll(int index, Collection<? extends BigNose> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Nose element : collection) {
+            for (BigNose element : collection) {
                 elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
@@ -96,24 +85,24 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean remove(Object element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
-            if (!(element instanceof Nose)) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
+            if (!(element instanceof BigNose)) {
                 return false;
             }
-            stateList.remove(((Nose) element).getState(stateList.certificate()));
+            stateList.remove(((BigNose) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
 
         @Override
         public boolean removeAll(Collection<?> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Nose) {
+                if (element instanceof BigNose) {
                     elements.add(element);
-                    states.add(((Nose)element).getState(stateList.certificate()));
+                    states.add(((BigNose)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -124,13 +113,13 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public boolean retainAll(Collection<?> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Nose) {
+                if (element instanceof BigNose) {
                     elements.add(element);
-                    states.add(((Nose)element).getState(stateList.certificate()));
+                    states.add(((BigNose)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -141,21 +130,21 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         @Override
         public void clear() {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
-        public Nose set(int index, Nose element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+        public BigNose set(int index, BigNose element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 
         @Override
-        public Nose remove(int index) {
-            stateList.throwExceptionIfNotEncapsulatedBy(NoseArrayList.this);
+        public BigNose remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(BigNoseArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }
@@ -173,7 +162,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         return list.contains(element);
     }
 
-    public Iterator<Nose> iterator() {
+    public Iterator<BigNose> iterator() {
         return list.iterator();
     }
 
@@ -181,28 +170,28 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         return list.toArray();
     }
 
-    public <Nose> Nose[] toArray(Nose[] array) {
+    public <BigNose> BigNose[] toArray(BigNose[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Nose element) {
+    public boolean add(BigNose element) {
         return list.add(element);
     }
 
-    public void add(int index, Nose element) {
+    public void add(int index, BigNose element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Nose> collection) {
+    public boolean addAll(Collection<? extends BigNose> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Nose> collection) {
+    public boolean addAll(int index, Collection<? extends BigNose> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Nose)) {
+        if (!(element instanceof BigNose)) {
             return false;
         }
         return list.remove(element);
@@ -224,15 +213,15 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         list.clear();
     }
 
-    public Nose get(int index) {
+    public BigNose get(int index) {
         return list.get(index);
     }
 
-    public Nose set(int index, Nose element) {
+    public BigNose set(int index, BigNose element) {
         return list.set(index, element);
     }
 
-    public Nose remove(int index) {
+    public BigNose remove(int index) {
         return list.remove(index);
     }
 
@@ -244,15 +233,15 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Nose> listIterator() {
+    public ListIterator<BigNose> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Nose> listIterator(int index) {
+    public ListIterator<BigNose> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Nose> subList(int fromIndex, int toIndex) {
+    public List<BigNose> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

@@ -11,4 +11,9 @@ public class Nose extends NoseFactory {
     public Nose asNose(int extraParameter) {
         return new Nose(state, extraParameter);
     }
+
+    // (factory)
+    public BigNose asBigNose() {
+        return new BigNose(state, stateBuilder);
+    }
 }

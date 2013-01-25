@@ -50,7 +50,7 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
     public {m.arrayListClass} {m.methodName}List({parameters}) {
     #if (m.isFactory)
         if (stateList != null) {
-            return new {m.arrayListClass}(stateList);
+            return new {m.arrayListClass}(stateList{extraArguments});
         }
     #end
         List<{m.returnclass}> result = new ArrayList<{m.returnclass}>();

@@ -3,7 +3,7 @@ Released: 2013-??-??
 
 Includes:
 * The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
-6* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problem to keeping state and behavior in sync.
+* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problem to keeping state and behavior in sync.
 ** The generation of XValue and XEntity has been replaced by XBehaviour (where X is the behaviour class).
 ** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
 * Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
@@ -13,8 +13,9 @@ Includes:
 ** Added support for the state attribute "(include)".
 ** If no columns are marked as natural key then collections are no longer included in hashCode and equals (earlier, all attributes except 'id' and 'exclude' was included if no natural key was given).
 ** (id) is now included in method equalsValue, hashCodeValue has been removed.
-** If no attributes is included in hashCode and equals, then super.hashCode and super.equals is executed.
-
+** If no attributes is included in hashCode and equals, then super.hashCode and super.equals is called.
+* The class Certificate has been made final.
+* Fixed a bug in lists which arose when having more than one as-method with extra parameters.
 
 == Laja2-006-alpha ==
 Released: 2013-01-04
@@ -23,7 +24,6 @@ Includes:
 * This release is backward compatible with version Laja2-005-beta and is marked as alpha as the support for CDD contains bugs and has some limitations:
 ** Lists are the only supported collection type, support for sets and maps will be added in the next version.
 ** State and behaviour classes has to be unique. Classes with same name in different packages are not supported.
-** If an entity has both (id) and (key) columns, the id should in some situations be used in hashCode() and equals(), now only (key) attributes are included.
 ** State projection has some limitations.
 ** If a state has more than one behaviour representation then all behaviour classes must have the same type of constructor. It's not supported to have one behaviour representation with a constructor that takes a ''state'' and another class that takes both a ''state'' and a ''stateBuilder''.
 ** If a substate is a list of entities and if the list is encapsulated by a list of values and the list contains duplicates then if an element is removed from the behaviour list, the state list and the behaviour list can get out of sync.

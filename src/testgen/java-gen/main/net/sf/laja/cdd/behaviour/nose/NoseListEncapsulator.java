@@ -34,6 +34,15 @@ public class NoseListEncapsulator implements Iterable<NoseEncapsulator> {
         return new NoseArrayList(result);
     }
 
+    public BigNoseList asBigNoseList() {
+        List<BigNose> result = new ArrayList<BigNose>();
+
+        for (NoseEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asBigNose());
+        }
+        return new BigNoseArrayList(result);
+    }
+
     public boolean isValid() {
         for (NoseEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {

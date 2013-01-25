@@ -35,4 +35,8 @@ public class NoseBuilder {
     public Nose asNose(int extraParameter) {
         return (Nose)builder.as(new NoseFactory.NoseFactory_(builder), extraParameter);
     }
+
+    public BigNose asBigNose() {
+        return (BigNose)builder.as(new NoseFactory.BigNoseFactory_(builder));
+    }
 }

@@ -14,6 +14,10 @@ public class NoseEncapsulator {
         return (Nose)builder.as(new NoseFactory.NoseFactory_(builder), extraParameter);
     }
 
+    public BigNose asBigNose() {
+        return (BigNose)builder.as(new NoseFactory.BigNoseFactory_(builder));
+    }
+
     public boolean isValid() {
          return builder.isValid();
     }
