@@ -16,7 +16,7 @@ public final class VehicleSizeStateListBuilder {
 
     public VehicleSizeStateListBuilder() {
         certificate = Certificate.get(new VehicleSizeStateImpl());
-        states = VehicleSizeStateListImpl.emptyList();
+        states = VehicleSizeStateArrayList.emptyList();
     }
 
     public VehicleSizeStateListBuilder(VehicleSizeStateList states) {

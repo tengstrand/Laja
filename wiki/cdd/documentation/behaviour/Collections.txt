@@ -315,7 +315,7 @@ public class ExporterStateImpl implements ExporterState {
     protected PersonStateList persons;
     ...
     ExporterStateImpl() {
-        persons = PersonStateListImpl.emptyList();
+        persons = PersonStateArrayList.emptyList();
     }
     ...
 }

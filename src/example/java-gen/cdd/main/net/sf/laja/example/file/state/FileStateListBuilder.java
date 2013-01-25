@@ -16,7 +16,7 @@ public final class FileStateListBuilder {
 
     public FileStateListBuilder() {
         certificate = Certificate.get(new FileStateImpl());
-        states = FileStateListImpl.emptyList();
+        states = FileStateArrayList.emptyList();
     }
 
     public FileStateListBuilder(FileStateList states) {

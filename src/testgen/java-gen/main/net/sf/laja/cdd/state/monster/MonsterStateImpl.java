@@ -16,10 +16,10 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.nose.NoseStateListImpl;
-import net.sf.laja.cdd.state.brow.BrowStateListImpl;
-import net.sf.laja.cdd.state.ear.EarStateListImpl;
-import net.sf.laja.cdd.state.mouth.MouthStateListImpl;
+import net.sf.laja.cdd.state.nose.NoseStateArrayList;
+import net.sf.laja.cdd.state.brow.BrowStateArrayList;
+import net.sf.laja.cdd.state.ear.EarStateArrayList;
+import net.sf.laja.cdd.state.mouth.MouthStateArrayList;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -254,10 +254,10 @@ public class MonsterStateImpl implements MonsterState {
     }
 
     MonsterStateImpl() {
-        noses = NoseStateListImpl.emptyList();
-        brows = BrowStateListImpl.emptyList();
-        ears = EarStateListImpl.emptyList();
-        mouths = MouthStateListImpl.emptyList();
+        noses = NoseStateArrayList.emptyList();
+        brows = BrowStateArrayList.emptyList();
+        ears = EarStateArrayList.emptyList();
+        mouths = MouthStateArrayList.emptyList();
     }
 
     public MonsterStateImpl(Certificate certificate) {

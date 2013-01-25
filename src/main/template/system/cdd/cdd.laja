@@ -253,7 +253,7 @@
 
     #import "{..}/../java/cdd/shared.java.laja"
     #import "{..}/../java/cdd/stateImpl.java.laja"
-    #import "{..}/../java/cdd/stateListImpl.java.laja"
+    #import "{..}/../java/cdd/stateArrayList.java.laja"
     #import "{..}/../java/cdd/stateBuilder.java.laja"
     #import "{..}/../java/cdd/stateBuilderImpl.java.laja"
     #import "{..}/../java/cdd/stateProjection.java.laja"

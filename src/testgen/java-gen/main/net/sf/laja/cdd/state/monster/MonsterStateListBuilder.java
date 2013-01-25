@@ -16,7 +16,7 @@ public final class MonsterStateListBuilder {
 
     public MonsterStateListBuilder() {
         certificate = Certificate.get(new MonsterStateImpl());
-        states = MonsterStateListImpl.emptyList();
+        states = MonsterStateArrayList.emptyList();
     }
 
     public MonsterStateListBuilder(MonsterStateList states) {

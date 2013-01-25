@@ -1,6 +1,6 @@
 
 #macro newElements()
-            {stateListClass} newElements = new {stateListImplClass}();
+            {stateListClass} newElements = new {stateArrayListClass}();
             for ({entryClass} element : collection) {
                 newElements.add(element.getState(stateList.certificate()));
             }

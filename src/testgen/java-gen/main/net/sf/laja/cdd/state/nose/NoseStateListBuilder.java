@@ -16,7 +16,7 @@ public final class NoseStateListBuilder {
 
     public NoseStateListBuilder() {
         certificate = Certificate.get(new NoseStateImpl());
-        states = NoseStateListImpl.emptyList();
+        states = NoseStateArrayList.emptyList();
     }
 
     public NoseStateListBuilder(NoseStateList states) {

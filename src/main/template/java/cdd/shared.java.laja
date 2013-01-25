@@ -4,7 +4,7 @@
 #set (stateListClass = "{stateClass}List")
 #set (stateClassTemplate = "{stateClass}Template")
 #set (stateListClass = "{stateClass}List")
-#set (stateListImplClass = "{stateClass}ListImpl")
+#set (stateArrayListClass = "{stateClass}ArrayList")
 #set (builderClass = "{stateClass}Builder")
 #set (builderImplClass = "{stateClass}BuilderImpl")
 #set (stateProjectionClass = "{stateClass}Projection")
@@ -111,11 +111,11 @@ import {template.packagename}.{attribute.type};
   #end
 #end
 
-#macro importStateListImpl()
+#macro importStateArrayList()
   #foreach (attribute in attributes where attribute.isStateList)
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
-import {template.packagename}.{template.stateClass}ListImpl;
+import {template.packagename}.{template.stateClass}ArrayList;
       #set (hasImports = true)
     #end
   #end

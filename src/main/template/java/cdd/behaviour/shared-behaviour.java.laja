@@ -16,7 +16,7 @@
 #set (stateClass = behaviour.stateClass)
 #set (stateImplClass = behaviour.stateImplClass)
 #set (stateListClass = "{stateClass}List")
-#set (stateListImplClass = "{stateListClass}Impl")
+#set (stateArrayListClass = "{stateClass}ArrayList")
 
 #set (stateBuilderClass = "{stateClass}Builder")
 #set (stateBuilderImplClass = "{stateBuilderClass}Impl")

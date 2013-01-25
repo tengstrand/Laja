@@ -16,7 +16,7 @@ public final class MouthStateListBuilder {
 
     public MouthStateListBuilder() {
         certificate = Certificate.get(new MouthStateImpl());
-        states = MouthStateListImpl.emptyList();
+        states = MouthStateArrayList.emptyList();
     }
 
     public MouthStateListBuilder(MouthStateList states) {

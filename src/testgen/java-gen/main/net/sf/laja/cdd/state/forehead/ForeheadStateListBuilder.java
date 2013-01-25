@@ -16,7 +16,7 @@ public final class ForeheadStateListBuilder {
 
     public ForeheadStateListBuilder() {
         certificate = Certificate.get(new ForeheadStateImpl());
-        states = ForeheadStateListImpl.emptyList();
+        states = ForeheadStateArrayList.emptyList();
     }
 
     public ForeheadStateListBuilder(ForeheadStateList states) {

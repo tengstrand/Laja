@@ -2,7 +2,7 @@ package net.sf.laja.cdd.state.arm;
 
 import net.sf.laja.cdd.state.hand.HandStateList;
 import net.sf.laja.cdd.state.hand.HandStateList;
-import net.sf.laja.cdd.state.hand.HandStateListImpl;
+import net.sf.laja.cdd.state.hand.HandStateArrayList;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -19,7 +19,7 @@ public class ArmStateImpl implements ArmState {
     private Object _encapsulator;
 
     ArmStateImpl() {
-        hands = HandStateListImpl.emptyList();
+        hands = HandStateArrayList.emptyList();
     }
 
     public ArmStateImpl(Certificate certificate) {

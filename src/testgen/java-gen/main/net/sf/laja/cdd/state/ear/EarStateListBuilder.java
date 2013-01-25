@@ -16,7 +16,7 @@ public final class EarStateListBuilder {
 
     public EarStateListBuilder() {
         certificate = Certificate.get(new EarStateImpl());
-        states = EarStateListImpl.emptyList();
+        states = EarStateArrayList.emptyList();
     }
 
     public EarStateListBuilder(EarStateList states) {

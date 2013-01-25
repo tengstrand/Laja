@@ -2,7 +2,7 @@
 #macro import()
   #foreach (template in templates.values())
 import {template.packagename}.{template.stateImplClass};
-import {template.packagename}.{template.stateClass}ListImpl;
+import {template.packagename}.{template.stateClass}ArrayList;
 import {template.packagename}.{template.stateClass}BuilderImpl;
   #end
 
@@ -28,7 +28,7 @@ public final class {certificateClass} {
   #foreach (template in templates.values())
 
     public static Certificate get({template.stateImplClass} state) { return certificate(state); }
-    public static Certificate get({template.stateClass}ListImpl state) { return certificate(state); }
+    public static Certificate get({template.stateClass}ArrayList state) { return certificate(state); }
     public static Certificate get({template.stateClass}BuilderImpl state) { return certificate(state); }
   #end
 }

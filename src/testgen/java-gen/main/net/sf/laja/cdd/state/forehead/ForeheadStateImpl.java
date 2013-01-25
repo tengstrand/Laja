@@ -2,7 +2,7 @@ package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.brow.BrowStateListImpl;
+import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -17,7 +17,7 @@ public class ForeheadStateImpl implements ForeheadState {
     private Object _encapsulator;
 
     ForeheadStateImpl() {
-        brows = BrowStateListImpl.emptyList();
+        brows = BrowStateArrayList.emptyList();
     }
 
     public ForeheadStateImpl(Certificate certificate) {

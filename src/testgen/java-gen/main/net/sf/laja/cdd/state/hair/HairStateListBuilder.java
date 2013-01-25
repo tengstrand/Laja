@@ -16,7 +16,7 @@ public final class HairStateListBuilder {
 
     public HairStateListBuilder() {
         certificate = Certificate.get(new HairStateImpl());
-        states = HairStateListImpl.emptyList();
+        states = HairStateArrayList.emptyList();
     }
 
     public HairStateListBuilder(HairStateList states) {

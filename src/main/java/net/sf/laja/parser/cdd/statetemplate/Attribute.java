@@ -89,7 +89,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
 
     public String typeAsStateImpl() {
         if (isState) {
-            return cleanedStateType + (isStateList ? "StateListImpl" : "StateImpl");
+            return cleanedStateType + (isStateList ? "StateArrayList" : "StateImpl");
         }
         return type;
     }

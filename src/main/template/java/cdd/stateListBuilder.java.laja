@@ -6,7 +6,7 @@ public final class {stateListBuilder} {
 
     public {stateListBuilder}() {
         certificate = Certificate.get(new {stateImplClass}());
-        states = {stateListImplClass}.emptyList();
+        states = {stateArrayListClass}.emptyList();
     }
 
     public {stateListBuilder}({stateListClass} states) {

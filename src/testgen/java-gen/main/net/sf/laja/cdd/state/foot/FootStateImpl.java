@@ -2,7 +2,7 @@ package net.sf.laja.cdd.state.foot;
 
 import net.sf.laja.cdd.state.toe.ToeStateList;
 import net.sf.laja.cdd.state.toe.ToeStateList;
-import net.sf.laja.cdd.state.toe.ToeStateListImpl;
+import net.sf.laja.cdd.state.toe.ToeStateArrayList;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -18,7 +18,7 @@ public class FootStateImpl implements FootState {
     private Object _encapsulator;
 
     FootStateImpl() {
-        toes = ToeStateListImpl.emptyList();
+        toes = ToeStateArrayList.emptyList();
     }
 
     public FootStateImpl(Certificate certificate) {

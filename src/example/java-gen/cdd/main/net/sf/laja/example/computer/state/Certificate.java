@@ -1,7 +1,7 @@
 package net.sf.laja.example.computer.state;
 
 import net.sf.laja.example.computer.state.ComputerStateImpl;
-import net.sf.laja.example.computer.state.ComputerStateListImpl;
+import net.sf.laja.example.computer.state.ComputerStateArrayList;
 import net.sf.laja.example.computer.state.ComputerStateBuilderImpl;
 
 /**
@@ -22,6 +22,6 @@ public final class Certificate {
     }
 
     public static Certificate get(ComputerStateImpl state) { return certificate(state); }
-    public static Certificate get(ComputerStateListImpl state) { return certificate(state); }
+    public static Certificate get(ComputerStateArrayList state) { return certificate(state); }
     public static Certificate get(ComputerStateBuilderImpl state) { return certificate(state); }
 }

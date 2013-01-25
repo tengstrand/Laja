@@ -16,7 +16,7 @@ public final class AccountStateListBuilder {
 
     public AccountStateListBuilder() {
         certificate = Certificate.get(new AccountStateImpl());
-        states = AccountStateListImpl.emptyList();
+        states = AccountStateArrayList.emptyList();
     }
 
     public AccountStateListBuilder(AccountStateList states) {

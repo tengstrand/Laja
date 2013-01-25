@@ -1,10 +1,7 @@
 package net.sf.laja.example.account.state;
 
-import net.sf.laja.example.account.state.BallStateImpl;
-import net.sf.laja.example.account.state.BallStateListImpl;
-import net.sf.laja.example.account.state.BallStateBuilderImpl;
 import net.sf.laja.example.account.state.AccountStateImpl;
-import net.sf.laja.example.account.state.AccountStateListImpl;
+import net.sf.laja.example.account.state.AccountStateArrayList;
 import net.sf.laja.example.account.state.AccountStateBuilderImpl;
 
 /**
@@ -24,11 +21,7 @@ public final class Certificate {
         return new Certificate();
     }
 
-    public static Certificate get(BallStateImpl state) { return certificate(state); }
-    public static Certificate get(BallStateListImpl state) { return certificate(state); }
-    public static Certificate get(BallStateBuilderImpl state) { return certificate(state); }
-
     public static Certificate get(AccountStateImpl state) { return certificate(state); }
-    public static Certificate get(AccountStateListImpl state) { return certificate(state); }
+    public static Certificate get(AccountStateArrayList state) { return certificate(state); }
     public static Certificate get(AccountStateBuilderImpl state) { return certificate(state); }
 }

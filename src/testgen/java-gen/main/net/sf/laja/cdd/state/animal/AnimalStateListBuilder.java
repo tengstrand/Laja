@@ -16,7 +16,7 @@ public final class AnimalStateListBuilder {
 
     public AnimalStateListBuilder() {
         certificate = Certificate.get(new AnimalStateImpl());
-        states = AnimalStateListImpl.emptyList();
+        states = AnimalStateArrayList.emptyList();
     }
 
     public AnimalStateListBuilder(AnimalStateList states) {

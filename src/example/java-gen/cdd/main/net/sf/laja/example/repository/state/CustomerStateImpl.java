@@ -1,7 +1,7 @@
 package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.AddressStateList;
-import net.sf.laja.example.repository.state.AddressStateListImpl;
+import net.sf.laja.example.repository.state.AddressStateArrayList;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -25,7 +25,7 @@ public class CustomerStateImpl implements CustomerState {
     private Object _encapsulator;
 
     CustomerStateImpl() {
-        oldAddresses = AddressStateListImpl.emptyList();
+        oldAddresses = AddressStateArrayList.emptyList();
     }
 
     public CustomerStateImpl(Certificate certificate) {
