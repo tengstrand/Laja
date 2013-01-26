@@ -13,14 +13,14 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
     protected CarStateList stateList;
     protected final List<Car> list;
 
-    public CarArrayList(Car... list) {
+    public CarArrayList(Car... array) {
         this.list = new ArrayList<Car>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public CarArrayList(Collection<Car> list) {
+    public CarArrayList(Collection<Car> collection) {
         this.list = new ArrayList<Car>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public CarArrayList(CarStateList stateList) {

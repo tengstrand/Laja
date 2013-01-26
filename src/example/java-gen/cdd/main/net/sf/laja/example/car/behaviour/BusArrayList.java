@@ -13,14 +13,14 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
     protected BusStateList stateList;
     protected final List<Bus> list;
 
-    public BusArrayList(Bus... list) {
+    public BusArrayList(Bus... array) {
         this.list = new ArrayList<Bus>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public BusArrayList(Collection<Bus> list) {
+    public BusArrayList(Collection<Bus> collection) {
         this.list = new ArrayList<Bus>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public BusArrayList(BusStateList stateList) {

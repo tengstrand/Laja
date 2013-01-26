@@ -25,14 +25,14 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
     protected CustomerStateList stateList;
     protected final List<Customer> list;
 
-    public CustomerArrayList(Customer... list) {
+    public CustomerArrayList(Customer... array) {
         this.list = new ArrayList<Customer>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public CustomerArrayList(Collection<Customer> list) {
+    public CustomerArrayList(Collection<Customer> collection) {
         this.list = new ArrayList<Customer>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public CustomerArrayList(CustomerStateList stateList) {

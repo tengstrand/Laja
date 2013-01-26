@@ -1,12 +1,15 @@
 package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.CustomerStateImpl;
+import net.sf.laja.example.repository.state.CustomerStateHashSet;
 import net.sf.laja.example.repository.state.CustomerStateArrayList;
 import net.sf.laja.example.repository.state.CustomerStateBuilderImpl;
 import net.sf.laja.example.repository.state.AddressStateImpl;
+import net.sf.laja.example.repository.state.AddressStateHashSet;
 import net.sf.laja.example.repository.state.AddressStateArrayList;
 import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
 import net.sf.laja.example.repository.state.ZipcodeStateImpl;
+import net.sf.laja.example.repository.state.ZipcodeStateHashSet;
 import net.sf.laja.example.repository.state.ZipcodeStateArrayList;
 import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
 
@@ -28,14 +31,17 @@ public final class Certificate {
     }
 
     public static Certificate get(CustomerStateImpl state) { return certificate(state); }
+    public static Certificate get(CustomerStateHashSet state) { return certificate(state); }
     public static Certificate get(CustomerStateArrayList state) { return certificate(state); }
     public static Certificate get(CustomerStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(AddressStateImpl state) { return certificate(state); }
+    public static Certificate get(AddressStateHashSet state) { return certificate(state); }
     public static Certificate get(AddressStateArrayList state) { return certificate(state); }
     public static Certificate get(AddressStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(ZipcodeStateImpl state) { return certificate(state); }
+    public static Certificate get(ZipcodeStateHashSet state) { return certificate(state); }
     public static Certificate get(ZipcodeStateArrayList state) { return certificate(state); }
     public static Certificate get(ZipcodeStateBuilderImpl state) { return certificate(state); }
 }

@@ -13,14 +13,14 @@ public class WritableFileArrayList implements WritableFileList, RandomAccess, Cl
     protected FileStateList stateList;
     protected final List<WritableFile> list;
 
-    public WritableFileArrayList(WritableFile... list) {
+    public WritableFileArrayList(WritableFile... array) {
         this.list = new ArrayList<WritableFile>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public WritableFileArrayList(Collection<WritableFile> list) {
+    public WritableFileArrayList(Collection<WritableFile> collection) {
         this.list = new ArrayList<WritableFile>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<WritableFile> {

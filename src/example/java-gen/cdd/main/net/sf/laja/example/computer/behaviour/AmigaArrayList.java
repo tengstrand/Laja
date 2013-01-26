@@ -13,14 +13,14 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
     protected ComputerStateList stateList;
     protected final List<Amiga> list;
 
-    public AmigaArrayList(Amiga... list) {
+    public AmigaArrayList(Amiga... array) {
         this.list = new ArrayList<Amiga>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public AmigaArrayList(Collection<Amiga> list) {
+    public AmigaArrayList(Collection<Amiga> collection) {
         this.list = new ArrayList<Amiga>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public AmigaArrayList(ComputerStateList stateList, Configuration context) {

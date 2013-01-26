@@ -1,6 +1,7 @@
 package net.sf.laja.example.account.state;
 
 import net.sf.laja.example.account.state.AccountStateImpl;
+import net.sf.laja.example.account.state.AccountStateHashSet;
 import net.sf.laja.example.account.state.AccountStateArrayList;
 import net.sf.laja.example.account.state.AccountStateBuilderImpl;
 
@@ -22,6 +23,7 @@ public final class Certificate {
     }
 
     public static Certificate get(AccountStateImpl state) { return certificate(state); }
+    public static Certificate get(AccountStateHashSet state) { return certificate(state); }
     public static Certificate get(AccountStateArrayList state) { return certificate(state); }
     public static Certificate get(AccountStateBuilderImpl state) { return certificate(state); }
 }

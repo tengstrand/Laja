@@ -16,14 +16,14 @@ public class CustomerInGuiArrayList implements CustomerInGuiList, RandomAccess, 
     protected CustomerStateList stateList;
     protected final List<CustomerInGui> list;
 
-    public CustomerInGuiArrayList(CustomerInGui... list) {
+    public CustomerInGuiArrayList(CustomerInGui... array) {
         this.list = new ArrayList<CustomerInGui>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public CustomerInGuiArrayList(Collection<CustomerInGui> list) {
+    public CustomerInGuiArrayList(Collection<CustomerInGui> collection) {
         this.list = new ArrayList<CustomerInGui>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<CustomerInGui> {

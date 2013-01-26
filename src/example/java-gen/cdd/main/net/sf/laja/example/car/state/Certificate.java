@@ -1,21 +1,27 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.OwnerStateImpl;
+import net.sf.laja.example.car.state.OwnerStateHashSet;
 import net.sf.laja.example.car.state.OwnerStateArrayList;
 import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
 import net.sf.laja.example.car.state.CarStateImpl;
+import net.sf.laja.example.car.state.CarStateHashSet;
 import net.sf.laja.example.car.state.CarStateArrayList;
 import net.sf.laja.example.car.state.CarStateBuilderImpl;
 import net.sf.laja.example.car.state.TruckStateImpl;
+import net.sf.laja.example.car.state.TruckStateHashSet;
 import net.sf.laja.example.car.state.TruckStateArrayList;
 import net.sf.laja.example.car.state.TruckStateBuilderImpl;
 import net.sf.laja.example.car.state.TruckTypeStateImpl;
+import net.sf.laja.example.car.state.TruckTypeStateHashSet;
 import net.sf.laja.example.car.state.TruckTypeStateArrayList;
 import net.sf.laja.example.car.state.TruckTypeStateBuilderImpl;
 import net.sf.laja.example.car.state.VehicleSizeStateImpl;
+import net.sf.laja.example.car.state.VehicleSizeStateHashSet;
 import net.sf.laja.example.car.state.VehicleSizeStateArrayList;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
 import net.sf.laja.example.car.state.BusStateImpl;
+import net.sf.laja.example.car.state.BusStateHashSet;
 import net.sf.laja.example.car.state.BusStateArrayList;
 import net.sf.laja.example.car.state.BusStateBuilderImpl;
 
@@ -37,26 +43,32 @@ public final class Certificate {
     }
 
     public static Certificate get(OwnerStateImpl state) { return certificate(state); }
+    public static Certificate get(OwnerStateHashSet state) { return certificate(state); }
     public static Certificate get(OwnerStateArrayList state) { return certificate(state); }
     public static Certificate get(OwnerStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(CarStateImpl state) { return certificate(state); }
+    public static Certificate get(CarStateHashSet state) { return certificate(state); }
     public static Certificate get(CarStateArrayList state) { return certificate(state); }
     public static Certificate get(CarStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(TruckStateImpl state) { return certificate(state); }
+    public static Certificate get(TruckStateHashSet state) { return certificate(state); }
     public static Certificate get(TruckStateArrayList state) { return certificate(state); }
     public static Certificate get(TruckStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(TruckTypeStateImpl state) { return certificate(state); }
+    public static Certificate get(TruckTypeStateHashSet state) { return certificate(state); }
     public static Certificate get(TruckTypeStateArrayList state) { return certificate(state); }
     public static Certificate get(TruckTypeStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(VehicleSizeStateImpl state) { return certificate(state); }
+    public static Certificate get(VehicleSizeStateHashSet state) { return certificate(state); }
     public static Certificate get(VehicleSizeStateArrayList state) { return certificate(state); }
     public static Certificate get(VehicleSizeStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(BusStateImpl state) { return certificate(state); }
+    public static Certificate get(BusStateHashSet state) { return certificate(state); }
     public static Certificate get(BusStateArrayList state) { return certificate(state); }
     public static Certificate get(BusStateBuilderImpl state) { return certificate(state); }
 }

@@ -17,14 +17,14 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
     protected DirectoryStateList stateList;
     protected final List<Directory> list;
 
-    public DirectoryArrayList(Directory... list) {
+    public DirectoryArrayList(Directory... array) {
         this.list = new ArrayList<Directory>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public DirectoryArrayList(Collection<Directory> list) {
+    public DirectoryArrayList(Collection<Directory> collection) {
         this.list = new ArrayList<Directory>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public DirectoryArrayList(DirectoryStateList stateList) {

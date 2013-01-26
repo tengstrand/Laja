@@ -1,9 +1,11 @@
 package net.sf.laja.example.file.state;
 
 import net.sf.laja.example.file.state.FileStateImpl;
+import net.sf.laja.example.file.state.FileStateHashSet;
 import net.sf.laja.example.file.state.FileStateArrayList;
 import net.sf.laja.example.file.state.FileStateBuilderImpl;
 import net.sf.laja.example.file.state.DirectoryStateImpl;
+import net.sf.laja.example.file.state.DirectoryStateHashSet;
 import net.sf.laja.example.file.state.DirectoryStateArrayList;
 import net.sf.laja.example.file.state.DirectoryStateBuilderImpl;
 
@@ -25,10 +27,12 @@ public final class Certificate {
     }
 
     public static Certificate get(FileStateImpl state) { return certificate(state); }
+    public static Certificate get(FileStateHashSet state) { return certificate(state); }
     public static Certificate get(FileStateArrayList state) { return certificate(state); }
     public static Certificate get(FileStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(DirectoryStateImpl state) { return certificate(state); }
+    public static Certificate get(DirectoryStateHashSet state) { return certificate(state); }
     public static Certificate get(DirectoryStateArrayList state) { return certificate(state); }
     public static Certificate get(DirectoryStateBuilderImpl state) { return certificate(state); }
 }

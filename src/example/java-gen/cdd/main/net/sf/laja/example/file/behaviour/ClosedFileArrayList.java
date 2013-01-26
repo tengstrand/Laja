@@ -17,14 +17,14 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
     protected FileStateList stateList;
     protected final List<ClosedFile> list;
 
-    public ClosedFileArrayList(ClosedFile... list) {
+    public ClosedFileArrayList(ClosedFile... array) {
         this.list = new ArrayList<ClosedFile>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public ClosedFileArrayList(Collection<ClosedFile> list) {
+    public ClosedFileArrayList(Collection<ClosedFile> collection) {
         this.list = new ArrayList<ClosedFile>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public ClosedFileArrayList(FileStateList stateList, Directory directory) {

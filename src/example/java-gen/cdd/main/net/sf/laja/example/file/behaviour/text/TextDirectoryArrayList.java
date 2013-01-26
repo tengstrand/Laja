@@ -16,14 +16,14 @@ public class TextDirectoryArrayList implements TextDirectoryList, RandomAccess, 
     protected DirectoryStateList stateList;
     protected final List<TextDirectory> list;
 
-    public TextDirectoryArrayList(TextDirectory... list) {
+    public TextDirectoryArrayList(TextDirectory... array) {
         this.list = new ArrayList<TextDirectory>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TextDirectoryArrayList(Collection<TextDirectory> list) {
+    public TextDirectoryArrayList(Collection<TextDirectory> collection) {
         this.list = new ArrayList<TextDirectory>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<TextDirectory> {

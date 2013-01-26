@@ -16,14 +16,14 @@ public class CustomerInDbArrayList implements CustomerInDbList, RandomAccess, Cl
     protected CustomerStateList stateList;
     protected final List<CustomerInDb> list;
 
-    public CustomerInDbArrayList(CustomerInDb... list) {
+    public CustomerInDbArrayList(CustomerInDb... array) {
         this.list = new ArrayList<CustomerInDb>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public CustomerInDbArrayList(Collection<CustomerInDb> list) {
+    public CustomerInDbArrayList(Collection<CustomerInDb> collection) {
         this.list = new ArrayList<CustomerInDb>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<CustomerInDb> {

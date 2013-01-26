@@ -13,14 +13,14 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
     protected AccountStateList stateList;
     protected final List<DestinationAccount> list;
 
-    public DestinationAccountArrayList(DestinationAccount... list) {
+    public DestinationAccountArrayList(DestinationAccount... array) {
         this.list = new ArrayList<DestinationAccount>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public DestinationAccountArrayList(Collection<DestinationAccount> list) {
+    public DestinationAccountArrayList(Collection<DestinationAccount> collection) {
         this.list = new ArrayList<DestinationAccount>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public DestinationAccountArrayList(AccountStateList stateList) {

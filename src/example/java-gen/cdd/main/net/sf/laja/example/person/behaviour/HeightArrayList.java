@@ -13,14 +13,14 @@ public class HeightArrayList implements HeightList, RandomAccess, Cloneable, jav
     protected HeightStateList stateList;
     protected final List<Height> list;
 
-    public HeightArrayList(Height... list) {
+    public HeightArrayList(Height... array) {
         this.list = new ArrayList<Height>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public HeightArrayList(Collection<Height> list) {
+    public HeightArrayList(Collection<Height> collection) {
         this.list = new ArrayList<Height>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public HeightArrayList(HeightStateList stateList) {

@@ -13,14 +13,14 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
     protected AccountStateList stateList;
     protected final List<SourceAccount> list;
 
-    public SourceAccountArrayList(SourceAccount... list) {
+    public SourceAccountArrayList(SourceAccount... array) {
         this.list = new ArrayList<SourceAccount>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public SourceAccountArrayList(Collection<SourceAccount> list) {
+    public SourceAccountArrayList(Collection<SourceAccount> collection) {
         this.list = new ArrayList<SourceAccount>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public SourceAccountArrayList(AccountStateList stateList) {

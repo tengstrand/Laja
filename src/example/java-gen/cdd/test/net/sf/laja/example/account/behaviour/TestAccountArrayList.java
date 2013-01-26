@@ -13,14 +13,14 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
     protected AccountStateList stateList;
     protected final List<TestAccount> list;
 
-    public TestAccountArrayList(TestAccount... list) {
+    public TestAccountArrayList(TestAccount... array) {
         this.list = new ArrayList<TestAccount>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TestAccountArrayList(Collection<TestAccount> list) {
+    public TestAccountArrayList(Collection<TestAccount> collection) {
         this.list = new ArrayList<TestAccount>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public TestAccountArrayList(AccountStateList stateList) {

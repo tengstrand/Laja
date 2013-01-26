@@ -13,14 +13,14 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
     protected ComputerStateList stateList;
     protected final List<AtariFalcon030> list;
 
-    public AtariFalcon030ArrayList(AtariFalcon030... list) {
+    public AtariFalcon030ArrayList(AtariFalcon030... array) {
         this.list = new ArrayList<AtariFalcon030>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public AtariFalcon030ArrayList(Collection<AtariFalcon030> list) {
+    public AtariFalcon030ArrayList(Collection<AtariFalcon030> collection) {
         this.list = new ArrayList<AtariFalcon030>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public AtariFalcon030ArrayList(ComputerStateList stateList) {

@@ -13,14 +13,14 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
     protected BmiStateList stateList;
     protected final List<BodyMassIndex> list;
 
-    public BodyMassIndexArrayList(BodyMassIndex... list) {
+    public BodyMassIndexArrayList(BodyMassIndex... array) {
         this.list = new ArrayList<BodyMassIndex>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public BodyMassIndexArrayList(Collection<BodyMassIndex> list) {
+    public BodyMassIndexArrayList(Collection<BodyMassIndex> collection) {
         this.list = new ArrayList<BodyMassIndex>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public BodyMassIndexArrayList(BmiStateList stateList) {

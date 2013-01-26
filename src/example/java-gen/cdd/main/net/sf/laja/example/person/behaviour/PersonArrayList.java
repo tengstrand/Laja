@@ -13,14 +13,14 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
     protected PersonStateList stateList;
     protected final List<Person> list;
 
-    public PersonArrayList(Person... list) {
+    public PersonArrayList(Person... array) {
         this.list = new ArrayList<Person>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public PersonArrayList(Collection<Person> list) {
+    public PersonArrayList(Collection<Person> collection) {
         this.list = new ArrayList<Person>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public PersonArrayList(PersonStateList stateList) {

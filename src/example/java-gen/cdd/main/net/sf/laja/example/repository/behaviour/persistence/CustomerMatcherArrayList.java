@@ -13,14 +13,14 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
     protected CustomerStateList stateList;
     protected final List<CustomerMatcher> list;
 
-    public CustomerMatcherArrayList(CustomerMatcher... list) {
+    public CustomerMatcherArrayList(CustomerMatcher... array) {
         this.list = new ArrayList<CustomerMatcher>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public CustomerMatcherArrayList(Collection<CustomerMatcher> list) {
+    public CustomerMatcherArrayList(Collection<CustomerMatcher> collection) {
         this.list = new ArrayList<CustomerMatcher>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public CustomerMatcherArrayList(CustomerStateList stateList) {

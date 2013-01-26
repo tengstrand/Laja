@@ -13,14 +13,14 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
     protected VehicleSizeStateList stateList;
     protected final List<VehicleSize> list;
 
-    public VehicleSizeArrayList(VehicleSize... list) {
+    public VehicleSizeArrayList(VehicleSize... array) {
         this.list = new ArrayList<VehicleSize>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public VehicleSizeArrayList(Collection<VehicleSize> list) {
+    public VehicleSizeArrayList(Collection<VehicleSize> collection) {
         this.list = new ArrayList<VehicleSize>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public VehicleSizeArrayList(VehicleSizeStateList stateList) {

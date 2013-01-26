@@ -13,14 +13,14 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
     protected TruckTypeStateList stateList;
     protected final List<TruckType> list;
 
-    public TruckTypeArrayList(TruckType... list) {
+    public TruckTypeArrayList(TruckType... array) {
         this.list = new ArrayList<TruckType>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TruckTypeArrayList(Collection<TruckType> list) {
+    public TruckTypeArrayList(Collection<TruckType> collection) {
         this.list = new ArrayList<TruckType>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public TruckTypeArrayList(TruckTypeStateList stateList) {

@@ -13,14 +13,14 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
     protected AddressStateList stateList;
     protected final List<Address> list;
 
-    public AddressArrayList(Address... list) {
+    public AddressArrayList(Address... array) {
         this.list = new ArrayList<Address>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public AddressArrayList(Collection<Address> list) {
+    public AddressArrayList(Collection<Address> collection) {
         this.list = new ArrayList<Address>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public AddressArrayList(AddressStateList stateList) {

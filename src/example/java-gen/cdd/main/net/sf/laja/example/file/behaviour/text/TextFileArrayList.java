@@ -13,14 +13,14 @@ public class TextFileArrayList implements TextFileList, RandomAccess, Cloneable,
     protected FileStateList stateList;
     protected final List<TextFile> list;
 
-    public TextFileArrayList(TextFile... list) {
+    public TextFileArrayList(TextFile... array) {
         this.list = new ArrayList<TextFile>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TextFileArrayList(Collection<TextFile> list) {
+    public TextFileArrayList(Collection<TextFile> collection) {
         this.list = new ArrayList<TextFile>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<TextFile> {

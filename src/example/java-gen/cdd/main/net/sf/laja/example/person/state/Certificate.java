@@ -1,12 +1,15 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiStateImpl;
+import net.sf.laja.example.person.state.BmiStateHashSet;
 import net.sf.laja.example.person.state.BmiStateArrayList;
 import net.sf.laja.example.person.state.BmiStateBuilderImpl;
 import net.sf.laja.example.person.state.HeightStateImpl;
+import net.sf.laja.example.person.state.HeightStateHashSet;
 import net.sf.laja.example.person.state.HeightStateArrayList;
 import net.sf.laja.example.person.state.HeightStateBuilderImpl;
 import net.sf.laja.example.person.state.PersonStateImpl;
+import net.sf.laja.example.person.state.PersonStateHashSet;
 import net.sf.laja.example.person.state.PersonStateArrayList;
 import net.sf.laja.example.person.state.PersonStateBuilderImpl;
 
@@ -28,14 +31,17 @@ public final class Certificate {
     }
 
     public static Certificate get(BmiStateImpl state) { return certificate(state); }
+    public static Certificate get(BmiStateHashSet state) { return certificate(state); }
     public static Certificate get(BmiStateArrayList state) { return certificate(state); }
     public static Certificate get(BmiStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(HeightStateImpl state) { return certificate(state); }
+    public static Certificate get(HeightStateHashSet state) { return certificate(state); }
     public static Certificate get(HeightStateArrayList state) { return certificate(state); }
     public static Certificate get(HeightStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(PersonStateImpl state) { return certificate(state); }
+    public static Certificate get(PersonStateHashSet state) { return certificate(state); }
     public static Certificate get(PersonStateArrayList state) { return certificate(state); }
     public static Certificate get(PersonStateBuilderImpl state) { return certificate(state); }
 }

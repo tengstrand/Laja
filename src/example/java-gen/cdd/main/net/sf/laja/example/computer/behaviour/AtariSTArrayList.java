@@ -13,14 +13,14 @@ public class AtariSTArrayList implements AtariSTList, RandomAccess, Cloneable, j
     protected ComputerStateList stateList;
     protected final List<AtariST> list;
 
-    public AtariSTArrayList(AtariST... list) {
+    public AtariSTArrayList(AtariST... array) {
         this.list = new ArrayList<AtariST>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public AtariSTArrayList(Collection<AtariST> list) {
+    public AtariSTArrayList(Collection<AtariST> collection) {
         this.list = new ArrayList<AtariST>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public AtariSTArrayList(ComputerStateList stateList) {

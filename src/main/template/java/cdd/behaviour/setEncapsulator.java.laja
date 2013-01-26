@@ -49,9 +49,11 @@ public class {setEncapsulatorClass} implements Iterable<{encapsulatorClass}> {
 }
 #end
 
-#macro importsList()
+#macro importsCollections()
   #foreach (method in behaviour.asMethods where method.isFactory)
     #foreach (import in behaviour.imports where import.endsWithType(method.returnclass))
+import {import.fullclassname}Set;
+import {import.fullclassname}HashSet;
 import {import.fullclassname}List;
 import {import.fullclassname}ArrayList;
      #end
@@ -63,7 +65,7 @@ package {behaviour.packagename};
 
 import java.util.*;
     #importsBegin()
-    #importsList()
+    #importsCollections()
     #importsEnd()
     #class()
 #end
