@@ -11,16 +11,19 @@
 #set (constructorClass = "{behaviourClass}Constructor")
 #set (creatorClass = "{behaviour.classname}Creator")
 #set (encapsulatorClass = "{behaviour.classname}Encapsulator")
+#set (setEncapsulatorClass = "{behaviour.classname}SetEncapsulator")
 #set (listEncapsulatorClass = "{behaviour.classname}ListEncapsulator")
 
 #set (stateClass = behaviour.stateClass)
 #set (stateImplClass = behaviour.stateImplClass)
+#set (stateSetClass = "{stateClass}Set")
 #set (stateListClass = "{stateClass}List")
 #set (stateArrayListClass = "{stateClass}ArrayList")
 
 #set (stateBuilderClass = "{stateClass}Builder")
 #set (stateBuilderImplClass = "{stateBuilderClass}Impl")
 #set (stateBehaviourClass = "{behaviour.cleanedStateClass}Behaviour")
+#set (stateSetBuilder = "{stateClass}SetBuilder")
 #set (stateListBuilder = "{stateClass}ListBuilder")
 
 #set (template = templates.get(behaviour.cleanedStateClass))
@@ -59,12 +62,14 @@
   #end
 #end
 
-#macro prepareList(outputDirArg, outDirArg)
+#macro prepareCollection(outputDirArg, outDirArg)
   #set (entryClass = method.returnclass)
+  #set (setInterface = method.setInterface)
   #set (listInterface = method.listInterface)
+  #set (hashSetClass = method.hashSetClass)
   #set (arrayListClass = method.arrayListClass)
   #set (packagename = behaviour.packagename)
-  #set (listOutputDir = outputDirArg)
+  #set (collectionOutputDir = outputDirArg)
   #set (asBehaviour = behaviours.get(entryClass))
   #if (asBehaviour == null)
     #set (asBehaviour = behaviour)
@@ -76,7 +81,7 @@
   #set (stateBuilderImplClass = "{stateBuilderClass}Impl")
   #foreach (import in behaviour.imports where import.endsWithType(method.returnclass))
     #set (packagename = statementConverter.asPackageName(import.fullclassname))
-    #set (listOutputDir = directoryConverter.asDirectory(outDirArg, import.fullclassname))
+    #set (collectionOutputDir = directoryConverter.asDirectory(outDirArg, import.fullclassname))
   #end
 #end
 
@@ -121,7 +126,7 @@ import {behaviourRef.packagename}.{attribute.listEncapsulator};
 
 #end
 
-#macro listImports()
+#macro collectionImports(isList)
   #foreach (m in asBehaviour.asMethods where m.methodName != method.methodName)
     #set (behaviourRef = behaviours.get(m.returnclass))
     #if (behaviourRef == null)
@@ -130,8 +135,13 @@ import {behaviourRef.packagename}.{attribute.listEncapsulator};
     #if (behaviourRef.packagename != packagename)
 
 import {behaviourRef.packagename}.{m.returnclass};
+      #if (isList)
 import {behaviourRef.packagename}.{m.listInterface};
 import {behaviourRef.packagename}.{m.arrayListClass};
+      #else
+import {behaviourRef.packagename}.{m.setInterface};
+import {behaviourRef.packagename}.{m.hashSetClass};
+      #end
     #end
   #end
   #if (!method.isFactory)
@@ -146,4 +156,12 @@ import {behaviourRef.packagename}.{m.returnclass}Factory;
       #set (first = false)
     #end
   #end
+#end
+
+#macro setImports()
+  #collectionImports(false)
+#end
+
+#macro listImports()
+  #collectionImports(true)
 #end

@@ -1,10 +1,10 @@
 
 #macro fileContent()
   #package()
-import java.util.List;
+import java.util.Set;
 
   #header()
-public interface {stateListClass} extends List<{stateClass}> {
+public interface {stateSetClass} extends Set<{stateClass}> {
     Certificate certificate();
     boolean isValid();
     void encapsulate(Object encapsulator);
@@ -12,5 +12,5 @@ public interface {stateListClass} extends List<{stateClass}> {
 }
 #end
 
-#set (filename = "{outputDir}/{stateListClass}.java")
+#set (filename = "{outputDir}/{stateSetClass}.java")
 #generateFile(filename, fileContent())

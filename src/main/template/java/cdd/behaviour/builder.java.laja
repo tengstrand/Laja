@@ -15,7 +15,12 @@ public class {builderClass} {
     }
   #foreach (attribute in template.attributes where attribute.isBuilderMethod)
 
-    #if (attribute.isStateList)
+    #if (attribute.isStateSet)
+    public {builderClass} {attribute.withMethod}({attribute.setEncapsulator} {attribute.variable}) {
+        builder.{attribute.withMethod}({attribute.variable}.stateSetBuilder);
+        return this;
+    }
+    #else if (attribute.isStateList)
     public {builderClass} {attribute.withMethod}({attribute.listEncapsulator} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.stateListBuilder);
         return this;

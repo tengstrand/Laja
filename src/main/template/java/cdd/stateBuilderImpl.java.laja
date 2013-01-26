@@ -30,7 +30,11 @@ public class {builderImplClass} implements {builderClass} {
   #end
   #foreach (attribute in attributes)
 
-    #if (attribute.isStateList)
+    #if (attribute.isStateSet)
+      #set (template = templates.get(attribute.cleanedStateType))
+    public void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder) {
+        state.{attribute.setter}(listBuilder.getStateSet(certificate), encapsulator);
+    #else if (attribute.isStateList)
       #set (template = templates.get(attribute.cleanedStateType))
     public void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder) {
         state.{attribute.setter}(listBuilder.getStateList(certificate), encapsulator);

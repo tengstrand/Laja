@@ -1,13 +1,15 @@
 
 #set (certificateClass = "Certificate")
 #set (stateClass = "{classname}State")
+#set (stateSetClass = "{stateClass}Set")
 #set (stateListClass = "{stateClass}List")
-#set (stateClassTemplate = "{stateClass}Template")
-#set (stateListClass = "{stateClass}List")
+#set (stateHashSetClass = "{stateClass}HashSet")
 #set (stateArrayListClass = "{stateClass}ArrayList")
+#set (stateClassTemplate = "{stateClass}Template")
 #set (builderClass = "{stateClass}Builder")
 #set (builderImplClass = "{stateClass}BuilderImpl")
 #set (stateProjectionClass = "{stateClass}Projection")
+#set (stateSetBuilder = "{stateSetClass}Builder")
 #set (stateListBuilder = "{stateListClass}Builder")
 #set (stateBehaviourClass = "{classname}Behaviour")
 #set (stateBehaviourFactoryClass = "{classname}BehaviourFactory")
@@ -106,6 +108,16 @@ import {expandedType.importStatement}{suffix};
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
 import {template.packagename}.{attribute.type};
+      #set (hasImports = true)
+    #end
+  #end
+#end
+
+#macro importStateHashSet()
+  #foreach (attribute in attributes where attribute.isStateSet)
+    #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
+      #set (template = templates.get(key))
+import {template.packagename}.{template.stateClass}HashSet;
       #set (hasImports = true)
     #end
   #end

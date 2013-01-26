@@ -1,0 +1,78 @@
+#macro class()
+  #header()
+public final class {stateSetBuilder} {
+    private final Certificate certificate;
+    private final {stateSetClass} states;
+
+    public {stateSetBuilder}() {
+        certificate = Certificate.get(new {stateImplClass}());
+        states = {stateHashSetClass}.emptySet();
+    }
+
+    public {stateSetBuilder}({stateSetClass} states) {
+        this.states = states;
+        certificate = Certificate.get(new {stateImplClass}());
+    }
+
+    public {stateSetClass} getStateSet({certificateClass} certificate) {
+        return states;
+    }
+
+    public List<{builderClass}> getStateBuilders() {
+        List<{builderClass}> builders = new ArrayList<{builderClass}>(states.size());
+
+        for ({stateClass} state : states) {
+            builders.add(new {builderImplClass}(state));
+        }
+        return builders;
+    }
+
+    public int size() {
+        return states.size();
+    }
+
+    public void clear() {
+        states.clear();
+    }
+
+    public void add({builderClass} builder) {
+        states.add(builder.get{stateClass}(certificate));
+    }
+
+    public void add({stateClass} state) {
+        states.add(state);
+    }
+
+    public boolean remove({stateClass} state) {
+        return states.remove(state);
+    }
+
+    public void remove(int index) {
+        states.remove(index);
+    }
+
+    public void retainAll({stateSetBuilder} retainStates) {
+        states.retainAll(retainStates.states);
+    }
+
+    @Override
+    public String toString() {
+        return "{stateSetBuilder}{" + states + "}";
+    }
+}
+#end
+
+#macro fileContent()
+  #package()
+  #importCertificate()
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+  #class()
+#end
+
+#set (filename = "{outputDir}/{stateSetBuilder}.java")
+#generateFile(filename, fileContent())

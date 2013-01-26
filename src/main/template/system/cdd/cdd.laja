@@ -252,21 +252,26 @@
     #end
 
     #import "{..}/../java/cdd/shared.java.laja"
+    #import "{..}/../java/cdd/state.java.laja"
     #import "{..}/../java/cdd/stateImpl.java.laja"
+    #import "{..}/../java/cdd/stateSet.java.laja"
+    #import "{..}/../java/cdd/stateList.java.laja"
+    #import "{..}/../java/cdd/stateHashSet.java.laja"
     #import "{..}/../java/cdd/stateArrayList.java.laja"
     #import "{..}/../java/cdd/stateBuilder.java.laja"
     #import "{..}/../java/cdd/stateBuilderImpl.java.laja"
     #import "{..}/../java/cdd/stateProjection.java.laja"
+    #import "{..}/../java/cdd/stateSetBuilder.java.laja"
     #import "{..}/../java/cdd/stateListBuilder.java.laja"
-    #import "{..}/../java/cdd/state.java.laja"
-    #import "{..}/../java/cdd/stateList.java.laja"
     #import "{..}/../java/cdd/stateBehaviour.java.laja"
     #import "{..}/../java/cdd/stateBehaviourFactory.java.laja"
   #end
 #end
 
 #macro generateBehaviour()
+  #set (processedSets = new java.util.HashSet())
   #set (processedLists = new java.util.HashSet())
+  #set (processedHashSets = new java.util.HashSet())
   #set (processedArrayLists = new java.util.HashSet())
   #foreach (behaviour in behaviours.values())
     #if (!directoryExists(behaviour.outputDir))
@@ -279,8 +284,11 @@
     #import "{..}/../java/cdd/behaviour/builder.java.laja"
     #import "{..}/../java/cdd/behaviour/creator.java.laja"
     #import "{..}/../java/cdd/behaviour/encapsulator.java.laja"
+    #import "{..}/../java/cdd/behaviour/set.java.laja"
     #import "{..}/../java/cdd/behaviour/list.java.laja"
+    #import "{..}/../java/cdd/behaviour/hashSet.java.laja"
     #import "{..}/../java/cdd/behaviour/arrayList.java.laja"
+    #import "{..}/../java/cdd/behaviour/setEncapsulator.java.laja"
     #import "{..}/../java/cdd/behaviour/listEncapsulator.java.laja"
   #end
 #end

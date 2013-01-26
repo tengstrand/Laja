@@ -427,6 +427,7 @@ public class {stateImplClass} implements {stateClass} {
   #package()
   #importBegin(false)
   #importState()
+  #importStateHashSet()
   #importStateArrayList()
   #importCertificate()
   #importEnd()

@@ -1,3 +1,4 @@
+
 == Laja2-007-alpha ==
 Released: 2013-??-??
 
@@ -16,8 +17,10 @@ Includes:
 ** (id) is now included in method equalsValue, hashCodeValue has been removed.
 ** If no attributes is included in hashCode and equals, then super.hashCode and super.equals is called.
 * The class Certificate has been made final.
-* Fixed a bug in lists which arose when having more than one as-method with extra parameters.
-* Wasn't able to reproduce the problem when using a mix of constructors in different behaviour representations (state) + (state, stateBuilder), so maybe it's fixed!
+* Fixed a bug in lists that occurred when having more than one as-method with extra parameters.
+* The problem that arose when mixed constructors in different behaviour representations (state) + (state, stateBuilder) can no longer be reproduced.
+* Changed name from XStateListImpl to XStateArrayList (where X is the state class).
+
 
 == Laja2-006-alpha ==
 Released: 2013-01-04

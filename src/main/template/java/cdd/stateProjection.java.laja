@@ -49,6 +49,7 @@ public class {stateProjectionClass} {
   #package()
   #importBegin(false)
   #importState()
+  #importStateHashSet()
   #importStateArrayList()
   #importEnd()
   #class()

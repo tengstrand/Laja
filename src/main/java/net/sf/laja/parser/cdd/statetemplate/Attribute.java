@@ -21,6 +21,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isInclude;
     public boolean isExclude;
     public boolean isState;
+    public boolean isStateSet;
     public boolean isStateList;
     public boolean isHidden;
     public boolean isOptional;
@@ -43,6 +44,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
         result.isInclude = isInclude;
         result.isExclude = isExclude || isId;
         result.isState = isState;
+        result.isStateSet = isStateSet;
         result.isStateList = isStateList;
         result.isHidden = isHidden;
         result.isOptional = isOptional;
@@ -89,7 +91,13 @@ public class Attribute implements StateTemplateParser.IAttribute {
 
     public String typeAsStateImpl() {
         if (isState) {
-            return cleanedStateType + (isStateList ? "StateArrayList" : "StateImpl");
+            if (isStateSet) {
+                return cleanedStateType + "StateHashSet";
+            } else if (isStateList) {
+                return cleanedStateType + "StateArrayList";
+            } else {
+                return cleanedStateType + "StateImpl";
+            }
         }
         return type;
     }
@@ -102,20 +110,36 @@ public class Attribute implements StateTemplateParser.IAttribute {
         return cleanedStateType + "Encapsulator";
     }
 
+    public String getSetEncapsulator() {
+        return cleanedStateType + "SetEncapsulator";
+    }
+
     public String getListEncapsulator() {
         return cleanedStateType + "ListEncapsulator";
     }
 
     public String getStateBuilder() {
-        return isStateList ? cleanedStateType + "StateListBuilder" : cleanedStateType + "StateBuilder";
+        if (isStateSet) {
+            return cleanedStateType + "StateSetBuilder";
+        } else if (isStateList) {
+            return cleanedStateType + "StateListBuilder";
+        } else {
+            return cleanedStateType + "StateBuilder";
+        }
     }
 
     public String getStateBuilderImpl() {
-        return getStateBuilder() + (isStateList ? "" : "Impl");
+        return getStateBuilder() + (isStateSet || isStateList ? "" : "Impl");
     }
 
     public String getStateBuilderVariable() {
-        return variable + (isStateList ? "StateListBuilder" : "StateBuilder");
+        if (isStateSet) {
+            return variable + "StateSetBuilder";
+        } else if (isStateList) {
+            return variable + "StateListBuilder";
+        } else {
+            return variable + "StateBuilder";
+        }
     }
 
     public String getStateBuilderGetter() {
@@ -124,13 +148,17 @@ public class Attribute implements StateTemplateParser.IAttribute {
 
     public void setType(String type) {
         final String state = "State";
+        final String stateSet = "StateSet";
         final String stateList = "StateList";
 
         this.type = type.trim();
+        isStateSet = type.endsWith(stateSet);
         isStateList = type.endsWith(stateList);
-        isState = isStateList || type.endsWith(state);
+        isState = isStateSet || isStateList || type.endsWith(state);
         if (isState) {
-            if (isStateList) {
+            if (isStateSet) {
+                cleanedStateType = type.substring(0, type.length() - stateSet.length());
+            } else if (isStateList) {
                 cleanedStateType = type.substring(0, type.length() - stateList.length());
             } else {
                 cleanedStateType = type.substring(0, type.length() - state.length());
@@ -210,6 +238,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
                 ", isInclude=" + isInclude +
                 ", isExclude=" + isExclude +
                 ", isState=" + isState +
+                ", isStateSet=" + isStateSet +
                 ", isStateList=" + isStateList +
                 ", isHidden=" + isHidden +
                 ", isOptional=" + isOptional +

@@ -1,17 +1,17 @@
 #macro class()
   #header()
-public class {stateArrayListClass} extends ArrayList<{stateClass}> implements {stateListClass} {
+public class {stateHashSetClass} extends HashSet<{stateClass}> implements {stateSetClass} {
     private Object encapsulator;
 
-    public {stateArrayListClass}() {
+    public {stateHashSetClass}() {
     }
 
-    public {stateArrayListClass}(int size) {
+    public {stateHashSetClass}(int size) {
         super(size);
     }
 
-    public static {stateListClass} emptyList() {
-        return new {stateArrayListClass}();
+    public static {stateSetClass} emptySet() {
+        return new {stateHashSetClass}();
     }
 
     public Certificate certificate() {
@@ -52,5 +52,5 @@ import java.util.*;
   #class()
 #end
 
-#set (filename = "{outputDir}/{stateArrayListClass}.java")
+#set (filename = "{outputDir}/{stateHashSetClass}.java")
 #generateFile(filename, fileContent())

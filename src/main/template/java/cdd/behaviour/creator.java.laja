@@ -20,7 +20,16 @@ public class {creatorClass} {
       #set (nextClass = "{strings.capitalize(nextAttribute.variable)}_")
 
     public class {currentClass} {
-      #if (attribute.isStateList)
+      #if (attribute.isStateSet)
+        public {nextClass} {attribute.variable}() {
+            return new {nextClass}();
+        }
+
+        public {nextClass} {attribute.variable}({attribute.setEncapsulator} {attribute.variable}) {
+            builder.{attribute.withMethod}({attribute.variable}.stateSetBuilder);
+            return new {nextClass}();
+        }
+      #else if (attribute.isStateList)
         public {nextClass} {attribute.variable}() {
             return new {nextClass}();
         }
@@ -45,7 +54,13 @@ public class {creatorClass} {
     #else
 
     public class {currentClass} {
-      #if (attribute.isStateList)
+      #if (attribute.isStateSet)
+        public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
+            {attribute.setEncapsulator} encapsulator = new {attribute.setEncapsulator}({attribute.variable});
+            builder.{attribute.withMethod}(encapsulator.stateSetBuilder);
+            return create();
+        }
+      #else if (attribute.isStateList)
         public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
             {attribute.listEncapsulator} encapsulator = new {attribute.listEncapsulator}({attribute.variable});
             builder.{attribute.withMethod}(encapsulator.stateListBuilder);

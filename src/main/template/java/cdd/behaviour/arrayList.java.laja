@@ -19,14 +19,14 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
     protected {stateListClass} stateList;
     protected final List<{entryClass}> list;
 
-    public {arrayListClass}({entryClass}... list) {
+    public {arrayListClass}({entryClass}... array) {
         this.list = new ArrayList<{entryClass}>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public {arrayListClass}(Collection<{entryClass}> list) {
+    public {arrayListClass}(Collection<{entryClass}> collection) {
         this.list = new ArrayList<{entryClass}>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
   #if (method.isFactory)
 
@@ -288,14 +288,14 @@ public class {arrayListClass} implements {listInterface}, RandomAccess, Cloneabl
 #end
 
 #foreach (method in behaviour.asMethods)
-  #prepareList(outputDir, outDir)
+  #prepareCollection(outputDir, outDir)
 
   #if (!processedArrayLists.contains(arrayListClass))
     #processedArrayLists.add(arrayListClass)
-    #if (!directoryExists(listOutputDir))
-      #createDirectoryPath(listOutputDir)
+    #if (!directoryExists(collectionOutputDir))
+      #createDirectoryPath(collectionOutputDir)
     #end
-    #set (filename = "{listOutputDir}/{arrayListClass}.java")
+    #set (filename = "{collectionOutputDir}/{arrayListClass}.java")
     #generateFile(filename, fileContent())
   #end
 #end

@@ -6,7 +6,9 @@ public class AsMethod implements BehaviourParser.IAsMethod {
     public boolean isFactory;
     public String returnclass;
     public String methodName;
+    public String setInterface;
     public String listInterface;
+    public String hashSetClass;
     public String arrayListClass;
     public Parameters parameters;
     public String statement;
@@ -24,7 +26,9 @@ public class AsMethod implements BehaviourParser.IAsMethod {
     public void setMethodName(String methodName) {
         this.methodName = methodName;
         String methodAsClass = StringUtils.capitalize(methodName.substring(2));
+        setInterface = methodAsClass + "Set";
         listInterface = methodAsClass + "List";
+        hashSetClass = methodAsClass + "HashSet";
         arrayListClass = methodAsClass + "ArrayList";
     }
 
