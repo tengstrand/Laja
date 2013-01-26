@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected OwnerStateSet stateSet;
+    protected OwnerStateList stateSet;
     protected final Set<Owner> set;
 
     public OwnerHashSet(Owner... array) {
@@ -23,7 +23,7 @@ public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.
         this.set.addAll(collection);
     }
 
-    public OwnerHashSet(OwnerStateSet stateSet) {
+    public OwnerHashSet(OwnerStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Owner> elements = new HashSet<Owner>(stateSet.size());
@@ -37,9 +37,9 @@ public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.
     }
 
     public class StateInSyncSet extends HashSet<Owner> {
-        private final OwnerStateSet stateSet;
+        private final OwnerStateList stateSet;
 
-        public StateInSyncSet(OwnerStateSet stateSet, Set<Owner> elements) {
+        public StateInSyncSet(OwnerStateList stateSet, Set<Owner> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

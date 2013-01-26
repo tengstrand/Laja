@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class DestinationAccountHashSet implements DestinationAccountSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AccountStateSet stateSet;
+    protected AccountStateList stateSet;
     protected final Set<DestinationAccount> set;
 
     public DestinationAccountHashSet(DestinationAccount... array) {
@@ -23,7 +23,7 @@ public class DestinationAccountHashSet implements DestinationAccountSet, RandomA
         this.set.addAll(collection);
     }
 
-    public DestinationAccountHashSet(AccountStateSet stateSet) {
+    public DestinationAccountHashSet(AccountStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<DestinationAccount> elements = new HashSet<DestinationAccount>(stateSet.size());
@@ -37,9 +37,9 @@ public class DestinationAccountHashSet implements DestinationAccountSet, RandomA
     }
 
     public class StateInSyncSet extends HashSet<DestinationAccount> {
-        private final AccountStateSet stateSet;
+        private final AccountStateList stateSet;
 
-        public StateInSyncSet(AccountStateSet stateSet, Set<DestinationAccount> elements) {
+        public StateInSyncSet(AccountStateList stateSet, Set<DestinationAccount> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

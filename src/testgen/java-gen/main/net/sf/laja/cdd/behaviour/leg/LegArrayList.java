@@ -13,14 +13,14 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
     protected LegStateList stateList;
     protected final List<Leg> list;
 
-    public LegArrayList(Leg... list) {
+    public LegArrayList(Leg... array) {
         this.list = new ArrayList<Leg>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public LegArrayList(Collection<Leg> list) {
+    public LegArrayList(Collection<Leg> collection) {
         this.list = new ArrayList<Leg>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public LegArrayList(LegStateList stateList) {

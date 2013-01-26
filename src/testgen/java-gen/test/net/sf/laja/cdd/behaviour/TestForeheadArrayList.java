@@ -13,14 +13,14 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
     protected ForeheadStateList stateList;
     protected final List<TestForehead> list;
 
-    public TestForeheadArrayList(TestForehead... list) {
+    public TestForeheadArrayList(TestForehead... array) {
         this.list = new ArrayList<TestForehead>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TestForeheadArrayList(Collection<TestForehead> list) {
+    public TestForeheadArrayList(Collection<TestForehead> collection) {
         this.list = new ArrayList<TestForehead>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public TestForeheadArrayList(ForeheadStateList stateList) {

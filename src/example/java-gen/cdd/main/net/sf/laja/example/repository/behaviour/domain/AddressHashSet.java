@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AddressHashSet implements AddressSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AddressStateSet stateSet;
+    protected AddressStateList stateSet;
     protected final Set<Address> set;
 
     public AddressHashSet(Address... array) {
@@ -23,7 +23,7 @@ public class AddressHashSet implements AddressSet, RandomAccess, Cloneable, java
         this.set.addAll(collection);
     }
 
-    public AddressHashSet(AddressStateSet stateSet) {
+    public AddressHashSet(AddressStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Address> elements = new HashSet<Address>(stateSet.size());
@@ -37,9 +37,9 @@ public class AddressHashSet implements AddressSet, RandomAccess, Cloneable, java
     }
 
     public class StateInSyncSet extends HashSet<Address> {
-        private final AddressStateSet stateSet;
+        private final AddressStateList stateSet;
 
-        public StateInSyncSet(AddressStateSet stateSet, Set<Address> elements) {
+        public StateInSyncSet(AddressStateList stateSet, Set<Address> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

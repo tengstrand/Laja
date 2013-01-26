@@ -13,14 +13,14 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
     protected FootStateList stateList;
     protected final List<Foot> list;
 
-    public FootArrayList(Foot... list) {
+    public FootArrayList(Foot... array) {
         this.list = new ArrayList<Foot>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public FootArrayList(Collection<Foot> list) {
+    public FootArrayList(Collection<Foot> collection) {
         this.list = new ArrayList<Foot>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public FootArrayList(FootStateList stateList) {

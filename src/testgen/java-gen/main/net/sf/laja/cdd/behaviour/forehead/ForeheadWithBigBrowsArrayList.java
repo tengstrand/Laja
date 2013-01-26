@@ -13,14 +13,14 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
     protected ForeheadStateList stateList;
     protected final List<ForeheadWithBigBrows> list;
 
-    public ForeheadWithBigBrowsArrayList(ForeheadWithBigBrows... list) {
+    public ForeheadWithBigBrowsArrayList(ForeheadWithBigBrows... array) {
         this.list = new ArrayList<ForeheadWithBigBrows>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public ForeheadWithBigBrowsArrayList(Collection<ForeheadWithBigBrows> list) {
+    public ForeheadWithBigBrowsArrayList(Collection<ForeheadWithBigBrows> collection) {
         this.list = new ArrayList<ForeheadWithBigBrows>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public ForeheadWithBigBrowsArrayList(ForeheadStateList stateList) {

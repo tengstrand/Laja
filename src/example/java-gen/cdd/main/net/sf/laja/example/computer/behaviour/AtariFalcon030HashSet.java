@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, Cloneable, java.io.Serializable {
-    protected ComputerStateSet stateSet;
+    protected ComputerStateList stateSet;
     protected final Set<AtariFalcon030> set;
 
     public AtariFalcon030HashSet(AtariFalcon030... array) {
@@ -23,7 +23,7 @@ public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, C
         this.set.addAll(collection);
     }
 
-    public AtariFalcon030HashSet(ComputerStateSet stateSet) {
+    public AtariFalcon030HashSet(ComputerStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<AtariFalcon030> elements = new HashSet<AtariFalcon030>(stateSet.size());
@@ -37,9 +37,9 @@ public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, C
     }
 
     public class StateInSyncSet extends HashSet<AtariFalcon030> {
-        private final ComputerStateSet stateSet;
+        private final ComputerStateList stateSet;
 
-        public StateInSyncSet(ComputerStateSet stateSet, Set<AtariFalcon030> elements) {
+        public StateInSyncSet(ComputerStateList stateSet, Set<AtariFalcon030> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

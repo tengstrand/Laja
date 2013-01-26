@@ -13,14 +13,14 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
     protected MouthStateList stateList;
     protected final List<Mouth> list;
 
-    public MouthArrayList(Mouth... list) {
+    public MouthArrayList(Mouth... array) {
         this.list = new ArrayList<Mouth>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public MouthArrayList(Collection<Mouth> list) {
+    public MouthArrayList(Collection<Mouth> collection) {
         this.list = new ArrayList<Mouth>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public MouthArrayList(MouthStateList stateList, MouthSize size) {

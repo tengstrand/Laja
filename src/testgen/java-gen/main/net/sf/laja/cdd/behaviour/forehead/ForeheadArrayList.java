@@ -13,14 +13,14 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
     protected ForeheadStateList stateList;
     protected final List<Forehead> list;
 
-    public ForeheadArrayList(Forehead... list) {
+    public ForeheadArrayList(Forehead... array) {
         this.list = new ArrayList<Forehead>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public ForeheadArrayList(Collection<Forehead> list) {
+    public ForeheadArrayList(Collection<Forehead> collection) {
         this.list = new ArrayList<Forehead>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public ForeheadArrayList(ForeheadStateList stateList) {

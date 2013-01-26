@@ -17,14 +17,14 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
     protected MonsterStateList stateList;
     protected final List<Monster> list;
 
-    public MonsterArrayList(Monster... list) {
+    public MonsterArrayList(Monster... array) {
         this.list = new ArrayList<Monster>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public MonsterArrayList(Collection<Monster> list) {
+    public MonsterArrayList(Collection<Monster> collection) {
         this.list = new ArrayList<Monster>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public MonsterArrayList(MonsterStateList stateList) {

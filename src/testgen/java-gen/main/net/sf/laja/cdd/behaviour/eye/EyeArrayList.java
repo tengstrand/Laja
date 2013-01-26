@@ -17,14 +17,14 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
     protected EyeStateList stateList;
     protected final List<Eye> list;
 
-    public EyeArrayList(Eye... list) {
+    public EyeArrayList(Eye... array) {
         this.list = new ArrayList<Eye>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public EyeArrayList(Collection<Eye> list) {
+    public EyeArrayList(Collection<Eye> collection) {
         this.list = new ArrayList<Eye>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public EyeArrayList(EyeStateList stateList) {

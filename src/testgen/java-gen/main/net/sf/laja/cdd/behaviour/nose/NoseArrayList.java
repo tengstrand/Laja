@@ -13,14 +13,14 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
     protected NoseStateList stateList;
     protected final List<Nose> list;
 
-    public NoseArrayList(Nose... list) {
+    public NoseArrayList(Nose... array) {
         this.list = new ArrayList<Nose>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public NoseArrayList(Collection<Nose> list) {
+    public NoseArrayList(Collection<Nose> collection) {
         this.list = new ArrayList<Nose>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public NoseArrayList(NoseStateList stateList, int extraParameter) {

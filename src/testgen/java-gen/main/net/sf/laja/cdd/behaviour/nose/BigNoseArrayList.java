@@ -13,14 +13,14 @@ public class BigNoseArrayList implements BigNoseList, RandomAccess, Cloneable, j
     protected NoseStateList stateList;
     protected final List<BigNose> list;
 
-    public BigNoseArrayList(BigNose... list) {
+    public BigNoseArrayList(BigNose... array) {
         this.list = new ArrayList<BigNose>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public BigNoseArrayList(Collection<BigNose> list) {
+    public BigNoseArrayList(Collection<BigNose> collection) {
         this.list = new ArrayList<BigNose>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public BigNoseArrayList(NoseStateList stateList) {

@@ -13,14 +13,14 @@ public class AnimalArrayList implements AnimalList, RandomAccess, Cloneable, jav
     protected AnimalStateList stateList;
     protected final List<Animal> list;
 
-    public AnimalArrayList(Animal... list) {
+    public AnimalArrayList(Animal... array) {
         this.list = new ArrayList<Animal>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public AnimalArrayList(Collection<Animal> list) {
+    public AnimalArrayList(Collection<Animal> collection) {
         this.list = new ArrayList<Animal>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public AnimalArrayList(AnimalStateList stateList) {

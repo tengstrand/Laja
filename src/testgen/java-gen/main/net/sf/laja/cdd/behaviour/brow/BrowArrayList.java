@@ -13,14 +13,14 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
     protected BrowStateList stateList;
     protected final List<Brow> list;
 
-    public BrowArrayList(Brow... list) {
+    public BrowArrayList(Brow... array) {
         this.list = new ArrayList<Brow>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public BrowArrayList(Collection<Brow> list) {
+    public BrowArrayList(Collection<Brow> collection) {
         this.list = new ArrayList<Brow>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public BrowArrayList(BrowStateList stateList) {

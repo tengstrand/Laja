@@ -17,14 +17,14 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
     protected MouthStateList stateList;
     protected final List<TestMouth> list;
 
-    public TestMouthArrayList(TestMouth... list) {
+    public TestMouthArrayList(TestMouth... array) {
         this.list = new ArrayList<TestMouth>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TestMouthArrayList(Collection<TestMouth> list) {
+    public TestMouthArrayList(Collection<TestMouth> collection) {
         this.list = new ArrayList<TestMouth>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public TestMouthArrayList(MouthStateList stateList) {

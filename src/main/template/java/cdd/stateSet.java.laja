@@ -2,6 +2,7 @@
 #macro fileContent()
   #package()
 import java.util.Set;
+import {certificatePackage}.Certificate;
 
   #header()
 public interface {stateSetClass} extends Set<{stateClass}> {

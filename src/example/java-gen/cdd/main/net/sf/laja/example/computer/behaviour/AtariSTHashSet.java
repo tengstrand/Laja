@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AtariSTHashSet implements AtariSTSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ComputerStateSet stateSet;
+    protected ComputerStateList stateSet;
     protected final Set<AtariST> set;
 
     public AtariSTHashSet(AtariST... array) {
@@ -23,7 +23,7 @@ public class AtariSTHashSet implements AtariSTSet, RandomAccess, Cloneable, java
         this.set.addAll(collection);
     }
 
-    public AtariSTHashSet(ComputerStateSet stateSet) {
+    public AtariSTHashSet(ComputerStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<AtariST> elements = new HashSet<AtariST>(stateSet.size());
@@ -37,9 +37,9 @@ public class AtariSTHashSet implements AtariSTSet, RandomAccess, Cloneable, java
     }
 
     public class StateInSyncSet extends HashSet<AtariST> {
-        private final ComputerStateSet stateSet;
+        private final ComputerStateList stateSet;
 
-        public StateInSyncSet(ComputerStateSet stateSet, Set<AtariST> elements) {
+        public StateInSyncSet(ComputerStateList stateSet, Set<AtariST> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

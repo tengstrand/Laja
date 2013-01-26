@@ -13,14 +13,14 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
     protected HeadStateList stateList;
     protected final List<Head> list;
 
-    public HeadArrayList(Head... list) {
+    public HeadArrayList(Head... array) {
         this.list = new ArrayList<Head>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public HeadArrayList(Collection<Head> list) {
+    public HeadArrayList(Collection<Head> collection) {
         this.list = new ArrayList<Head>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public HeadArrayList(HeadStateList stateList) {

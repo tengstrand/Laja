@@ -13,14 +13,14 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
     protected HandStateList stateList;
     protected final List<Hand> list;
 
-    public HandArrayList(Hand... list) {
+    public HandArrayList(Hand... array) {
         this.list = new ArrayList<Hand>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public HandArrayList(Collection<Hand> list) {
+    public HandArrayList(Collection<Hand> collection) {
         this.list = new ArrayList<Hand>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public HandArrayList(HandStateList stateList) {

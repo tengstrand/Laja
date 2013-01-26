@@ -13,14 +13,14 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
     protected HairStateList stateList;
     protected final List<FakeHair> list;
 
-    public FakeHairArrayList(FakeHair... list) {
+    public FakeHairArrayList(FakeHair... array) {
         this.list = new ArrayList<FakeHair>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public FakeHairArrayList(Collection<FakeHair> list) {
+    public FakeHairArrayList(Collection<FakeHair> collection) {
         this.list = new ArrayList<FakeHair>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public FakeHairArrayList(HairStateList stateList) {

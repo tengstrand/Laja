@@ -13,14 +13,14 @@ public class CuteMouthArrayList implements CuteMouthList, RandomAccess, Cloneabl
     protected MouthStateList stateList;
     protected final List<CuteMouth> list;
 
-    public CuteMouthArrayList(CuteMouth... list) {
+    public CuteMouthArrayList(CuteMouth... array) {
         this.list = new ArrayList<CuteMouth>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public CuteMouthArrayList(Collection<CuteMouth> list) {
+    public CuteMouthArrayList(Collection<CuteMouth> collection) {
         this.list = new ArrayList<CuteMouth>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<CuteMouth> {

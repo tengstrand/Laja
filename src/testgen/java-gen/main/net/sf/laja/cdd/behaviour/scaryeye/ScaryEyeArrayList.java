@@ -16,14 +16,14 @@ public class ScaryEyeArrayList implements ScaryEyeList, RandomAccess, Cloneable,
     protected EyeStateList stateList;
     protected final List<ScaryEye> list;
 
-    public ScaryEyeArrayList(ScaryEye... list) {
+    public ScaryEyeArrayList(ScaryEye... array) {
         this.list = new ArrayList<ScaryEye>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public ScaryEyeArrayList(Collection<ScaryEye> list) {
+    public ScaryEyeArrayList(Collection<ScaryEye> collection) {
         this.list = new ArrayList<ScaryEye>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<ScaryEye> {

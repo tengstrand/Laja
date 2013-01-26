@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected BusStateSet stateSet;
+    protected BusStateList stateSet;
     protected final Set<Bus> set;
 
     public BusHashSet(Bus... array) {
@@ -23,7 +23,7 @@ public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Seri
         this.set.addAll(collection);
     }
 
-    public BusHashSet(BusStateSet stateSet) {
+    public BusHashSet(BusStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Bus> elements = new HashSet<Bus>(stateSet.size());
@@ -37,9 +37,9 @@ public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Seri
     }
 
     public class StateInSyncSet extends HashSet<Bus> {
-        private final BusStateSet stateSet;
+        private final BusStateList stateSet;
 
-        public StateInSyncSet(BusStateSet stateSet, Set<Bus> elements) {
+        public StateInSyncSet(BusStateList stateSet, Set<Bus> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

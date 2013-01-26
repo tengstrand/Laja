@@ -13,14 +13,14 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
     protected EarStateList stateList;
     protected final List<Ear> list;
 
-    public EarArrayList(Ear... list) {
+    public EarArrayList(Ear... array) {
         this.list = new ArrayList<Ear>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public EarArrayList(Collection<Ear> list) {
+    public EarArrayList(Collection<Ear> collection) {
         this.list = new ArrayList<Ear>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public EarArrayList(EarStateList stateList) {

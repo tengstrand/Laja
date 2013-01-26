@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected CustomerStateSet stateSet;
+    protected CustomerStateList stateSet;
     protected final Set<CustomerMatcher> set;
 
     public CustomerMatcherHashSet(CustomerMatcher... array) {
@@ -23,7 +23,7 @@ public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess,
         this.set.addAll(collection);
     }
 
-    public CustomerMatcherHashSet(CustomerStateSet stateSet) {
+    public CustomerMatcherHashSet(CustomerStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<CustomerMatcher> elements = new HashSet<CustomerMatcher>(stateSet.size());
@@ -37,9 +37,9 @@ public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess,
     }
 
     public class StateInSyncSet extends HashSet<CustomerMatcher> {
-        private final CustomerStateSet stateSet;
+        private final CustomerStateList stateSet;
 
-        public StateInSyncSet(CustomerStateSet stateSet, Set<CustomerMatcher> elements) {
+        public StateInSyncSet(CustomerStateList stateSet, Set<CustomerMatcher> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

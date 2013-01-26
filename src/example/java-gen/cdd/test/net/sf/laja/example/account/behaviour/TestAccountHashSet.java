@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TestAccountHashSet implements TestAccountSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AccountStateSet stateSet;
+    protected AccountStateList stateSet;
     protected final Set<TestAccount> set;
 
     public TestAccountHashSet(TestAccount... array) {
@@ -23,7 +23,7 @@ public class TestAccountHashSet implements TestAccountSet, RandomAccess, Cloneab
         this.set.addAll(collection);
     }
 
-    public TestAccountHashSet(AccountStateSet stateSet) {
+    public TestAccountHashSet(AccountStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TestAccount> elements = new HashSet<TestAccount>(stateSet.size());
@@ -53,9 +53,9 @@ public class TestAccountHashSet implements TestAccountSet, RandomAccess, Cloneab
     }
 
     public class StateInSyncSet extends HashSet<TestAccount> {
-        private final AccountStateSet stateSet;
+        private final AccountStateList stateSet;
 
-        public StateInSyncSet(AccountStateSet stateSet, Set<TestAccount> elements) {
+        public StateInSyncSet(AccountStateList stateSet, Set<TestAccount> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

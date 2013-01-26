@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected TruckTypeStateSet stateSet;
+    protected TruckTypeStateList stateSet;
     protected final Set<TruckType> set;
 
     public TruckTypeHashSet(TruckType... array) {
@@ -23,7 +23,7 @@ public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, 
         this.set.addAll(collection);
     }
 
-    public TruckTypeHashSet(TruckTypeStateSet stateSet) {
+    public TruckTypeHashSet(TruckTypeStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TruckType> elements = new HashSet<TruckType>(stateSet.size());
@@ -37,9 +37,9 @@ public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, 
     }
 
     public class StateInSyncSet extends HashSet<TruckType> {
-        private final TruckTypeStateSet stateSet;
+        private final TruckTypeStateList stateSet;
 
-        public StateInSyncSet(TruckTypeStateSet stateSet, Set<TruckType> elements) {
+        public StateInSyncSet(TruckTypeStateList stateSet, Set<TruckType> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

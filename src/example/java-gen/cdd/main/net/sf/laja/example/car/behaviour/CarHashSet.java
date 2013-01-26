@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class CarHashSet implements CarSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected CarStateSet stateSet;
+    protected CarStateList stateSet;
     protected final Set<Car> set;
 
     public CarHashSet(Car... array) {
@@ -23,7 +23,7 @@ public class CarHashSet implements CarSet, RandomAccess, Cloneable, java.io.Seri
         this.set.addAll(collection);
     }
 
-    public CarHashSet(CarStateSet stateSet) {
+    public CarHashSet(CarStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Car> elements = new HashSet<Car>(stateSet.size());
@@ -37,9 +37,9 @@ public class CarHashSet implements CarSet, RandomAccess, Cloneable, java.io.Seri
     }
 
     public class StateInSyncSet extends HashSet<Car> {
-        private final CarStateSet stateSet;
+        private final CarStateList stateSet;
 
-        public StateInSyncSet(CarStateSet stateSet, Set<Car> elements) {
+        public StateInSyncSet(CarStateList stateSet, Set<Car> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

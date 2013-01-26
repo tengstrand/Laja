@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ComputerStateSet stateSet;
+    protected ComputerStateList stateSet;
     protected final Set<Amiga> set;
 
     public AmigaHashSet(Amiga... array) {
@@ -23,7 +23,7 @@ public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.
         this.set.addAll(collection);
     }
 
-    public AmigaHashSet(ComputerStateSet stateSet, Configuration context) {
+    public AmigaHashSet(ComputerStateList stateSet, Configuration context) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Amiga> elements = new HashSet<Amiga>(stateSet.size());
@@ -37,9 +37,9 @@ public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.
     }
 
     public class StateInSyncSet extends HashSet<Amiga> {
-        private final ComputerStateSet stateSet;
+        private final ComputerStateList stateSet;
 
-        public StateInSyncSet(ComputerStateSet stateSet, Set<Amiga> elements) {
+        public StateInSyncSet(ComputerStateList stateSet, Set<Amiga> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

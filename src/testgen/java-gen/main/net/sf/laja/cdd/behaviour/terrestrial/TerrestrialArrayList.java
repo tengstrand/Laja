@@ -16,14 +16,14 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
     protected TerrestrialStateList stateList;
     protected final List<Terrestrial> list;
 
-    public TerrestrialArrayList(Terrestrial... list) {
+    public TerrestrialArrayList(Terrestrial... array) {
         this.list = new ArrayList<Terrestrial>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TerrestrialArrayList(Collection<Terrestrial> list) {
+    public TerrestrialArrayList(Collection<Terrestrial> collection) {
         this.list = new ArrayList<Terrestrial>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public class StateInSyncList extends ArrayList<Terrestrial> {

@@ -13,14 +13,14 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
     protected BrowStateList stateList;
     protected final List<TestBrow> list;
 
-    public TestBrowArrayList(TestBrow... list) {
+    public TestBrowArrayList(TestBrow... array) {
         this.list = new ArrayList<TestBrow>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public TestBrowArrayList(Collection<TestBrow> list) {
+    public TestBrowArrayList(Collection<TestBrow> collection) {
         this.list = new ArrayList<TestBrow>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public TestBrowArrayList(BrowStateList stateList) {

@@ -13,7 +13,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class CustomerInGuiHashSet implements CustomerInGuiSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected CustomerStateSet stateSet;
+    protected CustomerStateList stateSet;
     protected final Set<CustomerInGui> set;
 
     public CustomerInGuiHashSet(CustomerInGui... array) {
@@ -27,9 +27,9 @@ public class CustomerInGuiHashSet implements CustomerInGuiSet, RandomAccess, Clo
     }
 
     public class StateInSyncSet extends HashSet<CustomerInGui> {
-        private final CustomerStateSet stateSet;
+        private final CustomerStateList stateSet;
 
-        public StateInSyncSet(CustomerStateSet stateSet, Set<CustomerInGui> elements) {
+        public StateInSyncSet(CustomerStateList stateSet, Set<CustomerInGui> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

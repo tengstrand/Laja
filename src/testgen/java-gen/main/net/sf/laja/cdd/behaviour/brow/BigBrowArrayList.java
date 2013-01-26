@@ -13,14 +13,14 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
     protected BrowStateList stateList;
     protected final List<BigBrow> list;
 
-    public BigBrowArrayList(BigBrow... list) {
+    public BigBrowArrayList(BigBrow... array) {
         this.list = new ArrayList<BigBrow>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public BigBrowArrayList(Collection<BigBrow> list) {
+    public BigBrowArrayList(Collection<BigBrow> collection) {
         this.list = new ArrayList<BigBrow>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public BigBrowArrayList(BrowStateList stateList) {

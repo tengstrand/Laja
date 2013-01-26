@@ -13,14 +13,14 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
     protected HairStateList stateList;
     protected final List<Hair> list;
 
-    public HairArrayList(Hair... list) {
+    public HairArrayList(Hair... array) {
         this.list = new ArrayList<Hair>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public HairArrayList(Collection<Hair> list) {
+    public HairArrayList(Collection<Hair> collection) {
         this.list = new ArrayList<Hair>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public HairArrayList(HairStateList stateList) {

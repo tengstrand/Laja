@@ -13,14 +13,14 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
     protected ArmStateList stateList;
     protected final List<Arm> list;
 
-    public ArmArrayList(Arm... list) {
+    public ArmArrayList(Arm... array) {
         this.list = new ArrayList<Arm>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public ArmArrayList(Collection<Arm> list) {
+    public ArmArrayList(Collection<Arm> collection) {
         this.list = new ArrayList<Arm>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public ArmArrayList(ArmStateList stateList) {

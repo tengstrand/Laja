@@ -76,6 +76,7 @@
   #end
   #set (statePackagename = templates.get(asBehaviour.cleanedStateClass).packagename)
   #set (stateClass = asBehaviour.stateClass)
+  #set (stateSetClass = "{stateClass}List")
   #set (stateListClass = "{stateClass}List")
   #set (stateBuilderClass = "{stateClass}Builder")
   #set (stateBuilderImplClass = "{stateBuilderClass}Impl")

@@ -13,14 +13,14 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
     protected TerrestrialStateList stateList;
     protected final List<OtherTerrestrial> list;
 
-    public OtherTerrestrialArrayList(OtherTerrestrial... list) {
+    public OtherTerrestrialArrayList(OtherTerrestrial... array) {
         this.list = new ArrayList<OtherTerrestrial>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public OtherTerrestrialArrayList(Collection<OtherTerrestrial> list) {
+    public OtherTerrestrialArrayList(Collection<OtherTerrestrial> collection) {
         this.list = new ArrayList<OtherTerrestrial>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public OtherTerrestrialArrayList(TerrestrialStateList stateList) {

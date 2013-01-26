@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AccountStateSet stateSet;
+    protected AccountStateList stateSet;
     protected final Set<SourceAccount> set;
 
     public SourceAccountHashSet(SourceAccount... array) {
@@ -23,7 +23,7 @@ public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Clo
         this.set.addAll(collection);
     }
 
-    public SourceAccountHashSet(AccountStateSet stateSet) {
+    public SourceAccountHashSet(AccountStateList stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<SourceAccount> elements = new HashSet<SourceAccount>(stateSet.size());
@@ -37,9 +37,9 @@ public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Clo
     }
 
     public class StateInSyncSet extends HashSet<SourceAccount> {
-        private final AccountStateSet stateSet;
+        private final AccountStateList stateSet;
 
-        public StateInSyncSet(AccountStateSet stateSet, Set<SourceAccount> elements) {
+        public StateInSyncSet(AccountStateList stateSet, Set<SourceAccount> elements) {
             this.stateSet = stateSet;
             super.addAll(elements);
         }

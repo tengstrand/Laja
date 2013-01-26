@@ -13,14 +13,14 @@ public class ValToeArrayList implements ValToeList, RandomAccess, Cloneable, jav
     protected ToeStateList stateList;
     protected final List<ValToe> list;
 
-    public ValToeArrayList(ValToe... list) {
+    public ValToeArrayList(ValToe... array) {
         this.list = new ArrayList<ValToe>();
-        this.list.addAll(Arrays.asList(list));
+        this.list.addAll(Arrays.asList(array));
     }
 
-    public ValToeArrayList(Collection<ValToe> list) {
+    public ValToeArrayList(Collection<ValToe> collection) {
         this.list = new ArrayList<ValToe>();
-        this.list.addAll(list);
+        this.list.addAll(collection);
     }
 
     public ValToeArrayList(ToeStateList stateList) {
