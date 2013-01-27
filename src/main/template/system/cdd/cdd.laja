@@ -202,9 +202,8 @@
 
     #expander.expand(errors)
     #if (!errors.hasErrors)
-      #messageFormatter.printAsSorted("  State: ", templates)
       #generateState()
-      #messageFormatter.printAsSorted("  Behaviour: ", behaviours)
+      #messageFormatter.printTable(behaviours)
       #generateBehaviour()
     #end
 
