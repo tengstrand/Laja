@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class MessageFormatter {
@@ -23,7 +24,7 @@ public class MessageFormatter {
     }
 
     public void printTable(Map<String, Behaviour> behaviours) {
-        Map<String, TreeSet> states = new HashMap<String, TreeSet>();
+        Map<String, TreeSet> states = new TreeMap<String, TreeSet>();
 
         for (Behaviour behaviour : behaviours.values()) {
             if (!states.containsKey(behaviour.cleanedStateClass)) {

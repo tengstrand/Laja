@@ -26,13 +26,6 @@ public class AsciiTable {
             }
         }
 
-        public Widths(Widths widths) {
-            this.widths = new ArrayList<Integer>(widths.size());
-            for (int i=0; i< widths.size(); i++) {
-                this.widths.set(i, widths.widths.get(i));
-            }
-        }
-
         public int size() {
             return widths.size();
         }
