@@ -13,16 +13,6 @@ import java.util.TreeSet;
 
 public class MessageFormatter {
 
-    public void printAsSorted(String description, Map map) {
-        String message = asSortedTrimmedString(new ArrayList(map.keySet()));
-        System.out.println(description + message );
-    }
-
-    public String asSortedTrimmedString(List list) {
-        String message = new TreeSet<String>(list).toString();
-        return message.substring(1, message.length() - 1);
-    }
-
     public void printTable(Map<String, Behaviour> behaviours) {
         Map<String, TreeSet> states = new TreeMap<String, TreeSet>();
 
