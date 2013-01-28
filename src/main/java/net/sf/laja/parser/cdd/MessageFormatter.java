@@ -31,8 +31,13 @@ public class MessageFormatter {
         for (String state : states.keySet()) {
             AsciiTable.Row row = new AsciiTable.Row();
             row.addColumn(state);
-            String behaviourStrings = states.get(state).toString();
-            row.addColumn(behaviourStrings.substring(1, behaviourStrings.length()-1));
+            List sortedBehaviours = new ArrayList(states.get(state));
+            if (sortedBehaviours.contains(state)) {
+                sortedBehaviours.remove(state);
+                sortedBehaviours.add(0, state);
+            }
+            String stringBehaviours = sortedBehaviours.toString();
+            row.addColumn(stringBehaviours.substring(1, stringBehaviours.length()-1));
             table.addRow(row);
         }
         System.out.println(table.text());
