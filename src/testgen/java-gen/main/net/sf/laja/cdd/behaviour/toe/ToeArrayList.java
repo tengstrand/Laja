@@ -36,17 +36,6 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public ValToeArrayList asValToeList() {
-        if (stateList != null) {
-            return new ValToeArrayList(stateList);
-        }
-        List<ValToe> result = new ArrayList<ValToe>();
-        for (Toe entry : list) {
-            result.add(entry.asValToe());
-        }
-        return new ValToeArrayList(result);
-    }
-
     public class StateInSyncList extends ArrayList<Toe> {
         private final ToeStateList stateList;
 

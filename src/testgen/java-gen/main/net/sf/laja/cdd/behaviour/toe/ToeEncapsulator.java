@@ -14,10 +14,6 @@ public class ToeEncapsulator {
         return (Toe)builder.as(new ToeFactory.ToeFactory_(builder));
     }
 
-    public ValToe asValToe() {
-        return (ValToe)builder.as(new ToeFactory.ValToeFactory_(builder));
-    }
-
     public boolean isValid() {
          return builder.isValid();
     }

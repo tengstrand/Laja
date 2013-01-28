@@ -34,15 +34,6 @@ public class ToeSetEncapsulator implements Iterable<ToeEncapsulator> {
         return new ToeHashSet(result);
     }
 
-    public ValToeSet asValToeSet() {
-        List<ValToe> result = new ArrayList<ValToe>();
-
-        for (ToeEncapsulator encapsulator : encapsulators) {
-            result.add(encapsulator.asValToe());
-        }
-        return new ValToeHashSet(result);
-    }
-
     public boolean isValid() {
         for (ToeEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {

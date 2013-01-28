@@ -36,17 +36,6 @@ public class ToeHashSet implements ToeSet, RandomAccess, Cloneable, java.io.Seri
         this.set = new StateInSyncSet(stateSet, elements);
     }
 
-    public ValToeHashSet asValToeSet() {
-        if (stateSet != null) {
-            return new ValToeHashSet(stateSet);
-        }
-        Set<ValToe> result = new HashSet<ValToe>();
-        for (Toe entry : set) {
-            result.add(entry.asValToe());
-        }
-        return new ValToeHashSet(result);
-    }
-
     public class StateInSyncSet extends HashSet<Toe> {
         private final ToeStateList stateSet;
 

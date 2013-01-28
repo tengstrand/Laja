@@ -12,11 +12,6 @@ public class Toe extends ToeFactory {
         return new Toe(state);
     }
 
-    // (factory)
-    public ValToe asValToe() {
-        return new ValToe(state);
-    }
-
     public String value() {
         return state.getLength() + "," + state.getWeight();
     }

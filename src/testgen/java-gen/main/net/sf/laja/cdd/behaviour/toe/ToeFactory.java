@@ -52,28 +52,4 @@ public class ToeFactory extends ToeBehaviour {
     
       }
     }
-
-    public static class ValToeFactory_ implements ToeBehaviourFactory {
-        private final ToeStateBuilder stateBuilder;
-
-        public ValToeFactory_(ToeStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
-
-        public Object create(ToeState state, Object... args) {
-            Object result = create_(state, args);
-
-            if (!state.isValidAsEncapsulated()) {
-                throw new IllegalStateException("Illegal state, could not create behaviour class 'ValToe'");
-            }
-            state.encapsulate();
-
-            return result;
-        }
-
-      private Object create_(ToeState state, Object... args) {
-        return new ValToe(state);
-    
-      }
-    }
 }

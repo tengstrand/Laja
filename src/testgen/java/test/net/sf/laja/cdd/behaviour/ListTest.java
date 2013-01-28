@@ -135,42 +135,6 @@ public class ListTest {
     }
 
     @Test
-    public void tryRemoveElementViaValueBasedListHavingEntityBasedState() {
-        final int length = 9;
-        final String red = "Red";
-        final String black = "Black";
-        final String blond = "Blond";
-
-        HairList hairList = Hair.createList(
-                Hair.length(length).color(red),
-                Hair.length(length).color(black),
-                Hair.length(length).color(blond)
-        ).asHairList();
-
-        HairList expectedHair = Hair.createList(
-                Hair.length(length).color(black),
-                Hair.length(length).color(blond)
-        ).asHairList();
-
-        // Will remove the Red hair.
-        hairList.remove(Hair.length(length).color(black).asHair());
-
-        assertEquals(2, hairList.size());
-        assertTrue(hairList.containsAll(expectedHair));
-
-        FakeHairList fakeList = hairList.asFakeHairList();
-
-        assertEquals(2, fakeList.size());
-
-        System.out.println(fakeList);
-
-        fakeList.remove(Hair.length(length).color(blond).asFakeHair());
-
-        assertEquals(1, fakeList.size());
-        assertTrue(fakeList.get(0).hasColor(black));
-    }
-
-    @Test
     public void add() {
         Arm arm1 = Arm.armWeight(10).hands(Hand.area(1)).asArm();
         arm1.hands.add(Hand.area(2).asHand());
