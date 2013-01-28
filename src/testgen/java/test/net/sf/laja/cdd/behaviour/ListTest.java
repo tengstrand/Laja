@@ -9,7 +9,6 @@ import net.sf.laja.cdd.behaviour.hair.HairList;
 import net.sf.laja.cdd.behaviour.hand.Hand;
 import net.sf.laja.cdd.behaviour.hand.HandList;
 import net.sf.laja.cdd.behaviour.toe.Toe;
-import net.sf.laja.cdd.behaviour.toe.ValToeList;
 import org.junit.Ignore;
 import org.junit.Test;
 

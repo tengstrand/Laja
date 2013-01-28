@@ -4,7 +4,6 @@ import java.util.*;
 import net.sf.laja.cdd.state.foot.*;
 import net.sf.laja.cdd.behaviour.toe.ToeArrayList;
 import net.sf.laja.cdd.behaviour.toe.ToeList;
-import net.sf.laja.cdd.behaviour.toe.ValToeList;
 import net.sf.laja.cdd.state.foot.FootState;
 import net.sf.laja.cdd.state.toe.ToeStateList;
 
