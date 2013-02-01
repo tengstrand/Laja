@@ -201,9 +201,9 @@
     #import "{..}/../java/cdd/certificate.java.laja"
 
     #expander.expand(errors)
+    #messageFormatter.printTable(behaviours)
     #if (!errors.hasErrors)
       #generateState()
-      #messageFormatter.printTable(behaviours)
       #generateBehaviour()
     #end
 
