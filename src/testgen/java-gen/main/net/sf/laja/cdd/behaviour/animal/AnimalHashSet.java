@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AnimalHashSet implements AnimalSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AnimalStateList stateSet;
+    protected AnimalStateSet stateSet;
     protected final Set<Animal> set;
 
     public AnimalHashSet(Animal... array) {
@@ -23,7 +23,7 @@ public class AnimalHashSet implements AnimalSet, RandomAccess, Cloneable, java.i
         this.set.addAll(collection);
     }
 
-    public AnimalHashSet(AnimalStateList stateSet) {
+    public AnimalHashSet(AnimalStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Animal> elements = new HashSet<Animal>(stateSet.size());
@@ -37,10 +37,11 @@ public class AnimalHashSet implements AnimalSet, RandomAccess, Cloneable, java.i
     }
 
     public class StateInSyncSet extends HashSet<Animal> {
-        private final AnimalStateList stateSet;
+        private AnimalStateSet stateSet;
 
-        public StateInSyncSet(AnimalStateList stateSet, Set<Animal> elements) {
+        public StateInSyncSet(AnimalStateSet stateSet, Set<Animal> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class AnimalHashSet implements AnimalSet, RandomAccess, Cloneable, java.i
             if (!(element instanceof Animal)) {
                 return false;
             }
-            stateSet.remove(((Animal) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Animal) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

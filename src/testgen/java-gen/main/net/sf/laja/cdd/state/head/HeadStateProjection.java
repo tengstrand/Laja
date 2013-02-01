@@ -10,8 +10,10 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
+import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.nose.NoseStateArrayList;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.ear.EarStateArrayList;
@@ -86,7 +88,13 @@ public class HeadStateProjection {
     }
 
     public class Brows_ {
-        public Length_ brows(BrowStateList brows) {
+        public Ears_ brows(BrowStateList brows) {
+            return new Ears_();
+        }
+    }
+
+    public class Ears_ {
+        public Length_ ears(EarStateSet ears) {
             return new Length_();
         }
     }
@@ -140,13 +148,13 @@ public class HeadStateProjection {
     }
 
     public class H_ {
-        public Ears_ h(double h) {
-            return new Ears_();
+        public OptionalEars_ h(double h) {
+            return new OptionalEars_();
         }
     }
 
-    public class Ears_ {
-        public Mouths_ ears(EarStateList ears) {
+    public class OptionalEars_ {
+        public Mouths_ optionalEars(EarStateList optionalEars) {
             return new Mouths_();
         }
     }

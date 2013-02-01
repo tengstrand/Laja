@@ -25,6 +25,10 @@ public class TruckFactory extends TruckBehaviour {
         return new TruckBuilder();
     }
 
+    public static TruckSetEncapsulator createSet(TruckEncapsulator... encapsulators) {
+        return new TruckSetEncapsulator(encapsulators);
+    }
+
     public static TruckListEncapsulator createList(TruckEncapsulator... encapsulators) {
         return new TruckListEncapsulator(encapsulators);
     }

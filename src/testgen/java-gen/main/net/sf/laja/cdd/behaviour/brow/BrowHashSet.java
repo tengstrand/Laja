@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class BrowHashSet implements BrowSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected BrowStateList stateSet;
+    protected BrowStateSet stateSet;
     protected final Set<Brow> set;
 
     public BrowHashSet(Brow... array) {
@@ -23,7 +23,7 @@ public class BrowHashSet implements BrowSet, RandomAccess, Cloneable, java.io.Se
         this.set.addAll(collection);
     }
 
-    public BrowHashSet(BrowStateList stateSet) {
+    public BrowHashSet(BrowStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Brow> elements = new HashSet<Brow>(stateSet.size());
@@ -48,10 +48,11 @@ public class BrowHashSet implements BrowSet, RandomAccess, Cloneable, java.io.Se
     }
 
     public class StateInSyncSet extends HashSet<Brow> {
-        private final BrowStateList stateSet;
+        private BrowStateSet stateSet;
 
-        public StateInSyncSet(BrowStateList stateSet, Set<Brow> elements) {
+        public StateInSyncSet(BrowStateSet stateSet, Set<Brow> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -79,9 +80,13 @@ public class BrowHashSet implements BrowSet, RandomAccess, Cloneable, java.io.Se
             if (!(element instanceof Brow)) {
                 return false;
             }
-            stateSet.remove(((Brow) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Brow) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

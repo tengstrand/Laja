@@ -25,6 +25,10 @@ public class LegFactory extends LegBehaviour {
         return new LegBuilder();
     }
 
+    public static LegSetEncapsulator createSet(LegEncapsulator... encapsulators) {
+        return new LegSetEncapsulator(encapsulators);
+    }
+
     public static LegListEncapsulator createList(LegEncapsulator... encapsulators) {
         return new LegListEncapsulator(encapsulators);
     }

@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AccountStateList stateSet;
+    protected AccountStateSet stateSet;
     protected final Set<SourceAccount> set;
 
     public SourceAccountHashSet(SourceAccount... array) {
@@ -23,7 +23,7 @@ public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Clo
         this.set.addAll(collection);
     }
 
-    public SourceAccountHashSet(AccountStateList stateSet) {
+    public SourceAccountHashSet(AccountStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<SourceAccount> elements = new HashSet<SourceAccount>(stateSet.size());
@@ -37,10 +37,11 @@ public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Clo
     }
 
     public class StateInSyncSet extends HashSet<SourceAccount> {
-        private final AccountStateList stateSet;
+        private AccountStateSet stateSet;
 
-        public StateInSyncSet(AccountStateList stateSet, Set<SourceAccount> elements) {
+        public StateInSyncSet(AccountStateSet stateSet, Set<SourceAccount> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Clo
             if (!(element instanceof SourceAccount)) {
                 return false;
             }
-            stateSet.remove(((SourceAccount) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((SourceAccount) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

@@ -1,7 +1,10 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.Certificate;
 
@@ -12,12 +15,14 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class ForeheadStateImpl implements ForeheadState {
     protected BrowStateList brows; // (optional)
+    protected EarStateSet ears; // (optional)
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
     ForeheadStateImpl() {
         brows = BrowStateArrayList.emptyList();
+        ears = EarStateHashSet.emptySet();
     }
 
     public ForeheadStateImpl(Certificate certificate) {
@@ -53,9 +58,11 @@ public class ForeheadStateImpl implements ForeheadState {
 
     // Getters
     public BrowStateList getBrows() { return brows; }
+    public EarStateSet getEars() { return ears; }
 
     // Setters
     public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
+    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears = ears; }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
@@ -74,7 +81,14 @@ public class ForeheadStateImpl implements ForeheadState {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        ForeheadStateImpl state = (ForeheadStateImpl)obj;
+
+        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
+
+        return true;
     }
 
     public boolean equalsValue(Object obj) {
@@ -84,17 +98,21 @@ public class ForeheadStateImpl implements ForeheadState {
         ForeheadStateImpl state = (ForeheadStateImpl)obj;
 
         if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
+        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int result = ears != null ? ears.hashCode() : 0;
+
+        return result;
     }
 
     @Override
     public String toString() {
-        return "{brows=" + brows + "}";
+        return "{brows=" + brows +
+                ", ears=" + ears + "}";
     }
 }

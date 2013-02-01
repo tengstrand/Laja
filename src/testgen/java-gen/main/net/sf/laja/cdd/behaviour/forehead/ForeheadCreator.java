@@ -6,7 +6,9 @@ import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 
 public class ForeheadCreator {

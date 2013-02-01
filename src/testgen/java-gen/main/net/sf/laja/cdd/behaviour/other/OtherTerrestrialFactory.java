@@ -25,6 +25,10 @@ public class OtherTerrestrialFactory extends TerrestrialBehaviour {
         return new OtherTerrestrialBuilder();
     }
 
+    public static OtherTerrestrialSetEncapsulator createSet(OtherTerrestrialEncapsulator... encapsulators) {
+        return new OtherTerrestrialSetEncapsulator(encapsulators);
+    }
+
     public static OtherTerrestrialListEncapsulator createList(OtherTerrestrialEncapsulator... encapsulators) {
         return new OtherTerrestrialListEncapsulator(encapsulators);
     }

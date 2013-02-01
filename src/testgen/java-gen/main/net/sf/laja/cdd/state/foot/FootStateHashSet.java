@@ -40,8 +40,8 @@ public class FootStateHashSet extends HashSet<FootState> implements FootStateSet
     }
 
     public void throwExceptionIfNotEncapsulatedBy(Object encapsulator) {
-        if (encapsulator != this.encapsulator) {
-            if (encapsulator != null && this.encapsulator != null && encapsulator.getClass() == this.encapsulator.getClass()) {
+        if (this.encapsulator != null && this.encapsulator != encapsulator) {
+            if (encapsulator != null && encapsulator.getClass() == this.encapsulator.getClass()) {
                 throw new IllegalStateException("The state has been encapsulated by another instance of " + this.encapsulator.getClass().getSimpleName() + " and can not be mutated by this behaviour instance");
             }
             String thatEncapsulator = encapsulator == null ? null : encapsulator.getClass().getSimpleName();

@@ -13,7 +13,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TerrestrialHashSet implements TerrestrialSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected TerrestrialStateList stateSet;
+    protected TerrestrialStateSet stateSet;
     protected final Set<Terrestrial> set;
 
     public TerrestrialHashSet(Terrestrial... array) {
@@ -27,10 +27,11 @@ public class TerrestrialHashSet implements TerrestrialSet, RandomAccess, Cloneab
     }
 
     public class StateInSyncSet extends HashSet<Terrestrial> {
-        private final TerrestrialStateList stateSet;
+        private TerrestrialStateSet stateSet;
 
-        public StateInSyncSet(TerrestrialStateList stateSet, Set<Terrestrial> elements) {
+        public StateInSyncSet(TerrestrialStateSet stateSet, Set<Terrestrial> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -58,9 +59,13 @@ public class TerrestrialHashSet implements TerrestrialSet, RandomAccess, Cloneab
             if (!(element instanceof Terrestrial)) {
                 return false;
             }
-            stateSet.remove(((Terrestrial) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Terrestrial) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

@@ -17,12 +17,16 @@ public class EarFactory extends EarBehaviour {
         super(state, stateBuilder);
     }
 
-    public static EarEncapsulator create() {
-        return new EarCreator().create();
+    public static EarEncapsulator weight(int weight) {
+        return new EarCreator().new Weight_().weight(weight);
     }
 
     public static EarBuilder build() {
         return new EarBuilder();
+    }
+
+    public static EarSetEncapsulator createSet(EarEncapsulator... encapsulators) {
+        return new EarSetEncapsulator(encapsulators);
     }
 
     public static EarListEncapsulator createList(EarEncapsulator... encapsulators) {

@@ -10,6 +10,7 @@ import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
 import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
+import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.Certificate;
@@ -30,6 +31,7 @@ public interface HeadStateBuilder extends EyeStateBuilder, ForeheadStateBuilder 
     void withHasEar(Boolean hasEar);
     void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder);
     void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
+    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder); // 1
     void withLength(int length);
     void withA(boolean a);
     void withB(byte b);
@@ -39,14 +41,15 @@ public interface HeadStateBuilder extends EyeStateBuilder, ForeheadStateBuilder 
     void withF(long f);
     void withG(float g);
     void withH(double h);
-    void withEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder);
+    void withOptionalEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder);
     void withMouths(net.sf.laja.cdd.state.mouth.MouthStateListBuilder listBuilder);
     EyeStateBuilder getLeftEyeStateBuilder();
     EyeStateBuilder getRightEyeStateBuilder();
     EyeStateBuilder getMidEyeStateBuilder();
     NoseStateListBuilder getNosesStateListBuilder();
     BrowStateListBuilder getBrowsStateListBuilder();
-    EarStateListBuilder getEarsStateListBuilder();
+    EarStateSetBuilder getEarsStateSetBuilder();
+    EarStateListBuilder getOptionalEarsStateListBuilder();
     MouthStateListBuilder getMouthsStateListBuilder();
     boolean isValid();
     Object as(HeadBehaviourFactory factory, Object... args);

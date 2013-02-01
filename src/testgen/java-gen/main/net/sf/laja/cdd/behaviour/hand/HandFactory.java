@@ -25,6 +25,10 @@ public class HandFactory extends HandBehaviour {
         return new HandBuilder();
     }
 
+    public static HandSetEncapsulator createSet(HandEncapsulator... encapsulators) {
+        return new HandSetEncapsulator(encapsulators);
+    }
+
     public static HandListEncapsulator createList(HandEncapsulator... encapsulators) {
         return new HandListEncapsulator(encapsulators);
     }

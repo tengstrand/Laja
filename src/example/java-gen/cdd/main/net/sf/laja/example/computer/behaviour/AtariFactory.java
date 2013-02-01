@@ -25,6 +25,10 @@ public class AtariFactory extends ComputerBehaviour {
         return new AtariBuilder();
     }
 
+    public static AtariSetEncapsulator createSet(AtariEncapsulator... encapsulators) {
+        return new AtariSetEncapsulator(encapsulators);
+    }
+
     public static AtariListEncapsulator createList(AtariEncapsulator... encapsulators) {
         return new AtariListEncapsulator(encapsulators);
     }

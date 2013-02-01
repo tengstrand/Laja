@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TextFileHashSet implements TextFileSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected FileStateList stateSet;
+    protected FileStateSet stateSet;
     protected final Set<TextFile> set;
 
     public TextFileHashSet(TextFile... array) {
@@ -24,10 +24,11 @@ public class TextFileHashSet implements TextFileSet, RandomAccess, Cloneable, ja
     }
 
     public class StateInSyncSet extends HashSet<TextFile> {
-        private final FileStateList stateSet;
+        private FileStateSet stateSet;
 
-        public StateInSyncSet(FileStateList stateSet, Set<TextFile> elements) {
+        public StateInSyncSet(FileStateSet stateSet, Set<TextFile> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -55,9 +56,13 @@ public class TextFileHashSet implements TextFileSet, RandomAccess, Cloneable, ja
             if (!(element instanceof TextFile)) {
                 return false;
             }
-            stateSet.remove(((TextFile) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TextFile) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

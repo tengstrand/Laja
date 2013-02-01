@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class OtherTerrestrialHashSet implements OtherTerrestrialSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected TerrestrialStateList stateSet;
+    protected TerrestrialStateSet stateSet;
     protected final Set<OtherTerrestrial> set;
 
     public OtherTerrestrialHashSet(OtherTerrestrial... array) {
@@ -23,7 +23,7 @@ public class OtherTerrestrialHashSet implements OtherTerrestrialSet, RandomAcces
         this.set.addAll(collection);
     }
 
-    public OtherTerrestrialHashSet(TerrestrialStateList stateSet) {
+    public OtherTerrestrialHashSet(TerrestrialStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<OtherTerrestrial> elements = new HashSet<OtherTerrestrial>(stateSet.size());
@@ -37,10 +37,11 @@ public class OtherTerrestrialHashSet implements OtherTerrestrialSet, RandomAcces
     }
 
     public class StateInSyncSet extends HashSet<OtherTerrestrial> {
-        private final TerrestrialStateList stateSet;
+        private TerrestrialStateSet stateSet;
 
-        public StateInSyncSet(TerrestrialStateList stateSet, Set<OtherTerrestrial> elements) {
+        public StateInSyncSet(TerrestrialStateSet stateSet, Set<OtherTerrestrial> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class OtherTerrestrialHashSet implements OtherTerrestrialSet, RandomAcces
             if (!(element instanceof OtherTerrestrial)) {
                 return false;
             }
-            stateSet.remove(((OtherTerrestrial) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((OtherTerrestrial) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

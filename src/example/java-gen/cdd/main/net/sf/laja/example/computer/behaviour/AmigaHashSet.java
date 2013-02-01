@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ComputerStateList stateSet;
+    protected ComputerStateSet stateSet;
     protected final Set<Amiga> set;
 
     public AmigaHashSet(Amiga... array) {
@@ -23,7 +23,7 @@ public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.
         this.set.addAll(collection);
     }
 
-    public AmigaHashSet(ComputerStateList stateSet, Configuration context) {
+    public AmigaHashSet(ComputerStateSet stateSet, Configuration context) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Amiga> elements = new HashSet<Amiga>(stateSet.size());
@@ -37,10 +37,11 @@ public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.
     }
 
     public class StateInSyncSet extends HashSet<Amiga> {
-        private final ComputerStateList stateSet;
+        private ComputerStateSet stateSet;
 
-        public StateInSyncSet(ComputerStateList stateSet, Set<Amiga> elements) {
+        public StateInSyncSet(ComputerStateSet stateSet, Set<Amiga> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.
             if (!(element instanceof Amiga)) {
                 return false;
             }
-            stateSet.remove(((Amiga) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Amiga) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

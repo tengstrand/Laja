@@ -14,6 +14,7 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
@@ -41,14 +42,20 @@ public class MonsterEncapsulator {
         return this;
     }
 
+    public MonsterEncapsulator withEars(EarEncapsulator... ears) {
+        EarSetEncapsulator encapsulator = new EarSetEncapsulator(ears);
+        builder.withEars(encapsulator.stateSetBuilder);
+        return this;
+    }
+
     public MonsterEncapsulator withLength(int length) {
         builder.withLength(length);
         return this;
     }
 
-    public MonsterEncapsulator withEars(EarEncapsulator... ears) {
-        EarListEncapsulator encapsulator = new EarListEncapsulator(ears);
-        builder.withEars(encapsulator.stateListBuilder);
+    public MonsterEncapsulator withOptionalEars(EarEncapsulator... optionalEars) {
+        EarListEncapsulator encapsulator = new EarListEncapsulator(optionalEars);
+        builder.withOptionalEars(encapsulator.stateListBuilder);
         return this;
     }
 

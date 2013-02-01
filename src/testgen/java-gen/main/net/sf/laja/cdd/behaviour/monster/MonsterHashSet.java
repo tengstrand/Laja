@@ -14,7 +14,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class MonsterHashSet implements MonsterSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected MonsterStateList stateSet;
+    protected MonsterStateSet stateSet;
     protected final Set<Monster> set;
 
     public MonsterHashSet(Monster... array) {
@@ -27,7 +27,7 @@ public class MonsterHashSet implements MonsterSet, RandomAccess, Cloneable, java
         this.set.addAll(collection);
     }
 
-    public MonsterHashSet(MonsterStateList stateSet) {
+    public MonsterHashSet(MonsterStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Monster> elements = new HashSet<Monster>(stateSet.size());
@@ -49,10 +49,11 @@ public class MonsterHashSet implements MonsterSet, RandomAccess, Cloneable, java
     }
 
     public class StateInSyncSet extends HashSet<Monster> {
-        private final MonsterStateList stateSet;
+        private MonsterStateSet stateSet;
 
-        public StateInSyncSet(MonsterStateList stateSet, Set<Monster> elements) {
+        public StateInSyncSet(MonsterStateSet stateSet, Set<Monster> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -80,9 +81,13 @@ public class MonsterHashSet implements MonsterSet, RandomAccess, Cloneable, java
             if (!(element instanceof Monster)) {
                 return false;
             }
-            stateSet.remove(((Monster) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Monster) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

@@ -76,7 +76,8 @@
   #end
   #set (statePackagename = templates.get(asBehaviour.cleanedStateClass).packagename)
   #set (stateClass = asBehaviour.stateClass)
-  #set (stateSetClass = "{stateClass}List")
+  #set (stateSetClass = "{stateClass}Set")
+  #set (stateHashSetClass = "{stateClass}HashSet")
   #set (stateListClass = "{stateClass}List")
   #set (stateBuilderClass = "{stateClass}Builder")
   #set (stateBuilderImplClass = "{stateBuilderClass}Impl")
@@ -108,6 +109,18 @@ import {template.packagename}.*;
   #end
   #foreach (import in imports)
 import {import};
+  #end
+#end
+
+#macro importsSetEncapsulator()
+  #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateSet)
+    #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
+    #if (behaviourRef == null)
+      #error("Could not find behaviour class '{attribute.cleanedStateType}' in {behaviours.keySet()}")
+    #end
+    #if (behaviour.packagename != behaviourRef.packagename)
+import {behaviourRef.packagename}.{attribute.setEncapsulator};
+    #end
   #end
 #end
 

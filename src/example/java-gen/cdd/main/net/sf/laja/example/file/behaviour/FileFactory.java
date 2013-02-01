@@ -25,6 +25,10 @@ public class FileFactory extends FileBehaviour {
         return new FileBuilder();
     }
 
+    public static FileSetEncapsulator createSet(FileEncapsulator... encapsulators) {
+        return new FileSetEncapsulator(encapsulators);
+    }
+
     public static FileListEncapsulator createList(FileEncapsulator... encapsulators) {
         return new FileListEncapsulator(encapsulators);
     }

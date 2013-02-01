@@ -5,4 +5,9 @@ package net.sf.laja.cdd.state.ear;
  */
 public class EarStateTemplate {
     double size; // (hide)
+    int weight;
+
+    boolean isValid() {
+        return size > 0;
+    }
 }

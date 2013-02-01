@@ -13,7 +13,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class CustomerInGuiHashSet implements CustomerInGuiSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected CustomerStateList stateSet;
+    protected CustomerStateSet stateSet;
     protected final Set<CustomerInGui> set;
 
     public CustomerInGuiHashSet(CustomerInGui... array) {
@@ -27,10 +27,11 @@ public class CustomerInGuiHashSet implements CustomerInGuiSet, RandomAccess, Clo
     }
 
     public class StateInSyncSet extends HashSet<CustomerInGui> {
-        private final CustomerStateList stateSet;
+        private CustomerStateSet stateSet;
 
-        public StateInSyncSet(CustomerStateList stateSet, Set<CustomerInGui> elements) {
+        public StateInSyncSet(CustomerStateSet stateSet, Set<CustomerInGui> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -58,9 +59,13 @@ public class CustomerInGuiHashSet implements CustomerInGuiSet, RandomAccess, Clo
             if (!(element instanceof CustomerInGui)) {
                 return false;
             }
-            stateSet.remove(((CustomerInGui) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((CustomerInGui) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

@@ -25,6 +25,10 @@ public class BrowFactory extends BrowBehaviour {
         return new BrowBuilder();
     }
 
+    public static BrowSetEncapsulator createSet(BrowEncapsulator... encapsulators) {
+        return new BrowSetEncapsulator(encapsulators);
+    }
+
     public static BrowListEncapsulator createList(BrowEncapsulator... encapsulators) {
         return new BrowListEncapsulator(encapsulators);
     }

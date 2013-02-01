@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class CuteMouthHashSet implements CuteMouthSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateSet;
+    protected MouthStateSet stateSet;
     protected final Set<CuteMouth> set;
 
     public CuteMouthHashSet(CuteMouth... array) {
@@ -24,10 +24,11 @@ public class CuteMouthHashSet implements CuteMouthSet, RandomAccess, Cloneable, 
     }
 
     public class StateInSyncSet extends HashSet<CuteMouth> {
-        private final MouthStateList stateSet;
+        private MouthStateSet stateSet;
 
-        public StateInSyncSet(MouthStateList stateSet, Set<CuteMouth> elements) {
+        public StateInSyncSet(MouthStateSet stateSet, Set<CuteMouth> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -55,9 +56,13 @@ public class CuteMouthHashSet implements CuteMouthSet, RandomAccess, Cloneable, 
             if (!(element instanceof CuteMouth)) {
                 return false;
             }
-            stateSet.remove(((CuteMouth) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((CuteMouth) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

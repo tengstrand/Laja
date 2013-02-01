@@ -9,6 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class EarStateImpl implements EarState {
     protected double size; // (hide)
+    protected int weight;
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
@@ -44,14 +45,16 @@ public class EarStateImpl implements EarState {
     }
 
     private boolean isValid(boolean encapsulated) {
-        return true;
+        return size > 0;
     }
 
     // Getters
     public double getSize() { return size; }
+    public int getWeight() { return weight; }
 
     // Setters
     public void setSize(double size, Object mutator) { checkMutator(mutator); this.size = size; }
+    public void setWeight(int weight, Object mutator) { checkMutator(mutator); this.weight = weight; }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
@@ -76,6 +79,7 @@ public class EarStateImpl implements EarState {
         EarStateImpl state = (EarStateImpl)obj;
 
         if (size != state.getSize()) return false;
+        if (weight != state.getWeight()) return false;
 
         return true;
     }
@@ -87,6 +91,7 @@ public class EarStateImpl implements EarState {
         EarStateImpl state = (EarStateImpl)obj;
 
         if (size != state.getSize()) return false;
+        if (weight != state.getWeight()) return false;
 
         return true;
     }
@@ -94,12 +99,14 @@ public class EarStateImpl implements EarState {
     @Override
     public int hashCode() {
         int result = (int)size;
+        result = 31 * result + weight;
 
         return result;
     }
 
     @Override
     public String toString() {
-        return "{size=" + size + "}";
+        return "{size=" + size +
+                ", weight=" + weight + "}";
     }
 }

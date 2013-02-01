@@ -1,8 +1,8 @@
 
 #macro newElements()
-            {stateSetClass} newElements = new {stateArrayListClass}();
+            {stateSetClass} newElements = new {stateHashSetClass}();
             for ({entryClass} element : collection) {
-                newElements.add(element.getState(stateList.certificate()));
+                newElements.add(element.getState(stateSet.certificate()));
             }
 #end
 
@@ -62,10 +62,11 @@ public class {hashSetClass} implements {setInterface}, RandomAccess, Cloneable, 
   #end
 
     public class StateInSyncSet extends HashSet<{entryClass}> {
-        private final {stateSetClass} stateSet;
+        private {stateSetClass} stateSet;
 
         public StateInSyncSet({stateSetClass} stateSet, Set<{entryClass}> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -93,9 +94,13 @@ public class {hashSetClass} implements {setInterface}, RandomAccess, Cloneable, 
             if (!(element instanceof {entryClass})) {
                 return false;
             }
-            stateSet.remove((({entryClass}) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove((({entryClass}) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

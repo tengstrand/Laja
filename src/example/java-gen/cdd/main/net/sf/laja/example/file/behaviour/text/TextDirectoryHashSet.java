@@ -13,7 +13,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TextDirectoryHashSet implements TextDirectorySet, RandomAccess, Cloneable, java.io.Serializable {
-    protected DirectoryStateList stateSet;
+    protected DirectoryStateSet stateSet;
     protected final Set<TextDirectory> set;
 
     public TextDirectoryHashSet(TextDirectory... array) {
@@ -27,10 +27,11 @@ public class TextDirectoryHashSet implements TextDirectorySet, RandomAccess, Clo
     }
 
     public class StateInSyncSet extends HashSet<TextDirectory> {
-        private final DirectoryStateList stateSet;
+        private DirectoryStateSet stateSet;
 
-        public StateInSyncSet(DirectoryStateList stateSet, Set<TextDirectory> elements) {
+        public StateInSyncSet(DirectoryStateSet stateSet, Set<TextDirectory> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -58,9 +59,13 @@ public class TextDirectoryHashSet implements TextDirectorySet, RandomAccess, Clo
             if (!(element instanceof TextDirectory)) {
                 return false;
             }
-            stateSet.remove(((TextDirectory) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TextDirectory) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

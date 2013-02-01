@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class DestinationAccountHashSet implements DestinationAccountSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected AccountStateList stateSet;
+    protected AccountStateSet stateSet;
     protected final Set<DestinationAccount> set;
 
     public DestinationAccountHashSet(DestinationAccount... array) {
@@ -23,7 +23,7 @@ public class DestinationAccountHashSet implements DestinationAccountSet, RandomA
         this.set.addAll(collection);
     }
 
-    public DestinationAccountHashSet(AccountStateList stateSet) {
+    public DestinationAccountHashSet(AccountStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<DestinationAccount> elements = new HashSet<DestinationAccount>(stateSet.size());
@@ -37,10 +37,11 @@ public class DestinationAccountHashSet implements DestinationAccountSet, RandomA
     }
 
     public class StateInSyncSet extends HashSet<DestinationAccount> {
-        private final AccountStateList stateSet;
+        private AccountStateSet stateSet;
 
-        public StateInSyncSet(AccountStateList stateSet, Set<DestinationAccount> elements) {
+        public StateInSyncSet(AccountStateSet stateSet, Set<DestinationAccount> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class DestinationAccountHashSet implements DestinationAccountSet, RandomA
             if (!(element instanceof DestinationAccount)) {
                 return false;
             }
-            stateSet.remove(((DestinationAccount) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((DestinationAccount) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

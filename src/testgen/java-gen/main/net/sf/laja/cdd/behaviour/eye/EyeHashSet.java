@@ -14,7 +14,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class EyeHashSet implements EyeSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected EyeStateList stateSet;
+    protected EyeStateSet stateSet;
     protected final Set<Eye> set;
 
     public EyeHashSet(Eye... array) {
@@ -27,7 +27,7 @@ public class EyeHashSet implements EyeSet, RandomAccess, Cloneable, java.io.Seri
         this.set.addAll(collection);
     }
 
-    public EyeHashSet(EyeStateList stateSet) {
+    public EyeHashSet(EyeStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Eye> elements = new HashSet<Eye>(stateSet.size());
@@ -49,10 +49,11 @@ public class EyeHashSet implements EyeSet, RandomAccess, Cloneable, java.io.Seri
     }
 
     public class StateInSyncSet extends HashSet<Eye> {
-        private final EyeStateList stateSet;
+        private EyeStateSet stateSet;
 
-        public StateInSyncSet(EyeStateList stateSet, Set<Eye> elements) {
+        public StateInSyncSet(EyeStateSet stateSet, Set<Eye> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -80,9 +81,13 @@ public class EyeHashSet implements EyeSet, RandomAccess, Cloneable, java.io.Seri
             if (!(element instanceof Eye)) {
                 return false;
             }
-            stateSet.remove(((Eye) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Eye) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

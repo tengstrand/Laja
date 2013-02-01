@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class VehicleSizeHashSet implements VehicleSizeSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected VehicleSizeStateList stateSet;
+    protected VehicleSizeStateSet stateSet;
     protected final Set<VehicleSize> set;
 
     public VehicleSizeHashSet(VehicleSize... array) {
@@ -23,7 +23,7 @@ public class VehicleSizeHashSet implements VehicleSizeSet, RandomAccess, Cloneab
         this.set.addAll(collection);
     }
 
-    public VehicleSizeHashSet(VehicleSizeStateList stateSet) {
+    public VehicleSizeHashSet(VehicleSizeStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<VehicleSize> elements = new HashSet<VehicleSize>(stateSet.size());
@@ -37,10 +37,11 @@ public class VehicleSizeHashSet implements VehicleSizeSet, RandomAccess, Cloneab
     }
 
     public class StateInSyncSet extends HashSet<VehicleSize> {
-        private final VehicleSizeStateList stateSet;
+        private VehicleSizeStateSet stateSet;
 
-        public StateInSyncSet(VehicleSizeStateList stateSet, Set<VehicleSize> elements) {
+        public StateInSyncSet(VehicleSizeStateSet stateSet, Set<VehicleSize> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class VehicleSizeHashSet implements VehicleSizeSet, RandomAccess, Cloneab
             if (!(element instanceof VehicleSize)) {
                 return false;
             }
-            stateSet.remove(((VehicleSize) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((VehicleSize) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AreaBrowList extends TestBrowArrayList {
-    public AreaBrowList(TestBrow... list) {
-        super(list);
+    public AreaBrowList(TestBrow... array) {
+        super(array);
     }
 
     public AreaBrowList(List<TestBrow> list) {

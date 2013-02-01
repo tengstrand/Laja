@@ -6,7 +6,10 @@ import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.behaviour.ear.EarBuilder;
 import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
+import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 
 public class ForeheadBuilder {
@@ -26,6 +29,11 @@ public class ForeheadBuilder {
 
     public ForeheadBuilder withBrows(BrowListEncapsulator brows) {
         builder.withBrows(brows.stateListBuilder);
+        return this;
+    }
+
+    public ForeheadBuilder withEars(EarSetEncapsulator ears) {
+        builder.withEars(ears.stateSetBuilder);
         return this;
     }
 

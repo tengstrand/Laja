@@ -25,6 +25,10 @@ public class TestAccountFactory extends AccountBehaviour {
         return new TestAccountBuilder();
     }
 
+    public static TestAccountSetEncapsulator createSet(TestAccountEncapsulator... encapsulators) {
+        return new TestAccountSetEncapsulator(encapsulators);
+    }
+
     public static TestAccountListEncapsulator createList(TestAccountEncapsulator... encapsulators) {
         return new TestAccountListEncapsulator(encapsulators);
     }

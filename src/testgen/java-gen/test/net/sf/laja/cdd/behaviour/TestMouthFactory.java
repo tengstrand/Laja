@@ -26,6 +26,10 @@ public class TestMouthFactory extends MouthBehaviour {
         return new TestMouthBuilder();
     }
 
+    public static TestMouthSetEncapsulator createSet(TestMouthEncapsulator... encapsulators) {
+        return new TestMouthSetEncapsulator(encapsulators);
+    }
+
     public static TestMouthListEncapsulator createList(TestMouthEncapsulator... encapsulators) {
         return new TestMouthListEncapsulator(encapsulators);
     }

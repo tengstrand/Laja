@@ -25,6 +25,10 @@ public class VehicleSizeFactory extends VehicleSizeBehaviour {
         return new VehicleSizeBuilder();
     }
 
+    public static VehicleSizeSetEncapsulator createSet(VehicleSizeEncapsulator... encapsulators) {
+        return new VehicleSizeSetEncapsulator(encapsulators);
+    }
+
     public static VehicleSizeListEncapsulator createList(VehicleSizeEncapsulator... encapsulators) {
         return new VehicleSizeListEncapsulator(encapsulators);
     }

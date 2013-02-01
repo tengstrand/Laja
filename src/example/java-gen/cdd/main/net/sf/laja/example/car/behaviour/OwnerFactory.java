@@ -25,6 +25,10 @@ public class OwnerFactory extends OwnerBehaviour {
         return new OwnerBuilder();
     }
 
+    public static OwnerSetEncapsulator createSet(OwnerEncapsulator... encapsulators) {
+        return new OwnerSetEncapsulator(encapsulators);
+    }
+
     public static OwnerListEncapsulator createList(OwnerEncapsulator... encapsulators) {
         return new OwnerListEncapsulator(encapsulators);
     }

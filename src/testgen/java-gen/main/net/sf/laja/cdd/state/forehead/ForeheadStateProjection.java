@@ -1,7 +1,10 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 
 /**
@@ -14,7 +17,19 @@ public class ForeheadStateProjection {
     ForeheadStateProjection() {
     }
 
-    public static ForeheadStateProjection brows(BrowStateList brows) {
-        return new ForeheadStateProjection();
+    public static ForeheadStateProjection.Ears_ brows(BrowStateList brows) {
+        return new ForeheadStateProjection().new Ears_();
+    }
+
+    public class Brows_ {
+        public Ears_ brows(BrowStateList brows) {
+            return new Ears_();
+        }
+    }
+
+    public class Ears_ {
+        public ForeheadStateProjection ears(EarStateSet ears) {
+            return ForeheadStateProjection.this;
+        }
     }
 }

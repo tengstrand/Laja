@@ -27,6 +27,10 @@ public class DirectoryFactory extends DirectoryBehaviour {
         return new DirectoryBuilder();
     }
 
+    public static DirectorySetEncapsulator createSet(DirectoryEncapsulator... encapsulators) {
+        return new DirectorySetEncapsulator(encapsulators);
+    }
+
     public static DirectoryListEncapsulator createList(DirectoryEncapsulator... encapsulators) {
         return new DirectoryListEncapsulator(encapsulators);
     }

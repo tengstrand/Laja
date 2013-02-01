@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class BodyMassIndexHashSet implements BodyMassIndexSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected BmiStateList stateSet;
+    protected BmiStateSet stateSet;
     protected final Set<BodyMassIndex> set;
 
     public BodyMassIndexHashSet(BodyMassIndex... array) {
@@ -23,7 +23,7 @@ public class BodyMassIndexHashSet implements BodyMassIndexSet, RandomAccess, Clo
         this.set.addAll(collection);
     }
 
-    public BodyMassIndexHashSet(BmiStateList stateSet) {
+    public BodyMassIndexHashSet(BmiStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<BodyMassIndex> elements = new HashSet<BodyMassIndex>(stateSet.size());
@@ -37,10 +37,11 @@ public class BodyMassIndexHashSet implements BodyMassIndexSet, RandomAccess, Clo
     }
 
     public class StateInSyncSet extends HashSet<BodyMassIndex> {
-        private final BmiStateList stateSet;
+        private BmiStateSet stateSet;
 
-        public StateInSyncSet(BmiStateList stateSet, Set<BodyMassIndex> elements) {
+        public StateInSyncSet(BmiStateSet stateSet, Set<BodyMassIndex> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class BodyMassIndexHashSet implements BodyMassIndexSet, RandomAccess, Clo
             if (!(element instanceof BodyMassIndex)) {
                 return false;
             }
-            stateSet.remove(((BodyMassIndex) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((BodyMassIndex) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

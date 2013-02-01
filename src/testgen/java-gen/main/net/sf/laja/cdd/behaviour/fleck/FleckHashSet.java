@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class FleckHashSet implements FleckSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected FleckStateList stateSet;
+    protected FleckStateSet stateSet;
     protected final Set<Fleck> set;
 
     public FleckHashSet(Fleck... array) {
@@ -23,7 +23,7 @@ public class FleckHashSet implements FleckSet, RandomAccess, Cloneable, java.io.
         this.set.addAll(collection);
     }
 
-    public FleckHashSet(FleckStateList stateSet) {
+    public FleckHashSet(FleckStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Fleck> elements = new HashSet<Fleck>(stateSet.size());
@@ -37,10 +37,11 @@ public class FleckHashSet implements FleckSet, RandomAccess, Cloneable, java.io.
     }
 
     public class StateInSyncSet extends HashSet<Fleck> {
-        private final FleckStateList stateSet;
+        private FleckStateSet stateSet;
 
-        public StateInSyncSet(FleckStateList stateSet, Set<Fleck> elements) {
+        public StateInSyncSet(FleckStateSet stateSet, Set<Fleck> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class FleckHashSet implements FleckSet, RandomAccess, Cloneable, java.io.
             if (!(element instanceof Fleck)) {
                 return false;
             }
-            stateSet.remove(((Fleck) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Fleck) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class MouthHashSet implements MouthSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateSet;
+    protected MouthStateSet stateSet;
     protected final Set<Mouth> set;
 
     public MouthHashSet(Mouth... array) {
@@ -23,7 +23,7 @@ public class MouthHashSet implements MouthSet, RandomAccess, Cloneable, java.io.
         this.set.addAll(collection);
     }
 
-    public MouthHashSet(MouthStateList stateSet, MouthSize size) {
+    public MouthHashSet(MouthStateSet stateSet, MouthSize size) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Mouth> elements = new HashSet<Mouth>(stateSet.size());
@@ -45,10 +45,11 @@ public class MouthHashSet implements MouthSet, RandomAccess, Cloneable, java.io.
     }
 
     public class StateInSyncSet extends HashSet<Mouth> {
-        private final MouthStateList stateSet;
+        private MouthStateSet stateSet;
 
-        public StateInSyncSet(MouthStateList stateSet, Set<Mouth> elements) {
+        public StateInSyncSet(MouthStateSet stateSet, Set<Mouth> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -76,9 +77,13 @@ public class MouthHashSet implements MouthSet, RandomAccess, Cloneable, java.io.
             if (!(element instanceof Mouth)) {
                 return false;
             }
-            stateSet.remove(((Mouth) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Mouth) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

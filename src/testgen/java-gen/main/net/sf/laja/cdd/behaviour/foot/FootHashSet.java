@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class FootHashSet implements FootSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected FootStateList stateSet;
+    protected FootStateSet stateSet;
     protected final Set<Foot> set;
 
     public FootHashSet(Foot... array) {
@@ -23,7 +23,7 @@ public class FootHashSet implements FootSet, RandomAccess, Cloneable, java.io.Se
         this.set.addAll(collection);
     }
 
-    public FootHashSet(FootStateList stateSet) {
+    public FootHashSet(FootStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Foot> elements = new HashSet<Foot>(stateSet.size());
@@ -37,10 +37,11 @@ public class FootHashSet implements FootSet, RandomAccess, Cloneable, java.io.Se
     }
 
     public class StateInSyncSet extends HashSet<Foot> {
-        private final FootStateList stateSet;
+        private FootStateSet stateSet;
 
-        public StateInSyncSet(FootStateList stateSet, Set<Foot> elements) {
+        public StateInSyncSet(FootStateSet stateSet, Set<Foot> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class FootHashSet implements FootSet, RandomAccess, Cloneable, java.io.Se
             if (!(element instanceof Foot)) {
                 return false;
             }
-            stateSet.remove(((Foot) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Foot) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

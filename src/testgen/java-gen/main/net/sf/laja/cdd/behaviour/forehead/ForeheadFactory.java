@@ -28,6 +28,10 @@ public class ForeheadFactory extends ForeheadBehaviour {
         return new ForeheadBuilder();
     }
 
+    public static ForeheadSetEncapsulator createSet(ForeheadEncapsulator... encapsulators) {
+        return new ForeheadSetEncapsulator(encapsulators);
+    }
+
     public static ForeheadListEncapsulator createList(ForeheadEncapsulator... encapsulators) {
         return new ForeheadListEncapsulator(encapsulators);
     }

@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TestBrowHashSet implements TestBrowSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected BrowStateList stateSet;
+    protected BrowStateSet stateSet;
     protected final Set<TestBrow> set;
 
     public TestBrowHashSet(TestBrow... array) {
@@ -23,7 +23,7 @@ public class TestBrowHashSet implements TestBrowSet, RandomAccess, Cloneable, ja
         this.set.addAll(collection);
     }
 
-    public TestBrowHashSet(BrowStateList stateSet) {
+    public TestBrowHashSet(BrowStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TestBrow> elements = new HashSet<TestBrow>(stateSet.size());
@@ -37,10 +37,11 @@ public class TestBrowHashSet implements TestBrowSet, RandomAccess, Cloneable, ja
     }
 
     public class StateInSyncSet extends HashSet<TestBrow> {
-        private final BrowStateList stateSet;
+        private BrowStateSet stateSet;
 
-        public StateInSyncSet(BrowStateList stateSet, Set<TestBrow> elements) {
+        public StateInSyncSet(BrowStateSet stateSet, Set<TestBrow> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class TestBrowHashSet implements TestBrowSet, RandomAccess, Cloneable, ja
             if (!(element instanceof TestBrow)) {
                 return false;
             }
-            stateSet.remove(((TestBrow) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TestBrow) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

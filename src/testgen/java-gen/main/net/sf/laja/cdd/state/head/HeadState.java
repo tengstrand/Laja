@@ -12,6 +12,7 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.Certificate;
@@ -52,6 +53,9 @@ public interface HeadState extends EyeState, ForeheadState {
     BrowStateList getBrows(); // (optional)
     void setBrows(BrowStateList brows, Object mutator);
 
+    EarStateSet getEars(); // (optional)
+    void setEars(EarStateSet ears, Object mutator);
+
     int getLength(); // (optional)
     void setLength(int length, Object mutator);
 
@@ -79,8 +83,8 @@ public interface HeadState extends EyeState, ForeheadState {
     double getH();
     void setH(double h, Object mutator);
 
-    EarStateList getEars(); // (optional)
-    void setEars(EarStateList ears, Object mutator);
+    EarStateList getOptionalEars(); // (optional)
+    void setOptionalEars(EarStateList optionalEars, Object mutator);
 
     MouthStateList getMouths();
     void setMouths(MouthStateList mouths, Object mutator);

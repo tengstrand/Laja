@@ -14,7 +14,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class ClosedFileHashSet implements ClosedFileSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected FileStateList stateSet;
+    protected FileStateSet stateSet;
     protected final Set<ClosedFile> set;
 
     public ClosedFileHashSet(ClosedFile... array) {
@@ -27,7 +27,7 @@ public class ClosedFileHashSet implements ClosedFileSet, RandomAccess, Cloneable
         this.set.addAll(collection);
     }
 
-    public ClosedFileHashSet(FileStateList stateSet, Directory directory) {
+    public ClosedFileHashSet(FileStateSet stateSet, Directory directory) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<ClosedFile> elements = new HashSet<ClosedFile>(stateSet.size());
@@ -57,10 +57,11 @@ public class ClosedFileHashSet implements ClosedFileSet, RandomAccess, Cloneable
     }
 
     public class StateInSyncSet extends HashSet<ClosedFile> {
-        private final FileStateList stateSet;
+        private FileStateSet stateSet;
 
-        public StateInSyncSet(FileStateList stateSet, Set<ClosedFile> elements) {
+        public StateInSyncSet(FileStateSet stateSet, Set<ClosedFile> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -88,9 +89,13 @@ public class ClosedFileHashSet implements ClosedFileSet, RandomAccess, Cloneable
             if (!(element instanceof ClosedFile)) {
                 return false;
             }
-            stateSet.remove(((ClosedFile) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((ClosedFile) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

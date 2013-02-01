@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class ForeheadHashSet implements ForeheadSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ForeheadStateList stateSet;
+    protected ForeheadStateSet stateSet;
     protected final Set<Forehead> set;
 
     public ForeheadHashSet(Forehead... array) {
@@ -23,7 +23,7 @@ public class ForeheadHashSet implements ForeheadSet, RandomAccess, Cloneable, ja
         this.set.addAll(collection);
     }
 
-    public ForeheadHashSet(ForeheadStateList stateSet) {
+    public ForeheadHashSet(ForeheadStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Forehead> elements = new HashSet<Forehead>(stateSet.size());
@@ -48,10 +48,11 @@ public class ForeheadHashSet implements ForeheadSet, RandomAccess, Cloneable, ja
     }
 
     public class StateInSyncSet extends HashSet<Forehead> {
-        private final ForeheadStateList stateSet;
+        private ForeheadStateSet stateSet;
 
-        public StateInSyncSet(ForeheadStateList stateSet, Set<Forehead> elements) {
+        public StateInSyncSet(ForeheadStateSet stateSet, Set<Forehead> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -79,9 +80,13 @@ public class ForeheadHashSet implements ForeheadSet, RandomAccess, Cloneable, ja
             if (!(element instanceof Forehead)) {
                 return false;
             }
-            stateSet.remove(((Forehead) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Forehead) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

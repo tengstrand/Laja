@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class FakeHairHashSet implements FakeHairSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected HairStateList stateSet;
+    protected HairStateSet stateSet;
     protected final Set<FakeHair> set;
 
     public FakeHairHashSet(FakeHair... array) {
@@ -23,7 +23,7 @@ public class FakeHairHashSet implements FakeHairSet, RandomAccess, Cloneable, ja
         this.set.addAll(collection);
     }
 
-    public FakeHairHashSet(HairStateList stateSet) {
+    public FakeHairHashSet(HairStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<FakeHair> elements = new HashSet<FakeHair>(stateSet.size());
@@ -37,10 +37,11 @@ public class FakeHairHashSet implements FakeHairSet, RandomAccess, Cloneable, ja
     }
 
     public class StateInSyncSet extends HashSet<FakeHair> {
-        private final HairStateList stateSet;
+        private HairStateSet stateSet;
 
-        public StateInSyncSet(HairStateList stateSet, Set<FakeHair> elements) {
+        public StateInSyncSet(HairStateSet stateSet, Set<FakeHair> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class FakeHairHashSet implements FakeHairSet, RandomAccess, Cloneable, ja
             if (!(element instanceof FakeHair)) {
                 return false;
             }
-            stateSet.remove(((FakeHair) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((FakeHair) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

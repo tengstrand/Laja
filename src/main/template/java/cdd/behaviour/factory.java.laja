@@ -33,7 +33,7 @@ public class {factoryClass} extends {stateBehaviourClass} {
     }
   #else
     #if (chainedReturnClass == null)
-      #if (firstChainedAttribute.isStateList)
+      #if (firstChainedAttribute.isStateSet || firstChainedAttribute.isStateList)
     public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator}... {firstChainedAttribute.variable}) {
       #else if (firstChainedAttribute.isState)
     public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator} {firstChainedAttribute.variable}) {
@@ -43,7 +43,7 @@ public class {factoryClass} extends {stateBehaviourClass} {
         return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
     }
     #else
-      #if (firstChainedAttribute.isStateList)
+      #if (firstChainedAttribute.isStateSet || firstChainedAttribute.isStateList)
     public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator}... {firstChainedAttribute.variable}) {
       #else if (firstChainedAttribute.isState)
     public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator} {firstChainedAttribute.variable}) {
@@ -57,6 +57,10 @@ public class {factoryClass} extends {stateBehaviourClass} {
 
     public static {builderClass} build() {
         return new {builderClass}();
+    }
+
+    public static {setEncapsulatorClass} createSet({encapsulatorClass}... encapsulators) {
+        return new {setEncapsulatorClass}(encapsulators);
     }
 
     public static {listEncapsulatorClass} createList({encapsulatorClass}... encapsulators) {

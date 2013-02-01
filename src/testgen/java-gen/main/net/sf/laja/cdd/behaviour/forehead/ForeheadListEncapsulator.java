@@ -7,6 +7,7 @@ import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 
 public class ForeheadListEncapsulator implements Iterable<ForeheadEncapsulator> {
     public ForeheadStateListBuilder stateListBuilder = new ForeheadStateListBuilder();

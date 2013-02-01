@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected BusStateList stateSet;
+    protected BusStateSet stateSet;
     protected final Set<Bus> set;
 
     public BusHashSet(Bus... array) {
@@ -23,7 +23,7 @@ public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Seri
         this.set.addAll(collection);
     }
 
-    public BusHashSet(BusStateList stateSet) {
+    public BusHashSet(BusStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Bus> elements = new HashSet<Bus>(stateSet.size());
@@ -37,10 +37,11 @@ public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Seri
     }
 
     public class StateInSyncSet extends HashSet<Bus> {
-        private final BusStateList stateSet;
+        private BusStateSet stateSet;
 
-        public StateInSyncSet(BusStateList stateSet, Set<Bus> elements) {
+        public StateInSyncSet(BusStateSet stateSet, Set<Bus> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Seri
             if (!(element instanceof Bus)) {
                 return false;
             }
-            stateSet.remove(((Bus) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Bus) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

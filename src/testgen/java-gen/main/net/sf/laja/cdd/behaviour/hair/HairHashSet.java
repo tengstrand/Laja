@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class HairHashSet implements HairSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected HairStateList stateSet;
+    protected HairStateSet stateSet;
     protected final Set<Hair> set;
 
     public HairHashSet(Hair... array) {
@@ -23,7 +23,7 @@ public class HairHashSet implements HairSet, RandomAccess, Cloneable, java.io.Se
         this.set.addAll(collection);
     }
 
-    public HairHashSet(HairStateList stateSet) {
+    public HairHashSet(HairStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Hair> elements = new HashSet<Hair>(stateSet.size());
@@ -48,10 +48,11 @@ public class HairHashSet implements HairSet, RandomAccess, Cloneable, java.io.Se
     }
 
     public class StateInSyncSet extends HashSet<Hair> {
-        private final HairStateList stateSet;
+        private HairStateSet stateSet;
 
-        public StateInSyncSet(HairStateList stateSet, Set<Hair> elements) {
+        public StateInSyncSet(HairStateSet stateSet, Set<Hair> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -79,9 +80,13 @@ public class HairHashSet implements HairSet, RandomAccess, Cloneable, java.io.Se
             if (!(element instanceof Hair)) {
                 return false;
             }
-            stateSet.remove(((Hair) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Hair) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

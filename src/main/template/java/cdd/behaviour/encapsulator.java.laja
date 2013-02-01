@@ -15,7 +15,13 @@ public class {encapsulatorClass} {
   #end
   #foreach (attribute in template.attributes where attribute.isOptional && attribute.isBuilderMethod)
 
-    #if (attribute.isStateList)
+    #if (attribute.isStateSet)
+    public {encapsulatorClass} {attribute.withMethod}({attribute.encapsulator}... {attribute.variable}) {
+        {attribute.setEncapsulator} encapsulator = new {attribute.setEncapsulator}({attribute.variable});
+        builder.{attribute.withMethod}(encapsulator.stateSetBuilder);
+        return this;
+    }
+    #else if (attribute.isStateList)
     public {encapsulatorClass} {attribute.withMethod}({attribute.encapsulator}... {attribute.variable}) {
         {attribute.listEncapsulator} encapsulator = new {attribute.listEncapsulator}({attribute.variable});
         builder.{attribute.withMethod}(encapsulator.stateListBuilder);
@@ -50,6 +56,7 @@ package {behaviour.packagename};
 
     #importsBegin()
     #importsEncapsulator()
+    #importsSetEncapsulator()
     #importsListEncapsulator()
     #importsEnd()
     #class()

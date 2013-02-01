@@ -15,6 +15,7 @@ import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
@@ -47,14 +48,20 @@ public class HeadEncapsulator {
         return this;
     }
 
+    public HeadEncapsulator withEars(EarEncapsulator... ears) {
+        EarSetEncapsulator encapsulator = new EarSetEncapsulator(ears);
+        builder.withEars(encapsulator.stateSetBuilder);
+        return this;
+    }
+
     public HeadEncapsulator withLength(int length) {
         builder.withLength(length);
         return this;
     }
 
-    public HeadEncapsulator withEars(EarEncapsulator... ears) {
-        EarListEncapsulator encapsulator = new EarListEncapsulator(ears);
-        builder.withEars(encapsulator.stateListBuilder);
+    public HeadEncapsulator withOptionalEars(EarEncapsulator... optionalEars) {
+        EarListEncapsulator encapsulator = new EarListEncapsulator(optionalEars);
+        builder.withOptionalEars(encapsulator.stateListBuilder);
         return this;
     }
 

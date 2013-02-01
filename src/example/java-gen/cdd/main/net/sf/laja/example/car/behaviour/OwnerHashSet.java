@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected OwnerStateList stateSet;
+    protected OwnerStateSet stateSet;
     protected final Set<Owner> set;
 
     public OwnerHashSet(Owner... array) {
@@ -23,7 +23,7 @@ public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.
         this.set.addAll(collection);
     }
 
-    public OwnerHashSet(OwnerStateList stateSet) {
+    public OwnerHashSet(OwnerStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Owner> elements = new HashSet<Owner>(stateSet.size());
@@ -37,10 +37,11 @@ public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.
     }
 
     public class StateInSyncSet extends HashSet<Owner> {
-        private final OwnerStateList stateSet;
+        private OwnerStateSet stateSet;
 
-        public StateInSyncSet(OwnerStateList stateSet, Set<Owner> elements) {
+        public StateInSyncSet(OwnerStateSet stateSet, Set<Owner> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.
             if (!(element instanceof Owner)) {
                 return false;
             }
-            stateSet.remove(((Owner) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Owner) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

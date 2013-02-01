@@ -27,6 +27,10 @@ public class TerrestrialFactory extends TerrestrialBehaviour {
         return new TerrestrialBuilder();
     }
 
+    public static TerrestrialSetEncapsulator createSet(TerrestrialEncapsulator... encapsulators) {
+        return new TerrestrialSetEncapsulator(encapsulators);
+    }
+
     public static TerrestrialListEncapsulator createList(TerrestrialEncapsulator... encapsulators) {
         return new TerrestrialListEncapsulator(encapsulators);
     }

@@ -25,6 +25,10 @@ public class HeightFactory extends HeightBehaviour {
         return new HeightBuilder();
     }
 
+    public static HeightSetEncapsulator createSet(HeightEncapsulator... encapsulators) {
+        return new HeightSetEncapsulator(encapsulators);
+    }
+
     public static HeightListEncapsulator createList(HeightEncapsulator... encapsulators) {
         return new HeightListEncapsulator(encapsulators);
     }

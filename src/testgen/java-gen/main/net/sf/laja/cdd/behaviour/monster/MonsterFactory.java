@@ -28,6 +28,10 @@ public class MonsterFactory extends MonsterBehaviour {
         return new MonsterBuilder();
     }
 
+    public static MonsterSetEncapsulator createSet(MonsterEncapsulator... encapsulators) {
+        return new MonsterSetEncapsulator(encapsulators);
+    }
+
     public static MonsterListEncapsulator createList(MonsterEncapsulator... encapsulators) {
         return new MonsterListEncapsulator(encapsulators);
     }

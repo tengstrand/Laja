@@ -11,6 +11,9 @@ public interface EarState {
     double getSize(); // (hide)
     void setSize(double size, Object mutator);
 
+    int getWeight();
+    void setWeight(int weight, Object mutator);
+
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean equalsValue(Object obj);

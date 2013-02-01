@@ -10,7 +10,19 @@ public class EarStateProjection {
     EarStateProjection() {
     }
 
-    public static EarStateProjection size(double size) {
-        return new EarStateProjection();
+    public static EarStateProjection.Weight_ size(double size) {
+        return new EarStateProjection().new Weight_();
+    }
+
+    public class Size_ {
+        public Weight_ size(double size) {
+            return new Weight_();
+        }
+    }
+
+    public class Weight_ {
+        public EarStateProjection weight(int weight) {
+            return EarStateProjection.this;
+        }
     }
 }

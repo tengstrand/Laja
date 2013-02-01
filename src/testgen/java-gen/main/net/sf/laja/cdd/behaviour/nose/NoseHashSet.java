@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class NoseHashSet implements NoseSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected NoseStateList stateSet;
+    protected NoseStateSet stateSet;
     protected final Set<Nose> set;
 
     public NoseHashSet(Nose... array) {
@@ -23,7 +23,7 @@ public class NoseHashSet implements NoseSet, RandomAccess, Cloneable, java.io.Se
         this.set.addAll(collection);
     }
 
-    public NoseHashSet(NoseStateList stateSet, int extraParameter) {
+    public NoseHashSet(NoseStateSet stateSet, int extraParameter) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Nose> elements = new HashSet<Nose>(stateSet.size());
@@ -48,10 +48,11 @@ public class NoseHashSet implements NoseSet, RandomAccess, Cloneable, java.io.Se
     }
 
     public class StateInSyncSet extends HashSet<Nose> {
-        private final NoseStateList stateSet;
+        private NoseStateSet stateSet;
 
-        public StateInSyncSet(NoseStateList stateSet, Set<Nose> elements) {
+        public StateInSyncSet(NoseStateSet stateSet, Set<Nose> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -79,9 +80,13 @@ public class NoseHashSet implements NoseSet, RandomAccess, Cloneable, java.io.Se
             if (!(element instanceof Nose)) {
                 return false;
             }
-            stateSet.remove(((Nose) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Nose) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

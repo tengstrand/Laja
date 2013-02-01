@@ -25,6 +25,10 @@ public class NoseFactory extends NoseBehaviour {
         return new NoseBuilder();
     }
 
+    public static NoseSetEncapsulator createSet(NoseEncapsulator... encapsulators) {
+        return new NoseSetEncapsulator(encapsulators);
+    }
+
     public static NoseListEncapsulator createList(NoseEncapsulator... encapsulators) {
         return new NoseListEncapsulator(encapsulators);
     }

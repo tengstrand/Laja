@@ -30,6 +30,10 @@ public class HeadFactory extends HeadBehaviour {
         return new HeadBuilder();
     }
 
+    public static HeadSetEncapsulator createSet(HeadEncapsulator... encapsulators) {
+        return new HeadSetEncapsulator(encapsulators);
+    }
+
     public static HeadListEncapsulator createList(HeadEncapsulator... encapsulators) {
         return new HeadListEncapsulator(encapsulators);
     }

@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected TruckTypeStateList stateSet;
+    protected TruckTypeStateSet stateSet;
     protected final Set<TruckType> set;
 
     public TruckTypeHashSet(TruckType... array) {
@@ -23,7 +23,7 @@ public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, 
         this.set.addAll(collection);
     }
 
-    public TruckTypeHashSet(TruckTypeStateList stateSet) {
+    public TruckTypeHashSet(TruckTypeStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TruckType> elements = new HashSet<TruckType>(stateSet.size());
@@ -37,10 +37,11 @@ public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, 
     }
 
     public class StateInSyncSet extends HashSet<TruckType> {
-        private final TruckTypeStateList stateSet;
+        private TruckTypeStateSet stateSet;
 
-        public StateInSyncSet(TruckTypeStateList stateSet, Set<TruckType> elements) {
+        public StateInSyncSet(TruckTypeStateSet stateSet, Set<TruckType> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class TruckTypeHashSet implements TruckTypeSet, RandomAccess, Cloneable, 
             if (!(element instanceof TruckType)) {
                 return false;
             }
-            stateSet.remove(((TruckType) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TruckType) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

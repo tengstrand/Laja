@@ -28,6 +28,10 @@ public class CustomerFactory extends CustomerBehaviour {
         return new CustomerBuilder();
     }
 
+    public static CustomerSetEncapsulator createSet(CustomerEncapsulator... encapsulators) {
+        return new CustomerSetEncapsulator(encapsulators);
+    }
+
     public static CustomerListEncapsulator createList(CustomerEncapsulator... encapsulators) {
         return new CustomerListEncapsulator(encapsulators);
     }

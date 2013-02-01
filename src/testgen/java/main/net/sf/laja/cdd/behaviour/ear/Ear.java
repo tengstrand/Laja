@@ -12,4 +12,13 @@ public class Ear extends EarFactory {
     public Ear asEar() {
         return new Ear(state);
     }
+
+    public int getWeight() {
+        return state.getWeight();
+    }
+
+    @Override
+    public String toString() {
+        return "Ear{state = " + state.toString() + ", hashCode=" + hashCode() + "}";
+    }
 }

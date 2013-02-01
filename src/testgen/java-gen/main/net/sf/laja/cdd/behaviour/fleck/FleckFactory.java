@@ -25,6 +25,10 @@ public class FleckFactory extends FleckBehaviour {
         return new FleckBuilder();
     }
 
+    public static FleckSetEncapsulator createSet(FleckEncapsulator... encapsulators) {
+        return new FleckSetEncapsulator(encapsulators);
+    }
+
     public static FleckListEncapsulator createList(FleckEncapsulator... encapsulators) {
         return new FleckListEncapsulator(encapsulators);
     }

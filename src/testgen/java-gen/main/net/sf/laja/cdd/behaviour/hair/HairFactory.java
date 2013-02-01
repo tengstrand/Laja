@@ -25,6 +25,10 @@ public class HairFactory extends HairBehaviour {
         return new HairBuilder();
     }
 
+    public static HairSetEncapsulator createSet(HairEncapsulator... encapsulators) {
+        return new HairSetEncapsulator(encapsulators);
+    }
+
     public static HairListEncapsulator createList(HairEncapsulator... encapsulators) {
         return new HairListEncapsulator(encapsulators);
     }

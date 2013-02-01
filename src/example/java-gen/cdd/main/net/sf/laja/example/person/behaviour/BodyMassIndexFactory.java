@@ -27,6 +27,10 @@ public class BodyMassIndexFactory extends BmiBehaviour {
         return new BodyMassIndexBuilder();
     }
 
+    public static BodyMassIndexSetEncapsulator createSet(BodyMassIndexEncapsulator... encapsulators) {
+        return new BodyMassIndexSetEncapsulator(encapsulators);
+    }
+
     public static BodyMassIndexListEncapsulator createList(BodyMassIndexEncapsulator... encapsulators) {
         return new BodyMassIndexListEncapsulator(encapsulators);
     }

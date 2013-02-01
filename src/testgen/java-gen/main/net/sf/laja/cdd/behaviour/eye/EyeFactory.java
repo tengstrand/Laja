@@ -26,6 +26,10 @@ public class EyeFactory extends EyeBehaviour {
         return new EyeBuilder();
     }
 
+    public static EyeSetEncapsulator createSet(EyeEncapsulator... encapsulators) {
+        return new EyeSetEncapsulator(encapsulators);
+    }
+
     public static EyeListEncapsulator createList(EyeEncapsulator... encapsulators) {
         return new EyeListEncapsulator(encapsulators);
     }

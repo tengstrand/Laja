@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
+import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -11,7 +13,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface ForeheadStateBuilder {
     void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
+    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder); // 1
     BrowStateListBuilder getBrowsStateListBuilder();
+    EarStateSetBuilder getEarsStateSetBuilder();
     boolean isValid();
     Object as(ForeheadBehaviourFactory factory, Object... args);
     ForeheadState getForeheadState(net.sf.laja.cdd.state.Certificate certificate);

@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TestForeheadHashSet implements TestForeheadSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ForeheadStateList stateSet;
+    protected ForeheadStateSet stateSet;
     protected final Set<TestForehead> set;
 
     public TestForeheadHashSet(TestForehead... array) {
@@ -23,7 +23,7 @@ public class TestForeheadHashSet implements TestForeheadSet, RandomAccess, Clone
         this.set.addAll(collection);
     }
 
-    public TestForeheadHashSet(ForeheadStateList stateSet) {
+    public TestForeheadHashSet(ForeheadStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TestForehead> elements = new HashSet<TestForehead>(stateSet.size());
@@ -37,10 +37,11 @@ public class TestForeheadHashSet implements TestForeheadSet, RandomAccess, Clone
     }
 
     public class StateInSyncSet extends HashSet<TestForehead> {
-        private final ForeheadStateList stateSet;
+        private ForeheadStateSet stateSet;
 
-        public StateInSyncSet(ForeheadStateList stateSet, Set<TestForehead> elements) {
+        public StateInSyncSet(ForeheadStateSet stateSet, Set<TestForehead> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class TestForeheadHashSet implements TestForeheadSet, RandomAccess, Clone
             if (!(element instanceof TestForehead)) {
                 return false;
             }
-            stateSet.remove(((TestForehead) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TestForehead) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

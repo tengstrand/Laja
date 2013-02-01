@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class HeadHashSet implements HeadSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected HeadStateList stateSet;
+    protected HeadStateSet stateSet;
     protected final Set<Head> set;
 
     public HeadHashSet(Head... array) {
@@ -23,7 +23,7 @@ public class HeadHashSet implements HeadSet, RandomAccess, Cloneable, java.io.Se
         this.set.addAll(collection);
     }
 
-    public HeadHashSet(HeadStateList stateSet) {
+    public HeadHashSet(HeadStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Head> elements = new HashSet<Head>(stateSet.size());
@@ -37,10 +37,11 @@ public class HeadHashSet implements HeadSet, RandomAccess, Cloneable, java.io.Se
     }
 
     public class StateInSyncSet extends HashSet<Head> {
-        private final HeadStateList stateSet;
+        private HeadStateSet stateSet;
 
-        public StateInSyncSet(HeadStateList stateSet, Set<Head> elements) {
+        public StateInSyncSet(HeadStateSet stateSet, Set<Head> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class HeadHashSet implements HeadSet, RandomAccess, Cloneable, java.io.Se
             if (!(element instanceof Head)) {
                 return false;
             }
-            stateSet.remove(((Head) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Head) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

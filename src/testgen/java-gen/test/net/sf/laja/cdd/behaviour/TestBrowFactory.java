@@ -25,6 +25,10 @@ public class TestBrowFactory extends BrowBehaviour {
         return new TestBrowBuilder();
     }
 
+    public static TestBrowSetEncapsulator createSet(TestBrowEncapsulator... encapsulators) {
+        return new TestBrowSetEncapsulator(encapsulators);
+    }
+
     public static TestBrowListEncapsulator createList(TestBrowEncapsulator... encapsulators) {
         return new TestBrowListEncapsulator(encapsulators);
     }

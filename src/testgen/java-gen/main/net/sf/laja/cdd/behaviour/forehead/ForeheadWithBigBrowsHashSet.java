@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class ForeheadWithBigBrowsHashSet implements ForeheadWithBigBrowsSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ForeheadStateList stateSet;
+    protected ForeheadStateSet stateSet;
     protected final Set<ForeheadWithBigBrows> set;
 
     public ForeheadWithBigBrowsHashSet(ForeheadWithBigBrows... array) {
@@ -23,7 +23,7 @@ public class ForeheadWithBigBrowsHashSet implements ForeheadWithBigBrowsSet, Ran
         this.set.addAll(collection);
     }
 
-    public ForeheadWithBigBrowsHashSet(ForeheadStateList stateSet) {
+    public ForeheadWithBigBrowsHashSet(ForeheadStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<ForeheadWithBigBrows> elements = new HashSet<ForeheadWithBigBrows>(stateSet.size());
@@ -37,10 +37,11 @@ public class ForeheadWithBigBrowsHashSet implements ForeheadWithBigBrowsSet, Ran
     }
 
     public class StateInSyncSet extends HashSet<ForeheadWithBigBrows> {
-        private final ForeheadStateList stateSet;
+        private ForeheadStateSet stateSet;
 
-        public StateInSyncSet(ForeheadStateList stateSet, Set<ForeheadWithBigBrows> elements) {
+        public StateInSyncSet(ForeheadStateSet stateSet, Set<ForeheadWithBigBrows> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class ForeheadWithBigBrowsHashSet implements ForeheadWithBigBrowsSet, Ran
             if (!(element instanceof ForeheadWithBigBrows)) {
                 return false;
             }
-            stateSet.remove(((ForeheadWithBigBrows) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((ForeheadWithBigBrows) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

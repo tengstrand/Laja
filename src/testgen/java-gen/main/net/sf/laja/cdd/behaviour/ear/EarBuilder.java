@@ -18,6 +18,11 @@ public class EarBuilder {
         builder = new EarStateBuilderImpl(state, encapsulator);
     }
 
+    public EarBuilder withWeight(int weight) {
+        builder.withWeight(weight);
+        return this;
+    }
+
     public boolean isValid() {
         return builder.isValid();
     }

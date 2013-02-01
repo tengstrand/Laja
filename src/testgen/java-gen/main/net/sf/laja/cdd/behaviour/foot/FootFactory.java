@@ -27,6 +27,10 @@ public class FootFactory extends FootBehaviour {
         return new FootBuilder();
     }
 
+    public static FootSetEncapsulator createSet(FootEncapsulator... encapsulators) {
+        return new FootSetEncapsulator(encapsulators);
+    }
+
     public static FootListEncapsulator createList(FootEncapsulator... encapsulators) {
         return new FootListEncapsulator(encapsulators);
     }

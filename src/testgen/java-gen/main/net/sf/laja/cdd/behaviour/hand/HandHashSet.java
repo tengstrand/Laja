@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class HandHashSet implements HandSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected HandStateList stateSet;
+    protected HandStateSet stateSet;
     protected final Set<Hand> set;
 
     public HandHashSet(Hand... array) {
@@ -23,7 +23,7 @@ public class HandHashSet implements HandSet, RandomAccess, Cloneable, java.io.Se
         this.set.addAll(collection);
     }
 
-    public HandHashSet(HandStateList stateSet) {
+    public HandHashSet(HandStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Hand> elements = new HashSet<Hand>(stateSet.size());
@@ -37,10 +37,11 @@ public class HandHashSet implements HandSet, RandomAccess, Cloneable, java.io.Se
     }
 
     public class StateInSyncSet extends HashSet<Hand> {
-        private final HandStateList stateSet;
+        private HandStateSet stateSet;
 
-        public StateInSyncSet(HandStateList stateSet, Set<Hand> elements) {
+        public StateInSyncSet(HandStateSet stateSet, Set<Hand> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class HandHashSet implements HandSet, RandomAccess, Cloneable, java.io.Se
             if (!(element instanceof Hand)) {
                 return false;
             }
-            stateSet.remove(((Hand) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Hand) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

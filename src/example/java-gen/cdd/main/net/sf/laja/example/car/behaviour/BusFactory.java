@@ -25,6 +25,10 @@ public class BusFactory extends BusBehaviour {
         return new BusBuilder();
     }
 
+    public static BusSetEncapsulator createSet(BusEncapsulator... encapsulators) {
+        return new BusSetEncapsulator(encapsulators);
+    }
+
     public static BusListEncapsulator createList(BusEncapsulator... encapsulators) {
         return new BusListEncapsulator(encapsulators);
     }

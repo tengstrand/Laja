@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class HeightHashSet implements HeightSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected HeightStateList stateSet;
+    protected HeightStateSet stateSet;
     protected final Set<Height> set;
 
     public HeightHashSet(Height... array) {
@@ -23,7 +23,7 @@ public class HeightHashSet implements HeightSet, RandomAccess, Cloneable, java.i
         this.set.addAll(collection);
     }
 
-    public HeightHashSet(HeightStateList stateSet) {
+    public HeightHashSet(HeightStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Height> elements = new HashSet<Height>(stateSet.size());
@@ -37,10 +37,11 @@ public class HeightHashSet implements HeightSet, RandomAccess, Cloneable, java.i
     }
 
     public class StateInSyncSet extends HashSet<Height> {
-        private final HeightStateList stateSet;
+        private HeightStateSet stateSet;
 
-        public StateInSyncSet(HeightStateList stateSet, Set<Height> elements) {
+        public StateInSyncSet(HeightStateSet stateSet, Set<Height> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class HeightHashSet implements HeightSet, RandomAccess, Cloneable, java.i
             if (!(element instanceof Height)) {
                 return false;
             }
-            stateSet.remove(((Height) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Height) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

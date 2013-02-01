@@ -13,7 +13,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class ScaryEyeHashSet implements ScaryEyeSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected EyeStateList stateSet;
+    protected EyeStateSet stateSet;
     protected final Set<ScaryEye> set;
 
     public ScaryEyeHashSet(ScaryEye... array) {
@@ -27,10 +27,11 @@ public class ScaryEyeHashSet implements ScaryEyeSet, RandomAccess, Cloneable, ja
     }
 
     public class StateInSyncSet extends HashSet<ScaryEye> {
-        private final EyeStateList stateSet;
+        private EyeStateSet stateSet;
 
-        public StateInSyncSet(EyeStateList stateSet, Set<ScaryEye> elements) {
+        public StateInSyncSet(EyeStateSet stateSet, Set<ScaryEye> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -58,9 +59,13 @@ public class ScaryEyeHashSet implements ScaryEyeSet, RandomAccess, Cloneable, ja
             if (!(element instanceof ScaryEye)) {
                 return false;
             }
-            stateSet.remove(((ScaryEye) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((ScaryEye) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

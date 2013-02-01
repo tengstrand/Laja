@@ -23,7 +23,7 @@ public class HeadStateTemplate extends HeadStateImpl {
     long f;
     float g;
     double h;
-    EarStateList ears; // (optional)
+    EarStateList optionalEars; // (optional)
     MouthStateList mouths;
 
     public boolean isValid() {

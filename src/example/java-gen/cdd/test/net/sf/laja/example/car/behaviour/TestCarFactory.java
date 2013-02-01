@@ -25,6 +25,10 @@ public class TestCarFactory extends CarBehaviour {
         return new TestCarBuilder();
     }
 
+    public static TestCarSetEncapsulator createSet(TestCarEncapsulator... encapsulators) {
+        return new TestCarSetEncapsulator(encapsulators);
+    }
+
     public static TestCarListEncapsulator createList(TestCarEncapsulator... encapsulators) {
         return new TestCarListEncapsulator(encapsulators);
     }

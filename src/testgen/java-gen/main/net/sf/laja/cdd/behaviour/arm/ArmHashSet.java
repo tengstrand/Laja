@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class ArmHashSet implements ArmSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected ArmStateList stateSet;
+    protected ArmStateSet stateSet;
     protected final Set<Arm> set;
 
     public ArmHashSet(Arm... array) {
@@ -23,7 +23,7 @@ public class ArmHashSet implements ArmSet, RandomAccess, Cloneable, java.io.Seri
         this.set.addAll(collection);
     }
 
-    public ArmHashSet(ArmStateList stateSet) {
+    public ArmHashSet(ArmStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Arm> elements = new HashSet<Arm>(stateSet.size());
@@ -37,10 +37,11 @@ public class ArmHashSet implements ArmSet, RandomAccess, Cloneable, java.io.Seri
     }
 
     public class StateInSyncSet extends HashSet<Arm> {
-        private final ArmStateList stateSet;
+        private ArmStateSet stateSet;
 
-        public StateInSyncSet(ArmStateList stateSet, Set<Arm> elements) {
+        public StateInSyncSet(ArmStateSet stateSet, Set<Arm> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class ArmHashSet implements ArmSet, RandomAccess, Cloneable, java.io.Seri
             if (!(element instanceof Arm)) {
                 return false;
             }
-            stateSet.remove(((Arm) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Arm) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

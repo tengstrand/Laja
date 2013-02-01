@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, Cloneable, java.io.Serializable {
-    protected ComputerStateList stateSet;
+    protected ComputerStateSet stateSet;
     protected final Set<AtariFalcon030> set;
 
     public AtariFalcon030HashSet(AtariFalcon030... array) {
@@ -23,7 +23,7 @@ public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, C
         this.set.addAll(collection);
     }
 
-    public AtariFalcon030HashSet(ComputerStateList stateSet) {
+    public AtariFalcon030HashSet(ComputerStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<AtariFalcon030> elements = new HashSet<AtariFalcon030>(stateSet.size());
@@ -37,10 +37,11 @@ public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, C
     }
 
     public class StateInSyncSet extends HashSet<AtariFalcon030> {
-        private final ComputerStateList stateSet;
+        private ComputerStateSet stateSet;
 
-        public StateInSyncSet(ComputerStateList stateSet, Set<AtariFalcon030> elements) {
+        public StateInSyncSet(ComputerStateSet stateSet, Set<AtariFalcon030> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, C
             if (!(element instanceof AtariFalcon030)) {
                 return false;
             }
-            stateSet.remove(((AtariFalcon030) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((AtariFalcon030) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

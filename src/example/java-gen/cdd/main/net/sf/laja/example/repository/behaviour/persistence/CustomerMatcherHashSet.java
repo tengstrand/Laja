@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected CustomerStateList stateSet;
+    protected CustomerStateSet stateSet;
     protected final Set<CustomerMatcher> set;
 
     public CustomerMatcherHashSet(CustomerMatcher... array) {
@@ -23,7 +23,7 @@ public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess,
         this.set.addAll(collection);
     }
 
-    public CustomerMatcherHashSet(CustomerStateList stateSet) {
+    public CustomerMatcherHashSet(CustomerStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<CustomerMatcher> elements = new HashSet<CustomerMatcher>(stateSet.size());
@@ -37,10 +37,11 @@ public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess,
     }
 
     public class StateInSyncSet extends HashSet<CustomerMatcher> {
-        private final CustomerStateList stateSet;
+        private CustomerStateSet stateSet;
 
-        public StateInSyncSet(CustomerStateList stateSet, Set<CustomerMatcher> elements) {
+        public StateInSyncSet(CustomerStateSet stateSet, Set<CustomerMatcher> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class CustomerMatcherHashSet implements CustomerMatcherSet, RandomAccess,
             if (!(element instanceof CustomerMatcher)) {
                 return false;
             }
-            stateSet.remove(((CustomerMatcher) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((CustomerMatcher) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

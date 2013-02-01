@@ -25,6 +25,10 @@ public class PersonFactory extends PersonBehaviour {
         return new PersonBuilder();
     }
 
+    public static PersonSetEncapsulator createSet(PersonEncapsulator... encapsulators) {
+        return new PersonSetEncapsulator(encapsulators);
+    }
+
     public static PersonListEncapsulator createList(PersonEncapsulator... encapsulators) {
         return new PersonListEncapsulator(encapsulators);
     }

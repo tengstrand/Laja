@@ -10,7 +10,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected EarStateList stateSet;
+    protected EarStateSet stateSet;
     protected final Set<Ear> set;
 
     public EarHashSet(Ear... array) {
@@ -23,7 +23,7 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
         this.set.addAll(collection);
     }
 
-    public EarHashSet(EarStateList stateSet) {
+    public EarHashSet(EarStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<Ear> elements = new HashSet<Ear>(stateSet.size());
@@ -37,10 +37,11 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
     }
 
     public class StateInSyncSet extends HashSet<Ear> {
-        private final EarStateList stateSet;
+        private EarStateSet stateSet;
 
-        public StateInSyncSet(EarStateList stateSet, Set<Ear> elements) {
+        public StateInSyncSet(EarStateSet stateSet, Set<Ear> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -68,9 +69,13 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
             if (!(element instanceof Ear)) {
                 return false;
             }
-            stateSet.remove(((Ear) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Ear) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

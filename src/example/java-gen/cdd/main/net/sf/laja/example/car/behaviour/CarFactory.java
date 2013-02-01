@@ -25,6 +25,10 @@ public class CarFactory extends CarBehaviour {
         return new CarBuilder();
     }
 
+    public static CarSetEncapsulator createSet(CarEncapsulator... encapsulators) {
+        return new CarSetEncapsulator(encapsulators);
+    }
+
     public static CarListEncapsulator createList(CarEncapsulator... encapsulators) {
         return new CarListEncapsulator(encapsulators);
     }

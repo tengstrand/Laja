@@ -24,6 +24,10 @@ public class AmigaFactory extends ComputerBehaviour {
         return new AmigaBuilder();
     }
 
+    public static AmigaSetEncapsulator createSet(AmigaEncapsulator... encapsulators) {
+        return new AmigaSetEncapsulator(encapsulators);
+    }
+
     public static AmigaListEncapsulator createList(AmigaEncapsulator... encapsulators) {
         return new AmigaListEncapsulator(encapsulators);
     }

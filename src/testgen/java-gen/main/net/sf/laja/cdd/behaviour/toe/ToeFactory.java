@@ -25,6 +25,10 @@ public class ToeFactory extends ToeBehaviour {
         return new ToeBuilder();
     }
 
+    public static ToeSetEncapsulator createSet(ToeEncapsulator... encapsulators) {
+        return new ToeSetEncapsulator(encapsulators);
+    }
+
     public static ToeListEncapsulator createList(ToeEncapsulator... encapsulators) {
         return new ToeListEncapsulator(encapsulators);
     }

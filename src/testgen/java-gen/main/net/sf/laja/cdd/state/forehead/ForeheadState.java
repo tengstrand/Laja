@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -12,6 +14,9 @@ import net.sf.laja.cdd.state.Certificate;
 public interface ForeheadState {
     BrowStateList getBrows(); // (optional)
     void setBrows(BrowStateList brows, Object mutator);
+
+    EarStateSet getEars(); // (optional)
+    void setEars(EarStateSet ears, Object mutator);
 
     boolean isValid();
     boolean isValidAsEncapsulated();

@@ -14,7 +14,7 @@ import java.util.*;
  *   http://laja.tengstrand.nu
  */
 public class TestMouthHashSet implements TestMouthSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected MouthStateList stateSet;
+    protected MouthStateSet stateSet;
     protected final Set<TestMouth> set;
 
     public TestMouthHashSet(TestMouth... array) {
@@ -27,7 +27,7 @@ public class TestMouthHashSet implements TestMouthSet, RandomAccess, Cloneable, 
         this.set.addAll(collection);
     }
 
-    public TestMouthHashSet(MouthStateList stateSet) {
+    public TestMouthHashSet(MouthStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TestMouth> elements = new HashSet<TestMouth>(stateSet.size());
@@ -49,10 +49,11 @@ public class TestMouthHashSet implements TestMouthSet, RandomAccess, Cloneable, 
     }
 
     public class StateInSyncSet extends HashSet<TestMouth> {
-        private final MouthStateList stateSet;
+        private MouthStateSet stateSet;
 
-        public StateInSyncSet(MouthStateList stateSet, Set<TestMouth> elements) {
+        public StateInSyncSet(MouthStateSet stateSet, Set<TestMouth> elements) {
             this.stateSet = stateSet;
+            this.stateSet.clear();
             super.addAll(elements);
         }
 
@@ -80,9 +81,13 @@ public class TestMouthHashSet implements TestMouthSet, RandomAccess, Cloneable, 
             if (!(element instanceof TestMouth)) {
                 return false;
             }
-            stateSet.remove(((TestMouth) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TestMouth) element).getState(stateSet.certificate()));
+            boolean removedElement = super.remove(element);
 
-            return super.remove(element);
+            if (removedState != removedElement) {
+                throw new IllegalStateException("The state and behaviour is out of sync. Please report this bug to the Laja project!");
+            }
+            return removedElement;
         }
 
         @Override

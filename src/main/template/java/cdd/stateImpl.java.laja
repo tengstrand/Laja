@@ -391,6 +391,9 @@ public class {stateImplClass} implements {stateClass} {
   #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
         {attribute.variable} = {attribute.typeAsStateImpl}.emptyList();
   #end
+  #foreach (attribute in attributes where attribute.isStateSet && !attribute.isExplicitAssigned)
+        {attribute.variable} = {attribute.typeAsStateImpl}.emptySet();
+  #end
     }
 
     public {stateImplClass}(Certificate certificate) {

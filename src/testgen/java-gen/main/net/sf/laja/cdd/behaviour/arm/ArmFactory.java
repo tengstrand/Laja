@@ -6,8 +6,11 @@ import java.util.Arrays;
 import net.sf.laja.cdd.state.arm.*;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.behaviour.hand.HandArrayList;
+import net.sf.laja.cdd.behaviour.hand.HandHashSet;
 import java.util.ArrayList;
+import net.sf.laja.cdd.behaviour.hand.HandSet;
 import net.sf.laja.cdd.behaviour.hand.HandList;
+import net.sf.laja.cdd.behaviour.hand.Hand;
 
 public class ArmFactory extends ArmBehaviour {
 
@@ -25,6 +28,10 @@ public class ArmFactory extends ArmBehaviour {
 
     public static ArmBuilder build() {
         return new ArmBuilder();
+    }
+
+    public static ArmSetEncapsulator createSet(ArmEncapsulator... encapsulators) {
+        return new ArmSetEncapsulator(encapsulators);
     }
 
     public static ArmListEncapsulator createList(ArmEncapsulator... encapsulators) {

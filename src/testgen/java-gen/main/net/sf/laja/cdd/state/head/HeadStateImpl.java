@@ -10,8 +10,10 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
+import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.nose.NoseStateArrayList;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.ear.EarStateArrayList;
@@ -34,6 +36,7 @@ public class HeadStateImpl implements HeadState {
     protected Boolean hasEar; // (optional)
     protected NoseStateList noses;
     protected BrowStateList brows; // (optional)
+    protected EarStateSet ears; // (optional)
     protected int length; // (optional)
     protected boolean a;
     protected byte b;
@@ -43,7 +46,7 @@ public class HeadStateImpl implements HeadState {
     protected long f;
     protected float g;
     protected double h;
-    protected EarStateList ears; // (optional)
+    protected EarStateList optionalEars; // (optional)
     protected MouthStateList mouths;
 
     private boolean _encapsulated = false;
@@ -52,8 +55,9 @@ public class HeadStateImpl implements HeadState {
     HeadStateImpl() {
         noses = NoseStateArrayList.emptyList();
         brows = BrowStateArrayList.emptyList();
-        ears = EarStateArrayList.emptyList();
+        optionalEars = EarStateArrayList.emptyList();
         mouths = MouthStateArrayList.emptyList();
+        ears = EarStateHashSet.emptySet();
     }
 
     public HeadStateImpl(Certificate certificate) {
@@ -92,6 +96,7 @@ public class HeadStateImpl implements HeadState {
            || (noses == null || !noses.isValid())
            || (brows != null && !brows.isValid())
            || (ears != null && !ears.isValid())
+           || (optionalEars != null && !optionalEars.isValid())
            || (mouths == null || !mouths.isValid())) {
             return false;
         }
@@ -109,6 +114,7 @@ public class HeadStateImpl implements HeadState {
     public Boolean getHasEar() { return hasEar; }
     public NoseStateList getNoses() { return noses; }
     public BrowStateList getBrows() { return brows; }
+    public EarStateSet getEars() { return ears; }
     public int getLength() { return length; }
     public boolean getA() { return a; }
     public byte getB() { return b; }
@@ -118,7 +124,7 @@ public class HeadStateImpl implements HeadState {
     public long getF() { return f; }
     public float getG() { return g; }
     public double getH() { return h; }
-    public EarStateList getEars() { return ears; }
+    public EarStateList getOptionalEars() { return optionalEars; }
     public MouthStateList getMouths() { return mouths; }
 
     // Setters
@@ -132,6 +138,7 @@ public class HeadStateImpl implements HeadState {
     public void setHasEar(Boolean hasEar, Object mutator) { checkMutator(mutator); this.hasEar = hasEar; }
     public void setNoses(NoseStateList noses, Object mutator) { checkMutator(mutator); this.noses.clear(); this.noses.addAll(noses); }
     public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
+    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears = ears; }
     public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
     public void setA(boolean a, Object mutator) { checkMutator(mutator); this.a = a; }
     public void setB(byte b, Object mutator) { checkMutator(mutator); this.b = b; }
@@ -141,7 +148,7 @@ public class HeadStateImpl implements HeadState {
     public void setF(long f, Object mutator) { checkMutator(mutator); this.f = f; }
     public void setG(float g, Object mutator) { checkMutator(mutator); this.g = g; }
     public void setH(double h, Object mutator) { checkMutator(mutator); this.h = h; }
-    public void setEars(EarStateList ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
+    public void setOptionalEars(EarStateList optionalEars, Object mutator) { checkMutator(mutator); this.optionalEars.clear(); this.optionalEars.addAll(optionalEars); }
     public void setMouths(MouthStateList mouths, Object mutator) { checkMutator(mutator); this.mouths.clear(); this.mouths.addAll(mouths); }
 
     private void checkMutator(Object mutator) {
@@ -174,6 +181,7 @@ public class HeadStateImpl implements HeadState {
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
         if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
         if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
+        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
         if (length != state.getLength()) return false;
         if (a != state.getA()) return false;
         if (b != state.getB()) return false;
@@ -203,6 +211,7 @@ public class HeadStateImpl implements HeadState {
         if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
         if (noses != null ? !noses.equals(state.noses) : state.noses != null) return false;
         if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
+        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
         if (length != state.getLength()) return false;
         if (a != state.getA()) return false;
         if (b != state.getB()) return false;
@@ -212,7 +221,7 @@ public class HeadStateImpl implements HeadState {
         if (f != state.getF()) return false;
         if (g != state.getG()) return false;
         if (h != state.getH()) return false;
-        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
+        if (optionalEars != null ? !optionalEars.equals(state.optionalEars) : state.optionalEars != null) return false;
         if (mouths != null ? !mouths.equals(state.mouths) : state.mouths != null) return false;
 
         return true;
@@ -228,6 +237,7 @@ public class HeadStateImpl implements HeadState {
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (decease != null ? decease.hashCode() : 0);
         result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
+        result = 31 * result + (ears != null ? ears.hashCode() : 0);
         result = 31 * result + length;
         result = 31 * result + (a ? 1 : 0);
         result = 31 * result + b;
@@ -253,6 +263,7 @@ public class HeadStateImpl implements HeadState {
                 ", hasEar=" + hasEar +
                 ", noses=" + noses +
                 ", brows=" + brows +
+                ", ears=" + ears +
                 ", length=" + length +
                 ", a=" + a +
                 ", b=" + b +
@@ -262,7 +273,7 @@ public class HeadStateImpl implements HeadState {
                 ", f=" + f +
                 ", g=" + g +
                 ", h=" + h +
-                ", ears=" + ears +
+                ", optionalEars=" + optionalEars +
                 ", mouths=" + mouths + "}";
     }
 }

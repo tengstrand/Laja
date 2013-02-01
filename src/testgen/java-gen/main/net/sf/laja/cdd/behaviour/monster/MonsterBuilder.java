@@ -17,6 +17,7 @@ import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
 import net.sf.laja.cdd.behaviour.nose.NoseBuilder;
 import net.sf.laja.cdd.behaviour.mouth.MouthBuilder;
 import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
+import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
@@ -87,6 +88,11 @@ public class MonsterBuilder {
         return this;
     }
 
+    public MonsterBuilder withEars(EarSetEncapsulator ears) {
+        builder.withEars(ears.stateSetBuilder);
+        return this;
+    }
+
     public MonsterBuilder withLength(int length) {
         builder.withLength(length);
         return this;
@@ -132,8 +138,8 @@ public class MonsterBuilder {
         return this;
     }
 
-    public MonsterBuilder withEars(EarListEncapsulator ears) {
-        builder.withEars(ears.stateListBuilder);
+    public MonsterBuilder withOptionalEars(EarListEncapsulator optionalEars) {
+        builder.withOptionalEars(optionalEars.stateListBuilder);
         return this;
     }
 

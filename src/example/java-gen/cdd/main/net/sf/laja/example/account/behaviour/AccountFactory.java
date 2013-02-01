@@ -25,6 +25,10 @@ public class AccountFactory extends AccountBehaviour {
         return new AccountBuilder();
     }
 
+    public static AccountSetEncapsulator createSet(AccountEncapsulator... encapsulators) {
+        return new AccountSetEncapsulator(encapsulators);
+    }
+
     public static AccountListEncapsulator createList(AccountEncapsulator... encapsulators) {
         return new AccountListEncapsulator(encapsulators);
     }

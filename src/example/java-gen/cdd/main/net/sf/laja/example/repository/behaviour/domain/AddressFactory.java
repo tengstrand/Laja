@@ -25,6 +25,10 @@ public class AddressFactory extends AddressBehaviour {
         return new AddressBuilder();
     }
 
+    public static AddressSetEncapsulator createSet(AddressEncapsulator... encapsulators) {
+        return new AddressSetEncapsulator(encapsulators);
+    }
+
     public static AddressListEncapsulator createList(AddressEncapsulator... encapsulators) {
         return new AddressListEncapsulator(encapsulators);
     }

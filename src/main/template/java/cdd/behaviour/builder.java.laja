@@ -74,6 +74,7 @@ package {behaviour.packagename};
 
     #importsBegin()
     #importsBuilder()
+    #importsSetEncapsulator()
     #importsListEncapsulator()
     #importsEnd()
     #class()

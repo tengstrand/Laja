@@ -25,6 +25,10 @@ public class AnimalFactory extends AnimalBehaviour {
         return new AnimalBuilder();
     }
 
+    public static AnimalSetEncapsulator createSet(AnimalEncapsulator... encapsulators) {
+        return new AnimalSetEncapsulator(encapsulators);
+    }
+
     public static AnimalListEncapsulator createList(AnimalEncapsulator... encapsulators) {
         return new AnimalListEncapsulator(encapsulators);
     }

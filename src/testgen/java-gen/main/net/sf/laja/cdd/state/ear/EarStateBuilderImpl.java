@@ -31,6 +31,10 @@ public class EarStateBuilderImpl implements EarStateBuilder {
         state.setSize(size, encapsulator);
     }
 
+    public void withWeight(int weight) {
+        state.setWeight(weight, encapsulator);
+    }
+
     public boolean isValid() {
         return state.isValid();
     }
