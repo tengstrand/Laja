@@ -253,6 +253,7 @@
     #import "{..}/../java/cdd/shared.java.laja"
     #import "{..}/../java/cdd/state.java.laja"
     #import "{..}/../java/cdd/stateImpl.java.laja"
+    #import "{..}/../java/cdd/stateComparable.java.laja"
     #import "{..}/../java/cdd/stateSet.java.laja"
     #import "{..}/../java/cdd/stateList.java.laja"
     #import "{..}/../java/cdd/stateHashSet.java.laja"

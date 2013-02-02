@@ -68,16 +68,18 @@ public class BrowStateImpl implements BrowState {
         _encapsulator = encapsulator;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        BrowStateImpl state = (BrowStateImpl)obj;
-
+    public boolean equalsState(BrowState state) {
         if (area != state.getArea()) return false;
 
         return true;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BrowStateComparable)) return false;
+
+        return ((BrowStateComparable)obj).equalsState(this);
     }
 
     public boolean equalsValue(Object obj) {

@@ -89,6 +89,21 @@ public class {builderImplClass} implements {builderClass} {
   #end
 
     @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+
+    public boolean equalsState(BrowState state) {
+        return this.state.equalsState(state);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof {stateComparable})) return false;
+        return (({stateComparable})obj).equalsState(state);
+    }
+
+    @Override
     public String toString() {
         return state.toString();
     }

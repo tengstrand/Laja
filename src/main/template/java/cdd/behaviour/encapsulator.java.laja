@@ -1,6 +1,6 @@
 
 #macro class()
-public class {encapsulatorClass} {
+public class {encapsulatorClass} implements {stateComparable} {
     public final {stateBuilderClass} builder;
 
     public {encapsulatorClass}({stateBuilderClass} builder) {
@@ -42,6 +42,20 @@ public class {encapsulatorClass} {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+    public boolean equalsState({stateClass} state) {
+        return builder.equalsState(state);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

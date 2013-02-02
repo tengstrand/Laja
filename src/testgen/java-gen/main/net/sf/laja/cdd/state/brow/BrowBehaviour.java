@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class BrowBehaviour {
+public class BrowBehaviour implements BrowStateComparable {
     protected final BrowState state;
     protected BrowStateBuilder stateBuilder;
 
@@ -29,11 +29,14 @@ public class BrowBehaviour {
         return state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsState(BrowState state) {
+        return this.state.equalsState(state);
+    }
 
-        return state.equals(((BrowBehaviour)o).state);
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BrowStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

@@ -1,6 +1,6 @@
 #macro class()
   #header()
-public class {stateBehaviourClass} {
+public class {stateBehaviourClass} implements {stateComparable} {
     protected final {stateClass} state;
     protected {builderClass} stateBuilder;
 
@@ -22,11 +22,14 @@ public class {stateBehaviourClass} {
         return state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equalsState({stateClass} state) {
+        return this.state.equalsState(state);
+    }
 
-        return state.equals((({stateBehaviourClass})o).state);
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof {stateComparable})) return false;
+        return state.equals(obj);
     }
 
     @Override

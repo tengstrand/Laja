@@ -6,6 +6,7 @@
 #set (stateHashSetClass = "{stateClass}HashSet")
 #set (stateArrayListClass = "{stateClass}ArrayList")
 #set (stateClassTemplate = "{stateClass}Template")
+#set (stateComparable = "{stateClass}Comparable")
 #set (builderClass = "{stateClass}Builder")
 #set (builderImplClass = "{stateClass}BuilderImpl")
 #set (stateProjectionClass = "{stateClass}Projection")
@@ -216,14 +217,11 @@ import {certificatePackage}.{certificateClass};
 #end
 
 #function interfaceImports(suffix)
-  #set (extends = "")
-  #if (expandedTypes.size > 0)
-    #set (extends = " extends ")
-    #set (delimiter = "")
-    #foreach (expandedType in expandedTypes)
-      #set (extends = "{extends}{delimiter}{expandedType.type}{suffix}")
-      #set (delimiter = ", ")
-    #end
+  #set (extends = "extends {stateComparable}")
+  #set (delimiter = "")
+  #foreach (expandedType in expandedTypes)
+    #set (extends = "{extends}{delimiter}{expandedType.type}{suffix}")
+    #set (delimiter = ", ")
   #end
   #return extends
 #end

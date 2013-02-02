@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface BrowStateBuilder {
+public interface BrowStateBuilder extends BrowStateComparable {
     void withArea(int area);
     boolean isValid();
     Object as(BrowBehaviourFactory factory, Object... args);

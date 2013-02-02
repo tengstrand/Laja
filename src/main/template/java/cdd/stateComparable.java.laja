@@ -1,0 +1,11 @@
+
+#macro fileContent()
+  #package()
+  #header()
+public interface {stateComparable} {
+    boolean equalsState({stateClass} state);
+}
+#end
+
+#set (filename = "{outputDir}/{stateComparable}.java")
+#generateFile(filename, fileContent())

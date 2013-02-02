@@ -43,6 +43,21 @@ public class BrowStateBuilderImpl implements BrowStateBuilder {
         return state;
     }
 
+    public boolean equalsState(BrowState state) {
+        return this.state.equalsState(state);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BrowStateComparable)) return false;
+        return ((BrowStateComparable)obj).equalsState(state);
+    }
+
+    @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+
     @Override
     public String toString() {
         return state.toString();
