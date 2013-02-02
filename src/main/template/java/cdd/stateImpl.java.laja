@@ -52,7 +52,7 @@
 
     // Setters
   #foreach (attribute in attributes)
-    #if (attribute.isStateList)
+    #if (attribute.isStateSet || attribute.isStateList)
     public void {setter(attribute)} { checkMutator(mutator); this.{attribute.variable}.clear(); this.{attribute.variable}.addAll({attribute.variable}); }
     #else
     public void {setter(attribute)} { checkMutator(mutator); this.{attribute.variable} = {attribute.variable}; }
@@ -203,7 +203,7 @@
 
 #function valueKeyAttributes(t)
   #set (keys = new java.util.ArrayList())
-  #foreach (attribute in t.attributes where !attribute.isExclude && !attribute.isStateList)
+  #foreach (attribute in t.attributes where !attribute.isExclude && !attribute.isStateSet && !attribute.isStateList)
     #keys.add(attribute)
   #end
   #return keys
@@ -388,7 +388,7 @@ public class {stateImplClass} implements {stateClass} {
   #declareStates()
 
     {stateImplClass}() {
-  #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
+  #foreach (attribute in attributes where attribute.isStateSet && attribute.isStateList && !attribute.isExplicitAssigned)
         {attribute.variable} = {attribute.typeAsStateImpl}.emptyList();
   #end
   #foreach (attribute in attributes where attribute.isStateSet && !attribute.isExplicitAssigned)

@@ -18,7 +18,6 @@ public class FootStateImpl implements FootState {
     private Object _encapsulator;
 
     FootStateImpl() {
-        toes = ToeStateArrayList.emptyList();
     }
 
     public FootStateImpl(Certificate certificate) {

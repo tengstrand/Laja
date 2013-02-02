@@ -25,7 +25,6 @@ public class CustomerStateImpl implements CustomerState {
     private Object _encapsulator;
 
     CustomerStateImpl() {
-        oldAddresses = AddressStateArrayList.emptyList();
     }
 
     public CustomerStateImpl(Certificate certificate) {

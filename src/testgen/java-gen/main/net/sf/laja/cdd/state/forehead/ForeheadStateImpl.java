@@ -21,7 +21,6 @@ public class ForeheadStateImpl implements ForeheadState {
     private Object _encapsulator;
 
     ForeheadStateImpl() {
-        brows = BrowStateArrayList.emptyList();
         ears = EarStateHashSet.emptySet();
     }
 
@@ -62,7 +61,7 @@ public class ForeheadStateImpl implements ForeheadState {
 
     // Setters
     public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
-    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears = ears; }
+    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
@@ -81,14 +80,7 @@ public class ForeheadStateImpl implements ForeheadState {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-
-        ForeheadStateImpl state = (ForeheadStateImpl)obj;
-
-        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
-
-        return true;
+        return super.equals(obj);
     }
 
     public boolean equalsValue(Object obj) {
@@ -105,9 +97,7 @@ public class ForeheadStateImpl implements ForeheadState {
 
     @Override
     public int hashCode() {
-        int result = ears != null ? ears.hashCode() : 0;
-
-        return result;
+        return super.hashCode();
     }
 
     @Override

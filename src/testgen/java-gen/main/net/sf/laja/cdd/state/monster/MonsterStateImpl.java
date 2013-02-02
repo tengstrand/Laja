@@ -257,10 +257,6 @@ public class MonsterStateImpl implements MonsterState {
     }
 
     MonsterStateImpl() {
-        noses = NoseStateArrayList.emptyList();
-        brows = BrowStateArrayList.emptyList();
-        optionalEars = EarStateArrayList.emptyList();
-        mouths = MouthStateArrayList.emptyList();
         ears = EarStateHashSet.emptySet();
     }
 
@@ -357,7 +353,7 @@ public class MonsterStateImpl implements MonsterState {
     public void setDecease(String decease, Object mutator) { checkMutator(mutator); this.decease = decease; }
     public void setNoses(NoseStateList noses, Object mutator) { checkMutator(mutator); this.noses.clear(); this.noses.addAll(noses); }
     public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
-    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears = ears; }
+    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
     public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
     public void setA(boolean a, Object mutator) { checkMutator(mutator); this.a = a; }
     public void setB(byte b, Object mutator) { checkMutator(mutator); this.b = b; }
@@ -405,7 +401,6 @@ public class MonsterStateImpl implements MonsterState {
         if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;
         if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
-        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
         if (length != state.getLength()) return false;
         if (a != state.getA()) return false;
         if (b != state.getB()) return false;
@@ -471,7 +466,6 @@ public class MonsterStateImpl implements MonsterState {
         result = 31 * result + eyeWeightInGrams;
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (decease != null ? decease.hashCode() : 0);
-        result = 31 * result + (ears != null ? ears.hashCode() : 0);
         result = 31 * result + length;
         result = 31 * result + (a ? 1 : 0);
         result = 31 * result + b;

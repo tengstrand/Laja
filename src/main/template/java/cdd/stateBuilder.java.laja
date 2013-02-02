@@ -10,7 +10,7 @@ public interface {builderClass}{extends} {
   #foreach (attribute in attributes)
     #if (attribute.isStateSet)
       #set (template = templates.get(attribute.cleanedStateType))
-    void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} setBuilder); // 1
+    void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} setBuilder);
     #else if (attribute.isStateList)
       #set (template = templates.get(attribute.cleanedStateType))
     void {attribute.withMethod}({template.packagename}.{attribute.stateBuilder} listBuilder);

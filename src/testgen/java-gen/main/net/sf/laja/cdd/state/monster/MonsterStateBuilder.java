@@ -41,7 +41,7 @@ public interface MonsterStateBuilder extends HeadStateBuilder {
     void withDecease(String decease);
     void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder);
     void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
-    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder); // 1
+    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder);
     void withLength(int length);
     void withA(boolean a);
     void withB(byte b);

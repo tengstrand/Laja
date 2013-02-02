@@ -13,7 +13,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface ForeheadStateBuilder {
     void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
-    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder); // 1
+    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder);
     BrowStateListBuilder getBrowsStateListBuilder();
     EarStateSetBuilder getEarsStateSetBuilder();
     boolean isValid();
