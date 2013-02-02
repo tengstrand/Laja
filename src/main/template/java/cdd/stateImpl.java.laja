@@ -34,7 +34,7 @@
             public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
       #isValid(template, true, "            ")
       #equals(template, true, "            ")
-      #equalsState(template, true, "            ")
+      #equalsState(template, "            ")
       #equalsValue(template, true, "            ")
       #hashCode(template, true, "            ")
       #toString(template, true, "            ")
@@ -430,7 +430,7 @@ public class {stateImplClass} implements {stateClass} {
   #encapsulate()
   #setEncapsulator()
   #equals($, false, "    ")
-  #equalsState($, false, "    ")
+  #equalsState($, "    ")
   #equalsValue($, false, "    ")
   #hashCode($, false, "    ")
   #toString($, false, "    ")

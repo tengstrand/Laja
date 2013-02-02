@@ -217,7 +217,7 @@ import {certificatePackage}.{certificateClass};
 #end
 
 #function interfaceImports(suffix)
-  #set (extends = "extends {stateComparable}")
+  #set (extends = " extends {stateComparable}")
   #set (delimiter = "")
   #foreach (expandedType in expandedTypes)
     #set (extends = "{extends}{delimiter}{expandedType.type}{suffix}")
