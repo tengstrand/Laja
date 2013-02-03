@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class MouthBehaviour {
+public class MouthBehaviour implements MouthStateComparable {
     protected final MouthState state;
     protected MouthStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class MouthBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((MouthBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MouthStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

@@ -49,9 +49,11 @@ public class {encapsulatorClass} implements {stateComparable} {
         return builder.hashCode();
     }
 
+#* fix!
     public boolean equalsState({stateClass} state) {
         return builder.equalsState(state);
     }
+*#
 
     @Override
     public boolean equals(Object obj) {
@@ -69,6 +71,7 @@ public class {encapsulatorClass} implements {stateComparable} {
 package {behaviour.packagename};
 
     #importsBegin()
+    #importStateComparable()
     #importsEncapsulator()
     #importsSetEncapsulator()
     #importsListEncapsulator()

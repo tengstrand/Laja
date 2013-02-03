@@ -22,7 +22,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeadState extends EyeState, ForeheadState {
+public interface HeadState extends HeadStateComparable, EyeState, ForeheadState {
     double getHeadWeightInGrams();
     void setHeadWeightInGrams(double headWeightInGrams, Object mutator);
 

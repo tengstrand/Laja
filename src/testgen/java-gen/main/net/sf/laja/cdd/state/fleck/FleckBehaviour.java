@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FleckBehaviour {
+public class FleckBehaviour implements FleckStateComparable {
     protected final FleckState state;
     protected FleckStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class FleckBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((FleckBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FleckStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class AnimalBehaviour {
+public class AnimalBehaviour implements AnimalStateComparable {
     protected final AnimalState state;
     protected AnimalStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class AnimalBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((AnimalBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AnimalStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

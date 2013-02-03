@@ -3,7 +3,8 @@
   #package()
   #header()
 public interface {stateComparable} {
-    boolean equalsState({stateClass} state);
+## fix!
+##    boolean equalsState({stateClass} state);
 }
 #end
 

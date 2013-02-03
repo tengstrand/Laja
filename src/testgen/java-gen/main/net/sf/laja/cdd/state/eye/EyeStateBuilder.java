@@ -8,7 +8,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface EyeStateBuilder {
+public interface EyeStateBuilder extends EyeStateComparable {
     void withEyeWeightInGrams(int eyeWeightInGrams);
     void withColor(String color);
     void withDecease(String decease);

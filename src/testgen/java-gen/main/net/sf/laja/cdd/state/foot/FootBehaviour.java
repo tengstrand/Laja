@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FootBehaviour {
+public class FootBehaviour implements FootStateComparable {
     protected final FootState state;
     protected FootStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class FootBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((FootBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FootStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

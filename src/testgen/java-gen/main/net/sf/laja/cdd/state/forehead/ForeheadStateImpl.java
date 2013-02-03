@@ -79,15 +79,18 @@ public class ForeheadStateImpl implements ForeheadState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof ForeheadStateComparable)) return false;
+
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        ForeheadStateImpl state = (ForeheadStateImpl)obj;
+        ForeheadStateImpl state = (ForeheadStateImpl)value;
 
         if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
         if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;

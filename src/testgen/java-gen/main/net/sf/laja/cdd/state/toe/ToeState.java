@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ToeState {
+public interface ToeState extends ToeStateComparable {
     int getLength(); // (key)
     void setLength(int length, Object mutator);
 

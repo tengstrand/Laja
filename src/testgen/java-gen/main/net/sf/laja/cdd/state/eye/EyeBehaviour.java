@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class EyeBehaviour {
+public class EyeBehaviour implements EyeStateComparable {
     protected final EyeState state;
     protected EyeStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class EyeBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((EyeBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof EyeStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

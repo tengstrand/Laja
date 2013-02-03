@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.hand;
 
 import net.sf.laja.cdd.state.hand.*;
 import net.sf.laja.cdd.state.hand.HandState;
+// Toe
 
-public class HandEncapsulator {
+public class HandEncapsulator implements HandStateComparable {
     public final HandStateBuilder builder;
 
     public HandEncapsulator(HandStateBuilder builder) {
@@ -16,6 +17,17 @@ public class HandEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

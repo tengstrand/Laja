@@ -8,9 +8,10 @@ import net.sf.laja.cdd.behaviour.hand.HandList;
 import net.sf.laja.cdd.behaviour.hand.HandSet;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.hand.HandStateList;
+// Toe
 import net.sf.laja.cdd.behaviour.hand.HandListEncapsulator;
 
-public class ArmEncapsulator {
+public class ArmEncapsulator implements ArmStateComparable {
     public final ArmStateBuilder builder;
 
     public ArmEncapsulator(ArmStateBuilder builder) {
@@ -28,6 +29,17 @@ public class ArmEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

@@ -28,11 +28,6 @@ public class BrowBehaviour implements BrowStateComparable {
         }
         return state;
     }
-
-    public boolean equalsState(BrowState state) {
-        return this.state.equalsState(state);
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof BrowStateComparable)) return false;

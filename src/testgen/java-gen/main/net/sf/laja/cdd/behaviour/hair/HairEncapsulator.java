@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.hair;
 
 import net.sf.laja.cdd.state.hair.*;
 import net.sf.laja.cdd.state.hair.HairState;
+// Toe
 
-public class HairEncapsulator {
+public class HairEncapsulator implements HairStateComparable {
     public final HairStateBuilder builder;
 
     public HairEncapsulator(HairStateBuilder builder) {
@@ -20,6 +21,17 @@ public class HairEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

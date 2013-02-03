@@ -11,6 +11,7 @@ import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.eye.EyeState;
+// Toe
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
@@ -20,7 +21,7 @@ import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
 import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 
-public class MonsterEncapsulator {
+public class MonsterEncapsulator implements MonsterStateComparable {
     public final MonsterStateBuilder builder;
 
     public MonsterEncapsulator(MonsterStateBuilder builder) {
@@ -61,6 +62,17 @@ public class MonsterEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

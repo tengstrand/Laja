@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface LegState {
+public interface LegState extends LegStateComparable {
     String getLegDescription();
     void setLegDescription(String legDescription, Object mutator);
 

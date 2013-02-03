@@ -27,7 +27,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface MonsterState extends HeadState {
+public interface MonsterState extends MonsterStateComparable, HeadState {
     int getNumberOfLegs();
     void setNumberOfLegs(int numberOfLegs, Object mutator);
 

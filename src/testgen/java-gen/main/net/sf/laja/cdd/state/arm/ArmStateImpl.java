@@ -81,23 +81,18 @@ public class ArmStateImpl implements ArmState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof ArmStateComparable)) return false;
 
-        ArmStateImpl state = (ArmStateImpl)obj;
-
-        if (armLength != state.getArmLength()) return false;
-        if (armWeight != state.getArmWeight()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        ArmStateImpl state = (ArmStateImpl)obj;
+        ArmStateImpl state = (ArmStateImpl)value;
 
         if (armLength != state.getArmLength()) return false;
         if (armWeight != state.getArmWeight()) return false;

@@ -81,23 +81,18 @@ public class MouthStateImpl implements MouthState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof MouthStateComparable)) return false;
 
-        MouthStateImpl state = (MouthStateImpl)obj;
-
-        if (width != state.getWidth()) return false;
-        if (height != state.getHeight()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        MouthStateImpl state = (MouthStateImpl)obj;
+        MouthStateImpl state = (MouthStateImpl)value;
 
         if (width != state.getWidth()) return false;
         if (height != state.getHeight()) return false;

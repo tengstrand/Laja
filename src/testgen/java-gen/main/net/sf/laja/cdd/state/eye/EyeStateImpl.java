@@ -83,25 +83,18 @@ public class EyeStateImpl implements EyeState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof EyeStateComparable)) return false;
 
-        EyeStateImpl state = (EyeStateImpl)obj;
-
-        if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-        if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
-        if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        EyeStateImpl state = (EyeStateImpl)obj;
+        EyeStateImpl state = (EyeStateImpl)value;
 
         if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface NoseStateBuilder {
+public interface NoseStateBuilder extends NoseStateComparable {
     void withNoseDescription(String noseDescription);
     void withDetails(String details);
     boolean isValid();

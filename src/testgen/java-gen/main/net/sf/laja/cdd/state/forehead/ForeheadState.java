@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ForeheadState {
+public interface ForeheadState extends ForeheadStateComparable {
     BrowStateList getBrows(); // (optional)
     void setBrows(BrowStateList brows, Object mutator);
 

@@ -92,15 +92,19 @@ public class {builderImplClass} implements {builderClass} {
     public int hashCode() {
         return state.hashCode();
     }
-
-    public boolean equalsState(BrowState state) {
+#*
+    // TODO: fix!
+    public boolean equalsState({stateClass} state) {
         return this.state.equalsState(state);
     }
-
+*#
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof {stateComparable})) return false;
-        return (({stateComparable})obj).equalsState(state);
+
+        return true;
+## TODO: fix!
+##        return (({stateComparable})obj).equalsState(state);
     }
 
     @Override

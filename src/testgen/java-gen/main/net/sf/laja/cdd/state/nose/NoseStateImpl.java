@@ -76,23 +76,18 @@ public class NoseStateImpl implements NoseState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof NoseStateComparable)) return false;
 
-        NoseStateImpl state = (NoseStateImpl)obj;
-
-        if (noseDescription != null ? !noseDescription.equals(state.noseDescription) : state.noseDescription != null) return false;
-        if (details != null ? !details.equals(state.details) : state.details != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        NoseStateImpl state = (NoseStateImpl)obj;
+        NoseStateImpl state = (NoseStateImpl)value;
 
         if (noseDescription != null ? !noseDescription.equals(state.noseDescription) : state.noseDescription != null) return false;
         if (details != null ? !details.equals(state.details) : state.details != null) return false;

@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.state.brow.*;
 import net.sf.laja.cdd.state.brow.BrowState;
+// Toe
 
-public class TestBrowEncapsulator {
+public class TestBrowEncapsulator implements BrowStateComparable {
     public final BrowStateBuilder builder;
 
     public TestBrowEncapsulator(BrowStateBuilder builder) {
@@ -16,6 +17,17 @@ public class TestBrowEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

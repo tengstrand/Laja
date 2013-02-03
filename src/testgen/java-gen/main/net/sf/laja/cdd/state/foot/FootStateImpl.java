@@ -78,22 +78,18 @@ public class FootStateImpl implements FootState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof FootStateComparable)) return false;
 
-        FootStateImpl state = (FootStateImpl)obj;
-
-        if (area != state.getArea()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        FootStateImpl state = (FootStateImpl)obj;
+        FootStateImpl state = (FootStateImpl)value;
 
         if (area != state.getArea()) return false;
         if (toes != null ? !toes.equals(state.toes) : state.toes != null) return false;

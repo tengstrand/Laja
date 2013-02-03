@@ -24,7 +24,7 @@ public interface {stateClass}{extends} {
     {method.returnclass} {method.getter}();
     #end
   #end
-  #if (extends.length == 0)
+  #if (!hasExtendedClasses)
 
     boolean isValid();
     boolean isValidAsEncapsulated();

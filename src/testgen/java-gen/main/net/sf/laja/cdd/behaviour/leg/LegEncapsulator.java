@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.leg;
 
 import net.sf.laja.cdd.state.leg.*;
 import net.sf.laja.cdd.state.leg.LegState;
+// Toe
 
-public class LegEncapsulator {
+public class LegEncapsulator implements LegStateComparable {
     public final LegStateBuilder builder;
 
     public LegEncapsulator(LegStateBuilder builder) {
@@ -16,6 +17,17 @@ public class LegEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

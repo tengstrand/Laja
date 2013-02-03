@@ -103,25 +103,18 @@ public class MonsterStateImpl implements MonsterState {
     }
 
             @Override
-            public boolean equals(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof MonsterStateComparable)) return false;
 
-                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)obj;
-
-                if (weight != state.getEyeWeightInGrams()) return false;
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-                if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
-                if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
-
-                return true;
+               return true;
             }
 
-            public boolean equalsValue(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)obj;
+                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)value;
 
                 if (weight != state.getEyeWeightInGrams()) return false;
                 if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
@@ -200,27 +193,18 @@ public class MonsterStateImpl implements MonsterState {
     }
 
             @Override
-            public boolean equals(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof MonsterStateComparable)) return false;
 
-                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)obj;
-
-                if (numberOfLegs != state.getNumberOfLegs()) return false;
-                if (numberOfOwnWings != state.getNumberOfWings()) return false;
-                if (leftEye != null ? !leftEye.equals(state.getLeftEye()) : state.getLeftEye() != null) return false;
-                if (rightEye != null ? !rightEye.equals(state.getRightEye()) : state.getRightEye() != null) return false;
-                if (midEye != null ? !midEye.equals(state.getMiddleEye()) : state.getMiddleEye() != null) return false;
-                if (weight != state.getWeight()) return false;
-
-                return true;
+               return true;
             }
 
-            public boolean equalsValue(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)obj;
+                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)value;
 
                 if (numberOfLegs != state.getNumberOfLegs()) return false;
                 if (numberOfOwnWings != state.getNumberOfWings()) return false;
@@ -386,43 +370,18 @@ public class MonsterStateImpl implements MonsterState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof MonsterStateComparable)) return false;
 
-        MonsterStateImpl state = (MonsterStateImpl)obj;
-
-        if (numberOfLegs != state.getNumberOfLegs()) return false;
-        if (numberOfOwnWings != state.getNumberOfOwnWings()) return false;
-        if (headWeightInGrams != state.getHeadWeightInGrams()) return false;
-        if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;
-        if (rightEye != null ? !rightEye.equals(state.rightEye) : state.rightEye != null) return false;
-        if (midEye != null ? !midEye.equals(state.midEye) : state.midEye != null) return false;
-        if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-        if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
-        if (length != state.getLength()) return false;
-        if (a != state.getA()) return false;
-        if (b != state.getB()) return false;
-        if (c != state.getC()) return false;
-        if (d != state.getD()) return false;
-        if (e != state.getE()) return false;
-        if (f != state.getF()) return false;
-        if (g != state.getG()) return false;
-        if (h != state.getH()) return false;
-        if (weight != state.getWeight()) return false;
-        if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
-        if (headWeight != state.getHeadWeight()) return false;
-        if (leftArm != null ? !leftArm.equals(state.leftArm) : state.leftArm != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        MonsterStateImpl state = (MonsterStateImpl)obj;
+        MonsterStateImpl state = (MonsterStateImpl)value;
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfOwnWings != state.getNumberOfOwnWings()) return false;

@@ -20,7 +20,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeadStateBuilder extends EyeStateBuilder, ForeheadStateBuilder {
+public interface HeadStateBuilder extends HeadStateComparable, EyeStateBuilder, ForeheadStateBuilder {
     void withHeadWeightInGrams(double headWeightInGrams);
     void withLeftEye(EyeStateBuilder leftEye);
     void withRightEye(EyeStateBuilder rightEye);

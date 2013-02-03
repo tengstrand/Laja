@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.nose;
 
 import net.sf.laja.cdd.state.nose.*;
 import net.sf.laja.cdd.state.nose.NoseState;
+// Toe
 
-public class NoseEncapsulator {
+public class NoseEncapsulator implements NoseStateComparable {
     public final NoseStateBuilder builder;
 
     public NoseEncapsulator(NoseStateBuilder builder) {
@@ -20,6 +21,17 @@ public class NoseEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

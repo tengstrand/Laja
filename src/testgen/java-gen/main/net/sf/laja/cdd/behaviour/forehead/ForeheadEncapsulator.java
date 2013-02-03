@@ -7,12 +7,13 @@ import net.sf.laja.cdd.behaviour.brow.BrowList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
+// Toe
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 
-public class ForeheadEncapsulator {
+public class ForeheadEncapsulator implements ForeheadStateComparable {
     public final ForeheadStateBuilder builder;
 
     public ForeheadEncapsulator(ForeheadStateBuilder builder) {
@@ -41,6 +42,17 @@ public class ForeheadEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

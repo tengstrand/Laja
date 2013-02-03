@@ -93,27 +93,18 @@ public class TerrestrialStateImpl implements TerrestrialState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof TerrestrialStateComparable)) return false;
 
-        TerrestrialStateImpl state = (TerrestrialStateImpl)obj;
-
-        if (numberOfLegs != state.getNumberOfLegs()) return false;
-        if (numberOfWings != state.getNumberOfWings()) return false;
-        if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;
-        if (rightEye != null ? !rightEye.equals(state.rightEye) : state.rightEye != null) return false;
-        if (middleEye != null ? !middleEye.equals(state.middleEye) : state.middleEye != null) return false;
-        if (weight != state.getWeight()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        TerrestrialStateImpl state = (TerrestrialStateImpl)obj;
+        TerrestrialStateImpl state = (TerrestrialStateImpl)value;
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfWings != state.getNumberOfWings()) return false;

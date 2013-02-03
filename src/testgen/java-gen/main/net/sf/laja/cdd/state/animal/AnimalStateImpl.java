@@ -69,22 +69,18 @@ public class AnimalStateImpl implements AnimalState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof AnimalStateComparable)) return false;
 
-        AnimalStateImpl state = (AnimalStateImpl)obj;
-
-        if (isTerrestrial != state.getIsTerrestrial()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        AnimalStateImpl state = (AnimalStateImpl)obj;
+        AnimalStateImpl state = (AnimalStateImpl)value;
 
         if (isTerrestrial != state.getIsTerrestrial()) return false;
 

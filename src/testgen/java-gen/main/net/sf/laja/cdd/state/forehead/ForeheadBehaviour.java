@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ForeheadBehaviour {
+public class ForeheadBehaviour implements ForeheadStateComparable {
     protected final ForeheadState state;
     protected ForeheadStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class ForeheadBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((ForeheadBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ForeheadStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

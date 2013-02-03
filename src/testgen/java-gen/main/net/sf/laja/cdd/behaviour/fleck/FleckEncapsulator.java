@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.fleck;
 
 import net.sf.laja.cdd.state.fleck.*;
 import net.sf.laja.cdd.state.fleck.FleckState;
+// Toe
 
-public class FleckEncapsulator {
+public class FleckEncapsulator implements FleckStateComparable {
     public final FleckStateBuilder builder;
 
     public FleckEncapsulator(FleckStateBuilder builder) {
@@ -16,6 +17,17 @@ public class FleckEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

@@ -22,6 +22,7 @@ public class Behaviour implements BehaviourParser.IBehaviour {
     public String factoryClass;
     public String stateClass;
     public String stateImplClass;
+    public String stateComparable;
     public String cleanedStateClass;
     public String method;
     public Parameters parameters;
@@ -44,6 +45,7 @@ public class Behaviour implements BehaviourParser.IBehaviour {
             this.cleanedStateClass = stateClass.substring(0, stateClass.length() - state.length());
             this.stateClass = stateClass;
             this.stateImplClass = stateClass + "Impl";
+            this.stateComparable = stateClass + "Comparable";
         }
     }
 

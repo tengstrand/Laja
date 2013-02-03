@@ -69,22 +69,18 @@ public class HandStateImpl implements HandState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof HandStateComparable)) return false;
 
-        HandStateImpl state = (HandStateImpl)obj;
-
-        if (area != state.getArea()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        HandStateImpl state = (HandStateImpl)obj;
+        HandStateImpl state = (HandStateImpl)value;
 
         if (area != state.getArea()) return false;
 

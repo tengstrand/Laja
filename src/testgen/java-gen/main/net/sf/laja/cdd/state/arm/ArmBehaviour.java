@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ArmBehaviour {
+public class ArmBehaviour implements ArmStateComparable {
     protected final ArmState state;
     protected ArmStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class ArmBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((ArmBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ArmStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

@@ -3,9 +3,10 @@ package net.sf.laja.cdd.behaviour.other;
 import net.sf.laja.cdd.state.terrestrial.*;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.eye.EyeState;
+// Toe
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
 
-public class OtherTerrestrialEncapsulator {
+public class OtherTerrestrialEncapsulator implements TerrestrialStateComparable {
     public final TerrestrialStateBuilder builder;
 
     public OtherTerrestrialEncapsulator(TerrestrialStateBuilder builder) {
@@ -23,6 +24,17 @@ public class OtherTerrestrialEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

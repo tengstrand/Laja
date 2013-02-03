@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HairBehaviour {
+public class HairBehaviour implements HairStateComparable {
     protected final HairState state;
     protected HairStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class HairBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((HairBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HairStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

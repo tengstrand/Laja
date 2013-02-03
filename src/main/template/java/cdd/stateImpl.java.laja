@@ -34,7 +34,8 @@
             public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
       #isValid(template, true, "            ")
       #equals(template, true, "            ")
-      #equalsState(template, true, "            ")
+## fix!
+##      #equalsState(template, true, "            ")
       #equalsValue(template, true, "            ")
       #hashCode(template, true, "            ")
       #toString(template, true, "            ")
@@ -223,37 +224,40 @@
 
 #macro equalsState(t, useGetter, tab)
 
-{tab}public boolean equalsState(Object obj) {
-  #equalsBody(t, entityAttributes(t), useGetter, tab)
+{tab}public boolean equalsState({stateClass} that) {
+  #equalsBody(t, entityAttributes(t), useGetter, "that", tab)
 #end
 
 #macro equals(t, useGetter, tab)
 
 {tab}@Override
-{tab}public boolean equals(Object obj) {
-{tab}   if (this == obj) return true;
-{tab}   if (!(obj instanceof {stateComparable})) return false;
+{tab}public boolean equals(Object that) {
+{tab}   if (this == that) return true;
+{tab}   if (!(that instanceof {stateComparable})) return false;
 
-{tab}   return (({stateComparable})obj).equalsState(this);
+## fix!
+{tab}   return true;
+##{tab}   return (({stateComparable})that).equalsState(this);
+{tab}}
 #end
 
 #macro equalsValue(t, useGetter, tab)
 
-{tab}public boolean equalsValue(Object obj) {
-  #equalsBody(t, valueAttributes(t), useGetter, tab)
+{tab}public boolean equalsValue(Object value) {
+  #equalsBody(t, valueAttributes(t), useGetter, "value", tab)
 #end
 
-#macro equalsBody(t, attributes, useGetter, tab)
+#macro equalsBody(t, attributes, useGetter, argument, tab)
   #if (attributes.isEmpty)
-{tab}    return super.equals(obj);
+{tab}    return super.equals({argument});
   #else
-{tab}    if (this == obj) return true;
-{tab}    if (obj == null || getClass() != obj.getClass()) return false;
+{tab}    if (this == {argument}) return true;
+{tab}    if ({argument} == null || getClass() != {argument}.getClass()) return false;
 
     #if (useGetter)
-{tab}    {t.packagename}.{t.stateClass} state = ({t.packagename}.{t.stateClass})obj;
+{tab}    {t.packagename}.{t.stateClass} state = ({t.packagename}.{t.stateClass}){argument};
     #else
-{tab}    {t.stateImplClass} state = ({t.stateImplClass})obj;
+{tab}    {t.stateImplClass} state = ({t.stateImplClass}){argument};
     #end
 
     #foreach (attribute in attributes)
@@ -430,7 +434,8 @@ public class {stateImplClass} implements {stateClass} {
   #encapsulate()
   #setEncapsulator()
   #equals($, false, "    ")
-  #equalsState($, false, "    ")
+## fix!
+##  #equalsState($, false, "    ")
   #equalsValue($, false, "    ")
   #hashCode($, false, "    ")
   #toString($, false, "    ")

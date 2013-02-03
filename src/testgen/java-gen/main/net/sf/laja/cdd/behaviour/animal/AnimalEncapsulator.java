@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.animal;
 
 import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
+// Toe
 
-public class AnimalEncapsulator {
+public class AnimalEncapsulator implements AnimalStateComparable {
     public final AnimalStateBuilder builder;
 
     public AnimalEncapsulator(AnimalStateBuilder builder) {
@@ -16,6 +17,17 @@ public class AnimalEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class EarBehaviour {
+public class EarBehaviour implements EarStateComparable {
     protected final EarState state;
     protected EarStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class EarBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((EarBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof EarStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

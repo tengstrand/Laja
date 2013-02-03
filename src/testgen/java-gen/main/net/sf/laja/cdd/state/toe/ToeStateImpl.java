@@ -72,22 +72,18 @@ public class ToeStateImpl implements ToeState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof ToeStateComparable)) return false;
 
-        ToeStateImpl state = (ToeStateImpl)obj;
-
-        if (length != state.getLength()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        ToeStateImpl state = (ToeStateImpl)obj;
+        ToeStateImpl state = (ToeStateImpl)value;
 
         if (length != state.getLength()) return false;
         if (weight != state.getWeight()) return false;

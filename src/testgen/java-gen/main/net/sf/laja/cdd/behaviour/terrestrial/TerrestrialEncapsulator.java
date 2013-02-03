@@ -5,9 +5,10 @@ import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.eye.EyeState;
+// Toe
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
 
-public class TerrestrialEncapsulator {
+public class TerrestrialEncapsulator implements TerrestrialStateComparable {
     public final TerrestrialStateBuilder builder;
 
     public TerrestrialEncapsulator(TerrestrialStateBuilder builder) {
@@ -25,6 +26,17 @@ public class TerrestrialEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

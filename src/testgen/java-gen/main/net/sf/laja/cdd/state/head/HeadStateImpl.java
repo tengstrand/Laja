@@ -163,38 +163,18 @@ public class HeadStateImpl implements HeadState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof HeadStateComparable)) return false;
 
-        HeadStateImpl state = (HeadStateImpl)obj;
-
-        if (headWeightInGrams != state.getHeadWeightInGrams()) return false;
-        if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;
-        if (rightEye != null ? !rightEye.equals(state.rightEye) : state.rightEye != null) return false;
-        if (midEye != null ? !midEye.equals(state.midEye) : state.midEye != null) return false;
-        if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-        if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
-        if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
-        if (length != state.getLength()) return false;
-        if (a != state.getA()) return false;
-        if (b != state.getB()) return false;
-        if (c != state.getC()) return false;
-        if (d != state.getD()) return false;
-        if (e != state.getE()) return false;
-        if (f != state.getF()) return false;
-        if (g != state.getG()) return false;
-        if (h != state.getH()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        HeadStateImpl state = (HeadStateImpl)obj;
+        HeadStateImpl state = (HeadStateImpl)value;
 
         if (headWeightInGrams != state.getHeadWeightInGrams()) return false;
         if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;

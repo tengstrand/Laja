@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HandBehaviour {
+public class HandBehaviour implements HandStateComparable {
     protected final HandState state;
     protected HandStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class HandBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((HandBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HandStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

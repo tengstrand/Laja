@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface LegStateBuilder {
+public interface LegStateBuilder extends LegStateComparable {
     void withLegDescription(String legDescription);
     boolean isValid();
     Object as(LegBehaviourFactory factory, Object... args);

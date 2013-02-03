@@ -4,8 +4,9 @@ import net.sf.laja.cdd.state.eye.*;
 import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
 import net.sf.laja.cdd.state.eye.EyeState;
 import java.math.BigDecimal;
+// Toe
 
-public class EyeEncapsulator {
+public class EyeEncapsulator implements EyeStateComparable {
     public final EyeStateBuilder builder;
 
     public EyeEncapsulator(EyeStateBuilder builder) {
@@ -23,6 +24,17 @@ public class EyeEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

@@ -21,11 +21,12 @@ public class {stateBehaviourClass} implements {stateComparable} {
         }
         return state;
     }
-
+#*
+    // TODO: fix!
     public boolean equalsState({stateClass} state) {
         return this.state.equalsState(state);
     }
-
+*#
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof {stateComparable})) return false;

@@ -9,7 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ArmStateBuilder {
+public interface ArmStateBuilder extends ArmStateComparable {
     void withArmLength(int armLength);
     void withArmWeight(double armWeight);
     void withHands(net.sf.laja.cdd.state.hand.HandStateListBuilder listBuilder);

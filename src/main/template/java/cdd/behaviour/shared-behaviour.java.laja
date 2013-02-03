@@ -16,6 +16,7 @@
 
 #set (stateClass = behaviour.stateClass)
 #set (stateImplClass = behaviour.stateImplClass)
+#set (stateComparable = behaviour.stateComparable)
 #set (stateSetClass = "{stateClass}Set")
 #set (stateListClass = "{stateClass}List")
 #set (stateArrayListClass = "{stateClass}ArrayList")

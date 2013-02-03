@@ -2,8 +2,9 @@ package net.sf.laja.cdd.behaviour.ear;
 
 import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
+// Toe
 
-public class EarEncapsulator {
+public class EarEncapsulator implements EarStateComparable {
     public final EarStateBuilder builder;
 
     public EarEncapsulator(EarStateBuilder builder) {
@@ -16,6 +17,17 @@ public class EarEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

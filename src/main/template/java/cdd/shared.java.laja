@@ -114,6 +114,10 @@ import {template.packagename}.{attribute.type};
   #end
 #end
 
+#macro importStateComparable()
+// {classname}
+#end
+
 #macro importStateHashSet()
   #foreach (attribute in attributes where attribute.isStateSet)
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
@@ -217,11 +221,11 @@ import {certificatePackage}.{certificateClass};
 #end
 
 #function interfaceImports(suffix)
+  #set (hasExtendedClasses = false)
   #set (extends = " extends {stateComparable}")
-  #set (delimiter = "")
   #foreach (expandedType in expandedTypes)
-    #set (extends = "{extends}{delimiter}{expandedType.type}{suffix}")
-    #set (delimiter = ", ")
+    #set (extends = "{extends}, {expandedType.type}{suffix}")
+  #set (hasExtendedClasses = true)
   #end
   #return extends
 #end

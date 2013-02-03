@@ -3,8 +3,9 @@ package net.sf.laja.cdd.behaviour;
 import net.sf.laja.cdd.state.mouth.*;
 import net.sf.laja.cdd.behaviour.mouth.CuteMouth;
 import net.sf.laja.cdd.state.mouth.MouthState;
+// Toe
 
-public class TestMouthEncapsulator {
+public class TestMouthEncapsulator implements MouthStateComparable {
     public final MouthStateBuilder builder;
 
     public TestMouthEncapsulator(MouthStateBuilder builder) {
@@ -22,6 +23,17 @@ public class TestMouthEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

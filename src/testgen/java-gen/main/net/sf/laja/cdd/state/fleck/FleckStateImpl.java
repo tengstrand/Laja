@@ -75,23 +75,18 @@ public class FleckStateImpl implements FleckState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof FleckStateComparable)) return false;
 
-        FleckStateImpl state = (FleckStateImpl)obj;
-
-        if (area != state.getArea()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        FleckStateImpl state = (FleckStateImpl)obj;
+        FleckStateImpl state = (FleckStateImpl)value;
 
         if (area != state.getArea()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;

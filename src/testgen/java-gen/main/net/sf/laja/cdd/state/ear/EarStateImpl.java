@@ -72,23 +72,18 @@ public class EarStateImpl implements EarState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof EarStateComparable)) return false;
 
-        EarStateImpl state = (EarStateImpl)obj;
-
-        if (size != state.getSize()) return false;
-        if (weight != state.getWeight()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        EarStateImpl state = (EarStateImpl)obj;
+        EarStateImpl state = (EarStateImpl)value;
 
         if (size != state.getSize()) return false;
         if (weight != state.getWeight()) return false;

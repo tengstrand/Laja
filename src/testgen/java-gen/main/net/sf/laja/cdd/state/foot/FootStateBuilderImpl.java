@@ -58,6 +58,17 @@ public class FootStateBuilderImpl implements FootStateBuilder {
     }
 
     @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FootStateComparable)) return false;
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return state.toString();
     }

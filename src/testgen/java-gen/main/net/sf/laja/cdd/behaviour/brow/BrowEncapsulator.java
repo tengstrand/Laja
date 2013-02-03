@@ -2,6 +2,7 @@ package net.sf.laja.cdd.behaviour.brow;
 
 import net.sf.laja.cdd.state.brow.*;
 import net.sf.laja.cdd.state.brow.BrowState;
+// Toe
 
 public class BrowEncapsulator implements BrowStateComparable {
     public final BrowStateBuilder builder;
@@ -22,14 +23,11 @@ public class BrowEncapsulator implements BrowStateComparable {
          return builder.isValid();
     }
 
-    public boolean equalsState(BrowState state) {
-        return builder.equalsState(state);
-    }
-
     @Override
     public int hashCode() {
         return builder.hashCode();
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -40,5 +38,4 @@ public class BrowEncapsulator implements BrowStateComparable {
     public String toString() {
         return builder.toString();
     }
-
 }

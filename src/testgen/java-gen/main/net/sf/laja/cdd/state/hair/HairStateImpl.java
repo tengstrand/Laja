@@ -75,22 +75,18 @@ public class HairStateImpl implements HairState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof HairStateComparable)) return false;
 
-        HairStateImpl state = (HairStateImpl)obj;
-
-        if (length != state.getLength()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        HairStateImpl state = (HairStateImpl)obj;
+        HairStateImpl state = (HairStateImpl)value;
 
         if (length != state.getLength()) return false;
         if (color != null ? !color.equals(state.color) : state.color != null) return false;

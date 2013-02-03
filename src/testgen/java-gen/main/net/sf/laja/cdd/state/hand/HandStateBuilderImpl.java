@@ -44,6 +44,17 @@ public class HandStateBuilderImpl implements HandStateBuilder {
     }
 
     @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HandStateComparable)) return false;
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return state.toString();
     }

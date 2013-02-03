@@ -27,7 +27,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface MonsterStateBuilder extends HeadStateBuilder {
+public interface MonsterStateBuilder extends MonsterStateComparable, HeadStateBuilder {
     EyeStateBuilder eyeStateBuilder();
     TerrestrialStateBuilder terrestrialStateBuilder();
     void withNumberOfLegs(int numberOfLegs);
