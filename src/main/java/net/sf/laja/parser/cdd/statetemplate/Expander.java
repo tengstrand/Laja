@@ -17,7 +17,7 @@ public class Expander {
     /**
      * Adds expanded attributes and imports from expanded attributes, to all state templates.
      *
-     * @param errors if any cyclic dependency is encountered a message are added to 'errors'.
+     * @param errors if any cyclic dependency is encountered a message is added to 'errors'.
      */
     public void expand(StateTemplateErrors errors) {
         Map<String, ExpansionResult> stateClassMap = calculateExpansion();
