@@ -18,6 +18,7 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String stateImplClass;
     public String isValidStatement;
     public List<Attribute> attributes;
+    public List<Attribute> attributesExpandIncluded;
     public List<StateMethod> stateMethods = new ArrayList<StateMethod>();
 
     public String rootSrcDir;
@@ -64,6 +65,11 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     // Workaround a bug in Laja
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    // Workaround a bug in Laja
+    public void setAttributesExpandIncluded(List<Attribute> attributes) {
+        this.attributesExpandIncluded = attributes;
     }
 
     public StateTemplate(String templateClassname) {
