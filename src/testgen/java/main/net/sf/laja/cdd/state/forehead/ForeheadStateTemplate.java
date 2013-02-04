@@ -6,4 +6,4 @@ import net.sf.laja.cdd.state.ear.EarStateSet;
 public class ForeheadStateTemplate {
     BrowStateList brows; // (optional)
     EarStateSet ears; // (optional)
- }
+}
