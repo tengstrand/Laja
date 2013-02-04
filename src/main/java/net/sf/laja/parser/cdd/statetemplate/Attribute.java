@@ -77,10 +77,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
         return Type.isImmutableObject(type);
     }
 
-    public boolean isObject() {
-        return !isPrimitive() && !isState;
-    }
-
     public boolean isBuilderMethod() {
         return !isHidden;
     }

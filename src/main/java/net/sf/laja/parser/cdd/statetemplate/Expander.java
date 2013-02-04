@@ -106,9 +106,6 @@ public class Expander {
                     addExpandedImports(stateTemplate, attribute);
                     expand(attribute.type, true, expandingTypes);
                 } else {
-                    if (attribute.isObject() && !attribute.isExpand) {
-                        addImportForStandardObjects(attribute.type, stateTemplate.imports);
-                    }
                     if (!attributesResult.contains(attribute)) {
                         addAttributeToResult(attribute, isExpanded);
                     } else {
@@ -155,14 +152,6 @@ public class Expander {
         }
     }
 
-    private void addImportForStandardObjects(String type, Imports imports) {
-        for (Importstatement importstatement : imports) {
-            if (importstatement.endsWithType(type)) {
-                importsResult.addImportstatement(importstatement);
-            }
-        }
-    }
-    
     private StateTemplate findStateTemplate(String type) {
         for (StateTemplate stateTemplate : stateTemplates) {
             if (type.equals(stateTemplate.stateClass)) {
