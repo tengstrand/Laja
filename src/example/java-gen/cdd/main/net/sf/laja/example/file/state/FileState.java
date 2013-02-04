@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FileState {
+public interface FileState extends FileStateComparable {
     String getFilename();
     void setFilename(String filename, Object mutator);
 

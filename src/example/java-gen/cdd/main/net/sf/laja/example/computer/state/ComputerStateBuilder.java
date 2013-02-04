@@ -7,7 +7,7 @@ import net.sf.laja.example.computer.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ComputerStateBuilder {
+public interface ComputerStateBuilder extends ComputerStateComparable {
     void withName(String name);
     void withProcessor(String processor);
     void withReleaseYear(int releaseYear);

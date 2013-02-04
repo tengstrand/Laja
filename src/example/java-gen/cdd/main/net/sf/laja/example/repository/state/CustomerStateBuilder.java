@@ -10,7 +10,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CustomerStateBuilder extends AddressStateBuilder {
+public interface CustomerStateBuilder extends CustomerStateComparable, AddressStateBuilder {
     void withSsn(long ssn);
     void withGivenName(String givenName);
     void withSurname(String surname);

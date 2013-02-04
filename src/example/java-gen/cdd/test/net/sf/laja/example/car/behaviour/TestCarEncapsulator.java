@@ -2,8 +2,9 @@ package net.sf.laja.example.car.behaviour;
 
 import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.CarState;
+// Bus
 
-public class TestCarEncapsulator {
+public class TestCarEncapsulator implements CarStateComparable {
     public final CarStateBuilder builder;
 
     public TestCarEncapsulator(CarStateBuilder builder) {
@@ -16,6 +17,17 @@ public class TestCarEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

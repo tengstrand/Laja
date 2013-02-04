@@ -82,24 +82,18 @@ public class AddressStateImpl implements AddressState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof AddressStateComparable)) return false;
 
-        AddressStateImpl state = (AddressStateImpl)obj;
-
-        if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
-        if (zipcode != state.getZipcode()) return false;
-        if (city != null ? !city.equals(state.city) : state.city != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        AddressStateImpl state = (AddressStateImpl)obj;
+        AddressStateImpl state = (AddressStateImpl)value;
 
         if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
         if (zipcode != state.getZipcode()) return false;

@@ -76,6 +76,17 @@ public class CarStateBuilderImpl implements CarStateBuilder {
     }
 
     @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CarStateComparable)) return false;
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return state.toString();
     }

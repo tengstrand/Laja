@@ -69,22 +69,18 @@ public class VehicleSizeStateImpl implements VehicleSizeState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof VehicleSizeStateComparable)) return false;
 
-        VehicleSizeStateImpl state = (VehicleSizeStateImpl)obj;
-
-        if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        VehicleSizeStateImpl state = (VehicleSizeStateImpl)obj;
+        VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
 

@@ -48,6 +48,17 @@ public class TruckTypeStateBuilderImpl implements TruckTypeStateBuilder {
     }
 
     @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TruckTypeStateComparable)) return false;
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return state.toString();
     }

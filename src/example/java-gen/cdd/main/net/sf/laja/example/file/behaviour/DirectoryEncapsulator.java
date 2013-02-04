@@ -4,8 +4,9 @@ import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.behaviour.text.TextDirectory;
 import net.sf.laja.example.file.state.DirectoryState;
 import java.io.File;
+// Directory
 
-public class DirectoryEncapsulator {
+public class DirectoryEncapsulator implements DirectoryStateComparable {
     public final DirectoryStateBuilder builder;
 
     public DirectoryEncapsulator(DirectoryStateBuilder builder) {
@@ -18,6 +19,17 @@ public class DirectoryEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

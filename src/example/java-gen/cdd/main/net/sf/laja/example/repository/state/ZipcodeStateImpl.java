@@ -69,22 +69,18 @@ public class ZipcodeStateImpl implements ZipcodeState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof ZipcodeStateComparable)) return false;
 
-        ZipcodeStateImpl state = (ZipcodeStateImpl)obj;
-
-        if (zipcode != state.getZipcode()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        ZipcodeStateImpl state = (ZipcodeStateImpl)obj;
+        ZipcodeStateImpl state = (ZipcodeStateImpl)value;
 
         if (zipcode != state.getZipcode()) return false;
 

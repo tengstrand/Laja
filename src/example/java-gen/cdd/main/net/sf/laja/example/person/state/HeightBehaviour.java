@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class HeightBehaviour {
+public class HeightBehaviour implements HeightStateComparable {
     protected final HeightState state;
     protected HeightStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class HeightBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((HeightBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof HeightStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

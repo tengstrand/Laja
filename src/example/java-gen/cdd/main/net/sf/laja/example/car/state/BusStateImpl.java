@@ -85,24 +85,18 @@ public class BusStateImpl implements BusState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof BusStateComparable)) return false;
 
-        BusStateImpl state = (BusStateImpl)obj;
-
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-        if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-        if (weightInKilograms != state.getWeightInKilograms()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        BusStateImpl state = (BusStateImpl)obj;
+        BusStateImpl state = (BusStateImpl)value;
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;

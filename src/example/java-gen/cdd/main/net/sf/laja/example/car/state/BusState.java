@@ -8,7 +8,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface BusState extends VehicleSizeState {
+public interface BusState extends BusStateComparable, VehicleSizeState {
     String getName();
     void setName(String name, Object mutator);
 

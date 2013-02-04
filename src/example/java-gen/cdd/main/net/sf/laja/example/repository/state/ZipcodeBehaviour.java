@@ -7,7 +7,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ZipcodeBehaviour {
+public class ZipcodeBehaviour implements ZipcodeStateComparable {
     protected final ZipcodeState state;
     protected ZipcodeStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class ZipcodeBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((ZipcodeBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ZipcodeStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

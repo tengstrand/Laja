@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface TruckTypeStateBuilder {
+public interface TruckTypeStateBuilder extends TruckTypeStateComparable {
     void withNumberOfWheels(int numberOfWheels);
     void withTruckName(String truckName);
     boolean isValid();

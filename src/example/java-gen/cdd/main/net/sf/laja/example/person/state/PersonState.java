@@ -9,7 +9,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface PersonState {
+public interface PersonState extends PersonStateComparable {
     String getGivenName();
     void setGivenName(String givenName, Object mutator);
 

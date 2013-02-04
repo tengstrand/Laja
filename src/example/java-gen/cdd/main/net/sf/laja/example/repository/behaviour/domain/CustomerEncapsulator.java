@@ -5,8 +5,9 @@ import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
 import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
 import net.sf.laja.example.repository.state.CustomerState;
+// Zipcode
 
-public class CustomerEncapsulator {
+public class CustomerEncapsulator implements CustomerStateComparable {
     public final CustomerStateBuilder builder;
 
     public CustomerEncapsulator(CustomerStateBuilder builder) {
@@ -44,6 +45,17 @@ public class CustomerEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

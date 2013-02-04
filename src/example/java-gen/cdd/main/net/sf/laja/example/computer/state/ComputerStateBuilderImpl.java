@@ -60,6 +60,17 @@ public class ComputerStateBuilderImpl implements ComputerStateBuilder {
     }
 
     @Override
+    public int hashCode() {
+        return state.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ComputerStateComparable)) return false;
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return state.toString();
     }

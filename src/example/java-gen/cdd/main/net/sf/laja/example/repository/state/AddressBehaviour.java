@@ -7,7 +7,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class AddressBehaviour {
+public class AddressBehaviour implements AddressStateComparable {
     protected final AddressState state;
     protected AddressStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class AddressBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((AddressBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AddressStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

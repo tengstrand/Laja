@@ -7,7 +7,7 @@ import net.sf.laja.example.account.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class AccountBehaviour {
+public class AccountBehaviour implements AccountStateComparable {
     protected final AccountState state;
     protected AccountStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class AccountBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((AccountBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AccountStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

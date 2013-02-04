@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class CarBehaviour {
+public class CarBehaviour implements CarStateComparable {
     protected final CarState state;
     protected CarStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class CarBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((CarBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CarStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

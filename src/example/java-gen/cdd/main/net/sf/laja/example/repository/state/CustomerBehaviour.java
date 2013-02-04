@@ -7,7 +7,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class CustomerBehaviour {
+public class CustomerBehaviour implements CustomerStateComparable {
     protected final CustomerState state;
     protected CustomerStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class CustomerBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((CustomerBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CustomerStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

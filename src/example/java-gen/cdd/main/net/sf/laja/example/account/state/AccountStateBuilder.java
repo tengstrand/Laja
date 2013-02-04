@@ -7,7 +7,7 @@ import net.sf.laja.example.account.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AccountStateBuilder {
+public interface AccountStateBuilder extends AccountStateComparable {
     void withBalance(double balance);
     boolean isValid();
     Object as(AccountBehaviourFactory factory, Object... args);

@@ -2,8 +2,9 @@ package net.sf.laja.example.computer.behaviour;
 
 import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.*;
+// Computer
 
-public class AmigaEncapsulator {
+public class AmigaEncapsulator implements ComputerStateComparable {
     public final ComputerStateBuilder builder;
 
     public AmigaEncapsulator(ComputerStateBuilder builder) {
@@ -16,6 +17,17 @@ public class AmigaEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

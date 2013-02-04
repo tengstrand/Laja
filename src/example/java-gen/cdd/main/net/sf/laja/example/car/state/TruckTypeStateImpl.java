@@ -75,23 +75,18 @@ public class TruckTypeStateImpl implements TruckTypeState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof TruckTypeStateComparable)) return false;
 
-        TruckTypeStateImpl state = (TruckTypeStateImpl)obj;
-
-        if (numberOfWheels != state.getNumberOfWheels()) return false;
-        if (truckName != null ? !truckName.equals(state.truckName) : state.truckName != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        TruckTypeStateImpl state = (TruckTypeStateImpl)obj;
+        TruckTypeStateImpl state = (TruckTypeStateImpl)value;
 
         if (numberOfWheels != state.getNumberOfWheels()) return false;
         if (truckName != null ? !truckName.equals(state.truckName) : state.truckName != null) return false;

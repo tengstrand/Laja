@@ -72,23 +72,18 @@ public class BmiStateImpl implements BmiState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof BmiStateComparable)) return false;
 
-        BmiStateImpl state = (BmiStateImpl)obj;
-
-        if (heightInCentimeters != state.getHeightInCentimeters()) return false;
-        if (weightInKilograms != state.getWeightInKilograms()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        BmiStateImpl state = (BmiStateImpl)obj;
+        BmiStateImpl state = (BmiStateImpl)value;
 
         if (heightInCentimeters != state.getHeightInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;

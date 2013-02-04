@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class DirectoryBehaviour {
+public class DirectoryBehaviour implements DirectoryStateComparable {
     protected final DirectoryState state;
     protected DirectoryStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class DirectoryBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((DirectoryBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DirectoryStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

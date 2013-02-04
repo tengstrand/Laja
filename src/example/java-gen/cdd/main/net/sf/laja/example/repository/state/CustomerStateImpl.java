@@ -111,22 +111,18 @@ public class CustomerStateImpl implements CustomerState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof CustomerStateComparable)) return false;
 
-        CustomerStateImpl state = (CustomerStateImpl)obj;
-
-        if (ssn != state.getSsn()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        CustomerStateImpl state = (CustomerStateImpl)obj;
+        CustomerStateImpl state = (CustomerStateImpl)value;
 
         if (ssn != state.getSsn()) return false;
         if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;

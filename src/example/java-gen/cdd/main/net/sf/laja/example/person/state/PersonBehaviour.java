@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class PersonBehaviour {
+public class PersonBehaviour implements PersonStateComparable {
     protected final PersonState state;
     protected PersonStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class PersonBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((PersonBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PersonStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

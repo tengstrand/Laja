@@ -9,7 +9,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CarState extends VehicleSizeState {
+public interface CarState extends CarStateComparable, VehicleSizeState {
     int getLengthInCentimeters();
     void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
 

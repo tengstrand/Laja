@@ -10,7 +10,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CustomerState extends AddressState {
+public interface CustomerState extends CustomerStateComparable, AddressState {
     long getSsn(); // (key)
     void setSsn(long ssn, Object mutator);
 

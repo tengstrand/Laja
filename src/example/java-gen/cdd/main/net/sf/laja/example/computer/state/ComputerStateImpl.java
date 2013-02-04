@@ -86,26 +86,18 @@ public class ComputerStateImpl implements ComputerState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof ComputerStateComparable)) return false;
 
-        ComputerStateImpl state = (ComputerStateImpl)obj;
-
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-        if (processor != null ? !processor.equals(state.processor) : state.processor != null) return false;
-        if (releaseYear != state.getReleaseYear()) return false;
-        if (memoryInKilobytes != state.getMemoryInKilobytes()) return false;
-        if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        ComputerStateImpl state = (ComputerStateImpl)obj;
+        ComputerStateImpl state = (ComputerStateImpl)value;
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (processor != null ? !processor.equals(state.processor) : state.processor != null) return false;

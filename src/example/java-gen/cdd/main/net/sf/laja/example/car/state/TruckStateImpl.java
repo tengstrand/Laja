@@ -63,25 +63,18 @@ public class TruckStateImpl implements TruckState {
     }
 
             @Override
-            public boolean equals(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof TruckStateComparable)) return false;
 
-                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)obj;
-
-                if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-                if (type.getTruckName() != null ? !type.getTruckName().equals(state.getName()) : state.getName() != null) return false;
-                if (owner != null ? !owner.equals(state.getOwner()) : state.getOwner() != null) return false;
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-
-                return true;
+               return true;
             }
 
-            public boolean equalsValue(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)obj;
+                net.sf.laja.example.car.state.CarState state = (net.sf.laja.example.car.state.CarState)value;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
                 if (type.getTruckName() != null ? !type.getTruckName().equals(state.getName()) : state.getName() != null) return false;
@@ -187,26 +180,18 @@ public class TruckStateImpl implements TruckState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof TruckStateComparable)) return false;
 
-        TruckStateImpl state = (TruckStateImpl)obj;
-
-        if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-        if (weightInKilograms != state.getWeightInKilograms()) return false;
-        if (type != null ? !type.equals(state.type) : state.type != null) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-        if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        TruckStateImpl state = (TruckStateImpl)obj;
+        TruckStateImpl state = (TruckStateImpl)value;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;

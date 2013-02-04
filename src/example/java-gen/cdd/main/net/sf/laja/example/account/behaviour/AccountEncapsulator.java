@@ -2,8 +2,9 @@ package net.sf.laja.example.account.behaviour;
 
 import net.sf.laja.example.account.state.*;
 import net.sf.laja.example.account.state.AccountState;
+// Account
 
-public class AccountEncapsulator {
+public class AccountEncapsulator implements AccountStateComparable {
     public final AccountStateBuilder builder;
 
     public AccountEncapsulator(AccountStateBuilder builder) {
@@ -20,6 +21,17 @@ public class AccountEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface TruckTypeState {
+public interface TruckTypeState extends TruckTypeStateComparable {
     int getNumberOfWheels();
     void setNumberOfWheels(int numberOfWheels, Object mutator);
 

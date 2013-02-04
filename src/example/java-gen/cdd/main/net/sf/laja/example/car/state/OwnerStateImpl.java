@@ -75,23 +75,18 @@ public class OwnerStateImpl implements OwnerState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof OwnerStateComparable)) return false;
 
-        OwnerStateImpl state = (OwnerStateImpl)obj;
-
-        if (ssn != state.getSsn()) return false;
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        OwnerStateImpl state = (OwnerStateImpl)obj;
+        OwnerStateImpl state = (OwnerStateImpl)value;
 
         if (ssn != state.getSsn()) return false;
         if (name != null ? !name.equals(state.name) : state.name != null) return false;

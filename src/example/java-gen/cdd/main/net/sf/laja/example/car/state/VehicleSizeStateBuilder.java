@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface VehicleSizeStateBuilder {
+public interface VehicleSizeStateBuilder extends VehicleSizeStateComparable {
     void withLengthInCentimeters(int lengthInCentimeters);
     boolean isValid();
     Object as(VehicleSizeBehaviourFactory factory, Object... args);

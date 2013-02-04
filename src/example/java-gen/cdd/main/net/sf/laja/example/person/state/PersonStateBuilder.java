@@ -10,7 +10,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface PersonStateBuilder {
+public interface PersonStateBuilder extends PersonStateComparable {
     BmiStateBuilder bmiStateBuilder();
     void withGivenName(String givenName);
     void withSurname(String surname);

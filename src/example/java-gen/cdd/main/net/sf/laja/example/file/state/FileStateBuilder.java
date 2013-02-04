@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FileStateBuilder {
+public interface FileStateBuilder extends FileStateComparable {
     void withFilename(String filename);
     boolean isValid();
     Object as(FileBehaviourFactory factory, Object... args);

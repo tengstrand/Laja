@@ -43,23 +43,18 @@ public class PersonStateImpl implements PersonState {
             }
 
             @Override
-            public boolean equals(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof PersonStateComparable)) return false;
 
-                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)obj;
-
-                if (height.getHeightInCentimeters() != state.getHeightInCentimeters()) return false;
-                if (weightInKilograms != state.getWeightInKilograms()) return false;
-
-                return true;
+               return true;
             }
 
-            public boolean equalsValue(Object obj) {
-                if (this == obj) return true;
-                if (obj == null || getClass() != obj.getClass()) return false;
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)obj;
+                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)value;
 
                 if (height.getHeightInCentimeters() != state.getHeightInCentimeters()) return false;
                 if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -150,25 +145,18 @@ public class PersonStateImpl implements PersonState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof PersonStateComparable)) return false;
 
-        PersonStateImpl state = (PersonStateImpl)obj;
-
-        if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
-        if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
-        if (weightInKilograms != state.getWeightInKilograms()) return false;
-        if (height != null ? !height.equals(state.height) : state.height != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        PersonStateImpl state = (PersonStateImpl)obj;
+        PersonStateImpl state = (PersonStateImpl)value;
 
         if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
         if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;

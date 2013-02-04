@@ -8,7 +8,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AddressStateBuilder extends ZipcodeStateBuilder {
+public interface AddressStateBuilder extends AddressStateComparable, ZipcodeStateBuilder {
     void withAddressId(int addressId);
     void withStreetName(String streetName);
     void withZipcode(int zipcode);

@@ -8,7 +8,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AddressState extends ZipcodeState {
+public interface AddressState extends AddressStateComparable, ZipcodeState {
     int getAddressId(); // (id)
     void setAddressId(int addressId, Object mutator);
 

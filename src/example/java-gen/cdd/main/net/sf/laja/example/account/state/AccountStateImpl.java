@@ -69,22 +69,18 @@ public class AccountStateImpl implements AccountState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof AccountStateComparable)) return false;
 
-        AccountStateImpl state = (AccountStateImpl)obj;
-
-        if (balance != state.getBalance()) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        AccountStateImpl state = (AccountStateImpl)obj;
+        AccountStateImpl state = (AccountStateImpl)value;
 
         if (balance != state.getBalance()) return false;
 

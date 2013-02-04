@@ -8,7 +8,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface BusStateBuilder extends VehicleSizeStateBuilder {
+public interface BusStateBuilder extends BusStateComparable, VehicleSizeStateBuilder {
     void withName(String name);
     void withLengthInCentimeters(int lengthInCentimeters);
     void withWeightInKilograms(int weightInKilograms);

@@ -7,7 +7,7 @@ import net.sf.laja.example.computer.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class ComputerBehaviour {
+public class ComputerBehaviour implements ComputerStateComparable {
     protected final ComputerState state;
     protected ComputerStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class ComputerBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((ComputerBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ComputerStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

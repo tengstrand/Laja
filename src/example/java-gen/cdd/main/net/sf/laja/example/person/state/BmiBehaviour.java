@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class BmiBehaviour {
+public class BmiBehaviour implements BmiStateComparable {
     protected final BmiState state;
     protected BmiStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class BmiBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((BmiBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BmiStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

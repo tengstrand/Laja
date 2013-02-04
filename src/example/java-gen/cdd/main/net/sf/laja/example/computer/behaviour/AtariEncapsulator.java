@@ -2,8 +2,9 @@ package net.sf.laja.example.computer.behaviour;
 
 import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.ComputerState;
+// Computer
 
-public class AtariEncapsulator {
+public class AtariEncapsulator implements ComputerStateComparable {
     public final ComputerStateBuilder builder;
 
     public AtariEncapsulator(ComputerStateBuilder builder) {
@@ -20,6 +21,17 @@ public class AtariEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

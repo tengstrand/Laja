@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public class FileBehaviour {
+public class FileBehaviour implements FileStateComparable {
     protected final FileState state;
     protected FileStateBuilder stateBuilder;
 
@@ -28,12 +28,10 @@ public class FileBehaviour {
         }
         return state;
     }
-
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return state.equals(((FileBehaviour)o).state);
+    public boolean equals(Object obj) {
+        if (!(obj instanceof FileStateComparable)) return false;
+        return state.equals(obj);
     }
 
     @Override

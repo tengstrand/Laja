@@ -72,22 +72,18 @@ public class DirectoryStateImpl implements DirectoryState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof DirectoryStateComparable)) return false;
 
-        DirectoryStateImpl state = (DirectoryStateImpl)obj;
-
-        if (directoryPath != null ? !directoryPath.equals(state.directoryPath) : state.directoryPath != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        DirectoryStateImpl state = (DirectoryStateImpl)obj;
+        DirectoryStateImpl state = (DirectoryStateImpl)value;
 
         if (directoryPath != null ? !directoryPath.equals(state.directoryPath) : state.directoryPath != null) return false;
 

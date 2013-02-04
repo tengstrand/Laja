@@ -72,22 +72,18 @@ public class FileStateImpl implements FileState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equals(Object that) {
+       if (this == that) return true;
+       if (!(that instanceof FileStateComparable)) return false;
 
-        FileStateImpl state = (FileStateImpl)obj;
-
-        if (filename != null ? !filename.equals(state.filename) : state.filename != null) return false;
-
-        return true;
+       return true;
     }
 
-    public boolean equalsValue(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+    public boolean equalsValue(Object value) {
+        if (this == value) return true;
+        if (value == null || getClass() != value.getClass()) return false;
 
-        FileStateImpl state = (FileStateImpl)obj;
+        FileStateImpl state = (FileStateImpl)value;
 
         if (filename != null ? !filename.equals(state.filename) : state.filename != null) return false;
 

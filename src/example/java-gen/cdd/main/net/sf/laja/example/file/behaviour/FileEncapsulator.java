@@ -2,8 +2,9 @@ package net.sf.laja.example.file.behaviour;
 
 import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.FileState;
+// Directory
 
-public class FileEncapsulator {
+public class FileEncapsulator implements FileStateComparable {
     public final FileStateBuilder builder;
 
     public FileEncapsulator(FileStateBuilder builder) {
@@ -20,6 +21,17 @@ public class FileEncapsulator {
 
     public boolean isValid() {
          return builder.isValid();
+    }
+
+    @Override
+    public int hashCode() {
+        return builder.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        return builder.equals(obj);
     }
 
     @Override

@@ -7,7 +7,7 @@ import net.sf.laja.example.file.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface DirectoryState {
+public interface DirectoryState extends DirectoryStateComparable {
     String getDirectoryPath();
     void setDirectoryPath(String directoryPath, Object mutator);
 
