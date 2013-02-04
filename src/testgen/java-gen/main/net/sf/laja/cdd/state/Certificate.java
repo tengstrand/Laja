@@ -4,6 +4,10 @@ import net.sf.laja.cdd.state.forehead.ForeheadStateImpl;
 import net.sf.laja.cdd.state.forehead.ForeheadStateHashSet;
 import net.sf.laja.cdd.state.forehead.ForeheadStateArrayList;
 import net.sf.laja.cdd.state.forehead.ForeheadStateBuilderImpl;
+import net.sf.laja.cdd.state.monster.MonsterStateImpl;
+import net.sf.laja.cdd.state.monster.MonsterStateHashSet;
+import net.sf.laja.cdd.state.monster.MonsterStateArrayList;
+import net.sf.laja.cdd.state.monster.MonsterStateBuilderImpl;
 import net.sf.laja.cdd.state.eye.EyeStateImpl;
 import net.sf.laja.cdd.state.eye.EyeStateHashSet;
 import net.sf.laja.cdd.state.eye.EyeStateArrayList;
@@ -12,10 +16,10 @@ import net.sf.laja.cdd.state.head.HeadStateImpl;
 import net.sf.laja.cdd.state.head.HeadStateHashSet;
 import net.sf.laja.cdd.state.head.HeadStateArrayList;
 import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
-import net.sf.laja.cdd.state.monster.MonsterStateImpl;
-import net.sf.laja.cdd.state.monster.MonsterStateHashSet;
-import net.sf.laja.cdd.state.monster.MonsterStateArrayList;
-import net.sf.laja.cdd.state.monster.MonsterStateBuilderImpl;
+import net.sf.laja.cdd.state.nail.NailStateImpl;
+import net.sf.laja.cdd.state.nail.NailStateHashSet;
+import net.sf.laja.cdd.state.nail.NailStateArrayList;
+import net.sf.laja.cdd.state.nail.NailStateBuilderImpl;
 import net.sf.laja.cdd.state.animal.AnimalStateImpl;
 import net.sf.laja.cdd.state.animal.AnimalStateHashSet;
 import net.sf.laja.cdd.state.animal.AnimalStateArrayList;
@@ -48,10 +52,18 @@ import net.sf.laja.cdd.state.brow.BrowStateImpl;
 import net.sf.laja.cdd.state.brow.BrowStateHashSet;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.brow.BrowStateBuilderImpl;
+import net.sf.laja.cdd.state.finger.FingerStateImpl;
+import net.sf.laja.cdd.state.finger.FingerStateHashSet;
+import net.sf.laja.cdd.state.finger.FingerStateArrayList;
+import net.sf.laja.cdd.state.finger.FingerStateBuilderImpl;
 import net.sf.laja.cdd.state.leg.LegStateImpl;
 import net.sf.laja.cdd.state.leg.LegStateHashSet;
 import net.sf.laja.cdd.state.leg.LegStateArrayList;
 import net.sf.laja.cdd.state.leg.LegStateBuilderImpl;
+import net.sf.laja.cdd.state.xhand.XHandStateImpl;
+import net.sf.laja.cdd.state.xhand.XHandStateHashSet;
+import net.sf.laja.cdd.state.xhand.XHandStateArrayList;
+import net.sf.laja.cdd.state.xhand.XHandStateBuilderImpl;
 import net.sf.laja.cdd.state.foot.FootStateImpl;
 import net.sf.laja.cdd.state.foot.FootStateHashSet;
 import net.sf.laja.cdd.state.foot.FootStateArrayList;
@@ -91,6 +103,11 @@ public final class Certificate {
     public static Certificate get(ForeheadStateArrayList state) { return certificate(state); }
     public static Certificate get(ForeheadStateBuilderImpl state) { return certificate(state); }
 
+    public static Certificate get(MonsterStateImpl state) { return certificate(state); }
+    public static Certificate get(MonsterStateHashSet state) { return certificate(state); }
+    public static Certificate get(MonsterStateArrayList state) { return certificate(state); }
+    public static Certificate get(MonsterStateBuilderImpl state) { return certificate(state); }
+
     public static Certificate get(EyeStateImpl state) { return certificate(state); }
     public static Certificate get(EyeStateHashSet state) { return certificate(state); }
     public static Certificate get(EyeStateArrayList state) { return certificate(state); }
@@ -101,10 +118,10 @@ public final class Certificate {
     public static Certificate get(HeadStateArrayList state) { return certificate(state); }
     public static Certificate get(HeadStateBuilderImpl state) { return certificate(state); }
 
-    public static Certificate get(MonsterStateImpl state) { return certificate(state); }
-    public static Certificate get(MonsterStateHashSet state) { return certificate(state); }
-    public static Certificate get(MonsterStateArrayList state) { return certificate(state); }
-    public static Certificate get(MonsterStateBuilderImpl state) { return certificate(state); }
+    public static Certificate get(NailStateImpl state) { return certificate(state); }
+    public static Certificate get(NailStateHashSet state) { return certificate(state); }
+    public static Certificate get(NailStateArrayList state) { return certificate(state); }
+    public static Certificate get(NailStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(AnimalStateImpl state) { return certificate(state); }
     public static Certificate get(AnimalStateHashSet state) { return certificate(state); }
@@ -146,10 +163,20 @@ public final class Certificate {
     public static Certificate get(BrowStateArrayList state) { return certificate(state); }
     public static Certificate get(BrowStateBuilderImpl state) { return certificate(state); }
 
+    public static Certificate get(FingerStateImpl state) { return certificate(state); }
+    public static Certificate get(FingerStateHashSet state) { return certificate(state); }
+    public static Certificate get(FingerStateArrayList state) { return certificate(state); }
+    public static Certificate get(FingerStateBuilderImpl state) { return certificate(state); }
+
     public static Certificate get(LegStateImpl state) { return certificate(state); }
     public static Certificate get(LegStateHashSet state) { return certificate(state); }
     public static Certificate get(LegStateArrayList state) { return certificate(state); }
     public static Certificate get(LegStateBuilderImpl state) { return certificate(state); }
+
+    public static Certificate get(XHandStateImpl state) { return certificate(state); }
+    public static Certificate get(XHandStateHashSet state) { return certificate(state); }
+    public static Certificate get(XHandStateArrayList state) { return certificate(state); }
+    public static Certificate get(XHandStateBuilderImpl state) { return certificate(state); }
 
     public static Certificate get(FootStateImpl state) { return certificate(state); }
     public static Certificate get(FootStateHashSet state) { return certificate(state); }
