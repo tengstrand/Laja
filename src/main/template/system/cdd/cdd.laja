@@ -236,7 +236,7 @@
     #set (imports = stateTemplate.imports)
     #set (allImports = stateTemplate.allImports)
     #set (attributes = stateTemplate.attributes)
-    #set (attributesExpandIncluded = stateTemplate.attributesExpandIncluded)
+    #set (expandedAttributes = stateTemplate.expandedAttributes)
     #set (isValidStatement = stateTemplate.isValidStatement)
     #set (asMethods = stateTemplate.asMethods)
     #set (stateMethods = stateTemplate.stateMethods)

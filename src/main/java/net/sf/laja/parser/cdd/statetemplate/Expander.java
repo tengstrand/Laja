@@ -7,7 +7,7 @@ public class Expander {
     public String cyclicMessage;
     public Imports importsResult;
     public List<Attribute> attributesResult;
-    public List<Attribute> attributesExpandIncludedResult;
+    public List<Attribute> expandedAttributesResult;
     private List<StateTemplate> stateTemplates = new ArrayList<StateTemplate>();
     private Map<String, StateTemplate> stateTemplateMap;
 
@@ -31,7 +31,7 @@ public class Expander {
         for (StateTemplate stateTemplate : stateTemplates) {
             ExpansionResult expandedResult = stateClassMap.get(stateTemplate.stateClass);
             stateTemplate.setAttributes(expandedResult.attributes);
-            stateTemplate.setAttributesExpandIncluded(expandedResult.attributesExpand);
+            stateTemplate.setExpandedAttributes(expandedResult.expandedAttributes);
             for (Importstatement importstatement : expandedResult.imports) {
                 stateTemplate.imports.addImportIfNotExists(importstatement);
             }
@@ -50,11 +50,11 @@ public class Expander {
         for (StateTemplate stateTemplate : stateTemplates) {
             importsResult = new Imports();
             attributesResult = new ArrayList<Attribute>();
-            attributesExpandIncludedResult = new ArrayList<Attribute>();
+            expandedAttributesResult = new ArrayList<Attribute>();
             List<String> expandingTypes = new ArrayList<String>();
 
             expand(stateTemplate.stateClass, false, expandingTypes);
-            stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, attributesExpandIncludedResult, importsResult));
+            stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedAttributesResult, importsResult));
         }
         calculateAllExpandedTypes();
 
@@ -107,7 +107,7 @@ public class Expander {
             for (Attribute attribute : stateTemplate.attributes) {
                 if (attribute.isExpand) {
                     addExpandedImports(stateTemplate, attribute);
-                    attributesExpandIncludedResult.add(attribute);
+                    expandedAttributesResult.add(attribute);
                     expand(attribute.type, true, expandingTypes);
                 } else {
                     if (!attributesResult.contains(attribute)) {
@@ -131,10 +131,8 @@ public class Expander {
             Attribute copy = attribute.copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude();
             copy.cleanCommentFromIdAndKey();
             attributesResult.add(copy);
-            attributesExpandIncludedResult.add(copy);
         } else {
             attributesResult.add(attribute);
-            attributesExpandIncludedResult.add(attribute);
         }
     }
 
@@ -168,12 +166,12 @@ public class Expander {
     
     public class ExpansionResult {
         public final List<Attribute> attributes;
-        public final List<Attribute> attributesExpand;
+        public final List<Attribute> expandedAttributes;
         public final Imports imports;
 
-        public ExpansionResult(List<Attribute> attributes, List<Attribute> attributesExpand, Imports imports) {
+        public ExpansionResult(List<Attribute> attributes, List<Attribute> expandedAttributes, Imports imports) {
             this.attributes = attributes;
-            this.attributesExpand = attributesExpand;
+            this.expandedAttributes = expandedAttributes;
 
             this.imports = imports;
         }
@@ -182,7 +180,7 @@ public class Expander {
         public String toString() {
             return "ExpansionResult{" +
                     "attributes=" + attributes +
-                    "attributesExpand=" + attributesExpand +
+                    "expandedAttributes=" + expandedAttributes +
                     ", imports=" + imports +
                     '}';
         }
