@@ -1,14 +1,15 @@
 ###set (filename = "{outputDir}/{stateClass}.java")
 ###generateFile(filename, fileContent())
 #macro stateProjections()
-  #foreach (method in stateMethods)
-    #foreach (template in templates.values() where template.classname == method.classname)
+  #foreach (stateMethod in stateMethods)
+    #foreach (template in templates.values() where template.classname == stateMethod.classname)
 
+      #set (method = new net.sf.laja.parser.cdd.StateProjectionMethod(stateMethod))
     public {method.returnclass} {method.getter}() {
         return new {method.returnclass}() {
             public Certificate certificate() { return certificate(); }
       #foreach (attribute in template.attributes)
-        #set (statement = method.statements.get(attribute.variable))
+        #set (statement = method.getStatement(attribute.variable))
         #if (statement == null)
           #set (msg = "/* missing attribute '{attribute.variable}' */")
           #if (attribute.isPrimitive)
@@ -274,7 +275,7 @@
 
 #macro variable(useGetter)
   #if (useGetter)
-    #set (statement = method.statements.get(attribute.variable))
+    #set (statement = method.getStatement(attribute.variable))
     #if (statement != null)
 {statement}##
     #else
