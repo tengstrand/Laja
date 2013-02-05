@@ -48,7 +48,14 @@ public class FingerStateImpl implements FingerState {
         if (color == null) {
             return false;
         }
+        if (!isNailValid()) {
+            return false;
+        }
         return true;
+    }
+
+    private boolean isNailValid() {
+        return "red".equals(color);
     }
 
     // Getters

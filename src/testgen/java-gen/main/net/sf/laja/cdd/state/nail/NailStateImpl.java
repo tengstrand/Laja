@@ -47,7 +47,7 @@ public class NailStateImpl implements NailState {
         if (color == null) {
             return false;
         }
-        return true;
+        return "red".equals(color);
     }
 
     // Getters
