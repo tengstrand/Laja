@@ -11,6 +11,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public String getter;
     public String setter;
     public String withMethod;
+    public String stateClass;
     public String stateMethod;
     public String initialValue;
     public String initialStatement = "";
@@ -36,6 +37,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
         result.getter = getter;
         result.setter = setter;
         result.withMethod = withMethod;
+        result.stateClass = stateClass;
         result.stateMethod = stateMethod;
         result.initialValue = initialValue;
         result.initialStatement = initialStatement;
@@ -160,7 +162,8 @@ public class Attribute implements StateTemplateParser.IAttribute {
                 cleanedStateType = type.substring(0, type.length() - state.length());
             }
         }
-        stateMethod = "get" + cleanedStateType + "State";
+        stateClass = cleanedStateType + "State";
+        stateMethod = "get" + stateClass;
     }
 
     public void setVariable(String variable) {
