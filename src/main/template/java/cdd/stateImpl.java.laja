@@ -2,17 +2,17 @@
 #macro stateProjections()
   #foreach (stateMethod in stateMethods)
     #foreach (template in templates.values() where template.classname == stateMethod.classname)
-      #stateProjection(template, stateMethod)
+      #stateProjection(template, stateMethod, "")
     #end
   #end
 #end
 
-#macro stateProjection(t, stateArg)
+#macro stateProjection(t, stateArg, tab)
   #set (method = new net.sf.laja.parser.cdd.StateProjectionMethod(stateArg))
 
-    public {method.returnclass} {method.getter}() {
-        return new {method.returnclass}() {
-            public Certificate certificate() { return certificate(); }
+{tab}    public {method.returnclass} {method.getter}() {
+{tab}        return new {method.returnclass}() {
+{tab}            public Certificate certificate() { return certificate(); }
       #foreach (attribute in t.attributes)
         #set (statement = method.getStatement(attribute.variable))
         #if (statement == null)
@@ -35,12 +35,13 @@
           #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
           #set (setStatement = "{stateImplClass}.this.{setStatement};")
         #end
-            public {attribute.type} {attribute.getter}() { return {getStatement} }
-            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {setStatement} }
+{tab}            public {attribute.type} {attribute.getter}() { return {getStatement} }
+{tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {setStatement} }
 
       #end
-            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
+{tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
+{tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
+      #substateMethod(method.classname, tab)
       #isValid(t, true, "            ")
       #equals(t, true, "            ")
 ## fix!
@@ -48,8 +49,13 @@
       #equalsValue(t, true, "            ")
       #hashCode(t, true, "            ")
       #toString(t, true, "            ")
-        };
-    }
+{tab}        };
+{tab}    }
+#end
+
+#macro substateMethod(stateClassname, tab)
+  #set (t2 = templates.get(stateClassname))
+  #stateMethods(t2, tab)
 #end
 
 #macro gettersAndSetters()
@@ -391,13 +397,13 @@
 {tab}}
 #end
 
-#macro stateMethods()
-  #foreach (attribute in expandedAttributes)
+#macro stateMethods(currentTemplate, tab)
+  #foreach (attribute in currentTemplate.expandedAttributes)
     #set (t = templates.get(attribute.cleanedStateType))
     #if (t == null)
       #errors.addMessage("Could not find state '{attribute.cleanedStateType}'")
     #else
-      #stateProjection(t, t)
+      #stateProjection(t, t, tab)
     #end
   #end
 #end
@@ -440,7 +446,7 @@ public class {stateImplClass} implements {stateClass} {
     }
   #isValid($, false, "    ")
   #gettersAndSetters()
-  #stateMethods()
+  #stateMethods(stateTemplate, "")
   #checkMutator()
   #encapsulate()
   #setEncapsulator()

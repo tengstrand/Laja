@@ -341,13 +341,23 @@ public class MonsterStateImpl implements MonsterState {
             public MouthStateList getMouths() { return MonsterStateImpl.this.mouths; }
             public void setMouths(MouthStateList mouths, Object mutator) { MonsterStateImpl.this.setMouths(mouths, mutator); }
 
-            public EyeState getEyeState() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
+            public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
 
-            public ForeheadState getForeheadState() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
+    public EyeState getEyeState() {
+        return new EyeState() {
+            public Certificate certificate() { return certificate(); }
+            public int getEyeWeightInGrams() { return MonsterStateImpl.this.eyeWeightInGrams; }
+            public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { MonsterStateImpl.this.setEyeWeightInGrams(eyeWeightInGrams, mutator); }
+
+            public String getColor() { return MonsterStateImpl.this.color; }
+            public void setColor(String color, Object mutator) { MonsterStateImpl.this.setColor(color, mutator); }
+
+            public String getDecease() { return MonsterStateImpl.this.decease; }
+            public void setDecease(String decease, Object mutator) { MonsterStateImpl.this.setDecease(decease, mutator); }
+
+            public Boolean getHasEar() { return MonsterStateImpl.this.hasEar; }
+            public void setHasEar(Boolean hasEar, Object mutator) { MonsterStateImpl.this.setHasEar(hasEar, mutator); }
 
             public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
@@ -361,22 +371,14 @@ public class MonsterStateImpl implements MonsterState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if ((getLeftEye() == null || !getLeftEye().isValid())
-           || (getRightEye() == null || !getRightEye().isValid())
-           || (getMidEye() != null && !getMidEye().isValid())
-           || getColor() == null
-           || (encapsulated && getDecease() == null)
-           || (getNoses() == null || !getNoses().isValid())
-           || (getBrows() != null && !getBrows().isValid())
-           || (getEars() != null && !getEars().isValid())
-           || (getOptionalEars() != null && !getOptionalEars().isValid())
-           || (getMouths() == null || !getMouths().isValid())) {
+                if (getColor() == null
+           || (encapsulated && getDecease() == null)) {
                     return false;
                 }
         if (!isHeadValid()) {
             return false;
         }
-                return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
+                return true;
             }
 
     private boolean isHeadValid() {
@@ -395,81 +397,148 @@ public class MonsterStateImpl implements MonsterState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.cdd.state.head.HeadState state = (net.sf.laja.cdd.state.head.HeadState)value;
+                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)value;
 
-                if (headWeightInGrams != state.getHeadWeightInGrams()) return false;
-                if (leftEye != null ? !leftEye.equals(state.getLeftEye()) : state.getLeftEye() != null) return false;
-                if (rightEye != null ? !rightEye.equals(state.getRightEye()) : state.getRightEye() != null) return false;
-                if (midEye != null ? !midEye.equals(state.getMidEye()) : state.getMidEye() != null) return false;
                 if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
                 if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
                 if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
                 if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
-                if (noses != null ? !noses.equals(state.getNoses()) : state.getNoses() != null) return false;
-                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
-                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
-                if (length != state.getLength()) return false;
-                if (a != state.getA()) return false;
-                if (b != state.getB()) return false;
-                if (c != state.getC()) return false;
-                if (d != state.getD()) return false;
-                if (e != state.getE()) return false;
-                if (f != state.getF()) return false;
-                if (g != state.getG()) return false;
-                if (h != state.getH()) return false;
-                if (optionalEars != null ? !optionalEars.equals(state.getOptionalEars()) : state.getOptionalEars() != null) return false;
-                if (mouths != null ? !mouths.equals(state.getMouths()) : state.getMouths() != null) return false;
 
                 return true;
             }
 
             @Override
             public int hashCode() {
-                int result = (int)headWeightInGrams;
-                result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
-                result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
-                result = 31 * result + (midEye != null ? midEye.hashCode() : 0);
-                result = 31 * result + eyeWeightInGrams;
+                int result = eyeWeightInGrams;
                 result = 31 * result + (color != null ? color.hashCode() : 0);
                 result = 31 * result + (decease != null ? decease.hashCode() : 0);
                 result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-                result = 31 * result + length;
-                result = 31 * result + (a ? 1 : 0);
-                result = 31 * result + b;
-                result = 31 * result + c;
-                result = 31 * result + d;
-                result = 31 * result + e;
-                result = (int)(f ^ (f >>> 32));
-                result = 31 * result + (int)g;
-                result = 31 * result + (int)h;
 
                 return result;
             }
 
             @Override
             public String toString() {
-                return "{headWeightInGrams=" + getHeadWeightInGrams() +
-                        ", leftEye=" + getLeftEye() +
-                        ", rightEye=" + getRightEye() +
-                        ", midEye=" + getMidEye() +
-                        ", eyeWeightInGrams=" + getEyeWeightInGrams() +
+                return "{eyeWeightInGrams=" + getEyeWeightInGrams() +
                         ", color=" + (getColor() == null ? null : '\'' + getColor() + '\'' ) +
                         ", decease=" + (getDecease() == null ? null : '\'' + getDecease() + '\'' ) +
-                        ", hasEar=" + getHasEar() +
-                        ", noses=" + getNoses() +
-                        ", brows=" + getBrows() +
-                        ", ears=" + getEars() +
-                        ", length=" + getLength() +
-                        ", a=" + getA() +
-                        ", b=" + getB() +
-                        ", c=" + getC() +
-                        ", d=" + getD() +
-                        ", e=" + getE() +
-                        ", f=" + getF() +
-                        ", g=" + getG() +
-                        ", h=" + getH() +
-                        ", optionalEars=" + getOptionalEars() +
-                        ", mouths=" + getMouths() + "}";
+                        ", hasEar=" + getHasEar() + "}";
+            }
+        };
+    }
+
+    public ForeheadState getForeheadState() {
+        return new ForeheadState() {
+            public Certificate certificate() { return certificate(); }
+            public BrowStateList getBrows() { return MonsterStateImpl.this.brows; }
+            public void setBrows(BrowStateList brows, Object mutator) { MonsterStateImpl.this.setBrows(brows, mutator); }
+
+            public EarStateSet getEars() { return MonsterStateImpl.this.ears; }
+            public void setEars(EarStateSet ears, Object mutator) { MonsterStateImpl.this.setEars(ears, mutator); }
+
+            public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+        if (!isHeadValid()) {
+            return false;
+        }
+                return true;
+            }
+
+    private boolean isHeadValid() {
+        return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
+    }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof MonsterStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.forehead.ForeheadState state = (net.sf.laja.cdd.state.forehead.ForeheadState)value;
+
+                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
+                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+
+            @Override
+            public String toString() {
+                return "{brows=" + getBrows() +
+                        ", ears=" + getEars() + "}";
+            }
+        };
+    }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+        if (!isHeadValid()) {
+            return false;
+        }
+                return true;
+            }
+
+    private boolean isHeadValid() {
+        return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
+    }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof MonsterStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.forehead.ForeheadState state = (net.sf.laja.cdd.state.forehead.ForeheadState)value;
+
+                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
+                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+
+            @Override
+            public String toString() {
+                return "{brows=" + getBrows() +
+                        ", ears=" + getEars() + "}";
             }
         };
     }
