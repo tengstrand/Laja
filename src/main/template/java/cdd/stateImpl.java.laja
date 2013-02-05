@@ -1,4 +1,6 @@
-#macro declareStates()
+###set (filename = "{outputDir}/{stateClass}.java")
+###generateFile(filename, fileContent())
+#macro stateProjections()
   #foreach (method in stateMethods)
     #foreach (template in templates.values() where template.classname == method.classname)
 
@@ -164,14 +166,6 @@
 {tab}    return true;
   #else
     #set (statement = t.isValidStatement)
-    #if (statements != null)
-      #foreach (s in statements.values())
-        #set (statement = statementConverter.prefixAttribute("", statement, key, s))
-        #foreach (attribute in t.attributes)
-          #set (statement = statementConverter.prefixAttribute("", statement, attribute.variable, "{attribute.getter}()"))
-        #end
-      #end
-    #end
     ## Replace references to expanded types, e.g: a.b -> b
     #foreach (expandedType in expandedTypes)
       #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type)
@@ -399,7 +393,7 @@ public class {stateImplClass} implements {stateClass} {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-  #declareStates()
+  #stateProjections()
 
     {stateImplClass}() {
   #foreach (attribute in attributes where attribute.isStateSet && attribute.isStateList && !attribute.isExplicitAssigned)
