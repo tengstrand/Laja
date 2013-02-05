@@ -1,12 +1,10 @@
 package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
+import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
@@ -18,7 +16,6 @@ import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.arm.ArmStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
@@ -28,7 +25,6 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface MonsterStateBuilder extends MonsterStateComparable, HeadStateBuilder {
-    EyeStateBuilder eyeStateBuilder();
     TerrestrialStateBuilder terrestrialStateBuilder();
     void withNumberOfLegs(int numberOfLegs);
     void withNumberOfOwnWings(int numberOfOwnWings);

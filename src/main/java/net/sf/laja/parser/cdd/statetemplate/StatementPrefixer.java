@@ -25,7 +25,7 @@ public class StatementPrefixer {
 
         boolean skipIfPeriod = prefix.length() > 0;
 
-        while (index > 0 && index < statement.length()-3) {
+        while (index > 0 && index <= statement.length()-2) {
             if (!isLetter(index - 1)
                     && (!skipIfPeriod || !isPeriod(index - 1))
                     && !isLetter(index + searchFor.length())) {

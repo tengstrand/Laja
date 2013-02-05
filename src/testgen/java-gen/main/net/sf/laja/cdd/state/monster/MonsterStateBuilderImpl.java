@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
+import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
@@ -12,7 +13,6 @@ import net.sf.laja.cdd.state.nose.NoseStateList;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.head.HeadBehaviourFactory;
 import net.sf.laja.cdd.state.head.HeadState;
@@ -30,7 +30,6 @@ import net.sf.laja.cdd.state.arm.ArmStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
 import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilderImpl;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
@@ -66,10 +65,6 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     public MonsterStateBuilderImpl(MonsterState state, Object encapsulator) {
         this(state);
         this.encapsulator = encapsulator;
-    }
-
-    public EyeStateBuilder eyeStateBuilder() {
-        return new EyeStateBuilderImpl(state.getEyeState());
     }
 
     public TerrestrialStateBuilder terrestrialStateBuilder() {

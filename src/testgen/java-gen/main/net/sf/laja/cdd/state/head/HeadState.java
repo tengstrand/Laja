@@ -88,4 +88,6 @@ public interface HeadState extends HeadStateComparable, EyeState, ForeheadState 
 
     MouthStateList getMouths();
     void setMouths(MouthStateList mouths, Object mutator);
+    EyeState getEyeState();
+    ForeheadState getForeheadState();
 }

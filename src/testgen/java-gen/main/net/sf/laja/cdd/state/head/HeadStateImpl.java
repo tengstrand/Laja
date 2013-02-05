@@ -147,6 +147,139 @@ public class HeadStateImpl implements HeadState {
     public void setOptionalEars(EarStateList optionalEars, Object mutator) { checkMutator(mutator); this.optionalEars.clear(); this.optionalEars.addAll(optionalEars); }
     public void setMouths(MouthStateList mouths, Object mutator) { checkMutator(mutator); this.mouths.clear(); this.mouths.addAll(mouths); }
 
+    public EyeState getEyeState() {
+        return new EyeState() {
+            public Certificate certificate() { return certificate(); }
+            public int getEyeWeightInGrams() { return HeadStateImpl.this.eyeWeightInGrams; }
+            public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { HeadStateImpl.this.setEyeWeightInGrams(eyeWeightInGrams, mutator); }
+
+            public String getColor() { return HeadStateImpl.this.color; }
+            public void setColor(String color, Object mutator) { HeadStateImpl.this.setColor(color, mutator); }
+
+            public String getDecease() { return HeadStateImpl.this.decease; }
+            public void setDecease(String decease, Object mutator) { HeadStateImpl.this.setDecease(decease, mutator); }
+
+            public Boolean getHasEar() { return HeadStateImpl.this.hasEar; }
+            public void setHasEar(Boolean hasEar, Object mutator) { HeadStateImpl.this.setHasEar(hasEar, mutator); }
+
+            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                if (getColor() == null
+           || (encapsulated && getDecease() == null)) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof HeadStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)value;
+
+                if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
+                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+                if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
+                if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = eyeWeightInGrams;
+                result = 31 * result + (color != null ? color.hashCode() : 0);
+                result = 31 * result + (decease != null ? decease.hashCode() : 0);
+                result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
+
+                return result;
+            }
+
+            @Override
+            public String toString() {
+                return "{eyeWeightInGrams=" + getEyeWeightInGrams() +
+                        ", color=" + (getColor() == null ? null : '\'' + getColor() + '\'' ) +
+                        ", decease=" + (getDecease() == null ? null : '\'' + getDecease() + '\'' ) +
+                        ", hasEar=" + getHasEar() + "}";
+            }
+        };
+    }
+
+    public ForeheadState getForeheadState() {
+        return new ForeheadState() {
+            public Certificate certificate() { return certificate(); }
+            public BrowStateList getBrows() { return HeadStateImpl.this.brows; }
+            public void setBrows(BrowStateList brows, Object mutator) { HeadStateImpl.this.setBrows(brows, mutator); }
+
+            public EarStateSet getEars() { return HeadStateImpl.this.ears; }
+            public void setEars(EarStateSet ears, Object mutator) { HeadStateImpl.this.setEars(ears, mutator); }
+
+            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                return true;
+            }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof HeadStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.forehead.ForeheadState state = (net.sf.laja.cdd.state.forehead.ForeheadState)value;
+
+                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
+                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+
+            @Override
+            public String toString() {
+                return "{brows=" + getBrows() +
+                        ", ears=" + getEars() + "}";
+            }
+        };
+    }
+
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
             throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));

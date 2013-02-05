@@ -12,4 +12,5 @@ import net.sf.laja.cdd.state.Certificate;
 public interface FingerState extends FingerStateComparable, NailState {
     String getColor();
     void setColor(String color, Object mutator);
+    NailState getNailState();
 }

@@ -24,6 +24,9 @@ public interface {stateClass}{extends} {
     {method.returnclass} {method.getter}();
     #end
   #end
+  #foreach (attribute in expandedAttributes)
+    {attribute.stateClass} get{attribute.stateClass}();
+  #end
   #if (!hasExtendedClasses)
 
     boolean isValid();

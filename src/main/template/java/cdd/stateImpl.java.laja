@@ -1,16 +1,22 @@
-###set (filename = "{outputDir}/{stateClass}.java")
-###generateFile(filename, fileContent())
+
 #macro stateProjections()
   #foreach (stateMethod in stateMethods)
     #foreach (template in templates.values() where template.classname == stateMethod.classname)
+      #stateProjection(template, stateMethod)
+    #end
+  #end
+#end
 
-      #set (method = new net.sf.laja.parser.cdd.StateProjectionMethod(stateMethod))
+#macro stateProjection(t, stateArg)
+  #set (method = new net.sf.laja.parser.cdd.StateProjectionMethod(stateArg))
+
     public {method.returnclass} {method.getter}() {
         return new {method.returnclass}() {
             public Certificate certificate() { return certificate(); }
-      #foreach (attribute in template.attributes)
+      #foreach (attribute in t.attributes)
         #set (statement = method.getStatement(attribute.variable))
         #if (statement == null)
+          #errors.addMessage("Could not find attribute '{attribute.variable}' in method '{stateClass}.{method.getter}'.")
           #set (msg = "/* missing attribute '{attribute.variable}' */")
           #if (attribute.isPrimitive)
             #if (attribute.type == "boolean")
@@ -27,6 +33,7 @@
         #else
           #set (getStatement = "{stateImplClass}.this.{statement};")
           #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
+          #println("statement = {statement} attribute.variable={attribute.variable} setStatement={setStatement}")
           #set (setStatement = "{stateImplClass}.this.{setStatement};")
         #end
             public {attribute.type} {attribute.getter}() { return {getStatement} }
@@ -35,17 +42,15 @@
       #end
             public void encapsulate() { {stateImplClass}.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
-      #isValid(template, true, "            ")
-      #equals(template, true, "            ")
+      #isValid(t, true, "            ")
+      #equals(t, true, "            ")
 ## fix!
-##      #equalsState(template, true, "            ")
-      #equalsValue(template, true, "            ")
-      #hashCode(template, true, "            ")
-      #toString(template, true, "            ")
+##      #equalsState(t, true, "            ")
+      #equalsValue(t, true, "            ")
+      #hashCode(t, true, "            ")
+      #toString(t, true, "            ")
         };
     }
-    #end
-  #end
 #end
 
 #macro gettersAndSetters()
@@ -387,6 +392,17 @@
 {tab}}
 #end
 
+#macro stateMethods()
+  #foreach (attribute in expandedAttributes)
+    #set (t = templates.get(attribute.cleanedStateType))
+    #if (t == null)
+      #errors.addMessage("Could not find state '{attribute.cleanedStateType}'")
+    #else
+      #stateProjection(t, t)
+    #end
+  #end
+#end
+
 #macro class()
   #header()
 public class {stateImplClass} implements {stateClass} {
@@ -425,6 +441,7 @@ public class {stateImplClass} implements {stateClass} {
     }
   #isValid($, false, "    ")
   #gettersAndSetters()
+  #stateMethods()
   #checkMutator()
   #encapsulate()
   #setEncapsulator()

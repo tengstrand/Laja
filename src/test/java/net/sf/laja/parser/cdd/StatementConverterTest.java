@@ -14,6 +14,11 @@ public class StatementConverterTest {
     }
 
     @Test
+    public void calculateSetStatementAttribute() {
+        assertEquals("setA(a, mutator)", converter.calculateSetStatement("a", "a"));
+    }
+
+    @Test
     public void calculateSetStatement() {
         assertEquals("setTruckName(name, mutator)", converter.calculateSetStatement("truckName", "name"));
     }
