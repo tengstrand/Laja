@@ -13,6 +13,8 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.nose.NoseStateArrayList;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;

@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.finger;
 
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.Certificate;
 
 /**

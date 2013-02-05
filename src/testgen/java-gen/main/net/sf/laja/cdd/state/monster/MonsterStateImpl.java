@@ -3,7 +3,6 @@ package net.sf.laja.cdd.state.monster;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeStateProjection;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
@@ -16,6 +15,9 @@ import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.arm.ArmState;
+import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.nose.NoseStateArrayList;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
@@ -310,28 +312,28 @@ public class MonsterStateImpl implements MonsterState {
             public void setLength(int length, Object mutator) { MonsterStateImpl.this.setLength(length, mutator); }
 
             public boolean getA() { return MonsterStateImpl.this.a; }
-            public void setA(boolean a, Object mutator) {  }
+            public void setA(boolean a, Object mutator) { MonsterStateImpl.this.setA(a, mutator); }
 
             public byte getB() { return MonsterStateImpl.this.b; }
-            public void setB(byte b, Object mutator) {  }
+            public void setB(byte b, Object mutator) { MonsterStateImpl.this.setB(b, mutator); }
 
             public short getC() { return MonsterStateImpl.this.c; }
-            public void setC(short c, Object mutator) {  }
+            public void setC(short c, Object mutator) { MonsterStateImpl.this.setC(c, mutator); }
 
             public char getD() { return MonsterStateImpl.this.d; }
-            public void setD(char d, Object mutator) {  }
+            public void setD(char d, Object mutator) { MonsterStateImpl.this.setD(d, mutator); }
 
             public int getE() { return MonsterStateImpl.this.e; }
-            public void setE(int e, Object mutator) {  }
+            public void setE(int e, Object mutator) { MonsterStateImpl.this.setE(e, mutator); }
 
             public long getF() { return MonsterStateImpl.this.f; }
-            public void setF(long f, Object mutator) {  }
+            public void setF(long f, Object mutator) { MonsterStateImpl.this.setF(f, mutator); }
 
             public float getG() { return MonsterStateImpl.this.g; }
-            public void setG(float g, Object mutator) {  }
+            public void setG(float g, Object mutator) { MonsterStateImpl.this.setG(g, mutator); }
 
             public double getH() { return MonsterStateImpl.this.h; }
-            public void setH(double h, Object mutator) {  }
+            public void setH(double h, Object mutator) { MonsterStateImpl.this.setH(h, mutator); }
 
             public EarStateList getOptionalEars() { return MonsterStateImpl.this.optionalEars; }
             public void setOptionalEars(EarStateList optionalEars, Object mutator) { MonsterStateImpl.this.setOptionalEars(optionalEars, mutator); }

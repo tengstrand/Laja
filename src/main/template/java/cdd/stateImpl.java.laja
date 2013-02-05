@@ -33,7 +33,6 @@
         #else
           #set (getStatement = "{stateImplClass}.this.{statement};")
           #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
-          #println("statement = {statement} attribute.variable={attribute.variable} setStatement={setStatement}")
           #set (setStatement = "{stateImplClass}.this.{setStatement};")
         #end
             public {attribute.type} {attribute.getter}() { return {getStatement} }
@@ -454,10 +453,20 @@ public class {stateImplClass} implements {stateClass} {
 }
 #end
 
+#macro importStateExpansion()
+  #foreach (attribute in expandedAttributes)
+    #set (t = templates.get(attribute.cleanedStateType))
+    #if (t != null)
+import {t.packagename}.{attribute.type};
+    #end
+  #end
+#end
+
 #macro fileContent()
   #package()
   #importBegin(false)
   #importState()
+  #importStateExpansion()
   #importStateHashSet()
   #importStateArrayList()
   #importCertificate()
