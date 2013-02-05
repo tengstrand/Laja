@@ -12,6 +12,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
     public String returnclass;
     public String variable;
     public String methodName;
+    public String getMethod;
     public String parameters;
     public String implclass;
     public String stateBuilderVariable;
@@ -46,6 +47,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
 
     public void setUname(String uname) {
         methodName = "state" + uname;
+        getMethod = "get" + uname + "State";
         variable = StringUtils.uncapitalize(uname);
         stateBuilderVariable = variable + "StateBuilder";
         if (params != null) {
@@ -78,6 +80,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
                 ", returnclass='" + returnclass + '\'' +
                 ", variable='" + variable + '\'' +
                 ", methodName='" + methodName + '\'' +
+                ", getMethod='" + getMethod + '\'' +
                 ", parameters='" + parameters + '\'' +
                 ", implclass='" + implclass + '\'' +
                 ", stateBuilderVariable='" + stateBuilderVariable + '\'' +
