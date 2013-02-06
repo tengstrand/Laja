@@ -20,7 +20,6 @@ Includes:
 * The class Certificate has been made final.
 * Fixed a bug in lists that occurred when having more than one as-method with extra parameters.
 * The problem that arose when mixed constructors in different behaviour representations (state) + (state, stateBuilder) can no longer be reproduced.
-* Changed name from XStateListImpl to XStateArrayList (where X is the state class).
 * Added methods equals + hashCode to XBuilder (where X is the behaviour class).
 * Simplified state projections, the new syntax is (e.g.): void address() { AddressProjection.streetName("main").streetNumber(1); }.
 
