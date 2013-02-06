@@ -7,10 +7,9 @@ import net.sf.laja.cdd.behaviour.head.Head;
 import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 import net.sf.laja.cdd.state.monster.MonsterState;
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
+import net.sf.laja.cdd.state.eye.EyeState;
 
 public class MonsterSetEncapsulator implements Iterable<MonsterEncapsulator> {
     public MonsterStateSetBuilder stateSetBuilder = new MonsterStateSetBuilder();

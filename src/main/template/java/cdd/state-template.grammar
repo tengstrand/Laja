@@ -33,7 +33,8 @@ grammar stateTemplate {
    parameters = s [!")"+];
    argument = getter | name:variable [s "." s argument];
    method = s "." s name:variable s "(" s argument s ")";
-   stateMethod = public name:returnclass ws "state" uname s "(" parameters ")" s "{" s  "return" ws name:implclass s method+ s ";" s "}";
+   stateProjection = "StateProjection";
+   stateMethod = public "void" ws name:methodname s "(" s ")" s "{" s  uname:returnclass s method+ s ";" s "}";
 
    classStatement = public "class" ws name:classname s ["extends" ws name s] "{" [s attribute | isvalid | stateMethod]+ s "}";
 
@@ -57,10 +58,8 @@ grammar stateTemplate {
 
    Method method.setVariable(String variable);
 
-   StateMethod stateMethod.setReturnclass(String returnclass);
-   stateMethod.setUname(String uname);
-   stateMethod.setParameters(String parameters);
-   stateMethod.setImplClass(String implclass);
+   StateMethod stateMethod.setMethodName(String methodname);
+   stateMethod.setReturnClass(String returnclass);
    stateMethod.addMethod(Method method, String statement);
 
    ClassStatement classStatement.setClassname(String classname);

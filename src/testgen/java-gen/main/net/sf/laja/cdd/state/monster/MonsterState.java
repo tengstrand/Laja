@@ -1,10 +1,9 @@
 package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
+import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -107,7 +106,7 @@ public interface MonsterState extends MonsterStateComparable, HeadState {
     ArmState getLeftArm();
     void setLeftArm(ArmState leftArm, Object mutator);
 
-    TerrestrialState getTerrestrialState();
+    TerrestrialState getTerrestrialStateProjection();
     HeadState getHeadState();
     EyeState getEyeState();
     ForeheadState getForeheadState();

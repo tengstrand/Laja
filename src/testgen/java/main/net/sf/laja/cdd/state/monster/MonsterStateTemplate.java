@@ -1,8 +1,6 @@
 package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
 
@@ -18,8 +16,8 @@ public class MonsterStateTemplate extends MonsterStateImpl {
     double headWeight;
     ArmState leftArm;
 
-    TerrestrialStateProjection stateTerrestrial() {
-        return TerrestrialStateProjection.numberOfLegs(numberOfLegs).numberOfWings(numberOfOwnWings).leftEye(leftEye)
+    void terrestrial() {
+        TerrestrialStateProjection.numberOfLegs(numberOfLegs).numberOfWings(numberOfOwnWings).leftEye(leftEye)
                 .rightEye(rightEye).middleEye(midEye).weight(weight);
     }
 }

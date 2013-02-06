@@ -1,10 +1,9 @@
 package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
+import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -62,7 +61,7 @@ public class MonsterStateImpl implements MonsterState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
-    public TerrestrialState getTerrestrialState() {
+    public TerrestrialState getTerrestrialStateProjection() {
         return new TerrestrialState() {
             public Certificate certificate() { return certificate(); }
             public int getNumberOfLegs() { return MonsterStateImpl.this.numberOfLegs; }

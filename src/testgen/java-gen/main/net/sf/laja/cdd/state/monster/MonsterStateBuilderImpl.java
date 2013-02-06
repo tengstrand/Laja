@@ -1,8 +1,6 @@
 package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateProjection;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
 import net.sf.laja.cdd.state.ear.EarStateList;
@@ -68,7 +66,7 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     }
 
     public TerrestrialStateBuilder terrestrialStateBuilder() {
-        return new TerrestrialStateBuilderImpl(state.getTerrestrialState());
+        return new TerrestrialStateBuilderImpl(state.getTerrestrialStateProjection());
     }
 
     public void withNumberOfLegs(int numberOfLegs) {
