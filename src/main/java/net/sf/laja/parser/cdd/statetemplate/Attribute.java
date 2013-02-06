@@ -169,6 +169,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public void setVariable(String variable) {
         if (variable.startsWith("$")) {
             isExpand = true;
+            variable = variable.substring(1);
         }
         String variableClass = StringUtils.capitalize(variable);
         this.variable = variable;

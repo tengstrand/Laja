@@ -96,6 +96,13 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
         isValidStatement = classStatement.isValid != null ? classStatement.isValid.getStatement() : null;
     }
 
+    public void addStateMethod(StateMethod stateMethod) {
+        if (stateMethods.contains(stateMethod)) {
+            errors.addMessage("State method '" + stateMethod.variable + "' already declared in class '" + stateClass + "'.");
+        }
+        stateMethods.add(stateMethod);
+    }
+
     private String calculateClassName(String classname) {
         final String stateTemplate = "StateTemplate";
         final int length = stateTemplate.length();

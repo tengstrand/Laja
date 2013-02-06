@@ -3,6 +3,7 @@ package net.sf.laja.parser.cdd.statetemplate;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StateMethod implements StateTemplateParser.IStateMethod {
@@ -56,8 +57,12 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         statements.put(method.variable, statement);
     }
 
-    public void addStateMethod(StateTemplate template) {
+    public void initStateMethodProjection(String variable, List<Attribute> attributes) {
+        setMethodName(variable);
 
+        for (Attribute attribute : attributes) {
+            statements.put(attribute.variable, attribute.variable);
+        }
     }
 
     @Override
