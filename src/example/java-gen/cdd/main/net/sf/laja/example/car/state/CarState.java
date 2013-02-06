@@ -21,4 +21,5 @@ public interface CarState extends CarStateComparable, VehicleSizeState {
 
     String getColor();
     void setColor(String color, Object mutator);
+    VehicleSizeState getVehicleSizeState();
 }

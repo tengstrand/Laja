@@ -17,4 +17,5 @@ public interface BusState extends BusStateComparable, VehicleSizeState {
 
     int getWeightInKilograms(); // (optional)
     void setWeightInKilograms(int weightInKilograms, Object mutator);
+    VehicleSizeState getVehicleSizeState();
 }

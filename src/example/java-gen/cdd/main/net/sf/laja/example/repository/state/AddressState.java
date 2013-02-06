@@ -20,4 +20,5 @@ public interface AddressState extends AddressStateComparable, ZipcodeState {
 
     String getCity();
     void setCity(String city, Object mutator);
+    ZipcodeState getZipcodeState();
 }

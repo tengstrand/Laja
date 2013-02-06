@@ -6,8 +6,8 @@ public class PersonStateTemplate {
     int weightInKilograms;
     HeightState height;
 
-    BmiStateProjection stateBmi() {
-        return BmiStateProjection
+    void bmi() {
+        BmiStateProjection
                 .heightInCentimeters(height.getHeightInCentimeters())
                 .weightInKilograms(weightInKilograms);
     }

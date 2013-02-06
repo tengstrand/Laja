@@ -40,4 +40,6 @@ public interface CustomerState extends CustomerStateComparable, AddressState {
 
     AddressStateList getOldAddresses(); // (optional)
     void setOldAddresses(AddressStateList oldAddresses, Object mutator);
+    AddressState getAddressState();
+    ZipcodeState getZipcodeState();
 }

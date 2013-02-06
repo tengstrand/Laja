@@ -157,7 +157,13 @@ public class Expander {
     }
 
     private void addExpandedStateMethod(StateTemplate stateTemplate, Attribute attribute) {
-        //System.out.println("####### " + attribute);
+        StateTemplate template = findStateTemplate(attribute.cleanedStateType);
+        if (template == null) {
+            return;
+        }
+        StateMethod stateMethod = new StateMethod(template);
+
+        System.out.println("####### " + attribute);
     }
 
     private StateTemplate findStateTemplate(String type) {

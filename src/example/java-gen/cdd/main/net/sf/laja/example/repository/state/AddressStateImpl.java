@@ -1,5 +1,6 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -65,6 +66,60 @@ public class AddressStateImpl implements AddressState {
     public void setStreetName(String streetName, Object mutator) { checkMutator(mutator); this.streetName = streetName; }
     public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
     public void setCity(String city, Object mutator) { checkMutator(mutator); this.city = city; }
+
+    public ZipcodeState getZipcodeState() {
+        return new ZipcodeState() {
+            public Certificate certificate() { return certificate(); }
+            public int getZipcode() { return AddressStateImpl.this.zipcode; }
+            public void setZipcode(int zipcode, Object mutator) { AddressStateImpl.this.setZipcode(zipcode, mutator); }
+
+            public void encapsulate() { AddressStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { AddressStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                return true;
+            }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof AddressStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.example.repository.state.ZipcodeState state = (net.sf.laja.example.repository.state.ZipcodeState)value;
+
+                if (zipcode != state.getZipcode()) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = zipcode;
+
+                return result;
+            }
+
+            @Override
+            public String toString() {
+                return "{zipcode=" + getZipcode() + "}";
+            }
+        };
+    }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {

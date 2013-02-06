@@ -35,13 +35,15 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         this.returnclass = classname + "State";
         stateBuilderClass = classname + "StateBuilder";
         stateBuilderImplClass = classname + "StateBuilderImpl";
-        getter = "get" + this.returnclass;
-        variable = StringUtils.uncapitalize(this.returnclass);
         classVariable = StringUtils.uncapitalize(this.returnclass);
     }
 
     public void setMethodName(String methodname) {
         variable = methodname;
+        getter = "get" + StringUtils.capitalize(methodname);
+        if (!getter.endsWith("State")) {
+            getter += "State";
+        }
         stateBuilderVariable = variable + "StateBuilder";
     }
 
@@ -52,6 +54,27 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         statement = statement.substring(index + 1, statement.length() - 1);
 
         statements.put(method.variable, statement);
+    }
+
+    public void addStateMethod(StateTemplate template) {
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StateMethod that = (StateMethod) o;
+
+        if (getter != null ? !getter.equals(that.getter) : that.getter != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return getter != null ? getter.hashCode() : 0;
     }
 
     @Override

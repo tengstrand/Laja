@@ -10,7 +10,7 @@ public class TruckStateTemplate extends TruckStateImpl {
     /**
      * We map all attributes so that this TruckState also can be used as CarState.
      */
-    CarStateProjection stateCar() {
-        return CarStateProjection.lengthInCentimeters(lengthInCentimeters).name(type.getTruckName()).owner(owner).color(color);
+    void car() {
+        CarStateProjection.lengthInCentimeters(lengthInCentimeters).name(type.getTruckName()).owner(owner).color(color);
     }
 }

@@ -28,4 +28,5 @@ public interface TruckState extends TruckStateComparable, VehicleSizeState {
     void setOwner(OwnerState owner, Object mutator);
 
     CarState getCarState();
+    VehicleSizeState getVehicleSizeState();
 }

@@ -1,6 +1,7 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.OwnerState;
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -74,6 +75,67 @@ public class CarStateImpl implements CarState {
     public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
     public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
     public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    public VehicleSizeState getVehicleSizeState() {
+        return new VehicleSizeState() {
+            public Certificate certificate() { return certificate(); }
+            public int getLengthInCentimeters() { return CarStateImpl.this.lengthInCentimeters; }
+            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { CarStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
+
+            public void encapsulate() { CarStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { CarStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+        if (!isVehicleSizeValid()) {
+            return false;
+        }
+                return lengthInCentimeters >= 0;
+            }
+
+    private boolean isVehicleSizeValid() {
+        return lengthInCentimeters >= 0;
+    }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof CarStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.example.car.state.VehicleSizeState state = (net.sf.laja.example.car.state.VehicleSizeState)value;
+
+                if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = lengthInCentimeters;
+
+                return result;
+            }
+
+            @Override
+            public String toString() {
+                return "{lengthInCentimeters=" + getLengthInCentimeters() + "}";
+            }
+        };
+    }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
