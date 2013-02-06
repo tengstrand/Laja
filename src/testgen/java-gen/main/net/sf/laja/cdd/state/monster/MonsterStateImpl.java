@@ -61,7 +61,7 @@ public class MonsterStateImpl implements MonsterState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
-    public TerrestrialState getTerrestrialStateProjection() {
+    public TerrestrialState getTerrestrialState() {
         return new TerrestrialState() {
             public Certificate certificate() { return certificate(); }
             public int getNumberOfLegs() { return MonsterStateImpl.this.numberOfLegs; }

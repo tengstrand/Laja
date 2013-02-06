@@ -175,7 +175,7 @@
   #validateStates()
 
   #if (!parserError && !errors.hasErrors)
-    #createMissingBehaviour()
+    #createMissingBehaviours()
 
     #import "{..}/../java/cdd/shared.java.laja"
     #import "{..}/../java/cdd/certificate.java.laja"
@@ -298,7 +298,7 @@
   #end
 #end
 
-#macro createMissingBehaviour()
+#macro createMissingBehaviours()
   #foreach (template in templates.values())
     #set (found = false)
     #foreach (behaviour in behaviours.values() where !found && behaviour.cleanedStateClass == template.classname)

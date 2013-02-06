@@ -106,7 +106,7 @@ public interface MonsterState extends MonsterStateComparable, HeadState {
     ArmState getLeftArm();
     void setLeftArm(ArmState leftArm, Object mutator);
 
-    TerrestrialState getTerrestrialStateProjection();
+    TerrestrialState getTerrestrialState();
     HeadState getHeadState();
     EyeState getEyeState();
     ForeheadState getForeheadState();

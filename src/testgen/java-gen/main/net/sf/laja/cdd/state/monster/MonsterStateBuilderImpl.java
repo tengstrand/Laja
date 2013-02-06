@@ -66,7 +66,7 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     }
 
     public TerrestrialStateBuilder terrestrialStateBuilder() {
-        return new TerrestrialStateBuilderImpl(state.getTerrestrialStateProjection());
+        return new TerrestrialStateBuilderImpl(state.getTerrestrialState());
     }
 
     public void withNumberOfLegs(int numberOfLegs) {

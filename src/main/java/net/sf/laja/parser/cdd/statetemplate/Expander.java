@@ -107,6 +107,7 @@ public class Expander {
             for (Attribute attribute : stateTemplate.attributes) {
                 if (attribute.isExpand) {
                     addExpandedImports(stateTemplate, attribute);
+                    addExpandedStateMethod(stateTemplate, attribute);
                     expandedAttributesResult.add(attribute);
                     expand(attribute.type, true, expandingTypes);
                 } else {
@@ -153,6 +154,10 @@ public class Expander {
             String type = attribute.isState ? attribute.cleanedStateType : attribute.type;
             stateTemplate.expandedTypes.add(new ExpandedType(attribute.variable, type, expandedTemplate.packagename + "." + type));
         }
+    }
+
+    private void addExpandedStateMethod(StateTemplate stateTemplate, Attribute attribute) {
+        //System.out.println("####### " + attribute);
     }
 
     private StateTemplate findStateTemplate(String type) {

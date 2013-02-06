@@ -35,9 +35,9 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         this.returnclass = classname + "State";
         stateBuilderClass = classname + "StateBuilder";
         stateBuilderImplClass = classname + "StateBuilderImpl";
-        getter = "get" + returnclass;
-        variable = StringUtils.uncapitalize(returnclass);
-        classVariable = StringUtils.uncapitalize(returnclass);
+        getter = "get" + this.returnclass;
+        variable = StringUtils.uncapitalize(this.returnclass);
+        classVariable = StringUtils.uncapitalize(this.returnclass);
     }
 
     public void setMethodName(String methodname) {
