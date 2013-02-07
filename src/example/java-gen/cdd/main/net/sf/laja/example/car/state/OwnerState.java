@@ -7,7 +7,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface OwnerState extends OwnerStateComparable {
+public interface OwnerState {
     long getSsn();
     void setSsn(long ssn, Object mutator);
 

@@ -3,8 +3,16 @@ package net.sf.laja.cdd.state.monster;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
+import java.math.BigDecimal;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.ear.EarStateList;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.state.mouth.MouthStateList;
+import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
+import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
@@ -24,7 +32,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface MonsterState extends MonsterStateComparable, HeadState {
+public interface MonsterState {
     int getNumberOfLegs();
     void setNumberOfLegs(int numberOfLegs, Object mutator);
 
@@ -105,9 +113,15 @@ public interface MonsterState extends MonsterStateComparable, HeadState {
 
     ArmState getLeftArm();
     void setLeftArm(ArmState leftArm, Object mutator);
-
+§§
     TerrestrialState getTerrestrialState();
+§§
     HeadState getHeadState();
-    EyeState getEyeState();
-    ForeheadState getForeheadState();
+
+    boolean isValid();
+    boolean isValidAsEncapsulated();
+    boolean equalsValue(Object obj);
+    void encapsulate();
+    void setEncapsulator(Object encapsulator);
+    Certificate certificate();
 }

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface BrowState extends BrowStateComparable {
+public interface BrowState {
     int getArea();
     void setArea(int area, Object mutator);
 

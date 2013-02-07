@@ -9,7 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface TerrestrialStateBuilder extends TerrestrialStateComparable {
+public interface TerrestrialStateBuilder {
     void withNumberOfLegs(int numberOfLegs);
     void withNumberOfWings(int numberOfWings);
     void withLeftEye(EyeStateBuilder leftEye);

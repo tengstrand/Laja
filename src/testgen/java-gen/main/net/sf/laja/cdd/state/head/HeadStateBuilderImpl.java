@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.nose.NoseStateList;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeBehaviourFactory;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadBehaviourFactory;
@@ -19,6 +21,9 @@ import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
+import net.sf.laja.cdd.state.forehead.ForeheadStateBuilderImpl;
+import net.sf.laja.cdd.state.eye.EyeStateBuilder;
+import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -52,6 +57,14 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
     public HeadStateBuilderImpl(HeadState state, Object encapsulator) {
         this(state);
         this.encapsulator = encapsulator;
+    }
+
+    public EyeStateBuilder getEyeStateBuilder() {
+        return new EyeStateBuilderImpl(state.getEyeState());
+    }
+
+    public ForeheadStateBuilder getForeheadStateBuilder() {
+        return new ForeheadStateBuilderImpl(state.getForeheadState());
     }
 
     public void withHeadWeightInGrams(double headWeightInGrams) {
@@ -206,23 +219,7 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(EyeBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
-    public Object as(ForeheadBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public HeadState getHeadState(net.sf.laja.cdd.state.Certificate certificate) {
-        return state;
-    }
-
-    public EyeState getEyeState(Certificate certificate) {
-        return state;
-    }
-
-    public ForeheadState getForeheadState(Certificate certificate) {
         return state;
     }
 

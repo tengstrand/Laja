@@ -1,6 +1,7 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -16,65 +17,11 @@ public class BusStateImpl implements BusState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
-    BusStateImpl() {
-    }
-
-    public BusStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static BusStateBuilder build() {
-        return new BusStateBuilderImpl();
-    }
-
-    public static BusStateBuilder build(BusState state) {
-        return new BusStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (name == null) {
-            return false;
-        }
-        if (!isVehicleSizeValid()) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isVehicleSizeValid() {
-        return lengthInCentimeters >= 0;
-    }
-
-    // Getters
-    public String getName() { return name; }
-    public int getLengthInCentimeters() { return lengthInCentimeters; }
-    public int getWeightInKilograms() { return weightInKilograms; }
-
-    // Setters
-    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
-    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
-
-    public VehicleSizeState getVehicleSizeState() {
+    public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
-            public int getLengthInCentimeters() { return BusStateImpl.this.lengthInCentimeters; }
-            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { BusStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
+            public int getLengthInCentimeters() { return 0; /* missing attribute 'lengthInCentimeters' */ }
+            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { /* missing attribute 'lengthInCentimeters' */ }
 
             public void encapsulate() { BusStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { BusStateImpl.this.setEncapsulator(encapsulator); }
@@ -130,6 +77,60 @@ public class BusStateImpl implements BusState {
             }
         };
     }
+
+    BusStateImpl() {
+    }
+
+    public BusStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static BusStateBuilder build() {
+        return new BusStateBuilderImpl();
+    }
+
+    public static BusStateBuilder build(BusState state) {
+        return new BusStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (name == null) {
+            return false;
+        }
+        if (!isVehicleSizeValid()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isVehicleSizeValid() {
+        return lengthInCentimeters >= 0;
+    }
+
+    // Getters
+    public String getName() { return name; }
+    public int getLengthInCentimeters() { return lengthInCentimeters; }
+    public int getWeightInKilograms() { return weightInKilograms; }
+
+    // Setters
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {

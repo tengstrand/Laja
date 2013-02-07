@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface NailStateBuilder extends NailStateComparable {
+public interface NailStateBuilder {
     void withColor(String color);
     boolean isValid();
     Object as(NailBehaviourFactory factory, Object... args);

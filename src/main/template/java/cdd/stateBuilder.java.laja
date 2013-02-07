@@ -1,11 +1,10 @@
 #set (prefix = "StateBuilder")
-#set (extends = interfaceImports(prefix))
 
 #macro interface()
   #header()
-public interface {builderClass}{extends} {
+public interface {builderClass} {
   #foreach (method in stateMethods)
-    {method.stateBuilderClass} {method.stateBuilderVariable}();
+    {method.stateBuilderClass} {method.stateBuilderGetter}();
   #end
   #foreach (attribute in attributes)
     #if (attribute.isStateSet)

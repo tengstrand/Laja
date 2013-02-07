@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FleckState extends FleckStateComparable {
+public interface FleckState {
     int getArea(); // (hide)
     void setArea(int area, Object mutator);
 

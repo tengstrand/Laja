@@ -9,7 +9,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface PersonState extends PersonStateComparable {
+public interface PersonState {
     String getGivenName();
     void setGivenName(String givenName, Object mutator);
 
@@ -21,7 +21,7 @@ public interface PersonState extends PersonStateComparable {
 
     HeightState getHeight();
     void setHeight(HeightState height, Object mutator);
-
+§§
     BmiState getBmiState();
 
     boolean isValid();

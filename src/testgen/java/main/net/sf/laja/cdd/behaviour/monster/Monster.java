@@ -11,7 +11,7 @@ public class Monster extends MonsterFactory {
     public Monster(MonsterState state, MonsterStateBuilder stateBuilder) {
         super(state, stateBuilder);
 
-        head = new Head(state, stateBuilder);
+        head = new Head(state.getHeadState(), stateBuilder.getHeadStateBuilder());
     }
 
     // (factory)
@@ -20,6 +20,6 @@ public class Monster extends MonsterFactory {
     }
 
     public Terrestrial asTerrestrial() {
-        return new Terrestrial(state.getTerrestrialState(), stateBuilder.terrestrialStateBuilder());
+        return new Terrestrial(state.getTerrestrialState(), stateBuilder.getTerrestrialStateBuilder());
     }
 }

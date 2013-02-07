@@ -5,6 +5,11 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
+import java.math.BigDecimal;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -22,7 +27,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeadState extends HeadStateComparable, EyeState, ForeheadState {
+public interface HeadState {
     double getHeadWeightInGrams();
     void setHeadWeightInGrams(double headWeightInGrams, Object mutator);
 
@@ -88,6 +93,15 @@ public interface HeadState extends HeadStateComparable, EyeState, ForeheadState 
 
     MouthStateList getMouths();
     void setMouths(MouthStateList mouths, Object mutator);
+§§
     EyeState getEyeState();
+§§
     ForeheadState getForeheadState();
+
+    boolean isValid();
+    boolean isValidAsEncapsulated();
+    boolean equalsValue(Object obj);
+    void encapsulate();
+    void setEncapsulator(Object encapsulator);
+    Certificate certificate();
 }

@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeightStateBuilder extends HeightStateComparable {
+public interface HeightStateBuilder {
     void withHeightInCentimeters(int heightInCentimeters);
     boolean isValid();
     Object as(HeightBehaviourFactory factory, Object... args);

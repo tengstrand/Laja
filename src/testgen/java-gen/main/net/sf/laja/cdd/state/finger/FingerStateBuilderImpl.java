@@ -1,8 +1,11 @@
 package net.sf.laja.cdd.state.finger;
 
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.nail.NailBehaviourFactory;
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailStateBuilderImpl;
+import net.sf.laja.cdd.state.nail.NailStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -30,6 +33,10 @@ public class FingerStateBuilderImpl implements FingerStateBuilder {
         this.encapsulator = encapsulator;
     }
 
+    public NailStateBuilder getNailStateBuilder() {
+        return new NailStateBuilderImpl(state.getNailState());
+    }
+
     public void withColor(String color) {
         state.setColor(color, encapsulator);
     }
@@ -42,15 +49,7 @@ public class FingerStateBuilderImpl implements FingerStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(NailBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public FingerState getFingerState(net.sf.laja.cdd.state.Certificate certificate) {
-        return state;
-    }
-
-    public NailState getNailState(Certificate certificate) {
         return state;
     }
 

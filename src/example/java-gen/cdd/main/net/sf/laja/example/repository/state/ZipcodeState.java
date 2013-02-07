@@ -7,7 +7,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ZipcodeState extends ZipcodeStateComparable {
+public interface ZipcodeState {
     int getZipcode();
     void setZipcode(int zipcode, Object mutator);
 

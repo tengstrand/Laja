@@ -1,7 +1,10 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
 import net.sf.laja.example.repository.state.ZipcodeState;
+import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
+import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -29,6 +32,10 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
         this.encapsulator = encapsulator;
     }
 
+    public ZipcodeStateBuilder getZipcodeStateBuilder() {
+        return new ZipcodeStateBuilderImpl(state.getZipcodeState());
+    }
+
     public void withAddressId(int addressId) {
         state.setAddressId(addressId, encapsulator);
     }
@@ -53,15 +60,7 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(ZipcodeBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public AddressState getAddressState(net.sf.laja.example.repository.state.Certificate certificate) {
-        return state;
-    }
-
-    public ZipcodeState getZipcodeState(Certificate certificate) {
         return state;
     }
 

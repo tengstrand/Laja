@@ -8,7 +8,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface EyeState extends EyeStateComparable {
+public interface EyeState {
     int getEyeWeightInGrams();
     void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator);
 

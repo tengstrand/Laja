@@ -10,7 +10,7 @@ public class Customer extends CustomerFactory {
 
     public Customer(CustomerState state) {
         super(state);
-        address = new Address(state);
+        address = new Address(state.getAddressState());
     }
 
     // (factory) (list)

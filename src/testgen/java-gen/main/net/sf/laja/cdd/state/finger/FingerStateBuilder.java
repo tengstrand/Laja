@@ -1,6 +1,8 @@
 package net.sf.laja.cdd.state.finger;
 
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailStateBuilder;
 import net.sf.laja.cdd.state.nail.NailStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
@@ -9,7 +11,8 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FingerStateBuilder extends FingerStateComparable, NailStateBuilder {
+public interface FingerStateBuilder {
+    NailStateBuilder getNailStateBuilder();
     void withColor(String color);
     boolean isValid();
     Object as(FingerBehaviourFactory factory, Object... args);

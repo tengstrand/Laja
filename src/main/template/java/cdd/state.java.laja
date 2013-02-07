@@ -1,4 +1,3 @@
-#set (extends = interfaceImports("State"))
 
 #macro fileContent()
   #package()
@@ -8,7 +7,7 @@
   #importCertificate()
   #importEnd()
   #header()
-public interface {stateClass}{extends} {
+public interface {stateClass} {
   #set (first = true)
   #foreach (attribute in attributes)
     #if (!first)
@@ -19,15 +18,11 @@ public interface {stateClass}{extends} {
     #set (first = false)
   #end
   #foreach (method in stateMethods)
-
+§§
     #foreach (template in templates.values() where template.classname == method.classname)
     {method.returnclass} {method.getter}();
     #end
   #end
-  #foreach (attribute in expandedAttributes)
-    {attribute.stateClass} get{attribute.stateClass}();
-  #end
-  #if (!hasExtendedClasses)
 
     boolean isValid();
     boolean isValidAsEncapsulated();
@@ -35,7 +30,6 @@ public interface {stateClass}{extends} {
     void encapsulate();
     void setEncapsulator(Object encapsulator);
     Certificate certificate();
-  #end
 }
 #end
 

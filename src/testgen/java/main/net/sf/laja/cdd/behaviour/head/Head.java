@@ -16,7 +16,7 @@ public class Head extends HeadFactory {
 
     public Head(HeadState state, HeadStateBuilder stateBuilder) {
         super(state, stateBuilder);
-        eye = new Eye(state);
+        eye = new Eye(state.getEyeState());
         leftEye = new Eye(state.getLeftEye());
         rightEye = new Eye(state.getRightEye());
         if (state.getMidEye() != null) {

@@ -1,5 +1,6 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressStateList;
 import net.sf.laja.example.repository.state.AddressStateArrayList;
 

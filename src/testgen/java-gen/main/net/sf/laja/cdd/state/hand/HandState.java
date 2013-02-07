@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HandState extends HandStateComparable {
+public interface HandState {
     int getArea(); // (key)
     void setArea(int area, Object mutator);
 

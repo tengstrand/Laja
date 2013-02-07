@@ -5,6 +5,11 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
+import java.math.BigDecimal;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -53,6 +58,139 @@ public class HeadStateImpl implements HeadState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
+
+    public EyeState getEyeState() {
+        return new EyeState() {
+            public Certificate certificate() { return certificate(); }
+            public int getEyeWeightInGrams() { return 0; /* missing attribute 'eyeWeightInGrams' */ }
+            public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { /* missing attribute 'eyeWeightInGrams' */ }
+
+            public String getColor() { return null; /* missing attribute 'color' */ }
+            public void setColor(String color, Object mutator) { /* missing attribute 'color' */ }
+
+            public String getDecease() { return null; /* missing attribute 'decease' */ }
+            public void setDecease(String decease, Object mutator) { /* missing attribute 'decease' */ }
+
+            public Boolean getHasEar() { return null; /* missing attribute 'hasEar' */ }
+            public void setHasEar(Boolean hasEar, Object mutator) { /* missing attribute 'hasEar' */ }
+
+            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                if (getColor() == null
+           || (encapsulated && getDecease() == null)) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof HeadStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)value;
+
+                if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
+                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+                if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
+                if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = eyeWeightInGrams;
+                result = 31 * result + (color != null ? color.hashCode() : 0);
+                result = 31 * result + (decease != null ? decease.hashCode() : 0);
+                result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
+
+                return result;
+            }
+
+            @Override
+            public String toString() {
+                return "{eyeWeightInGrams=" + getEyeWeightInGrams() +
+                        ", color=" + (getColor() == null ? null : '\'' + getColor() + '\'' ) +
+                        ", decease=" + (getDecease() == null ? null : '\'' + getDecease() + '\'' ) +
+                        ", hasEar=" + getHasEar() + "}";
+            }
+        };
+    }
+
+    public ForeheadState getForeheadState() {
+        return new ForeheadState() {
+            public Certificate certificate() { return certificate(); }
+            public BrowStateList getBrows() { return null; /* missing attribute 'brows' */ }
+            public void setBrows(BrowStateList brows, Object mutator) { /* missing attribute 'brows' */ }
+
+            public EarStateSet getEars() { return null; /* missing attribute 'ears' */ }
+            public void setEars(EarStateSet ears, Object mutator) { /* missing attribute 'ears' */ }
+
+            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                return true;
+            }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof HeadStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.forehead.ForeheadState state = (net.sf.laja.cdd.state.forehead.ForeheadState)value;
+
+                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
+                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+
+            @Override
+            public String toString() {
+                return "{brows=" + getBrows() +
+                        ", ears=" + getEars() + "}";
+            }
+        };
+    }
 
     HeadStateImpl() {
         ears = EarStateHashSet.emptySet();
@@ -148,139 +286,6 @@ public class HeadStateImpl implements HeadState {
     public void setH(double h, Object mutator) { checkMutator(mutator); this.h = h; }
     public void setOptionalEars(EarStateList optionalEars, Object mutator) { checkMutator(mutator); this.optionalEars.clear(); this.optionalEars.addAll(optionalEars); }
     public void setMouths(MouthStateList mouths, Object mutator) { checkMutator(mutator); this.mouths.clear(); this.mouths.addAll(mouths); }
-
-    public EyeState getEyeState() {
-        return new EyeState() {
-            public Certificate certificate() { return certificate(); }
-            public int getEyeWeightInGrams() { return HeadStateImpl.this.eyeWeightInGrams; }
-            public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { HeadStateImpl.this.setEyeWeightInGrams(eyeWeightInGrams, mutator); }
-
-            public String getColor() { return HeadStateImpl.this.color; }
-            public void setColor(String color, Object mutator) { HeadStateImpl.this.setColor(color, mutator); }
-
-            public String getDecease() { return HeadStateImpl.this.decease; }
-            public void setDecease(String decease, Object mutator) { HeadStateImpl.this.setDecease(decease, mutator); }
-
-            public Boolean getHasEar() { return HeadStateImpl.this.hasEar; }
-            public void setHasEar(Boolean hasEar, Object mutator) { HeadStateImpl.this.setHasEar(hasEar, mutator); }
-
-            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                if (getColor() == null
-           || (encapsulated && getDecease() == null)) {
-                    return false;
-                }
-                return true;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof HeadStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                net.sf.laja.cdd.state.eye.EyeState state = (net.sf.laja.cdd.state.eye.EyeState)value;
-
-                if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-                if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
-                if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = eyeWeightInGrams;
-                result = 31 * result + (color != null ? color.hashCode() : 0);
-                result = 31 * result + (decease != null ? decease.hashCode() : 0);
-                result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{eyeWeightInGrams=" + getEyeWeightInGrams() +
-                        ", color=" + (getColor() == null ? null : '\'' + getColor() + '\'' ) +
-                        ", decease=" + (getDecease() == null ? null : '\'' + getDecease() + '\'' ) +
-                        ", hasEar=" + getHasEar() + "}";
-            }
-        };
-    }
-
-    public ForeheadState getForeheadState() {
-        return new ForeheadState() {
-            public Certificate certificate() { return certificate(); }
-            public BrowStateList getBrows() { return HeadStateImpl.this.brows; }
-            public void setBrows(BrowStateList brows, Object mutator) { HeadStateImpl.this.setBrows(brows, mutator); }
-
-            public EarStateSet getEars() { return HeadStateImpl.this.ears; }
-            public void setEars(EarStateSet ears, Object mutator) { HeadStateImpl.this.setEars(ears, mutator); }
-
-            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                return true;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof HeadStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                net.sf.laja.cdd.state.forehead.ForeheadState state = (net.sf.laja.cdd.state.forehead.ForeheadState)value;
-
-                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
-                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-
-            @Override
-            public String toString() {
-                return "{brows=" + getBrows() +
-                        ", ears=" + getEars() + "}";
-            }
-        };
-    }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {

@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface BmiStateBuilder extends BmiStateComparable {
+public interface BmiStateBuilder {
     void withHeightInCentimeters(int heightInCentimeters);
     void withWeightInKilograms(int weightInKilograms);
     boolean isValid();

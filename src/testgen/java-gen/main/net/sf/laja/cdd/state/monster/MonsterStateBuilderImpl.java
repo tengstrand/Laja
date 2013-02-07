@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
+import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.head.HeadBehaviourFactory;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.eye.EyeBehaviourFactory;
@@ -28,7 +29,9 @@ import net.sf.laja.cdd.state.arm.ArmStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
 import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilderImpl;
+import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -65,8 +68,12 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public TerrestrialStateBuilder terrestrialStateBuilder() {
+    public TerrestrialStateBuilder getTerrestrialStateBuilder() {
         return new TerrestrialStateBuilderImpl(state.getTerrestrialState());
+    }
+
+    public HeadStateBuilder getHeadStateBuilder() {
+        return new HeadStateBuilderImpl(state.getHeadState());
     }
 
     public void withNumberOfLegs(int numberOfLegs) {
@@ -248,31 +255,7 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(HeadBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
-    public Object as(EyeBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
-    public Object as(ForeheadBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public MonsterState getMonsterState(net.sf.laja.cdd.state.Certificate certificate) {
-        return state;
-    }
-
-    public HeadState getHeadState(Certificate certificate) {
-        return state;
-    }
-
-    public EyeState getEyeState(Certificate certificate) {
-        return state;
-    }
-
-    public ForeheadState getForeheadState(Certificate certificate) {
         return state;
     }
 

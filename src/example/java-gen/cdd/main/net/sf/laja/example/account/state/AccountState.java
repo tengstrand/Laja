@@ -7,7 +7,7 @@ import net.sf.laja.example.account.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AccountState extends AccountStateComparable {
+public interface AccountState {
     double getBalance(); // (key)
     void setBalance(double balance, Object mutator);
 

@@ -11,7 +11,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface TerrestrialState extends TerrestrialStateComparable {
+public interface TerrestrialState {
     int getNumberOfLegs();
     void setNumberOfLegs(int numberOfLegs, Object mutator);
 

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface NoseState extends NoseStateComparable {
+public interface NoseState {
     String getNoseDescription();
     void setNoseDescription(String noseDescription, Object mutator);
 

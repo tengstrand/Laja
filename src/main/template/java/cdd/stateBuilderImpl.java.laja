@@ -24,7 +24,7 @@ public class {builderImplClass} implements {builderClass} {
     }
   #foreach (method in stateMethods)
 
-    public {method.stateBuilderClass} {method.stateBuilderVariable}() {
+    public {method.stateBuilderClass} {method.stateBuilderGetter}() {
         return new {method.stateBuilderImplClass}(state.{method.getter}());
     }
   #end
@@ -70,23 +70,10 @@ public class {builderImplClass} implements {builderClass} {
     public Object as({stateBehaviourFactoryClass} factory, Object... args) {
         return factory.create(state, args);
     }
-  #foreach (expandedType in allExpandedTypes)
-
-    public Object as({expandedType.type}BehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-  #end
 
     public {stateClass} get{stateClass}({certificatePackage}.{certificateClass} certificate) {
         return state;
     }
-  #foreach (expandedType in allExpandedTypes)
-    #set (type = expandedType.type)
-
-    public {type}State get{type}State(Certificate certificate) {
-        return state;
-    }
-  #end
 
     @Override
     public int hashCode() {

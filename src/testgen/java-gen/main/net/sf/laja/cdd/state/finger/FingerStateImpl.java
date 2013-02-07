@@ -2,6 +2,7 @@ package net.sf.laja.cdd.state.finger;
 
 import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -15,61 +16,11 @@ public class FingerStateImpl implements FingerState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
-    FingerStateImpl() {
-    }
-
-    public FingerStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static FingerStateBuilder build() {
-        return new FingerStateBuilderImpl();
-    }
-
-    public static FingerStateBuilder build(FingerState state) {
-        return new FingerStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (color == null) {
-            return false;
-        }
-        if (!isNailValid()) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isNailValid() {
-        return "red".equals(color);
-    }
-
-    // Getters
-    public String getColor() { return color; }
-
-    // Setters
-    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
-
     public NailState getNailState() {
         return new NailState() {
             public Certificate certificate() { return certificate(); }
-            public String getColor() { return FingerStateImpl.this.color; }
-            public void setColor(String color, Object mutator) { FingerStateImpl.this.setColor(color, mutator); }
+            public String getColor() { return null; /* missing attribute 'color' */ }
+            public void setColor(String color, Object mutator) { /* missing attribute 'color' */ }
 
             public void encapsulate() { FingerStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { FingerStateImpl.this.setEncapsulator(encapsulator); }
@@ -128,6 +79,56 @@ public class FingerStateImpl implements FingerState {
             }
         };
     }
+
+    FingerStateImpl() {
+    }
+
+    public FingerStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static FingerStateBuilder build() {
+        return new FingerStateBuilderImpl();
+    }
+
+    public static FingerStateBuilder build(FingerState state) {
+        return new FingerStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (color == null) {
+            return false;
+        }
+        if (!isNailValid()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isNailValid() {
+        return "red".equals(color);
+    }
+
+    // Getters
+    public String getColor() { return color; }
+
+    // Setters
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {

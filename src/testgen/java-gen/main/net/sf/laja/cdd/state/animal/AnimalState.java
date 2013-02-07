@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AnimalState extends AnimalStateComparable {
+public interface AnimalState {
     boolean getIsTerrestrial();
     void setIsTerrestrial(boolean isTerrestrial, Object mutator);
 

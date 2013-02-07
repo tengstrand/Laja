@@ -2,10 +2,13 @@ package net.sf.laja.cdd.state.xhand;
 
 import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.finger.FingerBehaviourFactory;
 import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.nail.NailBehaviourFactory;
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.finger.FingerStateBuilderImpl;
+import net.sf.laja.cdd.state.finger.FingerStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -33,6 +36,10 @@ public class XHandStateBuilderImpl implements XHandStateBuilder {
         this.encapsulator = encapsulator;
     }
 
+    public FingerStateBuilder getFingerStateBuilder() {
+        return new FingerStateBuilderImpl(state.getFingerState());
+    }
+
     public void withColor(String color) {
         state.setColor(color, encapsulator);
     }
@@ -45,23 +52,7 @@ public class XHandStateBuilderImpl implements XHandStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(FingerBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
-    public Object as(NailBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public XHandState getXHandState(net.sf.laja.cdd.state.Certificate certificate) {
-        return state;
-    }
-
-    public FingerState getFingerState(Certificate certificate) {
-        return state;
-    }
-
-    public NailState getNailState(Certificate certificate) {
         return state;
     }
 

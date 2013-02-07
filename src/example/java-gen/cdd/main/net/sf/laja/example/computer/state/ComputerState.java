@@ -7,7 +7,7 @@ import net.sf.laja.example.computer.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ComputerState extends ComputerStateComparable {
+public interface ComputerState {
     String getName(); // (hide)
     void setName(String name, Object mutator);
 

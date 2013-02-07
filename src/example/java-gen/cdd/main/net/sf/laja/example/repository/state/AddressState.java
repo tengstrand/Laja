@@ -1,6 +1,7 @@
 package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.ZipcodeState;
+import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -8,7 +9,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AddressState extends AddressStateComparable, ZipcodeState {
+public interface AddressState {
     int getAddressId(); // (id)
     void setAddressId(int addressId, Object mutator);
 
@@ -20,5 +21,13 @@ public interface AddressState extends AddressStateComparable, ZipcodeState {
 
     String getCity();
     void setCity(String city, Object mutator);
+§§
     ZipcodeState getZipcodeState();
+
+    boolean isValid();
+    boolean isValidAsEncapsulated();
+    boolean equalsValue(Object obj);
+    void encapsulate();
+    void setEncapsulator(Object encapsulator);
+    Certificate certificate();
 }

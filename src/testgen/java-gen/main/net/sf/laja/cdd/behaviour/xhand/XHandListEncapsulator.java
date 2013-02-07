@@ -4,6 +4,7 @@ import java.util.*;
 import net.sf.laja.cdd.state.xhand.*;
 import net.sf.laja.cdd.state.xhand.XHandState;
 import net.sf.laja.cdd.state.finger.FingerState;
+import net.sf.laja.cdd.state.nail.NailState;
 
 public class XHandListEncapsulator implements Iterable<XHandEncapsulator> {
     public XHandStateListBuilder stateListBuilder = new XHandStateListBuilder();

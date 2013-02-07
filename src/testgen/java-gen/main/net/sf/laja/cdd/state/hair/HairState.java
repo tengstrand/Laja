@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HairState extends HairStateComparable {
+public interface HairState {
     int getLength(); // (key)
     void setLength(int length, Object mutator);
 

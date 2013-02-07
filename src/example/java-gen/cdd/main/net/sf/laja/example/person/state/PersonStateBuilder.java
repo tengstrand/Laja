@@ -10,8 +10,8 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface PersonStateBuilder extends PersonStateComparable {
-    BmiStateBuilder bmiStateBuilder();
+public interface PersonStateBuilder {
+    BmiStateBuilder getBmiStateBuilder();
     void withGivenName(String givenName);
     void withSurname(String surname);
     void withWeightInKilograms(int weightInKilograms);

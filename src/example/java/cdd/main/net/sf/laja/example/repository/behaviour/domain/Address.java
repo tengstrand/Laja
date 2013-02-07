@@ -8,7 +8,7 @@ public class Address extends AddressFactory {
     public Address(AddressState state) {
         super(state);
 
-        zipcode = new Zipcode(state);
+        zipcode = new Zipcode(state.getZipcodeState());
     }
 
     // (factory) (list)

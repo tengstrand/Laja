@@ -12,6 +12,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
     public String getter;
     public String returnclass;
     public String variable;
+    public String stateBuilderGetter;
     public String stateBuilderVariable;
     public String stateBuilderClass;
     public String stateBuilderImplClass;
@@ -50,6 +51,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         if (!getter.endsWith("State")) {
             getter += "State";
         }
+        stateBuilderGetter = getter + "Builder";
         stateBuilderVariable = variable + "StateBuilder";
     }
 
@@ -92,6 +94,7 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
                 ", classVariable='" + classVariable + '\'' +
                 ", returnclass='" + returnclass + '\'' +
                 ", variable='" + variable + '\'' +
+                ", stateBuilderGetter='" + stateBuilderGetter + '\'' +
                 ", stateBuilderVariable='" + stateBuilderVariable + '\'' +
                 ", stateBuilderClass='" + stateBuilderClass + '\'' +
                 ", statements=" + statements +

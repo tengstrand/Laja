@@ -220,16 +220,6 @@ import {certificatePackage}.{certificateClass};
   #return result
 #end
 
-#function interfaceImports(suffix)
-  #set (hasExtendedClasses = false)
-  #set (extends = " extends {stateComparable}")
-  #foreach (expandedType in expandedTypes)
-    #set (extends = "{extends}, {expandedType.type}{suffix}")
-  #set (hasExtendedClasses = true)
-  #end
-  #return extends
-#end
-
 #function stateReferences(refClass)
   #set (types = new java.util.HashSet())
   #foreach (template in templates.values() where template.classname != classname)

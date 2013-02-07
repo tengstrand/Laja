@@ -33,7 +33,7 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public BmiStateBuilder bmiStateBuilder() {
+    public BmiStateBuilder getBmiStateBuilder() {
         return new BmiStateBuilderImpl(state.getBmiState());
     }
 

@@ -1,6 +1,7 @@
 package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.AddressState;
+import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.AddressStateList;
 import net.sf.laja.example.repository.state.Certificate;
@@ -10,7 +11,7 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CustomerState extends CustomerStateComparable, AddressState {
+public interface CustomerState {
     long getSsn(); // (key)
     void setSsn(long ssn, Object mutator);
 
@@ -40,6 +41,13 @@ public interface CustomerState extends CustomerStateComparable, AddressState {
 
     AddressStateList getOldAddresses(); // (optional)
     void setOldAddresses(AddressStateList oldAddresses, Object mutator);
+§§
     AddressState getAddressState();
-    ZipcodeState getZipcodeState();
+
+    boolean isValid();
+    boolean isValidAsEncapsulated();
+    boolean equalsValue(Object obj);
+    void encapsulate();
+    void setEncapsulator(Object encapsulator);
+    Certificate certificate();
 }

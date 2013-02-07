@@ -446,7 +446,6 @@ public class {stateImplClass} implements {stateClass} {
     }
   #isValid($, false, "    ")
   #gettersAndSetters()
-  #stateMethods(stateTemplate, "")
   #checkMutator()
   #encapsulate()
   #setEncapsulator()

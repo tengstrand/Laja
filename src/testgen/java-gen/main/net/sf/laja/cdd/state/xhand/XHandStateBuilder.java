@@ -1,8 +1,11 @@
 package net.sf.laja.cdd.state.xhand;
 
 import net.sf.laja.cdd.state.finger.FingerState;
+import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.finger.FingerStateBuilder;
 import net.sf.laja.cdd.state.nail.NailStateBuilder;
+import net.sf.laja.cdd.state.finger.FingerStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -10,7 +13,8 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface XHandStateBuilder extends XHandStateComparable, FingerStateBuilder {
+public interface XHandStateBuilder {
+    FingerStateBuilder getFingerStateBuilder();
     void withColor(String color);
     boolean isValid();
     Object as(XHandBehaviourFactory factory, Object... args);

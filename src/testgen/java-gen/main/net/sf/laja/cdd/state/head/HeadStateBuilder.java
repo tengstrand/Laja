@@ -5,6 +5,11 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
+import java.math.BigDecimal;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
@@ -13,6 +18,8 @@ import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
 import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
+import net.sf.laja.cdd.state.eye.EyeStateBuilder;
+import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -20,7 +27,9 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeadStateBuilder extends HeadStateComparable, EyeStateBuilder, ForeheadStateBuilder {
+public interface HeadStateBuilder {
+    EyeStateBuilder getEyeStateBuilder();
+    ForeheadStateBuilder getForeheadStateBuilder();
     void withHeadWeightInGrams(double headWeightInGrams);
     void withLeftEye(EyeStateBuilder leftEye);
     void withRightEye(EyeStateBuilder rightEye);

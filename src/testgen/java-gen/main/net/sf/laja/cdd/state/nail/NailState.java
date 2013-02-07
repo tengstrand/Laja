@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface NailState extends NailStateComparable {
+public interface NailState {
     String getColor();
     void setColor(String color, Object mutator);
 

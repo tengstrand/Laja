@@ -9,7 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FootState extends FootStateComparable {
+public interface FootState {
     int getArea();
     void setArea(int area, Object mutator);
 

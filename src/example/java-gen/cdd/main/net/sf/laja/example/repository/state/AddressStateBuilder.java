@@ -1,5 +1,7 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.ZipcodeState;
+import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
 import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
 import net.sf.laja.example.repository.state.Certificate;
 
@@ -8,7 +10,8 @@ import net.sf.laja.example.repository.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface AddressStateBuilder extends AddressStateComparable, ZipcodeStateBuilder {
+public interface AddressStateBuilder {
+    ZipcodeStateBuilder getZipcodeStateBuilder();
     void withAddressId(int addressId);
     void withStreetName(String streetName);
     void withZipcode(int zipcode);

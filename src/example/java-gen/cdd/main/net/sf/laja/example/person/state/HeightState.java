@@ -7,7 +7,7 @@ import net.sf.laja.example.person.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface HeightState extends HeightStateComparable {
+public interface HeightState {
     int getHeightInCentimeters();
     void setHeightInCentimeters(int heightInCentimeters, Object mutator);
 

@@ -1,7 +1,9 @@
 package net.sf.laja.example.car.state;
 
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
 import net.sf.laja.example.car.state.OwnerStateBuilder;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -9,7 +11,8 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CarStateBuilder extends CarStateComparable, VehicleSizeStateBuilder {
+public interface CarStateBuilder {
+    VehicleSizeStateBuilder getSizeStateBuilder();
     void withLengthInCentimeters(int lengthInCentimeters);
     void withName(String name);
     void withOwner(OwnerStateBuilder owner);

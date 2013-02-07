@@ -1,6 +1,7 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.Certificate;
 
@@ -9,7 +10,7 @@ import net.sf.laja.example.car.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface CarState extends CarStateComparable, VehicleSizeState {
+public interface CarState {
     int getLengthInCentimeters();
     void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
 
@@ -21,5 +22,13 @@ public interface CarState extends CarStateComparable, VehicleSizeState {
 
     String getColor();
     void setColor(String color, Object mutator);
-    VehicleSizeState getVehicleSizeState();
+§§
+    VehicleSizeState getSizeState();
+
+    boolean isValid();
+    boolean isValidAsEncapsulated();
+    boolean equalsValue(Object obj);
+    void encapsulate();
+    void setEncapsulator(Object encapsulator);
+    Certificate certificate();
 }

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface FleckStateBuilder extends FleckStateComparable {
+public interface FleckStateBuilder {
     void withArea(int area);
     void withColor(String color);
     boolean isValid();

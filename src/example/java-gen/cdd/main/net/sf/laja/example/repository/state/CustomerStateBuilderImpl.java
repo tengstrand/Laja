@@ -1,10 +1,13 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressBehaviourFactory;
 import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
 import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.AddressStateListBuilder;
+import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
+import net.sf.laja.example.repository.state.AddressStateBuilder;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -31,6 +34,10 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     public CustomerStateBuilderImpl(CustomerState state, Object encapsulator) {
         this(state);
         this.encapsulator = encapsulator;
+    }
+
+    public AddressStateBuilder getAddressStateBuilder() {
+        return new AddressStateBuilderImpl(state.getAddressState());
     }
 
     public void withSsn(long ssn) {
@@ -88,23 +95,7 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(AddressBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
-    public Object as(ZipcodeBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public CustomerState getCustomerState(net.sf.laja.example.repository.state.Certificate certificate) {
-        return state;
-    }
-
-    public AddressState getAddressState(Certificate certificate) {
-        return state;
-    }
-
-    public ZipcodeState getZipcodeState(Certificate certificate) {
         return state;
     }
 

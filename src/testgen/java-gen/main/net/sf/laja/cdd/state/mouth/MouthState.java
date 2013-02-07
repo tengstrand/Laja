@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface MouthState extends MouthStateComparable {
+public interface MouthState {
     int getNumberOfTeeth(); // (id)
     void setNumberOfTeeth(int numberOfTeeth, Object mutator);
 

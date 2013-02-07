@@ -9,7 +9,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface ArmState extends ArmStateComparable {
+public interface ArmState {
     int getArmLength(); // (optional)
     void setArmLength(int armLength, Object mutator);
 

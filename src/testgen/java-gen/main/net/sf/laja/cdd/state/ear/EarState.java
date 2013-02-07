@@ -7,7 +7,7 @@ import net.sf.laja.cdd.state.Certificate;
  *
  *   http://laja.tengstrand.nu
  */
-public interface EarState extends EarStateComparable {
+public interface EarState {
     double getSize(); // (hide)
     void setSize(double size, Object mutator);
 

@@ -1,7 +1,10 @@
 package net.sf.laja.example.car.state;
 
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeBehaviourFactory;
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -29,6 +32,10 @@ public class BusStateBuilderImpl implements BusStateBuilder {
         this.encapsulator = encapsulator;
     }
 
+    public VehicleSizeStateBuilder getSizeStateBuilder() {
+        return new VehicleSizeStateBuilderImpl(state.getSizeState());
+    }
+
     public void withName(String name) {
         state.setName(name, encapsulator);
     }
@@ -49,15 +56,7 @@ public class BusStateBuilderImpl implements BusStateBuilder {
         return factory.create(state, args);
     }
 
-    public Object as(VehicleSizeBehaviourFactory factory, Object... args) {
-        return factory.create(state, args);
-    }
-
     public BusState getBusState(net.sf.laja.example.car.state.Certificate certificate) {
-        return state;
-    }
-
-    public VehicleSizeState getVehicleSizeState(Certificate certificate) {
         return state;
     }
 
