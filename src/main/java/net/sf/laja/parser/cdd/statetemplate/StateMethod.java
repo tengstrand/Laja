@@ -62,13 +62,10 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         statements.put(method.variable, statement);
     }
 
-    public void initStateMethodProjection(String variable, String type, List<Attribute> attributes) {
-        setReturnClass(type);
-        setMethodName(variable);
-
-        for (Attribute attribute : attributes) {
-            statements.put(attribute.variable, attribute.variable);
-        }
+    public void initStateMethodProjection(Attribute attribute) {
+        setReturnClass(attribute.type);
+        setMethodName(attribute.variable);
+        statements.put(attribute.variable, attribute.variable);
     }
 
     @Override
