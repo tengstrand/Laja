@@ -98,7 +98,7 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
 
     public void addStateMethod(StateMethod stateMethod) {
         if (stateMethods.contains(stateMethod)) {
-            errors.addMessage("State method '" + stateMethod.variable + "' already declared in class '" + stateClass + "'.");
+            errors.addMessage("Expanded attribute with name '" + stateMethod.variable + "' already declared in '" + stateClass + "Template'.");
         }
         stateMethods.add(stateMethod);
     }

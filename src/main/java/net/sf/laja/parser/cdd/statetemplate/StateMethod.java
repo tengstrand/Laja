@@ -26,13 +26,18 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
     }
 
     public void setReturnClass(String returnclass) {
-        final String suffix = "StateProjection";
+        final String stateSuffix = "State";
+        final String stateProjectionSuffix = "StateProjection";
 
-        if (!returnclass.endsWith(suffix)) {
-            errors.addMessage("State projection method must return a StateProjection class, but was '" + returnclass + "'.");
+        if (!returnclass.endsWith(stateSuffix) && !returnclass.endsWith(stateProjectionSuffix)) {
+            errors.addMessage("State method must return a State or StateProjection class, but was '" + returnclass + "'.");
             return;
         }
-        classname = StringUtils.chomp(returnclass, suffix);
+        if (returnclass.endsWith(stateSuffix)) {
+            classname = StringUtils.chomp(returnclass, stateSuffix);
+        } else {
+            classname = StringUtils.chomp(returnclass, stateProjectionSuffix);
+        }
         this.returnclass = classname + "State";
         stateBuilderClass = classname + "StateBuilder";
         stateBuilderImplClass = classname + "StateBuilderImpl";
@@ -57,7 +62,8 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         statements.put(method.variable, statement);
     }
 
-    public void initStateMethodProjection(String variable, List<Attribute> attributes) {
+    public void initStateMethodProjection(String variable, String type, List<Attribute> attributes) {
+        setReturnClass(type);
         setMethodName(variable);
 
         for (Attribute attribute : attributes) {
@@ -72,14 +78,14 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
 
         StateMethod that = (StateMethod) o;
 
-        if (getter != null ? !getter.equals(that.getter) : that.getter != null) return false;
+        if (variable != null ? !variable.equals(that.variable) : that.variable != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return getter != null ? getter.hashCode() : 0;
+        return variable != null ? variable.hashCode() : 0;
     }
 
     @Override

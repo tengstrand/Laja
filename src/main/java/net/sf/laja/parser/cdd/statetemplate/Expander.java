@@ -162,7 +162,7 @@ public class Expander {
             return;
         }
         StateMethod stateMethod = new StateMethod(template);
-        stateMethod.initStateMethodProjection(attribute.variable, template.attributes);
+        stateMethod.initStateMethodProjection(attribute.variable, attribute.type, template.attributes);
         stateTemplate.addStateMethod(stateMethod);
     }
 
