@@ -107,7 +107,9 @@ public class Expander {
             for (Attribute attribute : stateTemplate.attributes) {
                 if (attribute.isExpand) {
                     addExpandedImports(stateTemplate, attribute);
-                    addExpandedStateMethod(stateTemplate, attribute);
+                    if (!isExpanded) {
+                        addExpandedStateMethod(stateTemplate, attribute);
+                    }
                     expandedAttributesResult.add(attribute);
                     expand(attribute.type, true, expandingTypes);
                 } else {
@@ -161,7 +163,7 @@ public class Expander {
         if (template == null) {
             return;
         }
-        StateMethod stateMethod = new StateMethod(template);
+        StateMethod stateMethod = new StateMethod(stateTemplate);
         stateMethod.initStateMethodProjection(attribute);
         stateTemplate.addStateMethod(stateMethod);
     }
