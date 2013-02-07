@@ -93,9 +93,9 @@ public interface HeadState {
 
     MouthStateList getMouths();
     void setMouths(MouthStateList mouths, Object mutator);
-§§
+
     EyeState getEyeState();
-§§
+
     ForeheadState getForeheadState();
 
     boolean isValid();

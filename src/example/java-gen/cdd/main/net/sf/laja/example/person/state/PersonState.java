@@ -21,7 +21,7 @@ public interface PersonState {
 
     HeightState getHeight();
     void setHeight(HeightState height, Object mutator);
-§§
+
     BmiState getBmiState();
 
     boolean isValid();

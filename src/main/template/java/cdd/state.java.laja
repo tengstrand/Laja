@@ -18,7 +18,7 @@ public interface {stateClass} {
     #set (first = false)
   #end
   #foreach (method in stateMethods)
-§§
+
     #foreach (template in templates.values() where template.classname == method.classname)
     {method.returnclass} {method.getter}();
     #end

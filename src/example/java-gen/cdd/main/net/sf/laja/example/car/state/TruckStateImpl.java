@@ -37,6 +37,10 @@ public class TruckStateImpl implements TruckState {
             public String getColor() { return TruckStateImpl.this.color; }
             public void setColor(String color, Object mutator) { TruckStateImpl.this.setColor(color, mutator); }
 
+            public VehicleSizeState getSizeState() {
+                return null;  //To change body of implemented methods use File | Settings | File Templates.
+            }
+
             public void encapsulate() { TruckStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { TruckStateImpl.this.setEncapsulator(encapsulator); }
 

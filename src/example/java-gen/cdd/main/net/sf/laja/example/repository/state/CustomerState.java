@@ -41,7 +41,7 @@ public interface CustomerState {
 
     AddressStateList getOldAddresses(); // (optional)
     void setOldAddresses(AddressStateList oldAddresses, Object mutator);
-§§
+
     AddressState getAddressState();
 
     boolean isValid();

@@ -21,7 +21,7 @@ public interface AddressState {
 
     String getCity();
     void setCity(String city, Object mutator);
-§§
+
     ZipcodeState getZipcodeState();
 
     boolean isValid();

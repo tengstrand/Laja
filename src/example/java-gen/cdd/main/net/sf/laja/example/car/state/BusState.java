@@ -18,7 +18,7 @@ public interface BusState {
 
     int getWeightInKilograms(); // (optional)
     void setWeightInKilograms(int weightInKilograms, Object mutator);
-§§
+
     VehicleSizeState getSizeState();
 
     boolean isValid();

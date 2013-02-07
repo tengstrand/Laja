@@ -13,7 +13,7 @@ import net.sf.laja.cdd.state.Certificate;
 public interface FingerState {
     String getColor();
     void setColor(String color, Object mutator);
-§§
+
     NailState getNailState();
 
     boolean isValid();

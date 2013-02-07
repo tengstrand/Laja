@@ -113,9 +113,9 @@ public interface MonsterState {
 
     ArmState getLeftArm();
     void setLeftArm(ArmState leftArm, Object mutator);
-§§
+
     TerrestrialState getTerrestrialState();
-§§
+
     HeadState getHeadState();
 
     boolean isValid();

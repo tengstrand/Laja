@@ -22,7 +22,7 @@ public interface CarState {
 
     String getColor();
     void setColor(String color, Object mutator);
-§§
+
     VehicleSizeState getSizeState();
 
     boolean isValid();

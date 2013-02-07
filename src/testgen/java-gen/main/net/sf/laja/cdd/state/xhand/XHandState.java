@@ -15,7 +15,7 @@ import net.sf.laja.cdd.state.Certificate;
 public interface XHandState {
     String getColor();
     void setColor(String color, Object mutator);
-§§
+
     FingerState getFingerState();
 
     boolean isValid();

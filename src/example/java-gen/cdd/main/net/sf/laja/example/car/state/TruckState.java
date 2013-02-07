@@ -27,9 +27,9 @@ public interface TruckState {
 
     OwnerState getOwner();
     void setOwner(OwnerState owner, Object mutator);
-§§
+
     CarState getCarState();
-§§
+
     VehicleSizeState getSizeState();
 
     boolean isValid();
