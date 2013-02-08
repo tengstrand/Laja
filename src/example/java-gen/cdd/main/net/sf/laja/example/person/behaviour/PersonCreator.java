@@ -14,22 +14,22 @@ public class PersonCreator {
     }
 
     public class Surname_ {
-        public WeightInKilograms_ surname(String surname) {
+        public HeightInCentimeters_ surname(String surname) {
             builder.withSurname(surname);
+            return new HeightInCentimeters_();
+        }
+    }
+
+    public class HeightInCentimeters_ {
+        public WeightInKilograms_ heightInCentimeters(int heightInCentimeters) {
+            builder.withHeightInCentimeters(heightInCentimeters);
             return new WeightInKilograms_();
         }
     }
 
     public class WeightInKilograms_ {
-        public Height_ weightInKilograms(int weightInKilograms) {
+        public PersonEncapsulator weightInKilograms(int weightInKilograms) {
             builder.withWeightInKilograms(weightInKilograms);
-            return new Height_();
-        }
-    }
-
-    public class Height_ {
-        public PersonEncapsulator height(HeightEncapsulator height) {
-            builder.withHeight(height.builder);
             return create();
         }
     }

@@ -1,7 +1,7 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
-import net.sf.laja.example.person.state.HeightStateBuilder;
+import net.sf.laja.example.person.state.BmiStateBuilder;
 import net.sf.laja.example.person.state.BmiStateBuilder;
 import net.sf.laja.example.person.state.Certificate;
 
@@ -11,12 +11,11 @@ import net.sf.laja.example.person.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface PersonStateBuilder {
-    BmiStateBuilder getBmiStateBuilder();
+    BmiStateBuilder getSizeStateBuilder();
     void withGivenName(String givenName);
     void withSurname(String surname);
+    void withHeightInCentimeters(int heightInCentimeters);
     void withWeightInKilograms(int weightInKilograms);
-    void withHeight(HeightStateBuilder height);
-    HeightStateBuilder getHeightStateBuilder();
     boolean isValid();
     Object as(PersonBehaviourFactory factory, Object... args);
     PersonState getPersonState(net.sf.laja.example.person.state.Certificate certificate);

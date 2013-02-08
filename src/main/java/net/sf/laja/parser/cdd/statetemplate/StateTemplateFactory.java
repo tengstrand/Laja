@@ -28,14 +28,6 @@ public class StateTemplateFactory implements StateTemplateParser.IStateTemplateF
         return new Attribute();
     }
 
-    public StateTemplateParser.IMethod createMethod() {
-        return new Method();
-    }
-
-    public StateTemplateParser.IStateMethod createStateMethod() {
-        return new StateMethod(stateTemplate);
-    }
-
     public StateTemplateParser.IClassStatement createClassStatement() {
         return new ClassStatement();
     }

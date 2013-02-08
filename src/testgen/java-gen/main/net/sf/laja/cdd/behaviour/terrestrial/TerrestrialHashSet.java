@@ -1,10 +1,7 @@
 package net.sf.laja.cdd.behaviour.terrestrial;
 
 import net.sf.laja.cdd.state.terrestrial.*;
-import net.sf.laja.cdd.behaviour.monster.*;
-
-import net.sf.laja.cdd.behaviour.monster.Monster;
-import net.sf.laja.cdd.behaviour.monster.MonsterFactory;
+import net.sf.laja.cdd.behaviour.terrestrial.*;
 import java.util.*;
 
 /**
@@ -24,6 +21,19 @@ public class TerrestrialHashSet implements TerrestrialSet, RandomAccess, Cloneab
     public TerrestrialHashSet(Collection<Terrestrial> collection) {
         this.set = new HashSet<Terrestrial>();
         this.set.addAll(collection);
+    }
+
+    public TerrestrialHashSet(TerrestrialStateSet stateSet) {
+        this.stateSet = stateSet;
+        this.stateSet.encapsulate(this);
+        Set<Terrestrial> elements = new HashSet<Terrestrial>(stateSet.size());
+
+        for (TerrestrialState state : stateSet) {
+            TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
+            Terrestrial entry = (Terrestrial) builder.as(new TerrestrialFactory.TerrestrialFactory_(builder));
+            elements.add(entry);
+        }
+        this.set = new StateInSyncSet(stateSet, elements);
     }
 
     public class StateInSyncSet extends HashSet<Terrestrial> {

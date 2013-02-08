@@ -2,10 +2,6 @@ package net.sf.laja.cdd.behaviour.monster;
 
 import net.sf.laja.cdd.state.monster.*;
 import net.sf.laja.cdd.behaviour.monster.*;
-
-import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
-import net.sf.laja.cdd.behaviour.terrestrial.TerrestrialList;
-import net.sf.laja.cdd.behaviour.terrestrial.TerrestrialArrayList;
 import java.util.*;
 
 /**
@@ -38,14 +34,6 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
-    }
-
-    public TerrestrialArrayList asTerrestrialList() {
-        List<Terrestrial> result = new ArrayList<Terrestrial>();
-        for (Monster entry : list) {
-            result.add(entry.asTerrestrial());
-        }
-        return new TerrestrialArrayList(result);
     }
 
     public class StateInSyncList extends ArrayList<Monster> {

@@ -28,13 +28,13 @@ public class PersonBuilder {
         return this;
     }
 
-    public PersonBuilder withWeightInKilograms(int weightInKilograms) {
-        builder.withWeightInKilograms(weightInKilograms);
+    public PersonBuilder withHeightInCentimeters(int heightInCentimeters) {
+        builder.withHeightInCentimeters(heightInCentimeters);
         return this;
     }
 
-    public PersonBuilder withHeight(HeightBuilder height) {
-        builder.withHeight(height.builder);
+    public PersonBuilder withWeightInKilograms(int weightInKilograms) {
+        builder.withWeightInKilograms(weightInKilograms);
         return this;
     }
 

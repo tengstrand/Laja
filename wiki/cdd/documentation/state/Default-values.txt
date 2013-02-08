@@ -27,6 +27,6 @@ Person{ssn=112233, givenName='Ingmar', surname='Unknown'}
 </source>
 
 
-[[State projection|< Back]]
+[[State composition|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State builder|Next >]]

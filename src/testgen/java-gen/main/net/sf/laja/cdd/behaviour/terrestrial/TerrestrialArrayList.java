@@ -1,10 +1,7 @@
 package net.sf.laja.cdd.behaviour.terrestrial;
 
 import net.sf.laja.cdd.state.terrestrial.*;
-import net.sf.laja.cdd.behaviour.monster.*;
-
-import net.sf.laja.cdd.behaviour.monster.Monster;
-import net.sf.laja.cdd.behaviour.monster.MonsterFactory;
+import net.sf.laja.cdd.behaviour.terrestrial.*;
 import java.util.*;
 
 /**
@@ -24,6 +21,19 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
     public TerrestrialArrayList(Collection<Terrestrial> collection) {
         this.list = new ArrayList<Terrestrial>();
         this.list.addAll(collection);
+    }
+
+    public TerrestrialArrayList(TerrestrialStateList stateList) {
+        this.stateList = stateList;
+        this.stateList.encapsulate(this);
+        List<Terrestrial> elements = new ArrayList<Terrestrial>(stateList.size());
+
+        for (TerrestrialState state : stateList) {
+            TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
+            Terrestrial entry = (Terrestrial) builder.as(new TerrestrialFactory.TerrestrialFactory_(builder));
+            elements.add(entry);
+        }
+        this.list = new StateInSyncList(stateList, elements);
     }
 
     public class StateInSyncList extends ArrayList<Terrestrial> {

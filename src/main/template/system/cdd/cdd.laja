@@ -265,7 +265,6 @@
     #import "{..}/../java/cdd/stateArrayList.java.laja"
     #import "{..}/../java/cdd/stateBuilder.java.laja"
     #import "{..}/../java/cdd/stateBuilderImpl.java.laja"
-    #import "{..}/../java/cdd/stateProjection.java.laja"
     #import "{..}/../java/cdd/stateSetBuilder.java.laja"
     #import "{..}/../java/cdd/stateListBuilder.java.laja"
     #import "{..}/../java/cdd/stateBehaviour.java.laja"

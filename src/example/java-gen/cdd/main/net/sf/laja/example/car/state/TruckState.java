@@ -1,6 +1,5 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.CarState;
 import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.TruckTypeState;
@@ -27,8 +26,6 @@ public interface TruckState {
 
     OwnerState getOwner();
     void setOwner(OwnerState owner, Object mutator);
-
-    CarState getCarState();
 
     VehicleSizeState getSizeState();
 

@@ -2,16 +2,14 @@ package net.sf.laja.cdd.state.monster;
 
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateProjection;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.ear.EarStateList;
+import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
@@ -68,102 +66,6 @@ public class MonsterStateImpl implements MonsterState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-
-    public TerrestrialState getTerrestrialState() {
-        return new TerrestrialState() {
-            public Certificate certificate() { return certificate(); }
-            public int getNumberOfLegs() { return MonsterStateImpl.this.numberOfLegs; }
-            public void setNumberOfLegs(int numberOfLegs, Object mutator) { MonsterStateImpl.this.setNumberOfLegs(numberOfLegs, mutator); }
-
-            public int getNumberOfWings() { return MonsterStateImpl.this.numberOfOwnWings; }
-            public void setNumberOfWings(int numberOfWings, Object mutator) { MonsterStateImpl.this.setNumberOfOwnWings(numberOfWings, mutator); }
-
-            public EyeState getLeftEye() { return MonsterStateImpl.this.leftEye; }
-            public void setLeftEye(EyeState leftEye, Object mutator) { MonsterStateImpl.this.setLeftEye(leftEye, mutator); }
-
-            public EyeState getRightEye() { return MonsterStateImpl.this.rightEye; }
-            public void setRightEye(EyeState rightEye, Object mutator) { MonsterStateImpl.this.setRightEye(rightEye, mutator); }
-
-            public EyeState getMiddleEye() { return MonsterStateImpl.this.midEye; }
-            public void setMiddleEye(EyeState middleEye, Object mutator) { MonsterStateImpl.this.setMidEye(middleEye, mutator); }
-
-            public int getWeight() { return MonsterStateImpl.this.weight; }
-            public void setWeight(int weight, Object mutator) { MonsterStateImpl.this.setWeight(weight, mutator); }
-
-            public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                if ((getLeftEye() == null || !getLeftEye().isValid())
-           || (encapsulated && (getRightEye() == null || !getRightEye().isValid()))
-           || (getMiddleEye() != null && !getMiddleEye().isValid())) {
-                    return false;
-                }
-        if (!isHeadValid()) {
-            return false;
-        }
-                return true;
-            }
-
-    private boolean isHeadValid() {
-        return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
-    }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof MonsterStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                net.sf.laja.cdd.state.terrestrial.TerrestrialState state = (net.sf.laja.cdd.state.terrestrial.TerrestrialState)value;
-
-                if (numberOfLegs != state.getNumberOfLegs()) return false;
-                if (numberOfOwnWings != state.getNumberOfWings()) return false;
-                if (leftEye != null ? !leftEye.equals(state.getLeftEye()) : state.getLeftEye() != null) return false;
-                if (rightEye != null ? !rightEye.equals(state.getRightEye()) : state.getRightEye() != null) return false;
-                if (midEye != null ? !midEye.equals(state.getMiddleEye()) : state.getMiddleEye() != null) return false;
-                if (weight != state.getWeight()) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = numberOfLegs;
-                result = 31 * result + numberOfOwnWings;
-                result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
-                result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
-                result = 31 * result + (midEye != null ? midEye.hashCode() : 0);
-                result = 31 * result + weight;
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{numberOfLegs=" + getNumberOfLegs() +
-                        ", numberOfWings=" + getNumberOfWings() +
-                        ", leftEye=" + getLeftEye() +
-                        ", rightEye=" + getRightEye() +
-                        ", middleEye=" + getMiddleEye() +
-                        ", weight=" + getWeight() + "}";
-            }
-        };
-    }
 
     public HeadState getHeadState() {
         return new HeadState() {

@@ -45,4 +45,4 @@ If you're curious about how to work with composition, you can go directly to the
 
 [[Define state|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[State expansion|Next >]]
+[[Default values|Next >]]

@@ -9,7 +9,6 @@
 #set (stateComparable = "{stateClass}Comparable")
 #set (builderClass = "{stateClass}Builder")
 #set (builderImplClass = "{stateClass}BuilderImpl")
-#set (stateProjectionClass = "{stateClass}Projection")
 #set (stateSetBuilder = "{stateSetClass}Builder")
 #set (stateListBuilder = "{stateListClass}Builder")
 #set (stateBehaviourClass = "{classname}Behaviour")

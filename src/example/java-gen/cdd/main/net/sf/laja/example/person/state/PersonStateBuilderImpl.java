@@ -1,8 +1,8 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
-import net.sf.laja.example.person.state.HeightStateBuilder;
-import net.sf.laja.example.person.state.HeightStateBuilderImpl;
+import net.sf.laja.example.person.state.BmiBehaviourFactory;
+import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.BmiStateBuilderImpl;
 import net.sf.laja.example.person.state.BmiStateBuilder;
 import net.sf.laja.example.person.state.Certificate;
@@ -16,7 +16,6 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     private Object encapsulator;
     private PersonState state;
     private final Certificate certificate;
-    private HeightStateBuilder heightStateBuilder;
 
     PersonStateBuilderImpl() {
         state = new PersonStateImpl();
@@ -33,8 +32,8 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public BmiStateBuilder getBmiStateBuilder() {
-        return new BmiStateBuilderImpl(state.getBmiState());
+    public BmiStateBuilder getSizeStateBuilder() {
+        return new BmiStateBuilderImpl(state.getSizeState());
     }
 
     public void withGivenName(String givenName) {
@@ -45,19 +44,12 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         state.setSurname(surname, encapsulator);
     }
 
+    public void withHeightInCentimeters(int heightInCentimeters) {
+        state.setHeightInCentimeters(heightInCentimeters, encapsulator);
+    }
+
     public void withWeightInKilograms(int weightInKilograms) {
         state.setWeightInKilograms(weightInKilograms, encapsulator);
-    }
-
-    public void withHeight(HeightStateBuilder height) {
-        state.setHeight(height.getHeightState(certificate), encapsulator);
-    }
-
-    public HeightStateBuilder getHeightStateBuilder() {
-        if (heightStateBuilder == null) {
-            heightStateBuilder = new HeightStateBuilderImpl(state.getHeight());
-        }
-        return heightStateBuilder;
     }
 
     public boolean isValid() {

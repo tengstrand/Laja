@@ -1,7 +1,7 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
-import net.sf.laja.example.person.state.HeightState;
+import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.Certificate;
 
 /**
@@ -12,20 +12,20 @@ import net.sf.laja.example.person.state.Certificate;
 public class PersonStateImpl implements PersonState {
     protected String givenName;
     protected String surname;
+    protected int heightInCentimeters;
     protected int weightInKilograms;
-    protected HeightState height;
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
-    public BmiState getBmiState() {
+    public BmiState getSizeState() {
         return new BmiState() {
             public Certificate certificate() { return certificate(); }
-            public int getHeightInCentimeters() { return PersonStateImpl.this.height.getHeightInCentimeters(); }
-            public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { PersonStateImpl.this.height.setHeightInCentimeters(heightInCentimeters, mutator); }
+            public int getHeightInCentimeters() { return 0; /* missing attribute 'heightInCentimeters' */ }
+            public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { /* missing attribute 'heightInCentimeters' */ }
 
-            public int getWeightInKilograms() { return PersonStateImpl.this.weightInKilograms; }
-            public void setWeightInKilograms(int weightInKilograms, Object mutator) { PersonStateImpl.this.setWeightInKilograms(weightInKilograms, mutator); }
+            public int getWeightInKilograms() { return 0; /* missing attribute 'weightInKilograms' */ }
+            public void setWeightInKilograms(int weightInKilograms, Object mutator) { /* missing attribute 'weightInKilograms' */ }
 
             public void encapsulate() { PersonStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { PersonStateImpl.this.setEncapsulator(encapsulator); }
@@ -56,7 +56,7 @@ public class PersonStateImpl implements PersonState {
 
                 net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)value;
 
-                if (height.getHeightInCentimeters() != state.getHeightInCentimeters()) return false;
+                if (heightInCentimeters != state.getHeightInCentimeters()) return false;
                 if (weightInKilograms != state.getWeightInKilograms()) return false;
 
                 return true;
@@ -64,7 +64,7 @@ public class PersonStateImpl implements PersonState {
 
             @Override
             public int hashCode() {
-                int result = height.getHeightInCentimeters();
+                int result = heightInCentimeters;
                 result = 31 * result + weightInKilograms;
 
                 return result;
@@ -110,8 +110,7 @@ public class PersonStateImpl implements PersonState {
 
     private boolean isValid(boolean encapsulated) {
         if (givenName == null
-           || surname == null
-           || (height == null || !height.isValid())) {
+           || surname == null) {
             return false;
         }
         return true;
@@ -120,14 +119,14 @@ public class PersonStateImpl implements PersonState {
     // Getters
     public String getGivenName() { return givenName; }
     public String getSurname() { return surname; }
+    public int getHeightInCentimeters() { return heightInCentimeters; }
     public int getWeightInKilograms() { return weightInKilograms; }
-    public HeightState getHeight() { return height; }
 
     // Setters
     public void setGivenName(String givenName, Object mutator) { checkMutator(mutator); this.givenName = givenName; }
     public void setSurname(String surname, Object mutator) { checkMutator(mutator); this.surname = surname; }
+    public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { checkMutator(mutator); this.heightInCentimeters = heightInCentimeters; }
     public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
-    public void setHeight(HeightState height, Object mutator) { checkMutator(mutator); this.height = height; }
 
     private void checkMutator(Object mutator) {
         if (mutator != _encapsulator) {
@@ -160,8 +159,8 @@ public class PersonStateImpl implements PersonState {
 
         if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
         if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
+        if (heightInCentimeters != state.getHeightInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
-        if (height != null ? !height.equals(state.height) : state.height != null) return false;
 
         return true;
     }
@@ -170,8 +169,8 @@ public class PersonStateImpl implements PersonState {
     public int hashCode() {
         int result = givenName != null ? givenName.hashCode() : 0;
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + heightInCentimeters;
         result = 31 * result + weightInKilograms;
-        result = 31 * result + (height != null ? height.hashCode() : 0);
 
         return result;
     }
@@ -180,7 +179,7 @@ public class PersonStateImpl implements PersonState {
     public String toString() {
         return "{givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
                 ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
-                ", weightInKilograms=" + weightInKilograms +
-                ", height=" + height + "}";
+                ", heightInCentimeters=" + heightInCentimeters +
+                ", weightInKilograms=" + weightInKilograms + "}";
     }
 }

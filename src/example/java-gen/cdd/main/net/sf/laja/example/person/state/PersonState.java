@@ -1,7 +1,7 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
-import net.sf.laja.example.person.state.HeightState;
+import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.Certificate;
 
 /**
@@ -16,13 +16,13 @@ public interface PersonState {
     String getSurname();
     void setSurname(String surname, Object mutator);
 
+    int getHeightInCentimeters();
+    void setHeightInCentimeters(int heightInCentimeters, Object mutator);
+
     int getWeightInKilograms();
     void setWeightInKilograms(int weightInKilograms, Object mutator);
 
-    HeightState getHeight();
-    void setHeight(HeightState height, Object mutator);
-
-    BmiState getBmiState();
+    BmiState getSizeState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

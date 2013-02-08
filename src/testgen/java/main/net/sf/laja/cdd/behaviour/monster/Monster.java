@@ -18,8 +18,4 @@ public class Monster extends MonsterFactory {
     public Monster asMonster() {
         return new Monster(state, stateBuilder);
     }
-
-    public Terrestrial asTerrestrial() {
-        return new Terrestrial(state.getTerrestrialState(), stateBuilder.getTerrestrialStateBuilder());
-    }
 }

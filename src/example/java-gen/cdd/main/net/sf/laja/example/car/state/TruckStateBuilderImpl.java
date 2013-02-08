@@ -1,6 +1,5 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.CarState;
 import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeBehaviourFactory;
 import net.sf.laja.example.car.state.VehicleSizeState;
@@ -8,9 +7,7 @@ import net.sf.laja.example.car.state.TruckTypeStateBuilder;
 import net.sf.laja.example.car.state.OwnerStateBuilder;
 import net.sf.laja.example.car.state.TruckTypeStateBuilderImpl;
 import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
-import net.sf.laja.example.car.state.CarStateBuilderImpl;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
-import net.sf.laja.example.car.state.CarStateBuilder;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
 import net.sf.laja.example.car.state.Certificate;
 
@@ -39,10 +36,6 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     public TruckStateBuilderImpl(TruckState state, Object encapsulator) {
         this(state);
         this.encapsulator = encapsulator;
-    }
-
-    public CarStateBuilder getCarStateBuilder() {
-        return new CarStateBuilderImpl(state.getCarState());
     }
 
     public VehicleSizeStateBuilder getSizeStateBuilder() {

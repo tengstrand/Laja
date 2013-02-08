@@ -2,10 +2,6 @@ package net.sf.laja.cdd.behaviour.monster;
 
 import net.sf.laja.cdd.state.monster.*;
 import net.sf.laja.cdd.behaviour.monster.*;
-
-import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
-import net.sf.laja.cdd.behaviour.terrestrial.TerrestrialSet;
-import net.sf.laja.cdd.behaviour.terrestrial.TerrestrialHashSet;
 import java.util.*;
 
 /**
@@ -38,14 +34,6 @@ public class MonsterHashSet implements MonsterSet, RandomAccess, Cloneable, java
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);
-    }
-
-    public TerrestrialHashSet asTerrestrialSet() {
-        Set<Terrestrial> result = new HashSet<Terrestrial>();
-        for (Monster entry : set) {
-            result.add(entry.asTerrestrial());
-        }
-        return new TerrestrialHashSet(result);
     }
 
     public class StateInSyncSet extends HashSet<Monster> {

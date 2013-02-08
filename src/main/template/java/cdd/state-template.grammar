@@ -30,13 +30,7 @@ grammar stateTemplate {
    uname = "A".."Z" [letter | digit]+;
    getter = "get" uname s "(" s ")";
 
-   parameters = s [!")"+];
-   argument = getter | name:variable [s "." s argument];
-   method = s "." s name:variable s "(" s argument s ")";
-   stateProjection = "StateProjection";
-   stateMethod = public "void" ws name:methodname s "(" s ")" s "{" s  uname:returnclass s method+ s ";" s "}";
-
-   classStatement = public "class" ws name:classname s ["extends" ws name s] "{" [s attribute | isvalid | stateMethod]+ s "}";
+   classStatement = public "class" ws name:classname s ["extends" ws name s] "{" [s attribute | isvalid]+ s "}";
 
    stateTemplate = s packagestatement s imports s classStatement s;
 
@@ -56,16 +50,9 @@ grammar stateTemplate {
    attribute.setInitialValue(String initialValue.value);
    attribute.setComment(String attributeComment.comment);
 
-   Method method.setVariable(String variable);
-
-   StateMethod stateMethod.setMethodName(String methodname);
-   stateMethod.setReturnClass(String returnclass);
-   stateMethod.addMethod(Method method, String statement);
-
    ClassStatement classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);
    classStatement.setIsValid(IsValid isvalid);
-   classStatement.addStateMethod(StateMethod stateMethod);
 
    StateTemplate stateTemplate.setPackagename(String packagestatement.packagename);
    stateTemplate.setImports(Imports imports);

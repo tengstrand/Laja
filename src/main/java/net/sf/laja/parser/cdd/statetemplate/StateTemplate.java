@@ -92,7 +92,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
         stateClass = classname + "State";
         stateImplClass = classname + "StateImpl";
         attributes = classStatement.attributes;
-        stateMethods = classStatement.stateMethods;
         isValidStatement = classStatement.isValid != null ? classStatement.isValid.getStatement() : null;
     }
 

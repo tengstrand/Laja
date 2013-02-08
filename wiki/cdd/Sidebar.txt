@@ -20,7 +20,6 @@
 ** Define state|Define state
 ** State composition|State composition
 ** State expansion|State expansion
-** State projection|State projection
 ** Default values|Default values
 ** State builder|State builder
 ** State validation|State validation

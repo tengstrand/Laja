@@ -7,7 +7,7 @@ public class Person extends PersonFactory {
 
     public Person(PersonState state) {
         super(state);
-        bmi = new BodyMassIndex(state.getBmiState());
+        bmi = null; //new BodyMassIndex(state.getgetBmiState());
     }
 
     public double calculateBmi() {

@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StateMethod implements StateTemplateParser.IStateMethod {
+public class StateMethod {
     public String classname;
     public String classVariable;
     public String getter;
@@ -53,15 +53,6 @@ public class StateMethod implements StateTemplateParser.IStateMethod {
         }
         stateBuilderGetter = getter + "Builder";
         stateBuilderVariable = variable + "StateBuilder";
-    }
-
-    public void addMethod(StateTemplateParser.IMethod imethod, String statement) {
-        Method method = (Method)imethod;
-        statement = statement.trim();
-        int index = statement.indexOf('(');
-        statement = statement.substring(index + 1, statement.length() - 1);
-
-        statements.put(method.variable, statement);
     }
 
     public void initStateMethodProjection(Attribute attribute) {
