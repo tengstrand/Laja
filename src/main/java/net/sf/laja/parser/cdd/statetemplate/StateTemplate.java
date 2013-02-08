@@ -19,6 +19,7 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String isValidStatement;
     public List<Attribute> attributes;
     public List<Attribute> expandedAttributes;
+    public List<StateTemplate> expandedStates = new ArrayList<StateTemplate>();
     public List<StateMethod> stateMethods = new ArrayList<StateMethod>();
 
     public String rootSrcDir;
@@ -65,6 +66,10 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     // Workaround a bug in Laja
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    public void setExpandedStates(List<StateTemplate> expandedStates) {
+        this.expandedStates = expandedStates;
     }
 
     // Workaround a bug in Laja

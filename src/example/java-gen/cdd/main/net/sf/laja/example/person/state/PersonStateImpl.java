@@ -77,6 +77,7 @@ public class PersonStateImpl implements PersonState {
             }
         };
     }
+    // BmiState
 
     PersonStateImpl() {
     }

@@ -20,6 +20,7 @@ public class TruckStateImpl implements TruckState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
+    // VehicleSizeState
 
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {

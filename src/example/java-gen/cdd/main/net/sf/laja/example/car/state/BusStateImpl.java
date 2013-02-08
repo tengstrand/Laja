@@ -16,6 +16,7 @@ public class BusStateImpl implements BusState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
+    // VehicleSizeState
 
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {

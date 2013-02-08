@@ -1,4 +1,39 @@
 
+#macro newStateMethods()
+  #foreach (t in expandedStates)
+    // {t.stateClass}
+  #end
+#end
+
+#macro newStateMethod(t, tab)
+/*
+{tab}    public {t.stateClass} get{t.stateClass}() {
+{tab}        return new {t.stateClass}() {
+{tab}            public Certificate certificate() { return certificate(); }
+      #foreach (attribute in t.attributes)
+        #set (statement = method.getStatement(attribute.variable))
+        #set (getStatement = "{stateImplClass}.this.{statement};")
+        #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
+        #set (setStatement = "{stateImplClass}.this.{setStatement};")
+{tab}            public {attribute.type} {attribute.getter}() { return {getStatement} }
+{tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {setStatement} }
+
+      #end
+{tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
+{tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
+      #substateMethod(method.classname, tab)
+      #isValid(t, true, "            ")
+      #equals(t, true, "            ")
+## fix!
+##      #equalsState(t, true, "            ")
+      #equalsValue(t, true, "            ")
+      #hashCode(t, true, "            ")
+      #toString(t, true, "            ")
+{tab}        };
+{tab}    }
+*/
+#end
+
 #macro stateProjections()
   #foreach (stateMethod in stateMethods)
     #foreach (template in templates.values() where template.classname == stateMethod.classname)
@@ -415,6 +450,7 @@ public class {stateImplClass} implements {stateClass} {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
+  #newStateMethods()
   #stateProjections()
 
     {stateImplClass}() {

@@ -7,9 +7,12 @@ public class Expander {
     public String cyclicMessage;
     public Imports importsResult;
     public List<Attribute> attributesResult;
+    public List<StateTemplate> expandedStatesResult;
     public List<Attribute> expandedAttributesResult;
     private List<StateTemplate> stateTemplates = new ArrayList<StateTemplate>();
     private Map<String, StateTemplate> stateTemplateMap;
+
+    private StateTemplateErrors errors;
 
     public void add(StateTemplate stateTemplate) {
         stateTemplates.add(stateTemplate);
@@ -21,6 +24,7 @@ public class Expander {
      * @param errors if any cyclic dependency is encountered a message is added to 'errors'.
      */
     public void expand(StateTemplateErrors errors) {
+        this.errors = errors;
         Map<String, ExpansionResult> stateClassMap = calculateExpansion();
 
         if (cyclic) {
@@ -31,6 +35,7 @@ public class Expander {
         for (StateTemplate stateTemplate : stateTemplates) {
             ExpansionResult expandedResult = stateClassMap.get(stateTemplate.stateClass);
             stateTemplate.setAttributes(expandedResult.attributes);
+            stateTemplate.setExpandedStates(expandedResult.expandedStates);
             stateTemplate.setExpandedAttributes(expandedResult.expandedAttributes);
             for (Importstatement importstatement : expandedResult.imports) {
                 stateTemplate.imports.addImportIfNotExists(importstatement);
@@ -50,11 +55,12 @@ public class Expander {
         for (StateTemplate stateTemplate : stateTemplates) {
             importsResult = new Imports();
             attributesResult = new ArrayList<Attribute>();
+            expandedStatesResult = new ArrayList<StateTemplate>();
             expandedAttributesResult = new ArrayList<Attribute>();
             List<String> expandingTypes = new ArrayList<String>();
 
             expand(stateTemplate.stateClass, false, expandingTypes);
-            stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedAttributesResult, importsResult));
+            stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedStatesResult, expandedAttributesResult, importsResult));
         }
         calculateAllExpandedTypes();
 
@@ -161,8 +167,10 @@ public class Expander {
     private void addExpandedStateMethod(StateTemplate stateTemplate, Attribute attribute) {
         StateTemplate template = findStateTemplate(attribute.stateClass);
         if (template == null) {
+            errors.addMessage("Could not find the state '" + attribute.stateClass + "' referenced from " + stateTemplate.templateClassname);
             return;
         }
+        expandedStatesResult.add(template);
         StateMethod stateMethod = new StateMethod(stateTemplate);
         stateMethod.initStateMethodProjection(attribute);
         stateTemplate.addStateMethod(stateMethod);
@@ -179,11 +187,13 @@ public class Expander {
     
     public class ExpansionResult {
         public final List<Attribute> attributes;
+        public final List<StateTemplate> expandedStates;
         public final List<Attribute> expandedAttributes;
         public final Imports imports;
 
-        public ExpansionResult(List<Attribute> attributes, List<Attribute> expandedAttributes, Imports imports) {
+        public ExpansionResult(List<Attribute> attributes, List<StateTemplate> expandedStates, List<Attribute> expandedAttributes, Imports imports) {
             this.attributes = attributes;
+            this.expandedStates = expandedStates;
             this.expandedAttributes = expandedAttributes;
 
             this.imports = imports;

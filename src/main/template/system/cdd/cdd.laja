@@ -241,6 +241,7 @@
     #set (allImports = stateTemplate.allImports)
     #set (attributes = stateTemplate.attributes)
     #set (expandedAttributes = stateTemplate.expandedAttributes)
+    #set (expandedStates = stateTemplate.expandedStates)
     #set (isValidStatement = stateTemplate.isValidStatement)
     #set (asMethods = stateTemplate.asMethods)
     #set (stateMethods = stateTemplate.stateMethods)
