@@ -22,10 +22,10 @@ public class {builderImplClass} implements {builderClass} {
         this(state);
         this.encapsulator = encapsulator;
     }
-  #foreach (method in stateMethods)
+  #foreach (attribute in expandedAttributes)
 
-    public {method.stateBuilderClass} {method.stateBuilderGetter}() {
-        return new {method.stateBuilderImplClass}(state.{method.getter}());
+    public {attribute.stateBuilder} get{attribute.variableAsClass}StateBuilder() {
+        return new {attribute.stateBuilder}Impl(state.get{attribute.variableAsClass}State());
     }
   #end
   #foreach (attribute in attributes)

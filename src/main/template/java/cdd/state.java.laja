@@ -17,13 +17,13 @@ public interface {stateClass} {
     void {setter(attribute)};
     #set (first = false)
   #end
-  #foreach (method in stateMethods)
 
-    #foreach (template in templates.values() where template.classname == method.classname)
-    {method.returnclass} {method.getter}();
-    #end
+  #foreach (attribute in expandedAttributes)
+    {attribute.stateClass} get{attribute.variableAsClass}State();
   #end
+  #if (expandedAttributes.size > 0)
 
+  #end
     boolean isValid();
     boolean isValidAsEncapsulated();
     boolean equalsValue(Object obj);

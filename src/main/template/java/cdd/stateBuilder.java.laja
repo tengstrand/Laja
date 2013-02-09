@@ -3,8 +3,8 @@
 #macro interface()
   #header()
 public interface {builderClass} {
-  #foreach (method in stateMethods)
-    {method.stateBuilderClass} {method.stateBuilderGetter}();
+  #foreach (attribute in expandedAttributes)
+    {attribute.stateBuilder} get{attribute.variableAsClass}StateBuilder();
   #end
   #foreach (attribute in attributes)
     #if (attribute.isStateSet)

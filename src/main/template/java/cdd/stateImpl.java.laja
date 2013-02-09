@@ -18,13 +18,13 @@
 {tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
 {tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
 ##      #substateMethod(method.classname, tab)
-  #isValid(t, true, "            ")
-  #equals(t, true, "            ")
+  #isValid(t, "            ")
+  #equals(t, "            ")
 ## fix!
-##      #equalsState(t, true, "            ")
-  #equalsValue(t, true, "            ")
-  #hashCode(t, true, "            ")
-  #toString(t, true, "            ")
+##      #equalsState(t, "            ")
+  #equalsValue(t, "            ")
+  #hashCode(t, "            ")
+  #toString(t, "            ")
 {tab}        };
 {tab}    }
 #end
@@ -69,7 +69,7 @@
         _encapsulator = encapsulator;
     }
 #end
-#macro isValid(t, useGetter, tab)
+#macro isValid(t, tab)
 
 {tab}public boolean isValid() {
 {tab}    return isValid(_encapsulated);
@@ -92,44 +92,24 @@
     #foreach (attribute in t.attributes where !attribute.isPrimitive)
       #if (attribute.isMandatory)
         #if (attribute.isState)
-          #if (useGetter)
-            #if (attribute.isHidden)
-{delimiter}(encapsulated && ({attribute.getter}() == null || !{attribute.getter}().isValid()))##
-            #else
-{delimiter}({attribute.getter}() == null || !{attribute.getter}().isValid())##
-            #end
-          #else
             #if (attribute.isHidden)
 {delimiter}(encapsulated && ({attribute.variable} == null || !{attribute.variable}.isValid()))##
-            #else
+          #else
 {delimiter}({attribute.variable} == null || !{attribute.variable}.isValid())##
-            #end
           #end
           #set (delimiter = nextDelimiter)
         #else
-          #if (useGetter)
-            #if (attribute.isHidden)
-{delimiter}(encapsulated && {attribute.getter}() == null)##
-            #else
-{delimiter}{attribute.getter}() == null##
-            #end
-          #else
-            #if (attribute.isHidden)
+          #if (attribute.isHidden)
 ## If the attribute is hidden, the attribute is supposed to be set by the behaviour constructor
 ## and if isValid() is called before the state has been encapsulated then we don't check for null.
 {delimiter}(encapsulated && {attribute.variable} == null)##
-            #else
+          #else
 {delimiter}{attribute.variable} == null##
-            #end
           #end
           #set (delimiter = nextDelimiter)
         #end
       #else if (attribute.isState)
-        #if (useGetter)
-{delimiter}({attribute.getter}() != null && !{attribute.getter}().isValid())##
-        #else
 {delimiter}({attribute.variable} != null && !{attribute.variable}.isValid())##
-        #end
         #set (delimiter = nextDelimiter)
       #end
     #end
@@ -198,13 +178,13 @@
   #return keys
 #end
 
-#macro equalsState(t, useGetter, tab)
+#macro equalsState(t, tab)
 
 {tab}public boolean equalsState({stateClass} that) {
-  #equalsBody(t, entityAttributes(t), useGetter, "that", tab)
+  #equalsBody(t, entityAttributes(t), "that", tab)
 #end
 
-#macro equals(t, useGetter, tab)
+#macro equals(t, tab)
 
 {tab}@Override
 {tab}public boolean equals(Object that) {
@@ -217,30 +197,26 @@
 {tab}}
 #end
 
-#macro equalsValue(t, useGetter, tab)
+#macro equalsValue(t, tab)
 
 {tab}public boolean equalsValue(Object value) {
-  #equalsBody(t, valueAttributes(t), useGetter, "value", tab)
+  #equalsBody(t, valueAttributes(t), "value", tab)
 #end
 
-#macro equalsBody(t, attributes, useGetter, argument, tab)
+#macro equalsBody(t, attributes, argument, tab)
   #if (attributes.isEmpty)
 {tab}    return super.equals({argument});
   #else
 {tab}    if (this == {argument}) return true;
 {tab}    if ({argument} == null || getClass() != {argument}.getClass()) return false;
 
-    #if (useGetter)
-{tab}    {t.packagename}.{t.stateClass} state = ({t.packagename}.{t.stateClass}){argument};
-    #else
 {tab}    {t.stateImplClass} state = ({t.stateImplClass}){argument};
-    #end
 
     #foreach (attribute in attributes)
       #if (attribute.isPrimitive)
 {tab}    if ({attribute.variable} != state.{attribute.getter}()) return false;
       #else
-{tab}    if ({variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
+{tab}    if ({attribute.variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
       #end
     #end
 
@@ -249,14 +225,14 @@
 {tab}}
 #end
 
-#macro hashCode(t, useGetter, tab)
+#macro hashCode(t, tab)
 
 {tab}@Override
 {tab}public int hashCode() {
-  #hashCodeBody(t, entityAttributes(t), useGetter, tab)
+  #hashCodeBody(t, entityAttributes(t), tab)
 #end
 
-#macro hashCodeBody(t, attributes, useGetter, tab)
+#macro hashCodeBody(t, attributes, tab)
   #if (attributes.isEmpty)
 {tab}    return super.hashCode();
   #else
@@ -286,11 +262,7 @@
         #else if (attribute.type == "boolean")
 {tab}    result = 31 * result + ({attribute.variable} ? 1 : 0);
         #else
-          #if (useGetter)
 {tab}    result = 31 * result + ({attribute.variable} != null ? {attribute.variable}.hashCode() : 0);
-          #else
-{tab}    result = 31 * result + ({attribute.variable} != null ? {attribute.variable}.hashCode() : 0);
-          #end
         #end
       #end
     #set (first = false)
@@ -301,7 +273,7 @@
 {tab}}
 #end
 
-#macro toString(t, useGetter, tab)
+#macro toString(t, tab)
 
 {tab}@Override
 {tab}public String toString() {
@@ -313,11 +285,7 @@
   #end
   #while (hasNext)
     #set (hasNext = iterator.hasNext)
-    #if (useGetter)
-      #set (value = "{attribute.getter}()")
-    #else
-      #set (value = attribute.variable)
-    #end
+    #set (value = attribute.variable)
     #if (hasNext)
       #if (first)
         #if (attribute.type == "String")
@@ -385,17 +353,17 @@ public class {stateImplClass} implements {stateClass} {
     public Certificate certificate() {
         return Certificate.get(this);
     }
-  #isValid($, false, "    ")
+  #isValid($, "    ")
   #gettersAndSetters()
   #checkMutator()
   #encapsulate()
   #setEncapsulator()
-  #equals($, false, "    ")
+  #equals($, "    ")
 ## fix!
-##  #equalsState($, false, "    ")
-  #equalsValue($, false, "    ")
-  #hashCode($, false, "    ")
-  #toString($, false, "    ")
+##  #equalsState($, "    ")
+  #equalsValue($, "    ")
+  #hashCode($, "    ")
+  #toString($, "    ")
 }
 #end
 

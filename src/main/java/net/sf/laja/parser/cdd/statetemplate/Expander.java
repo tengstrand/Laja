@@ -127,7 +127,7 @@ public class Expander {
                     }
                 }
             }
-//            addImportsForViews(stateTemplate);
+            addImportsForExpandedAttributes();
         }
     }
 
@@ -140,18 +140,18 @@ public class Expander {
             attributesResult.add(attribute);
         }
     }
-/*
-    private void addImportsForViews(StateTemplate stateTemplate) {
-        for (StateMethod method : stateTemplate.stateMethods) {
-            StateTemplate viewTemplate = findStateTemplate(method.classname + "State");
-            if (viewTemplate != null) {
-                for (Importstatement importstatement : viewTemplate.imports) {
+
+    private void addImportsForExpandedAttributes() {
+        for (Attribute attribute : expandedAttributesResult) {
+            StateTemplate template = findStateTemplate(attribute.stateClass);
+            if (template != null) {
+                for (Importstatement importstatement : template.imports) {
                     importsResult.addImportIfNotExists(importstatement);
                 }
             }
         }
     }
-*/
+
     private void addExpandedImports(StateTemplate stateTemplate, Attribute attribute) {
         StateTemplate expandedTemplate = findStateTemplate(attribute.type);
         if (expandedTemplate != null) {

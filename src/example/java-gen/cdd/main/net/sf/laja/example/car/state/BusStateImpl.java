@@ -1,7 +1,6 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.VehicleSizeState;
-import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -57,7 +56,7 @@ public class BusStateImpl implements BusState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.example.car.state.VehicleSizeState state = (net.sf.laja.example.car.state.VehicleSizeState)value;
+                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
 
@@ -73,7 +72,7 @@ public class BusStateImpl implements BusState {
 
             @Override
             public String toString() {
-                return "{lengthInCentimeters=" + getLengthInCentimeters() + "}";
+                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
     }
