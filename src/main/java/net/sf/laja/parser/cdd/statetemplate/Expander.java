@@ -111,7 +111,7 @@ public class Expander {
                 if (attribute.isExpand) {
                     addExpandedImports(stateTemplate, attribute);
                     if (!isExpanded) {
-                        addExpandedStateMethod(stateTemplate, attribute);
+                        expandedAttributesResult.add(attribute);
                     }
                     expand(attribute.type, true, expandingTypes);
                 } else {
@@ -127,7 +127,7 @@ public class Expander {
                     }
                 }
             }
-            addImportsForViews(stateTemplate);
+//            addImportsForViews(stateTemplate);
         }
     }
 
@@ -140,7 +140,7 @@ public class Expander {
             attributesResult.add(attribute);
         }
     }
-
+/*
     private void addImportsForViews(StateTemplate stateTemplate) {
         for (StateMethod method : stateTemplate.stateMethods) {
             StateTemplate viewTemplate = findStateTemplate(method.classname + "State");
@@ -151,25 +151,13 @@ public class Expander {
             }
         }
     }
-
+*/
     private void addExpandedImports(StateTemplate stateTemplate, Attribute attribute) {
         StateTemplate expandedTemplate = findStateTemplate(attribute.type);
         if (expandedTemplate != null) {
             String type = attribute.isState ? attribute.cleanedStateType : attribute.type;
             stateTemplate.expandedTypes.add(new ExpandedType(attribute.variable, type, expandedTemplate.packagename + "." + type));
         }
-    }
-
-    private void addExpandedStateMethod(StateTemplate stateTemplate, Attribute attribute) {
-        StateTemplate template = findStateTemplate(attribute.stateClass);
-        if (template == null) {
-            errors.addMessage("Could not find the state '" + attribute.stateClass + "' referenced from " + stateTemplate.templateClassname);
-            return;
-        }
-        expandedAttributesResult.add(attribute);
-        StateMethod stateMethod = new StateMethod(stateTemplate);
-        stateMethod.initStateMethodProjection(attribute);
-        stateTemplate.addStateMethod(stateMethod);
     }
 
     private StateTemplate findStateTemplate(String type) {

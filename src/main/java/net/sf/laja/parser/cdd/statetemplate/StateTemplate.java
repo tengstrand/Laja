@@ -19,7 +19,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String isValidStatement;
     public List<Attribute> attributes;
     public List<Attribute> expandedAttributes;
-    public List<StateMethod> stateMethods = new ArrayList<StateMethod>();
 
     public String rootSrcDir;
     public String rootOutDir;
@@ -95,13 +94,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
         isValidStatement = classStatement.isValid != null ? classStatement.isValid.getStatement() : null;
     }
 
-    public void addStateMethod(StateMethod stateMethod) {
-        if (stateMethods.contains(stateMethod)) {
-            errors.addMessage("Expanded attribute with name '" + stateMethod.variable + "' already declared in '" + stateClass + "Template'.");
-        }
-        stateMethods.add(stateMethod);
-    }
-
     private String calculateClassName(String classname) {
         final String stateTemplate = "StateTemplate";
         final int length = stateTemplate.length();
@@ -161,7 +153,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
                 ", stateImplClass='" + stateImplClass + '\'' +
                 ", isValidStatement='" + isValidStatement + '\'' +
                 ", attributes=" + attributes +
-                ", stateMethods=" + stateMethods +
                 ", sourceDir='" + sourceDir + '\'' +
                 ", outputDir='" + outputDir + '\'' +
                 ", templateClassname='" + templateClassname + '\'' +
