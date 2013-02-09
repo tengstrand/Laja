@@ -15,6 +15,71 @@ public class FingerStateImpl implements FingerState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
+/*
+    public NailState getNailState() {
+        return new NailState() {
+            public Certificate certificate() { return certificate(); }
+            public String getColor() { return NailStateImpl.this.NULL; }
+            public void setColor(String color, Object mutator) { NailStateImpl.this.setColor(color, mutator); }
+
+            public void encapsulate() { FingerStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { FingerStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                if (getColor() == null) {
+                    return false;
+                }
+        if (!isNailValid()) {
+            return false;
+        }
+                return "red".equals(color);
+            }
+
+    private boolean isNailValid() {
+        return "red".equals(color);
+    }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof FingerStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                net.sf.laja.cdd.state.nail.NailState state = (net.sf.laja.cdd.state.nail.NailState)value;
+
+                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = color != null ? color.hashCode() : 0;
+
+                return result;
+            }
+
+            @Override
+            public String toString() {
+                return "{color=" + getColor() + "}";
+            }
+        };
+    }
+*/
 
     public NailState getNailState() {
         return new NailState() {

@@ -1,96 +1,33 @@
 
-#macro newStateMethods()
-  #foreach (t in expandedStates)
-    // {t.stateClass}
+#macro stateMethods()
+  #foreach (expandedAttribute in expandedAttributes)
+    #stateMethod(expandedAttribute, "")
   #end
 #end
 
-#macro newStateMethod(t, tab)
-/*
-{tab}    public {t.stateClass} get{t.stateClass}() {
+#macro stateMethod(expandedAttribute, tab)
+  #set (t = templates.get(expandedAttribute.cleanedStateType))
+
+{tab}    public {t.stateClass} get{expandedAttribute.variableAsClass}State() {
 {tab}        return new {t.stateClass}() {
 {tab}            public Certificate certificate() { return certificate(); }
-      #foreach (attribute in t.attributes)
-        #set (statement = method.getStatement(attribute.variable))
-        #set (getStatement = "{stateImplClass}.this.{statement};")
-        #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
-        #set (setStatement = "{stateImplClass}.this.{setStatement};")
-{tab}            public {attribute.type} {attribute.getter}() { return {getStatement} }
-{tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {setStatement} }
+  #foreach (attribute in t.attributes)
+{tab}            public {attribute.type} {attribute.getter}() { return {stateImplClass}.this.{attribute.getter}(); }
+{tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {stateImplClass}.this.{attribute.setter}({attribute.variable}, mutator); }
 
-      #end
-{tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
-{tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
-      #substateMethod(method.classname, tab)
-      #isValid(t, true, "            ")
-      #equals(t, true, "            ")
-## fix!
-##      #equalsState(t, true, "            ")
-      #equalsValue(t, true, "            ")
-      #hashCode(t, true, "            ")
-      #toString(t, true, "            ")
-{tab}        };
-{tab}    }
-*/
-#end
-
-#macro stateProjections()
-  #foreach (stateMethod in stateMethods)
-    #foreach (template in templates.values() where template.classname == stateMethod.classname)
-      #stateProjection(template, stateMethod, "")
-    #end
   #end
-#end
-
-#macro stateProjection(t, stateArg, tab)
-  #set (method = new net.sf.laja.parser.cdd.StateProjectionMethod(stateArg))
-
-{tab}    public {method.returnclass} {method.getter}() {
-{tab}        return new {method.returnclass}() {
-{tab}            public Certificate certificate() { return certificate(); }
-      #foreach (attribute in t.attributes)
-        #set (statement = method.getStatement(attribute.variable))
-        #if (statement == null)
-          #errors.addMessage("Could not find attribute '{attribute.variable}' in method '{stateClass}.{method.getter}'.")
-          #set (msg = "/* missing attribute '{attribute.variable}' */")
-          #if (attribute.isPrimitive)
-            #if (attribute.type == "boolean")
-              #set (getStatement = "false; {msg}")
-            #else if (attribute.type == "char")
-              #set (getStatement = "' '; {msg}")
-            #else
-              #set (getStatement = "0; {msg}")
-            #end
-          #else
-            #set (getStatement = "null; {msg}")
-          #end
-          #set (setStatement = msg)
-        #else
-          #set (getStatement = "{stateImplClass}.this.{statement};")
-          #set (setStatement = statementConverter.calculateSetStatement(statement, attribute.variable))
-          #set (setStatement = "{stateImplClass}.this.{setStatement};")
-        #end
-{tab}            public {attribute.type} {attribute.getter}() { return {getStatement} }
-{tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {setStatement} }
-
-      #end
 {tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
 {tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
-      #substateMethod(method.classname, tab)
-      #isValid(t, true, "            ")
-      #equals(t, true, "            ")
+##      #substateMethod(method.classname, tab)
+  #isValid(t, true, "            ")
+  #equals(t, true, "            ")
 ## fix!
 ##      #equalsState(t, true, "            ")
-      #equalsValue(t, true, "            ")
-      #hashCode(t, true, "            ")
-      #toString(t, true, "            ")
+  #equalsValue(t, true, "            ")
+  #hashCode(t, true, "            ")
+  #toString(t, true, "            ")
 {tab}        };
 {tab}    }
-#end
-
-#macro substateMethod(stateClassname, tab)
-  #set (t2 = templates.get(stateClassname))
-  #stateMethods(t2, tab)
 #end
 
 #macro gettersAndSetters()
@@ -432,17 +369,6 @@
 {tab}}
 #end
 
-#macro stateMethods(currentTemplate, tab)
-  #foreach (attribute in currentTemplate.expandedAttributes)
-    #set (t = templates.get(attribute.cleanedStateType))
-    #if (t == null)
-      #errors.addMessage("Could not find state '{attribute.cleanedStateType}'")
-    #else
-      #stateProjection(t, t, tab)
-    #end
-  #end
-#end
-
 #macro class()
   #header()
 public class {stateImplClass} implements {stateClass} {
@@ -450,8 +376,7 @@ public class {stateImplClass} implements {stateClass} {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-  #newStateMethods()
-  #stateProjections()
+  #stateMethods()
 
     {stateImplClass}() {
   #foreach (attribute in attributes where attribute.isStateSet && attribute.isStateList && !attribute.isExplicitAssigned)

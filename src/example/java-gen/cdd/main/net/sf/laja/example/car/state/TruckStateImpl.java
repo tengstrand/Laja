@@ -20,13 +20,12 @@ public class TruckStateImpl implements TruckState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-    // VehicleSizeState
 
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
-            public int getLengthInCentimeters() { return 0; /* missing attribute 'lengthInCentimeters' */ }
-            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { /* missing attribute 'lengthInCentimeters' */ }
+            public int getLengthInCentimeters() { return TruckStateImpl.this.getLengthInCentimeters(); }
+            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { TruckStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
 
             public void encapsulate() { TruckStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { TruckStateImpl.this.setEncapsulator(encapsulator); }
