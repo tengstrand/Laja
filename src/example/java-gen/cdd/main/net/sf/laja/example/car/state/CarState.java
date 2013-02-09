@@ -1,7 +1,6 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.VehicleSizeState;
-import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.Certificate;
 
@@ -22,8 +21,6 @@ public interface CarState {
 
     String getColor();
     void setColor(String color, Object mutator);
-
-    VehicleSizeState getSizeState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

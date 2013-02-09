@@ -6,10 +6,9 @@
 #end
 
 #macro stateMethod(expandedAttribute, tab)
-  #set (t = templates.get(expandedAttribute.cleanedStateType))
 
-{tab}    public {t.stateClass} get{expandedAttribute.variableAsClass}State() {
-{tab}        return new {t.stateClass}() {
+{tab}    public {expandedAttribute.stateClass} get{expandedAttribute.variableAsClass}State() {
+{tab}        return new {expandedAttribute.stateClass}() {
 {tab}            public Certificate certificate() { return certificate(); }
   #foreach (attribute in t.attributes)
 {tab}            public {attribute.type} {attribute.getter}() { return {stateImplClass}.this.{attribute.getter}(); }
@@ -238,34 +237,16 @@
     #end
 
     #foreach (attribute in attributes)
-      #set (variable = variable(useGetter))
       #if (attribute.isPrimitive)
-{tab}    if ({variable} != state.{attribute.getter}()) return false;
+{tab}    if ({attribute.variable} != state.{attribute.getter}()) return false;
       #else
-        #if (useGetter)
-{tab}    if ({variable} != null ? !{variable}.equals(state.{attribute.getter}()) : state.{attribute.getter}() != null) return false;
-        #else
 {tab}    if ({variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
-        #end
       #end
     #end
 
 {tab}    return true;
   #end
 {tab}}
-#end
-
-#macro variable(useGetter)
-  #if (useGetter)
-    #set (statement = method.getStatement(attribute.variable))
-    #if (statement != null)
-{statement}##
-    #else
-{attribute.variable}##
-    #end
-  #else
-{attribute.variable}##
-  #end
 #end
 
 #macro hashCode(t, useGetter, tab)
@@ -283,33 +264,32 @@
     #set (intTypes = ["byte", "char", "short", "int"])
     #set (castTypes = ["float", "double"])
     #foreach (attribute in attributes)
-      #set (variable = variable(useGetter))
       #if (first)
         #if (intTypes.contains(attribute.type))
-{tab}    int result = {variable};
+{tab}    int result = {attribute.variable};
         #else if (castTypes.contains(attribute.type))
-{tab}    int result = (int){variable};
+{tab}    int result = (int){attribute.variable};
         #else if (attribute.type == "long")
-{tab}    int result = (int)({variable} ^ ({variable} >>> 32));
+{tab}    int result = (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
         #else if (attribute.type == "boolean")
-{tab}    int result = {variable} ? 1 : 0;
+{tab}    int result = {attribute.variable} ? 1 : 0;
         #else
-{tab}    int result = {variable} != null ? {variable}.hashCode() : 0;
+{tab}    int result = {attribute.variable} != null ? {attribute.variable}.hashCode() : 0;
         #end
       #else
         #if (intTypes.contains(attribute.type))
-{tab}    result = 31 * result + {variable};
+{tab}    result = 31 * result + {attribute.variable};
         #else if (castTypes.contains(attribute.type))
-{tab}    result = 31 * result + (int){variable};
+{tab}    result = 31 * result + (int){attribute.variable};
         #else if (attribute.type == "long")
-{tab}    result = (int)({variable} ^ ({variable} >>> 32));
+{tab}    result = (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
         #else if (attribute.type == "boolean")
-{tab}    result = 31 * result + ({variable} ? 1 : 0);
+{tab}    result = 31 * result + ({attribute.variable} ? 1 : 0);
         #else
           #if (useGetter)
-{tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
+{tab}    result = 31 * result + ({attribute.variable} != null ? {attribute.variable}.hashCode() : 0);
           #else
-{tab}    result = 31 * result + ({variable} != null ? {variable}.hashCode() : 0);
+{tab}    result = 31 * result + ({attribute.variable} != null ? {attribute.variable}.hashCode() : 0);
           #end
         #end
       #end
