@@ -1,11 +1,11 @@
 
-#macro stateMethods()
-  #foreach (expandedAttribute in expandedAttributes)
-    #stateMethod(expandedAttribute, "")
+#macro stateMethods(t, tab)
+  #foreach (expandedAttribute in t.expandedAttributes)
+    #stateMethod(t, expandedAttribute, tab)
   #end
 #end
 
-#macro stateMethod(expandedAttribute, tab)
+#macro stateMethod(t, expandedAttribute, tab)
 
 {tab}    public {expandedAttribute.stateClass} get{expandedAttribute.variableAsClass}State() {
 {tab}        return new {expandedAttribute.stateClass}() {
@@ -17,7 +17,7 @@
   #end
 {tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
 {tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
-##      #substateMethod(method.classname, tab)
+  #stateMethods(templates.get(expandedAttribute.cleanedStateType), "        {tab}")
   #isValid(t, "            ")
   #equals(t, "            ")
 ## fix!
@@ -324,7 +324,7 @@ public class {stateImplClass} implements {stateClass} {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-  #stateMethods()
+  #stateMethods($, "")
 
     {stateImplClass}() {
   #foreach (attribute in attributes where attribute.isStateSet && attribute.isStateList && !attribute.isExplicitAssigned)
