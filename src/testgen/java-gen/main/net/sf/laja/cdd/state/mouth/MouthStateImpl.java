@@ -71,7 +71,6 @@ public class MouthStateImpl implements MouthState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -55,7 +55,6 @@
             throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
         }
     }
-
 #end
 
 #macro encapsulate()

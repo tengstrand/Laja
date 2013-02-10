@@ -137,7 +137,6 @@ public class PersonStateImpl implements PersonState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

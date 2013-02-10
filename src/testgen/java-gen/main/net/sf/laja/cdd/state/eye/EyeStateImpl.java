@@ -73,7 +73,6 @@ public class EyeStateImpl implements EyeState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -76,7 +76,6 @@ public class ComputerStateImpl implements ComputerState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -199,7 +199,6 @@ public class VehicleStateImpl implements VehicleState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

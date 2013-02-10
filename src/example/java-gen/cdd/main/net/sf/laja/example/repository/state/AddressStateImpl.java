@@ -131,7 +131,6 @@ public class AddressStateImpl implements AddressState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -147,7 +147,6 @@ public class CarStateImpl implements CarState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

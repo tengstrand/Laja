@@ -303,7 +303,6 @@ public class HeadStateImpl implements HeadState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

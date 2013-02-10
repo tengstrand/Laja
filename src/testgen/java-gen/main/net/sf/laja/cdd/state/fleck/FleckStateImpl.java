@@ -65,7 +65,6 @@ public class FleckStateImpl implements FleckState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

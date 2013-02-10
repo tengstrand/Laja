@@ -83,7 +83,6 @@ public class TerrestrialStateImpl implements TerrestrialState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

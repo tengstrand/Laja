@@ -241,7 +241,6 @@ public class CustomerStateImpl implements CustomerState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

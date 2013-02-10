@@ -139,7 +139,6 @@ public class FingerStateImpl implements FingerState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

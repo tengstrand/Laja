@@ -151,7 +151,6 @@ public class TruckStateImpl implements TruckState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

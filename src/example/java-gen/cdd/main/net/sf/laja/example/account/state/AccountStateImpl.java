@@ -59,7 +59,6 @@ public class AccountStateImpl implements AccountState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

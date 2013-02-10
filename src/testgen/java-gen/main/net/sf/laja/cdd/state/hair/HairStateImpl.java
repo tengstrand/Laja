@@ -65,7 +65,6 @@ public class HairStateImpl implements HairState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

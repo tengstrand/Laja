@@ -62,7 +62,6 @@ public class FileStateImpl implements FileState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

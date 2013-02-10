@@ -69,7 +69,6 @@ public class FootStateImpl implements FootState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

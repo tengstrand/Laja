@@ -59,7 +59,6 @@ public class BrowStateImpl implements BrowState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

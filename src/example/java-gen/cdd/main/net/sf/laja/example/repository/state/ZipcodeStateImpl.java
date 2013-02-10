@@ -59,7 +59,6 @@ public class ZipcodeStateImpl implements ZipcodeState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -59,7 +59,6 @@ public class HandStateImpl implements HandState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -186,7 +186,6 @@ public class XHandStateImpl implements XHandState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

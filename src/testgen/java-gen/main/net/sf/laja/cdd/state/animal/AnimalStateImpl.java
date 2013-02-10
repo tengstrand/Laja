@@ -59,7 +59,6 @@ public class AnimalStateImpl implements AnimalState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

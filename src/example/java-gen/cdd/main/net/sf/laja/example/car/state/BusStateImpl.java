@@ -141,7 +141,6 @@ public class BusStateImpl implements BusState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -59,7 +59,6 @@ public class VehicleSizeStateImpl implements VehicleSizeState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

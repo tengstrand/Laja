@@ -66,7 +66,6 @@ public class NoseStateImpl implements NoseState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

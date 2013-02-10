@@ -72,7 +72,6 @@ public class ArmStateImpl implements ArmState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -62,7 +62,6 @@ public class LegStateImpl implements LegState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

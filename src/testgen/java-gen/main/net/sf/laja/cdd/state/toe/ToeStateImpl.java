@@ -62,7 +62,6 @@ public class ToeStateImpl implements ToeState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

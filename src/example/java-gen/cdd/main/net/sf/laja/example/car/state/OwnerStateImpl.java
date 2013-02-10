@@ -65,7 +65,6 @@ public class OwnerStateImpl implements OwnerState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

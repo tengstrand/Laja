@@ -466,7 +466,6 @@ public class MonsterStateImpl implements MonsterState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

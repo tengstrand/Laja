@@ -62,7 +62,6 @@ public class DirectoryStateImpl implements DirectoryState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

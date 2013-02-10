@@ -62,7 +62,6 @@ public class BmiStateImpl implements BmiState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

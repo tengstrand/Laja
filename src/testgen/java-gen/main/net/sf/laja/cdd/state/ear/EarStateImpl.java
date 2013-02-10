@@ -62,7 +62,6 @@ public class EarStateImpl implements EarState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

@@ -70,7 +70,6 @@ public class ForeheadStateImpl implements ForeheadState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }

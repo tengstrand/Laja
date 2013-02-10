@@ -62,7 +62,6 @@ public class NailStateImpl implements NailState {
         }
     }
 
-
     public void encapsulate() {
         _encapsulated = true;
     }
