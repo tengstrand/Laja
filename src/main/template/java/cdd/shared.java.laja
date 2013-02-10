@@ -86,9 +86,13 @@ package {package};
       #set (hasImports = true)
     #end
   #end
-  #foreach (method in stateMethods)
-    #foreach (template in templates.values() where template.classname == method.classname)
-import {template.packagename}.{template.classname}State;
+#end
+
+#macro importExpandedAttributes(expandedTypeSuffix)
+  #foreach (a in expandedAttributes)
+    #set (template = templates.get(a.cleanedStateType))
+    #foreach (suffix in expandedTypeSuffix.split(","))
+import {template.packagename}.{a.cleanedStateType}{suffix};
       #set (hasImports = true)
     #end
   #end

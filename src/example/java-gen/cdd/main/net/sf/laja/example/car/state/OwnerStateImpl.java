@@ -89,7 +89,7 @@ public class OwnerStateImpl implements OwnerState {
         OwnerStateImpl state = (OwnerStateImpl)value;
 
         if (ssn != state.getSsn()) return false;
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
+        if (name != null ? !name.equals(state.getName()) : state.getName() != null) return false;
 
         return true;
     }

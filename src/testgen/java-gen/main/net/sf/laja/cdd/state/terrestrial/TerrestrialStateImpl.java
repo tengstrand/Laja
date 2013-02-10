@@ -108,9 +108,9 @@ public class TerrestrialStateImpl implements TerrestrialState {
 
         if (numberOfLegs != state.getNumberOfLegs()) return false;
         if (numberOfWings != state.getNumberOfWings()) return false;
-        if (leftEye != null ? !leftEye.equals(state.leftEye) : state.leftEye != null) return false;
-        if (rightEye != null ? !rightEye.equals(state.rightEye) : state.rightEye != null) return false;
-        if (middleEye != null ? !middleEye.equals(state.middleEye) : state.middleEye != null) return false;
+        if (leftEye != null ? !leftEye.equals(state.getLeftEye()) : state.getLeftEye() != null) return false;
+        if (rightEye != null ? !rightEye.equals(state.getRightEye()) : state.getRightEye() != null) return false;
+        if (middleEye != null ? !middleEye.equals(state.getMiddleEye()) : state.getMiddleEye() != null) return false;
         if (weight != state.getWeight()) return false;
 
         return true;

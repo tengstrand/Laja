@@ -85,7 +85,7 @@ public class DirectoryStateImpl implements DirectoryState {
 
         DirectoryStateImpl state = (DirectoryStateImpl)value;
 
-        if (directoryPath != null ? !directoryPath.equals(state.directoryPath) : state.directoryPath != null) return false;
+        if (directoryPath != null ? !directoryPath.equals(state.getDirectoryPath()) : state.getDirectoryPath() != null) return false;
 
         return true;
     }

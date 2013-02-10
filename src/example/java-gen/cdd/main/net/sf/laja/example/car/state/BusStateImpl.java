@@ -1,6 +1,9 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
+import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -19,14 +22,9 @@ public class BusStateImpl implements BusState {
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
-            public String getName() { return BusStateImpl.this.getName(); }
-            public void setName(String name, Object mutator) { BusStateImpl.this.setName(name, mutator); }
 
             public int getLengthInCentimeters() { return BusStateImpl.this.getLengthInCentimeters(); }
             public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { BusStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
-
-            public int getWeightInKilograms() { return BusStateImpl.this.getWeightInKilograms(); }
-            public void setWeightInKilograms(int weightInKilograms, Object mutator) { BusStateImpl.this.setWeightInKilograms(weightInKilograms, mutator); }
 
             public void encapsulate() { BusStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { BusStateImpl.this.setEncapsulator(encapsulator); }
@@ -40,13 +38,10 @@ public class BusStateImpl implements BusState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if (name == null) {
-                    return false;
-                }
         if (!isVehicleSizeValid()) {
             return false;
         }
-                return true;
+                return lengthInCentimeters >= 0;
             }
 
     private boolean isVehicleSizeValid() {
@@ -65,29 +60,23 @@ public class BusStateImpl implements BusState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                BusStateImpl state = (BusStateImpl)value;
+                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
-                if (name != null ? !name.equals(state.name) : state.name != null) return false;
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-                if (weightInKilograms != state.getWeightInKilograms()) return false;
 
                 return true;
             }
 
             @Override
             public int hashCode() {
-                int result = name != null ? name.hashCode() : 0;
-                result = 31 * result + lengthInCentimeters;
-                result = 31 * result + weightInKilograms;
+                int result = lengthInCentimeters;
 
                 return result;
             }
 
             @Override
             public String toString() {
-                return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
-                        ", lengthInCentimeters=" + lengthInCentimeters +
-                        ", weightInKilograms=" + weightInKilograms + "}";
+                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
     }
@@ -175,7 +164,7 @@ public class BusStateImpl implements BusState {
 
         BusStateImpl state = (BusStateImpl)value;
 
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
+        if (name != null ? !name.equals(state.getName()) : state.getName() != null) return false;
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
 

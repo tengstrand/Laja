@@ -108,6 +108,7 @@ public class {builderImplClass} implements {builderClass} {
   #prepareStateImports()
   #importStateBuilder()
   #importStateBuilderImpl()
+  #importExpandedAttributes("StateBuilder,StateBuilderImpl")
   #importStates()
   #importProjectedStateBuilder()
   #importCertificate()

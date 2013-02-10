@@ -99,11 +99,11 @@ public class ComputerStateImpl implements ComputerState {
 
         ComputerStateImpl state = (ComputerStateImpl)value;
 
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-        if (processor != null ? !processor.equals(state.processor) : state.processor != null) return false;
+        if (name != null ? !name.equals(state.getName()) : state.getName() != null) return false;
+        if (processor != null ? !processor.equals(state.getProcessor()) : state.getProcessor() != null) return false;
         if (releaseYear != state.getReleaseYear()) return false;
         if (memoryInKilobytes != state.getMemoryInKilobytes()) return false;
-        if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
+        if (owner != null ? !owner.equals(state.getOwner()) : state.getOwner() != null) return false;
 
         return true;
     }

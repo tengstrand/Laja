@@ -1,7 +1,9 @@
 package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.ZipcodeState;
+import net.sf.laja.example.repository.state.ZipcodeStateImpl;
 import net.sf.laja.example.repository.state.ZipcodeState;
+import net.sf.laja.example.repository.state.ZipcodeStateImpl;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -21,7 +23,8 @@ public class AddressStateImpl implements AddressState {
     public ZipcodeState getZipcodeState() {
         return new ZipcodeState() {
             public Certificate certificate() { return certificate(); }
-            public int getZipcode() { return AddressStateImpl.this.zipcode; }
+
+            public int getZipcode() { return AddressStateImpl.this.getZipcode(); }
             public void setZipcode(int zipcode, Object mutator) { AddressStateImpl.this.setZipcode(zipcode, mutator); }
 
             public void encapsulate() { AddressStateImpl.this.encapsulate(); }
@@ -51,7 +54,7 @@ public class AddressStateImpl implements AddressState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.example.repository.state.ZipcodeState state = (net.sf.laja.example.repository.state.ZipcodeState)value;
+                ZipcodeStateImpl state = (ZipcodeStateImpl)value;
 
                 if (zipcode != state.getZipcode()) return false;
 
@@ -67,7 +70,7 @@ public class AddressStateImpl implements AddressState {
 
             @Override
             public String toString() {
-                return "{zipcode=" + getZipcode() + "}";
+                return "{zipcode=" + zipcode + "}";
             }
         };
     }
@@ -151,9 +154,9 @@ public class AddressStateImpl implements AddressState {
 
         AddressStateImpl state = (AddressStateImpl)value;
 
-        if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
+        if (streetName != null ? !streetName.equals(state.getStreetName()) : state.getStreetName() != null) return false;
         if (zipcode != state.getZipcode()) return false;
-        if (city != null ? !city.equals(state.city) : state.city != null) return false;
+        if (city != null ? !city.equals(state.getCity()) : state.getCity() != null) return false;
 
         return true;
     }

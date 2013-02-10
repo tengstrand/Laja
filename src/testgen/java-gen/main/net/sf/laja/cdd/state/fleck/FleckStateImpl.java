@@ -89,7 +89,7 @@ public class FleckStateImpl implements FleckState {
         FleckStateImpl state = (FleckStateImpl)value;
 
         if (area != state.getArea()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
         return true;
     }

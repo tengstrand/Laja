@@ -85,7 +85,7 @@ public class NailStateImpl implements NailState {
 
         NailStateImpl state = (NailStateImpl)value;
 
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
         return true;
     }

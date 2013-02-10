@@ -89,8 +89,8 @@ public class NoseStateImpl implements NoseState {
 
         NoseStateImpl state = (NoseStateImpl)value;
 
-        if (noseDescription != null ? !noseDescription.equals(state.noseDescription) : state.noseDescription != null) return false;
-        if (details != null ? !details.equals(state.details) : state.details != null) return false;
+        if (noseDescription != null ? !noseDescription.equals(state.getNoseDescription()) : state.getNoseDescription() != null) return false;
+        if (details != null ? !details.equals(state.getDetails()) : state.getDetails() != null) return false;
 
         return true;
     }

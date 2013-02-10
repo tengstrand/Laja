@@ -1,7 +1,6 @@
 package net.sf.laja.example.repository.state;
 
 import net.sf.laja.example.repository.state.ZipcodeState;
-import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**

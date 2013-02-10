@@ -92,7 +92,7 @@ public class FootStateImpl implements FootState {
         FootStateImpl state = (FootStateImpl)value;
 
         if (area != state.getArea()) return false;
-        if (toes != null ? !toes.equals(state.toes) : state.toes != null) return false;
+        if (toes != null ? !toes.equals(state.getToes()) : state.getToes() != null) return false;
 
         return true;
     }

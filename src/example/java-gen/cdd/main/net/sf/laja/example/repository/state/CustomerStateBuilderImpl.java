@@ -1,13 +1,12 @@
 package net.sf.laja.example.repository.state;
 
-import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressBehaviourFactory;
 import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
 import net.sf.laja.example.repository.state.ZipcodeState;
-import net.sf.laja.example.repository.state.AddressStateListBuilder;
-import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
 import net.sf.laja.example.repository.state.AddressStateBuilder;
+import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
+import net.sf.laja.example.repository.state.AddressStateListBuilder;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**

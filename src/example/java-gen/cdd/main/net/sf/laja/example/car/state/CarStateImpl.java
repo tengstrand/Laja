@@ -2,6 +2,9 @@ package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
+import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -21,17 +24,9 @@ public class CarStateImpl implements CarState {
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
+
             public int getLengthInCentimeters() { return CarStateImpl.this.getLengthInCentimeters(); }
             public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { CarStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
-
-            public String getName() { return CarStateImpl.this.getName(); }
-            public void setName(String name, Object mutator) { CarStateImpl.this.setName(name, mutator); }
-
-            public OwnerState getOwner() { return CarStateImpl.this.getOwner(); }
-            public void setOwner(OwnerState owner, Object mutator) { CarStateImpl.this.setOwner(owner, mutator); }
-
-            public String getColor() { return CarStateImpl.this.getColor(); }
-            public void setColor(String color, Object mutator) { CarStateImpl.this.setColor(color, mutator); }
 
             public void encapsulate() { CarStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { CarStateImpl.this.setEncapsulator(encapsulator); }
@@ -45,15 +40,10 @@ public class CarStateImpl implements CarState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if (name == null
-           || (owner == null || !owner.isValid())
-           || color == null) {
-                    return false;
-                }
         if (!isVehicleSizeValid()) {
             return false;
         }
-                return true;
+                return lengthInCentimeters >= 0;
             }
 
     private boolean isVehicleSizeValid() {
@@ -72,12 +62,9 @@ public class CarStateImpl implements CarState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                CarStateImpl state = (CarStateImpl)value;
+                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-                if (name != null ? !name.equals(state.name) : state.name != null) return false;
-                if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-                if (color != null ? !color.equals(state.color) : state.color != null) return false;
 
                 return true;
             }
@@ -85,19 +72,13 @@ public class CarStateImpl implements CarState {
             @Override
             public int hashCode() {
                 int result = lengthInCentimeters;
-                result = 31 * result + (name != null ? name.hashCode() : 0);
-                result = 31 * result + (owner != null ? owner.hashCode() : 0);
-                result = 31 * result + (color != null ? color.hashCode() : 0);
 
                 return result;
             }
 
             @Override
             public String toString() {
-                return "{lengthInCentimeters=" + lengthInCentimeters +
-                        ", name=" + (name == null ? null : '\'' + name + '\'' ) +
-                        ", owner=" + owner +
-                        ", color='" + color + '\'' + "}";
+                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
     }
@@ -190,9 +171,9 @@ public class CarStateImpl implements CarState {
         CarStateImpl state = (CarStateImpl)value;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-        if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
+        if (name != null ? !name.equals(state.getName()) : state.getName() != null) return false;
+        if (owner != null ? !owner.equals(state.getOwner()) : state.getOwner() != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
         return true;
     }

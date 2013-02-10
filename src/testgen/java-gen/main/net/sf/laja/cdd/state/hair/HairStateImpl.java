@@ -89,7 +89,7 @@ public class HairStateImpl implements HairState {
         HairStateImpl state = (HairStateImpl)value;
 
         if (length != state.getLength()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
         return true;
     }

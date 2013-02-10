@@ -1,10 +1,9 @@
 package net.sf.laja.example.person.state;
 
-import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.BmiBehaviourFactory;
 import net.sf.laja.example.person.state.BmiState;
-import net.sf.laja.example.person.state.BmiStateBuilderImpl;
 import net.sf.laja.example.person.state.BmiStateBuilder;
+import net.sf.laja.example.person.state.BmiStateBuilderImpl;
 import net.sf.laja.example.person.state.Certificate;
 
 /**

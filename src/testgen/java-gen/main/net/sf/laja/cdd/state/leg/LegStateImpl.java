@@ -85,7 +85,7 @@ public class LegStateImpl implements LegState {
 
         LegStateImpl state = (LegStateImpl)value;
 
-        if (legDescription != null ? !legDescription.equals(state.legDescription) : state.legDescription != null) return false;
+        if (legDescription != null ? !legDescription.equals(state.getLegDescription()) : state.getLegDescription() != null) return false;
 
         return true;
     }

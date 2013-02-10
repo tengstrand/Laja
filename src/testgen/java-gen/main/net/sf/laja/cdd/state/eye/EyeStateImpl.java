@@ -97,9 +97,9 @@ public class EyeStateImpl implements EyeState {
         EyeStateImpl state = (EyeStateImpl)value;
 
         if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-        if (decease != null ? !decease.equals(state.decease) : state.decease != null) return false;
-        if (hasEar != null ? !hasEar.equals(state.hasEar) : state.hasEar != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+        if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
+        if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
 
         return true;
     }

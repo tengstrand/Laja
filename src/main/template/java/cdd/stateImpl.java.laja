@@ -1,6 +1,7 @@
 
-#macro stateMethods(t, tab)
-  #foreach (expandedAttribute in t.expandedAttributes)
+#macro stateMethods(expandedStateTemplate, tab)
+  #foreach (expandedAttribute in expandedStateTemplate.expandedAttributes)
+    #set (t = templates.get(expandedAttribute.cleanedStateType))
     #stateMethod(t, expandedAttribute, tab)
   #end
 #end
@@ -10,6 +11,7 @@
 {tab}    public {expandedAttribute.stateClass} get{expandedAttribute.variableAsClass}State() {
 {tab}        return new {expandedAttribute.stateClass}() {
 {tab}            public Certificate certificate() { return certificate(); }
+
   #foreach (attribute in t.attributes)
 {tab}            public {attribute.type} {attribute.getter}() { return {stateImplClass}.this.{attribute.getter}(); }
 {tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {stateImplClass}.this.{attribute.setter}({attribute.variable}, mutator); }
@@ -216,7 +218,7 @@
       #if (attribute.isPrimitive)
 {tab}    if ({attribute.variable} != state.{attribute.getter}()) return false;
       #else
-{tab}    if ({attribute.variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
+{tab}    if ({attribute.variable} != null ? !{attribute.variable}.equals(state.{attribute.getter}()) : state.{attribute.getter}() != null) return false;
       #end
     #end
 
@@ -367,20 +369,12 @@ public class {stateImplClass} implements {stateClass} {
 }
 #end
 
-#macro importStateExpansion()
-  #foreach (attribute in expandedAttributes)
-    #set (t = templates.get(attribute.cleanedStateType))
-    #if (t != null)
-import {t.packagename}.{attribute.type};
-    #end
-  #end
-#end
-
 #macro fileContent()
   #package()
   #importBegin(false)
   #importState()
-  #importStateExpansion()
+  #importExpandedType("State,StateImpl")
+  #importExpandedAttributes("State,StateImpl")
   #importStateHashSet()
   #importStateArrayList()
   #importCertificate()

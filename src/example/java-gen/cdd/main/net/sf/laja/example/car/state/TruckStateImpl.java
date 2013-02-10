@@ -3,6 +3,9 @@ package net.sf.laja.example.car.state;
 import net.sf.laja.example.car.state.TruckTypeState;
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
+import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -23,20 +26,9 @@ public class TruckStateImpl implements TruckState {
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
+
             public int getLengthInCentimeters() { return TruckStateImpl.this.getLengthInCentimeters(); }
             public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { TruckStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
-
-            public int getWeightInKilograms() { return TruckStateImpl.this.getWeightInKilograms(); }
-            public void setWeightInKilograms(int weightInKilograms, Object mutator) { TruckStateImpl.this.setWeightInKilograms(weightInKilograms, mutator); }
-
-            public TruckTypeState getType() { return TruckStateImpl.this.getType(); }
-            public void setType(TruckTypeState type, Object mutator) { TruckStateImpl.this.setType(type, mutator); }
-
-            public String getColor() { return TruckStateImpl.this.getColor(); }
-            public void setColor(String color, Object mutator) { TruckStateImpl.this.setColor(color, mutator); }
-
-            public OwnerState getOwner() { return TruckStateImpl.this.getOwner(); }
-            public void setOwner(OwnerState owner, Object mutator) { TruckStateImpl.this.setOwner(owner, mutator); }
 
             public void encapsulate() { TruckStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { TruckStateImpl.this.setEncapsulator(encapsulator); }
@@ -50,15 +42,10 @@ public class TruckStateImpl implements TruckState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if ((type == null || !type.isValid())
-           || color == null
-           || (owner == null || !owner.isValid())) {
-                    return false;
-                }
         if (!isVehicleSizeValid()) {
             return false;
         }
-                return true;
+                return lengthInCentimeters >= 0;
             }
 
     private boolean isVehicleSizeValid() {
@@ -77,13 +64,9 @@ public class TruckStateImpl implements TruckState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                TruckStateImpl state = (TruckStateImpl)value;
+                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-                if (weightInKilograms != state.getWeightInKilograms()) return false;
-                if (type != null ? !type.equals(state.type) : state.type != null) return false;
-                if (color != null ? !color.equals(state.color) : state.color != null) return false;
-                if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
 
                 return true;
             }
@@ -91,21 +74,13 @@ public class TruckStateImpl implements TruckState {
             @Override
             public int hashCode() {
                 int result = lengthInCentimeters;
-                result = 31 * result + weightInKilograms;
-                result = 31 * result + (type != null ? type.hashCode() : 0);
-                result = 31 * result + (color != null ? color.hashCode() : 0);
-                result = 31 * result + (owner != null ? owner.hashCode() : 0);
 
                 return result;
             }
 
             @Override
             public String toString() {
-                return "{lengthInCentimeters=" + lengthInCentimeters +
-                        ", weightInKilograms=" + weightInKilograms +
-                        ", type=" + type +
-                        ", color=" + (color == null ? null : '\'' + color + '\'' ) +
-                        ", owner=" + owner + "}";
+                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
     }
@@ -201,9 +176,9 @@ public class TruckStateImpl implements TruckState {
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
-        if (type != null ? !type.equals(state.type) : state.type != null) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
-        if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
+        if (type != null ? !type.equals(state.getType()) : state.getType() != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+        if (owner != null ? !owner.equals(state.getOwner()) : state.getOwner() != null) return false;
 
         return true;
     }

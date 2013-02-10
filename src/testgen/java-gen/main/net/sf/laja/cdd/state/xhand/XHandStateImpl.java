@@ -3,8 +3,11 @@ package net.sf.laja.cdd.state.xhand;
 import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.finger.FingerState;
-import net.sf.laja.cdd.state.finger.FingerState;
+import net.sf.laja.cdd.state.finger.FingerStateImpl;
 import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailStateImpl;
+import net.sf.laja.cdd.state.finger.FingerState;
+import net.sf.laja.cdd.state.finger.FingerStateImpl;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -17,83 +20,27 @@ public class XHandStateImpl implements XHandState {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-/*
-    public FingerState getFingerState() {
-        return new FingerState() {
-            public Certificate certificate() { return certificate(); }
-            public String getColor() { return FingerStateImpl.this.color; }
-            public void setColor(String color, Object mutator) { FingerStateImpl.this.setColor(color, mutator); }
-
-            public void encapsulate() { XHandStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { XHandStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                if (getColor() == null) {
-                    return false;
-                }
-                return true;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof XHandStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                net.sf.laja.cdd.state.finger.FingerState state = (net.sf.laja.cdd.state.finger.FingerState)value;
-
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = color != null ? color.hashCode() : 0;
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{color=" + getColor() + "}";
-            }
-        };
-    }
-*/
 
     public FingerState getFingerState() {
         return new FingerState() {
             public Certificate certificate() { return certificate(); }
-            public String getColor() { return null; /* missing attribute 'color' */ }
-            public void setColor(String color, Object mutator) { /* missing attribute 'color' */ }
 
-            public void encapsulate() { XHandStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { XHandStateImpl.this.setEncapsulator(encapsulator); }
-
-    public NailState getNailState() {
-        return new NailState() {
-            public Certificate certificate() { return certificate(); }
-            public String getColor() { return XHandStateImpl.this.color; }
+            public String getColor() { return XHandStateImpl.this.getColor(); }
             public void setColor(String color, Object mutator) { XHandStateImpl.this.setColor(color, mutator); }
 
             public void encapsulate() { XHandStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { XHandStateImpl.this.setEncapsulator(encapsulator); }
 
+            public NailState getNailState() {
+                return new NailState() {
+                    public Certificate certificate() { return certificate(); }
+
+                    public String getColor() { return XHandStateImpl.this.getColor(); }
+                    public void setColor(String color, Object mutator) { XHandStateImpl.this.setColor(color, mutator); }
+
+                    public void encapsulate() { XHandStateImpl.this.encapsulate(); }
+                    public void setEncapsulator(Object encapsulator) { XHandStateImpl.this.setEncapsulator(encapsulator); }
+
             public boolean isValid() {
                 return isValid(_encapsulated);
             }
@@ -103,7 +50,7 @@ public class XHandStateImpl implements XHandState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if (getColor() == null) {
+                if (color == null) {
                     return false;
                 }
                 return "red".equals(color);
@@ -121,7 +68,7 @@ public class XHandStateImpl implements XHandState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.cdd.state.nail.NailState state = (net.sf.laja.cdd.state.nail.NailState)value;
+                NailStateImpl state = (NailStateImpl)value;
 
                 if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
@@ -137,10 +84,10 @@ public class XHandStateImpl implements XHandState {
 
             @Override
             public String toString() {
-                return "{color=" + getColor() + "}";
+                return "{color=" + color + "}";
             }
-        };
-    }
+                };
+            }
 
             public boolean isValid() {
                 return isValid(_encapsulated);
@@ -151,7 +98,7 @@ public class XHandStateImpl implements XHandState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if (getColor() == null) {
+                if (color == null) {
                     return false;
                 }
                 return "red".equals(color);
@@ -169,7 +116,7 @@ public class XHandStateImpl implements XHandState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.cdd.state.nail.NailState state = (net.sf.laja.cdd.state.nail.NailState)value;
+                NailStateImpl state = (NailStateImpl)value;
 
                 if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
@@ -185,10 +132,10 @@ public class XHandStateImpl implements XHandState {
 
             @Override
             public String toString() {
-                return "{color=" + getColor() + "}";
+                return "{color=" + color + "}";
             }
-        };
-    }
+                };
+            }
 
     XHandStateImpl() {
     }
@@ -262,7 +209,7 @@ public class XHandStateImpl implements XHandState {
 
         XHandStateImpl state = (XHandStateImpl)value;
 
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
         return true;
     }

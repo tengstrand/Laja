@@ -10,13 +10,14 @@ import net.sf.laja.cdd.state.nose.NoseStateList;
 import java.math.BigDecimal;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.head.HeadBehaviourFactory;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.eye.EyeBehaviourFactory;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadBehaviourFactory;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
+import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
 import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
@@ -26,8 +27,6 @@ import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.arm.ArmStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
 import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
-import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.state.Certificate;
 
 /**

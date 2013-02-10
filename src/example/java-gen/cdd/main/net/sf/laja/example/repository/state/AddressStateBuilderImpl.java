@@ -1,10 +1,9 @@
 package net.sf.laja.example.repository.state;
 
-import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
 import net.sf.laja.example.repository.state.ZipcodeState;
-import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
 import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
+import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**

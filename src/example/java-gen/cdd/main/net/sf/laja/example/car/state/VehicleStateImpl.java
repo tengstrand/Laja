@@ -2,6 +2,11 @@ package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.CarState;
+import net.sf.laja.example.car.state.CarStateImpl;
+import net.sf.laja.example.car.state.VehicleSizeState;
+import net.sf.laja.example.car.state.VehicleSizeStateImpl;
+import net.sf.laja.example.car.state.CarState;
+import net.sf.laja.example.car.state.CarStateImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -21,6 +26,7 @@ public class VehicleStateImpl implements VehicleState {
     public CarState getCarState() {
         return new CarState() {
             public Certificate certificate() { return certificate(); }
+
             public int getLengthInCentimeters() { return VehicleStateImpl.this.getLengthInCentimeters(); }
             public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { VehicleStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
 
@@ -39,17 +45,9 @@ public class VehicleStateImpl implements VehicleState {
             public VehicleSizeState getSizeState() {
                 return new VehicleSizeState() {
                     public Certificate certificate() { return certificate(); }
+
                     public int getLengthInCentimeters() { return VehicleStateImpl.this.getLengthInCentimeters(); }
                     public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { VehicleStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
-
-                    public String getName() { return VehicleStateImpl.this.getName(); }
-                    public void setName(String name, Object mutator) { VehicleStateImpl.this.setName(name, mutator); }
-
-                    public OwnerState getOwner() { return VehicleStateImpl.this.getOwner(); }
-                    public void setOwner(OwnerState owner, Object mutator) { VehicleStateImpl.this.setOwner(owner, mutator); }
-
-                    public String getColor() { return VehicleStateImpl.this.getColor(); }
-                    public void setColor(String color, Object mutator) { VehicleStateImpl.this.setColor(color, mutator); }
 
                     public void encapsulate() { VehicleStateImpl.this.encapsulate(); }
                     public void setEncapsulator(Object encapsulator) { VehicleStateImpl.this.setEncapsulator(encapsulator); }
@@ -63,12 +61,7 @@ public class VehicleStateImpl implements VehicleState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if (name == null
-           || (owner == null || !owner.isValid())
-           || color == null) {
-                    return false;
-                }
-                return true;
+                return lengthInCentimeters >= 0;
             }
 
             @Override
@@ -83,12 +76,9 @@ public class VehicleStateImpl implements VehicleState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                CarStateImpl state = (CarStateImpl)value;
+                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-                if (name != null ? !name.equals(state.name) : state.name != null) return false;
-                if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-                if (color != null ? !color.equals(state.color) : state.color != null) return false;
 
                 return true;
             }
@@ -96,19 +86,13 @@ public class VehicleStateImpl implements VehicleState {
             @Override
             public int hashCode() {
                 int result = lengthInCentimeters;
-                result = 31 * result + (name != null ? name.hashCode() : 0);
-                result = 31 * result + (owner != null ? owner.hashCode() : 0);
-                result = 31 * result + (color != null ? color.hashCode() : 0);
 
                 return result;
             }
 
             @Override
             public String toString() {
-                return "{lengthInCentimeters=" + lengthInCentimeters +
-                        ", name=" + (name == null ? null : '\'' + name + '\'' ) +
-                        ", owner=" + owner +
-                        ", color='" + color + '\'' + "}";
+                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
                 };
             }
@@ -122,12 +106,7 @@ public class VehicleStateImpl implements VehicleState {
             }
 
             private boolean isValid(boolean encapsulated) {
-                if (name == null
-           || (owner == null || !owner.isValid())
-           || color == null) {
-                    return false;
-                }
-                return true;
+                return lengthInCentimeters >= 0;
             }
 
             @Override
@@ -142,12 +121,9 @@ public class VehicleStateImpl implements VehicleState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                CarStateImpl state = (CarStateImpl)value;
+                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
 
                 if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-                if (name != null ? !name.equals(state.name) : state.name != null) return false;
-                if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-                if (color != null ? !color.equals(state.color) : state.color != null) return false;
 
                 return true;
             }
@@ -155,19 +131,13 @@ public class VehicleStateImpl implements VehicleState {
             @Override
             public int hashCode() {
                 int result = lengthInCentimeters;
-                result = 31 * result + (name != null ? name.hashCode() : 0);
-                result = 31 * result + (owner != null ? owner.hashCode() : 0);
-                result = 31 * result + (color != null ? color.hashCode() : 0);
 
                 return result;
             }
 
             @Override
             public String toString() {
-                return "{lengthInCentimeters=" + lengthInCentimeters +
-                        ", name=" + (name == null ? null : '\'' + name + '\'' ) +
-                        ", owner=" + owner +
-                        ", color='" + color + '\'' + "}";
+                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
                 };
             }
@@ -253,9 +223,9 @@ public class VehicleStateImpl implements VehicleState {
         VehicleStateImpl state = (VehicleStateImpl)value;
 
         if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
-        if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
-        if (color != null ? !color.equals(state.color) : state.color != null) return false;
+        if (name != null ? !name.equals(state.getName()) : state.getName() != null) return false;
+        if (owner != null ? !owner.equals(state.getOwner()) : state.getOwner() != null) return false;
+        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
         return true;
     }

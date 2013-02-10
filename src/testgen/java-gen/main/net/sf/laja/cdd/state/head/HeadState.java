@@ -11,8 +11,6 @@ import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.nose.NoseStateList;
@@ -95,8 +93,7 @@ public interface HeadState {
     void setMouths(MouthStateList mouths, Object mutator);
 
     EyeState getEyeState();
-
-    ForeheadState getForeheadState();
+    ForeheadState getForeheadStateState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

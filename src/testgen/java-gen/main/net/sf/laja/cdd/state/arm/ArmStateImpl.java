@@ -96,7 +96,7 @@ public class ArmStateImpl implements ArmState {
 
         if (armLength != state.getArmLength()) return false;
         if (armWeight != state.getArmWeight()) return false;
-        if (hands != null ? !hands.equals(state.hands) : state.hands != null) return false;
+        if (hands != null ? !hands.equals(state.getHands()) : state.getHands() != null) return false;
 
         return true;
     }

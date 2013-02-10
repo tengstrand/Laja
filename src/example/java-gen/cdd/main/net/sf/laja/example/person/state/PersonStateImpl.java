@@ -1,7 +1,9 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.example.person.state.BmiState;
+import net.sf.laja.example.person.state.BmiStateImpl;
 import net.sf.laja.example.person.state.BmiState;
+import net.sf.laja.example.person.state.BmiStateImpl;
 import net.sf.laja.example.person.state.Certificate;
 
 /**
@@ -21,11 +23,12 @@ public class PersonStateImpl implements PersonState {
     public BmiState getSizeState() {
         return new BmiState() {
             public Certificate certificate() { return certificate(); }
-            public int getHeightInCentimeters() { return 0; /* missing attribute 'heightInCentimeters' */ }
-            public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { /* missing attribute 'heightInCentimeters' */ }
 
-            public int getWeightInKilograms() { return 0; /* missing attribute 'weightInKilograms' */ }
-            public void setWeightInKilograms(int weightInKilograms, Object mutator) { /* missing attribute 'weightInKilograms' */ }
+            public int getHeightInCentimeters() { return PersonStateImpl.this.getHeightInCentimeters(); }
+            public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { PersonStateImpl.this.setHeightInCentimeters(heightInCentimeters, mutator); }
+
+            public int getWeightInKilograms() { return PersonStateImpl.this.getWeightInKilograms(); }
+            public void setWeightInKilograms(int weightInKilograms, Object mutator) { PersonStateImpl.this.setWeightInKilograms(weightInKilograms, mutator); }
 
             public void encapsulate() { PersonStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { PersonStateImpl.this.setEncapsulator(encapsulator); }
@@ -54,7 +57,7 @@ public class PersonStateImpl implements PersonState {
                 if (this == value) return true;
                 if (value == null || getClass() != value.getClass()) return false;
 
-                net.sf.laja.example.person.state.BmiState state = (net.sf.laja.example.person.state.BmiState)value;
+                BmiStateImpl state = (BmiStateImpl)value;
 
                 if (heightInCentimeters != state.getHeightInCentimeters()) return false;
                 if (weightInKilograms != state.getWeightInKilograms()) return false;
@@ -72,12 +75,11 @@ public class PersonStateImpl implements PersonState {
 
             @Override
             public String toString() {
-                return "{heightInCentimeters=" + getHeightInCentimeters() +
-                        ", weightInKilograms=" + getWeightInKilograms() + "}";
+                return "{heightInCentimeters=" + heightInCentimeters +
+                        ", weightInKilograms=" + weightInKilograms + "}";
             }
         };
     }
-    // BmiState
 
     PersonStateImpl() {
     }
@@ -158,8 +160,8 @@ public class PersonStateImpl implements PersonState {
 
         PersonStateImpl state = (PersonStateImpl)value;
 
-        if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
-        if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
+        if (givenName != null ? !givenName.equals(state.getGivenName()) : state.getGivenName() != null) return false;
+        if (surname != null ? !surname.equals(state.getSurname()) : state.getSurname() != null) return false;
         if (heightInCentimeters != state.getHeightInCentimeters()) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
 

@@ -92,8 +92,8 @@ public class ForeheadStateImpl implements ForeheadState {
 
         ForeheadStateImpl state = (ForeheadStateImpl)value;
 
-        if (brows != null ? !brows.equals(state.brows) : state.brows != null) return false;
-        if (ears != null ? !ears.equals(state.ears) : state.ears != null) return false;
+        if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
+        if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
 
         return true;
     }

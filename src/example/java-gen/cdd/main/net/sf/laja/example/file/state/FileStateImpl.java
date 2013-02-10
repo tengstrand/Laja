@@ -85,7 +85,7 @@ public class FileStateImpl implements FileState {
 
         FileStateImpl state = (FileStateImpl)value;
 
-        if (filename != null ? !filename.equals(state.filename) : state.filename != null) return false;
+        if (filename != null ? !filename.equals(state.getFilename()) : state.getFilename() != null) return false;
 
         return true;
     }

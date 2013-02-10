@@ -89,7 +89,7 @@ public class TruckTypeStateImpl implements TruckTypeState {
         TruckTypeStateImpl state = (TruckTypeStateImpl)value;
 
         if (numberOfWheels != state.getNumberOfWheels()) return false;
-        if (truckName != null ? !truckName.equals(state.truckName) : state.truckName != null) return false;
+        if (truckName != null ? !truckName.equals(state.getTruckName()) : state.getTruckName() != null) return false;
 
         return true;
     }
