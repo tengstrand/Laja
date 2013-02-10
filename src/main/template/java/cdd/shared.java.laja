@@ -169,21 +169,6 @@ import {template.packagename}.{template.stateClass}ArrayList;
       #set (hasImports = true)
     #end
   #end
-  #foreach (method in stateMethods)
-    #foreach (template in templates.values() where template.classname == method.classname)
-      #stateImports.add("import {template.packagename}.{method.stateBuilderImplClass}")
-      #set (hasImports = true)
-    #end
-  #end
-#end
-
-#macro importProjectedStateBuilder()
-  #foreach (method in stateMethods)
-    #foreach (template in templates.values() where template.classname == method.classname)
-import {template.packagename}.{method.stateBuilderClass};
-      #set (hasImports = true)
-    #end
-  #end
 #end
 
 #macro importCertificate()
