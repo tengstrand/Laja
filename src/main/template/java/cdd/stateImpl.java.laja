@@ -329,7 +329,7 @@ public class {stateImplClass} implements {stateClass} {
   #stateMethods($, "")
 
     {stateImplClass}() {
-  #foreach (attribute in attributes where attribute.isStateSet && attribute.isStateList && !attribute.isExplicitAssigned)
+  #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
         {attribute.variable} = {attribute.typeAsStateImpl}.emptyList();
   #end
   #foreach (attribute in attributes where attribute.isStateSet && !attribute.isExplicitAssigned)

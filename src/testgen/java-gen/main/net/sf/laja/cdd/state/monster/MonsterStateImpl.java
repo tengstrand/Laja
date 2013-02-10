@@ -225,7 +225,7 @@ public class MonsterStateImpl implements MonsterState {
                 };
             }
 
-                    public ForeheadState getForeheadStateState() {
+                    public ForeheadState getForeheadState() {
                         return new ForeheadState() {
                             public Certificate certificate() { return certificate(); }
 
@@ -343,6 +343,10 @@ public class MonsterStateImpl implements MonsterState {
                     }
 
     MonsterStateImpl() {
+        noses = NoseStateArrayList.emptyList();
+        brows = BrowStateArrayList.emptyList();
+        optionalEars = EarStateArrayList.emptyList();
+        mouths = MouthStateArrayList.emptyList();
         ears = EarStateHashSet.emptySet();
     }
 

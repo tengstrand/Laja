@@ -164,6 +164,7 @@ public class CustomerStateImpl implements CustomerState {
             }
 
     CustomerStateImpl() {
+        oldAddresses = AddressStateArrayList.emptyList();
     }
 
     public CustomerStateImpl(Certificate certificate) {

@@ -93,7 +93,7 @@ public interface HeadState {
     void setMouths(MouthStateList mouths, Object mutator);
 
     EyeState getEyeState();
-    ForeheadState getForeheadStateState();
+    ForeheadState getForeheadState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

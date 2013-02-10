@@ -19,6 +19,7 @@ public class ArmStateImpl implements ArmState {
     private Object _encapsulator;
 
     ArmStateImpl() {
+        hands = HandStateArrayList.emptyList();
     }
 
     public ArmStateImpl(Certificate certificate) {

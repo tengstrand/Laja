@@ -21,6 +21,7 @@ public class ForeheadStateImpl implements ForeheadState {
     private Object _encapsulator;
 
     ForeheadStateImpl() {
+        brows = BrowStateArrayList.emptyList();
         ears = EarStateHashSet.emptySet();
     }
 

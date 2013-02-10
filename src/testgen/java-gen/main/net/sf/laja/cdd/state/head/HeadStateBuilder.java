@@ -25,7 +25,7 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public interface HeadStateBuilder {
     EyeStateBuilder getEyeStateBuilder();
-    ForeheadStateBuilder getForeheadStateStateBuilder();
+    ForeheadStateBuilder getForeheadStateBuilder();
     void withHeadWeightInGrams(double headWeightInGrams);
     void withLeftEye(EyeStateBuilder leftEye);
     void withRightEye(EyeStateBuilder rightEye);

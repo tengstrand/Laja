@@ -62,8 +62,8 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         return new EyeStateBuilderImpl(state.getEyeState());
     }
 
-    public ForeheadStateBuilder getForeheadStateStateBuilder() {
-        return new ForeheadStateBuilderImpl(state.getForeheadStateState());
+    public ForeheadStateBuilder getForeheadStateBuilder() {
+        return new ForeheadStateBuilderImpl(state.getForeheadState());
     }
 
     public void withHeadWeightInGrams(double headWeightInGrams) {

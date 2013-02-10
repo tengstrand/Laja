@@ -23,6 +23,7 @@ Includes:
 * Added methods equals + hashCode to XBuilder (where X is the behaviour class).
 * Simplified state projections, the new syntax is (e.g.): void address() { AddressProjection.streetName("main").streetNumber(1); }.
 * Changed the way expanded states are handled to fix various problems with hashCode, equals and toString. Also added support to expand more than one state with the same type.
+* If an expanded type ends with "State", then it will be removed from the name.
 
 == Laja2-006-alpha ==
 Released: 2013-01-04

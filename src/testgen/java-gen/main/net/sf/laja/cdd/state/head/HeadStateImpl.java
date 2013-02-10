@@ -140,7 +140,7 @@ public class HeadStateImpl implements HeadState {
         };
     }
 
-            public ForeheadState getForeheadStateState() {
+            public ForeheadState getForeheadState() {
                 return new ForeheadState() {
                     public Certificate certificate() { return certificate(); }
 
@@ -199,6 +199,10 @@ public class HeadStateImpl implements HeadState {
             }
 
     HeadStateImpl() {
+        noses = NoseStateArrayList.emptyList();
+        brows = BrowStateArrayList.emptyList();
+        optionalEars = EarStateArrayList.emptyList();
+        mouths = MouthStateArrayList.emptyList();
         ears = EarStateHashSet.emptySet();
     }
 
