@@ -3,7 +3,7 @@ package net.sf.laja.cdd.state.monster;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.head.HeadState;
 
-public class MonsterStateTemplate extends MonsterStateImpl {
+public class MonsterStateTemplate {
     int numberOfLegs;
     int numberOfOwnWings;
     HeadState $head;

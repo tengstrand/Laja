@@ -23,6 +23,74 @@ public class VehicleStateImpl implements VehicleState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    VehicleStateImpl() {
+    }
+
+    public VehicleStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static VehicleStateBuilder build() {
+        return new VehicleStateBuilderImpl();
+    }
+
+    public static VehicleStateBuilder build(VehicleState state) {
+        return new VehicleStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getCarState().isValid()) {
+            return false;
+        }
+        if (name == null
+           || (owner == null || !owner.isValid())
+           || color == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // Getters
+    public int getLengthInCentimeters() { return lengthInCentimeters; }
+    public String getName() { return name; }
+    public OwnerState getOwner() { return owner; }
+    public String getColor() { return color; }
+
+    // Setters
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+    public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public CarState getCarState() {
         return new CarState() {
             public Certificate certificate() { return certificate(); }
@@ -42,6 +110,26 @@ public class VehicleStateImpl implements VehicleState {
             public void encapsulate() { VehicleStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { VehicleStateImpl.this.setEncapsulator(encapsulator); }
 
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                if (!getSizeState().isValid()) {
+                    return false;
+                }
+                if (name == null
+           || (owner == null || !owner.isValid())
+           || color == null) {
+                    return false;
+                }
+                return true;
+            }
+
             public VehicleSizeState getSizeState() {
                 return new VehicleSizeState() {
                     public Certificate certificate() { return certificate(); }
@@ -57,7 +145,7 @@ public class VehicleStateImpl implements VehicleState {
                     }
 
                     public boolean isValidAsEncapsulated() {
-                                        return isValid(true);
+                        return isValid(true);
                     }
 
                     private boolean isValid(boolean encapsulated) {
@@ -97,18 +185,6 @@ public class VehicleStateImpl implements VehicleState {
                 };
             }
 
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                return lengthInCentimeters >= 0;
-            }
-
             @Override
             public boolean equals(Object that) {
                if (this == that) return true;
@@ -140,71 +216,6 @@ public class VehicleStateImpl implements VehicleState {
                 return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
-    }
-
-    VehicleStateImpl() {
-    }
-
-    public VehicleStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static VehicleStateBuilder build() {
-        return new VehicleStateBuilderImpl();
-    }
-
-    public static VehicleStateBuilder build(VehicleState state) {
-        return new VehicleStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (name == null
-           || (owner == null || !owner.isValid())
-           || color == null) {
-            return false;
-        }
-        return true;
-    }
-
-    // Getters
-    public int getLengthInCentimeters() { return lengthInCentimeters; }
-    public String getName() { return name; }
-    public OwnerState getOwner() { return owner; }
-    public String getColor() { return color; }
-
-    // Setters
-    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
-    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
-    public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
-    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override

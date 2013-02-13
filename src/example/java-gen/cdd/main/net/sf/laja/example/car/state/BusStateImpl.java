@@ -19,6 +19,70 @@ public class BusStateImpl implements BusState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    BusStateImpl() {
+    }
+
+    public BusStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static BusStateBuilder build() {
+        return new BusStateBuilderImpl();
+    }
+
+    public static BusStateBuilder build(BusState state) {
+        return new BusStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getSizeState().isValid()) {
+            return false;
+        }
+        if (name == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // Getters
+    public String getName() { return name; }
+    public int getLengthInCentimeters() { return lengthInCentimeters; }
+    public int getWeightInKilograms() { return weightInKilograms; }
+
+    // Setters
+    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
@@ -34,19 +98,12 @@ public class BusStateImpl implements BusState {
             }
 
             public boolean isValidAsEncapsulated() {
-                        return isValid(true);
+                return isValid(true);
             }
 
             private boolean isValid(boolean encapsulated) {
-        if (!isVehicleSizeValid()) {
-            return false;
-        }
                 return lengthInCentimeters >= 0;
             }
-
-    private boolean isVehicleSizeValid() {
-        return lengthInCentimeters >= 0;
-    }
 
             @Override
             public boolean equals(Object that) {
@@ -79,74 +136,6 @@ public class BusStateImpl implements BusState {
                 return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
-    }
-
-    BusStateImpl() {
-    }
-
-    public BusStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static BusStateBuilder build() {
-        return new BusStateBuilderImpl();
-    }
-
-    public static BusStateBuilder build(BusState state) {
-        return new BusStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (name == null) {
-            return false;
-        }
-        if (!isVehicleSizeValid()) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isVehicleSizeValid() {
-        return lengthInCentimeters >= 0;
-    }
-
-    // Getters
-    public String getName() { return name; }
-    public int getLengthInCentimeters() { return lengthInCentimeters; }
-    public int getWeightInKilograms() { return weightInKilograms; }
-
-    // Setters
-    public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
-    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override

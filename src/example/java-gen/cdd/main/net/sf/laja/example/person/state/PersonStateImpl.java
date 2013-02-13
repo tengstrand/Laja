@@ -20,6 +20,73 @@ public class PersonStateImpl implements PersonState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    PersonStateImpl() {
+    }
+
+    public PersonStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static PersonStateBuilder build() {
+        return new PersonStateBuilderImpl();
+    }
+
+    public static PersonStateBuilder build(PersonState state) {
+        return new PersonStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getSizeState().isValid()) {
+            return false;
+        }
+        if (givenName == null
+           || surname == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // Getters
+    public String getGivenName() { return givenName; }
+    public String getSurname() { return surname; }
+    public int getHeightInCentimeters() { return heightInCentimeters; }
+    public int getWeightInKilograms() { return weightInKilograms; }
+
+    // Setters
+    public void setGivenName(String givenName, Object mutator) { checkMutator(mutator); this.givenName = givenName; }
+    public void setSurname(String surname, Object mutator) { checkMutator(mutator); this.surname = surname; }
+    public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { checkMutator(mutator); this.heightInCentimeters = heightInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public BmiState getSizeState() {
         return new BmiState() {
             public Certificate certificate() { return certificate(); }
@@ -38,7 +105,7 @@ public class PersonStateImpl implements PersonState {
             }
 
             public boolean isValidAsEncapsulated() {
-                        return isValid(true);
+                return isValid(true);
             }
 
             private boolean isValid(boolean encapsulated) {
@@ -79,70 +146,6 @@ public class PersonStateImpl implements PersonState {
                         ", weightInKilograms=" + weightInKilograms + "}";
             }
         };
-    }
-
-    PersonStateImpl() {
-    }
-
-    public PersonStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static PersonStateBuilder build() {
-        return new PersonStateBuilderImpl();
-    }
-
-    public static PersonStateBuilder build(PersonState state) {
-        return new PersonStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (givenName == null
-           || surname == null) {
-            return false;
-        }
-        return true;
-    }
-
-    // Getters
-    public String getGivenName() { return givenName; }
-    public String getSurname() { return surname; }
-    public int getHeightInCentimeters() { return heightInCentimeters; }
-    public int getWeightInKilograms() { return weightInKilograms; }
-
-    // Setters
-    public void setGivenName(String givenName, Object mutator) { checkMutator(mutator); this.givenName = givenName; }
-    public void setSurname(String surname, Object mutator) { checkMutator(mutator); this.surname = surname; }
-    public void setHeightInCentimeters(int heightInCentimeters, Object mutator) { checkMutator(mutator); this.heightInCentimeters = heightInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override

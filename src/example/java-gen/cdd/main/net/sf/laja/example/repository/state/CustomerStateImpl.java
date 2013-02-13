@@ -30,139 +30,6 @@ public class CustomerStateImpl implements CustomerState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
-    public AddressState getAddressState() {
-        return new AddressState() {
-            public Certificate certificate() { return certificate(); }
-
-            public int getAddressId() { return CustomerStateImpl.this.getAddressId(); }
-            public void setAddressId(int addressId, Object mutator) { CustomerStateImpl.this.setAddressId(addressId, mutator); }
-
-            public String getStreetName() { return CustomerStateImpl.this.getStreetName(); }
-            public void setStreetName(String streetName, Object mutator) { CustomerStateImpl.this.setStreetName(streetName, mutator); }
-
-            public int getZipcode() { return CustomerStateImpl.this.getZipcode(); }
-            public void setZipcode(int zipcode, Object mutator) { CustomerStateImpl.this.setZipcode(zipcode, mutator); }
-
-            public String getCity() { return CustomerStateImpl.this.getCity(); }
-            public void setCity(String city, Object mutator) { CustomerStateImpl.this.setCity(city, mutator); }
-
-            public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
-
-            public ZipcodeState getZipcodeState() {
-                return new ZipcodeState() {
-                    public Certificate certificate() { return certificate(); }
-
-                    public int getZipcode() { return CustomerStateImpl.this.getZipcode(); }
-                    public void setZipcode(int zipcode, Object mutator) { CustomerStateImpl.this.setZipcode(zipcode, mutator); }
-
-                    public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
-                    public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
-
-                    public boolean isValid() {
-                        return isValid(_encapsulated);
-                    }
-
-                    public boolean isValidAsEncapsulated() {
-                                        return isValid(true);
-                    }
-
-                    private boolean isValid(boolean encapsulated) {
-        if (!isAddressValid()) {
-            return false;
-        }
-                        return true;
-                    }
-
-    private boolean isAddressValid() {
-        return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
-    }
-
-                    @Override
-                    public boolean equals(Object that) {
-                       if (this == that) return true;
-                       if (!(that instanceof CustomerStateComparable)) return false;
-
-                       return true;
-                    }
-
-                    public boolean equalsValue(Object value) {
-                        if (this == value) return true;
-                        if (value == null || getClass() != value.getClass()) return false;
-
-                        ZipcodeStateImpl state = (ZipcodeStateImpl)value;
-
-                        if (zipcode != state.getZipcode()) return false;
-
-                        return true;
-                    }
-
-                    @Override
-                    public int hashCode() {
-                        int result = zipcode;
-
-                        return result;
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "{zipcode=" + zipcode + "}";
-                    }
-                };
-            }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-        if (!isAddressValid()) {
-            return false;
-        }
-                return true;
-            }
-
-    private boolean isAddressValid() {
-        return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
-    }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof CustomerStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                ZipcodeStateImpl state = (ZipcodeStateImpl)value;
-
-                if (zipcode != state.getZipcode()) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = zipcode;
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{zipcode=" + zipcode + "}";
-            }
-        };
-    }
-
     CustomerStateImpl() {
         oldAddresses = AddressStateArrayList.emptyList();
     }
@@ -195,20 +62,16 @@ public class CustomerStateImpl implements CustomerState {
     }
 
     private boolean isValid(boolean encapsulated) {
+        if (!getAddressState().isValid()) {
+            return false;
+        }
         if (givenName == null
            || streetName == null
            || city == null
            || (oldAddresses != null && !oldAddresses.isValid())) {
             return false;
         }
-        if (!isAddressValid()) {
-            return false;
-        }
         return age >= 0 && ssn >= 190000000000L;
-    }
-
-    private boolean isAddressValid() {
-        return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
     }
 
     // Getters
@@ -247,6 +110,132 @@ public class CustomerStateImpl implements CustomerState {
 
     public void setEncapsulator(Object encapsulator) {
         _encapsulator = encapsulator;
+    }
+
+    public AddressState getAddressState() {
+        return new AddressState() {
+            public Certificate certificate() { return certificate(); }
+
+            public int getAddressId() { return CustomerStateImpl.this.getAddressId(); }
+            public void setAddressId(int addressId, Object mutator) { CustomerStateImpl.this.setAddressId(addressId, mutator); }
+
+            public String getStreetName() { return CustomerStateImpl.this.getStreetName(); }
+            public void setStreetName(String streetName, Object mutator) { CustomerStateImpl.this.setStreetName(streetName, mutator); }
+
+            public int getZipcode() { return CustomerStateImpl.this.getZipcode(); }
+            public void setZipcode(int zipcode, Object mutator) { CustomerStateImpl.this.setZipcode(zipcode, mutator); }
+
+            public String getCity() { return CustomerStateImpl.this.getCity(); }
+            public void setCity(String city, Object mutator) { CustomerStateImpl.this.setCity(city, mutator); }
+
+            public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                if (!getZipcodeState().isValid()) {
+                    return false;
+                }
+                if (streetName == null
+           || city == null) {
+                    return false;
+                }
+                return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
+            }
+
+            public ZipcodeState getZipcodeState() {
+                return new ZipcodeState() {
+                    public Certificate certificate() { return certificate(); }
+
+                    public int getZipcode() { return CustomerStateImpl.this.getZipcode(); }
+                    public void setZipcode(int zipcode, Object mutator) { CustomerStateImpl.this.setZipcode(zipcode, mutator); }
+
+                    public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
+                    public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
+
+                    public boolean isValid() {
+                        return isValid(_encapsulated);
+                    }
+
+                    public boolean isValidAsEncapsulated() {
+                        return isValid(true);
+                    }
+
+                    private boolean isValid(boolean encapsulated) {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean equals(Object that) {
+                       if (this == that) return true;
+                       if (!(that instanceof CustomerStateComparable)) return false;
+
+                       return true;
+                    }
+
+                    public boolean equalsValue(Object value) {
+                        if (this == value) return true;
+                        if (value == null || getClass() != value.getClass()) return false;
+
+                        ZipcodeStateImpl state = (ZipcodeStateImpl)value;
+
+                        if (zipcode != state.getZipcode()) return false;
+
+                        return true;
+                    }
+
+                    @Override
+                    public int hashCode() {
+                        int result = zipcode;
+
+                        return result;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "{zipcode=" + zipcode + "}";
+                    }
+                };
+            }
+
+            @Override
+            public boolean equals(Object that) {
+               if (this == that) return true;
+               if (!(that instanceof CustomerStateComparable)) return false;
+
+               return true;
+            }
+
+            public boolean equalsValue(Object value) {
+                if (this == value) return true;
+                if (value == null || getClass() != value.getClass()) return false;
+
+                ZipcodeStateImpl state = (ZipcodeStateImpl)value;
+
+                if (zipcode != state.getZipcode()) return false;
+
+                return true;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = zipcode;
+
+                return result;
+            }
+
+            @Override
+            public String toString() {
+                return "{zipcode=" + zipcode + "}";
+            }
+        };
     }
 
     @Override

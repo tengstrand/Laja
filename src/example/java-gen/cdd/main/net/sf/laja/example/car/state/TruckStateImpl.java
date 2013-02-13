@@ -23,6 +23,76 @@ public class TruckStateImpl implements TruckState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    TruckStateImpl() {
+    }
+
+    public TruckStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static TruckStateBuilder build() {
+        return new TruckStateBuilderImpl();
+    }
+
+    public static TruckStateBuilder build(TruckState state) {
+        return new TruckStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getSizeState().isValid()) {
+            return false;
+        }
+        if ((type == null || !type.isValid())
+           || color == null
+           || (owner == null || !owner.isValid())) {
+            return false;
+        }
+        return true;
+    }
+
+    // Getters
+    public int getLengthInCentimeters() { return lengthInCentimeters; }
+    public int getWeightInKilograms() { return weightInKilograms; }
+    public TruckTypeState getType() { return type; }
+    public String getColor() { return color; }
+    public OwnerState getOwner() { return owner; }
+
+    // Setters
+    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
+    public void setType(TruckTypeState type, Object mutator) { checkMutator(mutator); this.type = type; }
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+    public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public VehicleSizeState getSizeState() {
         return new VehicleSizeState() {
             public Certificate certificate() { return certificate(); }
@@ -38,19 +108,12 @@ public class TruckStateImpl implements TruckState {
             }
 
             public boolean isValidAsEncapsulated() {
-                        return isValid(true);
+                return isValid(true);
             }
 
             private boolean isValid(boolean encapsulated) {
-        if (!isVehicleSizeValid()) {
-            return false;
-        }
                 return lengthInCentimeters >= 0;
             }
-
-    private boolean isVehicleSizeValid() {
-        return lengthInCentimeters >= 0;
-    }
 
             @Override
             public boolean equals(Object that) {
@@ -83,80 +146,6 @@ public class TruckStateImpl implements TruckState {
                 return "{lengthInCentimeters=" + lengthInCentimeters + "}";
             }
         };
-    }
-
-    TruckStateImpl() {
-    }
-
-    public TruckStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static TruckStateBuilder build() {
-        return new TruckStateBuilderImpl();
-    }
-
-    public static TruckStateBuilder build(TruckState state) {
-        return new TruckStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if ((type == null || !type.isValid())
-           || color == null
-           || (owner == null || !owner.isValid())) {
-            return false;
-        }
-        if (!isVehicleSizeValid()) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isVehicleSizeValid() {
-        return lengthInCentimeters >= 0;
-    }
-
-    // Getters
-    public int getLengthInCentimeters() { return lengthInCentimeters; }
-    public int getWeightInKilograms() { return weightInKilograms; }
-    public TruckTypeState getType() { return type; }
-    public String getColor() { return color; }
-    public OwnerState getOwner() { return owner; }
-
-    // Setters
-    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
-    public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
-    public void setType(TruckTypeState type, Object mutator) { checkMutator(mutator); this.type = type; }
-    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
-    public void setOwner(OwnerState owner, Object mutator) { checkMutator(mutator); this.owner = owner; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override

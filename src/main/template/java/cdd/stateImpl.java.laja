@@ -9,7 +9,7 @@
 #macro stateMethod(t, expandedAttribute, stack)
   #set (tab = stack.get())
 
-{tab}public {expandedAttribute.stateClass} get{expandedAttribute.variableAsClass}State() {
+{tab}public {expandedAttribute.stateClass} {expandedAttribute.variableStateGetter}() {
 {tab}    return new {expandedAttribute.stateClass}() {
 {tab}        public Certificate certificate() { return certificate(); }
 
@@ -20,11 +20,11 @@
   #end
 {tab}        public void encapsulate() { {stateImplClass}.this.encapsulate(); }
 {tab}        public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
+  #isValid(t, "        {tab}")
   #stack.push("        {tab}")
   #stateMethods(templates.get(expandedAttribute.cleanedStateType), stack)
   #stack.pull()
   #set (tab = stack.get())
-  #isValid(t, "        {tab}")
   #equals(t, "        {tab}")
 ## fix!
 ##      #equalsState(t, "        {tab}")
@@ -81,10 +81,15 @@
 {tab}}
 
 {tab}public boolean isValidAsEncapsulated() {
-{tab}{tab}return isValid(true);
+{tab}    return isValid(true);
 {tab}}
 
 {tab}private boolean isValid(boolean encapsulated) {
+  #foreach (a in t.expandedAttributes)
+{tab}    if (!{a.variableStateGetter}().isValid()) {
+{tab}        return false;
+{tab}    }
+  #end
   #set (hasMandatoryOrStateAttributes = false)
   #foreach (attribute in t.attributes where attribute.isMandatory && !attribute.isPrimitive)
     #set (hasMandatoryOrStateAttributes = true)
@@ -122,13 +127,6 @@
 {tab}        return false;
 {tab}    }
   #end
-  #foreach (expandedType in expandedTypes)
-    #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type && t2.isValidStatement != null)
-        if (!is{expandedType.type}Valid()) {
-            return false;
-        }
-    #end
-  #end
   #if (t.isValidStatement == null)
 {tab}    return true;
   #else
@@ -144,16 +142,6 @@
 {tab}    {statement}
   #end
 {tab}}
-  #if (expandedTypes.size() > 0)
-    #foreach (expandedType in expandedTypes)
-      #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type && t2.isValidStatement != null)
-
-    private boolean is{expandedType.type}Valid() {
-        {t2.isValidStatement}
-    }
-      #end
-    #end
-  #end
 #end
 
 #function valueAttributes(t)
@@ -329,9 +317,6 @@ public class {stateImplClass} implements {stateClass} {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-  #set (stack = stack())
-  #stack.push("    ")
-  #stateMethods($, stack)
 
     {stateImplClass}() {
   #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)
@@ -365,6 +350,9 @@ public class {stateImplClass} implements {stateClass} {
   #checkMutator()
   #encapsulate()
   #setEncapsulator()
+  #set (stack = stack())
+  #stack.push("    ")
+  #stateMethods($, stack)
   #equals($, "    ")
 ## fix!
 ##  #equalsState($, "    ")

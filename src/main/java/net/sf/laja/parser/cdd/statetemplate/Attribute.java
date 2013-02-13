@@ -144,6 +144,10 @@ public class Attribute implements StateTemplateParser.IAttribute {
         return "get" + StringUtils.capitalize(getStateBuilderVariable());
     }
 
+    public String getVariableStateGetter() {
+        return "get" + variableAsClass + "State";
+    }
+
     public void setType(String type) {
         final String state = "State";
         final String stateSet = "StateSet";

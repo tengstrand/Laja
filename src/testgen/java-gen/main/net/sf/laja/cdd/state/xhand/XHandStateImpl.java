@@ -21,6 +21,66 @@ public class XHandStateImpl implements XHandState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    XHandStateImpl() {
+    }
+
+    public XHandStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static XHandStateBuilder build() {
+        return new XHandStateBuilderImpl();
+    }
+
+    public static XHandStateBuilder build(XHandState state) {
+        return new XHandStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getFingerState().isValid()) {
+            return false;
+        }
+        if (color == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // Getters
+    public String getColor() { return color; }
+
+    // Setters
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public FingerState getFingerState() {
         return new FingerState() {
             public Certificate certificate() { return certificate(); }
@@ -30,6 +90,24 @@ public class XHandStateImpl implements XHandState {
 
             public void encapsulate() { XHandStateImpl.this.encapsulate(); }
             public void setEncapsulator(Object encapsulator) { XHandStateImpl.this.setEncapsulator(encapsulator); }
+
+            public boolean isValid() {
+                return isValid(_encapsulated);
+            }
+
+            public boolean isValidAsEncapsulated() {
+                return isValid(true);
+            }
+
+            private boolean isValid(boolean encapsulated) {
+                if (!getNailState().isValid()) {
+                    return false;
+                }
+                if (color == null) {
+                    return false;
+                }
+                return true;
+            }
 
             public NailState getNailState() {
                 return new NailState() {
@@ -46,7 +124,7 @@ public class XHandStateImpl implements XHandState {
                     }
 
                     public boolean isValidAsEncapsulated() {
-                                        return isValid(true);
+                        return isValid(true);
                     }
 
                     private boolean isValid(boolean encapsulated) {
@@ -89,21 +167,6 @@ public class XHandStateImpl implements XHandState {
                 };
             }
 
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                if (color == null) {
-                    return false;
-                }
-                return "red".equals(color);
-            }
-
             @Override
             public boolean equals(Object that) {
                if (this == that) return true;
@@ -135,63 +198,6 @@ public class XHandStateImpl implements XHandState {
                 return "{color=" + color + "}";
             }
         };
-    }
-
-    XHandStateImpl() {
-    }
-
-    public XHandStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static XHandStateBuilder build() {
-        return new XHandStateBuilderImpl();
-    }
-
-    public static XHandStateBuilder build(XHandState state) {
-        return new XHandStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (color == null) {
-            return false;
-        }
-        return true;
-    }
-
-    // Getters
-    public String getColor() { return color; }
-
-    // Setters
-    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override

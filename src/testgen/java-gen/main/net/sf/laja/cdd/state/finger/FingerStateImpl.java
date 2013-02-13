@@ -18,6 +18,66 @@ public class FingerStateImpl implements FingerState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    FingerStateImpl() {
+    }
+
+    public FingerStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static FingerStateBuilder build() {
+        return new FingerStateBuilderImpl();
+    }
+
+    public static FingerStateBuilder build(FingerState state) {
+        return new FingerStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getNailState().isValid()) {
+            return false;
+        }
+        if (color == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // Getters
+    public String getColor() { return color; }
+
+    // Setters
+    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public NailState getNailState() {
         return new NailState() {
             public Certificate certificate() { return certificate(); }
@@ -33,22 +93,15 @@ public class FingerStateImpl implements FingerState {
             }
 
             public boolean isValidAsEncapsulated() {
-                        return isValid(true);
+                return isValid(true);
             }
 
             private boolean isValid(boolean encapsulated) {
                 if (color == null) {
                     return false;
                 }
-        if (!isNailValid()) {
-            return false;
-        }
                 return "red".equals(color);
             }
-
-    private boolean isNailValid() {
-        return "red".equals(color);
-    }
 
             @Override
             public boolean equals(Object that) {
@@ -81,70 +134,6 @@ public class FingerStateImpl implements FingerState {
                 return "{color=" + color + "}";
             }
         };
-    }
-
-    FingerStateImpl() {
-    }
-
-    public FingerStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static FingerStateBuilder build() {
-        return new FingerStateBuilderImpl();
-    }
-
-    public static FingerStateBuilder build(FingerState state) {
-        return new FingerStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (color == null) {
-            return false;
-        }
-        if (!isNailValid()) {
-            return false;
-        }
-        return true;
-    }
-
-    private boolean isNailValid() {
-        return "red".equals(color);
-    }
-
-    // Getters
-    public String getColor() { return color; }
-
-    // Setters
-    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override

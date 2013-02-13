@@ -20,6 +20,73 @@ public class AddressStateImpl implements AddressState {
     private boolean _encapsulated = false;
     private Object _encapsulator;
 
+    AddressStateImpl() {
+    }
+
+    public AddressStateImpl(Certificate certificate) {
+        this();
+        if (certificate == null) {
+            throw new IllegalArgumentException("Certificate can not be null");
+        }
+    }
+
+    public static AddressStateBuilder build() {
+        return new AddressStateBuilderImpl();
+    }
+
+    public static AddressStateBuilder build(AddressState state) {
+        return new AddressStateBuilderImpl(state);
+    }
+
+    public Certificate certificate() {
+        return Certificate.get(this);
+    }
+
+    public boolean isValid() {
+        return isValid(_encapsulated);
+    }
+
+    public boolean isValidAsEncapsulated() {
+        return isValid(true);
+    }
+
+    private boolean isValid(boolean encapsulated) {
+        if (!getZipcodeState().isValid()) {
+            return false;
+        }
+        if (streetName == null
+           || city == null) {
+            return false;
+        }
+        return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
+    }
+
+    // Getters
+    public int getAddressId() { return addressId; }
+    public String getStreetName() { return streetName; }
+    public int getZipcode() { return zipcode; }
+    public String getCity() { return city; }
+
+    // Setters
+    public void setAddressId(int addressId, Object mutator) { checkMutator(mutator); this.addressId = addressId; }
+    public void setStreetName(String streetName, Object mutator) { checkMutator(mutator); this.streetName = streetName; }
+    public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
+    public void setCity(String city, Object mutator) { checkMutator(mutator); this.city = city; }
+
+    private void checkMutator(Object mutator) {
+        if (mutator != _encapsulator) {
+            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
+        }
+    }
+
+    public void encapsulate() {
+        _encapsulated = true;
+    }
+
+    public void setEncapsulator(Object encapsulator) {
+        _encapsulator = encapsulator;
+    }
+
     public ZipcodeState getZipcodeState() {
         return new ZipcodeState() {
             public Certificate certificate() { return certificate(); }
@@ -35,7 +102,7 @@ public class AddressStateImpl implements AddressState {
             }
 
             public boolean isValidAsEncapsulated() {
-                        return isValid(true);
+                return isValid(true);
             }
 
             private boolean isValid(boolean encapsulated) {
@@ -73,70 +140,6 @@ public class AddressStateImpl implements AddressState {
                 return "{zipcode=" + zipcode + "}";
             }
         };
-    }
-
-    AddressStateImpl() {
-    }
-
-    public AddressStateImpl(Certificate certificate) {
-        this();
-        if (certificate == null) {
-            throw new IllegalArgumentException("Certificate can not be null");
-        }
-    }
-
-    public static AddressStateBuilder build() {
-        return new AddressStateBuilderImpl();
-    }
-
-    public static AddressStateBuilder build(AddressState state) {
-        return new AddressStateBuilderImpl(state);
-    }
-
-    public Certificate certificate() {
-        return Certificate.get(this);
-    }
-
-    public boolean isValid() {
-        return isValid(_encapsulated);
-    }
-
-    public boolean isValidAsEncapsulated() {
-        return isValid(true);
-    }
-
-    private boolean isValid(boolean encapsulated) {
-        if (streetName == null
-           || city == null) {
-            return false;
-        }
-        return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
-    }
-
-    // Getters
-    public int getAddressId() { return addressId; }
-    public String getStreetName() { return streetName; }
-    public int getZipcode() { return zipcode; }
-    public String getCity() { return city; }
-
-    // Setters
-    public void setAddressId(int addressId, Object mutator) { checkMutator(mutator); this.addressId = addressId; }
-    public void setStreetName(String streetName, Object mutator) { checkMutator(mutator); this.streetName = streetName; }
-    public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
-    public void setCity(String city, Object mutator) { checkMutator(mutator); this.city = city; }
-
-    private void checkMutator(Object mutator) {
-        if (mutator != _encapsulator) {
-            throw new IllegalStateException("The state can only be mutated by current instance of " + (_encapsulator == null ? null : _encapsulator.getClass().getName()));
-        }
-    }
-
-    public void encapsulate() {
-        _encapsulated = true;
-    }
-
-    public void setEncapsulator(Object encapsulator) {
-        _encapsulator = encapsulator;
     }
 
     @Override
