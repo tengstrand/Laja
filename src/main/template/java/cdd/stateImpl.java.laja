@@ -1,34 +1,38 @@
 
-#macro stateMethods(expandedStateTemplate, tab)
+#macro stateMethods(expandedStateTemplate, stack)
   #foreach (expandedAttribute in expandedStateTemplate.expandedAttributes)
     #set (t = templates.get(expandedAttribute.cleanedStateType))
-    #stateMethod(t, expandedAttribute, tab)
+    #stateMethod(t, expandedAttribute, stack)
   #end
 #end
 
-#macro stateMethod(t, expandedAttribute, tab)
+#macro stateMethod(t, expandedAttribute, stack)
+  #set (tab = stack.get())
 
-{tab}    public {expandedAttribute.stateClass} get{expandedAttribute.variableAsClass}State() {
-{tab}        return new {expandedAttribute.stateClass}() {
-{tab}            public Certificate certificate() { return certificate(); }
+{tab}public {expandedAttribute.stateClass} get{expandedAttribute.variableAsClass}State() {
+{tab}    return new {expandedAttribute.stateClass}() {
+{tab}        public Certificate certificate() { return certificate(); }
 
   #foreach (attribute in t.attributes)
-{tab}            public {attribute.type} {attribute.getter}() { return {stateImplClass}.this.{attribute.getter}(); }
-{tab}            public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {stateImplClass}.this.{attribute.setter}({attribute.variable}, mutator); }
+{tab}        public {attribute.type} {attribute.getter}() { return {stateImplClass}.this.{attribute.getter}(); }
+{tab}        public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {stateImplClass}.this.{attribute.setter}({attribute.variable}, mutator); }
 
   #end
-{tab}            public void encapsulate() { {stateImplClass}.this.encapsulate(); }
-{tab}            public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
-  #stateMethods(templates.get(expandedAttribute.cleanedStateType), "        {tab}")
-  #isValid(t, "            ")
-  #equals(t, "            ")
+{tab}        public void encapsulate() { {stateImplClass}.this.encapsulate(); }
+{tab}        public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
+  #stack.push("        {tab}")
+  #stateMethods(templates.get(expandedAttribute.cleanedStateType), stack)
+  #stack.pull()
+  #set (tab = stack.get())
+  #isValid(t, "        {tab}")
+  #equals(t, "        {tab}")
 ## fix!
-##      #equalsState(t, "            ")
-  #equalsValue(t, "            ")
-  #hashCode(t, "            ")
-  #toString(t, "            ")
-{tab}        };
-{tab}    }
+##      #equalsState(t, "        {tab}")
+  #equalsValue(t, "        {tab}")
+  #hashCode(t, "        {tab}")
+  #toString(t, "        {tab}")
+{tab}    };
+{tab}}
 #end
 
 #macro gettersAndSetters()
@@ -325,7 +329,9 @@ public class {stateImplClass} implements {stateClass} {
 
     private boolean _encapsulated = false;
     private Object _encapsulator;
-  #stateMethods($, "")
+  #set (stack = stack())
+  #stack.push("    ")
+  #stateMethods($, stack)
 
     {stateImplClass}() {
   #foreach (attribute in attributes where attribute.isStateList && !attribute.isExplicitAssigned)

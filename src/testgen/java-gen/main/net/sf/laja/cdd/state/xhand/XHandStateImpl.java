@@ -41,51 +41,51 @@ public class XHandStateImpl implements XHandState {
                     public void encapsulate() { XHandStateImpl.this.encapsulate(); }
                     public void setEncapsulator(Object encapsulator) { XHandStateImpl.this.setEncapsulator(encapsulator); }
 
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
+                    public boolean isValid() {
+                        return isValid(_encapsulated);
+                    }
 
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
+                    public boolean isValidAsEncapsulated() {
+                                        return isValid(true);
+                    }
 
-            private boolean isValid(boolean encapsulated) {
-                if (color == null) {
-                    return false;
-                }
-                return "red".equals(color);
-            }
+                    private boolean isValid(boolean encapsulated) {
+                        if (color == null) {
+                            return false;
+                        }
+                        return "red".equals(color);
+                    }
 
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof XHandStateComparable)) return false;
+                    @Override
+                    public boolean equals(Object that) {
+                       if (this == that) return true;
+                       if (!(that instanceof XHandStateComparable)) return false;
 
-               return true;
-            }
+                       return true;
+                    }
 
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
+                    public boolean equalsValue(Object value) {
+                        if (this == value) return true;
+                        if (value == null || getClass() != value.getClass()) return false;
 
-                NailStateImpl state = (NailStateImpl)value;
+                        NailStateImpl state = (NailStateImpl)value;
 
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+                        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
 
-                return true;
-            }
+                        return true;
+                    }
 
-            @Override
-            public int hashCode() {
-                int result = color != null ? color.hashCode() : 0;
+                    @Override
+                    public int hashCode() {
+                        int result = color != null ? color.hashCode() : 0;
 
-                return result;
-            }
+                        return result;
+                    }
 
-            @Override
-            public String toString() {
-                return "{color=" + color + "}";
-            }
+                    @Override
+                    public String toString() {
+                        return "{color=" + color + "}";
+                    }
                 };
             }
 
@@ -134,8 +134,8 @@ public class XHandStateImpl implements XHandState {
             public String toString() {
                 return "{color=" + color + "}";
             }
-                };
-            }
+        };
+    }
 
     XHandStateImpl() {
     }

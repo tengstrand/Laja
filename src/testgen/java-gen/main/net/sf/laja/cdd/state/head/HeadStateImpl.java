@@ -140,18 +140,18 @@ public class HeadStateImpl implements HeadState {
         };
     }
 
-            public ForeheadState getForeheadState() {
-                return new ForeheadState() {
-                    public Certificate certificate() { return certificate(); }
+    public ForeheadState getForeheadState() {
+        return new ForeheadState() {
+            public Certificate certificate() { return certificate(); }
 
-                    public BrowStateList getBrows() { return HeadStateImpl.this.getBrows(); }
-                    public void setBrows(BrowStateList brows, Object mutator) { HeadStateImpl.this.setBrows(brows, mutator); }
+            public BrowStateList getBrows() { return HeadStateImpl.this.getBrows(); }
+            public void setBrows(BrowStateList brows, Object mutator) { HeadStateImpl.this.setBrows(brows, mutator); }
 
-                    public EarStateSet getEars() { return HeadStateImpl.this.getEars(); }
-                    public void setEars(EarStateSet ears, Object mutator) { HeadStateImpl.this.setEars(ears, mutator); }
+            public EarStateSet getEars() { return HeadStateImpl.this.getEars(); }
+            public void setEars(EarStateSet ears, Object mutator) { HeadStateImpl.this.setEars(ears, mutator); }
 
-                    public void encapsulate() { HeadStateImpl.this.encapsulate(); }
-                    public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
+            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
+            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
 
             public boolean isValid() {
                 return isValid(_encapsulated);
@@ -195,8 +195,8 @@ public class HeadStateImpl implements HeadState {
                 return "{brows=" + brows +
                         ", ears=" + ears + "}";
             }
-                };
-            }
+        };
+    }
 
     HeadStateImpl() {
         noses = NoseStateArrayList.emptyList();

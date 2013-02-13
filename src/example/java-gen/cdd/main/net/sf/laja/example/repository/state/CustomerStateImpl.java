@@ -59,55 +59,55 @@ public class CustomerStateImpl implements CustomerState {
                     public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
                     public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
 
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
+                    public boolean isValid() {
+                        return isValid(_encapsulated);
+                    }
 
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
+                    public boolean isValidAsEncapsulated() {
+                                        return isValid(true);
+                    }
 
-            private boolean isValid(boolean encapsulated) {
+                    private boolean isValid(boolean encapsulated) {
         if (!isAddressValid()) {
             return false;
         }
-                return true;
-            }
+                        return true;
+                    }
 
     private boolean isAddressValid() {
         return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
     }
 
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof CustomerStateComparable)) return false;
+                    @Override
+                    public boolean equals(Object that) {
+                       if (this == that) return true;
+                       if (!(that instanceof CustomerStateComparable)) return false;
 
-               return true;
-            }
+                       return true;
+                    }
 
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
+                    public boolean equalsValue(Object value) {
+                        if (this == value) return true;
+                        if (value == null || getClass() != value.getClass()) return false;
 
-                ZipcodeStateImpl state = (ZipcodeStateImpl)value;
+                        ZipcodeStateImpl state = (ZipcodeStateImpl)value;
 
-                if (zipcode != state.getZipcode()) return false;
+                        if (zipcode != state.getZipcode()) return false;
 
-                return true;
-            }
+                        return true;
+                    }
 
-            @Override
-            public int hashCode() {
-                int result = zipcode;
+                    @Override
+                    public int hashCode() {
+                        int result = zipcode;
 
-                return result;
-            }
+                        return result;
+                    }
 
-            @Override
-            public String toString() {
-                return "{zipcode=" + zipcode + "}";
-            }
+                    @Override
+                    public String toString() {
+                        return "{zipcode=" + zipcode + "}";
+                    }
                 };
             }
 
@@ -160,8 +160,8 @@ public class CustomerStateImpl implements CustomerState {
             public String toString() {
                 return "{zipcode=" + zipcode + "}";
             }
-                };
-            }
+        };
+    }
 
     CustomerStateImpl() {
         oldAddresses = AddressStateArrayList.emptyList();

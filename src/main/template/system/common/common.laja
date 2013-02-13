@@ -1,12 +1,24 @@
 
-#macro lazyImportCommon()
+#macro lazyImportCounter()
   #if ($laja.counterImported == null)
     #import "{.}/Counter.groovy"
     #set ($laja.counterImported = true)
   #end
 #end
 
+#macro lazyImportStack()
+  #if ($laja.stackImported == null)
+    #import "{.}/Stack.groovy"
+    #set ($laja.stackImported = true)
+  #end
+#end
+
 #function counter(initialValue)
-  #lazyImportCommon()
+  #lazyImportCounter()
   #return new Counter(initialValue);
+#end
+
+#function stack()
+  #lazyImportStack()
+  #return new Stack();
 #end

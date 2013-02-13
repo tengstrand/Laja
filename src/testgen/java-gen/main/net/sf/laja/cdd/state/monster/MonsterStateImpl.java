@@ -160,83 +160,135 @@ public class MonsterStateImpl implements MonsterState {
                     public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
                     public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
 
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
+                    public boolean isValid() {
+                        return isValid(_encapsulated);
+                    }
 
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
+                    public boolean isValidAsEncapsulated() {
+                                        return isValid(true);
+                    }
 
-            private boolean isValid(boolean encapsulated) {
-                if (color == null
+                    private boolean isValid(boolean encapsulated) {
+                        if (color == null
            || (encapsulated && decease == null)) {
-                    return false;
-                }
+                            return false;
+                        }
         if (!isHeadValid()) {
             return false;
         }
-                return true;
-            }
+                        return true;
+                    }
 
     private boolean isHeadValid() {
         return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
     }
 
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof MonsterStateComparable)) return false;
+                    @Override
+                    public boolean equals(Object that) {
+                       if (this == that) return true;
+                       if (!(that instanceof MonsterStateComparable)) return false;
 
-               return true;
-            }
+                       return true;
+                    }
 
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
+                    public boolean equalsValue(Object value) {
+                        if (this == value) return true;
+                        if (value == null || getClass() != value.getClass()) return false;
 
-                EyeStateImpl state = (EyeStateImpl)value;
+                        EyeStateImpl state = (EyeStateImpl)value;
 
-                if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-                if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
-                if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
+                        if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
+                        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
+                        if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
+                        if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
 
-                return true;
-            }
+                        return true;
+                    }
 
-            @Override
-            public int hashCode() {
-                int result = eyeWeightInGrams;
-                result = 31 * result + (color != null ? color.hashCode() : 0);
-                result = 31 * result + (decease != null ? decease.hashCode() : 0);
-                result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
+                    @Override
+                    public int hashCode() {
+                        int result = eyeWeightInGrams;
+                        result = 31 * result + (color != null ? color.hashCode() : 0);
+                        result = 31 * result + (decease != null ? decease.hashCode() : 0);
+                        result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
 
-                return result;
-            }
+                        return result;
+                    }
 
-            @Override
-            public String toString() {
-                return "{eyeWeightInGrams=" + eyeWeightInGrams +
-                        ", color=" + (color == null ? null : '\'' + color + '\'' ) +
-                        ", decease=" + (decease == null ? null : '\'' + decease + '\'' ) +
-                        ", hasEar=" + hasEar + "}";
-            }
+                    @Override
+                    public String toString() {
+                        return "{eyeWeightInGrams=" + eyeWeightInGrams +
+                                ", color=" + (color == null ? null : '\'' + color + '\'' ) +
+                                ", decease=" + (decease == null ? null : '\'' + decease + '\'' ) +
+                                ", hasEar=" + hasEar + "}";
+                    }
                 };
             }
 
-                    public ForeheadState getForeheadState() {
-                        return new ForeheadState() {
-                            public Certificate certificate() { return certificate(); }
+            public ForeheadState getForeheadState() {
+                return new ForeheadState() {
+                    public Certificate certificate() { return certificate(); }
 
-                            public BrowStateList getBrows() { return MonsterStateImpl.this.getBrows(); }
-                            public void setBrows(BrowStateList brows, Object mutator) { MonsterStateImpl.this.setBrows(brows, mutator); }
+                    public BrowStateList getBrows() { return MonsterStateImpl.this.getBrows(); }
+                    public void setBrows(BrowStateList brows, Object mutator) { MonsterStateImpl.this.setBrows(brows, mutator); }
 
-                            public EarStateSet getEars() { return MonsterStateImpl.this.getEars(); }
-                            public void setEars(EarStateSet ears, Object mutator) { MonsterStateImpl.this.setEars(ears, mutator); }
+                    public EarStateSet getEars() { return MonsterStateImpl.this.getEars(); }
+                    public void setEars(EarStateSet ears, Object mutator) { MonsterStateImpl.this.setEars(ears, mutator); }
 
-                            public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
-                            public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
+                    public void encapsulate() { MonsterStateImpl.this.encapsulate(); }
+                    public void setEncapsulator(Object encapsulator) { MonsterStateImpl.this.setEncapsulator(encapsulator); }
+
+                    public boolean isValid() {
+                        return isValid(_encapsulated);
+                    }
+
+                    public boolean isValidAsEncapsulated() {
+                                        return isValid(true);
+                    }
+
+                    private boolean isValid(boolean encapsulated) {
+        if (!isHeadValid()) {
+            return false;
+        }
+                        return true;
+                    }
+
+    private boolean isHeadValid() {
+        return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
+    }
+
+                    @Override
+                    public boolean equals(Object that) {
+                       if (this == that) return true;
+                       if (!(that instanceof MonsterStateComparable)) return false;
+
+                       return true;
+                    }
+
+                    public boolean equalsValue(Object value) {
+                        if (this == value) return true;
+                        if (value == null || getClass() != value.getClass()) return false;
+
+                        ForeheadStateImpl state = (ForeheadStateImpl)value;
+
+                        if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
+                        if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
+
+                        return true;
+                    }
+
+                    @Override
+                    public int hashCode() {
+                        return super.hashCode();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "{brows=" + brows +
+                                ", ears=" + ears + "}";
+                    }
+                };
+            }
 
             public boolean isValid() {
                 return isValid(_encapsulated);
@@ -287,60 +339,8 @@ public class MonsterStateImpl implements MonsterState {
                 return "{brows=" + brows +
                         ", ears=" + ears + "}";
             }
-                        };
-                    }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-        if (!isHeadValid()) {
-            return false;
-        }
-                return true;
-            }
-
-    private boolean isHeadValid() {
-        return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
+        };
     }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof MonsterStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                ForeheadStateImpl state = (ForeheadStateImpl)value;
-
-                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
-                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-
-            @Override
-            public String toString() {
-                return "{brows=" + brows +
-                        ", ears=" + ears + "}";
-            }
-                        };
-                    }
 
     MonsterStateImpl() {
         noses = NoseStateArrayList.emptyList();

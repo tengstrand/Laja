@@ -2,7 +2,9 @@
 == Laja2-007-alpha ==
 Released: 2013-??-??
 
-Includes:
+Includes Laja:
+* New macro: #stack().
+Includes CDD:
 * Added support for Set.
 * The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
 * Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problem to keeping state and behavior in sync.
