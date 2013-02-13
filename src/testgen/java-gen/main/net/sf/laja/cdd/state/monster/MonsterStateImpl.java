@@ -108,17 +108,17 @@ public class MonsterStateImpl implements MonsterState {
             return false;
         }
         if ((leftEye == null || !leftEye.isValid())
-           || (rightEye == null || !rightEye.isValid())
-           || (midEye != null && !midEye.isValid())
-           || color == null
-           || (encapsulated && decease == null)
-           || (noses == null || !noses.isValid())
-           || (brows != null && !brows.isValid())
-           || (ears != null && !ears.isValid())
-           || (optionalEars != null && !optionalEars.isValid())
-           || (mouths == null || !mouths.isValid())
-           || hasEar == null
-           || (leftArm == null || !leftArm.isValid())) {
+                || (rightEye == null || !rightEye.isValid())
+                || (midEye != null && !midEye.isValid())
+                || color == null
+                || (encapsulated && decease == null)
+                || (noses == null || !noses.isValid())
+                || (brows != null && !brows.isValid())
+                || (ears != null && !ears.isValid())
+                || (optionalEars != null && !optionalEars.isValid())
+                || (mouths == null || !mouths.isValid())
+                || hasEar == null
+                || (leftArm == null || !leftArm.isValid())) {
             return false;
         }
         return true;
@@ -285,15 +285,15 @@ public class MonsterStateImpl implements MonsterState {
                     return false;
                 }
                 if ((leftEye == null || !leftEye.isValid())
-           || (rightEye == null || !rightEye.isValid())
-           || (midEye != null && !midEye.isValid())
-           || color == null
-           || (encapsulated && decease == null)
-           || (noses == null || !noses.isValid())
-           || (brows != null && !brows.isValid())
-           || (ears != null && !ears.isValid())
-           || (optionalEars != null && !optionalEars.isValid())
-           || (mouths == null || !mouths.isValid())) {
+                        || (rightEye == null || !rightEye.isValid())
+                        || (midEye != null && !midEye.isValid())
+                        || color == null
+                        || (encapsulated && decease == null)
+                        || (noses == null || !noses.isValid())
+                        || (brows != null && !brows.isValid())
+                        || (ears != null && !ears.isValid())
+                        || (optionalEars != null && !optionalEars.isValid())
+                        || (mouths == null || !mouths.isValid())) {
                     return false;
                 }
                 return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
@@ -328,7 +328,7 @@ public class MonsterStateImpl implements MonsterState {
 
                     private boolean isValid(boolean encapsulated) {
                         if (color == null
-           || (encapsulated && decease == null)) {
+                                || (encapsulated && decease == null)) {
                             return false;
                         }
                         return true;

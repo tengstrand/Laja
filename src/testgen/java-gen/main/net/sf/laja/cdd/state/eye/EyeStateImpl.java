@@ -49,7 +49,7 @@ public class EyeStateImpl implements EyeState {
 
     private boolean isValid(boolean encapsulated) {
         if (color == null
-           || (encapsulated && decease == null)) {
+                || (encapsulated && decease == null)) {
             return false;
         }
         return true;

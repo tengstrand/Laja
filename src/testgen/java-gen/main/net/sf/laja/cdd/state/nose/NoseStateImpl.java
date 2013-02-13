@@ -46,7 +46,7 @@ public class NoseStateImpl implements NoseState {
 
     private boolean isValid(boolean encapsulated) {
         if (noseDescription == null
-           || details == null) {
+                || details == null) {
             return false;
         }
         return true;

@@ -54,8 +54,8 @@ public class TerrestrialStateImpl implements TerrestrialState {
 
     private boolean isValid(boolean encapsulated) {
         if ((leftEye == null || !leftEye.isValid())
-           || (encapsulated && (rightEye == null || !rightEye.isValid()))
-           || (middleEye != null && !middleEye.isValid())) {
+                || (encapsulated && (rightEye == null || !rightEye.isValid()))
+                || (middleEye != null && !middleEye.isValid())) {
             return false;
         }
         return true;

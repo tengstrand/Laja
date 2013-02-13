@@ -97,7 +97,7 @@
   #if (hasMandatoryOrStateAttributes)
     #set (delimiter = "")
     #set (nextDelimiter = "
-           || ")
+{tab}            || ")
 {tab}    if (##
     #foreach (attribute in t.attributes where !attribute.isPrimitive)
       #if (attribute.isMandatory)
