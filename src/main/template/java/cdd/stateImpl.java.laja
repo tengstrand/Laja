@@ -251,7 +251,7 @@
         #else if (castTypes.contains(attribute.type))
 {tab}    result = 31 * result + (int){attribute.variable};
         #else if (attribute.type == "long")
-{tab}    result = (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
+{tab}    result = 31 * result + (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
         #else if (attribute.type == "boolean")
 {tab}    result = 31 * result + ({attribute.variable} ? 1 : 0);
         #else

@@ -373,7 +373,7 @@ public class HeadStateImpl implements HeadState {
         result = 31 * result + c;
         result = 31 * result + d;
         result = 31 * result + e;
-        result = (int)(f ^ (f >>> 32));
+        result = 31 * result + (int)(f ^ (f >>> 32));
         result = 31 * result + (int)g;
         result = 31 * result + (int)h;
 
