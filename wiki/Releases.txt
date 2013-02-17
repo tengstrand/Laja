@@ -1,13 +1,19 @@
-
 == Laja2-007-alpha ==
 Released: 2013-??-??
 
-Includes Laja:
+Included in  Laja:
 * New macro: #stack().
-Includes CDD:
+
+Included in CDD:
+* Removed the support for state projection. Much the same effect can be achieved by using state expansion. This part of the codebase added a lot of complexity that was a pain to maintain!
+* Expanded attributes is now handled in a correct way:
+** The previous solution to let the state implementation class inherit from the corresponding state interface for the expanded attribute has been replaced by a getStateX method (where X is the name of the expanded attribute).
+** The hashCode, equals and toString methods are now based on the attributes that are part of the expanded state, and delegated to the enclosing state class.
+** The inner handling of encapsulation state (true/false) was delegated to the enclosing state class, but is now (correctly) handled by the expanded state.
+** Support for having more than one expanded attribute of the same type.
 * Added support for Set.
 * The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
-* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problem to keeping state and behavior in sync.
+* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problems keeping state and behavior in sync.
 ** The generation of XValue and XEntity has been replaced by XBehaviour (where X is the behaviour class).
 ** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
 * Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
@@ -19,13 +25,12 @@ Includes CDD:
 ** If no columns are marked as natural key then collections are no longer included in hashCode and equals (earlier, all attributes except 'id' and 'exclude' was included if no natural key was given).
 ** (id) is now included in method equalsValue, hashCodeValue has been removed.
 ** If no attributes is included in hashCode and equals, then super.hashCode and super.equals is called.
-* The class Certificate has been made final.
+* The class Certificate is now final.
 * Fixed a bug in lists that occurred when having more than one as-method with extra parameters.
 * The problem that arose when mixed constructors in different behaviour representations (state) + (state, stateBuilder) can no longer be reproduced.
 * Added methods equals + hashCode to XBuilder (where X is the behaviour class).
-* Simplified state projections, the new syntax is (e.g.): void address() { AddressProjection.streetName("main").streetNumber(1); }.
-* Changed the way expanded states are handled to fix various problems with hashCode, equals and toString. Also added support to expand more than one state with the same type.
 * If an expanded type ends with "State", then it will be removed from the name.
+* Fixed a bug in the hashCode() method for attributes of type 'long'.
 
 == Laja2-006-alpha ==
 Released: 2013-01-04

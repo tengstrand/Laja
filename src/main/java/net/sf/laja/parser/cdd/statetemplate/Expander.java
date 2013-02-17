@@ -54,9 +54,9 @@ public class Expander {
             importsResult = new Imports();
             attributesResult = new ArrayList<Attribute>();
             expandedAttributesResult = new ArrayList<Attribute>();
-            List<String> expandingTypes = new ArrayList<String>();
+            List<String> expandedAttributes = new ArrayList<String>();
 
-            expand(stateTemplate.stateClass, false, expandingTypes);
+            expand(stateTemplate.stateClass, false, expandedAttributes);
             stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedAttributesResult, importsResult));
         }
         calculateAllExpandedTypes();
@@ -88,32 +88,24 @@ public class Expander {
         }
     }
 
-    private void expand(String type, boolean isExpanded, List<String> expandingTypes) {
+    private void expand(String type, boolean isExpanded, List<String> expandedAttributes) {
         if (cyclic) {
             return;
         }
-        if (expandingTypes.contains(type)) {
-            cyclicMessage = "Cyclic references: ";
-            String separator = "";
-            for (String expandingType : expandingTypes) {
-                cyclicMessage += separator + expandingType;
-                separator = " > ";
-            }
-            cyclicMessage += separator + type;
-            cyclic = true;
-            return;
-        }
-        expandingTypes.add(type);
+        expandedAttributes.add(type);
         StateTemplate stateTemplate = findStateTemplate(type);
 
         if (stateTemplate != null) {
             for (Attribute attribute : stateTemplate.attributes) {
                 if (attribute.isExpand) {
+                    if (isCyclic(type, attribute, expandedAttributes)) {
+                        return;
+                    }
                     addExpandedImports(stateTemplate, attribute);
                     if (!isExpanded) {
                         expandedAttributesResult.add(attribute);
                     }
-                    expand(attribute.type, true, expandingTypes);
+                    expand(attribute.type, true, expandedAttributes);
                 } else {
                     if (!attributesResult.contains(attribute)) {
                         addAttributeToResult(attribute, isExpanded);
@@ -128,6 +120,24 @@ public class Expander {
                 }
             }
         }
+    }
+
+    private boolean isCyclic(String type, Attribute attribute, List<String> expandedAttributes) {
+        String expandedAttribute = type + "." + attribute.variable;
+
+        if (expandedAttributes.contains(expandedAttribute)) {
+            cyclicMessage = "Cyclic references: ";
+            String separator = "";
+            for (String expandingType : expandedAttributes) {
+                cyclicMessage += separator + expandingType;
+                separator = " > ";
+            }
+            cyclicMessage += separator + type;
+            cyclic = true;
+            return true;
+        }
+        expandedAttributes.add(expandedAttribute);
+        return false;
     }
 
     private void addAttributeToResult(Attribute attribute, boolean isExpanded) {
