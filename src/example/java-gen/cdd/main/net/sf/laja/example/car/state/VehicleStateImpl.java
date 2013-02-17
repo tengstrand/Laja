@@ -58,8 +58,8 @@ public class VehicleStateImpl implements VehicleState {
             return false;
         }
         if (name == null
-           || (owner == null || !owner.isValid())
-           || color == null) {
+                || (owner == null || !owner.isValid())
+                || color == null) {
             return false;
         }
         return true;
@@ -123,8 +123,8 @@ public class VehicleStateImpl implements VehicleState {
                     return false;
                 }
                 if (name == null
-                   || (owner == null || !owner.isValid())
-                   || color == null) {
+                        || (owner == null || !owner.isValid())
+                        || color == null) {
                     return false;
                 }
                 return true;

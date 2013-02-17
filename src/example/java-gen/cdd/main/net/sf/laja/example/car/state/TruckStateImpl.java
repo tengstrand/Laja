@@ -58,8 +58,8 @@ public class TruckStateImpl implements TruckState {
             return false;
         }
         if ((type == null || !type.isValid())
-           || color == null
-           || (owner == null || !owner.isValid())) {
+                || color == null
+                || (owner == null || !owner.isValid())) {
             return false;
         }
         return true;

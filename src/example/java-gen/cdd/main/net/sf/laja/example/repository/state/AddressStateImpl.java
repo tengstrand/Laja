@@ -55,7 +55,7 @@ public class AddressStateImpl implements AddressState {
             return false;
         }
         if (streetName == null
-           || city == null) {
+                || city == null) {
             return false;
         }
         return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));

@@ -66,9 +66,9 @@ public class CustomerStateImpl implements CustomerState {
             return false;
         }
         if (givenName == null
-           || streetName == null
-           || city == null
-           || (oldAddresses != null && !oldAddresses.isValid())) {
+                || streetName == null
+                || city == null
+                || (oldAddresses != null && !oldAddresses.isValid())) {
             return false;
         }
         return age >= 0 && ssn >= 190000000000L;
@@ -144,7 +144,7 @@ public class CustomerStateImpl implements CustomerState {
                     return false;
                 }
                 if (streetName == null
-                   || city == null) {
+                        || city == null) {
                     return false;
                 }
                 return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));

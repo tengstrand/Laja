@@ -56,8 +56,8 @@ public class CarStateImpl implements CarState {
             return false;
         }
         if (name == null
-           || (owner == null || !owner.isValid())
-           || color == null) {
+                || (owner == null || !owner.isValid())
+                || color == null) {
             return false;
         }
         return true;

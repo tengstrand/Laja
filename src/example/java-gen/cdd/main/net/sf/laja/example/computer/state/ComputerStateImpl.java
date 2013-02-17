@@ -49,8 +49,8 @@ public class ComputerStateImpl implements ComputerState {
 
     private boolean isValid(boolean encapsulated) {
         if ((encapsulated && name == null)
-           || (encapsulated && processor == null)
-           || owner == null) {
+                || (encapsulated && processor == null)
+                || owner == null) {
             return false;
         }
         return releaseYear > 0 && memoryInKilobytes > 0;

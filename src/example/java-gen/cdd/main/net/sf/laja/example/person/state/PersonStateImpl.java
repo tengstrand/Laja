@@ -55,7 +55,7 @@ public class PersonStateImpl implements PersonState {
             return false;
         }
         if (givenName == null
-           || surname == null) {
+                || surname == null) {
             return false;
         }
         return true;
