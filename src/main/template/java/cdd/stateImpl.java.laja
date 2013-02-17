@@ -130,16 +130,7 @@
   #if (t.isValidStatement == null)
 {tab}    return true;
   #else
-    #set (statement = t.isValidStatement)
-    ## Replace references to expanded types, e.g: a.b -> b
-    #foreach (expandedType in expandedTypes)
-      #foreach (t2 in templates.values() where t2 != null && t2.classname == expandedType.type)
-        #foreach (attribute in t2.attributes)
-          #set (statement = statementConverter.prefixAttribute("", statement, "{expandedType.variable}.{attribute.variable}", attribute.variable))
-        #end
-      #end
-    #end
-{tab}    {statement}
+{tab}    {t.isValidStatement}
   #end
 {tab}}
 #end
