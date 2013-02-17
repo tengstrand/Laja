@@ -75,12 +75,12 @@ public class ExpanderTest {
         Map<String, Expander.ExpansionResult> result = expander.calculateExpansion();
 
         Map<String, EResult> expectedClassMap = new LinkedHashMap<String, EResult>();
-        Imports imports = new Imports();
-        imports.addImport("net.XClass");
         List<Attr> attrs = new ArrayList<Attr>();
         attrs.add(new Attr("XClass", "x"));
-        expectedClassMap.put("AState", new EResult(imports, attrs));
+        expectedClassMap.put("AState", new EResult(new Imports(), attrs));
 
+        Imports imports = new Imports();
+        imports.addImport("net.XClass");
         attrs = new ArrayList<Attr>();
         attrs.add(new Attr("XClass", "x"));
         expectedClassMap.put("BState", new EResult(imports, attrs));

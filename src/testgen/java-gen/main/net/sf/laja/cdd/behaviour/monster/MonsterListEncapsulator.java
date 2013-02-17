@@ -13,6 +13,9 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
+import java.math.BigDecimal;
+import net.sf.laja.cdd.state.brow.BrowStateList;
+import net.sf.laja.cdd.state.ear.EarStateSet;
 
 public class MonsterListEncapsulator implements Iterable<MonsterEncapsulator> {
     public MonsterStateListBuilder stateListBuilder = new MonsterStateListBuilder();

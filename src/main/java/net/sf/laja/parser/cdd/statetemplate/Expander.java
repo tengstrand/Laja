@@ -127,7 +127,6 @@ public class Expander {
                     }
                 }
             }
-            addImportsForExpandedAttributes();
         }
     }
 
@@ -141,20 +140,12 @@ public class Expander {
         }
     }
 
-    private void addImportsForExpandedAttributes() {
-        for (Attribute attribute : expandedAttributesResult) {
-            StateTemplate template = findStateTemplate(attribute.stateClass);
-            if (template != null) {
-                for (Importstatement importstatement : template.imports) {
-                    importsResult.addImportIfNotExists(importstatement);
-                }
-            }
-        }
-    }
-
     private void addExpandedImports(StateTemplate stateTemplate, Attribute attribute) {
         StateTemplate expandedTemplate = findStateTemplate(attribute.type);
         if (expandedTemplate != null) {
+            for (Importstatement importstatement : expandedTemplate.imports) {
+                importsResult.addImportIfNotExists(importstatement);
+            }
             String type = attribute.isState ? attribute.cleanedStateType : attribute.type;
             stateTemplate.expandedTypes.add(new ExpandedType(attribute.variable, type, expandedTemplate.packagename + "." + type));
         }
