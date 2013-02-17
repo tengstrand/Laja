@@ -108,7 +108,7 @@ public class ExpanderTest {
         expander.calculateExpansion();
 
         assertTrue(expander.cyclic);
-        assertEquals("Cyclic references: AState > AState.c > CState > CState.b > BState > BState.a > AState > AState", expander.cyclicMessage);
+        assertEquals("Cyclic references: AState.c > CState.b > BState.a > AState", expander.cyclicMessage);
     }
 
     private void verifyResult(Map<String, Expander.ExpansionResult> result, Map<String, EResult> expectedClassMap) {

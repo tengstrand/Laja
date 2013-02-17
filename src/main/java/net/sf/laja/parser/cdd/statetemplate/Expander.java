@@ -92,7 +92,6 @@ public class Expander {
         if (cyclic) {
             return;
         }
-        expandedAttributes.add(type);
         StateTemplate stateTemplate = findStateTemplate(type);
 
         if (stateTemplate != null) {
