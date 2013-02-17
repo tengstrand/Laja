@@ -2,7 +2,6 @@
 #macro fileContent()
   #package()
   #importBegin(false)
-  #importExpandedType("State")
   #importState()
   #importCertificate()
   #importEnd()

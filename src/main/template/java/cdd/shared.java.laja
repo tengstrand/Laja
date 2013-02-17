@@ -88,16 +88,6 @@ package {package};
   #end
 #end
 
-#macro importExpandedAttributes(expandedTypeSuffix)
-  #foreach (a in expandedAttributes)
-    #set (template = templates.get(a.cleanedStateType))
-    #foreach (suffix in expandedTypeSuffix.split(","))
-import {template.packagename}.{a.cleanedStateType}{suffix};
-      #set (hasImports = true)
-    #end
-  #end
-#end
-
 #macro importExpandedType(expandedTypeSuffix)
   #foreach (expandedType in allExpandedTypes)
     #foreach (suffix in expandedTypeSuffix.split(","))

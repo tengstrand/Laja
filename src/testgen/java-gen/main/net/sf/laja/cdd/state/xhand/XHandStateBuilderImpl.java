@@ -4,10 +4,12 @@ import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.finger.FingerBehaviourFactory;
 import net.sf.laja.cdd.state.finger.FingerState;
-import net.sf.laja.cdd.state.nail.NailBehaviourFactory;
-import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.finger.FingerStateBuilder;
 import net.sf.laja.cdd.state.finger.FingerStateBuilderImpl;
+import net.sf.laja.cdd.state.nail.NailBehaviourFactory;
+import net.sf.laja.cdd.state.nail.NailState;
+import net.sf.laja.cdd.state.nail.NailStateBuilder;
+import net.sf.laja.cdd.state.nail.NailStateBuilderImpl;
 import net.sf.laja.cdd.state.Certificate;
 
 /**

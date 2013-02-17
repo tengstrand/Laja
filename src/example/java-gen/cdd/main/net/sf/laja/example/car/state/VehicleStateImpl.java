@@ -1,12 +1,8 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.example.car.state.OwnerState;
-import net.sf.laja.example.car.state.CarState;
 import net.sf.laja.example.car.state.CarStateImpl;
-import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeStateImpl;
-import net.sf.laja.example.car.state.CarState;
-import net.sf.laja.example.car.state.CarStateImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**

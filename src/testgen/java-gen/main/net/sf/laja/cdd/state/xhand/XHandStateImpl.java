@@ -2,12 +2,8 @@ package net.sf.laja.cdd.state.xhand;
 
 import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.nail.NailState;
-import net.sf.laja.cdd.state.finger.FingerState;
 import net.sf.laja.cdd.state.finger.FingerStateImpl;
-import net.sf.laja.cdd.state.nail.NailState;
 import net.sf.laja.cdd.state.nail.NailStateImpl;
-import net.sf.laja.cdd.state.finger.FingerState;
-import net.sf.laja.cdd.state.finger.FingerStateImpl;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
