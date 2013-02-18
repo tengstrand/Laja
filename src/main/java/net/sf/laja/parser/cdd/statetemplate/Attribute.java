@@ -211,17 +211,12 @@ public class Attribute implements StateTemplateParser.IAttribute {
 
         Attribute attribute = (Attribute) o;
 
-        if (type != null ? !type.equals(attribute.type) : attribute.type != null) return false;
-        if (variable != null ? !variable.equals(attribute.variable) : attribute.variable != null) return false;
-
-        return true;
+        return variable.equals(attribute.variable);
     }
 
     @Override
     public int hashCode() {
-        int result = type != null ? type.hashCode() : 0;
-        result = 31 * result + (variable != null ? variable.hashCode() : 0);
-        return result;
+        return variable.hashCode();
     }
 
     @Override

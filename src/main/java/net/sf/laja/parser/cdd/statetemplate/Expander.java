@@ -5,6 +5,8 @@ import java.util.*;
 public class Expander {
     public boolean cyclic = false;
     public String cyclicMessage;
+    public String duplicatedAttribute;
+
     public Imports importsResult;
     public List<Attribute> attributesResult;
     public List<Attribute> expandedAttributesResult;
@@ -24,6 +26,7 @@ public class Expander {
      */
     public void expand(StateTemplateErrors errors) {
         this.errors = errors;
+        duplicatedAttribute = null;
         Map<String, ExpansionResult> stateClassMap = calculateExpansion();
 
         if (cyclic) {
@@ -42,6 +45,14 @@ public class Expander {
     }
 
     /**
+     * Only used for test purpose.
+     */
+    public Map<String, ExpansionResult> calculateExpansion(StateTemplateErrors errors) {
+        this.errors = errors;
+        return calculateExpansion();
+    }
+
+    /**
      * Goes through all state templates and calculates new expanded attributes and
      * possible needed imports for every state template.
      *
@@ -56,7 +67,7 @@ public class Expander {
             expandedAttributesResult = new ArrayList<Attribute>();
             List<String> expandedAttributes = new ArrayList<String>();
 
-            expand(stateTemplate.stateClass, false, expandedAttributes);
+            expand(stateTemplate.stateClass, stateTemplate.classname, false, expandedAttributes);
             stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedAttributesResult, importsResult));
         }
         calculateAllExpandedTypes();
@@ -88,7 +99,7 @@ public class Expander {
         }
     }
 
-    private void expand(String type, boolean isExpanded, List<String> expandedAttributes) {
+    private void expand(String type, String state, boolean isExpanded, List<String> expandedAttributes) {
         if (cyclic) {
             return;
         }
@@ -104,17 +115,13 @@ public class Expander {
                     if (!isExpanded) {
                         expandedAttributesResult.add(attribute);
                     }
-                    expand(attribute.type, true, expandedAttributes);
+                    expand(attribute.type, state, true, expandedAttributes);
                 } else {
                     if (!attributesResult.contains(attribute)) {
                         addAttributeToResult(attribute, isExpanded);
                     } else {
-                        Attribute existingAttribute = attributesResult.get(attributesResult.indexOf(attribute));
-                        if (existingAttribute.isOptional && attribute.isMandatory) {
-                            // Replace the attribute with the one that is mandatory.
-                            attributesResult.remove(attribute);
-                            addAttributeToResult(attribute, isExpanded);
-                        }
+                        errors.addMessage("Duplicated attribute '" + attribute.variable + "' in state '" + state + "' (defined in " + state + "StateTemplate) " +
+                            "found in attribute '" + stateTemplate.stateClass + "." + attribute.variable + "'.");
                     }
                 }
             }

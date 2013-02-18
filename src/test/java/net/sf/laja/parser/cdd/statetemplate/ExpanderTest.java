@@ -61,6 +61,27 @@ public class ExpanderTest {
     }
 
     @Test
+    public void calculateExpansionWithDuplicatedAttributeNames() {
+        StateTemplate a = createStateTemplate("AState");
+        addAttribute(a, "x", "int", false);
+        addAttribute(a, "y", "int", false);
+        expander.add(a);
+
+        StateTemplate b = createStateTemplate("BState");
+        addAttribute(b, "x", "long", false);
+        addAttribute(b, "a", "AState", true);
+        expander.add(b);
+
+        StateTemplateErrors errors = new StateTemplateErrors();
+        Map<String, Expander.ExpansionResult> result = expander.calculateExpansion(errors);
+
+        StateTemplateErrors expectedErrors = new StateTemplateErrors();
+        expectedErrors.addMessage("Duplicated attribute 'x' in state 'B' (defined in BStateTemplate) found in attribute 'AState.x'.");
+
+        assertEquals(expectedErrors, errors);
+    }
+
+    @Test
     public void calculateExpansionWithExtraImportsNeeded() {
         StateTemplate a = createStateTemplate("AState");
         addImports(a, "net.XClass");
@@ -105,7 +126,7 @@ public class ExpanderTest {
         addAttribute(c, "b", "BState", true);
         expander.add(c);
 
-        expander.calculateExpansion();
+        expander.calculateExpansion(new StateTemplateErrors());
 
         assertTrue(expander.cyclic);
         assertEquals("Cyclic references: AState.c > CState.b > BState.a > AState", expander.cyclicMessage);
@@ -147,12 +168,12 @@ public class ExpanderTest {
         return  attribute;
     }
 
-    private void addAttribute(StateTemplate stateTemplate, String variable, String type, boolean isMerge) {
-        addAttribute(stateTemplate, variable, type, isMerge, "");
+    private void addAttribute(StateTemplate stateTemplate, String variable, String type, boolean isExpand) {
+        addAttribute(stateTemplate, variable, type, isExpand, "");
     }
 
-    private void addAttribute(StateTemplate stateTemplate, String variable, String type, boolean isMerge, String comment) {
-        Attribute attribute = createAttribute(variable, type, isMerge, comment);
+    private void addAttribute(StateTemplate stateTemplate, String variable, String type, boolean isExpand, String comment) {
+        Attribute attribute = createAttribute(variable, type, isExpand, comment);
         stateTemplate.addAttribute(attribute);
     }
 

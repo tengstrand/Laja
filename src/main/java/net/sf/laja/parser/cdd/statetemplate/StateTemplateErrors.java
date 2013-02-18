@@ -31,6 +31,16 @@ public class StateTemplateErrors {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StateTemplateErrors that = (StateTemplateErrors) o;
+
+        return messages.equals(that.messages);
+    }
+
+    @Override
     public String toString() {
         return "StateTemplateErrors{" +
                 "messages=" + messages +
