@@ -73,10 +73,12 @@ public class ExpanderTest {
         expander.add(b);
 
         StateTemplateErrors errors = new StateTemplateErrors();
-        Map<String, Expander.ExpansionResult> result = expander.calculateExpansion(errors);
+        expander.calculateExpansion(errors);
 
         StateTemplateErrors expectedErrors = new StateTemplateErrors();
-        expectedErrors.addMessage("Duplicated attribute 'x' in state 'B' (defined in BStateTemplate) found in attribute 'AState.x'.");
+        expectedErrors.addMessage("Duplicated attribute 'x' found in 'BState':\n" +
+                "   BState.x\n" +
+                "   BState $a: AState.x");
 
         assertEquals(expectedErrors, errors);
     }

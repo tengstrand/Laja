@@ -26,7 +26,6 @@ public class Expander {
      */
     public void expand(StateTemplateErrors errors) {
         this.errors = errors;
-        duplicatedAttribute = null;
         Map<String, ExpansionResult> stateClassMap = calculateExpansion();
 
         if (cyclic) {
@@ -62,12 +61,24 @@ public class Expander {
         Map<String, ExpansionResult> stateClassMap = new LinkedHashMap<String, ExpansionResult>();
         
         for (StateTemplate stateTemplate : stateTemplates) {
+            duplicatedAttribute = null;
             importsResult = new Imports();
             attributesResult = new ArrayList<Attribute>();
             expandedAttributesResult = new ArrayList<Attribute>();
             List<String> expandedAttributes = new ArrayList<String>();
+            List<String> allAttributes = new ArrayList<String>();
 
-            expand(stateTemplate.stateClass, stateTemplate.classname, false, expandedAttributes);
+            expand(stateTemplate.stateClass, "", false, allAttributes, expandedAttributes);
+
+            if (duplicatedAttribute != null) {
+                String message = "Duplicated attribute '" + duplicatedAttribute + "' found in '" + stateTemplate.stateClass + "':";
+                for (String attribute : allAttributes) {
+                    if (attribute.endsWith("." + duplicatedAttribute)) {
+                        message += "\n   " + attribute;
+                    }
+                }
+                errors.addMessage(message);
+            }
             stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedAttributesResult, importsResult));
         }
         calculateAllExpandedTypes();
@@ -99,7 +110,7 @@ public class Expander {
         }
     }
 
-    private void expand(String type, String state, boolean isExpanded, List<String> expandedAttributes) {
+    private void expand(String type, String expandedAttribute, boolean isExpanded, List<String> allAttributes, List<String> expandedAttributes) {
         if (cyclic) {
             return;
         }
@@ -107,6 +118,7 @@ public class Expander {
 
         if (stateTemplate != null) {
             for (Attribute attribute : stateTemplate.attributes) {
+                allAttributes.add(expandedAttribute + type + "." + attribute.variable);
                 if (attribute.isExpand) {
                     if (isCyclic(type, attribute, expandedAttributes)) {
                         return;
@@ -115,13 +127,13 @@ public class Expander {
                     if (!isExpanded) {
                         expandedAttributesResult.add(attribute);
                     }
-                    expand(attribute.type, state, true, expandedAttributes);
+                    String expandedMessage = expandedAttribute.isEmpty() ? type + " $" + attribute.variable + ": " : expandedAttribute;
+                    expand(attribute.type, expandedMessage, true, allAttributes, expandedAttributes);
                 } else {
                     if (!attributesResult.contains(attribute)) {
                         addAttributeToResult(attribute, isExpanded);
                     } else {
-                        errors.addMessage("Duplicated attribute '" + attribute.variable + "' in state '" + state + "' (defined in " + state + "StateTemplate) " +
-                            "found in attribute '" + stateTemplate.stateClass + "." + attribute.variable + "'.");
+                        duplicatedAttribute = attribute.variable;
                     }
                 }
             }
