@@ -182,26 +182,24 @@
 
     #expander.expand(errors)
     #messageFormatter.printTable(behaviours)
-    #if (!errors.hasErrors)
-      #generateState()
-      #generateBehaviour()
-    #end
+  #end
 
-    #if (errors.hasErrors)
-      #errors.printMessages()
+  #cleanupInputParameters()
+
+  #if (!parserError && !errors.hasErrors)
+    #generateState()
+    #generateBehaviour()
+
+    #if (autoRemove == null)
+      #set (autoRemove = true)
     #end
+    #if (autoRemove)
+      #processedFiles.removeFilesMarkedForDeletion()
+    #end
+    #processedFiles.printProcessedMessage(verbose, autoRemove)
   #else
     #errors.printMessages()
   #end
-  #cleanupInputParameters()
-
-  #if (autoRemove == null)
-    #set (autoRemove = true)
-  #end
-  #if (autoRemove)
-    #processedFiles.removeFilesMarkedForDeletion()
-  #end
-  #processedFiles.printProcessedMessage(verbose, autoRemove)
 #end
 
 #macro validateStates()
