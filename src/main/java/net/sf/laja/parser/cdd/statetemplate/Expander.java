@@ -5,7 +5,7 @@ import java.util.*;
 public class Expander {
     public boolean cyclic = false;
     public String cyclicMessage;
-    public String duplicatedAttribute;
+    public Set<String> duplicatedAttributes;
 
     public Imports importsResult;
     public List<Attribute> attributesResult;
@@ -61,7 +61,7 @@ public class Expander {
         Map<String, ExpansionResult> stateClassMap = new LinkedHashMap<String, ExpansionResult>();
         
         for (StateTemplate stateTemplate : stateTemplates) {
-            duplicatedAttribute = null;
+            duplicatedAttributes = new HashSet<String>();
             importsResult = new Imports();
             attributesResult = new ArrayList<Attribute>();
             expandedAttributesResult = new ArrayList<Attribute>();
@@ -70,20 +70,24 @@ public class Expander {
 
             expand(stateTemplate.stateClass, "", false, allAttributes, expandedAttributes);
 
-            if (duplicatedAttribute != null) {
-                String message = "Duplicated attribute '" + duplicatedAttribute + "' found in '" + stateTemplate.stateClass + "':";
-                for (String attribute : allAttributes) {
-                    if (attribute.endsWith("." + duplicatedAttribute)) {
-                        message += "\n   " + attribute;
-                    }
-                }
-                errors.addMessage(message);
+            for (String duplicatedAttribute : duplicatedAttributes) {
+                addErrorMessage(duplicatedAttribute, stateTemplate.stateClass, allAttributes);
             }
             stateClassMap.put(stateTemplate.stateClass, new ExpansionResult(attributesResult, expandedAttributesResult, importsResult));
         }
         calculateAllExpandedTypes();
 
         return stateClassMap;
+    }
+
+    private void addErrorMessage(String duplicatedAttribute, String stateClass, List<String> allAttributes) {
+        String message = "Duplicated attribute '" + duplicatedAttribute + "' found in '" + stateClass + "':";
+        for (String attribute : allAttributes) {
+            if (attribute.endsWith("." + duplicatedAttribute)) {
+                message += "\n   " + attribute;
+            }
+        }
+        errors.addMessage(message);
     }
 
     private void calculateAllExpandedTypes() {
@@ -133,7 +137,7 @@ public class Expander {
                     if (!attributesResult.contains(attribute)) {
                         addAttributeToResult(attribute, isExpanded);
                     } else {
-                        duplicatedAttribute = attribute.variable;
+                        duplicatedAttributes.add(attribute.variable);
                     }
                 }
             }
