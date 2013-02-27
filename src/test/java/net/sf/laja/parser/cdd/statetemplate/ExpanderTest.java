@@ -84,6 +84,55 @@ public class ExpanderTest {
     }
 
     @Test
+    public void calculatePrefixedExpansion() {
+        StateTemplate a = createStateTemplate("AState");
+        addAttribute(a, "weight", "int", false);
+        addAttribute(a, "length", "int", false);
+        expander.add(a);
+
+        StateTemplate b = createStateTemplate("BState");
+        addAttribute(b, "abc", "AState", true, " // (prefix)");
+        addAttribute(b, "def", "AState", true);
+        addAttribute(b, "b", "long", false);
+        expander.add(b);
+
+        StateTemplate c = createStateTemplate("CState");
+        addAttribute(c, "x", "BState", true, " // (prefix)");
+        addAttribute(c, "y", "BState", true);
+        addAttribute(c, "c", "long", false);
+        expander.add(c);
+
+        StateTemplateErrors errors = new StateTemplateErrors();
+        Map<String, Expander.ExpansionResult> result = expander.calculateExpansion(errors);
+
+        Map<String, EResult> expectedClassMap = new LinkedHashMap<String, EResult>();
+        Imports imports = new Imports();
+        List<Attr> attrs = new ArrayList<Attr>();
+        attrs.add(new Attr("int", "weight"));
+        attrs.add(new Attr("int", "length"));
+        expectedClassMap.put("AState", new EResult(imports, attrs));
+
+        attrs = new ArrayList<Attr>();
+        attrs.add(new Attr("int", "abcWeight"));
+        attrs.add(new Attr("int", "abcLength"));
+        attrs.add(new Attr("int", "weight"));
+        attrs.add(new Attr("int", "length"));
+        attrs.add(new Attr("long", "b"));
+        expectedClassMap.put("BState", new EResult(imports, attrs));
+
+        attrs = new ArrayList<Attr>();
+        attrs.add(new Attr("int", "xAbcWeight"));
+        attrs.add(new Attr("int", "xAbcLength"));
+        attrs.add(new Attr("int", "weight"));
+        attrs.add(new Attr("int", "length"));
+        attrs.add(new Attr("long", "xB"));
+        attrs.add(new Attr("long", "c"));
+        expectedClassMap.put("CState", new EResult(imports, attrs));
+
+        verifyResult(result, expectedClassMap);
+    }
+
+    @Test
     public void calculateExpansionWithExtraImportsNeeded() {
         StateTemplate a = createStateTemplate("AState");
         addImports(a, "net.XClass");
@@ -143,8 +192,10 @@ public class ExpanderTest {
             List<Attribute> attributes = result.get(stateClass).attributes;
             List<Attr> expectedAttributes = expectedClassMap.get(stateClass).attributes;
             assertEquals(attributes.size(), expectedAttributes.size());
-            for (Attribute attribute : attributes) {
-                assertTrue(expectedAttributes.contains(new Attr(attribute)));
+            for (Attr attr : expectedAttributes) {
+                Attribute attribute = new Attribute();
+                attribute.variable = attr.variable;
+                assertTrue(attributes.contains(attribute));
             }
         }
     }

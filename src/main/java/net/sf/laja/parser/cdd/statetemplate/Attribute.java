@@ -19,6 +19,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isId;
     public boolean isKey;
     public boolean isExpand;
+    public boolean isPrefix;
     public boolean isInclude;
     public boolean isExclude;
     public boolean isState;
@@ -28,21 +29,24 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isOptional;
     public boolean isMandatory = true;
 
-    public Attribute copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude() {
+    public Attribute copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude(String prefix) {
         Attribute result = new Attribute();
         result.type = type;
         result.cleanedStateType = cleanedStateType;
-        result.variable = variable;
-        result.variableAsClass = variableAsClass;
-        result.getter = getter;
-        result.setter = setter;
-        result.withMethod = withMethod;
+
+        if (!prefix.isEmpty()) {
+            result.setVariable(prefix + StringUtils.capitalize(variable));
+        } else {
+            result.setVariable(variable);
+        }
+
         result.stateClass = stateClass;
         result.stateMethod = stateMethod;
         result.initialValue = initialValue;
         result.initialStatement = initialStatement;
         result.comment  = comment;
         result.isExpand = isExpand;
+        result.isPrefix = isPrefix;
         result.isInclude = isInclude;
         result.isExclude = isExclude || isId;
         result.isState = isState;
@@ -192,6 +196,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isId = comment.contains("(id)");
         isKey = comment.contains("(key)");
         isHidden = comment.contains("(hide)");
+        isPrefix = comment.contains("(prefix)");
         isInclude = comment.contains("(include)");
         isExclude = comment.contains("(exclude)");
         isOptional = comment.contains("(optional)");
@@ -234,6 +239,7 @@ public class Attribute implements StateTemplateParser.IAttribute {
                 ", initialStatement='" + initialStatement + '\'' +
                 ", comment='" + comment + '\'' +
                 ", isExpand=" + isExpand +
+                ", isPrefix=" + isPrefix +
                 ", isInclude=" + isInclude +
                 ", isExclude=" + isExclude +
                 ", isState=" + isState +

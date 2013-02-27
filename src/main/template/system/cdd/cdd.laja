@@ -20,8 +20,6 @@
   #set (behaviourOutDir = null)
   #set (defaultStateOutDir = null)
   #set (defaultBehaviourOutDir = null)
-  #set (certificatePackage = null)
-  #set (certificatePath = null)
 #end
 
 #macro addBehaviour(classname)

@@ -8,6 +8,7 @@ public class Expander {
     public Set<String> duplicatedAttributes;
 
     public Imports importsResult;
+    public List<String> allAttributes;
     public List<Attribute> attributesResult;
     public List<Attribute> expandedAttributesResult;
     private List<StateTemplate> stateTemplates = new ArrayList<StateTemplate>();
@@ -63,12 +64,13 @@ public class Expander {
         for (StateTemplate stateTemplate : stateTemplates) {
             duplicatedAttributes = new HashSet<String>();
             importsResult = new Imports();
+            allAttributes = new ArrayList<String>();
             attributesResult = new ArrayList<Attribute>();
             expandedAttributesResult = new ArrayList<Attribute>();
             List<String> expandedAttributes = new ArrayList<String>();
             List<String> allAttributes = new ArrayList<String>();
 
-            expand(stateTemplate.stateClass, "", false, allAttributes, expandedAttributes);
+            expand(stateTemplate.stateClass, "", "", false, allAttributes, expandedAttributes);
 
             for (String duplicatedAttribute : duplicatedAttributes) {
                 addErrorMessage(duplicatedAttribute, stateTemplate.stateClass, allAttributes);
@@ -114,7 +116,7 @@ public class Expander {
         }
     }
 
-    private void expand(String type, String expandedAttribute, boolean isExpanded, List<String> allAttributes, List<String> expandedAttributes) {
+    private void expand(String type, String expandedPrefix, String expandedAttribute, boolean isExpanded, List<String> allAttributes, List<String> expandedAttributes) {
         if (cyclic) {
             return;
         }
@@ -132,10 +134,11 @@ public class Expander {
                         expandedAttributesResult.add(attribute);
                     }
                     String expandedMessage = expandedAttribute.isEmpty() ? type + " $" + attribute.variable + ": " : expandedAttribute;
-                    expand(attribute.type, expandedMessage, true, allAttributes, expandedAttributes);
+                    String prefix = attribute.isPrefix ? expandedPrefix.isEmpty() ? attribute.variable : expandedPrefix + attribute.variableAsClass : "";
+                    expand(attribute.type, prefix, expandedMessage, true, allAttributes, expandedAttributes);
                 } else {
-                    if (!attributesResult.contains(attribute)) {
-                        addAttributeToResult(attribute, isExpanded);
+                    if (!allAttributes.contains(expandedPrefix + "." + attribute.variable)) {
+                        addAttributeToResult(attribute, expandedPrefix, isExpanded);
                     } else {
                         duplicatedAttributes.add(attribute.variable);
                     }
@@ -162,9 +165,11 @@ public class Expander {
         return false;
     }
 
-    private void addAttributeToResult(Attribute attribute, boolean isExpanded) {
+    private void addAttributeToResult(Attribute attribute, String prefix, boolean isExpanded) {
+        allAttributes.add(prefix + "." + attribute.variable);
+
         if (isExpanded) {
-            Attribute copy = attribute.copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude();
+            Attribute copy = attribute.copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude(prefix);
             copy.cleanCommentFromIdAndKey();
             attributesResult.add(copy);
         } else {
