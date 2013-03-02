@@ -26,7 +26,7 @@ public class MessageFormatter {
             }
         }
 
-        AsciiTable table = new AsciiTable("State", "Behaviour");
+        AsciiTable table = new AsciiTable("State", "Behaviour (context)");
 
         for (String state : states.keySet()) {
             AsciiTable.Row row = new AsciiTable.Row();
