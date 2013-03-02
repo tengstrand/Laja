@@ -22,12 +22,6 @@ public class {builderImplClass} implements {builderClass} {
         this(state);
         this.encapsulator = encapsulator;
     }
-  #foreach (attribute in expandedAttributes)
-
-    public {attribute.stateBuilder} get{attribute.variableAsClass}StateBuilder() {
-        return new {attribute.stateBuilder}Impl(state.get{attribute.variableAsClass}State());
-    }
-  #end
   #foreach (attribute in attributes)
 
     #if (attribute.isStateSet)
@@ -46,12 +40,6 @@ public class {builderImplClass} implements {builderClass} {
         state.{attribute.setter}({attribute.variable}, encapsulator);
     #end
     }
-    #foreach (method in allConvertMethods where method.variable == attribute.variable)
-
-    public void {attribute.withMethod}({method.type} {method.variable}) {
-        state.{attribute.setter}({method.statement}, encapsulator);
-    }
-    #end
   #end
   #foreach (attribute in attributes where attribute.isState)
 
@@ -103,8 +91,7 @@ public class {builderImplClass} implements {builderClass} {
 
 #macro fileContent()
   #package()
-  #importBegin(true)
-  #importExpandedType("BehaviourFactory,State,StateBuilder,StateBuilderImpl")
+  #importBegin()
   #prepareStateImports()
   #importStateBuilder()
   #importStateBuilderImpl()

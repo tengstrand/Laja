@@ -28,8 +28,8 @@ public class AddressBuilder {
         return this;
     }
 
-    public AddressBuilder withZipcode(int zipcode) {
-        builder.withZipcode(zipcode);
+    public AddressBuilder withZipcode(ZipcodeBuilder zipcode) {
+        builder.withZipcode(zipcode.builder);
         return this;
     }
 

@@ -1,5 +1,6 @@
 package net.sf.laja.example.car.state;
 
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.OwnerState;
 import net.sf.laja.example.car.state.Certificate;
 
@@ -9,8 +10,8 @@ import net.sf.laja.example.car.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface CarState {
-    int getLengthInCentimeters();
-    void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
+    VehicleSizeState getSize();
+    void setSize(VehicleSizeState size, Object mutator);
 
     String getName();
     void setName(String name, Object mutator);
@@ -20,8 +21,6 @@ public interface CarState {
 
     String getColor();
     void setColor(String color, Object mutator);
-
-    VehicleSizeState getSizeState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

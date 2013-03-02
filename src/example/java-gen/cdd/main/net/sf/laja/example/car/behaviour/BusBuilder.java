@@ -23,8 +23,8 @@ public class BusBuilder {
         return this;
     }
 
-    public BusBuilder withLengthInCentimeters(int lengthInCentimeters) {
-        builder.withLengthInCentimeters(lengthInCentimeters);
+    public BusBuilder withSize(VehicleSizeBuilder size) {
+        builder.withSize(size.builder);
         return this;
     }
 

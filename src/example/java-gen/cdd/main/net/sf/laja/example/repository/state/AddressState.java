@@ -1,5 +1,6 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -14,13 +15,11 @@ public interface AddressState {
     String getStreetName();
     void setStreetName(String streetName, Object mutator);
 
-    int getZipcode();
-    void setZipcode(int zipcode, Object mutator);
+    ZipcodeState getZipcode();
+    void setZipcode(ZipcodeState zipcode, Object mutator);
 
     String getCity();
     void setCity(String city, Object mutator);
-
-    ZipcodeState getZipcodeState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

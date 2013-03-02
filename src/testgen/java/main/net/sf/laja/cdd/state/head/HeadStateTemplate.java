@@ -11,9 +11,8 @@ public class HeadStateTemplate extends HeadStateImpl {
     EyeState leftEye;
     EyeState rightEye;
     EyeState midEye; // (optional)
-    EyeState $eye;
     NoseStateList noses;
-    ForeheadState $foreheadState;
+    ForeheadState foreheadState;
     int length; // (optional)
     boolean a;
     byte b;

@@ -6,7 +6,7 @@ public class CustomerStateTemplate {
     String surname; // (optional)
     int age;
     String pet; // (optional)
-    AddressState $address;
+    AddressState address;
     AddressStateList oldAddresses; // (optional)
 
     public boolean isValid() {

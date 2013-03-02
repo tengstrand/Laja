@@ -18,8 +18,8 @@ public class TestCarBuilder {
         builder = new CarStateBuilderImpl(state, encapsulator);
     }
 
-    public TestCarBuilder withLengthInCentimeters(int lengthInCentimeters) {
-        builder.withLengthInCentimeters(lengthInCentimeters);
+    public TestCarBuilder withSize(VehicleSizeBuilder size) {
+        builder.withSize(size.builder);
         return this;
     }
 

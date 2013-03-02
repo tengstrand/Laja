@@ -26,4 +26,8 @@ public class StringToIntConverter {
     public int value() {
         return Integer.parseInt(value);
     }
+
+    public String stringValue() {
+        return value;
+    }
 }

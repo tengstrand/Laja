@@ -1,8 +1,8 @@
 package net.sf.laja.example.car.state;
 
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.TruckTypeState;
 import net.sf.laja.example.car.state.OwnerState;
-import net.sf.laja.example.car.state.VehicleSizeStateImpl;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -11,7 +11,7 @@ import net.sf.laja.example.car.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public class TruckStateImpl implements TruckState {
-    protected int lengthInCentimeters;
+    protected VehicleSizeState size;
     protected int weightInKilograms;
     protected TruckTypeState type;
     protected String color;
@@ -51,10 +51,8 @@ public class TruckStateImpl implements TruckState {
     }
 
     private boolean isValid(boolean encapsulated) {
-        if (!getSizeState().isValid()) {
-            return false;
-        }
-        if ((type == null || !type.isValid())
+        if ((size == null || !size.isValid())
+                || (type == null || !type.isValid())
                 || color == null
                 || (owner == null || !owner.isValid())) {
             return false;
@@ -63,14 +61,14 @@ public class TruckStateImpl implements TruckState {
     }
 
     // Getters
-    public int getLengthInCentimeters() { return lengthInCentimeters; }
+    public VehicleSizeState getSize() { return size; }
     public int getWeightInKilograms() { return weightInKilograms; }
     public TruckTypeState getType() { return type; }
     public String getColor() { return color; }
     public OwnerState getOwner() { return owner; }
 
     // Setters
-    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setSize(VehicleSizeState size, Object mutator) { checkMutator(mutator); this.size = size; }
     public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
     public void setType(TruckTypeState type, Object mutator) { checkMutator(mutator); this.type = type; }
     public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
@@ -90,61 +88,6 @@ public class TruckStateImpl implements TruckState {
         _encapsulator = encapsulator;
     }
 
-    public VehicleSizeState getSizeState() {
-        return new VehicleSizeState() {
-            public Certificate certificate() { return certificate(); }
-
-            public int getLengthInCentimeters() { return TruckStateImpl.this.getLengthInCentimeters(); }
-            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { TruckStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
-
-            public void encapsulate() { TruckStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { TruckStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                return lengthInCentimeters >= 0;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof TruckStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
-
-                if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = lengthInCentimeters;
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
-            }
-        };
-    }
-
     @Override
     public boolean equals(Object that) {
        if (this == that) return true;
@@ -159,7 +102,7 @@ public class TruckStateImpl implements TruckState {
 
         TruckStateImpl state = (TruckStateImpl)value;
 
-        if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
+        if (size != null ? !size.equals(state.getSize()) : state.getSize() != null) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
         if (type != null ? !type.equals(state.getType()) : state.getType() != null) return false;
         if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
@@ -170,7 +113,7 @@ public class TruckStateImpl implements TruckState {
 
     @Override
     public int hashCode() {
-        int result = lengthInCentimeters;
+        int result = size != null ? size.hashCode() : 0;
         result = 31 * result + weightInKilograms;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (color != null ? color.hashCode() : 0);
@@ -181,7 +124,7 @@ public class TruckStateImpl implements TruckState {
 
     @Override
     public String toString() {
-        return "{lengthInCentimeters=" + lengthInCentimeters +
+        return "{size=" + size +
                 ", weightInKilograms=" + weightInKilograms +
                 ", type=" + type +
                 ", color=" + (color == null ? null : '\'' + color + '\'' ) +

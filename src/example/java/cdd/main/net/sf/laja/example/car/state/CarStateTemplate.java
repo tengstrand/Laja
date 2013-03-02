@@ -1,7 +1,7 @@
 package net.sf.laja.example.car.state;
 
 public class CarStateTemplate {
-    VehicleSizeState $size;
+    VehicleSizeState size;
     String name;
     OwnerState owner;
     String color;

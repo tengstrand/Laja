@@ -46,23 +46,8 @@ public class CustomerBuilder {
         return this;
     }
 
-    public CustomerBuilder withAddressId(int addressId) {
-        builder.withAddressId(addressId);
-        return this;
-    }
-
-    public CustomerBuilder withStreetName(String streetName) {
-        builder.withStreetName(streetName);
-        return this;
-    }
-
-    public CustomerBuilder withZipcode(int zipcode) {
-        builder.withZipcode(zipcode);
-        return this;
-    }
-
-    public CustomerBuilder withCity(String city) {
-        builder.withCity(city);
+    public CustomerBuilder withAddress(AddressBuilder address) {
+        builder.withAddress(address.builder);
         return this;
     }
 

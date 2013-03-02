@@ -1,40 +1,4 @@
 
-#macro stateMethods(expandedStateTemplate, stack)
-  #foreach (expandedAttribute in expandedStateTemplate.expandedAttributes)
-    #set (t = templates.get(expandedAttribute.cleanedStateType))
-    #stateMethod(t, expandedAttribute, stack)
-  #end
-#end
-
-#macro stateMethod(t, expandedAttribute, stack)
-  #set (tab = stack.get())
-
-{tab}public {expandedAttribute.stateClass} {expandedAttribute.variableStateGetter}() {
-{tab}    return new {expandedAttribute.stateClass}() {
-{tab}        public Certificate certificate() { return certificate(); }
-
-  #foreach (attribute in t.attributes)
-{tab}        public {attribute.type} {attribute.getter}() { return {stateImplClass}.this.{attribute.getter}(); }
-{tab}        public void {attribute.setter}({attribute.type} {attribute.variable}, Object mutator) { {stateImplClass}.this.{attribute.setter}({attribute.variable}, mutator); }
-
-  #end
-{tab}        public void encapsulate() { {stateImplClass}.this.encapsulate(); }
-{tab}        public void setEncapsulator(Object encapsulator) { {stateImplClass}.this.setEncapsulator(encapsulator); }
-  #isValid(t, "        {tab}")
-  #stack.push("        {tab}")
-  #stateMethods(templates.get(expandedAttribute.cleanedStateType), stack)
-  #stack.pull()
-  #set (tab = stack.get())
-  #equals(t, "        {tab}")
-## fix!
-##      #equalsState(t, "        {tab}")
-  #equalsValue(t, "        {tab}")
-  #hashCode(t, "        {tab}")
-  #toString(t, "        {tab}")
-{tab}    };
-{tab}}
-#end
-
 #macro gettersAndSetters()
 
     // Getters
@@ -85,11 +49,6 @@
 {tab}}
 
 {tab}private boolean isValid(boolean encapsulated) {
-  #foreach (a in t.expandedAttributes)
-{tab}    if (!{a.variableStateGetter}().isValid()) {
-{tab}        return false;
-{tab}    }
-  #end
   #set (hasMandatoryOrStateAttributes = false)
   #foreach (attribute in t.attributes where attribute.isMandatory && !attribute.isPrimitive)
     #set (hasMandatoryOrStateAttributes = true)
@@ -343,7 +302,6 @@ public class {stateImplClass} implements {stateClass} {
   #setEncapsulator()
   #set (stack = stack())
   #stack.push("    ")
-  #stateMethods($, stack)
   #equals($, "    ")
 ## fix!
 ##  #equalsState($, "    ")
@@ -355,9 +313,8 @@ public class {stateImplClass} implements {stateClass} {
 
 #macro fileContent()
   #package()
-  #importBegin(false)
+  #importBegin()
   #importState()
-  #importExpandedType("StateImpl")
   #importStateHashSet()
   #importStateArrayList()
   #importCertificate()

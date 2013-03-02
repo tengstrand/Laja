@@ -2,7 +2,7 @@ package net.sf.laja.example.car.behaviour;
 
 import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.BusState;
-// Vehicle
+// Bus
 
 public class BusEncapsulator implements BusStateComparable {
     public final BusStateBuilder builder;

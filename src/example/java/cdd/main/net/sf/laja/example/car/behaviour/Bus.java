@@ -7,7 +7,7 @@ public class Bus extends BusFactory {
 
     public Bus(BusState state) {
         super(state);
-        size = new VehicleSize(state.getSizeState());
+        size = new VehicleSize(state.getSize());
     }
 
     public boolean isNormalSize() {

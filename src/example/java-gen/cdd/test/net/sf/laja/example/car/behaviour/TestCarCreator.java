@@ -6,9 +6,9 @@ import net.sf.laja.example.car.state.CarState;
 public class TestCarCreator {
     private final CarStateBuilder builder = CarStateImpl.build();
 
-    public class LengthInCentimeters_ {
-        public Name_ lengthInCentimeters(int lengthInCentimeters) {
-            builder.withLengthInCentimeters(lengthInCentimeters);
+    public class Size_ {
+        public Name_ size(VehicleSizeEncapsulator size) {
+            builder.withSize(size.builder);
             return new Name_();
         }
     }

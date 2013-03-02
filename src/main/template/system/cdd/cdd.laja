@@ -20,6 +20,8 @@
   #set (behaviourOutDir = null)
   #set (defaultStateOutDir = null)
   #set (defaultBehaviourOutDir = null)
+  #set (certificatePackage = null)
+  #set (certificatePath = null)
 #end
 
 #macro addBehaviour(classname)
@@ -45,7 +47,6 @@
 
   #set (parserError = false)
   #set (templates = new java.util.HashMap())
-  #set (expander = new net.sf.laja.parser.cdd.statetemplate.Expander())
   #set (errors = new net.sf.laja.parser.cdd.statetemplate.StateTemplateErrors())
 
   #set (processedFiles = new net.sf.laja.parser.cdd.OutputDirectoryReader$Result())
@@ -129,7 +130,6 @@
             #set (parserError = true)
           #end
           #templates.put(template.classname, template)
-          #expander.add(template))
         #else
           #errors.addMessages(template.errors)
           #set (parserError = true)
@@ -178,11 +178,8 @@
     #import "{..}/../java/cdd/shared.java.laja"
     #import "{..}/../java/cdd/certificate.java.laja"
 
-    #expander.expand(errors)
     #messageFormatter.printTable(behaviours)
   #end
-
-  #cleanupInputParameters()
 
   #if (!parserError && !errors.hasErrors)
     #generateState()
@@ -198,6 +195,7 @@
   #else
     #errors.printMessages()
   #end
+  #cleanupInputParameters()
 #end
 
 #macro validateStates()
@@ -210,12 +208,6 @@
       #end
       #if (!attribute.isValidType)
         #attributeError("Unsupported type '{attribute.type}'")
-      #end
-      #if (attribute.isExpand && attribute.isStateList)
-        #attributeError("Not possible to expanded a state lists")
-      #end
-      #if (attribute.isOptional && attribute.isExpand)
-        #attributeError("Not possible to expand optional attributes")
       #end
     #end
     #if (cnt.isGreaterThan(1))
@@ -236,15 +228,10 @@
     #set (imports = stateTemplate.imports)
     #set (allImports = stateTemplate.allImports)
     #set (attributes = stateTemplate.attributes)
-    #set (expandedAttributes = stateTemplate.expandedAttributes)
     #set (isValidStatement = stateTemplate.isValidStatement)
     #set (asMethods = stateTemplate.asMethods)
     #set (stateMethods = stateTemplate.stateMethods)
     #set (convertMethods = stateTemplate.convertMethods)
-    #set (allConvertMethods = stateTemplate.allConvertMethods)
-    #set (expandedTypes = stateTemplate.expandedTypes)
-    #set (allExpandedTypes = stateTemplate.allExpandedTypes)
-    #set (expandedTypeImports = stateTemplate.expandedTypeImports)
     #set (errors = stateTemplate.errors)
 
     #if (!directoryExists(outputDir))

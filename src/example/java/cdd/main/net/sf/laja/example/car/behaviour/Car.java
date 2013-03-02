@@ -7,7 +7,7 @@ public class Car extends CarFactory {
 
     public Car(CarState state) {
         super(state);
-        size = new VehicleSize(state.getSizeState());
+        size = new VehicleSize(state.getSize());
     }
 
     // Used by test context to inject mocks.

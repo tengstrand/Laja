@@ -9,11 +9,11 @@ import net.sf.laja.example.repository.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface AddressStateBuilder {
-    ZipcodeStateBuilder getZipcodeStateBuilder();
     void withAddressId(int addressId);
     void withStreetName(String streetName);
-    void withZipcode(int zipcode);
+    void withZipcode(ZipcodeStateBuilder zipcode);
     void withCity(String city);
+    ZipcodeStateBuilder getZipcodeStateBuilder();
     boolean isValid();
     Object as(AddressBehaviourFactory factory, Object... args);
     AddressState getAddressState(net.sf.laja.example.repository.state.Certificate certificate);

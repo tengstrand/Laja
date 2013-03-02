@@ -1,10 +1,8 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.VehicleSizeBehaviourFactory;
-import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
-import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
 import net.sf.laja.example.car.state.OwnerStateBuilder;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
 import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
 import net.sf.laja.example.car.state.Certificate;
 
@@ -17,6 +15,7 @@ public class CarStateBuilderImpl implements CarStateBuilder {
     private Object encapsulator;
     private CarState state;
     private final Certificate certificate;
+    private VehicleSizeStateBuilder sizeStateBuilder;
     private OwnerStateBuilder ownerStateBuilder;
 
     CarStateBuilderImpl() {
@@ -34,12 +33,8 @@ public class CarStateBuilderImpl implements CarStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public VehicleSizeStateBuilder getSizeStateBuilder() {
-        return new VehicleSizeStateBuilderImpl(state.getSizeState());
-    }
-
-    public void withLengthInCentimeters(int lengthInCentimeters) {
-        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
+    public void withSize(VehicleSizeStateBuilder size) {
+        state.setSize(size.getVehicleSizeState(certificate), encapsulator);
     }
 
     public void withName(String name) {
@@ -52,6 +47,13 @@ public class CarStateBuilderImpl implements CarStateBuilder {
 
     public void withColor(String color) {
         state.setColor(color, encapsulator);
+    }
+
+    public VehicleSizeStateBuilder getSizeStateBuilder() {
+        if (sizeStateBuilder == null) {
+            sizeStateBuilder = new VehicleSizeStateBuilderImpl(state.getSize());
+        }
+        return sizeStateBuilder;
     }
 
     public OwnerStateBuilder getOwnerStateBuilder() {

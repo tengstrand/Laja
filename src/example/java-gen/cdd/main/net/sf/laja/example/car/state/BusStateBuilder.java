@@ -9,10 +9,10 @@ import net.sf.laja.example.car.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface BusStateBuilder {
-    VehicleSizeStateBuilder getSizeStateBuilder();
     void withName(String name);
-    void withLengthInCentimeters(int lengthInCentimeters);
+    void withSize(VehicleSizeStateBuilder size);
     void withWeightInKilograms(int weightInKilograms);
+    VehicleSizeStateBuilder getSizeStateBuilder();
     boolean isValid();
     Object as(BusBehaviourFactory factory, Object... args);
     BusState getBusState(net.sf.laja.example.car.state.Certificate certificate);

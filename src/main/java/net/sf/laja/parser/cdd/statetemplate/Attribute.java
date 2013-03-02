@@ -18,8 +18,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public String comment = "";
     public boolean isId;
     public boolean isKey;
-    public boolean isExpand;
-    public boolean isPrefix;
     public boolean isInclude;
     public boolean isExclude;
     public boolean isState;
@@ -28,37 +26,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isHidden;
     public boolean isOptional;
     public boolean isMandatory = true;
-
-    public Attribute copyAllAttributesExceptIdAndKeyPlusReplaceIdWithExclude(String prefix) {
-        Attribute result = new Attribute();
-        result.type = type;
-        result.cleanedStateType = cleanedStateType;
-
-        if (!prefix.isEmpty()) {
-            result.setVariable(prefix + StringUtils.capitalize(variable));
-        } else {
-            result.setVariable(variable);
-        }
-
-        result.stateClass = stateClass;
-        result.stateMethod = stateMethod;
-        result.initialValue = initialValue;
-        result.initialStatement = initialStatement;
-        result.comment  = comment;
-        result.isExpand = isExpand;
-        result.isPrefix = isPrefix;
-        result.isInclude = isInclude;
-        result.isExclude = isExclude || isId;
-        result.isState = isState;
-        result.isStateSet = isStateSet;
-        result.isStateList = isStateList;
-        result.isHidden = isHidden;
-        result.isOptional = isOptional;
-
-        postSetProperties(result);
-
-        return result;
-    }
 
     public void cleanCommentFromIdAndKey() {
         String whiteSpaces = comment.indexOf("//") >= 0 ? comment.substring(0, comment.indexOf("//")) : "";
@@ -175,10 +142,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
     }
 
     public void setVariable(String variable) {
-        if (variable.startsWith("$")) {
-            isExpand = true;
-            variable = StringUtils.chomp(variable.substring(1), "State");
-        }
         String variableClass = StringUtils.capitalize(variable);
         this.variable = variable;
         this.variableAsClass = variableClass;
@@ -196,7 +159,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isId = comment.contains("(id)");
         isKey = comment.contains("(key)");
         isHidden = comment.contains("(hide)");
-        isPrefix = comment.contains("(prefix)");
         isInclude = comment.contains("(include)");
         isExclude = comment.contains("(exclude)");
         isOptional = comment.contains("(optional)");
@@ -238,8 +200,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
                 ", initialValue='" + initialValue + '\'' +
                 ", initialStatement='" + initialStatement + '\'' +
                 ", comment='" + comment + '\'' +
-                ", isExpand=" + isExpand +
-                ", isPrefix=" + isPrefix +
                 ", isInclude=" + isInclude +
                 ", isExclude=" + isExclude +
                 ", isState=" + isState +

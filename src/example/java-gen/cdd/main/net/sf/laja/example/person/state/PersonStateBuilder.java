@@ -9,11 +9,10 @@ import net.sf.laja.example.person.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface PersonStateBuilder {
-    BmiStateBuilder getSizeStateBuilder();
     void withGivenName(String givenName);
     void withSurname(String surname);
-    void withHeightInCentimeters(int heightInCentimeters);
-    void withWeightInKilograms(int weightInKilograms);
+    void withSize(BmiStateBuilder size);
+    BmiStateBuilder getSizeStateBuilder();
     boolean isValid();
     Object as(PersonBehaviourFactory factory, Object... args);
     PersonState getPersonState(net.sf.laja.example.person.state.Certificate certificate);

@@ -1,7 +1,5 @@
 package net.sf.laja.example.repository.state;
 
-import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
-import net.sf.laja.example.repository.state.ZipcodeState;
 import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
 import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
 import net.sf.laja.example.repository.state.Certificate;
@@ -15,6 +13,7 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
     private Object encapsulator;
     private AddressState state;
     private final Certificate certificate;
+    private ZipcodeStateBuilder zipcodeStateBuilder;
 
     AddressStateBuilderImpl() {
         state = new AddressStateImpl();
@@ -31,10 +30,6 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public ZipcodeStateBuilder getZipcodeStateBuilder() {
-        return new ZipcodeStateBuilderImpl(state.getZipcodeState());
-    }
-
     public void withAddressId(int addressId) {
         state.setAddressId(addressId, encapsulator);
     }
@@ -43,12 +38,19 @@ public class AddressStateBuilderImpl implements AddressStateBuilder {
         state.setStreetName(streetName, encapsulator);
     }
 
-    public void withZipcode(int zipcode) {
-        state.setZipcode(zipcode, encapsulator);
+    public void withZipcode(ZipcodeStateBuilder zipcode) {
+        state.setZipcode(zipcode.getZipcodeState(certificate), encapsulator);
     }
 
     public void withCity(String city) {
         state.setCity(city, encapsulator);
+    }
+
+    public ZipcodeStateBuilder getZipcodeStateBuilder() {
+        if (zipcodeStateBuilder == null) {
+            zipcodeStateBuilder = new ZipcodeStateBuilderImpl(state.getZipcode());
+        }
+        return zipcodeStateBuilder;
     }
 
     public boolean isValid() {

@@ -1,6 +1,6 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.VehicleSizeStateImpl;
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -10,7 +10,7 @@ import net.sf.laja.example.car.state.Certificate;
  */
 public class BusStateImpl implements BusState {
     protected String name;
-    protected int lengthInCentimeters;
+    protected VehicleSizeState size;
     protected int weightInKilograms; // (optional)
 
     private boolean _encapsulated = false;
@@ -47,10 +47,8 @@ public class BusStateImpl implements BusState {
     }
 
     private boolean isValid(boolean encapsulated) {
-        if (!getSizeState().isValid()) {
-            return false;
-        }
-        if (name == null) {
+        if (name == null
+                || (size == null || !size.isValid())) {
             return false;
         }
         return true;
@@ -58,12 +56,12 @@ public class BusStateImpl implements BusState {
 
     // Getters
     public String getName() { return name; }
-    public int getLengthInCentimeters() { return lengthInCentimeters; }
+    public VehicleSizeState getSize() { return size; }
     public int getWeightInKilograms() { return weightInKilograms; }
 
     // Setters
     public void setName(String name, Object mutator) { checkMutator(mutator); this.name = name; }
-    public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { checkMutator(mutator); this.lengthInCentimeters = lengthInCentimeters; }
+    public void setSize(VehicleSizeState size, Object mutator) { checkMutator(mutator); this.size = size; }
     public void setWeightInKilograms(int weightInKilograms, Object mutator) { checkMutator(mutator); this.weightInKilograms = weightInKilograms; }
 
     private void checkMutator(Object mutator) {
@@ -78,61 +76,6 @@ public class BusStateImpl implements BusState {
 
     public void setEncapsulator(Object encapsulator) {
         _encapsulator = encapsulator;
-    }
-
-    public VehicleSizeState getSizeState() {
-        return new VehicleSizeState() {
-            public Certificate certificate() { return certificate(); }
-
-            public int getLengthInCentimeters() { return BusStateImpl.this.getLengthInCentimeters(); }
-            public void setLengthInCentimeters(int lengthInCentimeters, Object mutator) { BusStateImpl.this.setLengthInCentimeters(lengthInCentimeters, mutator); }
-
-            public void encapsulate() { BusStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { BusStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                return lengthInCentimeters >= 0;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof BusStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                VehicleSizeStateImpl state = (VehicleSizeStateImpl)value;
-
-                if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = lengthInCentimeters;
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{lengthInCentimeters=" + lengthInCentimeters + "}";
-            }
-        };
     }
 
     @Override
@@ -150,7 +93,7 @@ public class BusStateImpl implements BusState {
         BusStateImpl state = (BusStateImpl)value;
 
         if (name != null ? !name.equals(state.getName()) : state.getName() != null) return false;
-        if (lengthInCentimeters != state.getLengthInCentimeters()) return false;
+        if (size != null ? !size.equals(state.getSize()) : state.getSize() != null) return false;
         if (weightInKilograms != state.getWeightInKilograms()) return false;
 
         return true;
@@ -159,7 +102,7 @@ public class BusStateImpl implements BusState {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + lengthInCentimeters;
+        result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + weightInKilograms;
 
         return result;
@@ -168,7 +111,7 @@ public class BusStateImpl implements BusState {
     @Override
     public String toString() {
         return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
-                ", lengthInCentimeters=" + lengthInCentimeters +
+                ", size=" + size +
                 ", weightInKilograms=" + weightInKilograms + "}";
     }
 }

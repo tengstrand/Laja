@@ -1,5 +1,6 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressStateList;
 import net.sf.laja.example.repository.state.Certificate;
 
@@ -24,22 +25,11 @@ public interface CustomerState {
     String getPet(); // (optional)
     void setPet(String pet, Object mutator);
 
-    int getAddressId();
-    void setAddressId(int addressId, Object mutator);
-
-    String getStreetName();
-    void setStreetName(String streetName, Object mutator);
-
-    int getZipcode();
-    void setZipcode(int zipcode, Object mutator);
-
-    String getCity();
-    void setCity(String city, Object mutator);
+    AddressState getAddress();
+    void setAddress(AddressState address, Object mutator);
 
     AddressStateList getOldAddresses(); // (optional)
     void setOldAddresses(AddressStateList oldAddresses, Object mutator);
-
-    AddressState getAddressState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

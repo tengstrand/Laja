@@ -32,11 +32,6 @@ public class CustomerEncapsulator implements CustomerStateComparable {
         return this;
     }
 
-    public CustomerEncapsulator withAddressId(int addressId) {
-        builder.withAddressId(addressId);
-        return this;
-    }
-
     public CustomerEncapsulator withOldAddresses(AddressEncapsulator... oldAddresses) {
         AddressListEncapsulator encapsulator = new AddressListEncapsulator(oldAddresses);
         builder.withOldAddresses(encapsulator.stateListBuilder);

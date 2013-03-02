@@ -1,7 +1,5 @@
 package net.sf.laja.example.person.state;
 
-import net.sf.laja.example.person.state.BmiBehaviourFactory;
-import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.BmiStateBuilder;
 import net.sf.laja.example.person.state.BmiStateBuilderImpl;
 import net.sf.laja.example.person.state.Certificate;
@@ -15,6 +13,7 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
     private Object encapsulator;
     private PersonState state;
     private final Certificate certificate;
+    private BmiStateBuilder sizeStateBuilder;
 
     PersonStateBuilderImpl() {
         state = new PersonStateImpl();
@@ -31,10 +30,6 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public BmiStateBuilder getSizeStateBuilder() {
-        return new BmiStateBuilderImpl(state.getSizeState());
-    }
-
     public void withGivenName(String givenName) {
         state.setGivenName(givenName, encapsulator);
     }
@@ -43,12 +38,15 @@ public class PersonStateBuilderImpl implements PersonStateBuilder {
         state.setSurname(surname, encapsulator);
     }
 
-    public void withHeightInCentimeters(int heightInCentimeters) {
-        state.setHeightInCentimeters(heightInCentimeters, encapsulator);
+    public void withSize(BmiStateBuilder size) {
+        state.setSize(size.getBmiState(certificate), encapsulator);
     }
 
-    public void withWeightInKilograms(int weightInKilograms) {
-        state.setWeightInKilograms(weightInKilograms, encapsulator);
+    public BmiStateBuilder getSizeStateBuilder() {
+        if (sizeStateBuilder == null) {
+            sizeStateBuilder = new BmiStateBuilderImpl(state.getSize());
+        }
+        return sizeStateBuilder;
     }
 
     public boolean isValid() {

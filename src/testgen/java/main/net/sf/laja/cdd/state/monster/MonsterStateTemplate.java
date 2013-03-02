@@ -6,7 +6,7 @@ import net.sf.laja.cdd.state.head.HeadState;
 public class MonsterStateTemplate {
     int numberOfLegs;
     int numberOfOwnWings;
-    HeadState $head;
+    HeadState head;
     int length; // (optional))
     int weight;
     String color;

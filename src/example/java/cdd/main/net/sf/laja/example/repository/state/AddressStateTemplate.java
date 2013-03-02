@@ -3,7 +3,7 @@ package net.sf.laja.example.repository.state;
 public class AddressStateTemplate {
     int addressId; // (id)
     String streetName;
-    ZipcodeState $zipcode;
+    ZipcodeState zipcode;
     String city;
 
     public boolean isValid() {

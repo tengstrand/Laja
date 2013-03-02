@@ -18,8 +18,8 @@ public class TruckBuilder {
         builder = new TruckStateBuilderImpl(state, encapsulator);
     }
 
-    public TruckBuilder withLengthInCentimeters(int lengthInCentimeters) {
-        builder.withLengthInCentimeters(lengthInCentimeters);
+    public TruckBuilder withSize(VehicleSizeBuilder size) {
+        builder.withSize(size.builder);
         return this;
     }
 

@@ -7,15 +7,15 @@ public class BusCreator {
     private final BusStateBuilder builder = BusStateImpl.build();
 
     public class Name_ {
-        public LengthInCentimeters_ name(String name) {
+        public Size_ name(String name) {
             builder.withName(name);
-            return new LengthInCentimeters_();
+            return new Size_();
         }
     }
 
-    public class LengthInCentimeters_ {
-        public BusEncapsulator lengthInCentimeters(int lengthInCentimeters) {
-            builder.withLengthInCentimeters(lengthInCentimeters);
+    public class Size_ {
+        public BusEncapsulator size(VehicleSizeEncapsulator size) {
+            builder.withSize(size.builder);
             return create();
         }
     }

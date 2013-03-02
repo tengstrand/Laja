@@ -1,8 +1,7 @@
 package net.sf.laja.example.repository.state;
 
+import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressStateList;
-import net.sf.laja.example.repository.state.AddressStateImpl;
-import net.sf.laja.example.repository.state.ZipcodeStateImpl;
 import net.sf.laja.example.repository.state.AddressStateArrayList;
 import net.sf.laja.example.repository.state.Certificate;
 
@@ -17,10 +16,7 @@ public class CustomerStateImpl implements CustomerState {
     protected String surname; // (optional)
     protected int age;
     protected String pet; // (optional)
-    protected int addressId;
-    protected String streetName;
-    protected int zipcode;
-    protected String city;
+    protected AddressState address;
     protected AddressStateList oldAddresses; // (optional)
 
     private boolean _encapsulated = false;
@@ -58,12 +54,8 @@ public class CustomerStateImpl implements CustomerState {
     }
 
     private boolean isValid(boolean encapsulated) {
-        if (!getAddressState().isValid()) {
-            return false;
-        }
         if (givenName == null
-                || streetName == null
-                || city == null
+                || (address == null || !address.isValid())
                 || (oldAddresses != null && !oldAddresses.isValid())) {
             return false;
         }
@@ -76,10 +68,7 @@ public class CustomerStateImpl implements CustomerState {
     public String getSurname() { return surname; }
     public int getAge() { return age; }
     public String getPet() { return pet; }
-    public int getAddressId() { return addressId; }
-    public String getStreetName() { return streetName; }
-    public int getZipcode() { return zipcode; }
-    public String getCity() { return city; }
+    public AddressState getAddress() { return address; }
     public AddressStateList getOldAddresses() { return oldAddresses; }
 
     // Setters
@@ -88,10 +77,7 @@ public class CustomerStateImpl implements CustomerState {
     public void setSurname(String surname, Object mutator) { checkMutator(mutator); this.surname = surname; }
     public void setAge(int age, Object mutator) { checkMutator(mutator); this.age = age; }
     public void setPet(String pet, Object mutator) { checkMutator(mutator); this.pet = pet; }
-    public void setAddressId(int addressId, Object mutator) { checkMutator(mutator); this.addressId = addressId; }
-    public void setStreetName(String streetName, Object mutator) { checkMutator(mutator); this.streetName = streetName; }
-    public void setZipcode(int zipcode, Object mutator) { checkMutator(mutator); this.zipcode = zipcode; }
-    public void setCity(String city, Object mutator) { checkMutator(mutator); this.city = city; }
+    public void setAddress(AddressState address, Object mutator) { checkMutator(mutator); this.address = address; }
     public void setOldAddresses(AddressStateList oldAddresses, Object mutator) { checkMutator(mutator); this.oldAddresses.clear(); this.oldAddresses.addAll(oldAddresses); }
 
     private void checkMutator(Object mutator) {
@@ -106,132 +92,6 @@ public class CustomerStateImpl implements CustomerState {
 
     public void setEncapsulator(Object encapsulator) {
         _encapsulator = encapsulator;
-    }
-
-    public AddressState getAddressState() {
-        return new AddressState() {
-            public Certificate certificate() { return certificate(); }
-
-            public int getAddressId() { return CustomerStateImpl.this.getAddressId(); }
-            public void setAddressId(int addressId, Object mutator) { CustomerStateImpl.this.setAddressId(addressId, mutator); }
-
-            public String getStreetName() { return CustomerStateImpl.this.getStreetName(); }
-            public void setStreetName(String streetName, Object mutator) { CustomerStateImpl.this.setStreetName(streetName, mutator); }
-
-            public int getZipcode() { return CustomerStateImpl.this.getZipcode(); }
-            public void setZipcode(int zipcode, Object mutator) { CustomerStateImpl.this.setZipcode(zipcode, mutator); }
-
-            public String getCity() { return CustomerStateImpl.this.getCity(); }
-            public void setCity(String city, Object mutator) { CustomerStateImpl.this.setCity(city, mutator); }
-
-            public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                if (!getZipcodeState().isValid()) {
-                    return false;
-                }
-                if (streetName == null
-                        || city == null) {
-                    return false;
-                }
-                return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
-            }
-
-            public ZipcodeState getZipcodeState() {
-                return new ZipcodeState() {
-                    public Certificate certificate() { return certificate(); }
-
-                    public int getZipcode() { return CustomerStateImpl.this.getZipcode(); }
-                    public void setZipcode(int zipcode, Object mutator) { CustomerStateImpl.this.setZipcode(zipcode, mutator); }
-
-                    public void encapsulate() { CustomerStateImpl.this.encapsulate(); }
-                    public void setEncapsulator(Object encapsulator) { CustomerStateImpl.this.setEncapsulator(encapsulator); }
-
-                    public boolean isValid() {
-                        return isValid(_encapsulated);
-                    }
-
-                    public boolean isValidAsEncapsulated() {
-                        return isValid(true);
-                    }
-
-                    private boolean isValid(boolean encapsulated) {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean equals(Object that) {
-                       if (this == that) return true;
-                       if (!(that instanceof CustomerStateComparable)) return false;
-
-                       return true;
-                    }
-
-                    public boolean equalsValue(Object value) {
-                        if (this == value) return true;
-                        if (value == null || getClass() != value.getClass()) return false;
-
-                        ZipcodeStateImpl state = (ZipcodeStateImpl)value;
-
-                        if (zipcode != state.getZipcode()) return false;
-
-                        return true;
-                    }
-
-                    @Override
-                    public int hashCode() {
-                        int result = zipcode;
-
-                        return result;
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "{zipcode=" + zipcode + "}";
-                    }
-                };
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof CustomerStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                ZipcodeStateImpl state = (ZipcodeStateImpl)value;
-
-                if (zipcode != state.getZipcode()) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = zipcode;
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{zipcode=" + zipcode + "}";
-            }
-        };
     }
 
     @Override
@@ -253,9 +113,7 @@ public class CustomerStateImpl implements CustomerState {
         if (surname != null ? !surname.equals(state.getSurname()) : state.getSurname() != null) return false;
         if (age != state.getAge()) return false;
         if (pet != null ? !pet.equals(state.getPet()) : state.getPet() != null) return false;
-        if (streetName != null ? !streetName.equals(state.getStreetName()) : state.getStreetName() != null) return false;
-        if (zipcode != state.getZipcode()) return false;
-        if (city != null ? !city.equals(state.getCity()) : state.getCity() != null) return false;
+        if (address != null ? !address.equals(state.getAddress()) : state.getAddress() != null) return false;
         if (oldAddresses != null ? !oldAddresses.equals(state.getOldAddresses()) : state.getOldAddresses() != null) return false;
 
         return true;
@@ -275,10 +133,7 @@ public class CustomerStateImpl implements CustomerState {
                 ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
                 ", age=" + age +
                 ", pet=" + (pet == null ? null : '\'' + pet + '\'' ) +
-                ", addressId=" + addressId +
-                ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
-                ", zipcode=" + zipcode +
-                ", city=" + (city == null ? null : '\'' + city + '\'' ) +
+                ", address=" + address +
                 ", oldAddresses=" + oldAddresses + "}";
     }
 }

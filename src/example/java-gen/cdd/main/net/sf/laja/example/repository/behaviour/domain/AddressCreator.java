@@ -14,8 +14,8 @@ public class AddressCreator {
     }
 
     public class Zipcode_ {
-        public City_ zipcode(int zipcode) {
-            builder.withZipcode(zipcode);
+        public City_ zipcode(ZipcodeEncapsulator zipcode) {
+            builder.withZipcode(zipcode.builder);
             return new City_();
         }
     }

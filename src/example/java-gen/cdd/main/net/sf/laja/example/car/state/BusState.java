@@ -1,5 +1,6 @@
 package net.sf.laja.example.car.state;
 
+import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.Certificate;
 
 /**
@@ -11,13 +12,11 @@ public interface BusState {
     String getName();
     void setName(String name, Object mutator);
 
-    int getLengthInCentimeters();
-    void setLengthInCentimeters(int lengthInCentimeters, Object mutator);
+    VehicleSizeState getSize();
+    void setSize(VehicleSizeState size, Object mutator);
 
     int getWeightInKilograms(); // (optional)
     void setWeightInKilograms(int weightInKilograms, Object mutator);
-
-    VehicleSizeState getSizeState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

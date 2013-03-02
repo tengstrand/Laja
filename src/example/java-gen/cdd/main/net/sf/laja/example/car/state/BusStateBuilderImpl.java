@@ -1,7 +1,5 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.VehicleSizeBehaviourFactory;
-import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
 import net.sf.laja.example.car.state.Certificate;
@@ -15,6 +13,7 @@ public class BusStateBuilderImpl implements BusStateBuilder {
     private Object encapsulator;
     private BusState state;
     private final Certificate certificate;
+    private VehicleSizeStateBuilder sizeStateBuilder;
 
     BusStateBuilderImpl() {
         state = new BusStateImpl();
@@ -31,20 +30,23 @@ public class BusStateBuilderImpl implements BusStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public VehicleSizeStateBuilder getSizeStateBuilder() {
-        return new VehicleSizeStateBuilderImpl(state.getSizeState());
-    }
-
     public void withName(String name) {
         state.setName(name, encapsulator);
     }
 
-    public void withLengthInCentimeters(int lengthInCentimeters) {
-        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
+    public void withSize(VehicleSizeStateBuilder size) {
+        state.setSize(size.getVehicleSizeState(certificate), encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
         state.setWeightInKilograms(weightInKilograms, encapsulator);
+    }
+
+    public VehicleSizeStateBuilder getSizeStateBuilder() {
+        if (sizeStateBuilder == null) {
+            sizeStateBuilder = new VehicleSizeStateBuilderImpl(state.getSize());
+        }
+        return sizeStateBuilder;
     }
 
     public boolean isValid() {

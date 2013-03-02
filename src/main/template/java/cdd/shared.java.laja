@@ -73,28 +73,7 @@ package {package};
 
 #end
 
-#macro importBegin(importExpanded)
-  #set (hasImports = false)
-  #if (importExpanded)
-    #foreach (importstatement in allImports)
-{importstatement.statement}
-      #set (hasImports = true)
-    #end
-  #else
-    #foreach (importstatement in imports)
-{importstatement.statement}
-      #set (hasImports = true)
-    #end
-  #end
-#end
-
-#macro importExpandedType(expandedTypeSuffix)
-  #foreach (expandedType in allExpandedTypes)
-    #foreach (suffix in expandedTypeSuffix.split(","))
-import {expandedType.importStatement}{suffix};
-      #set (hasImports = true)
-    #end
-  #end
+#macro importBegin()
 #end
 
 #macro importState()
@@ -132,7 +111,7 @@ import {template.packagename}.{template.stateClass}ArrayList;
 #end
 
 #macro importStateBuilder()
-  #foreach (attribute in attributes where attribute.isState && !attribute.isExpand)
+  #foreach (attribute in attributes where attribute.isState)
     #set (template = templates.get(attribute.cleanedStateType))
     #if (template != null)
       #stateImports.add("import {template.packagename}.{attribute.stateBuilder}")
@@ -152,7 +131,7 @@ import {template.packagename}.{template.stateClass}ArrayList;
 #end
 
 #macro importStateBuilderImpl()
-  #foreach (attribute in attributes where attribute.isState && !attribute.isExpand)
+  #foreach (attribute in attributes where attribute.isState)
     #set (template = templates.get(attribute.cleanedStateType))
     #if (template != null)
       #stateImports.add("import {template.packagename}.{attribute.stateBuilderImpl}")

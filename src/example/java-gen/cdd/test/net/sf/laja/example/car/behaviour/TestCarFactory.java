@@ -17,8 +17,8 @@ public class TestCarFactory extends CarBehaviour {
         super(state, stateBuilder);
     }
 
-    public static TestCarCreator.Name_ lengthInCentimeters(int lengthInCentimeters) {
-        return new TestCarCreator().new LengthInCentimeters_().lengthInCentimeters(lengthInCentimeters);
+    public static TestCarCreator.Name_ size(VehicleSizeEncapsulator size) {
+        return new TestCarCreator().new Size_().size(size);
     }
 
     public static TestCarBuilder build() {

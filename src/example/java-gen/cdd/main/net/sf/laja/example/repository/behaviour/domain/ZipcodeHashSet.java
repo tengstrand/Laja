@@ -1,7 +1,7 @@
-package net.sf.laja.example.car.behaviour;
+package net.sf.laja.example.repository.behaviour.domain;
 
-import net.sf.laja.example.car.state.*;
-import net.sf.laja.example.car.behaviour.*;
+import net.sf.laja.example.repository.state.*;
+import net.sf.laja.example.repository.behaviour.domain.*;
 import java.util.*;
 
 /**
@@ -9,55 +9,55 @@ import java.util.*;
  *
  *   http://laja.tengstrand.nu
  */
-public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java.io.Serializable {
-    protected VehicleStateSet stateSet;
-    protected final Set<Vehicle> set;
+public class ZipcodeHashSet implements ZipcodeSet, RandomAccess, Cloneable, java.io.Serializable {
+    protected ZipcodeStateSet stateSet;
+    protected final Set<Zipcode> set;
 
-    public VehicleHashSet(Vehicle... array) {
-        this.set = new HashSet<Vehicle>();
+    public ZipcodeHashSet(Zipcode... array) {
+        this.set = new HashSet<Zipcode>();
         this.set.addAll(Arrays.asList(array));
     }
 
-    public VehicleHashSet(Collection<Vehicle> collection) {
-        this.set = new HashSet<Vehicle>();
+    public ZipcodeHashSet(Collection<Zipcode> collection) {
+        this.set = new HashSet<Zipcode>();
         this.set.addAll(collection);
     }
 
-    public VehicleHashSet(VehicleStateSet stateSet) {
+    public ZipcodeHashSet(ZipcodeStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
-        Set<Vehicle> elements = new HashSet<Vehicle>(stateSet.size());
+        Set<Zipcode> elements = new HashSet<Zipcode>(stateSet.size());
 
-        for (VehicleState state : stateSet) {
-            VehicleStateBuilder builder = new VehicleStateBuilderImpl(state);
-            Vehicle entry = (Vehicle) builder.as(new VehicleFactory.VehicleFactory_(builder));
+        for (ZipcodeState state : stateSet) {
+            ZipcodeStateBuilder builder = new ZipcodeStateBuilderImpl(state);
+            Zipcode entry = (Zipcode) builder.as(new ZipcodeFactory.ZipcodeFactory_(builder));
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);
     }
 
-    public class StateInSyncSet extends HashSet<Vehicle> {
-        private VehicleStateSet stateSet;
+    public class StateInSyncSet extends HashSet<Zipcode> {
+        private ZipcodeStateSet stateSet;
 
-        public StateInSyncSet(VehicleStateSet stateSet, Set<Vehicle> elements) {
+        public StateInSyncSet(ZipcodeStateSet stateSet, Set<Zipcode> elements) {
             this.stateSet = stateSet;
             this.stateSet.clear();
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Vehicle element) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(VehicleHashSet.this);
+        public boolean add(Zipcode element) {
+            stateSet.throwExceptionIfNotEncapsulatedBy(ZipcodeHashSet.this);
             stateSet.add(element.getState(stateSet.certificate()));
             return super.add(element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Vehicle> collection) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(VehicleHashSet.this);
+        public boolean addAll(Collection<? extends Zipcode> collection) {
+            stateSet.throwExceptionIfNotEncapsulatedBy(ZipcodeHashSet.this);
             boolean modified = super.addAll(collection);
 
-            for (Vehicle element : collection) {
+            for (Zipcode element : collection) {
                 stateSet.add(element.getState(stateSet.certificate()));
             }
             return modified;
@@ -65,11 +65,11 @@ public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java
 
         @Override
         public boolean remove(Object element) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(VehicleHashSet.this);
-            if (!(element instanceof Vehicle)) {
+            stateSet.throwExceptionIfNotEncapsulatedBy(ZipcodeHashSet.this);
+            if (!(element instanceof Zipcode)) {
                 return false;
             }
-            boolean removedState = stateSet.remove(((Vehicle) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((Zipcode) element).getState(stateSet.certificate()));
             boolean removedElement = super.remove(element);
 
             if (removedState != removedElement) {
@@ -80,13 +80,13 @@ public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java
 
         @Override
         public boolean removeAll(Collection<?> collection) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(VehicleHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(ZipcodeHashSet.this);
             Set states = new HashSet(collection.size());
             Set elements = new HashSet(collection.size());
             for (Object element : collection) {
-                if (element instanceof Vehicle) {
+                if (element instanceof Zipcode) {
                     elements.add(element);
-                    states.add(((Vehicle)element).getState(stateSet.certificate()));
+                    states.add(((Zipcode)element).getState(stateSet.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -97,13 +97,13 @@ public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java
 
         @Override
         public boolean retainAll(Collection<?> collection) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(VehicleHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(ZipcodeHashSet.this);
             Set states = new HashSet(collection.size());
             Set elements = new HashSet(collection.size());
             for (Object element : collection) {
-                if (element instanceof Vehicle) {
+                if (element instanceof Zipcode) {
                     elements.add(element);
-                    states.add(((Vehicle)element).getState(stateSet.certificate()));
+                    states.add(((Zipcode)element).getState(stateSet.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -114,7 +114,7 @@ public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java
 
         @Override
         public void clear() {
-            stateSet.throwExceptionIfNotEncapsulatedBy(VehicleHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(ZipcodeHashSet.this);
             stateSet.clear();
             super.clear();
         }
@@ -132,7 +132,7 @@ public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java
         return set.contains(element);
     }
 
-    public Iterator<Vehicle> iterator() {
+    public Iterator<Zipcode> iterator() {
         return set.iterator();
     }
 
@@ -140,20 +140,20 @@ public class VehicleHashSet implements VehicleSet, RandomAccess, Cloneable, java
         return set.toArray();
     }
 
-    public <Vehicle> Vehicle[] toArray(Vehicle[] array) {
+    public <Zipcode> Zipcode[] toArray(Zipcode[] array) {
         return set.toArray(array);
     }
 
-    public boolean add(Vehicle element) {
+    public boolean add(Zipcode element) {
         return set.add(element);
     }
 
-    public boolean addAll(Collection<? extends Vehicle> collection) {
+    public boolean addAll(Collection<? extends Zipcode> collection) {
         return set.addAll(collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Vehicle)) {
+        if (!(element instanceof Zipcode)) {
             return false;
         }
         return set.remove(element);

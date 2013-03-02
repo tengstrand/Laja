@@ -3,10 +3,7 @@ package net.sf.laja.parser.cdd.statetemplate;
 import net.sf.laja.exception.LajaException;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String classname;
@@ -18,7 +15,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String stateImplClass;
     public String isValidStatement;
     public List<Attribute> attributes;
-    public List<Attribute> expandedAttributes;
 
     public String rootSrcDir;
     public String rootOutDir;
@@ -27,8 +23,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String sourceDir;
     public String outputDir;
     public String templateClassname;
-    public Set<ExpandedType> expandedTypes = new LinkedHashSet<ExpandedType>();
-    public Set<ExpandedType> allExpandedTypes = new LinkedHashSet<ExpandedType>();
     public StateTemplateErrors errors = new StateTemplateErrors();
 
     // Workaround a bug in Laja.
@@ -64,11 +58,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     // Workaround a bug in Laja
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
-    }
-
-    // Workaround a bug in Laja
-    public void setExpandedAttributes(List<Attribute> attributes) {
-        this.expandedAttributes = attributes;
     }
 
     public StateTemplate(String templateClassname) {
@@ -156,7 +145,6 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
                 ", sourceDir='" + sourceDir + '\'' +
                 ", outputDir='" + outputDir + '\'' +
                 ", templateClassname='" + templateClassname + '\'' +
-                ", expandedTypes=" + expandedTypes +
                 ", errors=" + errors +
                 '}';
     }

@@ -67,7 +67,8 @@ public class {creatorClass} {
             return create();
         }
       #else if (attribute.isState)
-        public {encapsulatorClass} {attribute.variable}({attribute.encapsulator} {attribute.variable}) {
+        #set (behaviourFactory = behavioursFactories.get(attribute.cleanedStateType))
+        public {encapsulatorClass} {attribute.variable}({behaviourFactory.classname}Encapsulator {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.builder);
             return create();
         }
@@ -89,7 +90,7 @@ public class {creatorClass} {
 
 #macro importsEncapsulatorRef()
   #foreach (attribute in template.attributes where attribute.isMandatory && attribute.isState && !attribute.isHidden)
-    #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
+    #set (behaviourRef = behavioursFactories.get(attribute.cleanedStateType))
     #if (behaviour.packagename != behaviourRef.packagename)
 import {behaviourRef.packagename}.{attribute.getEncapsulator};
     #end

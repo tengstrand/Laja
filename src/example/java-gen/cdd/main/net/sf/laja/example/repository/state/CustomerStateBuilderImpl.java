@@ -1,14 +1,8 @@
 package net.sf.laja.example.repository.state;
 
-import net.sf.laja.example.repository.state.AddressBehaviourFactory;
-import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressStateBuilder;
-import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
-import net.sf.laja.example.repository.state.ZipcodeBehaviourFactory;
-import net.sf.laja.example.repository.state.ZipcodeState;
-import net.sf.laja.example.repository.state.ZipcodeStateBuilder;
-import net.sf.laja.example.repository.state.ZipcodeStateBuilderImpl;
 import net.sf.laja.example.repository.state.AddressStateListBuilder;
+import net.sf.laja.example.repository.state.AddressStateBuilderImpl;
 import net.sf.laja.example.repository.state.Certificate;
 
 /**
@@ -20,6 +14,7 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     private Object encapsulator;
     private CustomerState state;
     private final Certificate certificate;
+    private AddressStateBuilder addressStateBuilder;
     private AddressStateListBuilder oldAddressesStateListBuilder;
 
     CustomerStateBuilderImpl() {
@@ -35,10 +30,6 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
     public CustomerStateBuilderImpl(CustomerState state, Object encapsulator) {
         this(state);
         this.encapsulator = encapsulator;
-    }
-
-    public AddressStateBuilder getAddressStateBuilder() {
-        return new AddressStateBuilderImpl(state.getAddressState());
     }
 
     public void withSsn(long ssn) {
@@ -61,24 +52,19 @@ public class CustomerStateBuilderImpl implements CustomerStateBuilder {
         state.setPet(pet, encapsulator);
     }
 
-    public void withAddressId(int addressId) {
-        state.setAddressId(addressId, encapsulator);
-    }
-
-    public void withStreetName(String streetName) {
-        state.setStreetName(streetName, encapsulator);
-    }
-
-    public void withZipcode(int zipcode) {
-        state.setZipcode(zipcode, encapsulator);
-    }
-
-    public void withCity(String city) {
-        state.setCity(city, encapsulator);
+    public void withAddress(AddressStateBuilder address) {
+        state.setAddress(address.getAddressState(certificate), encapsulator);
     }
 
     public void withOldAddresses(net.sf.laja.example.repository.state.AddressStateListBuilder listBuilder) {
         state.setOldAddresses(listBuilder.getStateList(certificate), encapsulator);
+    }
+
+    public AddressStateBuilder getAddressStateBuilder() {
+        if (addressStateBuilder == null) {
+            addressStateBuilder = new AddressStateBuilderImpl(state.getAddress());
+        }
+        return addressStateBuilder;
     }
 
     public AddressStateListBuilder getOldAddressesStateListBuilder() {

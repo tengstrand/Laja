@@ -1,7 +1,7 @@
-package net.sf.laja.example.car.behaviour;
+package net.sf.laja.example.repository.behaviour.domain;
 
-import net.sf.laja.example.car.state.*;
-import net.sf.laja.example.car.behaviour.*;
+import net.sf.laja.example.repository.state.*;
+import net.sf.laja.example.repository.behaviour.domain.*;
 import java.util.*;
 
 /**
@@ -9,73 +9,73 @@ import java.util.*;
  *
  *   http://laja.tengstrand.nu
  */
-public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, java.io.Serializable {
-    protected VehicleStateList stateList;
-    protected final List<Vehicle> list;
+public class ZipcodeArrayList implements ZipcodeList, RandomAccess, Cloneable, java.io.Serializable {
+    protected ZipcodeStateList stateList;
+    protected final List<Zipcode> list;
 
-    public VehicleArrayList(Vehicle... array) {
-        this.list = new ArrayList<Vehicle>();
+    public ZipcodeArrayList(Zipcode... array) {
+        this.list = new ArrayList<Zipcode>();
         this.list.addAll(Arrays.asList(array));
     }
 
-    public VehicleArrayList(Collection<Vehicle> collection) {
-        this.list = new ArrayList<Vehicle>();
+    public ZipcodeArrayList(Collection<Zipcode> collection) {
+        this.list = new ArrayList<Zipcode>();
         this.list.addAll(collection);
     }
 
-    public VehicleArrayList(VehicleStateList stateList) {
+    public ZipcodeArrayList(ZipcodeStateList stateList) {
         this.stateList = stateList;
         this.stateList.encapsulate(this);
-        List<Vehicle> elements = new ArrayList<Vehicle>(stateList.size());
+        List<Zipcode> elements = new ArrayList<Zipcode>(stateList.size());
 
-        for (VehicleState state : stateList) {
-            VehicleStateBuilder builder = new VehicleStateBuilderImpl(state);
-            Vehicle entry = (Vehicle) builder.as(new VehicleFactory.VehicleFactory_(builder));
+        for (ZipcodeState state : stateList) {
+            ZipcodeStateBuilder builder = new ZipcodeStateBuilderImpl(state);
+            Zipcode entry = (Zipcode) builder.as(new ZipcodeFactory.ZipcodeFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public class StateInSyncList extends ArrayList<Vehicle> {
-        private final VehicleStateList stateList;
+    public class StateInSyncList extends ArrayList<Zipcode> {
+        private final ZipcodeStateList stateList;
 
-        public StateInSyncList(VehicleStateList stateList, List<Vehicle> elements) {
+        public StateInSyncList(ZipcodeStateList stateList, List<Zipcode> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Vehicle element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+        public boolean add(Zipcode element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Vehicle element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+        public void add(int index, Zipcode element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Vehicle> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+        public boolean addAll(Collection<? extends Zipcode> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             boolean modified = super.addAll(collection);
 
-            for (Vehicle element : collection) {
+            for (Zipcode element : collection) {
                 stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Vehicle> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+        public boolean addAll(int index, Collection<? extends Zipcode> collection) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Vehicle element : collection) {
+            for (Zipcode element : collection) {
                 elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
@@ -85,24 +85,24 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
 
         @Override
         public boolean remove(Object element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
-            if (!(element instanceof Vehicle)) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
+            if (!(element instanceof Zipcode)) {
                 return false;
             }
-            stateList.remove(((Vehicle) element).getState(stateList.certificate()));
+            stateList.remove(((Zipcode) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
 
         @Override
         public boolean removeAll(Collection<?> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Vehicle) {
+                if (element instanceof Zipcode) {
                     elements.add(element);
-                    states.add(((Vehicle)element).getState(stateList.certificate()));
+                    states.add(((Zipcode)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -113,13 +113,13 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
 
         @Override
         public boolean retainAll(Collection<?> collection) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Vehicle) {
+                if (element instanceof Zipcode) {
                     elements.add(element);
-                    states.add(((Vehicle)element).getState(stateList.certificate()));
+                    states.add(((Zipcode)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -130,21 +130,21 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
 
         @Override
         public void clear() {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             stateList.clear();
             super.clear();
         }
 
         @Override
-        public Vehicle set(int index, Vehicle element) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+        public Zipcode set(int index, Zipcode element) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 
         @Override
-        public Vehicle remove(int index) {
-            stateList.throwExceptionIfNotEncapsulatedBy(VehicleArrayList.this);
+        public Zipcode remove(int index) {
+            stateList.throwExceptionIfNotEncapsulatedBy(ZipcodeArrayList.this);
             stateList.remove(index);
             return super.remove(index);
         }
@@ -162,7 +162,7 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
         return list.contains(element);
     }
 
-    public Iterator<Vehicle> iterator() {
+    public Iterator<Zipcode> iterator() {
         return list.iterator();
     }
 
@@ -170,28 +170,28 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
         return list.toArray();
     }
 
-    public <Vehicle> Vehicle[] toArray(Vehicle[] array) {
+    public <Zipcode> Zipcode[] toArray(Zipcode[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Vehicle element) {
+    public boolean add(Zipcode element) {
         return list.add(element);
     }
 
-    public void add(int index, Vehicle element) {
+    public void add(int index, Zipcode element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Vehicle> collection) {
+    public boolean addAll(Collection<? extends Zipcode> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Vehicle> collection) {
+    public boolean addAll(int index, Collection<? extends Zipcode> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Vehicle)) {
+        if (!(element instanceof Zipcode)) {
             return false;
         }
         return list.remove(element);
@@ -213,15 +213,15 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
         list.clear();
     }
 
-    public Vehicle get(int index) {
+    public Zipcode get(int index) {
         return list.get(index);
     }
 
-    public Vehicle set(int index, Vehicle element) {
+    public Zipcode set(int index, Zipcode element) {
         return list.set(index, element);
     }
 
-    public Vehicle remove(int index) {
+    public Zipcode remove(int index) {
         return list.remove(index);
     }
 
@@ -233,15 +233,15 @@ public class VehicleArrayList implements VehicleList, RandomAccess, Cloneable, j
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Vehicle> listIterator() {
+    public ListIterator<Zipcode> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Vehicle> listIterator(int index) {
+    public ListIterator<Zipcode> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Vehicle> subList(int fromIndex, int toIndex) {
+    public List<Zipcode> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

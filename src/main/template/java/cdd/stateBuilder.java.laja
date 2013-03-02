@@ -3,9 +3,6 @@
 #macro interface()
   #header()
 public interface {builderClass} {
-  #foreach (attribute in expandedAttributes)
-    {attribute.stateBuilder} get{attribute.variableAsClass}StateBuilder();
-  #end
   #foreach (attribute in attributes)
     #if (attribute.isStateSet)
       #set (template = templates.get(attribute.cleanedStateType))
@@ -30,8 +27,7 @@ public interface {builderClass} {
 
 #macro fileContent()
   #package()
-  #importBegin(false)
-  #importExpandedType(prefix)
+  #importBegin()
   #prepareStateImports()
   #importStateBuilder()
   #importStates()

@@ -1,58 +1,53 @@
 package net.sf.laja.example.repository.behaviour.gui;
 
+import net.sf.laja.example.repository.behaviour.domain.AddressBuilder;
 import net.sf.laja.example.repository.behaviour.domain.CustomerBuilder;
+import net.sf.laja.example.repository.behaviour.domain.ZipcodeBuilder;
 import net.sf.laja.example.repository.state.CustomerBehaviour;
 import net.sf.laja.example.repository.state.CustomerState;
 
 public class CustomerInGui extends CustomerBehaviour {
-    private String givenName;
-    private String surname;
     private StringToIntConverter age;
-    private String streetName;
     private StringToIntConverter zipcode;
 
     final CustomerBuilder customerBuilder;
+    final AddressBuilder addressBuilder;
+    final ZipcodeBuilder zipcodeBuilder;
 
     public CustomerInGui(CustomerState state) {
         super(state);
 
-        givenName = state.getGivenName();
-        surname = state.getSurname();
         age = new StringToIntConverter(state.getAge());
-        streetName = state.getStreetName();
-        zipcode = new StringToIntConverter(state.getZipcode());
+        zipcode = new StringToIntConverter(state.getAddress().getZipcode().getZipcode());
 
         customerBuilder = new CustomerBuilder(state, this);
+        addressBuilder = new AddressBuilder(state.getAddress(), this);
+        zipcodeBuilder = new ZipcodeBuilder(state.getAddress().getZipcode(), this);
     }
 
     public void setGivenName(String givenName) {
-        this.setGivenName(givenName);
+        customerBuilder.withGivenName(givenName);
     }
 
     public void setSurname(String surname) {
         customerBuilder.withSurname(surname);
     }
 
-    public void setAge(String age) {
-        this.age = new StringToIntConverter(age);
-        if (this.age.isValid()) {
-            customerBuilder.withAge(this.age.value());
+    public void setAge(String newAge) {
+        age = new StringToIntConverter(newAge);
+        if (age.isValid()) {
+            customerBuilder.withAge(age.value());
         }
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = new StringToIntConverter(zipcode);
-        if (this.zipcode.isValid()) {
-            customerBuilder.withZipcode(this.zipcode.value());
+    public void setZipcode(String newZipcode) {
+        zipcode = new StringToIntConverter(newZipcode);
+        if (zipcode.isValid()) {
+            zipcodeBuilder.withZipcode(zipcode.value());
         }
-    }
-
-    private CustomerBuilder getInstance() {
-        return customerBuilder.withGivenName(givenName).withSurname(surname).withAge(age.value())
-                .withStreetName(streetName).withZipcode(zipcode.value());
     }
 
     public boolean isValid() {
-        return age.isValid() && zipcode.isValid() && getInstance().isValid();
+        return age.isValid() && zipcode.isValid() && customerBuilder.isValid();
     }
 }

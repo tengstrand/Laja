@@ -1,11 +1,9 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.VehicleSizeBehaviourFactory;
-import net.sf.laja.example.car.state.VehicleSizeState;
 import net.sf.laja.example.car.state.VehicleSizeStateBuilder;
-import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
 import net.sf.laja.example.car.state.TruckTypeStateBuilder;
 import net.sf.laja.example.car.state.OwnerStateBuilder;
+import net.sf.laja.example.car.state.VehicleSizeStateBuilderImpl;
 import net.sf.laja.example.car.state.TruckTypeStateBuilderImpl;
 import net.sf.laja.example.car.state.OwnerStateBuilderImpl;
 import net.sf.laja.example.car.state.Certificate;
@@ -19,6 +17,7 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
     private Object encapsulator;
     private TruckState state;
     private final Certificate certificate;
+    private VehicleSizeStateBuilder sizeStateBuilder;
     private TruckTypeStateBuilder typeStateBuilder;
     private OwnerStateBuilder ownerStateBuilder;
 
@@ -37,12 +36,8 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public VehicleSizeStateBuilder getSizeStateBuilder() {
-        return new VehicleSizeStateBuilderImpl(state.getSizeState());
-    }
-
-    public void withLengthInCentimeters(int lengthInCentimeters) {
-        state.setLengthInCentimeters(lengthInCentimeters, encapsulator);
+    public void withSize(VehicleSizeStateBuilder size) {
+        state.setSize(size.getVehicleSizeState(certificate), encapsulator);
     }
 
     public void withWeightInKilograms(int weightInKilograms) {
@@ -59,6 +54,13 @@ public class TruckStateBuilderImpl implements TruckStateBuilder {
 
     public void withOwner(OwnerStateBuilder owner) {
         state.setOwner(owner.getOwnerState(certificate), encapsulator);
+    }
+
+    public VehicleSizeStateBuilder getSizeStateBuilder() {
+        if (sizeStateBuilder == null) {
+            sizeStateBuilder = new VehicleSizeStateBuilderImpl(state.getSize());
+        }
+        return sizeStateBuilder;
     }
 
     public TruckTypeStateBuilder getTypeStateBuilder() {

@@ -24,29 +24,15 @@ public class CustomerCreator {
     }
 
     public class Age_ {
-        public StreetName_ age(int age) {
+        public Address_ age(int age) {
             builder.withAge(age);
-            return new StreetName_();
+            return new Address_();
         }
     }
 
-    public class StreetName_ {
-        public Zipcode_ streetName(String streetName) {
-            builder.withStreetName(streetName);
-            return new Zipcode_();
-        }
-    }
-
-    public class Zipcode_ {
-        public City_ zipcode(int zipcode) {
-            builder.withZipcode(zipcode);
-            return new City_();
-        }
-    }
-
-    public class City_ {
-        public CustomerEncapsulator city(String city) {
-            builder.withCity(city);
+    public class Address_ {
+        public CustomerEncapsulator address(AddressEncapsulator address) {
+            builder.withAddress(address.builder);
             return create();
         }
     }

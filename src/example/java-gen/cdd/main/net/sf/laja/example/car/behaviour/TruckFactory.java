@@ -17,8 +17,8 @@ public class TruckFactory extends TruckBehaviour {
         super(state, stateBuilder);
     }
 
-    public static TruckCreator.WeightInKilograms_ lengthInCentimeters(int lengthInCentimeters) {
-        return new TruckCreator().new LengthInCentimeters_().lengthInCentimeters(lengthInCentimeters);
+    public static TruckCreator.WeightInKilograms_ size(VehicleSizeEncapsulator size) {
+        return new TruckCreator().new Size_().size(size);
     }
 
     public static TruckBuilder build() {
