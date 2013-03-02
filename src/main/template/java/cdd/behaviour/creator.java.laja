@@ -68,7 +68,7 @@ public class {creatorClass} {
         }
       #else if (attribute.isState)
         #set (behaviourFactory = behavioursFactories.get(attribute.cleanedStateType))
-        public {encapsulatorClass} {attribute.variable}({behaviourFactory.classname}Encapsulator {attribute.variable}) {
+        public {encapsulatorClass} {attribute.variable}({behaviourFactory.encapsulatorClass} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.builder);
             return create();
         }

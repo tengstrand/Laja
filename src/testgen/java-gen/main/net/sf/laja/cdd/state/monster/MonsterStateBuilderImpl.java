@@ -1,35 +1,8 @@
 package net.sf.laja.cdd.state.monster;
 
-import net.sf.laja.cdd.state.arm.ArmState;
-import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.head.HeadBehaviourFactory;
-import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.state.head.HeadStateBuilder;
-import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
-import net.sf.laja.cdd.state.eye.EyeBehaviourFactory;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
-import net.sf.laja.cdd.state.forehead.ForeheadBehaviourFactory;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilderImpl;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
-import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
-import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
-import net.sf.laja.cdd.state.ear.EarStateListBuilder;
-import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.arm.ArmStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
+import net.sf.laja.cdd.state.head.HeadStateBuilderImpl;
 import net.sf.laja.cdd.state.arm.ArmStateBuilderImpl;
 import net.sf.laja.cdd.state.Certificate;
 
@@ -42,14 +15,7 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
     private Object encapsulator;
     private MonsterState state;
     private final Certificate certificate;
-    private EyeStateBuilder leftEyeStateBuilder;
-    private EyeStateBuilder rightEyeStateBuilder;
-    private EyeStateBuilder midEyeStateBuilder;
-    private NoseStateListBuilder nosesStateListBuilder;
-    private BrowStateListBuilder browsStateListBuilder;
-    private EarStateSetBuilder earsStateSetBuilder;
-    private EarStateListBuilder optionalEarsStateListBuilder;
-    private MouthStateListBuilder mouthsStateListBuilder;
+    private HeadStateBuilder headStateBuilder;
     private ArmStateBuilder leftArmStateBuilder;
 
     MonsterStateBuilderImpl() {
@@ -67,10 +33,6 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public HeadStateBuilder getHeadStateBuilder() {
-        return new HeadStateBuilderImpl(state.getHeadState());
-    }
-
     public void withNumberOfLegs(int numberOfLegs) {
         state.setNumberOfLegs(numberOfLegs, encapsulator);
     }
@@ -79,24 +41,16 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
         state.setNumberOfOwnWings(numberOfOwnWings, encapsulator);
     }
 
-    public void withHeadWeightInGrams(double headWeightInGrams) {
-        state.setHeadWeightInGrams(headWeightInGrams, encapsulator);
+    public void withHead(HeadStateBuilder head) {
+        state.setHead(head.getHeadState(certificate), encapsulator);
     }
 
-    public void withLeftEye(EyeStateBuilder leftEye) {
-        state.setLeftEye(leftEye.getEyeState(certificate), encapsulator);
+    public void withLength(int length) {
+        state.setLength(length, encapsulator);
     }
 
-    public void withRightEye(EyeStateBuilder rightEye) {
-        state.setRightEye(rightEye.getEyeState(certificate), encapsulator);
-    }
-
-    public void withMidEye(EyeStateBuilder midEye) {
-        state.setMidEye(midEye.getEyeState(certificate), encapsulator);
-    }
-
-    public void withEyeWeightInGrams(int eyeWeightInGrams) {
-        state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
+    public void withWeight(int weight) {
+        state.setWeight(weight, encapsulator);
     }
 
     public void withColor(String color) {
@@ -105,66 +59,6 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
 
     public void withDecease(String decease) {
         state.setDecease(decease, encapsulator);
-    }
-
-    public void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder) {
-        state.setNoses(listBuilder.getStateList(certificate), encapsulator);
-    }
-
-    public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
-        state.setBrows(listBuilder.getStateList(certificate), encapsulator);
-    }
-
-    public void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder listBuilder) {
-        state.setEars(listBuilder.getStateSet(certificate), encapsulator);
-    }
-
-    public void withLength(int length) {
-        state.setLength(length, encapsulator);
-    }
-
-    public void withA(boolean a) {
-        state.setA(a, encapsulator);
-    }
-
-    public void withB(byte b) {
-        state.setB(b, encapsulator);
-    }
-
-    public void withC(short c) {
-        state.setC(c, encapsulator);
-    }
-
-    public void withD(char d) {
-        state.setD(d, encapsulator);
-    }
-
-    public void withE(int e) {
-        state.setE(e, encapsulator);
-    }
-
-    public void withF(long f) {
-        state.setF(f, encapsulator);
-    }
-
-    public void withG(float g) {
-        state.setG(g, encapsulator);
-    }
-
-    public void withH(double h) {
-        state.setH(h, encapsulator);
-    }
-
-    public void withOptionalEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder) {
-        state.setOptionalEars(listBuilder.getStateList(certificate), encapsulator);
-    }
-
-    public void withMouths(net.sf.laja.cdd.state.mouth.MouthStateListBuilder listBuilder) {
-        state.setMouths(listBuilder.getStateList(certificate), encapsulator);
-    }
-
-    public void withWeight(int weight) {
-        state.setWeight(weight, encapsulator);
     }
 
     public void withHasEar(Boolean hasEar) {
@@ -179,60 +73,11 @@ public class MonsterStateBuilderImpl implements MonsterStateBuilder {
         state.setLeftArm(leftArm.getArmState(certificate), encapsulator);
     }
 
-    public EyeStateBuilder getLeftEyeStateBuilder() {
-        if (leftEyeStateBuilder == null) {
-            leftEyeStateBuilder = new EyeStateBuilderImpl(state.getLeftEye());
+    public HeadStateBuilder getHeadStateBuilder() {
+        if (headStateBuilder == null) {
+            headStateBuilder = new HeadStateBuilderImpl(state.getHead());
         }
-        return leftEyeStateBuilder;
-    }
-
-    public EyeStateBuilder getRightEyeStateBuilder() {
-        if (rightEyeStateBuilder == null) {
-            rightEyeStateBuilder = new EyeStateBuilderImpl(state.getRightEye());
-        }
-        return rightEyeStateBuilder;
-    }
-
-    public EyeStateBuilder getMidEyeStateBuilder() {
-        if (midEyeStateBuilder == null) {
-            midEyeStateBuilder = new EyeStateBuilderImpl(state.getMidEye());
-        }
-        return midEyeStateBuilder;
-    }
-
-    public NoseStateListBuilder getNosesStateListBuilder() {
-        if (nosesStateListBuilder == null) {
-            nosesStateListBuilder = new NoseStateListBuilder(state.getNoses());
-        }
-        return nosesStateListBuilder;
-    }
-
-    public BrowStateListBuilder getBrowsStateListBuilder() {
-        if (browsStateListBuilder == null) {
-            browsStateListBuilder = new BrowStateListBuilder(state.getBrows());
-        }
-        return browsStateListBuilder;
-    }
-
-    public EarStateSetBuilder getEarsStateSetBuilder() {
-        if (earsStateSetBuilder == null) {
-            earsStateSetBuilder = new EarStateSetBuilder(state.getEars());
-        }
-        return earsStateSetBuilder;
-    }
-
-    public EarStateListBuilder getOptionalEarsStateListBuilder() {
-        if (optionalEarsStateListBuilder == null) {
-            optionalEarsStateListBuilder = new EarStateListBuilder(state.getOptionalEars());
-        }
-        return optionalEarsStateListBuilder;
-    }
-
-    public MouthStateListBuilder getMouthsStateListBuilder() {
-        if (mouthsStateListBuilder == null) {
-            mouthsStateListBuilder = new MouthStateListBuilder(state.getMouths());
-        }
-        return mouthsStateListBuilder;
+        return headStateBuilder;
     }
 
     public ArmStateBuilder getLeftArmStateBuilder() {

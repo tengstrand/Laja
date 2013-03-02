@@ -12,17 +12,12 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.behaviour.ear.EarBuilder;
-import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
 import net.sf.laja.cdd.behaviour.nose.NoseBuilder;
+import net.sf.laja.cdd.behaviour.forehead.ForeheadBuilder;
 import net.sf.laja.cdd.behaviour.mouth.MouthBuilder;
 import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
-import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
-import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
 import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 
@@ -61,33 +56,13 @@ public class HeadBuilder {
         return this;
     }
 
-    public HeadBuilder withEyeWeightInGrams(int eyeWeightInGrams) {
-        builder.withEyeWeightInGrams(eyeWeightInGrams);
-        return this;
-    }
-
-    public HeadBuilder withColor(String color) {
-        builder.withColor(color);
-        return this;
-    }
-
-    public HeadBuilder withHasEar(Boolean hasEar) {
-        builder.withHasEar(hasEar);
-        return this;
-    }
-
     public HeadBuilder withNoses(NoseListEncapsulator noses) {
         builder.withNoses(noses.stateListBuilder);
         return this;
     }
 
-    public HeadBuilder withBrows(BrowListEncapsulator brows) {
-        builder.withBrows(brows.stateListBuilder);
-        return this;
-    }
-
-    public HeadBuilder withEars(EarSetEncapsulator ears) {
-        builder.withEars(ears.stateSetBuilder);
+    public HeadBuilder withForeheadState(TestForeheadBuilder foreheadState) {
+        builder.withForeheadState(foreheadState.builder);
         return this;
     }
 

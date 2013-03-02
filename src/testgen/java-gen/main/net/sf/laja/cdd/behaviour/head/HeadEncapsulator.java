@@ -12,16 +12,10 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
 // Toe
-import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
-import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
 import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 
@@ -38,23 +32,6 @@ public class HeadEncapsulator implements HeadStateComparable {
 
     public HeadEncapsulator withMidEye(EyeEncapsulator midEye) {
         builder.withMidEye(midEye.builder);
-        return this;
-    }
-
-    public HeadEncapsulator withHasEar(Boolean hasEar) {
-        builder.withHasEar(hasEar);
-        return this;
-    }
-
-    public HeadEncapsulator withBrows(BrowEncapsulator... brows) {
-        BrowListEncapsulator encapsulator = new BrowListEncapsulator(brows);
-        builder.withBrows(encapsulator.stateListBuilder);
-        return this;
-    }
-
-    public HeadEncapsulator withEars(EarEncapsulator... ears) {
-        EarSetEncapsulator encapsulator = new EarSetEncapsulator(ears);
-        builder.withEars(encapsulator.stateSetBuilder);
         return this;
     }
 

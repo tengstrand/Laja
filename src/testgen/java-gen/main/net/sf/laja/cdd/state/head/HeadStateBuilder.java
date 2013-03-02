@@ -1,19 +1,8 @@
 package net.sf.laja.cdd.state.head;
 
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
-import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
-import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
+import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.Certificate;
@@ -24,19 +13,12 @@ import net.sf.laja.cdd.state.Certificate;
  *   http://laja.tengstrand.nu
  */
 public interface HeadStateBuilder {
-    EyeStateBuilder getEyeStateBuilder();
-    ForeheadStateBuilder getForeheadStateBuilder();
     void withHeadWeightInGrams(double headWeightInGrams);
     void withLeftEye(EyeStateBuilder leftEye);
     void withRightEye(EyeStateBuilder rightEye);
     void withMidEye(EyeStateBuilder midEye);
-    void withEyeWeightInGrams(int eyeWeightInGrams);
-    void withColor(String color);
-    void withDecease(String decease);
-    void withHasEar(Boolean hasEar);
     void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder);
-    void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
-    void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder);
+    void withForeheadState(ForeheadStateBuilder foreheadState);
     void withLength(int length);
     void withA(boolean a);
     void withB(byte b);
@@ -52,8 +34,7 @@ public interface HeadStateBuilder {
     EyeStateBuilder getRightEyeStateBuilder();
     EyeStateBuilder getMidEyeStateBuilder();
     NoseStateListBuilder getNosesStateListBuilder();
-    BrowStateListBuilder getBrowsStateListBuilder();
-    EarStateSetBuilder getEarsStateSetBuilder();
+    ForeheadStateBuilder getForeheadStateStateBuilder();
     EarStateListBuilder getOptionalEarsStateListBuilder();
     MouthStateListBuilder getMouthsStateListBuilder();
     boolean isValid();

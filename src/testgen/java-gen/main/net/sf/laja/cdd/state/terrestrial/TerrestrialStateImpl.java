@@ -3,7 +3,6 @@ package net.sf.laja.cdd.state.terrestrial;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.Certificate;
 
 /**

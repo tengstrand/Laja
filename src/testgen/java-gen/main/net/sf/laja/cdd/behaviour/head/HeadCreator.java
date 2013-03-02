@@ -12,18 +12,14 @@ import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
 import net.sf.laja.cdd.behaviour.eye.EyeEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseEncapsulator;
-import net.sf.laja.cdd.behaviour.mouth.MouthEncapsulator;
+import net.sf.laja.cdd.behaviour.ForeheadEncapsulator;
+import net.sf.laja.cdd.behaviour.MouthEncapsulator;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
-import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
 import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 
@@ -45,33 +41,26 @@ public class HeadCreator {
     }
 
     public class RightEye_ {
-        public EyeWeightInGrams_ rightEye(EyeEncapsulator rightEye) {
+        public Noses_ rightEye(EyeEncapsulator rightEye) {
             builder.withRightEye(rightEye.builder);
-            return new EyeWeightInGrams_();
-        }
-    }
-
-    public class EyeWeightInGrams_ {
-        public Color_ eyeWeightInGrams(int eyeWeightInGrams) {
-            builder.withEyeWeightInGrams(eyeWeightInGrams);
-            return new Color_();
-        }
-    }
-
-    public class Color_ {
-        public Noses_ color(String color) {
-            builder.withColor(color);
             return new Noses_();
         }
     }
 
     public class Noses_ {
-        public A_ noses() {
-            return new A_();
+        public ForeheadState_ noses() {
+            return new ForeheadState_();
         }
 
-        public A_ noses(NoseListEncapsulator noses) {
+        public ForeheadState_ noses(NoseListEncapsulator noses) {
             builder.withNoses(noses.stateListBuilder);
+            return new ForeheadState_();
+        }
+    }
+
+    public class ForeheadState_ {
+        public A_ foreheadState(ForeheadEncapsulator foreheadState) {
+            builder.withForeheadState(foreheadState.builder);
             return new A_();
         }
     }

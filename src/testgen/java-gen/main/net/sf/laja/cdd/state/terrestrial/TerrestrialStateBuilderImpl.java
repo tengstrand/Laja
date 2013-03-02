@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.state.terrestrial;
 
-import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
 import net.sf.laja.cdd.state.Certificate;

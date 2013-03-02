@@ -1,28 +1,12 @@
 package net.sf.laja.cdd.state.head;
 
-import net.sf.laja.cdd.state.ear.EarStateList;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.eye.EyeBehaviourFactory;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeStateBuilder;
-import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
-import net.sf.laja.cdd.state.forehead.ForeheadBehaviourFactory;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
-import net.sf.laja.cdd.state.forehead.ForeheadStateBuilderImpl;
 import net.sf.laja.cdd.state.eye.EyeStateBuilder;
 import net.sf.laja.cdd.state.nose.NoseStateListBuilder;
-import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
-import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
+import net.sf.laja.cdd.state.forehead.ForeheadStateBuilder;
 import net.sf.laja.cdd.state.ear.EarStateListBuilder;
 import net.sf.laja.cdd.state.mouth.MouthStateListBuilder;
 import net.sf.laja.cdd.state.eye.EyeStateBuilderImpl;
+import net.sf.laja.cdd.state.forehead.ForeheadStateBuilderImpl;
 import net.sf.laja.cdd.state.Certificate;
 
 /**
@@ -38,8 +22,7 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
     private EyeStateBuilder rightEyeStateBuilder;
     private EyeStateBuilder midEyeStateBuilder;
     private NoseStateListBuilder nosesStateListBuilder;
-    private BrowStateListBuilder browsStateListBuilder;
-    private EarStateSetBuilder earsStateSetBuilder;
+    private ForeheadStateBuilder foreheadStateStateBuilder;
     private EarStateListBuilder optionalEarsStateListBuilder;
     private MouthStateListBuilder mouthsStateListBuilder;
 
@@ -58,14 +41,6 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         this.encapsulator = encapsulator;
     }
 
-    public EyeStateBuilder getEyeStateBuilder() {
-        return new EyeStateBuilderImpl(state.getEyeState());
-    }
-
-    public ForeheadStateBuilder getForeheadStateBuilder() {
-        return new ForeheadStateBuilderImpl(state.getForeheadState());
-    }
-
     public void withHeadWeightInGrams(double headWeightInGrams) {
         state.setHeadWeightInGrams(headWeightInGrams, encapsulator);
     }
@@ -82,32 +57,12 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         state.setMidEye(midEye.getEyeState(certificate), encapsulator);
     }
 
-    public void withEyeWeightInGrams(int eyeWeightInGrams) {
-        state.setEyeWeightInGrams(eyeWeightInGrams, encapsulator);
-    }
-
-    public void withColor(String color) {
-        state.setColor(color, encapsulator);
-    }
-
-    public void withDecease(String decease) {
-        state.setDecease(decease, encapsulator);
-    }
-
-    public void withHasEar(Boolean hasEar) {
-        state.setHasEar(hasEar, encapsulator);
-    }
-
     public void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder) {
         state.setNoses(listBuilder.getStateList(certificate), encapsulator);
     }
 
-    public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
-        state.setBrows(listBuilder.getStateList(certificate), encapsulator);
-    }
-
-    public void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder listBuilder) {
-        state.setEars(listBuilder.getStateSet(certificate), encapsulator);
+    public void withForeheadState(ForeheadStateBuilder foreheadState) {
+        state.setForeheadState(foreheadState.getForeheadState(certificate), encapsulator);
     }
 
     public void withLength(int length) {
@@ -182,18 +137,11 @@ public class HeadStateBuilderImpl implements HeadStateBuilder {
         return nosesStateListBuilder;
     }
 
-    public BrowStateListBuilder getBrowsStateListBuilder() {
-        if (browsStateListBuilder == null) {
-            browsStateListBuilder = new BrowStateListBuilder(state.getBrows());
+    public ForeheadStateBuilder getForeheadStateStateBuilder() {
+        if (foreheadStateStateBuilder == null) {
+            foreheadStateStateBuilder = new ForeheadStateBuilderImpl(state.getForeheadState());
         }
-        return browsStateListBuilder;
-    }
-
-    public EarStateSetBuilder getEarsStateSetBuilder() {
-        if (earsStateSetBuilder == null) {
-            earsStateSetBuilder = new EarStateSetBuilder(state.getEars());
-        }
-        return earsStateSetBuilder;
+        return foreheadStateStateBuilder;
     }
 
     public EarStateListBuilder getOptionalEarsStateListBuilder() {

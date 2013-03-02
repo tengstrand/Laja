@@ -1,19 +1,10 @@
 package net.sf.laja.cdd.state.head;
 
-import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.Certificate;
@@ -36,26 +27,11 @@ public interface HeadState {
     EyeState getMidEye(); // (optional)
     void setMidEye(EyeState midEye, Object mutator);
 
-    int getEyeWeightInGrams();
-    void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator);
-
-    String getColor();
-    void setColor(String color, Object mutator);
-
-    String getDecease(); // (hide)
-    void setDecease(String decease, Object mutator);
-
-    Boolean getHasEar(); // (optional)
-    void setHasEar(Boolean hasEar, Object mutator);
-
     NoseStateList getNoses();
     void setNoses(NoseStateList noses, Object mutator);
 
-    BrowStateList getBrows(); // (optional)
-    void setBrows(BrowStateList brows, Object mutator);
-
-    EarStateSet getEars(); // (optional)
-    void setEars(EarStateSet ears, Object mutator);
+    ForeheadState getForeheadState();
+    void setForeheadState(ForeheadState foreheadState, Object mutator);
 
     int getLength(); // (optional)
     void setLength(int length, Object mutator);
@@ -89,9 +65,6 @@ public interface HeadState {
 
     MouthStateList getMouths();
     void setMouths(MouthStateList mouths, Object mutator);
-
-    EyeState getEyeState();
-    ForeheadState getForeheadState();
 
     boolean isValid();
     boolean isValidAsEncapsulated();

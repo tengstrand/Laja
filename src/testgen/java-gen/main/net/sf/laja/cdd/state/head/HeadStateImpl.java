@@ -1,26 +1,13 @@
 package net.sf.laja.cdd.state.head;
 
-import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.eye.EyeState;
+import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import java.math.BigDecimal;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.state.brow.BrowStateList;
-import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
-import net.sf.laja.cdd.state.eye.EyeStateImpl;
-import net.sf.laja.cdd.state.forehead.ForeheadStateImpl;
-import net.sf.laja.cdd.state.ear.EarStateHashSet;
 import net.sf.laja.cdd.state.nose.NoseStateArrayList;
-import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.ear.EarStateArrayList;
 import net.sf.laja.cdd.state.mouth.MouthStateArrayList;
 import net.sf.laja.cdd.state.Certificate;
@@ -35,13 +22,8 @@ public class HeadStateImpl implements HeadState {
     protected EyeState leftEye;
     protected EyeState rightEye;
     protected EyeState midEye; // (optional)
-    protected int eyeWeightInGrams;
-    protected String color;
-    protected String decease; // (hide)
-    protected Boolean hasEar; // (optional)
     protected NoseStateList noses;
-    protected BrowStateList brows; // (optional)
-    protected EarStateSet ears; // (optional)
+    protected ForeheadState foreheadState;
     protected int length; // (optional)
     protected boolean a;
     protected byte b;
@@ -59,10 +41,8 @@ public class HeadStateImpl implements HeadState {
 
     HeadStateImpl() {
         noses = NoseStateArrayList.emptyList();
-        brows = BrowStateArrayList.emptyList();
         optionalEars = EarStateArrayList.emptyList();
         mouths = MouthStateArrayList.emptyList();
-        ears = EarStateHashSet.emptySet();
     }
 
     public HeadStateImpl(Certificate certificate) {
@@ -93,20 +73,11 @@ public class HeadStateImpl implements HeadState {
     }
 
     private boolean isValid(boolean encapsulated) {
-        if (!getEyeState().isValid()) {
-            return false;
-        }
-        if (!getForeheadState().isValid()) {
-            return false;
-        }
         if ((leftEye == null || !leftEye.isValid())
                 || (rightEye == null || !rightEye.isValid())
                 || (midEye != null && !midEye.isValid())
-                || color == null
-                || (encapsulated && decease == null)
                 || (noses == null || !noses.isValid())
-                || (brows != null && !brows.isValid())
-                || (ears != null && !ears.isValid())
+                || (foreheadState == null || !foreheadState.isValid())
                 || (optionalEars != null && !optionalEars.isValid())
                 || (mouths == null || !mouths.isValid())) {
             return false;
@@ -119,13 +90,8 @@ public class HeadStateImpl implements HeadState {
     public EyeState getLeftEye() { return leftEye; }
     public EyeState getRightEye() { return rightEye; }
     public EyeState getMidEye() { return midEye; }
-    public int getEyeWeightInGrams() { return eyeWeightInGrams; }
-    public String getColor() { return color; }
-    public String getDecease() { return decease; }
-    public Boolean getHasEar() { return hasEar; }
     public NoseStateList getNoses() { return noses; }
-    public BrowStateList getBrows() { return brows; }
-    public EarStateSet getEars() { return ears; }
+    public ForeheadState getForeheadState() { return foreheadState; }
     public int getLength() { return length; }
     public boolean getA() { return a; }
     public byte getB() { return b; }
@@ -143,13 +109,8 @@ public class HeadStateImpl implements HeadState {
     public void setLeftEye(EyeState leftEye, Object mutator) { checkMutator(mutator); this.leftEye = leftEye; }
     public void setRightEye(EyeState rightEye, Object mutator) { checkMutator(mutator); this.rightEye = rightEye; }
     public void setMidEye(EyeState midEye, Object mutator) { checkMutator(mutator); this.midEye = midEye; }
-    public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { checkMutator(mutator); this.eyeWeightInGrams = eyeWeightInGrams; }
-    public void setColor(String color, Object mutator) { checkMutator(mutator); this.color = color; }
-    public void setDecease(String decease, Object mutator) { checkMutator(mutator); this.decease = decease; }
-    public void setHasEar(Boolean hasEar, Object mutator) { checkMutator(mutator); this.hasEar = hasEar; }
     public void setNoses(NoseStateList noses, Object mutator) { checkMutator(mutator); this.noses.clear(); this.noses.addAll(noses); }
-    public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
-    public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
+    public void setForeheadState(ForeheadState foreheadState, Object mutator) { checkMutator(mutator); this.foreheadState = foreheadState; }
     public void setLength(int length, Object mutator) { checkMutator(mutator); this.length = length; }
     public void setA(boolean a, Object mutator) { checkMutator(mutator); this.a = a; }
     public void setB(byte b, Object mutator) { checkMutator(mutator); this.b = b; }
@@ -176,141 +137,6 @@ public class HeadStateImpl implements HeadState {
         _encapsulator = encapsulator;
     }
 
-    public EyeState getEyeState() {
-        return new EyeState() {
-            public Certificate certificate() { return certificate(); }
-
-            public int getEyeWeightInGrams() { return HeadStateImpl.this.getEyeWeightInGrams(); }
-            public void setEyeWeightInGrams(int eyeWeightInGrams, Object mutator) { HeadStateImpl.this.setEyeWeightInGrams(eyeWeightInGrams, mutator); }
-
-            public String getColor() { return HeadStateImpl.this.getColor(); }
-            public void setColor(String color, Object mutator) { HeadStateImpl.this.setColor(color, mutator); }
-
-            public String getDecease() { return HeadStateImpl.this.getDecease(); }
-            public void setDecease(String decease, Object mutator) { HeadStateImpl.this.setDecease(decease, mutator); }
-
-            public Boolean getHasEar() { return HeadStateImpl.this.getHasEar(); }
-            public void setHasEar(Boolean hasEar, Object mutator) { HeadStateImpl.this.setHasEar(hasEar, mutator); }
-
-            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                if (color == null
-                        || (encapsulated && decease == null)) {
-                    return false;
-                }
-                return true;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof HeadStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                EyeStateImpl state = (EyeStateImpl)value;
-
-                if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-                if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-                if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
-                if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                int result = eyeWeightInGrams;
-                result = 31 * result + (color != null ? color.hashCode() : 0);
-                result = 31 * result + (decease != null ? decease.hashCode() : 0);
-                result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
-
-                return result;
-            }
-
-            @Override
-            public String toString() {
-                return "{eyeWeightInGrams=" + eyeWeightInGrams +
-                        ", color=" + (color == null ? null : '\'' + color + '\'' ) +
-                        ", decease=" + (decease == null ? null : '\'' + decease + '\'' ) +
-                        ", hasEar=" + hasEar + "}";
-            }
-        };
-    }
-
-    public ForeheadState getForeheadState() {
-        return new ForeheadState() {
-            public Certificate certificate() { return certificate(); }
-
-            public BrowStateList getBrows() { return HeadStateImpl.this.getBrows(); }
-            public void setBrows(BrowStateList brows, Object mutator) { HeadStateImpl.this.setBrows(brows, mutator); }
-
-            public EarStateSet getEars() { return HeadStateImpl.this.getEars(); }
-            public void setEars(EarStateSet ears, Object mutator) { HeadStateImpl.this.setEars(ears, mutator); }
-
-            public void encapsulate() { HeadStateImpl.this.encapsulate(); }
-            public void setEncapsulator(Object encapsulator) { HeadStateImpl.this.setEncapsulator(encapsulator); }
-
-            public boolean isValid() {
-                return isValid(_encapsulated);
-            }
-
-            public boolean isValidAsEncapsulated() {
-                return isValid(true);
-            }
-
-            private boolean isValid(boolean encapsulated) {
-                return true;
-            }
-
-            @Override
-            public boolean equals(Object that) {
-               if (this == that) return true;
-               if (!(that instanceof HeadStateComparable)) return false;
-
-               return true;
-            }
-
-            public boolean equalsValue(Object value) {
-                if (this == value) return true;
-                if (value == null || getClass() != value.getClass()) return false;
-
-                ForeheadStateImpl state = (ForeheadStateImpl)value;
-
-                if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
-                if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
-
-                return true;
-            }
-
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-
-            @Override
-            public String toString() {
-                return "{brows=" + brows +
-                        ", ears=" + ears + "}";
-            }
-        };
-    }
-
     @Override
     public boolean equals(Object that) {
        if (this == that) return true;
@@ -329,13 +155,8 @@ public class HeadStateImpl implements HeadState {
         if (leftEye != null ? !leftEye.equals(state.getLeftEye()) : state.getLeftEye() != null) return false;
         if (rightEye != null ? !rightEye.equals(state.getRightEye()) : state.getRightEye() != null) return false;
         if (midEye != null ? !midEye.equals(state.getMidEye()) : state.getMidEye() != null) return false;
-        if (eyeWeightInGrams != state.getEyeWeightInGrams()) return false;
-        if (color != null ? !color.equals(state.getColor()) : state.getColor() != null) return false;
-        if (decease != null ? !decease.equals(state.getDecease()) : state.getDecease() != null) return false;
-        if (hasEar != null ? !hasEar.equals(state.getHasEar()) : state.getHasEar() != null) return false;
         if (noses != null ? !noses.equals(state.getNoses()) : state.getNoses() != null) return false;
-        if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
-        if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
+        if (foreheadState != null ? !foreheadState.equals(state.getForeheadState()) : state.getForeheadState() != null) return false;
         if (length != state.getLength()) return false;
         if (a != state.getA()) return false;
         if (b != state.getB()) return false;
@@ -357,10 +178,7 @@ public class HeadStateImpl implements HeadState {
         result = 31 * result + (leftEye != null ? leftEye.hashCode() : 0);
         result = 31 * result + (rightEye != null ? rightEye.hashCode() : 0);
         result = 31 * result + (midEye != null ? midEye.hashCode() : 0);
-        result = 31 * result + eyeWeightInGrams;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + (decease != null ? decease.hashCode() : 0);
-        result = 31 * result + (hasEar != null ? hasEar.hashCode() : 0);
+        result = 31 * result + (foreheadState != null ? foreheadState.hashCode() : 0);
         result = 31 * result + length;
         result = 31 * result + (a ? 1 : 0);
         result = 31 * result + b;
@@ -380,13 +198,8 @@ public class HeadStateImpl implements HeadState {
                 ", leftEye=" + leftEye +
                 ", rightEye=" + rightEye +
                 ", midEye=" + midEye +
-                ", eyeWeightInGrams=" + eyeWeightInGrams +
-                ", color=" + (color == null ? null : '\'' + color + '\'' ) +
-                ", decease=" + (decease == null ? null : '\'' + decease + '\'' ) +
-                ", hasEar=" + hasEar +
                 ", noses=" + noses +
-                ", brows=" + brows +
-                ", ears=" + ears +
+                ", foreheadState=" + foreheadState +
                 ", length=" + length +
                 ", a=" + a +
                 ", b=" + b +

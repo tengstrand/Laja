@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.state.eye;
 
-import java.math.BigDecimal;
 import net.sf.laja.cdd.state.Certificate;
 
 /**

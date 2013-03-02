@@ -1,7 +1,6 @@
 package net.sf.laja.cdd.state.arm;
 
 import net.sf.laja.cdd.state.hand.HandStateList;
-import net.sf.laja.cdd.state.hand.HandStateList;
 import net.sf.laja.cdd.state.Certificate;
 
 /**

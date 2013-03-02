@@ -29,7 +29,8 @@ public class {builderClass} {
       #if (!behaviours.containsKey(attribute.cleanedStateType))
         #errors.addMessage("Missing behaviour class: {attribute.cleanedStateType}")
       #end
-    public {builderClass} {attribute.withMethod}({attribute.builder} {attribute.variable}) {
+      #set (behaviourFactory = behavioursFactories.get(attribute.cleanedStateType))
+    public {builderClass} {attribute.withMethod}({behaviourFactory.builderClass} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.builder);
         return this;
     }

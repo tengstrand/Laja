@@ -22,7 +22,7 @@ public class CarTest {
         VehicleSize size = mock(VehicleSize.class);
         when(size.isBig()).thenReturn(true);
 
-        Car car = TestCar.lengthInCentimeters(100).name("Volvo").owner(Owner.ssn(197007071234L).name("Kalle")).color("Red").asCar(size);
+        Car car = TestCar.size(VehicleSize.lengthInCentimeters(100)).name("Volvo").owner(Owner.ssn(197007071234L).name("Kalle")).color("Red").asCar(size);
 
         assertTrue(car.isBig());
     }
