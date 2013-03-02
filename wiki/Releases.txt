@@ -5,12 +5,9 @@ Included in  Laja:
 * New macro: #stack().
 
 Included in CDD:
-* Removed the support for state projection. Much the same effect can be achieved by using state expansion. This part of the codebase added a lot of complexity that was a pain to maintain!
-* Expanded attributes is now handled in a correct way:
-** The previous solution to let the state implementation class inherit from the corresponding state interface for the expanded attribute has been replaced by a getStateX method (where X is the name of the expanded attribute).
-** The hashCode, equals and toString methods are now based on the attributes that are part of the expanded state, and delegated to the enclosing state class.
-** The inner handling of encapsulation state (true/false) was delegated to the enclosing state class, but is now (correctly) handled by the expanded state.
-** Support for having more than one expanded attribute of the same type.
+* Removed support for state expansion. The idea of ??state expansion will perhaps emerge in a different form to facilitate building state.
+* Removed support for state projection. State projection seemed to be a good idea at the beginning, but sharing mutable state could lead to undesired effects. State projection for immutable state is still a good idea but is not supported at the moment!
+** Support for state expansion and state projection was also removed to reduce the complexity and to speed up the development time.
 * Added support for Set.
 * The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
 * Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problems keeping state and behavior in sync.
