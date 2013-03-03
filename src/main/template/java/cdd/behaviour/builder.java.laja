@@ -15,22 +15,19 @@ public class {builderClass} {
     }
   #foreach (attribute in template.attributes where attribute.isBuilderMethod)
 
+    #set (factory = factories.get(attribute.cleanedStateType))
     #if (attribute.isStateSet)
-    public {builderClass} {attribute.withMethod}({attribute.setEncapsulator} {attribute.variable}) {
+    public {builderClass} {attribute.withMethod}({factory.setEncapsulator} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.stateSetBuilder);
         return this;
     }
     #else if (attribute.isStateList)
-    public {builderClass} {attribute.withMethod}({attribute.listEncapsulator} {attribute.variable}) {
+    public {builderClass} {attribute.withMethod}({factory.listEncapsulator} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.stateListBuilder);
         return this;
     }
     #else if (attribute.isState)
-      #if (!behaviours.containsKey(attribute.cleanedStateType))
-        #errors.addMessage("Missing behaviour class: {attribute.cleanedStateType}")
-      #end
-      #set (behaviourFactory = behavioursFactories.get(attribute.cleanedStateType))
-    public {builderClass} {attribute.withMethod}({behaviourFactory.builderClass} {attribute.variable}) {
+    public {builderClass} {attribute.withMethod}({factory.builderClass} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.builder);
         return this;
     }

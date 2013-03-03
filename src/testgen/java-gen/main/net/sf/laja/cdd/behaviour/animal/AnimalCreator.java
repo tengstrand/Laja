@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.animal;
-
 import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
 

@@ -14,7 +14,6 @@ Included in CDD:
 ** The generation of XValue and XEntity has been replaced by XBehaviour (where X is the behaviour class).
 ** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
 * Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
-* The (id) and (key) properties are now removed from expanded attributes.
 * Renamed XStateListImpl to XStateArrayList (where X is the state class).
 * Renamed state method valueEquals to equalsValue + removed valueHashCode.
 * Improved management of identity:
@@ -26,7 +25,6 @@ Included in CDD:
 * Fixed a bug in lists that occurred when having more than one as-method with extra parameters.
 * The problem that arose when mixed constructors in different behaviour representations (state) + (state, stateBuilder) can no longer be reproduced.
 * Added methods equals + hashCode to XBuilder (where X is the behaviour class).
-* If an expanded type ends with "State", then it will be removed from the name.
 * Fixed a bug in the hashCode() method for attributes of type 'long'.
 
 == Laja2-006-alpha ==

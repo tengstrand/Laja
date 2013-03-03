@@ -54,6 +54,14 @@ public class Behaviour implements BehaviourParser.IBehaviour {
         parameters = (Parameters)iparameters;
     }
 
+    public String getSetEncapsulator() {
+        return classname + "SetEncapsulator";
+    }
+
+    public String getListEncapsulator() {
+        return classname + "ListEncapsulator";
+    }
+
     // TODO: remove this setter when the bug in Laja is solved.
     public void setSrcDir(String srcDir) {
         this.srcDir = srcDir;

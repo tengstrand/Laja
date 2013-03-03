@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.monster;
-
 import net.sf.laja.cdd.state.monster.*;
 import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
 import net.sf.laja.cdd.behaviour.head.Head;

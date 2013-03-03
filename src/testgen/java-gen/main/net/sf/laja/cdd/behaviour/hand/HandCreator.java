@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.hand;
-
 import net.sf.laja.cdd.state.hand.*;
 import net.sf.laja.cdd.state.hand.HandState;
 

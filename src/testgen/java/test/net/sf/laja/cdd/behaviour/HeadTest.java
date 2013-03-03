@@ -22,9 +22,8 @@ public class HeadTest {
                 .headWeightInGrams(200)
                 .leftEye(Eye.eyeWeightInGrams(50).color("1"))
                 .rightEye(Eye.eyeWeightInGrams(51).color("2"))
-                .eyeWeightInGrams(40)
-                .color("RED")
                 .noses(noses)
+                .forehead(Forehead.create())
                 .a(true).b((byte) 1).c((short) 2).d('a').e(3).f(4).g((float) 5.0).h(6.0)
                 .mouths(MouthFactory.width(10).height(5).color("red")).asHead();
 

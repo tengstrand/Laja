@@ -21,22 +21,12 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isInclude;
     public boolean isExclude;
     public boolean isState;
+    public boolean isStateObject;
     public boolean isStateSet;
     public boolean isStateList;
     public boolean isHidden;
     public boolean isOptional;
     public boolean isMandatory = true;
-
-    public void cleanCommentFromIdAndKey() {
-        String whiteSpaces = comment.indexOf("//") >= 0 ? comment.substring(0, comment.indexOf("//")) : "";
-        comment = comment.replaceAll("\\(id\\)", "");
-        comment = comment.replaceAll("\\(key\\)", "");
-        comment = comment.replaceAll("//", "").trim();
-
-        if (comment.length() > 0) {
-            comment = whiteSpaces + "// " + comment;
-        }
-    }
 
     public boolean isValidType() {
         return isPrimitive() || isImmutableObject() || isState;
@@ -128,6 +118,8 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isStateSet = type.endsWith(stateSet);
         isStateList = type.endsWith(stateList);
         isState = isStateSet || isStateList || type.endsWith(state);
+        isStateObject = isState && !isStateSet && !isStateList;
+
         if (isState) {
             if (isStateSet) {
                 cleanedStateType = type.substring(0, type.length() - stateSet.length());
@@ -162,13 +154,10 @@ public class Attribute implements StateTemplateParser.IAttribute {
         isInclude = comment.contains("(include)");
         isExclude = comment.contains("(exclude)");
         isOptional = comment.contains("(optional)");
-        postSetProperties(this);
-    }
 
-    private void postSetProperties(Attribute attribute) {
-        attribute.isExclude |= attribute.isId;
-        attribute.isOptional |= attribute.isExclude;
-        attribute.isMandatory = !attribute.isOptional;
+        isExclude |= isId;
+        isOptional |= isExclude;
+        isMandatory = !isOptional;
     }
 
     @Override

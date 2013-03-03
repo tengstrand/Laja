@@ -1,5 +1,4 @@
 package net.sf.laja.example.computer.behaviour;
-
 import net.sf.laja.example.computer.state.*;
 import net.sf.laja.example.computer.state.*;
 

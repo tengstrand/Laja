@@ -4,15 +4,15 @@ import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 // Toe
 
-public class EarEncapsulator implements EarStateComparable {
+public class TheEarEncapsulator implements EarStateComparable {
     public final EarStateBuilder builder;
 
-    public EarEncapsulator(EarStateBuilder builder) {
+    public TheEarEncapsulator(EarStateBuilder builder) {
         this.builder = builder;
     }
 
-    public Ear asEar() {
-        return (Ear)builder.as(new EarFactory.EarFactory_(builder));
+    public TheEar asTheEar() {
+        return (TheEar)builder.as(new TheEarFactory.TheEarFactory_(builder));
     }
 
     public boolean isValid() {

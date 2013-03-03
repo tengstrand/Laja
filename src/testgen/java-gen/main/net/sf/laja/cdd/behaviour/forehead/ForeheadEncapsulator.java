@@ -9,8 +9,8 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 // Toe
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 
 public class ForeheadEncapsulator implements ForeheadStateComparable {
@@ -34,8 +34,8 @@ public class ForeheadEncapsulator implements ForeheadStateComparable {
         return this;
     }
 
-    public ForeheadEncapsulator withEars(EarEncapsulator... ears) {
-        EarSetEncapsulator encapsulator = new EarSetEncapsulator(ears);
+    public ForeheadEncapsulator withEars(TheEarEncapsulator... ears) {
+        TheEarSetEncapsulator encapsulator = new TheEarSetEncapsulator(ears);
         builder.withEars(encapsulator.stateSetBuilder);
         return this;
     }

@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.toe;
-
 import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
 

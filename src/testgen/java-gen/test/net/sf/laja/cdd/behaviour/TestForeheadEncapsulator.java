@@ -2,9 +2,7 @@ package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.state.forehead.*;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
-import net.sf.laja.cdd.behaviour.brow.BrowList;
-import net.sf.laja.cdd.behaviour.ear.Ear;
-import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEar;
 import net.sf.laja.cdd.behaviour.ear.EarHashSet;
 import net.sf.laja.cdd.behaviour.ear.EarSet;
 import net.sf.laja.cdd.state.ear.EarState;
@@ -17,8 +15,8 @@ import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 // Toe
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.EarSetEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 
 public class TestForeheadEncapsulator implements ForeheadStateComparable {
@@ -38,8 +36,8 @@ public class TestForeheadEncapsulator implements ForeheadStateComparable {
         return this;
     }
 
-    public TestForeheadEncapsulator withEars(EarEncapsulator... ears) {
-        EarSetEncapsulator encapsulator = new EarSetEncapsulator(ears);
+    public TestForeheadEncapsulator withEars(TheEarEncapsulator... ears) {
+        TheEarSetEncapsulator encapsulator = new TheEarSetEncapsulator(ears);
         builder.withEars(encapsulator.stateSetBuilder);
         return this;
     }

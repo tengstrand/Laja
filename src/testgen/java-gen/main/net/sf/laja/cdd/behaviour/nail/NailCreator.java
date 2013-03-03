@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.nail;
-
 import net.sf.laja.cdd.state.nail.*;
 import net.sf.laja.cdd.state.nail.NailState;
 

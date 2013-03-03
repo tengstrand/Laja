@@ -11,53 +11,53 @@ import java.util.*;
  */
 public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Serializable {
     protected EarStateSet stateSet;
-    protected final Set<Ear> set;
+    protected final Set<TheEar> set;
 
-    public EarHashSet(Ear... array) {
-        this.set = new HashSet<Ear>();
+    public EarHashSet(TheEar... array) {
+        this.set = new HashSet<TheEar>();
         this.set.addAll(Arrays.asList(array));
     }
 
-    public EarHashSet(Collection<Ear> collection) {
-        this.set = new HashSet<Ear>();
+    public EarHashSet(Collection<TheEar> collection) {
+        this.set = new HashSet<TheEar>();
         this.set.addAll(collection);
     }
 
     public EarHashSet(EarStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
-        Set<Ear> elements = new HashSet<Ear>(stateSet.size());
+        Set<TheEar> elements = new HashSet<TheEar>(stateSet.size());
 
         for (EarState state : stateSet) {
             EarStateBuilder builder = new EarStateBuilderImpl(state);
-            Ear entry = (Ear) builder.as(new EarFactory.EarFactory_(builder));
+            TheEar entry = (TheEar) builder.as(new TheEarFactory.TheEarFactory_(builder));
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);
     }
 
-    public class StateInSyncSet extends HashSet<Ear> {
+    public class StateInSyncSet extends HashSet<TheEar> {
         private EarStateSet stateSet;
 
-        public StateInSyncSet(EarStateSet stateSet, Set<Ear> elements) {
+        public StateInSyncSet(EarStateSet stateSet, Set<TheEar> elements) {
             this.stateSet = stateSet;
             this.stateSet.clear();
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Ear element) {
+        public boolean add(TheEar element) {
             stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
             stateSet.add(element.getState(stateSet.certificate()));
             return super.add(element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Ear> collection) {
+        public boolean addAll(Collection<? extends TheEar> collection) {
             stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
             boolean modified = super.addAll(collection);
 
-            for (Ear element : collection) {
+            for (TheEar element : collection) {
                 stateSet.add(element.getState(stateSet.certificate()));
             }
             return modified;
@@ -66,10 +66,10 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
         @Override
         public boolean remove(Object element) {
             stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
-            if (!(element instanceof Ear)) {
+            if (!(element instanceof TheEar)) {
                 return false;
             }
-            boolean removedState = stateSet.remove(((Ear) element).getState(stateSet.certificate()));
+            boolean removedState = stateSet.remove(((TheEar) element).getState(stateSet.certificate()));
             boolean removedElement = super.remove(element);
 
             if (removedState != removedElement) {
@@ -84,9 +84,9 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
             Set states = new HashSet(collection.size());
             Set elements = new HashSet(collection.size());
             for (Object element : collection) {
-                if (element instanceof Ear) {
+                if (element instanceof TheEar) {
                     elements.add(element);
-                    states.add(((Ear)element).getState(stateSet.certificate()));
+                    states.add(((TheEar)element).getState(stateSet.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -101,9 +101,9 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
             Set states = new HashSet(collection.size());
             Set elements = new HashSet(collection.size());
             for (Object element : collection) {
-                if (element instanceof Ear) {
+                if (element instanceof TheEar) {
                     elements.add(element);
-                    states.add(((Ear)element).getState(stateSet.certificate()));
+                    states.add(((TheEar)element).getState(stateSet.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -132,7 +132,7 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
         return set.contains(element);
     }
 
-    public Iterator<Ear> iterator() {
+    public Iterator<TheEar> iterator() {
         return set.iterator();
     }
 
@@ -140,20 +140,20 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
         return set.toArray();
     }
 
-    public <Ear> Ear[] toArray(Ear[] array) {
+    public <TheEar> TheEar[] toArray(TheEar[] array) {
         return set.toArray(array);
     }
 
-    public boolean add(Ear element) {
+    public boolean add(TheEar element) {
         return set.add(element);
     }
 
-    public boolean addAll(Collection<? extends Ear> collection) {
+    public boolean addAll(Collection<? extends TheEar> collection) {
         return set.addAll(collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Ear)) {
+        if (!(element instanceof TheEar)) {
             return false;
         }
         return set.remove(element);

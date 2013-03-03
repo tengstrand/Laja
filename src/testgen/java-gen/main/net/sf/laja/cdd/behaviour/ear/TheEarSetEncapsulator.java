@@ -4,38 +4,38 @@ import java.util.*;
 import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 
-public class EarSetEncapsulator implements Iterable<EarEncapsulator> {
+public class TheEarSetEncapsulator implements Iterable<TheEarEncapsulator> {
     public EarStateSetBuilder stateSetBuilder = new EarStateSetBuilder();
-    private List<EarEncapsulator> encapsulators = new ArrayList<EarEncapsulator>();
+    private List<TheEarEncapsulator> encapsulators = new ArrayList<TheEarEncapsulator>();
 
-    public void add(EarEncapsulator encapsulator) {
+    public void add(TheEarEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
         stateSetBuilder.add(encapsulator.builder);
     }
 
-    public EarSetEncapsulator(EarEncapsulator... encapsulators) {
+    public TheEarSetEncapsulator(TheEarEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
-        for (EarEncapsulator encapsulator : encapsulators) {
+        for (TheEarEncapsulator encapsulator : encapsulators) {
             stateSetBuilder.add(encapsulator.builder);
         }
     }
 
-    public Iterator<EarEncapsulator> iterator() {
+    public Iterator<TheEarEncapsulator> iterator() {
         return encapsulators.iterator();
     }
 
-    public EarSet asEarSet() {
-        List<Ear> result = new ArrayList<Ear>();
+    public TheEarSet asTheEarSet() {
+        List<TheEar> result = new ArrayList<TheEar>();
 
-        for (EarEncapsulator encapsulator : encapsulators) {
-            result.add(encapsulator.asEar());
+        for (TheEarEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asTheEar());
         }
-        return new EarHashSet(result);
+        return new TheEarHashSet(result);
     }
 
     public boolean isValid() {
-        for (EarEncapsulator encapsulator : encapsulators) {
+        for (TheEarEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {
                 return false;
             }

@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.eye;
-
 import net.sf.laja.cdd.state.eye.*;
 import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
 import net.sf.laja.cdd.state.eye.EyeState;

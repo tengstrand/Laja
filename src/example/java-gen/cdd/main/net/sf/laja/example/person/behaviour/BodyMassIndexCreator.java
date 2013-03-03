@@ -1,5 +1,4 @@
 package net.sf.laja.example.person.behaviour;
-
 import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.BmiState;
 import java.math.BigDecimal;

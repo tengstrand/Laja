@@ -1,7 +1,5 @@
 package net.sf.laja.cdd.behaviour;
-
 import net.sf.laja.cdd.state.ear.*;
-import net.sf.laja.cdd.behaviour.ear.EarFactory;
 import net.sf.laja.cdd.state.ear.EarState;
 
 public class TestEarCreator {

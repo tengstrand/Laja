@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.brow;
-
 import net.sf.laja.cdd.state.brow.*;
 import net.sf.laja.cdd.state.brow.BrowState;
 

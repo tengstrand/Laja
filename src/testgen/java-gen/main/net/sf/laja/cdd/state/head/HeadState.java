@@ -30,8 +30,8 @@ public interface HeadState {
     NoseStateList getNoses();
     void setNoses(NoseStateList noses, Object mutator);
 
-    ForeheadState getForeheadState();
-    void setForeheadState(ForeheadState foreheadState, Object mutator);
+    ForeheadState getForehead();
+    void setForehead(ForeheadState forehead, Object mutator);
 
     int getLength(); // (optional)
     void setLength(int length, Object mutator);
@@ -60,8 +60,8 @@ public interface HeadState {
     double getH();
     void setH(double h, Object mutator);
 
-    EarStateList getOptionalEars(); // (optional)
-    void setOptionalEars(EarStateList optionalEars, Object mutator);
+    EarStateList getEars(); // (optional)
+    void setEars(EarStateList ears, Object mutator);
 
     MouthStateList getMouths();
     void setMouths(MouthStateList mouths, Object mutator);

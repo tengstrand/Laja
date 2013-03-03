@@ -11,71 +11,71 @@ import java.util.*;
  */
 public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.Serializable {
     protected EarStateList stateList;
-    protected final List<Ear> list;
+    protected final List<TheEar> list;
 
-    public EarArrayList(Ear... array) {
-        this.list = new ArrayList<Ear>();
+    public EarArrayList(TheEar... array) {
+        this.list = new ArrayList<TheEar>();
         this.list.addAll(Arrays.asList(array));
     }
 
-    public EarArrayList(Collection<Ear> collection) {
-        this.list = new ArrayList<Ear>();
+    public EarArrayList(Collection<TheEar> collection) {
+        this.list = new ArrayList<TheEar>();
         this.list.addAll(collection);
     }
 
     public EarArrayList(EarStateList stateList) {
         this.stateList = stateList;
         this.stateList.encapsulate(this);
-        List<Ear> elements = new ArrayList<Ear>(stateList.size());
+        List<TheEar> elements = new ArrayList<TheEar>(stateList.size());
 
         for (EarState state : stateList) {
             EarStateBuilder builder = new EarStateBuilderImpl(state);
-            Ear entry = (Ear) builder.as(new EarFactory.EarFactory_(builder));
+            TheEar entry = (TheEar) builder.as(new TheEarFactory.TheEarFactory_(builder));
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);
     }
 
-    public class StateInSyncList extends ArrayList<Ear> {
+    public class StateInSyncList extends ArrayList<TheEar> {
         private final EarStateList stateList;
 
-        public StateInSyncList(EarStateList stateList, List<Ear> elements) {
+        public StateInSyncList(EarStateList stateList, List<TheEar> elements) {
             this.stateList = stateList;
             super.addAll(elements);
         }
 
         @Override
-        public boolean add(Ear element) {
+        public boolean add(TheEar element) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
             stateList.add(element.getState(stateList.certificate()));
             return super.add(element);
         }
 
         @Override
-        public void add(int index, Ear element) {
+        public void add(int index, TheEar element) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
             stateList.add(index, element.getState(stateList.certificate()));
             super.add(index, element);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Ear> collection) {
+        public boolean addAll(Collection<? extends TheEar> collection) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
             boolean modified = super.addAll(collection);
 
-            for (Ear element : collection) {
+            for (TheEar element : collection) {
                 stateList.add(element.getState(stateList.certificate()));
             }
             return modified;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Ear> collection) {
+        public boolean addAll(int index, Collection<? extends TheEar> collection) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
             boolean modified = super.addAll(index, collection);
 
             List elements = new ArrayList(collection.size());
-            for (Ear element : collection) {
+            for (TheEar element : collection) {
                 elements.add(element.getState(stateList.certificate()));
             }
             stateList.addAll(index, elements);
@@ -86,10 +86,10 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         @Override
         public boolean remove(Object element) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
-            if (!(element instanceof Ear)) {
+            if (!(element instanceof TheEar)) {
                 return false;
             }
-            stateList.remove(((Ear) element).getState(stateList.certificate()));
+            stateList.remove(((TheEar) element).getState(stateList.certificate()));
 
             return super.remove(element);
         }
@@ -100,9 +100,9 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Ear) {
+                if (element instanceof TheEar) {
                     elements.add(element);
-                    states.add(((Ear)element).getState(stateList.certificate()));
+                    states.add(((TheEar)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.removeAll(elements);
@@ -117,9 +117,9 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
             List states = new ArrayList(collection.size());
             List elements = new ArrayList(collection.size());
             for (Object element : collection) {
-                if (element instanceof Ear) {
+                if (element instanceof TheEar) {
                     elements.add(element);
-                    states.add(((Ear)element).getState(stateList.certificate()));
+                    states.add(((TheEar)element).getState(stateList.certificate()));
                 }
             }
             boolean modified = super.retainAll(elements);
@@ -136,14 +136,14 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         }
 
         @Override
-        public Ear set(int index, Ear element) {
+        public TheEar set(int index, TheEar element) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
             stateList.set(index, element.getState(stateList.certificate()));
             return super.set(index, element);
         }
 
         @Override
-        public Ear remove(int index) {
+        public TheEar remove(int index) {
             stateList.throwExceptionIfNotEncapsulatedBy(EarArrayList.this);
             stateList.remove(index);
             return super.remove(index);
@@ -162,7 +162,7 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         return list.contains(element);
     }
 
-    public Iterator<Ear> iterator() {
+    public Iterator<TheEar> iterator() {
         return list.iterator();
     }
 
@@ -170,28 +170,28 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         return list.toArray();
     }
 
-    public <Ear> Ear[] toArray(Ear[] array) {
+    public <TheEar> TheEar[] toArray(TheEar[] array) {
         return list.toArray(array);
     }
 
-    public boolean add(Ear element) {
+    public boolean add(TheEar element) {
         return list.add(element);
     }
 
-    public void add(int index, Ear element) {
+    public void add(int index, TheEar element) {
         list.add(index, element);
     }
 
-    public boolean addAll(Collection<? extends Ear> collection) {
+    public boolean addAll(Collection<? extends TheEar> collection) {
         return list.addAll(collection);
     }
 
-    public boolean addAll(int index, Collection<? extends Ear> collection) {
+    public boolean addAll(int index, Collection<? extends TheEar> collection) {
         return list.addAll(index, collection);
     }
 
     public boolean remove(Object element) {
-        if (!(element instanceof Ear)) {
+        if (!(element instanceof TheEar)) {
             return false;
         }
         return list.remove(element);
@@ -213,15 +213,15 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         list.clear();
     }
 
-    public Ear get(int index) {
+    public TheEar get(int index) {
         return list.get(index);
     }
 
-    public Ear set(int index, Ear element) {
+    public TheEar set(int index, TheEar element) {
         return list.set(index, element);
     }
 
-    public Ear remove(int index) {
+    public TheEar remove(int index) {
         return list.remove(index);
     }
 
@@ -233,15 +233,15 @@ public class EarArrayList implements EarList, RandomAccess, Cloneable, java.io.S
         return list.lastIndexOf(element);
     }
 
-    public ListIterator<Ear> listIterator() {
+    public ListIterator<TheEar> listIterator() {
         return list.listIterator();
     }
 
-    public ListIterator<Ear> listIterator(int index) {
+    public ListIterator<TheEar> listIterator(int index) {
         return list.listIterator(index);
     }
 
-    public List<Ear> subList(int fromIndex, int toIndex) {
+    public List<TheEar> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
 

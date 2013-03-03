@@ -1,19 +1,18 @@
 package net.sf.laja.cdd.behaviour.ear;
-
 import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 
-public class EarCreator {
+public class TheEarCreator {
     private final EarStateBuilder builder = EarStateImpl.build();
 
     public class Weight_ {
-        public EarEncapsulator weight(int weight) {
+        public TheEarEncapsulator weight(int weight) {
             builder.withWeight(weight);
             return create();
         }
     }
 
-    public EarEncapsulator create() {
-        return new EarEncapsulator(builder);
+    public TheEarEncapsulator create() {
+        return new TheEarEncapsulator(builder);
      }
 }

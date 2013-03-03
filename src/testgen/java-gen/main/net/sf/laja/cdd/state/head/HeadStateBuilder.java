@@ -18,7 +18,7 @@ public interface HeadStateBuilder {
     void withRightEye(EyeStateBuilder rightEye);
     void withMidEye(EyeStateBuilder midEye);
     void withNoses(net.sf.laja.cdd.state.nose.NoseStateListBuilder listBuilder);
-    void withForeheadState(ForeheadStateBuilder foreheadState);
+    void withForehead(ForeheadStateBuilder forehead);
     void withLength(int length);
     void withA(boolean a);
     void withB(byte b);
@@ -28,14 +28,14 @@ public interface HeadStateBuilder {
     void withF(long f);
     void withG(float g);
     void withH(double h);
-    void withOptionalEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder);
+    void withEars(net.sf.laja.cdd.state.ear.EarStateListBuilder listBuilder);
     void withMouths(net.sf.laja.cdd.state.mouth.MouthStateListBuilder listBuilder);
     EyeStateBuilder getLeftEyeStateBuilder();
     EyeStateBuilder getRightEyeStateBuilder();
     EyeStateBuilder getMidEyeStateBuilder();
     NoseStateListBuilder getNosesStateListBuilder();
-    ForeheadStateBuilder getForeheadStateStateBuilder();
-    EarStateListBuilder getOptionalEarsStateListBuilder();
+    ForeheadStateBuilder getForeheadStateBuilder();
+    EarStateListBuilder getEarsStateListBuilder();
     MouthStateListBuilder getMouthsStateListBuilder();
     boolean isValid();
     Object as(HeadBehaviourFactory factory, Object... args);

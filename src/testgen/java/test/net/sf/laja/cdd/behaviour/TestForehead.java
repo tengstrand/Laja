@@ -1,9 +1,7 @@
 package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
-import net.sf.laja.cdd.behaviour.brow.BrowList;
-import net.sf.laja.cdd.behaviour.ear.Ear;
-import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEar;
 import net.sf.laja.cdd.behaviour.ear.EarHashSet;
 import net.sf.laja.cdd.behaviour.ear.EarSet;
 import net.sf.laja.cdd.state.ear.EarState;
@@ -34,12 +32,12 @@ public class TestForehead extends TestForeheadFactory {
         return browList;
     }
 
-    private Ear ear(int weight) {
-        return Ear.weight(weight).asEar();
+    private TheEar ear(int weight) {
+        return TheEar.weight(weight).asTheEar();
     }
 
     private EarState earState(int weight) {
-        EarState earState = Ear.weight(weight).asEar().getState(state.certificate());
+        EarState earState = TheEar.weight(weight).asTheEar().getState(state.certificate());
         return earState;
     }
 
@@ -47,7 +45,7 @@ public class TestForehead extends TestForeheadFactory {
         return new EarHashSet(state.getEars());
     }
 
-    public void removeEar(Ear ear) {
+    public void removeEar(TheEar ear) {
         Set<EarState> states = new HashSet<EarState>();
         states.add(earState(1));
         states.add(earState(2));
@@ -66,5 +64,9 @@ public class TestForehead extends TestForeheadFactory {
             result.add(earState.getWeight());
         }
         return result;
+    }
+
+    public void test() {
+        TestForehead.create().withEars(TheEar.weight(1)).asTestForehead();
     }
 }

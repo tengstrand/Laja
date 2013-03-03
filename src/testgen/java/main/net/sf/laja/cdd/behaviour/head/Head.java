@@ -4,11 +4,10 @@ import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
 import net.sf.laja.cdd.behaviour.mouth.MouthList;
 import net.sf.laja.cdd.behaviour.mouth.MouthSize;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
 
 public class Head extends HeadFactory {
-    private final Eye eye;
     private final Eye leftEye;
     private final Eye rightEye;
     private Eye midEye;
@@ -16,7 +15,6 @@ public class Head extends HeadFactory {
 
     public Head(HeadState state, HeadStateBuilder stateBuilder) {
         super(state, stateBuilder);
-        eye = new Eye(state.getEyeState());
         leftEye = new Eye(state.getLeftEye());
         rightEye = new Eye(state.getRightEye());
         if (state.getMidEye() != null) {

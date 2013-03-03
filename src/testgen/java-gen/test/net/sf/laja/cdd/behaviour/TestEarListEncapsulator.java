@@ -2,7 +2,6 @@ package net.sf.laja.cdd.behaviour;
 
 import java.util.*;
 import net.sf.laja.cdd.state.ear.*;
-import net.sf.laja.cdd.behaviour.ear.EarFactory;
 import net.sf.laja.cdd.state.ear.EarState;
 
 public class TestEarListEncapsulator implements Iterable<TestEarEncapsulator> {

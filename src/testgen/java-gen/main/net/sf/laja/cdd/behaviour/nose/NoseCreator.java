@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.nose;
-
 import net.sf.laja.cdd.state.nose.*;
 import net.sf.laja.cdd.state.nose.NoseState;
 

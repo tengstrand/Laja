@@ -1,5 +1,4 @@
 package net.sf.laja.example.repository.behaviour.domain;
-
 import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.state.ZipcodeState;
 

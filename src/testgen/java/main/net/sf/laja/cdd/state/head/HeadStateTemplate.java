@@ -12,7 +12,7 @@ public class HeadStateTemplate extends HeadStateImpl {
     EyeState rightEye;
     EyeState midEye; // (optional)
     NoseStateList noses;
-    ForeheadState foreheadState;
+    ForeheadState forehead;
     int length; // (optional)
     boolean a;
     byte b;
@@ -22,10 +22,10 @@ public class HeadStateTemplate extends HeadStateImpl {
     long f;
     float g;
     double h;
-    EarStateList optionalEars; // (optional)
+    EarStateList ears; // (optional)
     MouthStateList mouths;
 
     public boolean isValid() {
-        return headWeightInGrams >= 0.5 && eyeWeightInGrams > 0;
+        return headWeightInGrams >= 0.5;
     }
 }

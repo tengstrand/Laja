@@ -5,20 +5,19 @@ import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
 import net.sf.laja.cdd.behaviour.mouth.MouthList;
 import net.sf.laja.cdd.behaviour.mouth.MouthSize;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
 import net.sf.laja.cdd.state.ear.EarStateList;
 import net.sf.laja.cdd.state.eye.EyeState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
-import net.sf.laja.cdd.behaviour.ear.EarBuilder;
 import net.sf.laja.cdd.behaviour.nose.NoseBuilder;
 import net.sf.laja.cdd.behaviour.forehead.ForeheadBuilder;
 import net.sf.laja.cdd.behaviour.mouth.MouthBuilder;
 import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
 import net.sf.laja.cdd.behaviour.nose.NoseListEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.EarListEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarListEncapsulator;
 import net.sf.laja.cdd.behaviour.mouth.MouthListEncapsulator;
 
 public class HeadBuilder {
@@ -61,8 +60,8 @@ public class HeadBuilder {
         return this;
     }
 
-    public HeadBuilder withForeheadState(TestForeheadBuilder foreheadState) {
-        builder.withForeheadState(foreheadState.builder);
+    public HeadBuilder withForehead(ForeheadBuilder forehead) {
+        builder.withForehead(forehead.builder);
         return this;
     }
 
@@ -111,8 +110,8 @@ public class HeadBuilder {
         return this;
     }
 
-    public HeadBuilder withOptionalEars(EarListEncapsulator optionalEars) {
-        builder.withOptionalEars(optionalEars.stateListBuilder);
+    public HeadBuilder withEars(TheEarListEncapsulator ears) {
+        builder.withEars(ears.stateListBuilder);
         return this;
     }
 

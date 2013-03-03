@@ -1,10 +1,12 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.behaviour.ear.Ear;
-import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
 import net.sf.laja.cdd.behaviour.ear.EarHashSet;
 import net.sf.laja.cdd.behaviour.ear.EarList;
 import net.sf.laja.cdd.behaviour.ear.EarSet;
+import net.sf.laja.cdd.behaviour.ear.TheEar;
+import net.sf.laja.cdd.behaviour.ear.TheEarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarList;
+import net.sf.laja.cdd.behaviour.ear.TheEarSet;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,12 +21,12 @@ import static org.junit.Assert.assertFalse;
  */
 public class SetTest {
 
-    private EarEncapsulator ear(int weight) {
-        return Ear.weight(weight);
+    private TheEarEncapsulator ear(int weight) {
+        return TheEar.weight(weight);
     }
 
     private EarWeightSet createEarSet() {
-        EarSet set = Ear.createSet(ear(1), ear(2), ear(3)).asEarSet();
+        TheEarSet set = TheEar.createSet(ear(1), ear(2), ear(3)).asTheEarSet();
         return new EarWeightSet(set);
     }
 
@@ -32,7 +34,7 @@ public class SetTest {
     public void remove_createdFromVarargConstructor() {
         EarWeightSet set = createEarSet();
 
-        set.remove(ear(2).asEar());
+        set.remove(ear(2).asTheEar());
 
         assertEquals(Arrays.asList(1, 3), set.weights());
     }
@@ -41,7 +43,7 @@ public class SetTest {
     public void remove_createdFromSet() {
         EarWeightSet set = createEarSet();
 
-        set.remove(ear(2).asEar());
+        set.remove(ear(2).asTheEar());
 
         assertEquals(Arrays.asList(1, 3), set.weights());
     }
@@ -50,7 +52,7 @@ public class SetTest {
     public void remove_createdFromStateSet() {
         TestForehead forehead = TestForehead.create().withEars(ear(1), ear(2), ear(3)).asTestForehead();
 
-        forehead.removeEar(ear(2).asEar());
+        forehead.removeEar(ear(2).asTheEar());
 
         assertEquals(Arrays.asList(1, 3), forehead.earWeights());
     }
@@ -72,7 +74,7 @@ public class SetTest {
 
     @Test
     public void contains() {
-        assertTrue(createEarSet().contains(ear(2).asEar()));
+        assertTrue(createEarSet().contains(ear(2).asTheEar()));
     }
 
     @Test
@@ -82,15 +84,15 @@ public class SetTest {
 
     @Test
     public void iterator() {
-        Iterator<Ear> iterator = createEarSet().iterator();
+        Iterator<TheEar> iterator = createEarSet().iterator();
 
-        assertEquals(ear(1).asEar(), iterator.next());
+        assertEquals(ear(1).asTheEar(), iterator.next());
     }
 
     @Test
     public void containsAll() {
         EarSet set = createEarSet();
-        EarList list = Ear.createList(ear(1), ear(2), ear(3)).asEarList();
+        TheEarList list = TheEar.createList(ear(1), ear(2), ear(3)).asTheEarList();
 
         assertTrue(set.containsAll(list));
     }
@@ -98,10 +100,10 @@ public class SetTest {
     @Test
     public void add() {
         TestForehead forehead1 = TestForehead.create().withEars(ear(1)).asTestForehead();
-        forehead1.getEars().add(ear(2).asEar());
+        forehead1.getEars().add(ear(2).asTheEar());
         TestForehead forehead2 = forehead1.asTestForehead();
 
-        EarSet expectedSet = Ear.createSet(ear(1), ear(2)).asEarSet();
+        TheEarSet expectedSet = TheEar.createSet(ear(1), ear(2)).asTheEarSet();
 
         assertEquals(expectedSet, forehead1.getEars());
         assertEquals(expectedSet, forehead2.getEars());
@@ -110,10 +112,10 @@ public class SetTest {
     @Test
     public void addAll() {
         TestForehead forehead1 = TestForehead.create().withEars(ear(1), ear(2)).asTestForehead();
-        forehead1.getEars().addAll(Ear.createSet(ear(3), ear(4)).asEarSet());
+        forehead1.getEars().addAll(TheEar.createSet(ear(3), ear(4)).asTheEarSet());
         TestForehead forehead2 = forehead1.asTestForehead();
 
-        EarSet expectedSet = Ear.createSet(ear(1), ear(2), ear(3), ear(4)).asEarSet();
+        TheEarSet expectedSet = TheEar.createSet(ear(1), ear(2), ear(3), ear(4)).asTheEarSet();
 
         assertEquals(expectedSet, forehead1.getEars());
         assertEquals(expectedSet, forehead2.getEars());
@@ -122,10 +124,10 @@ public class SetTest {
     @Test
     public void remove() {
         TestForehead forehead1 = TestForehead.create().withEars(ear(1), ear(2), ear(3)).asTestForehead();
-        forehead1.getEars().remove(ear(2).asEar());
+        forehead1.getEars().remove(ear(2).asTheEar());
         TestForehead forehead2 = forehead1.asTestForehead();
 
-        EarSet expectedSet = Ear.createSet(ear(1), ear(3)).asEarSet();
+        TheEarSet expectedSet = TheEar.createSet(ear(1), ear(3)).asTheEarSet();
 
         assertEquals(expectedSet, forehead1.getEars());
         assertEquals(expectedSet, forehead2.getEars());
@@ -134,10 +136,10 @@ public class SetTest {
     @Test
     public void removeAll() {
         TestForehead forehead1 = TestForehead.create().withEars(ear(1), ear(2), ear(3), ear(4), ear(5)).asTestForehead();
-        forehead1.getEars().removeAll(Ear.createSet(ear(3), ear(4)).asEarSet());
+        forehead1.getEars().removeAll(TheEar.createSet(ear(3), ear(4)).asTheEarSet());
         TestForehead forehead2 = forehead1.asTestForehead();
 
-        EarSet expectedSet = Ear.createSet(ear(1), ear(2), ear(5)).asEarSet();
+        TheEarSet expectedSet = TheEar.createSet(ear(1), ear(2), ear(5)).asTheEarSet();
 
         assertEquals(expectedSet, forehead1.getEars());
         assertEquals(expectedSet, forehead2.getEars());
@@ -146,10 +148,10 @@ public class SetTest {
     @Test
     public void retainAll() {
         TestForehead forehead1 = TestForehead.create().withEars(ear(1), ear(2), ear(3)).asTestForehead();
-        forehead1.getEars().retainAll(Ear.createSet(ear(2), ear(3)).asEarSet());
+        forehead1.getEars().retainAll(TheEar.createSet(ear(2), ear(3)).asTheEarSet());
         TestForehead forehead2 = forehead1.asTestForehead();
 
-        EarSet expectedSet = Ear.createSet(ear(2), ear(3)).asEarSet();
+        TheEarSet expectedSet = TheEar.createSet(ear(2), ear(3)).asTheEarSet();
 
         assertEquals(expectedSet, forehead1.getEars());
         assertEquals(expectedSet, forehead2.getEars());
@@ -161,7 +163,7 @@ public class SetTest {
         forehead1.getEars().clear();
         TestForehead forehead2 = forehead1.asTestForehead();
 
-        EarSet expectedSet = Ear.createSet().asEarSet();
+        TheEarSet expectedSet = TheEar.createSet().asTheEarSet();
 
         assertEquals(expectedSet, forehead1.getEars());
         assertEquals(expectedSet, forehead2.getEars());

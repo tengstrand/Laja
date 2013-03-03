@@ -26,8 +26,8 @@
 
 #macro addBehaviour(classname)
   #behaviours.put(classname, behaviour)
-  #if (behaviour.isFactory)
-    #behavioursFactories.put(behaviour.cleanedStateClass, behaviour)
+  #if (behaviour.isFactory && (!factories.containsKey(behaviour.cleanedStateClass) || behaviour.classname == behaviour.cleanedStateClass))
+    #factories.put(behaviour.cleanedStateClass, behaviour)
   #end
 #end
 
@@ -39,7 +39,7 @@
   #end
 
   #set (behaviours = new java.util.LinkedHashMap())
-  #set (behavioursFactories = new java.util.HashMap())
+  #set (factories = new java.util.HashMap())
 
   #set (certificateAssigned = false)
   #set (templateFiles = new java.util.ArrayList())

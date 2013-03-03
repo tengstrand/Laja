@@ -1,5 +1,4 @@
 package net.sf.laja.example.file.behaviour;
-
 import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.FileState;
 

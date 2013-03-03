@@ -3,18 +3,16 @@ package net.sf.laja.cdd.behaviour;
 import java.util.List;
 import net.sf.laja.cdd.state.forehead.*;
 import java.util.Arrays;
-import net.sf.laja.cdd.behaviour.ear.Ear;
 import net.sf.laja.cdd.state.ear.EarState;
 import net.sf.laja.cdd.behaviour.ear.EarHashSet;
 import net.sf.laja.cdd.behaviour.ear.EarSet;
 import java.util.ArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
-import java.util.Iterator;
 import java.util.Set;
-import net.sf.laja.cdd.behaviour.ear.EarEncapsulator;
+import java.util.Iterator;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
+import net.sf.laja.cdd.behaviour.ear.TheEar;
 import java.util.HashSet;
-import net.sf.laja.cdd.behaviour.brow.BrowList;
 
 public class TestForeheadFactory extends ForeheadBehaviour {
 

@@ -1,5 +1,4 @@
 package net.sf.laja.cdd.behaviour.hair;
-
 import net.sf.laja.cdd.state.hair.*;
 import net.sf.laja.cdd.state.hair.HairState;
 

@@ -4,38 +4,38 @@ import java.util.*;
 import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 
-public class EarListEncapsulator implements Iterable<EarEncapsulator> {
+public class TheEarListEncapsulator implements Iterable<TheEarEncapsulator> {
     public EarStateListBuilder stateListBuilder = new EarStateListBuilder();
-    private List<EarEncapsulator> encapsulators = new ArrayList<EarEncapsulator>();
+    private List<TheEarEncapsulator> encapsulators = new ArrayList<TheEarEncapsulator>();
 
-    public void add(EarEncapsulator encapsulator) {
+    public void add(TheEarEncapsulator encapsulator) {
         encapsulators.add(encapsulator);
         stateListBuilder.add(encapsulator.builder);
     }
 
-    public EarListEncapsulator(EarEncapsulator... encapsulators) {
+    public TheEarListEncapsulator(TheEarEncapsulator... encapsulators) {
         this.encapsulators.addAll(Arrays.asList(encapsulators));
 
-        for (EarEncapsulator encapsulator : encapsulators) {
+        for (TheEarEncapsulator encapsulator : encapsulators) {
             stateListBuilder.add(encapsulator.builder);
         }
     }
 
-    public Iterator<EarEncapsulator> iterator() {
+    public Iterator<TheEarEncapsulator> iterator() {
         return encapsulators.iterator();
     }
 
-    public EarList asEarList() {
-        List<Ear> result = new ArrayList<Ear>();
+    public TheEarList asTheEarList() {
+        List<TheEar> result = new ArrayList<TheEar>();
 
-        for (EarEncapsulator encapsulator : encapsulators) {
-            result.add(encapsulator.asEar());
+        for (TheEarEncapsulator encapsulator : encapsulators) {
+            result.add(encapsulator.asTheEar());
         }
-        return new EarArrayList(result);
+        return new TheEarArrayList(result);
     }
 
     public boolean isValid() {
-        for (EarEncapsulator encapsulator : encapsulators) {
+        for (TheEarEncapsulator encapsulator : encapsulators) {
             if (!encapsulator.isValid()) {
                 return false;
             }

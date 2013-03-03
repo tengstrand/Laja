@@ -100,12 +100,10 @@ import {template.packagename}.*;
 
 #macro importsEncapsulator()
   #set (imports = new java.util.HashSet())
-  #foreach (attribute in template.attributes where attribute.isOptional && attribute.isBuilderMethod)
-    #if (behaviours.containsKey(attribute.cleanedStateType))
-      #set (packagename = behaviours.get(attribute.cleanedStateType).packagename)
-      #if (packagename != behaviour.packagename)
-        #imports.add("{packagename}.{attribute.encapsulator}")
-      #end
+  #foreach (attribute in template.attributes where attribute.isState && attribute.isOptional && attribute.isBuilderMethod)
+    #set (factory = factories.get(attribute.cleanedStateType))
+    #if (behaviour.packagename != factory.packagename)
+      #imports.add("{factory.packagename}.{factory.encapsulatorClass}")
     #end
   #end
   #foreach (import in imports)
@@ -115,24 +113,24 @@ import {import};
 
 #macro importsSetEncapsulator()
   #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateSet)
-    #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
-    #if (behaviourRef == null)
-      #error("Could not find behaviour class '{attribute.cleanedStateType}' in {behaviours.keySet()}")
+    #set (factory = factories.get(attribute.cleanedStateType))
+    #if (factory == null)
+      #error("Could not find behaviour class '{attribute.cleanedStateType}' in {factories.keySet()}")
     #end
-    #if (behaviour.packagename != behaviourRef.packagename)
-import {behaviourRef.packagename}.{attribute.setEncapsulator};
+    #if (behaviour.packagename != factory.packagename)
+import {factory.packagename}.{factory.setEncapsulator};
     #end
   #end
 #end
 
 #macro importsListEncapsulator()
   #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateList)
-    #set (behaviourRef = behaviours.get(attribute.cleanedStateType))
-    #if (behaviourRef == null)
+    #set (factory = factories.get(attribute.cleanedStateType))
+    #if (factory == null)
       #error("Could not find behaviour class '{attribute.cleanedStateType}' in {behaviours.keySet()}")
     #end
-    #if (behaviour.packagename != behaviourRef.packagename)
-import {behaviourRef.packagename}.{attribute.listEncapsulator};
+    #if (behaviour.packagename != factory.packagename)
+import {factory.packagename}.{factory.listEncapsulator};
     #end
   #end
 #end

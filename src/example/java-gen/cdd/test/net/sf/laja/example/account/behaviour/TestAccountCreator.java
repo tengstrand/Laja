@@ -1,5 +1,4 @@
 package net.sf.laja.example.account.behaviour;
-
 import net.sf.laja.example.account.state.*;
 import net.sf.laja.example.account.state.AccountState;
 

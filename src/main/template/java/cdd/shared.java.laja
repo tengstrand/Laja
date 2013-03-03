@@ -190,5 +190,5 @@ import {certificatePackage}.{certificateClass};
 #end
 
 #function isFactory(theclassname)
-  #return behavioursFactories.containsKey(theclassname)
+  #return factories.containsKey(theclassname)
 #end

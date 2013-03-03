@@ -6,7 +6,6 @@ import net.sf.laja.cdd.state.ear.*;
 import java.util.Arrays;
 import net.sf.laja.cdd.state.ear.EarState;
 import java.util.ArrayList;
-import net.sf.laja.cdd.behaviour.ear.EarFactory;
 
 public class TestEarFactory extends EarBehaviour {
 

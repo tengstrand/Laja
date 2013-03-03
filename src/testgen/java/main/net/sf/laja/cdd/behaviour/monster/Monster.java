@@ -11,7 +11,7 @@ public class Monster extends MonsterFactory {
     public Monster(MonsterState state, MonsterStateBuilder stateBuilder) {
         super(state, stateBuilder);
 
-        head = new Head(state.getHeadState(), stateBuilder.getHeadStateBuilder());
+        head = new Head(state.getHead(), stateBuilder.getHeadStateBuilder());
     }
 
     // (factory)

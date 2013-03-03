@@ -20,12 +20,13 @@ public class {creatorClass} {
       #set (nextClass = "{strings.capitalize(nextAttribute.variable)}_")
 
     public class {currentClass} {
+      #set (factory = factories.get(attribute.cleanedStateType))
       #if (attribute.isStateSet)
         public {nextClass} {attribute.variable}() {
             return new {nextClass}();
         }
 
-        public {nextClass} {attribute.variable}({attribute.setEncapsulator} {attribute.variable}) {
+        public {nextClass} {attribute.variable}({factory.setEncapsulator} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.stateSetBuilder);
             return new {nextClass}();
         }
@@ -34,7 +35,7 @@ public class {creatorClass} {
             return new {nextClass}();
         }
 
-        public {nextClass} {attribute.variable}({attribute.listEncapsulator} {attribute.variable}) {
+        public {nextClass} {attribute.variable}({factory.listEncapsulator} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.stateListBuilder);
             return new {nextClass}();
         }
@@ -54,21 +55,21 @@ public class {creatorClass} {
     #else
 
     public class {currentClass} {
+      #set (factory = factories.get(attribute.cleanedStateType))
       #if (attribute.isStateSet)
-        public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
-            {attribute.setEncapsulator} encapsulator = new {attribute.setEncapsulator}({attribute.variable});
+        public {encapsulatorClass} {attribute.variable}({factory.encapsulatorClass}... {attribute.variable}) {
+            {factory.setEncapsulator} encapsulator = new {factory.setEncapsulator}({attribute.variable});
             builder.{attribute.withMethod}(encapsulator.stateSetBuilder);
             return create();
         }
       #else if (attribute.isStateList)
-        public {encapsulatorClass} {attribute.variable}({attribute.encapsulator}... {attribute.variable}) {
-            {attribute.listEncapsulator} encapsulator = new {attribute.listEncapsulator}({attribute.variable});
+        public {encapsulatorClass} {attribute.variable}({factory.encapsulatorClass}... {attribute.variable}) {
+            {factory.listEncapsulator} encapsulator = new {factory.listEncapsulator}({attribute.variable});
             builder.{attribute.withMethod}(encapsulator.stateListBuilder);
             return create();
         }
       #else if (attribute.isState)
-        #set (behaviourFactory = behavioursFactories.get(attribute.cleanedStateType))
-        public {encapsulatorClass} {attribute.variable}({behaviourFactory.encapsulatorClass} {attribute.variable}) {
+        public {encapsulatorClass} {attribute.variable}({factory.encapsulatorClass} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.builder);
             return create();
         }
@@ -89,17 +90,16 @@ public class {creatorClass} {
 #end
 
 #macro importsEncapsulatorRef()
-  #foreach (attribute in template.attributes where attribute.isMandatory && attribute.isState && !attribute.isHidden)
-    #set (behaviourRef = behavioursFactories.get(attribute.cleanedStateType))
-    #if (behaviour.packagename != behaviourRef.packagename)
-import {behaviourRef.packagename}.{attribute.getEncapsulator};
+  #foreach (attribute in template.attributes where attribute.isMandatory && !attribute.isHidden && attribute.isState)
+    #set (factory = factories.get(attribute.cleanedStateType))
+    #if (behaviour.packagename != factory.packagename)
+import {factory.packagename}.{factory.encapsulatorClass};
     #end
   #end
 #end
 
 #macro fileContent()
 package {behaviour.packagename};
-
     #importsBegin()
     #importsEncapsulator()
     #importsEncapsulatorRef()
