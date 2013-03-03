@@ -57,19 +57,19 @@ public class {creatorClass} {
     public class {currentClass} {
       #set (factory = factories.get(attribute.cleanedStateType))
       #if (attribute.isStateSet)
-        public {encapsulatorClass} {attribute.variable}({factory.encapsulatorClass}... {attribute.variable}) {
+        public {encapsulatorClass} {attribute.variable}({factory.encapsulator}... {attribute.variable}) {
             {factory.setEncapsulator} encapsulator = new {factory.setEncapsulator}({attribute.variable});
             builder.{attribute.withMethod}(encapsulator.stateSetBuilder);
             return create();
         }
       #else if (attribute.isStateList)
-        public {encapsulatorClass} {attribute.variable}({factory.encapsulatorClass}... {attribute.variable}) {
+        public {encapsulatorClass} {attribute.variable}({factory.encapsulator}... {attribute.variable}) {
             {factory.listEncapsulator} encapsulator = new {factory.listEncapsulator}({attribute.variable});
             builder.{attribute.withMethod}(encapsulator.stateListBuilder);
             return create();
         }
       #else if (attribute.isState)
-        public {encapsulatorClass} {attribute.variable}({factory.encapsulatorClass} {attribute.variable}) {
+        public {encapsulatorClass} {attribute.variable}({factory.encapsulator} {attribute.variable}) {
             builder.{attribute.withMethod}({attribute.variable}.builder);
             return create();
         }
@@ -93,7 +93,7 @@ public class {creatorClass} {
   #foreach (attribute in template.attributes where attribute.isMandatory && !attribute.isHidden && attribute.isState)
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (behaviour.packagename != factory.packagename)
-import {factory.packagename}.{factory.encapsulatorClass};
+import {factory.packagename}.{factory.encapsulator};
     #end
   #end
 #end

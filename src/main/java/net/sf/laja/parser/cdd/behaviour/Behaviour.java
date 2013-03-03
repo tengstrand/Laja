@@ -20,7 +20,6 @@ public class Behaviour implements BehaviourParser.IBehaviour {
     public String builderClass;
     public String creatorClass;
     public String factoryClass;
-    public String encapsulatorClass;
     public String stateClass;
     public String stateImplClass;
     public String stateComparable;
@@ -52,6 +51,10 @@ public class Behaviour implements BehaviourParser.IBehaviour {
 
     public void setParameters(BehaviourParser.IParameters iparameters) {
         parameters = (Parameters)iparameters;
+    }
+
+    public String getEncapsulator() {
+        return classname + "Encapsulator";
     }
 
     public String getSetEncapsulator() {
@@ -106,7 +109,6 @@ public class Behaviour implements BehaviourParser.IBehaviour {
         builderClass = classname + "Builder";
         creatorClass = classname + "Creator";
         factoryClass = classname + "Factory";
-        encapsulatorClass = classname + "Encapsulator";
     }
 
     /**

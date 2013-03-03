@@ -103,7 +103,7 @@ import {template.packagename}.*;
   #foreach (attribute in template.attributes where attribute.isState && attribute.isOptional && attribute.isBuilderMethod)
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (behaviour.packagename != factory.packagename)
-      #imports.add("{factory.packagename}.{factory.encapsulatorClass}")
+      #imports.add("{factory.packagename}.{factory.encapsulator}")
     #end
   #end
   #foreach (import in imports)

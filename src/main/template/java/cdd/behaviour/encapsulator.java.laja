@@ -17,19 +17,19 @@ public class {encapsulatorClass} implements {stateComparable} {
 
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (attribute.isStateSet)
-    public {encapsulatorClass} {attribute.withMethod}({factory.encapsulatorClass}... {attribute.variable}) {
+    public {encapsulatorClass} {attribute.withMethod}({factory.encapsulator}... {attribute.variable}) {
         {factory.setEncapsulator} encapsulator = new {factory.setEncapsulator}({attribute.variable});
         builder.{attribute.withMethod}(encapsulator.stateSetBuilder);
         return this;
     }
     #else if (attribute.isStateList)
-    public {encapsulatorClass} {attribute.withMethod}({factory.encapsulatorClass}... {attribute.variable}) {
+    public {encapsulatorClass} {attribute.withMethod}({factory.encapsulator}... {attribute.variable}) {
         {factory.listEncapsulator} encapsulator = new {factory.listEncapsulator}({attribute.variable});
         builder.{attribute.withMethod}(encapsulator.stateListBuilder);
         return this;
     }
     #else if (attribute.isState)
-    public {encapsulatorClass} {attribute.withMethod}({factory.encapsulatorClass} {attribute.variable}) {
+    public {encapsulatorClass} {attribute.withMethod}({factory.encapsulator} {attribute.variable}) {
         builder.{attribute.withMethod}({attribute.variable}.builder);
         return this;
     }
