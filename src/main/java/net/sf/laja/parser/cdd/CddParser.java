@@ -14,9 +14,6 @@ import net.sf.laja.parser.engine2.source.FileSource;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class CddParser {
 
