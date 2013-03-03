@@ -114,9 +114,6 @@ import {import};
 #macro importsSetEncapsulator()
   #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateSet)
     #set (factory = factories.get(attribute.cleanedStateType))
-    #if (factory == null)
-      #error("Could not find behaviour class '{attribute.cleanedStateType}' in {factories.keySet()}")
-    #end
     #if (behaviour.packagename != factory.packagename)
 import {factory.packagename}.{factory.setEncapsulator};
     #end
@@ -126,9 +123,6 @@ import {factory.packagename}.{factory.setEncapsulator};
 #macro importsListEncapsulator()
   #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateList)
     #set (factory = factories.get(attribute.cleanedStateType))
-    #if (factory == null)
-      #error("Could not find behaviour class '{attribute.cleanedStateType}' in {behaviours.keySet()}")
-    #end
     #if (behaviour.packagename != factory.packagename)
 import {factory.packagename}.{factory.listEncapsulator};
     #end

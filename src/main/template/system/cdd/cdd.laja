@@ -209,6 +209,12 @@
       #if (!attribute.isValidType)
         #attributeError("Unsupported type '{attribute.type}'")
       #end
+      #if (attribute.isState)
+        #set (factory = factories.get(attribute.cleanedStateType))
+        #if (factory == null)
+          #attributeError("Could not find state '{attribute.cleanedStateType}'")
+        #end
+      #end
     #end
     #if (cnt.isGreaterThan(1))
       #errors.addMessage("Max one attribute can be marked as surrogate key (id). Error in {template.classname}StateTemplate.")
