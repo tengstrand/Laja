@@ -9,21 +9,21 @@ import java.util.*;
  *
  *   http://laja.tengstrand.nu
  */
-public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Serializable {
+public class TheEarHashSet implements TheEarSet, RandomAccess, Cloneable, java.io.Serializable {
     protected EarStateSet stateSet;
     protected final Set<TheEar> set;
 
-    public EarHashSet(TheEar... array) {
+    public TheEarHashSet(TheEar... array) {
         this.set = new HashSet<TheEar>();
         this.set.addAll(Arrays.asList(array));
     }
 
-    public EarHashSet(Collection<TheEar> collection) {
+    public TheEarHashSet(Collection<TheEar> collection) {
         this.set = new HashSet<TheEar>();
         this.set.addAll(collection);
     }
 
-    public EarHashSet(EarStateSet stateSet) {
+    public TheEarHashSet(EarStateSet stateSet) {
         this.stateSet = stateSet;
         this.stateSet.encapsulate(this);
         Set<TheEar> elements = new HashSet<TheEar>(stateSet.size());
@@ -47,14 +47,14 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
 
         @Override
         public boolean add(TheEar element) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(TheEarHashSet.this);
             stateSet.add(element.getState(stateSet.certificate()));
             return super.add(element);
         }
 
         @Override
         public boolean addAll(Collection<? extends TheEar> collection) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(TheEarHashSet.this);
             boolean modified = super.addAll(collection);
 
             for (TheEar element : collection) {
@@ -65,7 +65,7 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
 
         @Override
         public boolean remove(Object element) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(TheEarHashSet.this);
             if (!(element instanceof TheEar)) {
                 return false;
             }
@@ -80,7 +80,7 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
 
         @Override
         public boolean removeAll(Collection<?> collection) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(TheEarHashSet.this);
             Set states = new HashSet(collection.size());
             Set elements = new HashSet(collection.size());
             for (Object element : collection) {
@@ -97,7 +97,7 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
 
         @Override
         public boolean retainAll(Collection<?> collection) {
-            stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(TheEarHashSet.this);
             Set states = new HashSet(collection.size());
             Set elements = new HashSet(collection.size());
             for (Object element : collection) {
@@ -114,7 +114,7 @@ public class EarHashSet implements EarSet, RandomAccess, Cloneable, java.io.Seri
 
         @Override
         public void clear() {
-            stateSet.throwExceptionIfNotEncapsulatedBy(EarHashSet.this);
+            stateSet.throwExceptionIfNotEncapsulatedBy(TheEarHashSet.this);
             stateSet.clear();
             super.clear();
         }

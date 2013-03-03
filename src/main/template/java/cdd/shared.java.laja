@@ -74,6 +74,7 @@ package {package};
 #end
 
 #macro importBegin()
+  #set (importStatements = new java.util.HashSet())
 #end
 
 #macro importState()
