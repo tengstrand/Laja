@@ -101,7 +101,7 @@ package {package};
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
       #if (template.packagename != package)
-        #importStatements.add("import {template.packagename}.{template.stateClass}HashSet;");
+        #importStatements.add("import {template.packagename}.{template.stateClass}HashSet;")
       #end
     #end
   #end
@@ -112,7 +112,7 @@ package {package};
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
       #if (template.packagename != package)
-        #importStatements.add("import {template.packagename}.{template.stateClass}ArrayList;");
+        #importStatements.add("import {template.packagename}.{template.stateClass}ArrayList;")
       #end
     #end
   #end

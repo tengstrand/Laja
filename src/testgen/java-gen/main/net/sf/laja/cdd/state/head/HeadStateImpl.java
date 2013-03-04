@@ -1,8 +1,5 @@
 package net.sf.laja.cdd.state.head;
 
-;
-;
-;
 import net.sf.laja.cdd.state.Certificate;
 import net.sf.laja.cdd.state.ear.EarStateArrayList;
 import net.sf.laja.cdd.state.ear.EarStateList;
