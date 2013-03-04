@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.fleck;
+
 import net.sf.laja.cdd.state.fleck.*;
 import net.sf.laja.cdd.state.fleck.FleckState;
 

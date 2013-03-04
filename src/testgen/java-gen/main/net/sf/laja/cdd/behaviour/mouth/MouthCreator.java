@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.mouth;
+
 import net.sf.laja.cdd.state.mouth.*;
 import net.sf.laja.cdd.state.mouth.MouthBehaviour;
 import net.sf.laja.cdd.state.mouth.MouthState;

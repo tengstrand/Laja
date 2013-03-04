@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.other;
+
 import net.sf.laja.cdd.state.terrestrial.*;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.state.eye.EyeState;

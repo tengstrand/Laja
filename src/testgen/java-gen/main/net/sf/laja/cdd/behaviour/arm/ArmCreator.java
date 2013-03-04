@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.arm;
+
 import net.sf.laja.cdd.state.arm.*;
 import net.sf.laja.cdd.behaviour.hand.Hand;
 import net.sf.laja.cdd.behaviour.hand.HandArrayList;

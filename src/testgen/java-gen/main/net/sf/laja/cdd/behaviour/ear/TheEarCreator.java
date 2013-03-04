@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.ear;
+
 import net.sf.laja.cdd.state.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 

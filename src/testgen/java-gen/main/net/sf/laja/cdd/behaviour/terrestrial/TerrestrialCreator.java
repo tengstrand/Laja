@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.terrestrial;
+
 import net.sf.laja.cdd.state.terrestrial.*;
 import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;

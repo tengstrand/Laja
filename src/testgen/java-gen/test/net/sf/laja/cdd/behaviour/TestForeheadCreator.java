@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour;
+
 import net.sf.laja.cdd.state.forehead.*;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.ear.TheEar;

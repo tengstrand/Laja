@@ -1,4 +1,5 @@
 package net.sf.laja.cdd.behaviour.leg;
+
 import net.sf.laja.cdd.state.leg.*;
 import net.sf.laja.cdd.state.leg.LegState;
 
