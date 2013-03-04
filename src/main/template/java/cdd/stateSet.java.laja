@@ -1,9 +1,10 @@
 
 #macro fileContent()
   #package()
-import java.util.Set;
-import {certificatePackage}.Certificate;
-
+  #importBegin()
+  #addImport("import java.util.Set;")
+  #importCertificate()
+  #importEnd()
   #header()
 public interface {stateSetClass} extends Set<{stateClass}> {
     Certificate certificate();

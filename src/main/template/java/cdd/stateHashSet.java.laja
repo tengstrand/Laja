@@ -46,9 +46,10 @@ public class {stateHashSetClass} extends HashSet<{stateClass}> implements {state
 
 #macro fileContent()
   #package()
-import java.util.*;
+  #importBegin()
+  #addImport("import java.util.*;")
   #importCertificate()
-
+  #importEnd()
   #class()
 #end
 

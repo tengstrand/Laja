@@ -1,7 +1,5 @@
 package net.sf.laja.example.repository.state;
 
-import net.sf.laja.example.repository.state.Certificate;
-
 import java.util.ArrayList;
 import java.util.List;
 

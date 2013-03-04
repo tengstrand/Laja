@@ -47,8 +47,9 @@ public class {stateBehaviourClass} implements {stateComparable} {
 
 #macro fileContent()
     #package()
+    #importBegin()
     #importCertificate()
-
+    #importEnd()
     #class()
 #end
 

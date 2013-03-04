@@ -74,15 +74,20 @@ package {package};
 #end
 
 #macro importBegin()
-  #set (importStatements = new java.util.HashSet())
+  #set (importStatements = new java.util.TreeSet())
+#end
+
+#macro addImport(statement)
+  #importStatements.add(statement)
 #end
 
 #macro importState()
   #foreach (attribute in attributes where attribute.isState)
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
-import {template.packagename}.{attribute.type};
-      #set (hasImports = true)
+      #if (template.packagename != package)
+        #importStatements.add("import {template.packagename}.{attribute.type};")
+      #end
     #end
   #end
 #end
@@ -95,8 +100,9 @@ import {template.packagename}.{attribute.type};
   #foreach (attribute in attributes where attribute.isStateSet)
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
-import {template.packagename}.{template.stateClass}HashSet;
-      #set (hasImports = true)
+      #if (template.packagename != package)
+        #importStatements.add("import {template.packagename}.{template.stateClass}HashSet;");
+      #end
     #end
   #end
 #end
@@ -105,8 +111,9 @@ import {template.packagename}.{template.stateClass}HashSet;
   #foreach (attribute in attributes where attribute.isStateList)
     #foreach (key in templates.keySet() where key == attribute.cleanedStateType)
       #set (template = templates.get(key))
-import {template.packagename}.{template.stateClass}ArrayList;
-      #set (hasImports = true)
+      #if (template.packagename != package)
+        #importStatements.add("import {template.packagename}.{template.stateClass}ArrayList;");
+      #end
     #end
   #end
 #end
@@ -114,40 +121,32 @@ import {template.packagename}.{template.stateClass}ArrayList;
 #macro importStateBuilder()
   #foreach (attribute in attributes where attribute.isState)
     #set (template = templates.get(attribute.cleanedStateType))
-    #if (template != null)
-      #stateImports.add("import {template.packagename}.{attribute.stateBuilder}")
-      #set (hasImports = true)
+    #if (template.packagename != package)
+      #importStatements.add("import {template.packagename}.{attribute.stateBuilder};")
     #end
-  #end
-#end
-
-#macro prepareStateImports()
-  #set (stateImports = new java.util.LinkedHashSet())
-#end
-
-#macro importStates()
-  #foreach (import in stateImports)
-{import};
   #end
 #end
 
 #macro importStateBuilderImpl()
   #foreach (attribute in attributes where attribute.isState)
     #set (template = templates.get(attribute.cleanedStateType))
-    #if (template != null)
-      #stateImports.add("import {template.packagename}.{attribute.stateBuilderImpl}")
-      #set (hasImports = true)
+    #if (template.packagename != package)
+      #importStatements.add("import {template.packagename}.{attribute.stateBuilderImpl};")
     #end
   #end
 #end
 
 #macro importCertificate()
-import {certificatePackage}.{certificateClass};
-    #set (hasImports = true)
+  #if (certificatePackage != package)
+    #importStatements.add("import {certificatePackage}.{certificateClass};")
+  #end
 #end
 
 #macro importEnd()
-  #if (hasImports)
+  #if (importStatements.size() > 0)
+    #foreach (importStatement in importStatements)
+{importStatement}
+    #end
 
   #end
 #end

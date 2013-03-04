@@ -8,6 +8,7 @@ import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
+import net.sf.laja.cdd.behaviour.ear.TheEarBuilder;
 import net.sf.laja.cdd.behaviour.ear.TheEarSetEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowListEncapsulator;
 

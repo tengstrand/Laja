@@ -64,13 +64,13 @@ public final class {stateSetBuilder} {
 
 #macro fileContent()
   #package()
+  #importBegin()
   #importCertificate()
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+  #addImport("import java.util.ArrayList;")
+  #addImport("import java.util.HashSet;")
+  #addImport("import java.util.List;")
+  #addImport("import java.util.Set;")
+  #importEnd()
   #class()
 #end
 

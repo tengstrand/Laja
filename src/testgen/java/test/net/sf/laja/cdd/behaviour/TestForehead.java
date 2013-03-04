@@ -2,8 +2,8 @@ package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.ear.TheEar;
-import net.sf.laja.cdd.behaviour.ear.EarHashSet;
-import net.sf.laja.cdd.behaviour.ear.EarSet;
+import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
+import net.sf.laja.cdd.behaviour.ear.TheEarSet;
 import net.sf.laja.cdd.state.ear.EarState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 
@@ -18,7 +18,7 @@ public class TestForehead extends TestForeheadFactory {
 
         // Needed to populate hidden field in Brow.
         new BrowArrayList(state.getBrows());
-        new EarHashSet(state.getEars());
+        new TheEarHashSet(state.getEars());
     }
 
     // (factory)
@@ -41,8 +41,8 @@ public class TestForehead extends TestForeheadFactory {
         return earState;
     }
 
-    public EarSet getEars() {
-        return new EarHashSet(state.getEars());
+    public TheEarSet getEars() {
+        return new TheEarHashSet(state.getEars());
     }
 
     public void removeEar(TheEar ear) {
@@ -53,7 +53,7 @@ public class TestForehead extends TestForeheadFactory {
 
         states.remove(earState(2));
 
-        EarSet set = new EarHashSet(state.getEars());
+        TheEarSet set = new TheEarHashSet(state.getEars());
         set.remove(ear(2));
 
     }

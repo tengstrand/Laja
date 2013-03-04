@@ -1,7 +1,5 @@
 package net.sf.laja.example.car.state;
 
-import net.sf.laja.example.car.state.Certificate;
-
 import java.util.ArrayList;
 import java.util.List;
 

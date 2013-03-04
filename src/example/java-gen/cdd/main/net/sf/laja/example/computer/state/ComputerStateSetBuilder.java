@@ -1,7 +1,5 @@
 package net.sf.laja.example.computer.state;
 
-import net.sf.laja.example.computer.state.Certificate;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

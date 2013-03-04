@@ -1,13 +1,13 @@
 package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.behaviour.ear.TheEar;
-import net.sf.laja.cdd.behaviour.ear.EarHashSet;
+import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class EarWeightSet extends EarHashSet {
+public class EarWeightSet extends TheEarHashSet {
 
     public EarWeightSet(Collection<TheEar> collection) {
         super(collection);

@@ -46,9 +46,10 @@ public class {stateArrayListClass} extends ArrayList<{stateClass}> implements {s
 
 #macro fileContent()
   #package()
-import java.util.*;
+  #importBegin()
+  #addImport("import java.util.*;")
   #importCertificate()
-
+  #importEnd()
   #class()
 #end
 

@@ -1,10 +1,8 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.behaviour.ear.EarHashSet;
-import net.sf.laja.cdd.behaviour.ear.EarList;
-import net.sf.laja.cdd.behaviour.ear.EarSet;
 import net.sf.laja.cdd.behaviour.ear.TheEar;
 import net.sf.laja.cdd.behaviour.ear.TheEarEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
 import net.sf.laja.cdd.behaviour.ear.TheEarList;
 import net.sf.laja.cdd.behaviour.ear.TheEarSet;
 import org.junit.Test;
@@ -64,7 +62,7 @@ public class SetTest {
 
     @Test
     public void isEmpty() {
-        assertTrue(new EarHashSet().isEmpty());
+        assertTrue(new TheEarHashSet().isEmpty());
     }
 
     @Test
@@ -91,7 +89,7 @@ public class SetTest {
 
     @Test
     public void containsAll() {
-        EarSet set = createEarSet();
+        TheEarSet set = createEarSet();
         TheEarList list = TheEar.createList(ear(1), ear(2), ear(3)).asTheEarList();
 
         assertTrue(set.containsAll(list));

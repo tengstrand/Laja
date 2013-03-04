@@ -13,6 +13,7 @@ import net.sf.laja.cdd.state.forehead.ForeheadState;
 import net.sf.laja.cdd.state.mouth.MouthStateList;
 import net.sf.laja.cdd.state.nose.NoseStateList;
 import net.sf.laja.cdd.behaviour.nose.NoseBuilder;
+import net.sf.laja.cdd.behaviour.ear.TheEarBuilder;
 import net.sf.laja.cdd.behaviour.forehead.ForeheadBuilder;
 import net.sf.laja.cdd.behaviour.mouth.MouthBuilder;
 import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
