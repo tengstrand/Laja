@@ -4,10 +4,12 @@ import net.sf.laja.cdd.behaviour.arm.Arm;
 import net.sf.laja.cdd.behaviour.arm.ArmBuilder;
 import net.sf.laja.cdd.behaviour.arm.ArmEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.Brow;
+import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.behaviour.forehead.Forehead;
 import net.sf.laja.cdd.behaviour.forehead.ForeheadWithBigBrows;
 import net.sf.laja.cdd.behaviour.hair.Hair;
 import net.sf.laja.cdd.behaviour.hair.HairList;
+import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -46,6 +48,11 @@ public class EncapsulationTest {
         Hair hair = Hair.length(10).color("red").asHair();
 
         hair.mutate();
+    }
+
+    @Test
+    public void shouldBePossibleToMutateSubstateFromTheConstructorViaBuilderWithThisAsMutator() {
+        Terrestrial.numberOfLegs(1).leftEye(Eye.eyeWeightInGrams(2).color("red")).asTerrestrial();
     }
 
     @Test (expected = IllegalStateException.class)
