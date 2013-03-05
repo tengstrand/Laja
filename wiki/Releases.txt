@@ -8,6 +8,7 @@ Included in CDD:
 * Removed support for state expansion. The idea of ??state expansion will perhaps emerge in a different form to facilitate building state.
 * Removed support for state projection. State projection seemed to be a good idea at the beginning, but sharing mutable state could lead to undesired effects. State projection for immutable state is still a good idea but is not supported at the moment!
 ** Support for state expansion and state projection was also removed to reduce the complexity and to speed up the development time.
+* Removed the extra behaviour constructor (state, stateBuilder), leaving only the (state) constructor left. The new way to solve this is to "manually" create a builder an manipulate the state via the builder.
 * Added support for Set.
 * The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
 * Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problems keeping state and behavior in sync.
