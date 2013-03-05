@@ -2,8 +2,6 @@ package net.sf.laja.cdd.behaviour.terrestrial;
 
 import java.util.List;
 import java.util.Iterator;
-import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
-import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.behaviour.eye.Eye;
 import java.util.Arrays;
