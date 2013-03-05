@@ -30,7 +30,7 @@ public class SourceAccountHashSet implements SourceAccountSet, RandomAccess, Clo
 
         for (AccountState state : stateSet) {
             AccountStateBuilder builder = new AccountStateBuilderImpl(state);
-            SourceAccount entry = (SourceAccount) builder.as(new AccountFactory.SourceAccountFactory_(builder));
+            SourceAccount entry = (SourceAccount) builder.as(new AccountFactory.SourceAccountFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -33,6 +33,6 @@ public class TestEarBuilder {
     }
 
     public TestEar asTestEar() {
-        return (TestEar)builder.as(new TestEarFactory.TestEarFactory_(builder));
+        return (TestEar)builder.as(new TestEarFactory.TestEarFactory_());
     }
 }

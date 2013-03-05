@@ -30,11 +30,6 @@ public class LegFactory extends LegBehaviour {
     }
 
     public static class LegFactory_ implements LegBehaviourFactory {
-        private final LegStateBuilder stateBuilder;
-
-        public LegFactory_(LegStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(LegState state, Object... args) {
             Object result = create_(state, args);

@@ -30,7 +30,7 @@ public class ZipcodeArrayList implements ZipcodeList, RandomAccess, Cloneable, j
 
         for (ZipcodeState state : stateList) {
             ZipcodeStateBuilder builder = new ZipcodeStateBuilderImpl(state);
-            Zipcode entry = (Zipcode) builder.as(new ZipcodeFactory.ZipcodeFactory_(builder));
+            Zipcode entry = (Zipcode) builder.as(new ZipcodeFactory.ZipcodeFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

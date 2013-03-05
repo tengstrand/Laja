@@ -30,7 +30,7 @@ public class AtariFalcon030HashSet implements AtariFalcon030Set, RandomAccess, C
 
         for (ComputerState state : stateSet) {
             ComputerStateBuilder builder = new ComputerStateBuilderImpl(state);
-            AtariFalcon030 entry = (AtariFalcon030) builder.as(new AtariFactory.AtariFalcon030Factory_(builder));
+            AtariFalcon030 entry = (AtariFalcon030) builder.as(new AtariFactory.AtariFalcon030Factory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

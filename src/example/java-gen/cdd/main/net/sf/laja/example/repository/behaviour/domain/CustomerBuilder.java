@@ -61,10 +61,10 @@ public class CustomerBuilder {
     }
 
     public Customer asCustomer() {
-        return (Customer)builder.as(new CustomerFactory.CustomerFactory_(builder));
+        return (Customer)builder.as(new CustomerFactory.CustomerFactory_());
     }
 
     public CustomerMatcher asCustomerMatcher() {
-        return (CustomerMatcher)builder.as(new CustomerFactory.CustomerMatcherFactory_(builder));
+        return (CustomerMatcher)builder.as(new CustomerFactory.CustomerMatcherFactory_());
     }
 }

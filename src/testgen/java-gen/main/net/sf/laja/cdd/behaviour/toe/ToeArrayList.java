@@ -30,7 +30,7 @@ public class ToeArrayList implements ToeList, RandomAccess, Cloneable, java.io.S
 
         for (ToeState state : stateList) {
             ToeStateBuilder builder = new ToeStateBuilderImpl(state);
-            Toe entry = (Toe) builder.as(new ToeFactory.ToeFactory_(builder));
+            Toe entry = (Toe) builder.as(new ToeFactory.ToeFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

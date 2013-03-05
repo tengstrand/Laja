@@ -55,6 +55,6 @@ public class OtherTerrestrialBuilder {
     }
 
     public OtherTerrestrial asOtherTerrestrial() {
-        return (OtherTerrestrial)builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_(builder));
+        return (OtherTerrestrial)builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_());
     }
 }

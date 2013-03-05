@@ -58,6 +58,6 @@ public class TerrestrialBuilder {
     }
 
     public Terrestrial asTerrestrial() {
-        return (Terrestrial)builder.as(new TerrestrialFactory.TerrestrialFactory_(builder));
+        return (Terrestrial)builder.as(new TerrestrialFactory.TerrestrialFactory_());
     }
 }

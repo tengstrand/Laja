@@ -30,7 +30,7 @@ public class BrowHashSet implements BrowSet, RandomAccess, Cloneable, java.io.Se
 
         for (BrowState state : stateSet) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_(builder));
+            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

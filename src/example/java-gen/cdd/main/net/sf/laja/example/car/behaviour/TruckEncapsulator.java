@@ -12,7 +12,7 @@ public class TruckEncapsulator implements TruckStateComparable {
     }
 
     public Truck asTruck() {
-        return (Truck)builder.as(new TruckFactory.TruckFactory_(builder));
+        return (Truck)builder.as(new TruckFactory.TruckFactory_());
     }
 
     public boolean isValid() {

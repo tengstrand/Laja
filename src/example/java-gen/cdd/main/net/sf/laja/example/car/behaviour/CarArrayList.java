@@ -30,7 +30,7 @@ public class CarArrayList implements CarList, RandomAccess, Cloneable, java.io.S
 
         for (CarState state : stateList) {
             CarStateBuilder builder = new CarStateBuilderImpl(state);
-            Car entry = (Car) builder.as(new CarFactory.CarFactory_(builder));
+            Car entry = (Car) builder.as(new CarFactory.CarFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

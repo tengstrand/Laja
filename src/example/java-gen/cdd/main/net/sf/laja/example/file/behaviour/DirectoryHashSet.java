@@ -34,7 +34,7 @@ public class DirectoryHashSet implements DirectorySet, RandomAccess, Cloneable, 
 
         for (DirectoryState state : stateSet) {
             DirectoryStateBuilder builder = new DirectoryStateBuilderImpl(state);
-            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_(builder));
+            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

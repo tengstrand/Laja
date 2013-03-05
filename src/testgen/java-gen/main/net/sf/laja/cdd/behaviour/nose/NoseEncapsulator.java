@@ -12,11 +12,11 @@ public class NoseEncapsulator implements NoseStateComparable {
     }
 
     public Nose asNose(int extraParameter) {
-        return (Nose)builder.as(new NoseFactory.NoseFactory_(builder), extraParameter);
+        return (Nose)builder.as(new NoseFactory.NoseFactory_(), extraParameter);
     }
 
     public BigNose asBigNose() {
-        return (BigNose)builder.as(new NoseFactory.BigNoseFactory_(builder));
+        return (BigNose)builder.as(new NoseFactory.BigNoseFactory_());
     }
 
     public boolean isValid() {

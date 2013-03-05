@@ -66,11 +66,6 @@ public class {factoryClass} extends {stateBehaviourClass} {
     #set (innerFactoryClass = "{method.returnclass}Factory_")
 
     public static class {innerFactoryClass} implements {template.classname}BehaviourFactory {
-        private final {stateBuilderClass} stateBuilder;
-
-        public {innerFactoryClass}({stateBuilderClass} stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create({template.stateClass} state, Object... args) {
             Object result = create_(state, args);

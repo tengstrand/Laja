@@ -30,7 +30,7 @@ public class OtherTerrestrialArrayList implements OtherTerrestrialList, RandomAc
 
         for (TerrestrialState state : stateList) {
             TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
-            OtherTerrestrial entry = (OtherTerrestrial) builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_(builder));
+            OtherTerrestrial entry = (OtherTerrestrial) builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

@@ -30,7 +30,7 @@ public class CarHashSet implements CarSet, RandomAccess, Cloneable, java.io.Seri
 
         for (CarState state : stateSet) {
             CarStateBuilder builder = new CarStateBuilderImpl(state);
-            Car entry = (Car) builder.as(new CarFactory.CarFactory_(builder));
+            Car entry = (Car) builder.as(new CarFactory.CarFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -30,7 +30,7 @@ public class TestAccountHashSet implements TestAccountSet, RandomAccess, Cloneab
 
         for (AccountState state : stateSet) {
             AccountStateBuilder builder = new AccountStateBuilderImpl(state);
-            TestAccount entry = (TestAccount) builder.as(new TestAccountFactory.TestAccountFactory_(builder));
+            TestAccount entry = (TestAccount) builder.as(new TestAccountFactory.TestAccountFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

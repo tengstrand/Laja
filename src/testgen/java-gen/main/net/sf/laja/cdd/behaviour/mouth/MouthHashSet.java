@@ -30,7 +30,7 @@ public class MouthHashSet implements MouthSet, RandomAccess, Cloneable, java.io.
 
         for (MouthState state : stateSet) {
             MouthStateBuilder builder = new MouthStateBuilderImpl(state);
-            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(builder), size);
+            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(), size);
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

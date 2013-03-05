@@ -14,7 +14,7 @@ public class EyeEncapsulator implements EyeStateComparable {
     }
 
     public Eye asEye() {
-        return (Eye)builder.as(new EyeFactory.EyeFactory_(builder));
+        return (Eye)builder.as(new EyeFactory.EyeFactory_());
     }
 
     public EyeEncapsulator withHasEar(Boolean hasEar) {

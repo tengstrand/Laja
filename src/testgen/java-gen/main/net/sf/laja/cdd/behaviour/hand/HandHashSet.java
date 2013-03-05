@@ -30,7 +30,7 @@ public class HandHashSet implements HandSet, RandomAccess, Cloneable, java.io.Se
 
         for (HandState state : stateSet) {
             HandStateBuilder builder = new HandStateBuilderImpl(state);
-            Hand entry = (Hand) builder.as(new HandFactory.HandFactory_(builder));
+            Hand entry = (Hand) builder.as(new HandFactory.HandFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

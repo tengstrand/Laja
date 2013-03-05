@@ -30,7 +30,7 @@ public class ToeHashSet implements ToeSet, RandomAccess, Cloneable, java.io.Seri
 
         for (ToeState state : stateSet) {
             ToeStateBuilder builder = new ToeStateBuilderImpl(state);
-            Toe entry = (Toe) builder.as(new ToeFactory.ToeFactory_(builder));
+            Toe entry = (Toe) builder.as(new ToeFactory.ToeFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

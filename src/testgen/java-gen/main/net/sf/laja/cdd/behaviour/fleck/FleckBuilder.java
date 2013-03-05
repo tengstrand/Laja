@@ -33,6 +33,6 @@ public class FleckBuilder {
     }
 
     public Fleck asFleck() {
-        return (Fleck)builder.as(new FleckFactory.FleckFactory_(builder));
+        return (Fleck)builder.as(new FleckFactory.FleckFactory_());
     }
 }

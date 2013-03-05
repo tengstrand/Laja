@@ -12,7 +12,7 @@ public class OwnerEncapsulator implements OwnerStateComparable {
     }
 
     public Owner asOwner() {
-        return (Owner)builder.as(new OwnerFactory.OwnerFactory_(builder));
+        return (Owner)builder.as(new OwnerFactory.OwnerFactory_());
     }
 
     public boolean isValid() {

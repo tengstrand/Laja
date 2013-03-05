@@ -30,7 +30,7 @@ public class AddressArrayList implements AddressList, RandomAccess, Cloneable, j
 
         for (AddressState state : stateList) {
             AddressStateBuilder builder = new AddressStateBuilderImpl(state);
-            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_(builder));
+            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

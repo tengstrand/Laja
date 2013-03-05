@@ -12,11 +12,11 @@ public class AtariEncapsulator implements ComputerStateComparable {
     }
 
     public AtariST asAtariST() {
-        return (AtariST)builder.as(new AtariFactory.AtariSTFactory_(builder));
+        return (AtariST)builder.as(new AtariFactory.AtariSTFactory_());
     }
 
     public AtariFalcon030 asAtariFalcon030() {
-        return (AtariFalcon030)builder.as(new AtariFactory.AtariFalcon030Factory_(builder));
+        return (AtariFalcon030)builder.as(new AtariFactory.AtariFalcon030Factory_());
     }
 
     public boolean isValid() {

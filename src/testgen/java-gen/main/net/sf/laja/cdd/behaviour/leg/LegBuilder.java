@@ -28,6 +28,6 @@ public class LegBuilder {
     }
 
     public Leg asLeg() {
-        return (Leg)builder.as(new LegFactory.LegFactory_(builder));
+        return (Leg)builder.as(new LegFactory.LegFactory_());
     }
 }

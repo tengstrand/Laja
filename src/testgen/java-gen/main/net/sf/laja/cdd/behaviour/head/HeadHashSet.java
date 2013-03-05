@@ -30,7 +30,7 @@ public class HeadHashSet implements HeadSet, RandomAccess, Cloneable, java.io.Se
 
         for (HeadState state : stateSet) {
             HeadStateBuilder builder = new HeadStateBuilderImpl(state);
-            Head entry = (Head) builder.as(new HeadFactory.HeadFactory_(builder));
+            Head entry = (Head) builder.as(new HeadFactory.HeadFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

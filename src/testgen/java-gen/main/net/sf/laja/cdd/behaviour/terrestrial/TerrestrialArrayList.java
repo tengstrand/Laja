@@ -30,7 +30,7 @@ public class TerrestrialArrayList implements TerrestrialList, RandomAccess, Clon
 
         for (TerrestrialState state : stateList) {
             TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
-            Terrestrial entry = (Terrestrial) builder.as(new TerrestrialFactory.TerrestrialFactory_(builder));
+            Terrestrial entry = (Terrestrial) builder.as(new TerrestrialFactory.TerrestrialFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

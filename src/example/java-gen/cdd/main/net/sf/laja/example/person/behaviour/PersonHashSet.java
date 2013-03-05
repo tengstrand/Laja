@@ -30,7 +30,7 @@ public class PersonHashSet implements PersonSet, RandomAccess, Cloneable, java.i
 
         for (PersonState state : stateSet) {
             PersonStateBuilder builder = new PersonStateBuilderImpl(state);
-            Person entry = (Person) builder.as(new PersonFactory.PersonFactory_(builder));
+            Person entry = (Person) builder.as(new PersonFactory.PersonFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

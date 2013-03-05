@@ -37,11 +37,6 @@ public class TestForeheadFactory extends ForeheadBehaviour {
     }
 
     public static class TestForeheadFactory_ implements ForeheadBehaviourFactory {
-        private final ForeheadStateBuilder stateBuilder;
-
-        public TestForeheadFactory_(ForeheadStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ForeheadState state, Object... args) {
             Object result = create_(state, args);

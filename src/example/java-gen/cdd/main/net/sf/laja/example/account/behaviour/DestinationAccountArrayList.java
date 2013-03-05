@@ -30,7 +30,7 @@ public class DestinationAccountArrayList implements DestinationAccountList, Rand
 
         for (AccountState state : stateList) {
             AccountStateBuilder builder = new AccountStateBuilderImpl(state);
-            DestinationAccount entry = (DestinationAccount) builder.as(new AccountFactory.DestinationAccountFactory_(builder));
+            DestinationAccount entry = (DestinationAccount) builder.as(new AccountFactory.DestinationAccountFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

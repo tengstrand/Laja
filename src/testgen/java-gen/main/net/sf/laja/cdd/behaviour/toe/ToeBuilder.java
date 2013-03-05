@@ -33,6 +33,6 @@ public class ToeBuilder {
     }
 
     public Toe asToe() {
-        return (Toe)builder.as(new ToeFactory.ToeFactory_(builder));
+        return (Toe)builder.as(new ToeFactory.ToeFactory_());
     }
 }

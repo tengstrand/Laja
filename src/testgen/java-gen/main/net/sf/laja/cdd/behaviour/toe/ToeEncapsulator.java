@@ -12,7 +12,7 @@ public class ToeEncapsulator implements ToeStateComparable {
     }
 
     public Toe asToe() {
-        return (Toe)builder.as(new ToeFactory.ToeFactory_(builder));
+        return (Toe)builder.as(new ToeFactory.ToeFactory_());
     }
 
     public boolean isValid() {

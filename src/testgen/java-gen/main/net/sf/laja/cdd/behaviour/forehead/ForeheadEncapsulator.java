@@ -21,11 +21,11 @@ public class ForeheadEncapsulator implements ForeheadStateComparable {
     }
 
     public Forehead asForehead() {
-        return (Forehead)builder.as(new ForeheadFactory.ForeheadFactory_(builder));
+        return (Forehead)builder.as(new ForeheadFactory.ForeheadFactory_());
     }
 
     public ForeheadWithBigBrows asForeheadWithBigBrows() {
-        return (ForeheadWithBigBrows)builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_(builder));
+        return (ForeheadWithBigBrows)builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_());
     }
 
     public ForeheadEncapsulator withBrows(BrowEncapsulator... brows) {

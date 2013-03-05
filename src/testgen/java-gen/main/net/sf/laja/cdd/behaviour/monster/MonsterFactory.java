@@ -32,11 +32,6 @@ public class MonsterFactory extends MonsterBehaviour {
     }
 
     public static class MonsterFactory_ implements MonsterBehaviourFactory {
-        private final MonsterStateBuilder stateBuilder;
-
-        public MonsterFactory_(MonsterStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(MonsterState state, Object... args) {
             Object result = create_(state, args);

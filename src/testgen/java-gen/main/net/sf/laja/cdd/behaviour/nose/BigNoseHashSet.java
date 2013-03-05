@@ -30,7 +30,7 @@ public class BigNoseHashSet implements BigNoseSet, RandomAccess, Cloneable, java
 
         for (NoseState state : stateSet) {
             NoseStateBuilder builder = new NoseStateBuilderImpl(state);
-            BigNose entry = (BigNose) builder.as(new NoseFactory.BigNoseFactory_(builder));
+            BigNose entry = (BigNose) builder.as(new NoseFactory.BigNoseFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

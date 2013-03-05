@@ -14,7 +14,7 @@ public class DirectoryEncapsulator implements DirectoryStateComparable {
     }
 
     public Directory asDirectory() {
-        return (Directory)builder.as(new DirectoryFactory.DirectoryFactory_(builder));
+        return (Directory)builder.as(new DirectoryFactory.DirectoryFactory_());
     }
 
     public boolean isValid() {

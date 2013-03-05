@@ -30,11 +30,6 @@ public class TruckTypeFactory extends TruckTypeBehaviour {
     }
 
     public static class TruckTypeFactory_ implements TruckTypeBehaviourFactory {
-        private final TruckTypeStateBuilder stateBuilder;
-
-        public TruckTypeFactory_(TruckTypeStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(TruckTypeState state, Object... args) {
             Object result = create_(state, args);

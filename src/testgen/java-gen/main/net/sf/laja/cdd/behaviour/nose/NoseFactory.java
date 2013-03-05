@@ -30,11 +30,6 @@ public class NoseFactory extends NoseBehaviour {
     }
 
     public static class NoseFactory_ implements NoseBehaviourFactory {
-        private final NoseStateBuilder stateBuilder;
-
-        public NoseFactory_(NoseStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(NoseState state, Object... args) {
             Object result = create_(state, args);
@@ -56,11 +51,6 @@ public class NoseFactory extends NoseBehaviour {
     }
 
     public static class BigNoseFactory_ implements NoseBehaviourFactory {
-        private final NoseStateBuilder stateBuilder;
-
-        public BigNoseFactory_(NoseStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(NoseState state, Object... args) {
             Object result = create_(state, args);

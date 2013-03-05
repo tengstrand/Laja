@@ -35,11 +35,6 @@ public class HeadFactory extends HeadBehaviour {
     }
 
     public static class HeadFactory_ implements HeadBehaviourFactory {
-        private final HeadStateBuilder stateBuilder;
-
-        public HeadFactory_(HeadStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(HeadState state, Object... args) {
             Object result = create_(state, args);

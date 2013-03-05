@@ -30,7 +30,7 @@ public class SourceAccountArrayList implements SourceAccountList, RandomAccess, 
 
         for (AccountState state : stateList) {
             AccountStateBuilder builder = new AccountStateBuilderImpl(state);
-            SourceAccount entry = (SourceAccount) builder.as(new AccountFactory.SourceAccountFactory_(builder));
+            SourceAccount entry = (SourceAccount) builder.as(new AccountFactory.SourceAccountFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

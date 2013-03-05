@@ -12,7 +12,7 @@ public class AnimalEncapsulator implements AnimalStateComparable {
     }
 
     public Animal asAnimal() {
-        return (Animal)builder.as(new AnimalFactory.AnimalFactory_(builder));
+        return (Animal)builder.as(new AnimalFactory.AnimalFactory_());
     }
 
     public boolean isValid() {

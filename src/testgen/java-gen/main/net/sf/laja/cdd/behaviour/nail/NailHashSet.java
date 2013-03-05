@@ -30,7 +30,7 @@ public class NailHashSet implements NailSet, RandomAccess, Cloneable, java.io.Se
 
         for (NailState state : stateSet) {
             NailStateBuilder builder = new NailStateBuilderImpl(state);
-            Nail entry = (Nail) builder.as(new NailFactory.NailFactory_(builder));
+            Nail entry = (Nail) builder.as(new NailFactory.NailFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

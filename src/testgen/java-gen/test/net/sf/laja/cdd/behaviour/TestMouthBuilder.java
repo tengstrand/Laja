@@ -44,6 +44,6 @@ public class TestMouthBuilder {
     }
 
     public TestMouth asTestMouth() {
-        return (TestMouth)builder.as(new TestMouthFactory.TestMouthFactory_(builder));
+        return (TestMouth)builder.as(new TestMouthFactory.TestMouthFactory_());
     }
 }

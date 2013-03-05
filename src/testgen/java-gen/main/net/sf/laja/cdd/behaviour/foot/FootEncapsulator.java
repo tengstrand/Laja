@@ -16,7 +16,7 @@ public class FootEncapsulator implements FootStateComparable {
     }
 
     public Foot asFoot() {
-        return (Foot)builder.as(new FootFactory.FootFactory_(builder));
+        return (Foot)builder.as(new FootFactory.FootFactory_());
     }
 
     public boolean isValid() {

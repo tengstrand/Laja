@@ -28,6 +28,6 @@ public class HandBuilder {
     }
 
     public Hand asHand() {
-        return (Hand)builder.as(new HandFactory.HandFactory_(builder));
+        return (Hand)builder.as(new HandFactory.HandFactory_());
     }
 }

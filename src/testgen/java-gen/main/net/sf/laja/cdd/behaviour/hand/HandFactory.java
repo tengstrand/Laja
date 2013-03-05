@@ -30,11 +30,6 @@ public class HandFactory extends HandBehaviour {
     }
 
     public static class HandFactory_ implements HandBehaviourFactory {
-        private final HandStateBuilder stateBuilder;
-
-        public HandFactory_(HandStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(HandState state, Object... args) {
             Object result = create_(state, args);

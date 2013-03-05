@@ -30,7 +30,7 @@ public class BigBrowHashSet implements BigBrowSet, RandomAccess, Cloneable, java
 
         for (BrowState state : stateSet) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            BigBrow entry = (BigBrow) builder.as(new BrowFactory.BigBrowFactory_(builder));
+            BigBrow entry = (BigBrow) builder.as(new BrowFactory.BigBrowFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

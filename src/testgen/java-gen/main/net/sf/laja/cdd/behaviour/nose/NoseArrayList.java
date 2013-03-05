@@ -30,7 +30,7 @@ public class NoseArrayList implements NoseList, RandomAccess, Cloneable, java.io
 
         for (NoseState state : stateList) {
             NoseStateBuilder builder = new NoseStateBuilderImpl(state);
-            Nose entry = (Nose) builder.as(new NoseFactory.NoseFactory_(builder), extraParameter);
+            Nose entry = (Nose) builder.as(new NoseFactory.NoseFactory_(), extraParameter);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

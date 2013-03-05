@@ -30,11 +30,6 @@ public class OtherTerrestrialFactory extends TerrestrialBehaviour {
     }
 
     public static class OtherTerrestrialFactory_ implements TerrestrialBehaviourFactory {
-        private final TerrestrialStateBuilder stateBuilder;
-
-        public OtherTerrestrialFactory_(TerrestrialStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(TerrestrialState state, Object... args) {
             Object result = create_(state, args);

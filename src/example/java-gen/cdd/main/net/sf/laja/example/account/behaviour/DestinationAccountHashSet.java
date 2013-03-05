@@ -30,7 +30,7 @@ public class DestinationAccountHashSet implements DestinationAccountSet, RandomA
 
         for (AccountState state : stateSet) {
             AccountStateBuilder builder = new AccountStateBuilderImpl(state);
-            DestinationAccount entry = (DestinationAccount) builder.as(new AccountFactory.DestinationAccountFactory_(builder));
+            DestinationAccount entry = (DestinationAccount) builder.as(new AccountFactory.DestinationAccountFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

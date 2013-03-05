@@ -30,11 +30,6 @@ public class HairFactory extends HairBehaviour {
     }
 
     public static class HairFactory_ implements HairBehaviourFactory {
-        private final HairStateBuilder stateBuilder;
-
-        public HairFactory_(HairStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(HairState state, Object... args) {
             Object result = create_(state, args);
@@ -54,11 +49,6 @@ public class HairFactory extends HairBehaviour {
     }
 
     public static class FakeHairFactory_ implements HairBehaviourFactory {
-        private final HairStateBuilder stateBuilder;
-
-        public FakeHairFactory_(HairStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(HairState state, Object... args) {
             Object result = create_(state, args);

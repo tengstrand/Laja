@@ -79,6 +79,6 @@ public class MonsterBuilder {
     }
 
     public Monster asMonster() {
-        return (Monster)builder.as(new MonsterFactory.MonsterFactory_(builder));
+        return (Monster)builder.as(new MonsterFactory.MonsterFactory_());
     }
 }

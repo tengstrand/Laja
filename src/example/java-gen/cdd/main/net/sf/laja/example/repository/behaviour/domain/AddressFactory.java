@@ -30,11 +30,6 @@ public class AddressFactory extends AddressBehaviour {
     }
 
     public static class AddressFactory_ implements AddressBehaviourFactory {
-        private final AddressStateBuilder stateBuilder;
-
-        public AddressFactory_(AddressStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(AddressState state, Object... args) {
             Object result = create_(state, args);

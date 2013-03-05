@@ -48,6 +48,6 @@ public class TestForeheadBuilder {
     }
 
     public TestForehead asTestForehead() {
-        return (TestForehead)builder.as(new TestForeheadFactory.TestForeheadFactory_(builder));
+        return (TestForehead)builder.as(new TestForeheadFactory.TestForeheadFactory_());
     }
 }

@@ -30,7 +30,7 @@ public class LegArrayList implements LegList, RandomAccess, Cloneable, java.io.S
 
         for (LegState state : stateList) {
             LegStateBuilder builder = new LegStateBuilderImpl(state);
-            Leg entry = (Leg) builder.as(new LegFactory.LegFactory_(builder));
+            Leg entry = (Leg) builder.as(new LegFactory.LegFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

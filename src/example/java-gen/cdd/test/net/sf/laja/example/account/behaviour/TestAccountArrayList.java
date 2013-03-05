@@ -30,7 +30,7 @@ public class TestAccountArrayList implements TestAccountList, RandomAccess, Clon
 
         for (AccountState state : stateList) {
             AccountStateBuilder builder = new AccountStateBuilderImpl(state);
-            TestAccount entry = (TestAccount) builder.as(new TestAccountFactory.TestAccountFactory_(builder));
+            TestAccount entry = (TestAccount) builder.as(new TestAccountFactory.TestAccountFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

@@ -30,7 +30,7 @@ public class ArmArrayList implements ArmList, RandomAccess, Cloneable, java.io.S
 
         for (ArmState state : stateList) {
             ArmStateBuilder builder = new ArmStateBuilderImpl(state);
-            Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_(builder));
+            Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

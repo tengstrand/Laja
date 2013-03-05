@@ -30,7 +30,7 @@ public class HeadArrayList implements HeadList, RandomAccess, Cloneable, java.io
 
         for (HeadState state : stateList) {
             HeadStateBuilder builder = new HeadStateBuilderImpl(state);
-            Head entry = (Head) builder.as(new HeadFactory.HeadFactory_(builder));
+            Head entry = (Head) builder.as(new HeadFactory.HeadFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

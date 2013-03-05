@@ -30,7 +30,7 @@ public class OwnerHashSet implements OwnerSet, RandomAccess, Cloneable, java.io.
 
         for (OwnerState state : stateSet) {
             OwnerStateBuilder builder = new OwnerStateBuilderImpl(state);
-            Owner entry = (Owner) builder.as(new OwnerFactory.OwnerFactory_(builder));
+            Owner entry = (Owner) builder.as(new OwnerFactory.OwnerFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

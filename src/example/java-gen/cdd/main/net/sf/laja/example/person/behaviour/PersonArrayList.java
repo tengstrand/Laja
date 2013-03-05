@@ -30,7 +30,7 @@ public class PersonArrayList implements PersonList, RandomAccess, Cloneable, jav
 
         for (PersonState state : stateList) {
             PersonStateBuilder builder = new PersonStateBuilderImpl(state);
-            Person entry = (Person) builder.as(new PersonFactory.PersonFactory_(builder));
+            Person entry = (Person) builder.as(new PersonFactory.PersonFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

@@ -34,7 +34,7 @@ public class TestMouthArrayList implements TestMouthList, RandomAccess, Cloneabl
 
         for (MouthState state : stateList) {
             MouthStateBuilder builder = new MouthStateBuilderImpl(state);
-            TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_(builder));
+            TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

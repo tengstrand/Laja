@@ -12,7 +12,7 @@ public class TestAccountEncapsulator implements AccountStateComparable {
     }
 
     public TestAccount asTestAccount() {
-        return (TestAccount)builder.as(new TestAccountFactory.TestAccountFactory_(builder));
+        return (TestAccount)builder.as(new TestAccountFactory.TestAccountFactory_());
     }
 
     public boolean isValid() {

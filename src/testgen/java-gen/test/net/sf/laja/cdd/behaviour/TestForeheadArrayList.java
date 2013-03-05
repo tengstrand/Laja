@@ -30,7 +30,7 @@ public class TestForeheadArrayList implements TestForeheadList, RandomAccess, Cl
 
         for (ForeheadState state : stateList) {
             ForeheadStateBuilder builder = new ForeheadStateBuilderImpl(state);
-            TestForehead entry = (TestForehead) builder.as(new TestForeheadFactory.TestForeheadFactory_(builder));
+            TestForehead entry = (TestForehead) builder.as(new TestForeheadFactory.TestForeheadFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

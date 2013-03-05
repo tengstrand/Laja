@@ -12,7 +12,7 @@ public class LegEncapsulator implements LegStateComparable {
     }
 
     public Leg asLeg() {
-        return (Leg)builder.as(new LegFactory.LegFactory_(builder));
+        return (Leg)builder.as(new LegFactory.LegFactory_());
     }
 
     public boolean isValid() {

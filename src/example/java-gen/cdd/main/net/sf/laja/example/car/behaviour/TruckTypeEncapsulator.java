@@ -12,7 +12,7 @@ public class TruckTypeEncapsulator implements TruckTypeStateComparable {
     }
 
     public TruckType asTruckType() {
-        return (TruckType)builder.as(new TruckTypeFactory.TruckTypeFactory_(builder));
+        return (TruckType)builder.as(new TruckTypeFactory.TruckTypeFactory_());
     }
 
     public boolean isValid() {

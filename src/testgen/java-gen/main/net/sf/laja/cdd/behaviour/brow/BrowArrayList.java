@@ -30,7 +30,7 @@ public class BrowArrayList implements BrowList, RandomAccess, Cloneable, java.io
 
         for (BrowState state : stateList) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_(builder));
+            Brow entry = (Brow) builder.as(new BrowFactory.BrowFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

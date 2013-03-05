@@ -33,11 +33,6 @@ public class CustomerFactory extends CustomerBehaviour {
     }
 
     public static class CustomerFactory_ implements CustomerBehaviourFactory {
-        private final CustomerStateBuilder stateBuilder;
-
-        public CustomerFactory_(CustomerStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(CustomerState state, Object... args) {
             Object result = create_(state, args);
@@ -57,11 +52,6 @@ public class CustomerFactory extends CustomerBehaviour {
     }
 
     public static class CustomerMatcherFactory_ implements CustomerBehaviourFactory {
-        private final CustomerStateBuilder stateBuilder;
-
-        public CustomerMatcherFactory_(CustomerStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(CustomerState state, Object... args) {
             Object result = create_(state, args);

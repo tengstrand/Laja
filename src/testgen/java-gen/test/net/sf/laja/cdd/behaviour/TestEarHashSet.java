@@ -30,7 +30,7 @@ public class TestEarHashSet implements TestEarSet, RandomAccess, Cloneable, java
 
         for (EarState state : stateSet) {
             EarStateBuilder builder = new EarStateBuilderImpl(state);
-            TestEar entry = (TestEar) builder.as(new TestEarFactory.TestEarFactory_(builder));
+            TestEar entry = (TestEar) builder.as(new TestEarFactory.TestEarFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

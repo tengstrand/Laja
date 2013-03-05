@@ -33,6 +33,6 @@ public class OwnerBuilder {
     }
 
     public Owner asOwner() {
-        return (Owner)builder.as(new OwnerFactory.OwnerFactory_(builder));
+        return (Owner)builder.as(new OwnerFactory.OwnerFactory_());
     }
 }

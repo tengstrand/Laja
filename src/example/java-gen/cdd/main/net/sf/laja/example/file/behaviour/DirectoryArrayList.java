@@ -34,7 +34,7 @@ public class DirectoryArrayList implements DirectoryList, RandomAccess, Cloneabl
 
         for (DirectoryState state : stateList) {
             DirectoryStateBuilder builder = new DirectoryStateBuilderImpl(state);
-            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_(builder));
+            Directory entry = (Directory) builder.as(new DirectoryFactory.DirectoryFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

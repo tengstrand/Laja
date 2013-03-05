@@ -30,7 +30,7 @@ public class TerrestrialHashSet implements TerrestrialSet, RandomAccess, Cloneab
 
         for (TerrestrialState state : stateSet) {
             TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
-            Terrestrial entry = (Terrestrial) builder.as(new TerrestrialFactory.TerrestrialFactory_(builder));
+            Terrestrial entry = (Terrestrial) builder.as(new TerrestrialFactory.TerrestrialFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

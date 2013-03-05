@@ -14,7 +14,7 @@ public class BodyMassIndexEncapsulator implements BmiStateComparable {
     }
 
     public BodyMassIndex asBodyMassIndex() {
-        return (BodyMassIndex)builder.as(new BodyMassIndexFactory.BodyMassIndexFactory_(builder));
+        return (BodyMassIndex)builder.as(new BodyMassIndexFactory.BodyMassIndexFactory_());
     }
 
     public boolean isValid() {

@@ -43,6 +43,6 @@ public class AddressBuilder {
     }
 
     public Address asAddress() {
-        return (Address)builder.as(new AddressFactory.AddressFactory_(builder));
+        return (Address)builder.as(new AddressFactory.AddressFactory_());
     }
 }

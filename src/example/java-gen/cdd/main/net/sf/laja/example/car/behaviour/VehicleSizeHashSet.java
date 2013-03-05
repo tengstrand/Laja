@@ -30,7 +30,7 @@ public class VehicleSizeHashSet implements VehicleSizeSet, RandomAccess, Cloneab
 
         for (VehicleSizeState state : stateSet) {
             VehicleSizeStateBuilder builder = new VehicleSizeStateBuilderImpl(state);
-            VehicleSize entry = (VehicleSize) builder.as(new VehicleSizeFactory.VehicleSizeFactory_(builder));
+            VehicleSize entry = (VehicleSize) builder.as(new VehicleSizeFactory.VehicleSizeFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -28,10 +28,10 @@ public class FileBuilder {
     }
 
     public ClosedFile asClosedFile(Directory directory) {
-        return (ClosedFile)builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
+        return (ClosedFile)builder.as(new FileFactory.ClosedFileFactory_(), directory);
     }
 
     public WritableFile asWritableFile(Directory directory, boolean createIfNotExists) {
-        return (WritableFile)builder.as(new FileFactory.WritableFileFactory_(builder), directory, createIfNotExists);
+        return (WritableFile)builder.as(new FileFactory.WritableFileFactory_(), directory, createIfNotExists);
     }
 }

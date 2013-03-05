@@ -30,7 +30,7 @@ public class FleckHashSet implements FleckSet, RandomAccess, Cloneable, java.io.
 
         for (FleckState state : stateSet) {
             FleckStateBuilder builder = new FleckStateBuilderImpl(state);
-            Fleck entry = (Fleck) builder.as(new FleckFactory.FleckFactory_(builder));
+            Fleck entry = (Fleck) builder.as(new FleckFactory.FleckFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

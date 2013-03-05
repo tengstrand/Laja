@@ -30,7 +30,7 @@ public class NoseHashSet implements NoseSet, RandomAccess, Cloneable, java.io.Se
 
         for (NoseState state : stateSet) {
             NoseStateBuilder builder = new NoseStateBuilderImpl(state);
-            Nose entry = (Nose) builder.as(new NoseFactory.NoseFactory_(builder), extraParameter);
+            Nose entry = (Nose) builder.as(new NoseFactory.NoseFactory_(), extraParameter);
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -30,11 +30,6 @@ public class AccountFactory extends AccountBehaviour {
     }
 
     public static class SourceAccountFactory_ implements AccountBehaviourFactory {
-        private final AccountStateBuilder stateBuilder;
-
-        public SourceAccountFactory_(AccountStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(AccountState state, Object... args) {
             Object result = create_(state, args);
@@ -54,11 +49,6 @@ public class AccountFactory extends AccountBehaviour {
     }
 
     public static class DestinationAccountFactory_ implements AccountBehaviourFactory {
-        private final AccountStateBuilder stateBuilder;
-
-        public DestinationAccountFactory_(AccountStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(AccountState state, Object... args) {
             Object result = create_(state, args);

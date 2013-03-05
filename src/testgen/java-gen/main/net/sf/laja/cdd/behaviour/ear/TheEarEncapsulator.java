@@ -12,7 +12,7 @@ public class TheEarEncapsulator implements EarStateComparable {
     }
 
     public TheEar asTheEar() {
-        return (TheEar)builder.as(new TheEarFactory.TheEarFactory_(builder));
+        return (TheEar)builder.as(new TheEarFactory.TheEarFactory_());
     }
 
     public boolean isValid() {

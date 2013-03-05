@@ -48,6 +48,6 @@ public class TruckBuilder {
     }
 
     public Truck asTruck() {
-        return (Truck)builder.as(new TruckFactory.TruckFactory_(builder));
+        return (Truck)builder.as(new TruckFactory.TruckFactory_());
     }
 }

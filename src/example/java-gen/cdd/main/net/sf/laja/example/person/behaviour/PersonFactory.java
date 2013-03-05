@@ -30,11 +30,6 @@ public class PersonFactory extends PersonBehaviour {
     }
 
     public static class PersonFactory_ implements PersonBehaviourFactory {
-        private final PersonStateBuilder stateBuilder;
-
-        public PersonFactory_(PersonStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(PersonState state, Object... args) {
             Object result = create_(state, args);

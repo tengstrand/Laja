@@ -30,7 +30,7 @@ public class HairHashSet implements HairSet, RandomAccess, Cloneable, java.io.Se
 
         for (HairState state : stateSet) {
             HairStateBuilder builder = new HairStateBuilderImpl(state);
-            Hair entry = (Hair) builder.as(new HairFactory.HairFactory_(builder));
+            Hair entry = (Hair) builder.as(new HairFactory.HairFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

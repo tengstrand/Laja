@@ -12,7 +12,7 @@ public class PersonEncapsulator implements PersonStateComparable {
     }
 
     public Person asPerson() {
-        return (Person)builder.as(new PersonFactory.PersonFactory_(builder));
+        return (Person)builder.as(new PersonFactory.PersonFactory_());
     }
 
     public boolean isValid() {

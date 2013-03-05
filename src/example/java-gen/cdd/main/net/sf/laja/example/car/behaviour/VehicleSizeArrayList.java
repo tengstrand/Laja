@@ -30,7 +30,7 @@ public class VehicleSizeArrayList implements VehicleSizeList, RandomAccess, Clon
 
         for (VehicleSizeState state : stateList) {
             VehicleSizeStateBuilder builder = new VehicleSizeStateBuilderImpl(state);
-            VehicleSize entry = (VehicleSize) builder.as(new VehicleSizeFactory.VehicleSizeFactory_(builder));
+            VehicleSize entry = (VehicleSize) builder.as(new VehicleSizeFactory.VehicleSizeFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

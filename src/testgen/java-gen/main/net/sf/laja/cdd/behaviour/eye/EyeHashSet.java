@@ -34,7 +34,7 @@ public class EyeHashSet implements EyeSet, RandomAccess, Cloneable, java.io.Seri
 
         for (EyeState state : stateSet) {
             EyeStateBuilder builder = new EyeStateBuilderImpl(state);
-            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_(builder));
+            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

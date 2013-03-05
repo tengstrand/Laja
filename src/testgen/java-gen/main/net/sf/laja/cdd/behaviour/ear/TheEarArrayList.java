@@ -30,7 +30,7 @@ public class TheEarArrayList implements TheEarList, RandomAccess, Cloneable, jav
 
         for (EarState state : stateList) {
             EarStateBuilder builder = new EarStateBuilderImpl(state);
-            TheEar entry = (TheEar) builder.as(new TheEarFactory.TheEarFactory_(builder));
+            TheEar entry = (TheEar) builder.as(new TheEarFactory.TheEarFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

@@ -30,7 +30,7 @@ public class TestBrowArrayList implements TestBrowList, RandomAccess, Cloneable,
 
         for (BrowState state : stateList) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            TestBrow entry = (TestBrow) builder.as(new TestBrowFactory.TestBrowFactory_(builder));
+            TestBrow entry = (TestBrow) builder.as(new TestBrowFactory.TestBrowFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

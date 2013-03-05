@@ -34,7 +34,7 @@ public class ClosedFileHashSet implements ClosedFileSet, RandomAccess, Cloneable
 
         for (FileState state : stateSet) {
             FileStateBuilder builder = new FileStateBuilderImpl(state);
-            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
+            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(), directory);
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

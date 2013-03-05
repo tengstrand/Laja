@@ -17,7 +17,7 @@ public class TerrestrialEncapsulator implements TerrestrialStateComparable {
     }
 
     public Terrestrial asTerrestrial() {
-        return (Terrestrial)builder.as(new TerrestrialFactory.TerrestrialFactory_(builder));
+        return (Terrestrial)builder.as(new TerrestrialFactory.TerrestrialFactory_());
     }
 
     public TerrestrialEncapsulator withMiddleEye(EyeEncapsulator middleEye) {

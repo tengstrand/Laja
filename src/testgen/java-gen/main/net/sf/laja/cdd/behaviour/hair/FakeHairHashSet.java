@@ -30,7 +30,7 @@ public class FakeHairHashSet implements FakeHairSet, RandomAccess, Cloneable, ja
 
         for (HairState state : stateSet) {
             HairStateBuilder builder = new HairStateBuilderImpl(state);
-            FakeHair entry = (FakeHair) builder.as(new HairFactory.FakeHairFactory_(builder));
+            FakeHair entry = (FakeHair) builder.as(new HairFactory.FakeHairFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -38,6 +38,6 @@ public class PersonBuilder {
     }
 
     public Person asPerson() {
-        return (Person)builder.as(new PersonFactory.PersonFactory_(builder));
+        return (Person)builder.as(new PersonFactory.PersonFactory_());
     }
 }

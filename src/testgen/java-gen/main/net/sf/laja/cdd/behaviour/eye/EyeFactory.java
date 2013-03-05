@@ -31,11 +31,6 @@ public class EyeFactory extends EyeBehaviour {
     }
 
     public static class EyeFactory_ implements EyeBehaviourFactory {
-        private final EyeStateBuilder stateBuilder;
-
-        public EyeFactory_(EyeStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(EyeState state, Object... args) {
             Object result = create_(state, args);

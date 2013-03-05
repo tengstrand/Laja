@@ -30,7 +30,7 @@ public class ForeheadArrayList implements ForeheadList, RandomAccess, Cloneable,
 
         for (ForeheadState state : stateList) {
             ForeheadStateBuilder builder = new ForeheadStateBuilderImpl(state);
-            Forehead entry = (Forehead) builder.as(new ForeheadFactory.ForeheadFactory_(builder));
+            Forehead entry = (Forehead) builder.as(new ForeheadFactory.ForeheadFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

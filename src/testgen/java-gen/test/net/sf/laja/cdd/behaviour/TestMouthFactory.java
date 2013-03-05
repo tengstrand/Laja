@@ -31,11 +31,6 @@ public class TestMouthFactory extends MouthBehaviour {
     }
 
     public static class TestMouthFactory_ implements MouthBehaviourFactory {
-        private final MouthStateBuilder stateBuilder;
-
-        public TestMouthFactory_(MouthStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(MouthState state, Object... args) {
             Object result = create_(state, args);

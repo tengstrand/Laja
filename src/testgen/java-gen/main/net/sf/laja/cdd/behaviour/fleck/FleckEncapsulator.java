@@ -12,7 +12,7 @@ public class FleckEncapsulator implements FleckStateComparable {
     }
 
     public Fleck asFleck() {
-        return (Fleck)builder.as(new FleckFactory.FleckFactory_(builder));
+        return (Fleck)builder.as(new FleckFactory.FleckFactory_());
     }
 
     public boolean isValid() {

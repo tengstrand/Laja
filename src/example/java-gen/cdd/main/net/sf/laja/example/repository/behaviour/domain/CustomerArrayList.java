@@ -42,7 +42,7 @@ public class CustomerArrayList implements CustomerList, RandomAccess, Cloneable,
 
         for (CustomerState state : stateList) {
             CustomerStateBuilder builder = new CustomerStateBuilderImpl(state);
-            Customer entry = (Customer) builder.as(new CustomerFactory.CustomerFactory_(builder));
+            Customer entry = (Customer) builder.as(new CustomerFactory.CustomerFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

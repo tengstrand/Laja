@@ -30,7 +30,7 @@ public class TruckHashSet implements TruckSet, RandomAccess, Cloneable, java.io.
 
         for (TruckState state : stateSet) {
             TruckStateBuilder builder = new TruckStateBuilderImpl(state);
-            Truck entry = (Truck) builder.as(new TruckFactory.TruckFactory_(builder));
+            Truck entry = (Truck) builder.as(new TruckFactory.TruckFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

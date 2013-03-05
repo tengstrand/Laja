@@ -30,7 +30,7 @@ public class BigNoseArrayList implements BigNoseList, RandomAccess, Cloneable, j
 
         for (NoseState state : stateList) {
             NoseStateBuilder builder = new NoseStateBuilderImpl(state);
-            BigNose entry = (BigNose) builder.as(new NoseFactory.BigNoseFactory_(builder));
+            BigNose entry = (BigNose) builder.as(new NoseFactory.BigNoseFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

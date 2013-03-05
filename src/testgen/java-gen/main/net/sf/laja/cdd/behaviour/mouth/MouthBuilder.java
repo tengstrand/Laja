@@ -45,6 +45,6 @@ public class MouthBuilder {
     }
 
     public Mouth asMouth(MouthSize size) {
-        return (Mouth)builder.as(new MouthFactory.MouthFactory_(builder), size);
+        return (Mouth)builder.as(new MouthFactory.MouthFactory_(), size);
     }
 }

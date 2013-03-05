@@ -28,6 +28,6 @@ public class VehicleSizeBuilder {
     }
 
     public VehicleSize asVehicleSize() {
-        return (VehicleSize)builder.as(new VehicleSizeFactory.VehicleSizeFactory_(builder));
+        return (VehicleSize)builder.as(new VehicleSizeFactory.VehicleSizeFactory_());
     }
 }

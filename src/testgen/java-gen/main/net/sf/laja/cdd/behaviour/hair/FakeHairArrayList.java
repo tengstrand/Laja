@@ -30,7 +30,7 @@ public class FakeHairArrayList implements FakeHairList, RandomAccess, Cloneable,
 
         for (HairState state : stateList) {
             HairStateBuilder builder = new HairStateBuilderImpl(state);
-            FakeHair entry = (FakeHair) builder.as(new HairFactory.FakeHairFactory_(builder));
+            FakeHair entry = (FakeHair) builder.as(new HairFactory.FakeHairFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

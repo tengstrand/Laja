@@ -30,7 +30,7 @@ public class AddressHashSet implements AddressSet, RandomAccess, Cloneable, java
 
         for (AddressState state : stateSet) {
             AddressStateBuilder builder = new AddressStateBuilderImpl(state);
-            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_(builder));
+            Address entry = (Address) builder.as(new AddressFactory.AddressFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -30,7 +30,7 @@ public class AnimalHashSet implements AnimalSet, RandomAccess, Cloneable, java.i
 
         for (AnimalState state : stateSet) {
             AnimalStateBuilder builder = new AnimalStateBuilderImpl(state);
-            Animal entry = (Animal) builder.as(new AnimalFactory.AnimalFactory_(builder));
+            Animal entry = (Animal) builder.as(new AnimalFactory.AnimalFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

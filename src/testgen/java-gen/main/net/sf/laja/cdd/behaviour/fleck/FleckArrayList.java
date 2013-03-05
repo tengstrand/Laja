@@ -30,7 +30,7 @@ public class FleckArrayList implements FleckList, RandomAccess, Cloneable, java.
 
         for (FleckState state : stateList) {
             FleckStateBuilder builder = new FleckStateBuilderImpl(state);
-            Fleck entry = (Fleck) builder.as(new FleckFactory.FleckFactory_(builder));
+            Fleck entry = (Fleck) builder.as(new FleckFactory.FleckFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

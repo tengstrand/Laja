@@ -27,7 +27,7 @@ public class TestForeheadEncapsulator implements ForeheadStateComparable {
     }
 
     public TestForehead asTestForehead() {
-        return (TestForehead)builder.as(new TestForeheadFactory.TestForeheadFactory_(builder));
+        return (TestForehead)builder.as(new TestForeheadFactory.TestForeheadFactory_());
     }
 
     public TestForeheadEncapsulator withBrows(BrowEncapsulator... brows) {

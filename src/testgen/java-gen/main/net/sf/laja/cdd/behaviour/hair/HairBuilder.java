@@ -33,10 +33,10 @@ public class HairBuilder {
     }
 
     public Hair asHair() {
-        return (Hair)builder.as(new HairFactory.HairFactory_(builder));
+        return (Hair)builder.as(new HairFactory.HairFactory_());
     }
 
     public FakeHair asFakeHair() {
-        return (FakeHair)builder.as(new HairFactory.FakeHairFactory_(builder));
+        return (FakeHair)builder.as(new HairFactory.FakeHairFactory_());
     }
 }

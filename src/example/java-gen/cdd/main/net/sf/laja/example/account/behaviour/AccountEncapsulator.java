@@ -12,11 +12,11 @@ public class AccountEncapsulator implements AccountStateComparable {
     }
 
     public SourceAccount asSourceAccount() {
-        return (SourceAccount)builder.as(new AccountFactory.SourceAccountFactory_(builder));
+        return (SourceAccount)builder.as(new AccountFactory.SourceAccountFactory_());
     }
 
     public DestinationAccount asDestinationAccount() {
-        return (DestinationAccount)builder.as(new AccountFactory.DestinationAccountFactory_(builder));
+        return (DestinationAccount)builder.as(new AccountFactory.DestinationAccountFactory_());
     }
 
     public boolean isValid() {

@@ -30,7 +30,7 @@ public class MouthArrayList implements MouthList, RandomAccess, Cloneable, java.
 
         for (MouthState state : stateList) {
             MouthStateBuilder builder = new MouthStateBuilderImpl(state);
-            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(builder), size);
+            Mouth entry = (Mouth) builder.as(new MouthFactory.MouthFactory_(), size);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

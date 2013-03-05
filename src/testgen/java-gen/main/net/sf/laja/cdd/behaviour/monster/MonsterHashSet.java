@@ -30,7 +30,7 @@ public class MonsterHashSet implements MonsterSet, RandomAccess, Cloneable, java
 
         for (MonsterState state : stateSet) {
             MonsterStateBuilder builder = new MonsterStateBuilderImpl(state);
-            Monster entry = (Monster) builder.as(new MonsterFactory.MonsterFactory_(builder));
+            Monster entry = (Monster) builder.as(new MonsterFactory.MonsterFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

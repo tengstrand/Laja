@@ -30,7 +30,7 @@ public class BusArrayList implements BusList, RandomAccess, Cloneable, java.io.S
 
         for (BusState state : stateList) {
             BusStateBuilder builder = new BusStateBuilderImpl(state);
-            Bus entry = (Bus) builder.as(new BusFactory.BusFactory_(builder));
+            Bus entry = (Bus) builder.as(new BusFactory.BusFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

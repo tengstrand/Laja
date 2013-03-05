@@ -29,11 +29,6 @@ public class AmigaFactory extends ComputerBehaviour {
     }
 
     public static class AmigaFactory_ implements ComputerBehaviourFactory {
-        private final ComputerStateBuilder stateBuilder;
-
-        public AmigaFactory_(ComputerStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ComputerState state, Object... args) {
             Object result = create_(state, args);

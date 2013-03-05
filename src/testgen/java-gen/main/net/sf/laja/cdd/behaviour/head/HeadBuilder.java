@@ -126,6 +126,6 @@ public class HeadBuilder {
     }
 
     public Head asHead() {
-        return (Head)builder.as(new HeadFactory.HeadFactory_(builder));
+        return (Head)builder.as(new HeadFactory.HeadFactory_());
     }
 }

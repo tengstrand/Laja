@@ -28,6 +28,6 @@ public class AnimalBuilder {
     }
 
     public Animal asAnimal() {
-        return (Animal)builder.as(new AnimalFactory.AnimalFactory_(builder));
+        return (Animal)builder.as(new AnimalFactory.AnimalFactory_());
     }
 }

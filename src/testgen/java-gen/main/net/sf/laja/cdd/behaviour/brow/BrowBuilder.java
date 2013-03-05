@@ -28,10 +28,10 @@ public class BrowBuilder {
     }
 
     public Brow asBrow() {
-        return (Brow)builder.as(new BrowFactory.BrowFactory_(builder));
+        return (Brow)builder.as(new BrowFactory.BrowFactory_());
     }
 
     public BigBrow asBigBrow() {
-        return (BigBrow)builder.as(new BrowFactory.BigBrowFactory_(builder));
+        return (BigBrow)builder.as(new BrowFactory.BigBrowFactory_());
     }
 }

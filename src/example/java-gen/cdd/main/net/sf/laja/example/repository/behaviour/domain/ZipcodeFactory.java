@@ -30,11 +30,6 @@ public class ZipcodeFactory extends ZipcodeBehaviour {
     }
 
     public static class ZipcodeFactory_ implements ZipcodeBehaviourFactory {
-        private final ZipcodeStateBuilder stateBuilder;
-
-        public ZipcodeFactory_(ZipcodeStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ZipcodeState state, Object... args) {
             Object result = create_(state, args);

@@ -30,7 +30,7 @@ public class AnimalArrayList implements AnimalList, RandomAccess, Cloneable, jav
 
         for (AnimalState state : stateList) {
             AnimalStateBuilder builder = new AnimalStateBuilderImpl(state);
-            Animal entry = (Animal) builder.as(new AnimalFactory.AnimalFactory_(builder));
+            Animal entry = (Animal) builder.as(new AnimalFactory.AnimalFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

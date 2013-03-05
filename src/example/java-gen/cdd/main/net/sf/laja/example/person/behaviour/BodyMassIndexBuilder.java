@@ -35,6 +35,6 @@ public class BodyMassIndexBuilder {
     }
 
     public BodyMassIndex asBodyMassIndex() {
-        return (BodyMassIndex)builder.as(new BodyMassIndexFactory.BodyMassIndexFactory_(builder));
+        return (BodyMassIndex)builder.as(new BodyMassIndexFactory.BodyMassIndexFactory_());
     }
 }

@@ -30,11 +30,6 @@ public class ToeFactory extends ToeBehaviour {
     }
 
     public static class ToeFactory_ implements ToeBehaviourFactory {
-        private final ToeStateBuilder stateBuilder;
-
-        public ToeFactory_(ToeStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ToeState state, Object... args) {
             Object result = create_(state, args);

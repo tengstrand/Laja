@@ -30,7 +30,7 @@ public class FootHashSet implements FootSet, RandomAccess, Cloneable, java.io.Se
 
         for (FootState state : stateSet) {
             FootStateBuilder builder = new FootStateBuilderImpl(state);
-            Foot entry = (Foot) builder.as(new FootFactory.FootFactory_(builder));
+            Foot entry = (Foot) builder.as(new FootFactory.FootFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

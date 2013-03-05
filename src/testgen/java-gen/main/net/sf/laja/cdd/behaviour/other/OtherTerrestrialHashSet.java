@@ -30,7 +30,7 @@ public class OtherTerrestrialHashSet implements OtherTerrestrialSet, RandomAcces
 
         for (TerrestrialState state : stateSet) {
             TerrestrialStateBuilder builder = new TerrestrialStateBuilderImpl(state);
-            OtherTerrestrial entry = (OtherTerrestrial) builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_(builder));
+            OtherTerrestrial entry = (OtherTerrestrial) builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

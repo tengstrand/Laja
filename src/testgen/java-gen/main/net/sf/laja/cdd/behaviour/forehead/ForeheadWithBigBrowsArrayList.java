@@ -30,7 +30,7 @@ public class ForeheadWithBigBrowsArrayList implements ForeheadWithBigBrowsList, 
 
         for (ForeheadState state : stateList) {
             ForeheadStateBuilder builder = new ForeheadStateBuilderImpl(state);
-            ForeheadWithBigBrows entry = (ForeheadWithBigBrows) builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_(builder));
+            ForeheadWithBigBrows entry = (ForeheadWithBigBrows) builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

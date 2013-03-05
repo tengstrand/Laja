@@ -33,11 +33,6 @@ public class ForeheadFactory extends ForeheadBehaviour {
     }
 
     public static class ForeheadFactory_ implements ForeheadBehaviourFactory {
-        private final ForeheadStateBuilder stateBuilder;
-
-        public ForeheadFactory_(ForeheadStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ForeheadState state, Object... args) {
             Object result = create_(state, args);
@@ -57,11 +52,6 @@ public class ForeheadFactory extends ForeheadBehaviour {
     }
 
     public static class ForeheadWithBigBrowsFactory_ implements ForeheadBehaviourFactory {
-        private final ForeheadStateBuilder stateBuilder;
-
-        public ForeheadWithBigBrowsFactory_(ForeheadStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ForeheadState state, Object... args) {
             Object result = create_(state, args);

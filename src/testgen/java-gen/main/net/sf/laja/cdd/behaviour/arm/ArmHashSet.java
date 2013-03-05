@@ -30,7 +30,7 @@ public class ArmHashSet implements ArmSet, RandomAccess, Cloneable, java.io.Seri
 
         for (ArmState state : stateSet) {
             ArmStateBuilder builder = new ArmStateBuilderImpl(state);
-            Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_(builder));
+            Arm entry = (Arm) builder.as(new ArmFactory.ArmFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

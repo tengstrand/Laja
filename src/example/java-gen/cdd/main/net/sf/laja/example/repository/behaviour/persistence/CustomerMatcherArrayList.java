@@ -30,7 +30,7 @@ public class CustomerMatcherArrayList implements CustomerMatcherList, RandomAcce
 
         for (CustomerState state : stateList) {
             CustomerStateBuilder builder = new CustomerStateBuilderImpl(state);
-            CustomerMatcher entry = (CustomerMatcher) builder.as(new CustomerFactory.CustomerMatcherFactory_(builder));
+            CustomerMatcher entry = (CustomerMatcher) builder.as(new CustomerFactory.CustomerMatcherFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

@@ -30,11 +30,6 @@ public class FileFactory extends FileBehaviour {
     }
 
     public static class ClosedFileFactory_ implements FileBehaviourFactory {
-        private final FileStateBuilder stateBuilder;
-
-        public ClosedFileFactory_(FileStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(FileState state, Object... args) {
             Object result = create_(state, args);
@@ -56,11 +51,6 @@ public class FileFactory extends FileBehaviour {
     }
 
     public static class WritableFileFactory_ implements FileBehaviourFactory {
-        private final FileStateBuilder stateBuilder;
-
-        public WritableFileFactory_(FileStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(FileState state, Object... args) {
             Object result = create_(state, args);

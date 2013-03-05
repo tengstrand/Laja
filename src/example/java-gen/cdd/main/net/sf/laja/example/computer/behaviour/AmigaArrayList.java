@@ -30,7 +30,7 @@ public class AmigaArrayList implements AmigaList, RandomAccess, Cloneable, java.
 
         for (ComputerState state : stateList) {
             ComputerStateBuilder builder = new ComputerStateBuilderImpl(state);
-            Amiga entry = (Amiga) builder.as(new AmigaFactory.AmigaFactory_(builder), context);
+            Amiga entry = (Amiga) builder.as(new AmigaFactory.AmigaFactory_(), context);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

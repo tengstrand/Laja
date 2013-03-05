@@ -32,11 +32,6 @@ public class DirectoryFactory extends DirectoryBehaviour {
     }
 
     public static class DirectoryFactory_ implements DirectoryBehaviourFactory {
-        private final DirectoryStateBuilder stateBuilder;
-
-        public DirectoryFactory_(DirectoryStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(DirectoryState state, Object... args) {
             Object result = create_(state, args);

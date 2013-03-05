@@ -32,11 +32,6 @@ public class FootFactory extends FootBehaviour {
     }
 
     public static class FootFactory_ implements FootBehaviourFactory {
-        private final FootStateBuilder stateBuilder;
-
-        public FootFactory_(FootStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(FootState state, Object... args) {
             Object result = create_(state, args);

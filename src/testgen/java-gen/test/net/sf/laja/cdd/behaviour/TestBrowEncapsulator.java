@@ -12,7 +12,7 @@ public class TestBrowEncapsulator implements BrowStateComparable {
     }
 
     public TestBrow asTestBrow() {
-        return (TestBrow)builder.as(new TestBrowFactory.TestBrowFactory_(builder));
+        return (TestBrow)builder.as(new TestBrowFactory.TestBrowFactory_());
     }
 
     public boolean isValid() {

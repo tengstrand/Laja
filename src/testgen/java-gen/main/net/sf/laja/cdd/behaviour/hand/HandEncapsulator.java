@@ -12,7 +12,7 @@ public class HandEncapsulator implements HandStateComparable {
     }
 
     public Hand asHand() {
-        return (Hand)builder.as(new HandFactory.HandFactory_(builder));
+        return (Hand)builder.as(new HandFactory.HandFactory_());
     }
 
     public boolean isValid() {

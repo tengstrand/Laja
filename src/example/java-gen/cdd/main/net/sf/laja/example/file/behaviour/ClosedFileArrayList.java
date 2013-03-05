@@ -34,7 +34,7 @@ public class ClosedFileArrayList implements ClosedFileList, RandomAccess, Clonea
 
         for (FileState state : stateList) {
             FileStateBuilder builder = new FileStateBuilderImpl(state);
-            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(builder), directory);
+            ClosedFile entry = (ClosedFile) builder.as(new FileFactory.ClosedFileFactory_(), directory);
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

@@ -35,11 +35,6 @@ public class ArmFactory extends ArmBehaviour {
     }
 
     public static class ArmFactory_ implements ArmBehaviourFactory {
-        private final ArmStateBuilder stateBuilder;
-
-        public ArmFactory_(ArmStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ArmState state, Object... args) {
             Object result = create_(state, args);

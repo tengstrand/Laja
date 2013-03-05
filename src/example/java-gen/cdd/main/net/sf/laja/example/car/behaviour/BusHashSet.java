@@ -30,7 +30,7 @@ public class BusHashSet implements BusSet, RandomAccess, Cloneable, java.io.Seri
 
         for (BusState state : stateSet) {
             BusStateBuilder builder = new BusStateBuilderImpl(state);
-            Bus entry = (Bus) builder.as(new BusFactory.BusFactory_(builder));
+            Bus entry = (Bus) builder.as(new BusFactory.BusFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

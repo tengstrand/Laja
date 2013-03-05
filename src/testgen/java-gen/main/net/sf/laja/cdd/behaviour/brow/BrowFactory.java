@@ -30,11 +30,6 @@ public class BrowFactory extends BrowBehaviour {
     }
 
     public static class BrowFactory_ implements BrowBehaviourFactory {
-        private final BrowStateBuilder stateBuilder;
-
-        public BrowFactory_(BrowStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(BrowState state, Object... args) {
             Object result = create_(state, args);
@@ -54,11 +49,6 @@ public class BrowFactory extends BrowBehaviour {
     }
 
     public static class BigBrowFactory_ implements BrowBehaviourFactory {
-        private final BrowStateBuilder stateBuilder;
-
-        public BigBrowFactory_(BrowStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(BrowState state, Object... args) {
             Object result = create_(state, args);

@@ -46,6 +46,6 @@ public class ArmBuilder {
     }
 
     public Arm asArm() {
-        return (Arm)builder.as(new ArmFactory.ArmFactory_(builder));
+        return (Arm)builder.as(new ArmFactory.ArmFactory_());
     }
 }

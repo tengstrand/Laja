@@ -38,6 +38,6 @@ public class FootBuilder {
     }
 
     public Foot asFoot() {
-        return (Foot)builder.as(new FootFactory.FootFactory_(builder));
+        return (Foot)builder.as(new FootFactory.FootFactory_());
     }
 }

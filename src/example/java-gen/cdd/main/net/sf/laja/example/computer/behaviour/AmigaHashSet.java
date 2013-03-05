@@ -30,7 +30,7 @@ public class AmigaHashSet implements AmigaSet, RandomAccess, Cloneable, java.io.
 
         for (ComputerState state : stateSet) {
             ComputerStateBuilder builder = new ComputerStateBuilderImpl(state);
-            Amiga entry = (Amiga) builder.as(new AmigaFactory.AmigaFactory_(builder), context);
+            Amiga entry = (Amiga) builder.as(new AmigaFactory.AmigaFactory_(), context);
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

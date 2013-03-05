@@ -30,7 +30,7 @@ public class MonsterArrayList implements MonsterList, RandomAccess, Cloneable, j
 
         for (MonsterState state : stateList) {
             MonsterStateBuilder builder = new MonsterStateBuilderImpl(state);
-            Monster entry = (Monster) builder.as(new MonsterFactory.MonsterFactory_(builder));
+            Monster entry = (Monster) builder.as(new MonsterFactory.MonsterFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

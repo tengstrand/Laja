@@ -38,7 +38,7 @@ public class {hashSetClass} implements {setInterface}, RandomAccess, Cloneable, 
 
         for ({stateClass} state : stateSet) {
             {stateBuilderClass} builder = new {stateBuilderImplClass}(state);
-            {entryClass} entry = ({entryClass}) builder.as(new {factoryClass}.{entryClass}Factory_(builder){arguments});
+            {entryClass} entry = ({entryClass}) builder.as(new {factoryClass}.{entryClass}Factory_(){arguments});
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

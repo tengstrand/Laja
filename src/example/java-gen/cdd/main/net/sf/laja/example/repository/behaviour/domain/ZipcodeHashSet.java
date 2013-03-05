@@ -30,7 +30,7 @@ public class ZipcodeHashSet implements ZipcodeSet, RandomAccess, Cloneable, java
 
         for (ZipcodeState state : stateSet) {
             ZipcodeStateBuilder builder = new ZipcodeStateBuilderImpl(state);
-            Zipcode entry = (Zipcode) builder.as(new ZipcodeFactory.ZipcodeFactory_(builder));
+            Zipcode entry = (Zipcode) builder.as(new ZipcodeFactory.ZipcodeFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

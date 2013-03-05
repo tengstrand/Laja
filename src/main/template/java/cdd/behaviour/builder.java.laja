@@ -46,7 +46,7 @@ public class {builderClass} {
     #setArgumentsAndParameters(method, false)
 
     public {method.returnclass} {method.methodName}({parameters}) {
-        return ({method.returnclass})builder.as(new {factoryClass}.{method.returnclass}Factory_(builder){extraArguments});
+        return ({method.returnclass})builder.as(new {factoryClass}.{method.returnclass}Factory_(){extraArguments});
     }
   #end
 }

@@ -30,7 +30,7 @@ public class ForeheadHashSet implements ForeheadSet, RandomAccess, Cloneable, ja
 
         for (ForeheadState state : stateSet) {
             ForeheadStateBuilder builder = new ForeheadStateBuilderImpl(state);
-            Forehead entry = (Forehead) builder.as(new ForeheadFactory.ForeheadFactory_(builder));
+            Forehead entry = (Forehead) builder.as(new ForeheadFactory.ForeheadFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

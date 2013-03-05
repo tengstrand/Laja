@@ -30,7 +30,7 @@ public class NailArrayList implements NailList, RandomAccess, Cloneable, java.io
 
         for (NailState state : stateList) {
             NailStateBuilder builder = new NailStateBuilderImpl(state);
-            Nail entry = (Nail) builder.as(new NailFactory.NailFactory_(builder));
+            Nail entry = (Nail) builder.as(new NailFactory.NailFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

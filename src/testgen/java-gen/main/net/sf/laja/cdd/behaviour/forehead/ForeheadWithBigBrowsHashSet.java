@@ -30,7 +30,7 @@ public class ForeheadWithBigBrowsHashSet implements ForeheadWithBigBrowsSet, Ran
 
         for (ForeheadState state : stateSet) {
             ForeheadStateBuilder builder = new ForeheadStateBuilderImpl(state);
-            ForeheadWithBigBrows entry = (ForeheadWithBigBrows) builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_(builder));
+            ForeheadWithBigBrows entry = (ForeheadWithBigBrows) builder.as(new ForeheadFactory.ForeheadWithBigBrowsFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

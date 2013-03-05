@@ -30,7 +30,7 @@ public class OwnerArrayList implements OwnerList, RandomAccess, Cloneable, java.
 
         for (OwnerState state : stateList) {
             OwnerStateBuilder builder = new OwnerStateBuilderImpl(state);
-            Owner entry = (Owner) builder.as(new OwnerFactory.OwnerFactory_(builder));
+            Owner entry = (Owner) builder.as(new OwnerFactory.OwnerFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

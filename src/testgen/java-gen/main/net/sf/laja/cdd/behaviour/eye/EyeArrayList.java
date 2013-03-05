@@ -34,7 +34,7 @@ public class EyeArrayList implements EyeList, RandomAccess, Cloneable, java.io.S
 
         for (EyeState state : stateList) {
             EyeStateBuilder builder = new EyeStateBuilderImpl(state);
-            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_(builder));
+            Eye entry = (Eye) builder.as(new EyeFactory.EyeFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

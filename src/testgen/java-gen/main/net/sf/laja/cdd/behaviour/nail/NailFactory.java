@@ -30,11 +30,6 @@ public class NailFactory extends NailBehaviour {
     }
 
     public static class NailFactory_ implements NailBehaviourFactory {
-        private final NailStateBuilder stateBuilder;
-
-        public NailFactory_(NailStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(NailState state, Object... args) {
             Object result = create_(state, args);

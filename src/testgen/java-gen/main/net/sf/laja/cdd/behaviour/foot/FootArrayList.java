@@ -30,7 +30,7 @@ public class FootArrayList implements FootList, RandomAccess, Cloneable, java.io
 
         for (FootState state : stateList) {
             FootStateBuilder builder = new FootStateBuilderImpl(state);
-            Foot entry = (Foot) builder.as(new FootFactory.FootFactory_(builder));
+            Foot entry = (Foot) builder.as(new FootFactory.FootFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

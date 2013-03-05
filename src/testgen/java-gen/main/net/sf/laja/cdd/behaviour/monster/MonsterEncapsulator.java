@@ -16,7 +16,7 @@ public class MonsterEncapsulator implements MonsterStateComparable {
     }
 
     public Monster asMonster() {
-        return (Monster)builder.as(new MonsterFactory.MonsterFactory_(builder));
+        return (Monster)builder.as(new MonsterFactory.MonsterFactory_());
     }
 
     public MonsterEncapsulator withLength(int length) {

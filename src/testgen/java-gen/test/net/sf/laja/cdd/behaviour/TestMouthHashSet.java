@@ -34,7 +34,7 @@ public class TestMouthHashSet implements TestMouthSet, RandomAccess, Cloneable, 
 
         for (MouthState state : stateSet) {
             MouthStateBuilder builder = new MouthStateBuilderImpl(state);
-            TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_(builder));
+            TestMouth entry = (TestMouth) builder.as(new TestMouthFactory.TestMouthFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

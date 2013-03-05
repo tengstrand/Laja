@@ -19,7 +19,7 @@ public class ArmEncapsulator implements ArmStateComparable {
     }
 
     public Arm asArm() {
-        return (Arm)builder.as(new ArmFactory.ArmFactory_(builder));
+        return (Arm)builder.as(new ArmFactory.ArmFactory_());
     }
 
     public ArmEncapsulator withArmLength(int armLength) {

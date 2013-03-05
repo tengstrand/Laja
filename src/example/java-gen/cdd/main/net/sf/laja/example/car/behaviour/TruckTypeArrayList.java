@@ -30,7 +30,7 @@ public class TruckTypeArrayList implements TruckTypeList, RandomAccess, Cloneabl
 
         for (TruckTypeState state : stateList) {
             TruckTypeStateBuilder builder = new TruckTypeStateBuilderImpl(state);
-            TruckType entry = (TruckType) builder.as(new TruckTypeFactory.TruckTypeFactory_(builder));
+            TruckType entry = (TruckType) builder.as(new TruckTypeFactory.TruckTypeFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

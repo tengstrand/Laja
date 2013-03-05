@@ -30,7 +30,7 @@ public class AtariFalcon030ArrayList implements AtariFalcon030List, RandomAccess
 
         for (ComputerState state : stateList) {
             ComputerStateBuilder builder = new ComputerStateBuilderImpl(state);
-            AtariFalcon030 entry = (AtariFalcon030) builder.as(new AtariFactory.AtariFalcon030Factory_(builder));
+            AtariFalcon030 entry = (AtariFalcon030) builder.as(new AtariFactory.AtariFalcon030Factory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

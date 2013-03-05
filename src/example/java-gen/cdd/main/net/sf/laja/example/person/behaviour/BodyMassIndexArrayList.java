@@ -30,7 +30,7 @@ public class BodyMassIndexArrayList implements BodyMassIndexList, RandomAccess, 
 
         for (BmiState state : stateList) {
             BmiStateBuilder builder = new BmiStateBuilderImpl(state);
-            BodyMassIndex entry = (BodyMassIndex) builder.as(new BodyMassIndexFactory.BodyMassIndexFactory_(builder));
+            BodyMassIndex entry = (BodyMassIndex) builder.as(new BodyMassIndexFactory.BodyMassIndexFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

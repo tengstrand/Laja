@@ -48,6 +48,6 @@ public class AmigaBuilder {
     }
 
     public Amiga asAmiga(Configuration context) {
-        return (Amiga)builder.as(new AmigaFactory.AmigaFactory_(builder), context);
+        return (Amiga)builder.as(new AmigaFactory.AmigaFactory_(), context);
     }
 }

@@ -30,7 +30,7 @@ public class BigBrowArrayList implements BigBrowList, RandomAccess, Cloneable, j
 
         for (BrowState state : stateList) {
             BrowStateBuilder builder = new BrowStateBuilderImpl(state);
-            BigBrow entry = (BigBrow) builder.as(new BrowFactory.BigBrowFactory_(builder));
+            BigBrow entry = (BigBrow) builder.as(new BrowFactory.BigBrowFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

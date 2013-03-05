@@ -27,7 +27,7 @@ public class HeadEncapsulator implements HeadStateComparable {
     }
 
     public Head asHead() {
-        return (Head)builder.as(new HeadFactory.HeadFactory_(builder));
+        return (Head)builder.as(new HeadFactory.HeadFactory_());
     }
 
     public HeadEncapsulator withMidEye(EyeEncapsulator midEye) {

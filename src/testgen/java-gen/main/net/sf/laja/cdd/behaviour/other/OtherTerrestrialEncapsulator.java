@@ -14,7 +14,7 @@ public class OtherTerrestrialEncapsulator implements TerrestrialStateComparable 
     }
 
     public OtherTerrestrial asOtherTerrestrial() {
-        return (OtherTerrestrial)builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_(builder));
+        return (OtherTerrestrial)builder.as(new OtherTerrestrialFactory.OtherTerrestrialFactory_());
     }
 
     public OtherTerrestrialEncapsulator withMiddleEye(EyeEncapsulator middleEye) {

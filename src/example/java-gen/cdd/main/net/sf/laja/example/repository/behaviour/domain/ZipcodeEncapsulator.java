@@ -12,7 +12,7 @@ public class ZipcodeEncapsulator implements ZipcodeStateComparable {
     }
 
     public Zipcode asZipcode() {
-        return (Zipcode)builder.as(new ZipcodeFactory.ZipcodeFactory_(builder));
+        return (Zipcode)builder.as(new ZipcodeFactory.ZipcodeFactory_());
     }
 
     public boolean isValid() {

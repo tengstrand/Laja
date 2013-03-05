@@ -30,7 +30,7 @@ public class LegHashSet implements LegSet, RandomAccess, Cloneable, java.io.Seri
 
         for (LegState state : stateSet) {
             LegStateBuilder builder = new LegStateBuilderImpl(state);
-            Leg entry = (Leg) builder.as(new LegFactory.LegFactory_(builder));
+            Leg entry = (Leg) builder.as(new LegFactory.LegFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

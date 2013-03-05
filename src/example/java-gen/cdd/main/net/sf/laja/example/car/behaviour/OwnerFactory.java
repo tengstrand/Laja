@@ -30,11 +30,6 @@ public class OwnerFactory extends OwnerBehaviour {
     }
 
     public static class OwnerFactory_ implements OwnerBehaviourFactory {
-        private final OwnerStateBuilder stateBuilder;
-
-        public OwnerFactory_(OwnerStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(OwnerState state, Object... args) {
             Object result = create_(state, args);

@@ -30,11 +30,6 @@ public class AtariFactory extends ComputerBehaviour {
     }
 
     public static class AtariSTFactory_ implements ComputerBehaviourFactory {
-        private final ComputerStateBuilder stateBuilder;
-
-        public AtariSTFactory_(ComputerStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ComputerState state, Object... args) {
             Object result = create_(state, args);
@@ -54,11 +49,6 @@ public class AtariFactory extends ComputerBehaviour {
     }
 
     public static class AtariFalcon030Factory_ implements ComputerBehaviourFactory {
-        private final ComputerStateBuilder stateBuilder;
-
-        public AtariFalcon030Factory_(ComputerStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(ComputerState state, Object... args) {
             Object result = create_(state, args);

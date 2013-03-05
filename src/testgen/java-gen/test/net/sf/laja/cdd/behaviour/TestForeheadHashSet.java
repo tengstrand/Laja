@@ -30,7 +30,7 @@ public class TestForeheadHashSet implements TestForeheadSet, RandomAccess, Clone
 
         for (ForeheadState state : stateSet) {
             ForeheadStateBuilder builder = new ForeheadStateBuilderImpl(state);
-            TestForehead entry = (TestForehead) builder.as(new TestForeheadFactory.TestForeheadFactory_(builder));
+            TestForehead entry = (TestForehead) builder.as(new TestForeheadFactory.TestForeheadFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

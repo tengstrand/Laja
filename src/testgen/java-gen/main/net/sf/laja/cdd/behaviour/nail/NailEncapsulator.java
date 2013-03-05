@@ -12,7 +12,7 @@ public class NailEncapsulator implements NailStateComparable {
     }
 
     public Nail asNail() {
-        return (Nail)builder.as(new NailFactory.NailFactory_(builder));
+        return (Nail)builder.as(new NailFactory.NailFactory_());
     }
 
     public boolean isValid() {

@@ -28,6 +28,6 @@ public class ZipcodeBuilder {
     }
 
     public Zipcode asZipcode() {
-        return (Zipcode)builder.as(new ZipcodeFactory.ZipcodeFactory_(builder));
+        return (Zipcode)builder.as(new ZipcodeFactory.ZipcodeFactory_());
     }
 }

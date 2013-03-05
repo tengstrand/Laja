@@ -42,7 +42,7 @@ public class CustomerHashSet implements CustomerSet, RandomAccess, Cloneable, ja
 
         for (CustomerState state : stateSet) {
             CustomerStateBuilder builder = new CustomerStateBuilderImpl(state);
-            Customer entry = (Customer) builder.as(new CustomerFactory.CustomerFactory_(builder));
+            Customer entry = (Customer) builder.as(new CustomerFactory.CustomerFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

@@ -30,7 +30,7 @@ public class HairArrayList implements HairList, RandomAccess, Cloneable, java.io
 
         for (HairState state : stateList) {
             HairStateBuilder builder = new HairStateBuilderImpl(state);
-            Hair entry = (Hair) builder.as(new HairFactory.HairFactory_(builder));
+            Hair entry = (Hair) builder.as(new HairFactory.HairFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

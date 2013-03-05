@@ -13,7 +13,7 @@ public class TestMouthEncapsulator implements MouthStateComparable {
     }
 
     public TestMouth asTestMouth() {
-        return (TestMouth)builder.as(new TestMouthFactory.TestMouthFactory_(builder));
+        return (TestMouth)builder.as(new TestMouthFactory.TestMouthFactory_());
     }
 
     public TestMouthEncapsulator withNumberOfTeeth(int numberOfTeeth) {

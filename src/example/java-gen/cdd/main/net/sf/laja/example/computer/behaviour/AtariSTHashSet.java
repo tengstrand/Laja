@@ -30,7 +30,7 @@ public class AtariSTHashSet implements AtariSTSet, RandomAccess, Cloneable, java
 
         for (ComputerState state : stateSet) {
             ComputerStateBuilder builder = new ComputerStateBuilderImpl(state);
-            AtariST entry = (AtariST) builder.as(new AtariFactory.AtariSTFactory_(builder));
+            AtariST entry = (AtariST) builder.as(new AtariFactory.AtariSTFactory_());
             elements.add(entry);
         }
         this.set = new StateInSyncSet(stateSet, elements);

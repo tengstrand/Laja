@@ -30,7 +30,7 @@ public class HandArrayList implements HandList, RandomAccess, Cloneable, java.io
 
         for (HandState state : stateList) {
             HandStateBuilder builder = new HandStateBuilderImpl(state);
-            Hand entry = (Hand) builder.as(new HandFactory.HandFactory_(builder));
+            Hand entry = (Hand) builder.as(new HandFactory.HandFactory_());
             elements.add(entry);
         }
         this.list = new StateInSyncList(stateList, elements);

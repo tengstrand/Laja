@@ -12,7 +12,7 @@ public class AddressEncapsulator implements AddressStateComparable {
     }
 
     public Address asAddress() {
-        return (Address)builder.as(new AddressFactory.AddressFactory_(builder));
+        return (Address)builder.as(new AddressFactory.AddressFactory_());
     }
 
     public AddressEncapsulator withAddressId(int addressId) {

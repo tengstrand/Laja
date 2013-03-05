@@ -38,6 +38,6 @@ public class BusBuilder {
     }
 
     public Bus asBus() {
-        return (Bus)builder.as(new BusFactory.BusFactory_(builder));
+        return (Bus)builder.as(new BusFactory.BusFactory_());
     }
 }

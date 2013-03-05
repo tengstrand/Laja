@@ -12,11 +12,11 @@ public class BrowEncapsulator implements BrowStateComparable {
     }
 
     public Brow asBrow() {
-        return (Brow)builder.as(new BrowFactory.BrowFactory_(builder));
+        return (Brow)builder.as(new BrowFactory.BrowFactory_());
     }
 
     public BigBrow asBigBrow() {
-        return (BigBrow)builder.as(new BrowFactory.BigBrowFactory_(builder));
+        return (BigBrow)builder.as(new BrowFactory.BigBrowFactory_());
     }
 
     public boolean isValid() {

@@ -30,11 +30,6 @@ public class TestEarFactory extends EarBehaviour {
     }
 
     public static class TestEarFactory_ implements EarBehaviourFactory {
-        private final EarStateBuilder stateBuilder;
-
-        public TestEarFactory_(EarStateBuilder stateBuilder) {
-            this.stateBuilder = stateBuilder;
-        }
 
         public Object create(EarState state, Object... args) {
             Object result = create_(state, args);
