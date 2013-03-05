@@ -23,12 +23,12 @@ public class HeadTest {
                 .leftEye(Eye.eyeWeightInGrams(50).color("1"))
                 .rightEye(Eye.eyeWeightInGrams(51).color("2"))
                 .noses(noses)
-                .forehead(Forehead.create())
+                .forehead(Forehead.brow(Brow.area(1)))
                 .a(true).b((byte) 1).c((short) 2).d('a').e(3).f(4).g((float) 5.0).h(6.0)
                 .mouths(MouthFactory.width(10).height(5).color("red")).asHead();
 
         System.out.println(head);
     }
 
-    Forehead forehead = Forehead.create().withBrows(Brow.area(200)).asForehead();
+    Forehead forehead = Forehead.brow(Brow.area(10)).withBrows(Brow.area(200)).asForehead();
 }

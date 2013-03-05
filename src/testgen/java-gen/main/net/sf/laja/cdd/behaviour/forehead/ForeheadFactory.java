@@ -1,14 +1,15 @@
 package net.sf.laja.cdd.behaviour.forehead;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.state.forehead.*;
-import java.util.Arrays;
-import net.sf.laja.cdd.behaviour.brow.Brow;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
+import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
 import net.sf.laja.cdd.behaviour.brow.BrowList;
+import net.sf.laja.cdd.state.forehead.*;
+import net.sf.laja.cdd.state.forehead.ForeheadState;
 
 public class ForeheadFactory extends ForeheadBehaviour {
 
@@ -16,8 +17,8 @@ public class ForeheadFactory extends ForeheadBehaviour {
         super(state);
     }
 
-    public static ForeheadEncapsulator create() {
-        return new ForeheadCreator().create();
+    public static ForeheadEncapsulator brow(BrowEncapsulator brow) {
+        return new ForeheadCreator().new Brow_().brow(brow);
     }
 
     public static ForeheadBuilder build() {

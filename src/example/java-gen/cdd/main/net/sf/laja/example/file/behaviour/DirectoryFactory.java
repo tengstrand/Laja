@@ -1,12 +1,12 @@
 package net.sf.laja.example.file.behaviour;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.example.file.state.*;
-import java.util.Arrays;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import net.sf.laja.example.file.behaviour.text.TextDirectory;
+import net.sf.laja.example.file.state.*;
 import net.sf.laja.example.file.state.DirectoryState;
 
 public class DirectoryFactory extends DirectoryBehaviour {

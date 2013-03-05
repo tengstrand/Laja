@@ -1,6 +1,6 @@
 
 #macro imports()
-  #set (imports = new java.util.HashSet())
+  #set (imports = new java.util.TreeSet())
   #foreach (importstatement in behaviour.imports)
     #imports.add(importstatement.statement)
   #end
@@ -9,6 +9,10 @@
   #imports.add("import java.util.Arrays;")
   #imports.add("import java.util.Iterator;")
   #imports.add("import java.util.List;")
+  #if (firstChainedAttribute != null && firstChainedAttribute.isState)
+    #set (b = behaviours.get(firstChainedAttribute.cleanedStateType))
+    #imports.add("import {b.packagename}.{firstChainedAttribute.encapsulator};")
+  #end
   #foreach (importstatement in imports)
 {importstatement}
   #end
@@ -22,7 +26,6 @@ public class {factoryClass} extends {stateBehaviourClass} {
         super(state);
     }
 
-  #initChainedCreator(template, true)
   #if (firstChainedAttribute == null)
     public static {encapsulatorClass} create() {
         return new {creatorClass}().create();
@@ -96,8 +99,9 @@ public class {factoryClass} extends {stateBehaviourClass} {
 #macro factoryContent()
 package {behaviour.packagename};
 
-    #imports()
-    #class()
+  #initChainedCreator(template, true)
+  #imports()
+  #class()
 #end
 
 #if (behaviour.isFactory)

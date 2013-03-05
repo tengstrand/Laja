@@ -1,10 +1,10 @@
 package net.sf.laja.example.car.behaviour;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.example.car.state.*;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.example.car.state.*;
 import net.sf.laja.example.car.state.TruckTypeState;
 
 public class TruckTypeFactory extends TruckTypeBehaviour {

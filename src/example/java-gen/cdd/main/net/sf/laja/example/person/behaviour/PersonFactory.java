@@ -1,10 +1,10 @@
 package net.sf.laja.example.person.behaviour;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.Arrays;
-import net.sf.laja.example.person.state.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.example.person.state.*;
 import net.sf.laja.example.person.state.PersonState;
 
 public class PersonFactory extends PersonBehaviour {

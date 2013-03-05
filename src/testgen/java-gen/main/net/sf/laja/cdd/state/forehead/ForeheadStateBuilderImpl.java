@@ -1,6 +1,8 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.Certificate;
+import net.sf.laja.cdd.state.brow.BrowStateBuilder;
+import net.sf.laja.cdd.state.brow.BrowStateBuilderImpl;
 import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
 import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 
@@ -13,6 +15,7 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
     private Object encapsulator;
     private ForeheadState state;
     private final Certificate certificate;
+    private BrowStateBuilder browStateBuilder;
     private BrowStateListBuilder browsStateListBuilder;
     private EarStateSetBuilder earsStateSetBuilder;
 
@@ -31,12 +34,23 @@ public class ForeheadStateBuilderImpl implements ForeheadStateBuilder {
         this.encapsulator = encapsulator;
     }
 
+    public void withBrow(BrowStateBuilder brow) {
+        state.setBrow(brow.getBrowState(certificate), encapsulator);
+    }
+
     public void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder) {
         state.setBrows(listBuilder.getStateList(certificate), encapsulator);
     }
 
     public void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder listBuilder) {
         state.setEars(listBuilder.getStateSet(certificate), encapsulator);
+    }
+
+    public BrowStateBuilder getBrowStateBuilder() {
+        if (browStateBuilder == null) {
+            browStateBuilder = new BrowStateBuilderImpl(state.getBrow());
+        }
+        return browStateBuilder;
     }
 
     public BrowStateListBuilder getBrowsStateListBuilder() {

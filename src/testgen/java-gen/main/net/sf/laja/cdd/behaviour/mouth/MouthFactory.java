@@ -1,13 +1,13 @@
 package net.sf.laja.cdd.behaviour.mouth;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.cdd.state.mouth.*;
+import net.sf.laja.cdd.state.mouth.MouthBehaviour;
 import net.sf.laja.cdd.state.mouth.MouthState;
 import net.sf.laja.cdd.state.mouth.MouthStateBuilder;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.mouth.MouthBehaviour;
-import java.util.ArrayList;
-import net.sf.laja.cdd.state.mouth.*;
 
 public class MouthFactory extends MouthBehaviour {
 

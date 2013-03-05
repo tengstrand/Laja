@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.Certificate;
+import net.sf.laja.cdd.state.brow.BrowState;
 import net.sf.laja.cdd.state.brow.BrowStateArrayList;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateHashSet;
@@ -12,6 +13,7 @@ import net.sf.laja.cdd.state.ear.EarStateSet;
  *   http://laja.tengstrand.nu
  */
 public class ForeheadStateImpl implements ForeheadState {
+    protected BrowState brow;
     protected BrowStateList brows; // (optional)
     protected EarStateSet ears; // (optional)
 
@@ -51,14 +53,21 @@ public class ForeheadStateImpl implements ForeheadState {
     }
 
     private boolean isValid(boolean encapsulated) {
+        if ((brow == null || !brow.isValid())
+                || (brows != null && !brows.isValid())
+                || (ears != null && !ears.isValid())) {
+            return false;
+        }
         return true;
     }
 
     // Getters
+    public BrowState getBrow() { return brow; }
     public BrowStateList getBrows() { return brows; }
     public EarStateSet getEars() { return ears; }
 
     // Setters
+    public void setBrow(BrowState brow, Object mutator) { checkMutator(mutator); this.brow = brow; }
     public void setBrows(BrowStateList brows, Object mutator) { checkMutator(mutator); this.brows.clear(); this.brows.addAll(brows); }
     public void setEars(EarStateSet ears, Object mutator) { checkMutator(mutator); this.ears.clear(); this.ears.addAll(ears); }
 
@@ -90,6 +99,7 @@ public class ForeheadStateImpl implements ForeheadState {
 
         ForeheadStateImpl state = (ForeheadStateImpl)value;
 
+        if (brow != null ? !brow.equals(state.getBrow()) : state.getBrow() != null) return false;
         if (brows != null ? !brows.equals(state.getBrows()) : state.getBrows() != null) return false;
         if (ears != null ? !ears.equals(state.getEars()) : state.getEars() != null) return false;
 
@@ -98,12 +108,15 @@ public class ForeheadStateImpl implements ForeheadState {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int result = brow != null ? brow.hashCode() : 0;
+
+        return result;
     }
 
     @Override
     public String toString() {
-        return "{brows=" + brows +
+        return "{brow=" + brow +
+                ", brows=" + brows +
                 ", ears=" + ears + "}";
     }
 }

@@ -1,11 +1,11 @@
 package net.sf.laja.cdd.behaviour.animal;
 
-import java.util.List;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import net.sf.laja.cdd.state.animal.*;
 import net.sf.laja.cdd.state.animal.AnimalState;
-import java.util.ArrayList;
 
 public class AnimalFactory extends AnimalBehaviour {
 

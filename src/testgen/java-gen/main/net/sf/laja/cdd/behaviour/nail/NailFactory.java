@@ -1,11 +1,11 @@
 package net.sf.laja.cdd.behaviour.nail;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.state.nail.NailState;
-import net.sf.laja.cdd.state.nail.*;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.cdd.state.nail.*;
+import net.sf.laja.cdd.state.nail.NailState;
 
 public class NailFactory extends NailBehaviour {
 

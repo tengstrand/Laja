@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.Certificate;
+import net.sf.laja.cdd.state.brow.BrowStateBuilder;
 import net.sf.laja.cdd.state.brow.BrowStateListBuilder;
 import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
 
@@ -10,8 +11,10 @@ import net.sf.laja.cdd.state.ear.EarStateSetBuilder;
  *   http://laja.tengstrand.nu
  */
 public interface ForeheadStateBuilder {
+    void withBrow(BrowStateBuilder brow);
     void withBrows(net.sf.laja.cdd.state.brow.BrowStateListBuilder listBuilder);
     void withEars(net.sf.laja.cdd.state.ear.EarStateSetBuilder setBuilder);
+    BrowStateBuilder getBrowStateBuilder();
     BrowStateListBuilder getBrowsStateListBuilder();
     EarStateSetBuilder getEarsStateSetBuilder();
     boolean isValid();

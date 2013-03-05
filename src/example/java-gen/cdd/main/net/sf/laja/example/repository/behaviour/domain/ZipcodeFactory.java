@@ -1,11 +1,11 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import net.sf.laja.example.repository.state.*;
 import net.sf.laja.example.repository.state.ZipcodeState;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 public class ZipcodeFactory extends ZipcodeBehaviour {
 

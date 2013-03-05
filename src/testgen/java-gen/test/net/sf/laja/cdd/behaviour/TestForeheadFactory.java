@@ -1,18 +1,19 @@
 package net.sf.laja.cdd.behaviour;
 
-import java.util.List;
-import net.sf.laja.cdd.state.forehead.*;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.ear.EarState;
 import java.util.ArrayList;
-import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
+import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
+import net.sf.laja.cdd.behaviour.ear.TheEar;
 import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
 import net.sf.laja.cdd.behaviour.ear.TheEarSet;
+import net.sf.laja.cdd.state.ear.EarState;
+import net.sf.laja.cdd.state.forehead.*;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
-import net.sf.laja.cdd.behaviour.ear.TheEar;
-import java.util.HashSet;
 
 public class TestForeheadFactory extends ForeheadBehaviour {
 
@@ -20,8 +21,8 @@ public class TestForeheadFactory extends ForeheadBehaviour {
         super(state);
     }
 
-    public static TestForeheadEncapsulator create() {
-        return new TestForeheadCreator().create();
+    public static TestForeheadEncapsulator brow(BrowEncapsulator brow) {
+        return new TestForeheadCreator().new Brow_().brow(brow);
     }
 
     public static TestForeheadBuilder build() {

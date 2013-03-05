@@ -1,12 +1,12 @@
 package net.sf.laja.cdd.behaviour.eye;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.state.eye.EyeState;
-import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.cdd.behaviour.scaryeye.ScaryEye;
 import net.sf.laja.cdd.state.eye.*;
+import net.sf.laja.cdd.state.eye.EyeState;
 
 public class EyeFactory extends EyeBehaviour {
 

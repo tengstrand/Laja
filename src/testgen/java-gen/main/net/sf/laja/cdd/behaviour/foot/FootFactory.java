@@ -1,12 +1,12 @@
 package net.sf.laja.cdd.behaviour.foot;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.foot.*;
-import net.sf.laja.cdd.behaviour.toe.ToeList;
-import net.sf.laja.cdd.behaviour.toe.ToeArrayList;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.cdd.behaviour.toe.ToeArrayList;
+import net.sf.laja.cdd.behaviour.toe.ToeList;
+import net.sf.laja.cdd.state.foot.*;
 import net.sf.laja.cdd.state.foot.FootState;
 
 public class FootFactory extends FootBehaviour {

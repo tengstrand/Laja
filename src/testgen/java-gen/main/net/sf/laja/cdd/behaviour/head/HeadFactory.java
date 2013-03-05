@@ -1,16 +1,16 @@
 package net.sf.laja.cdd.behaviour.head;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.cdd.behaviour.mouth.MouthSize;
-import net.sf.laja.cdd.state.head.HeadStateBuilder;
-import net.sf.laja.cdd.behaviour.eye.Eye;
-import java.util.Arrays;
-import net.sf.laja.cdd.state.head.HeadState;
-import net.sf.laja.cdd.behaviour.mouth.MouthList;
-import net.sf.laja.cdd.state.head.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.cdd.behaviour.eye.Eye;
 import net.sf.laja.cdd.behaviour.mouth.MouthArrayList;
+import net.sf.laja.cdd.behaviour.mouth.MouthList;
+import net.sf.laja.cdd.behaviour.mouth.MouthSize;
+import net.sf.laja.cdd.state.head.*;
+import net.sf.laja.cdd.state.head.HeadState;
+import net.sf.laja.cdd.state.head.HeadStateBuilder;
 
 public class HeadFactory extends HeadBehaviour {
 

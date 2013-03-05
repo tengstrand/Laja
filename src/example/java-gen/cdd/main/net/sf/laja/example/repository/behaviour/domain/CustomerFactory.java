@@ -1,14 +1,14 @@
 package net.sf.laja.example.repository.behaviour.domain;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
-import net.sf.laja.example.repository.state.*;
-import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
-import java.util.Arrays;
-import net.sf.laja.example.repository.state.CustomerState;
-import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
+import net.sf.laja.example.repository.behaviour.persistence.CustomerInDb;
+import net.sf.laja.example.repository.behaviour.persistence.CustomerMatcher;
+import net.sf.laja.example.repository.state.*;
+import net.sf.laja.example.repository.state.CustomerState;
 
 public class CustomerFactory extends CustomerBehaviour {
 

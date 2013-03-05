@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.state.forehead;
 
 import net.sf.laja.cdd.state.Certificate;
+import net.sf.laja.cdd.state.brow.BrowState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 
@@ -10,6 +11,9 @@ import net.sf.laja.cdd.state.ear.EarStateSet;
  *   http://laja.tengstrand.nu
  */
 public interface ForeheadState {
+    BrowState getBrow();
+    void setBrow(BrowState brow, Object mutator);
+
     BrowStateList getBrows(); // (optional)
     void setBrows(BrowStateList brows, Object mutator);
 

@@ -1,10 +1,10 @@
 package net.sf.laja.example.computer.behaviour;
 
-import java.util.List;
-import java.util.Iterator;
-import net.sf.laja.example.computer.state.*;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import net.sf.laja.example.computer.state.*;
 
 public class AmigaFactory extends ComputerBehaviour {
 

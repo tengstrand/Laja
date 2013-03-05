@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import net.sf.laja.cdd.state.brow.BrowState;
 import net.sf.laja.cdd.state.brow.BrowStateList;
 import net.sf.laja.cdd.state.ear.EarStateSet;
 import net.sf.laja.cdd.behaviour.brow.BrowBuilder;
@@ -31,6 +32,11 @@ public class TestForeheadBuilder {
 
     public TestForeheadBuilder(ForeheadState state, Object encapsulator) {
         builder = new ForeheadStateBuilderImpl(state, encapsulator);
+    }
+
+    public TestForeheadBuilder withBrow(BrowBuilder brow) {
+        builder.withBrow(brow.builder);
+        return this;
     }
 
     public TestForeheadBuilder withBrows(BrowListEncapsulator brows) {

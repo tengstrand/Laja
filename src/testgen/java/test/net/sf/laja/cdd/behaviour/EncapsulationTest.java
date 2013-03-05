@@ -68,7 +68,7 @@ public class EncapsulationTest {
 
     @Test
     public void shouldBePossibleToMutateEncapsulatedStateListFromCurrentContext() {
-        Forehead forehead = Forehead.create().withBrows(Brow.area(1)).asForehead();
+        Forehead forehead = Forehead.brow(Brow.area(1)).withBrows(Brow.area(1)).asForehead();
 
         // Switch context.
         ForeheadWithBigBrows foreheadWithBigBrows = forehead.asForeheadWithBigBrows();
@@ -79,7 +79,7 @@ public class EncapsulationTest {
 
     @Test (expected = IllegalStateException.class)
     public void shouldNotBePossibleToMutateEncapsulatedStateListFromAnotherContext() {
-        Forehead forehead = Forehead.create().withBrows(Brow.area(1)).asForehead();
+        Forehead forehead = Forehead.brow(Brow.area(1)).withBrows(Brow.area(1)).asForehead();
 
         // Switch context.
         forehead.asForeheadWithBigBrows();

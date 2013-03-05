@@ -1,11 +1,11 @@
 package net.sf.laja.cdd.behaviour.toe;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import net.sf.laja.cdd.state.toe.*;
 import net.sf.laja.cdd.state.toe.ToeState;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 public class ToeFactory extends ToeBehaviour {
 

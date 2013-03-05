@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.behaviour;
 
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.ear.TheEar;
 import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
@@ -67,6 +68,6 @@ public class TestForehead extends TestForeheadFactory {
     }
 
     public void test() {
-        TestForehead.create().withEars(TheEar.weight(1)).asTestForehead();
+        TestForehead.brow(Brow.area(1)).withEars(TheEar.weight(1)).asTestForehead();
     }
 }
