@@ -66,14 +66,6 @@ public class EncapsulationTest {
         hair.mutate();
     }
 
-    public void shouldNotBePossibleToMutateUnencapsulatedStateListFromAnotherContext() {
-        HairList hairs = Hair.createList(Hair.length(1).color("red")).asHairList();
-
-        hairs.asFakeHairList();
-
-        hairs.add(Hair.length(2).color("black").asHair());
-    }
-
     @Test
     public void shouldBePossibleToMutateEncapsulatedStateListFromCurrentContext() {
         Forehead forehead = Forehead.create().withBrows(Brow.area(1)).asForehead();
