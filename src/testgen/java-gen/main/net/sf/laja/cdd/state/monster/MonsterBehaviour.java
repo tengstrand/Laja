@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class MonsterBehaviour implements MonsterStateComparable {
     protected final MonsterState state;
-    protected MonsterStateBuilder stateBuilder;
 
     public MonsterBehaviour(MonsterState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public MonsterBehaviour(MonsterState state, MonsterStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

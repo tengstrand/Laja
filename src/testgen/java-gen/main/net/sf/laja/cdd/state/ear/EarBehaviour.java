@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class EarBehaviour implements EarStateComparable {
     protected final EarState state;
-    protected EarStateBuilder stateBuilder;
 
     public EarBehaviour(EarState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public EarBehaviour(EarState state, EarStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

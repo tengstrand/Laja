@@ -18,10 +18,6 @@ public class HeadFactory extends HeadBehaviour {
         super(state);
     }
 
-    public HeadFactory(HeadState state, HeadStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static HeadCreator.LeftEye_ headWeightInGrams(double headWeightInGrams) {
         return new HeadCreator().new HeadWeightInGrams_().headWeightInGrams(headWeightInGrams);
     }
@@ -46,7 +42,7 @@ public class HeadFactory extends HeadBehaviour {
         }
 
         public Object create(HeadState state, Object... args) {
-            Object result = create_(state, stateBuilder, args);
+            Object result = create_(state, args);
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class 'Head'");
@@ -56,8 +52,8 @@ public class HeadFactory extends HeadBehaviour {
             return result;
         }
 
-      private Object create_(HeadState state, HeadStateBuilder stateBuilder, Object... args) {
-        return new Head(state, stateBuilder);
+      private Object create_(HeadState state, Object... args) {
+        return new Head(state);
     
       }
     }

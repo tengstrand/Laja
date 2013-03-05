@@ -13,10 +13,6 @@ public class AnimalFactory extends AnimalBehaviour {
         super(state);
     }
 
-    public AnimalFactory(AnimalState state, AnimalStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static AnimalEncapsulator isTerrestrial(boolean isTerrestrial) {
         return new AnimalCreator().new IsTerrestrial_().isTerrestrial(isTerrestrial);
     }

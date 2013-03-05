@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class MouthBehaviour implements MouthStateComparable {
     protected final MouthState state;
-    protected MouthStateBuilder stateBuilder;
 
     public MouthBehaviour(MouthState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public MouthBehaviour(MouthState state, MouthStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

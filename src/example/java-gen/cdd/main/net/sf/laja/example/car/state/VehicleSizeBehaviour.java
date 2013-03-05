@@ -7,16 +7,9 @@ package net.sf.laja.example.car.state;
  */
 public class VehicleSizeBehaviour implements VehicleSizeStateComparable {
     protected final VehicleSizeState state;
-    protected VehicleSizeStateBuilder stateBuilder;
 
     public VehicleSizeBehaviour(VehicleSizeState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public VehicleSizeBehaviour(VehicleSizeState state, VehicleSizeStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

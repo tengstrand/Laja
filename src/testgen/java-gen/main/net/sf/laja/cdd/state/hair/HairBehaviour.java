@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class HairBehaviour implements HairStateComparable {
     protected final HairState state;
-    protected HairStateBuilder stateBuilder;
 
     public HairBehaviour(HairState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public HairBehaviour(HairState state, HairStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

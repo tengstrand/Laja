@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class AnimalBehaviour implements AnimalStateComparable {
     protected final AnimalState state;
-    protected AnimalStateBuilder stateBuilder;
 
     public AnimalBehaviour(AnimalState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public AnimalBehaviour(AnimalState state, AnimalStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

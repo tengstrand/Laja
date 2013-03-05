@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class LegBehaviour implements LegStateComparable {
     protected final LegState state;
-    protected LegStateBuilder stateBuilder;
 
     public LegBehaviour(LegState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public LegBehaviour(LegState state, LegStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

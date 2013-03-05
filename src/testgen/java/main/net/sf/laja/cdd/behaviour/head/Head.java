@@ -13,8 +13,8 @@ public class Head extends HeadFactory {
     private Eye midEye;
     private final MouthList mouths;
 
-    public Head(HeadState state, HeadStateBuilder stateBuilder) {
-        super(state, stateBuilder);
+    public Head(HeadState state) {
+        super(state);
         leftEye = new Eye(state.getLeftEye());
         rightEye = new Eye(state.getRightEye());
         if (state.getMidEye() != null) {
@@ -25,7 +25,7 @@ public class Head extends HeadFactory {
 
     // (factory)
     public Head asHead() {
-        return new Head(state, stateBuilder);
+        return new Head(state);
     }
 
     @Override

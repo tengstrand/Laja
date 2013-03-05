@@ -4,7 +4,7 @@ import net.sf.laja.cdd.state.nose.NoseState;
 import net.sf.laja.cdd.state.nose.NoseStateBuilder;
 
 public class BigNose extends NoseFactory {
-    public BigNose(NoseState state, NoseStateBuilder stateBuilder) {
-        super(state, stateBuilder);
+    public BigNose(NoseState state) {
+        super(state);
     }
 }

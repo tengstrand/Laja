@@ -18,6 +18,26 @@ public class AtariBuilder {
         builder = new ComputerStateBuilderImpl(state, encapsulator);
     }
 
+    public AtariBuilder withName(String name) {
+        builder.withName(name);
+        return this;
+    }
+
+    public AtariBuilder withProcessor(String processor) {
+        builder.withProcessor(processor);
+        return this;
+    }
+
+    public AtariBuilder withReleaseYear(int releaseYear) {
+        builder.withReleaseYear(releaseYear);
+        return this;
+    }
+
+    public AtariBuilder withMemoryInKilobytes(int memoryInKilobytes) {
+        builder.withMemoryInKilobytes(memoryInKilobytes);
+        return this;
+    }
+
     public AtariBuilder withOwner(String owner) {
         builder.withOwner(owner);
         return this;

@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class HandBehaviour implements HandStateComparable {
     protected final HandState state;
-    protected HandStateBuilder stateBuilder;
 
     public HandBehaviour(HandState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public HandBehaviour(HandState state, HandStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

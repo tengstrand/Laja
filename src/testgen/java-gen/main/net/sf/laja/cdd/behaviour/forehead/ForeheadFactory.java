@@ -16,10 +16,6 @@ public class ForeheadFactory extends ForeheadBehaviour {
         super(state);
     }
 
-    public ForeheadFactory(ForeheadState state, ForeheadStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static ForeheadEncapsulator create() {
         return new ForeheadCreator().create();
     }

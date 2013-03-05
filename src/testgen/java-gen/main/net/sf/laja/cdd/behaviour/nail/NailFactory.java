@@ -13,10 +13,6 @@ public class NailFactory extends NailBehaviour {
         super(state);
     }
 
-    public NailFactory(NailState state, NailStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static NailEncapsulator color(String color) {
         return new NailCreator().new Color_().color(color);
     }

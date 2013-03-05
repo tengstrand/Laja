@@ -9,10 +9,6 @@ public class MouthEntity extends MouthBehaviour {
         super(state);
     }
 
-    public MouthEntity(MouthState state, MouthStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     // (factory)
     public Mouth asMouth(MouthSize size) {
         if (size == MouthSize.SMALL) {

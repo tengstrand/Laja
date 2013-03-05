@@ -6,7 +6,6 @@ import net.sf.laja.cdd.state.monster.MonsterState;
 import java.util.Arrays;
 import net.sf.laja.cdd.behaviour.head.Head;
 import net.sf.laja.cdd.state.monster.*;
-import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
 import java.util.ArrayList;
 import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 
@@ -14,10 +13,6 @@ public class MonsterFactory extends MonsterBehaviour {
 
     public MonsterFactory(MonsterState state) {
         super(state);
-    }
-
-    public MonsterFactory(MonsterState state, MonsterStateBuilder stateBuilder) {
-        super(state, stateBuilder);
     }
 
     public static MonsterCreator.NumberOfOwnWings_ numberOfLegs(int numberOfLegs) {
@@ -44,7 +39,7 @@ public class MonsterFactory extends MonsterBehaviour {
         }
 
         public Object create(MonsterState state, Object... args) {
-            Object result = create_(state, stateBuilder, args);
+            Object result = create_(state, args);
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class 'Monster'");
@@ -54,8 +49,8 @@ public class MonsterFactory extends MonsterBehaviour {
             return result;
         }
 
-      private Object create_(MonsterState state, MonsterStateBuilder stateBuilder, Object... args) {
-        return new Monster(state, stateBuilder);
+      private Object create_(MonsterState state, Object... args) {
+        return new Monster(state);
     
       }
     }

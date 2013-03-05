@@ -7,16 +7,9 @@ package net.sf.laja.example.file.state;
  */
 public class DirectoryBehaviour implements DirectoryStateComparable {
     protected final DirectoryState state;
-    protected DirectoryStateBuilder stateBuilder;
 
     public DirectoryBehaviour(DirectoryState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public DirectoryBehaviour(DirectoryState state, DirectoryStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

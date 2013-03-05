@@ -1,10 +1,9 @@
 package net.sf.laja.cdd.behaviour.monster;
 
 import net.sf.laja.cdd.state.monster.*;
-import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
 import net.sf.laja.cdd.behaviour.head.Head;
-import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 import net.sf.laja.cdd.state.monster.MonsterState;
+import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 import net.sf.laja.cdd.state.arm.ArmState;
 import net.sf.laja.cdd.state.head.HeadState;
 import net.sf.laja.cdd.behaviour.head.HeadBuilder;

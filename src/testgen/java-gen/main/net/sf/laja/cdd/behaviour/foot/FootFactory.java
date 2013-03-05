@@ -15,10 +15,6 @@ public class FootFactory extends FootBehaviour {
         super(state);
     }
 
-    public FootFactory(FootState state, FootStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static FootCreator.Toes_ area(int area) {
         return new FootCreator().new Area_().area(area);
     }

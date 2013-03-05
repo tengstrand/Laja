@@ -7,16 +7,9 @@ package net.sf.laja.example.person.state;
  */
 public class BmiBehaviour implements BmiStateComparable {
     protected final BmiState state;
-    protected BmiStateBuilder stateBuilder;
 
     public BmiBehaviour(BmiState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public BmiBehaviour(BmiState state, BmiStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

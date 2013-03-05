@@ -13,10 +13,6 @@ public class BusFactory extends BusBehaviour {
         super(state);
     }
 
-    public BusFactory(BusState state, BusStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static BusCreator.Size_ name(String name) {
         return new BusCreator().new Name_().name(name);
     }

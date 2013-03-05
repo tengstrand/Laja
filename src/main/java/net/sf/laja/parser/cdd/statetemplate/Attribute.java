@@ -40,10 +40,6 @@ public class Attribute implements StateTemplateParser.IAttribute {
         return Type.isImmutableObject(type);
     }
 
-    public boolean isBuilderMethod() {
-        return !isHidden;
-    }
-
     public boolean isExplicitAssigned() {
         return initialValue != null;
     }

@@ -13,10 +13,6 @@ public class VehicleSizeFactory extends VehicleSizeBehaviour {
         super(state);
     }
 
-    public VehicleSizeFactory(VehicleSizeState state, VehicleSizeStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static VehicleSizeEncapsulator lengthInCentimeters(int lengthInCentimeters) {
         return new VehicleSizeCreator().new LengthInCentimeters_().lengthInCentimeters(lengthInCentimeters);
     }

@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class ForeheadBehaviour implements ForeheadStateComparable {
     protected final ForeheadState state;
-    protected ForeheadStateBuilder stateBuilder;
 
     public ForeheadBehaviour(ForeheadState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public ForeheadBehaviour(ForeheadState state, ForeheadStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

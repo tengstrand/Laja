@@ -142,15 +142,6 @@ public class Behaviour implements BehaviourParser.IBehaviour {
         return false;
     }
 
-    public boolean isStateBuilderConstructor() {
-        for (Parameter parameter : parameters) {
-            if (parameter.isStateBuilder(classname)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public String toString() {
         return "Behaviour{" +

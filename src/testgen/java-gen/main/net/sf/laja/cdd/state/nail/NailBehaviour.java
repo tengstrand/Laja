@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class NailBehaviour implements NailStateComparable {
     protected final NailState state;
-    protected NailStateBuilder stateBuilder;
 
     public NailBehaviour(NailState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public NailBehaviour(NailState state, NailStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

@@ -7,16 +7,9 @@ package net.sf.laja.example.file.state;
  */
 public class FileBehaviour implements FileStateComparable {
     protected final FileState state;
-    protected FileStateBuilder stateBuilder;
 
     public FileBehaviour(FileState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public FileBehaviour(FileState state, FileStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

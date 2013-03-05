@@ -15,10 +15,6 @@ public class DirectoryFactory extends DirectoryBehaviour {
         super(state);
     }
 
-    public DirectoryFactory(DirectoryState state, DirectoryStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static DirectoryEncapsulator directoryPath(String directoryPath) {
         return new DirectoryCreator().new DirectoryPath_().directoryPath(directoryPath);
     }

@@ -14,6 +14,6 @@ public class Nose extends NoseFactory {
 
     // (factory)
     public BigNose asBigNose() {
-        return new BigNose(state, stateBuilder);
+        return new BigNose(state);
     }
 }

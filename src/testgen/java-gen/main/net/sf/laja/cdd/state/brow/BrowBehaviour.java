@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class BrowBehaviour implements BrowStateComparable {
     protected final BrowState state;
-    protected BrowStateBuilder stateBuilder;
 
     public BrowBehaviour(BrowState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public BrowBehaviour(BrowState state, BrowStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

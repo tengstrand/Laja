@@ -14,10 +14,6 @@ public class EyeFactory extends EyeBehaviour {
         super(state);
     }
 
-    public EyeFactory(EyeState state, EyeStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static EyeCreator.Color_ eyeWeightInGrams(int eyeWeightInGrams) {
         return new EyeCreator().new EyeWeightInGrams_().eyeWeightInGrams(eyeWeightInGrams);
     }

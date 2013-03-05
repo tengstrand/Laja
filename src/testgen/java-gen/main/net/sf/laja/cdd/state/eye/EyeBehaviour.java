@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class EyeBehaviour implements EyeStateComparable {
     protected final EyeState state;
-    protected EyeStateBuilder stateBuilder;
 
     public EyeBehaviour(EyeState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public EyeBehaviour(EyeState state, EyeStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

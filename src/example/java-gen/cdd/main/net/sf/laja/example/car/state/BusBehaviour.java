@@ -7,16 +7,9 @@ package net.sf.laja.example.car.state;
  */
 public class BusBehaviour implements BusStateComparable {
     protected final BusState state;
-    protected BusStateBuilder stateBuilder;
 
     public BusBehaviour(BusState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public BusBehaviour(BusState state, BusStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

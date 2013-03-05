@@ -18,10 +18,6 @@ public class Parameter implements BehaviourParser.IParameter {
         return Type.typeAsObject(type);
     }
 
-    public boolean isStateBuilder(String classname) {
-        return type.equals(classname + "StateBuilder") && variable.equals("stateBuilder");
-    }
-
     @Override
     public String toString() {
         return "Parameter{" +

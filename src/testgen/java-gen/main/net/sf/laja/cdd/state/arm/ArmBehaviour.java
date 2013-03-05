@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class ArmBehaviour implements ArmStateComparable {
     protected final ArmState state;
-    protected ArmStateBuilder stateBuilder;
 
     public ArmBehaviour(ArmState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public ArmBehaviour(ArmState state, ArmStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

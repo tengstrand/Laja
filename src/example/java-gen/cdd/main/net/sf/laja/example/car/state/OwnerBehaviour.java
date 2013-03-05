@@ -7,16 +7,9 @@ package net.sf.laja.example.car.state;
  */
 public class OwnerBehaviour implements OwnerStateComparable {
     protected final OwnerState state;
-    protected OwnerStateBuilder stateBuilder;
 
     public OwnerBehaviour(OwnerState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public OwnerBehaviour(OwnerState state, OwnerStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

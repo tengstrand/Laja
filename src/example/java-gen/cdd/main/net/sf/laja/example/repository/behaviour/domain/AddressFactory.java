@@ -13,10 +13,6 @@ public class AddressFactory extends AddressBehaviour {
         super(state);
     }
 
-    public AddressFactory(AddressState state, AddressStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static AddressCreator.Zipcode_ streetName(String streetName) {
         return new AddressCreator().new StreetName_().streetName(streetName);
     }

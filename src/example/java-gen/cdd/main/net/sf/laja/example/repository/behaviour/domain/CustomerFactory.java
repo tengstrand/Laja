@@ -16,10 +16,6 @@ public class CustomerFactory extends CustomerBehaviour {
         super(state);
     }
 
-    public CustomerFactory(CustomerState state, CustomerStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static CustomerCreator.GivenName_ ssn(long ssn) {
         return new CustomerCreator().new Ssn_().ssn(ssn);
     }

@@ -13,10 +13,6 @@ public class OwnerFactory extends OwnerBehaviour {
         super(state);
     }
 
-    public OwnerFactory(OwnerState state, OwnerStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static OwnerCreator.Name_ ssn(long ssn) {
         return new OwnerCreator().new Ssn_().ssn(ssn);
     }

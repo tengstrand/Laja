@@ -7,16 +7,9 @@ package net.sf.laja.example.repository.state;
  */
 public class AddressBehaviour implements AddressStateComparable {
     protected final AddressState state;
-    protected AddressStateBuilder stateBuilder;
 
     public AddressBehaviour(AddressState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public AddressBehaviour(AddressState state, AddressStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

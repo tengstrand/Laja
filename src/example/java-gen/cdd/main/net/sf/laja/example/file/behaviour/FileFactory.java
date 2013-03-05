@@ -13,10 +13,6 @@ public class FileFactory extends FileBehaviour {
         super(state);
     }
 
-    public FileFactory(FileState state, FileStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static FileEncapsulator filename(String filename) {
         return new FileCreator().new Filename_().filename(filename);
     }

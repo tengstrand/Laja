@@ -18,6 +18,16 @@ public class FleckBuilder {
         builder = new FleckStateBuilderImpl(state, encapsulator);
     }
 
+    public FleckBuilder withArea(int area) {
+        builder.withArea(area);
+        return this;
+    }
+
+    public FleckBuilder withColor(String color) {
+        builder.withColor(color);
+        return this;
+    }
+
     public boolean isValid() {
         return builder.isValid();
     }

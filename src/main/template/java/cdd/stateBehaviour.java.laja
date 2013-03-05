@@ -2,16 +2,9 @@
   #header()
 public class {stateBehaviourClass} implements {stateComparable} {
     protected final {stateClass} state;
-    protected {builderClass} stateBuilder;
 
     public {stateBehaviourClass}({stateClass} state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public {stateBehaviourClass}({stateClass} state, {builderClass} stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

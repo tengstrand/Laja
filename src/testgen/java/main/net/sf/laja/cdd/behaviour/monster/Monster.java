@@ -1,21 +1,20 @@
 package net.sf.laja.cdd.behaviour.monster;
 
-import net.sf.laja.cdd.behaviour.terrestrial.Terrestrial;
 import net.sf.laja.cdd.behaviour.head.Head;
-import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 import net.sf.laja.cdd.state.monster.MonsterState;
+import net.sf.laja.cdd.state.monster.MonsterStateBuilder;
 
 public class Monster extends MonsterFactory {
     private final Head head;
 
-    public Monster(MonsterState state, MonsterStateBuilder stateBuilder) {
-        super(state, stateBuilder);
+    public Monster(MonsterState state) {
+        super(state);
 
-        head = new Head(state.getHead(), stateBuilder.getHeadStateBuilder());
+        head = new Head(state.getHead());
     }
 
     // (factory)
     public Monster asMonster() {
-        return new Monster(state, stateBuilder);
+        return new Monster(state);
     }
 }

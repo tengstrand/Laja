@@ -13,10 +13,6 @@ public class HairFactory extends HairBehaviour {
         super(state);
     }
 
-    public HairFactory(HairState state, HairStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static HairCreator.Color_ length(int length) {
         return new HairCreator().new Length_().length(length);
     }

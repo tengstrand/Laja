@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class NoseBehaviour implements NoseStateComparable {
     protected final NoseState state;
-    protected NoseStateBuilder stateBuilder;
 
     public NoseBehaviour(NoseState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public NoseBehaviour(NoseState state, NoseStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

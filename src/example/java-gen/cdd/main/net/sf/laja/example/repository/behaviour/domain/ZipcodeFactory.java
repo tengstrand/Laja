@@ -13,10 +13,6 @@ public class ZipcodeFactory extends ZipcodeBehaviour {
         super(state);
     }
 
-    public ZipcodeFactory(ZipcodeState state, ZipcodeStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static ZipcodeEncapsulator zipcode(int zipcode) {
         return new ZipcodeCreator().new Zipcode_().zipcode(zipcode);
     }

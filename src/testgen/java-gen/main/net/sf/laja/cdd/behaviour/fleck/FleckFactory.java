@@ -13,10 +13,6 @@ public class FleckFactory extends FleckBehaviour {
         super(state);
     }
 
-    public FleckFactory(FleckState state, FleckStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static FleckEncapsulator create() {
         return new FleckCreator().create();
     }

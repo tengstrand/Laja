@@ -7,16 +7,9 @@ package net.sf.laja.example.computer.state;
  */
 public class ComputerBehaviour implements ComputerStateComparable {
     protected final ComputerState state;
-    protected ComputerStateBuilder stateBuilder;
 
     public ComputerBehaviour(ComputerState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public ComputerBehaviour(ComputerState state, ComputerStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

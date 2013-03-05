@@ -13,10 +13,6 @@ public class OtherTerrestrialFactory extends TerrestrialBehaviour {
         super(state);
     }
 
-    public OtherTerrestrialFactory(TerrestrialState state, TerrestrialStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static OtherTerrestrialCreator.LeftEye_ numberOfLegs(int numberOfLegs) {
         return new OtherTerrestrialCreator().new NumberOfLegs_().numberOfLegs(numberOfLegs);
     }

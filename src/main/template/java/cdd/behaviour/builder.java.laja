@@ -13,7 +13,7 @@ public class {builderClass} {
     public {builderClass}({stateClass} state, Object encapsulator) {
         builder = new {stateBuilderImplClass}(state, encapsulator);
     }
-  #foreach (attribute in template.attributes where attribute.isBuilderMethod)
+  #foreach (attribute in template.attributes)
 
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (attribute.isStateSet)
@@ -54,7 +54,7 @@ public class {builderClass} {
 
 #macro importsBuilder()
   #set (imports = new java.util.HashSet())
-  #foreach (attribute in template.attributes where attribute.isBuilderMethod)
+  #foreach (attribute in template.attributes)
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (factory != null && factory.packagename != behaviour.packagename)
       #imports.add("{factory.packagename}.{factory.builderClass}")

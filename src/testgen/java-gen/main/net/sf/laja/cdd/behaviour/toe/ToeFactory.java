@@ -13,10 +13,6 @@ public class ToeFactory extends ToeBehaviour {
         super(state);
     }
 
-    public ToeFactory(ToeState state, ToeStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static ToeCreator.Weight_ length(int length) {
         return new ToeCreator().new Length_().length(length);
     }

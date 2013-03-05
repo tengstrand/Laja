@@ -13,10 +13,6 @@ public class CarFactory extends CarBehaviour {
         super(state);
     }
 
-    public CarFactory(CarState state, CarStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static CarCreator.Name_ size(VehicleSizeEncapsulator size) {
         return new CarCreator().new Size_().size(size);
     }

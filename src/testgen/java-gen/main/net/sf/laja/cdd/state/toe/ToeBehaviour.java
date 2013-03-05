@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class ToeBehaviour implements ToeStateComparable {
     protected final ToeState state;
-    protected ToeStateBuilder stateBuilder;
 
     public ToeBehaviour(ToeState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public ToeBehaviour(ToeState state, ToeStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

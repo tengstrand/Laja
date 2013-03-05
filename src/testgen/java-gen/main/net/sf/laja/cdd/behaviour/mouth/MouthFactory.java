@@ -15,10 +15,6 @@ public class MouthFactory extends MouthBehaviour {
         super(state);
     }
 
-    public MouthFactory(MouthState state, MouthStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static MouthCreator.Height_ width(int width) {
         return new MouthCreator().new Width_().width(width);
     }

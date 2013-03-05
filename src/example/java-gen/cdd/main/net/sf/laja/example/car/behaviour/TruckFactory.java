@@ -13,10 +13,6 @@ public class TruckFactory extends TruckBehaviour {
         super(state);
     }
 
-    public TruckFactory(TruckState state, TruckStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static TruckCreator.WeightInKilograms_ size(VehicleSizeEncapsulator size) {
         return new TruckCreator().new Size_().size(size);
     }

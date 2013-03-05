@@ -25,13 +25,28 @@ public class OtherTerrestrialBuilder {
         return this;
     }
 
+    public OtherTerrestrialBuilder withNumberOfWings(int numberOfWings) {
+        builder.withNumberOfWings(numberOfWings);
+        return this;
+    }
+
     public OtherTerrestrialBuilder withLeftEye(EyeBuilder leftEye) {
         builder.withLeftEye(leftEye.builder);
         return this;
     }
 
+    public OtherTerrestrialBuilder withRightEye(EyeBuilder rightEye) {
+        builder.withRightEye(rightEye.builder);
+        return this;
+    }
+
     public OtherTerrestrialBuilder withMiddleEye(EyeBuilder middleEye) {
         builder.withMiddleEye(middleEye.builder);
+        return this;
+    }
+
+    public OtherTerrestrialBuilder withWeight(int weight) {
+        builder.withWeight(weight);
         return this;
     }
 

@@ -13,10 +13,6 @@ public class TestEarFactory extends EarBehaviour {
         super(state);
     }
 
-    public TestEarFactory(EarState state, EarStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static TestEarEncapsulator weight(int weight) {
         return new TestEarCreator().new Weight_().weight(weight);
     }

@@ -13,10 +13,6 @@ public class HandFactory extends HandBehaviour {
         super(state);
     }
 
-    public HandFactory(HandState state, HandStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static HandEncapsulator area(int area) {
         return new HandCreator().new Area_().area(area);
     }

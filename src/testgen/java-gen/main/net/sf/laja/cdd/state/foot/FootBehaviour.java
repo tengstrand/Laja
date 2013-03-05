@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class FootBehaviour implements FootStateComparable {
     protected final FootState state;
-    protected FootStateBuilder stateBuilder;
 
     public FootBehaviour(FootState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public FootBehaviour(FootState state, FootStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

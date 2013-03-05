@@ -13,10 +13,6 @@ public class NoseFactory extends NoseBehaviour {
         super(state);
     }
 
-    public NoseFactory(NoseState state, NoseStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static NoseCreator.Details_ noseDescription(String noseDescription) {
         return new NoseCreator().new NoseDescription_().noseDescription(noseDescription);
     }
@@ -78,7 +74,7 @@ public class NoseFactory extends NoseBehaviour {
         }
 
       private Object create_(NoseState state, Object... args) {
-        return new BigNose(state, stateBuilder);
+        return new BigNose(state);
     
       }
     }

@@ -13,7 +13,7 @@ public class {encapsulatorClass} implements {stateComparable} {
         return ({method.returnclass})builder.as(new {factoryClass}.{method.returnclass}Factory_(builder){extraArguments});
     }
   #end
-  #foreach (attribute in template.attributes where attribute.isOptional && attribute.isBuilderMethod)
+  #foreach (attribute in template.attributes where attribute.isOptional && !attribute.isHidden)
 
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (attribute.isStateSet)

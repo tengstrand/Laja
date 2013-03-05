@@ -7,16 +7,9 @@ package net.sf.laja.example.person.state;
  */
 public class PersonBehaviour implements PersonStateComparable {
     protected final PersonState state;
-    protected PersonStateBuilder stateBuilder;
 
     public PersonBehaviour(PersonState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public PersonBehaviour(PersonState state, PersonStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

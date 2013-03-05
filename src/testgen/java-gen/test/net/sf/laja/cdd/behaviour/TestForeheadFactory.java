@@ -20,10 +20,6 @@ public class TestForeheadFactory extends ForeheadBehaviour {
         super(state);
     }
 
-    public TestForeheadFactory(ForeheadState state, ForeheadStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static TestForeheadEncapsulator create() {
         return new TestForeheadCreator().create();
     }

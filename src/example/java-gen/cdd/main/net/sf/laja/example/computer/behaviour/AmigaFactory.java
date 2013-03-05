@@ -12,10 +12,6 @@ public class AmigaFactory extends ComputerBehaviour {
         super(state);
     }
 
-    public AmigaFactory(ComputerState state, ComputerStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static AmigaEncapsulator owner(String owner) {
         return new AmigaCreator().new Owner_().owner(owner);
     }

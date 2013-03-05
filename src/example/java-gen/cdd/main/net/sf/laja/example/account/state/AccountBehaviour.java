@@ -7,16 +7,9 @@ package net.sf.laja.example.account.state;
  */
 public class AccountBehaviour implements AccountStateComparable {
     protected final AccountState state;
-    protected AccountStateBuilder stateBuilder;
 
     public AccountBehaviour(AccountState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public AccountBehaviour(AccountState state, AccountStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

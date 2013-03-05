@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class HeadBehaviour implements HeadStateComparable {
     protected final HeadState state;
-    protected HeadStateBuilder stateBuilder;
 
     public HeadBehaviour(HeadState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public HeadBehaviour(HeadState state, HeadStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

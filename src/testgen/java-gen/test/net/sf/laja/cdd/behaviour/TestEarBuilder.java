@@ -18,6 +18,11 @@ public class TestEarBuilder {
         builder = new EarStateBuilderImpl(state, encapsulator);
     }
 
+    public TestEarBuilder withSize(double size) {
+        builder.withSize(size);
+        return this;
+    }
+
     public TestEarBuilder withWeight(int weight) {
         builder.withWeight(weight);
         return this;

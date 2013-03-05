@@ -13,10 +13,6 @@ public class PersonFactory extends PersonBehaviour {
         super(state);
     }
 
-    public PersonFactory(PersonState state, PersonStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static PersonCreator.Surname_ givenName(String givenName) {
         return new PersonCreator().new GivenName_().givenName(givenName);
     }

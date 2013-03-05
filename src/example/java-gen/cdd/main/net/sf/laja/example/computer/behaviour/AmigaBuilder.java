@@ -18,6 +18,26 @@ public class AmigaBuilder {
         builder = new ComputerStateBuilderImpl(state, encapsulator);
     }
 
+    public AmigaBuilder withName(String name) {
+        builder.withName(name);
+        return this;
+    }
+
+    public AmigaBuilder withProcessor(String processor) {
+        builder.withProcessor(processor);
+        return this;
+    }
+
+    public AmigaBuilder withReleaseYear(int releaseYear) {
+        builder.withReleaseYear(releaseYear);
+        return this;
+    }
+
+    public AmigaBuilder withMemoryInKilobytes(int memoryInKilobytes) {
+        builder.withMemoryInKilobytes(memoryInKilobytes);
+        return this;
+    }
+
     public AmigaBuilder withOwner(String owner) {
         builder.withOwner(owner);
         return this;

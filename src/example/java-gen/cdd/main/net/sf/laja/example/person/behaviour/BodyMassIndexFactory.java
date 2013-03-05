@@ -15,10 +15,6 @@ public class BodyMassIndexFactory extends BmiBehaviour {
         super(state);
     }
 
-    public BodyMassIndexFactory(BmiState state, BmiStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static BodyMassIndexCreator.WeightInKilograms_ heightInCentimeters(int heightInCentimeters) {
         return new BodyMassIndexCreator().new HeightInCentimeters_().heightInCentimeters(heightInCentimeters);
     }

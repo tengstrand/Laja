@@ -13,10 +13,6 @@ public class TestAccountFactory extends AccountBehaviour {
         super(state);
     }
 
-    public TestAccountFactory(AccountState state, AccountStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static TestAccountEncapsulator balance(double balance) {
         return new TestAccountCreator().new Balance_().balance(balance);
     }

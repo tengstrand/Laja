@@ -100,7 +100,7 @@ import {template.packagename}.*;
 
 #macro importsEncapsulator()
   #set (imports = new java.util.HashSet())
-  #foreach (attribute in template.attributes where attribute.isState && attribute.isOptional && attribute.isBuilderMethod)
+  #foreach (attribute in template.attributes where attribute.isState && attribute.isOptional && !attribute.isHidden)
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (behaviour.packagename != factory.packagename)
       #imports.add("{factory.packagename}.{factory.encapsulator}")
@@ -112,7 +112,7 @@ import {import};
 #end
 
 #macro importsSetEncapsulator()
-  #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateSet)
+  #foreach (attribute in template.attributes where !attribute.isHidden && attribute.isStateSet)
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (behaviour.packagename != factory.packagename)
 import {factory.packagename}.{factory.setEncapsulator};
@@ -121,7 +121,7 @@ import {factory.packagename}.{factory.setEncapsulator};
 #end
 
 #macro importsListEncapsulator()
-  #foreach (attribute in template.attributes where attribute.isBuilderMethod && attribute.isStateList)
+  #foreach (attribute in template.attributes where !attribute.isHidden && attribute.isStateList)
     #set (factory = factories.get(attribute.cleanedStateType))
     #if (behaviour.packagename != factory.packagename)
 import {factory.packagename}.{factory.listEncapsulator};

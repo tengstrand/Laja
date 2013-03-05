@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class FleckBehaviour implements FleckStateComparable {
     protected final FleckState state;
-    protected FleckStateBuilder stateBuilder;
 
     public FleckBehaviour(FleckState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public FleckBehaviour(FleckState state, FleckStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

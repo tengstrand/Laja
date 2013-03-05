@@ -2,6 +2,7 @@ package net.sf.laja.cdd.behaviour.terrestrial;
 
 import java.util.List;
 import java.util.Iterator;
+import net.sf.laja.cdd.behaviour.eye.EyeBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialStateBuilder;
 import net.sf.laja.cdd.state.terrestrial.TerrestrialState;
 import net.sf.laja.cdd.behaviour.eye.Eye;
@@ -13,10 +14,6 @@ public class TerrestrialFactory extends TerrestrialBehaviour {
 
     public TerrestrialFactory(TerrestrialState state) {
         super(state);
-    }
-
-    public TerrestrialFactory(TerrestrialState state, TerrestrialStateBuilder stateBuilder) {
-        super(state, stateBuilder);
     }
 
     public static TerrestrialCreator.LeftEye_ numberOfLegs(int numberOfLegs) {
@@ -43,7 +40,7 @@ public class TerrestrialFactory extends TerrestrialBehaviour {
         }
 
         public Object create(TerrestrialState state, Object... args) {
-            Object result = create_(state, stateBuilder, args);
+            Object result = create_(state, args);
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class 'Terrestrial'");
@@ -53,8 +50,8 @@ public class TerrestrialFactory extends TerrestrialBehaviour {
             return result;
         }
 
-      private Object create_(TerrestrialState state, TerrestrialStateBuilder stateBuilder, Object... args) {
-        return new Terrestrial(state, stateBuilder);
+      private Object create_(TerrestrialState state, Object... args) {
+        return new Terrestrial(state);
     
       }
     }

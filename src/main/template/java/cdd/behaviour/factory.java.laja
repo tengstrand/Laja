@@ -22,10 +22,6 @@ public class {factoryClass} extends {stateBehaviourClass} {
         super(state);
     }
 
-    public {factoryClass}({stateClass} state, {stateBuilderClass} stateBuilder) {
-        super(state, stateBuilder);
-    }
-
   #initChainedCreator(template, true)
   #if (firstChainedAttribute == null)
     public static {encapsulatorClass} create() {
@@ -77,11 +73,7 @@ public class {factoryClass} extends {stateBehaviourClass} {
         }
 
         public Object create({template.stateClass} state, Object... args) {
-    #if (!behaviour.isStateBuilderConstructor)
             Object result = create_(state, args);
-    #else
-            Object result = create_(state, stateBuilder, args);
-    #end
 
             if (!state.isValidAsEncapsulated()) {
                 throw new IllegalStateException("Illegal state, could not create behaviour class '{method.returnclass}'");
@@ -91,11 +83,7 @@ public class {factoryClass} extends {stateBehaviourClass} {
             return result;
         }
 
-    #if (!behaviour.isStateBuilderConstructor)
       private Object create_({template.stateClass} state, Object... args) {
-    #else
-      private Object create_({template.stateClass} state, {stateBuilderClass} stateBuilder, Object... args) {
-    #end
     #if (method.parameters.size > 0)
       #set (counter = counter(0))
       #foreach (parameter in method.parameters)

@@ -13,10 +13,6 @@ public class TruckTypeFactory extends TruckTypeBehaviour {
         super(state);
     }
 
-    public TruckTypeFactory(TruckTypeState state, TruckTypeStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static TruckTypeCreator.TruckName_ numberOfWheels(int numberOfWheels) {
         return new TruckTypeCreator().new NumberOfWheels_().numberOfWheels(numberOfWheels);
     }

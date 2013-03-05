@@ -18,10 +18,6 @@ public class ArmFactory extends ArmBehaviour {
         super(state);
     }
 
-    public ArmFactory(ArmState state, ArmStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static ArmCreator.Hands_ armWeight(double armWeight) {
         return new ArmCreator().new ArmWeight_().armWeight(armWeight);
     }

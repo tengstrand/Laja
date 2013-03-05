@@ -13,10 +13,6 @@ public class LegFactory extends LegBehaviour {
         super(state);
     }
 
-    public LegFactory(LegState state, LegStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static LegEncapsulator legDescription(String legDescription) {
         return new LegCreator().new LegDescription_().legDescription(legDescription);
     }

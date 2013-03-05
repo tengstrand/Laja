@@ -7,16 +7,9 @@ package net.sf.laja.example.car.state;
  */
 public class CarBehaviour implements CarStateComparable {
     protected final CarState state;
-    protected CarStateBuilder stateBuilder;
 
     public CarBehaviour(CarState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public CarBehaviour(CarState state, CarStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

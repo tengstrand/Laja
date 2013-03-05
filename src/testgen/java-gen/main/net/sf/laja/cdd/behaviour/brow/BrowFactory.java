@@ -13,10 +13,6 @@ public class BrowFactory extends BrowBehaviour {
         super(state);
     }
 
-    public BrowFactory(BrowState state, BrowStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static BrowEncapsulator area(int area) {
         return new BrowCreator().new Area_().area(area);
     }

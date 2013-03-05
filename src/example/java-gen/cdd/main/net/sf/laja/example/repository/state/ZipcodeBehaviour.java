@@ -7,16 +7,9 @@ package net.sf.laja.example.repository.state;
  */
 public class ZipcodeBehaviour implements ZipcodeStateComparable {
     protected final ZipcodeState state;
-    protected ZipcodeStateBuilder stateBuilder;
 
     public ZipcodeBehaviour(ZipcodeState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public ZipcodeBehaviour(ZipcodeState state, ZipcodeStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

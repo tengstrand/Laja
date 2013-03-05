@@ -13,10 +13,6 @@ public class AtariFactory extends ComputerBehaviour {
         super(state);
     }
 
-    public AtariFactory(ComputerState state, ComputerStateBuilder stateBuilder) {
-        super(state, stateBuilder);
-    }
-
     public static AtariEncapsulator owner(String owner) {
         return new AtariCreator().new Owner_().owner(owner);
     }

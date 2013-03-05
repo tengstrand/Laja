@@ -9,16 +9,9 @@ import net.sf.laja.cdd.state.Certificate;
  */
 public class TerrestrialBehaviour implements TerrestrialStateComparable {
     protected final TerrestrialState state;
-    protected TerrestrialStateBuilder stateBuilder;
 
     public TerrestrialBehaviour(TerrestrialState state) {
         this.state = state;
-        state.setEncapsulator(this);
-    }
-
-    public TerrestrialBehaviour(TerrestrialState state, TerrestrialStateBuilder stateBuilder) {
-        this.state = state;
-        this.stateBuilder = stateBuilder;
         state.setEncapsulator(this);
     }
 

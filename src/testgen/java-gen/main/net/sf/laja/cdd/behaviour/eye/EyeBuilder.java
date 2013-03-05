@@ -30,6 +30,11 @@ public class EyeBuilder {
         return this;
     }
 
+    public EyeBuilder withDecease(String decease) {
+        builder.withDecease(decease);
+        return this;
+    }
+
     public EyeBuilder withHasEar(Boolean hasEar) {
         builder.withHasEar(hasEar);
         return this;
