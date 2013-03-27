@@ -6,11 +6,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import net.sf.laja.cdd.behaviour.brow.Brow;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
 import net.sf.laja.cdd.behaviour.brow.BrowEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.TheEar;
-import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
-import net.sf.laja.cdd.behaviour.ear.TheEarSet;
+import net.sf.laja.cdd.behaviour.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 import net.sf.laja.cdd.state.forehead.*;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
@@ -21,8 +20,8 @@ public class TestForeheadFactory extends ForeheadBehaviour {
         super(state);
     }
 
-    public static TestForeheadEncapsulator brow(BrowEncapsulator brow) {
-        return new TestForeheadCreator().new Brow_().brow(brow);
+    public static TestForeheadEncapsulator brow(int area) {
+        return new TestForeheadCreator().new Brow_().brow(Brow.area(area));
     }
 
     public static TestForeheadBuilder build() {

@@ -17,8 +17,8 @@ public class ForeheadFactory extends ForeheadBehaviour {
         super(state);
     }
 
-    public static ForeheadEncapsulator brow(BrowEncapsulator brow) {
-        return new ForeheadCreator().new Brow_().brow(brow);
+    public static ForeheadEncapsulator brow(int area) {
+        return new ForeheadCreator().new Brow_().brow(Brow.area(area));
     }
 
     public static ForeheadBuilder build() {

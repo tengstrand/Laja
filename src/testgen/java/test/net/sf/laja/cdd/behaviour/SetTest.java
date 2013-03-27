@@ -1,11 +1,6 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.behaviour.brow.Brow;
-import net.sf.laja.cdd.behaviour.ear.TheEar;
-import net.sf.laja.cdd.behaviour.ear.TheEarEncapsulator;
-import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
-import net.sf.laja.cdd.behaviour.ear.TheEarList;
-import net.sf.laja.cdd.behaviour.ear.TheEarSet;
+import net.sf.laja.cdd.behaviour.ear.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -49,7 +44,7 @@ public class SetTest {
 
     @Test
     public void remove_createdFromStateSet() {
-        TestForehead forehead = TestForehead.brow(Brow.area(1)).withEars(ear(1), ear(2), ear(3)).asTestForehead();
+        TestForehead forehead = TestForehead.brow(1).withEars(ear(1), ear(2), ear(3)).asTestForehead();
 
         forehead.removeEar(ear(2).asTheEar());
 
@@ -98,7 +93,7 @@ public class SetTest {
 
     @Test
     public void add() {
-        TestForehead forehead1 = TestForehead.brow(Brow.area(1)).withEars(ear(1)).asTestForehead();
+        TestForehead forehead1 = TestForehead.brow(1).withEars(ear(1)).asTestForehead();
         forehead1.getEars().add(ear(2).asTheEar());
         TestForehead forehead2 = forehead1.asTestForehead();
 
@@ -110,7 +105,7 @@ public class SetTest {
 
     @Test
     public void addAll() {
-        TestForehead forehead1 = TestForehead.brow(Brow.area(1)).withEars(ear(1), ear(2)).asTestForehead();
+        TestForehead forehead1 = TestForehead.brow(1).withEars(ear(1), ear(2)).asTestForehead();
         forehead1.getEars().addAll(TheEar.createSet(ear(3), ear(4)).asTheEarSet());
         TestForehead forehead2 = forehead1.asTestForehead();
 
@@ -122,7 +117,7 @@ public class SetTest {
 
     @Test
     public void remove() {
-        TestForehead forehead1 = TestForehead.brow(Brow.area(1)).withEars(ear(1), ear(2), ear(3)).asTestForehead();
+        TestForehead forehead1 = TestForehead.brow(1).withEars(ear(1), ear(2), ear(3)).asTestForehead();
         forehead1.getEars().remove(ear(2).asTheEar());
         TestForehead forehead2 = forehead1.asTestForehead();
 
@@ -134,7 +129,7 @@ public class SetTest {
 
     @Test
     public void removeAll() {
-        TestForehead forehead1 = TestForehead.brow(Brow.area(1)).withEars(ear(1), ear(2), ear(3), ear(4), ear(5)).asTestForehead();
+        TestForehead forehead1 = TestForehead.brow(1).withEars(ear(1), ear(2), ear(3), ear(4), ear(5)).asTestForehead();
         forehead1.getEars().removeAll(TheEar.createSet(ear(3), ear(4)).asTheEarSet());
         TestForehead forehead2 = forehead1.asTestForehead();
 
@@ -146,7 +141,7 @@ public class SetTest {
 
     @Test
     public void retainAll() {
-        TestForehead forehead1 = TestForehead.brow(Brow.area(1)).withEars(ear(1), ear(2), ear(3)).asTestForehead();
+        TestForehead forehead1 = TestForehead.brow(1).withEars(ear(1), ear(2), ear(3)).asTestForehead();
         forehead1.getEars().retainAll(TheEar.createSet(ear(2), ear(3)).asTheEarSet());
         TestForehead forehead2 = forehead1.asTestForehead();
 
@@ -158,7 +153,7 @@ public class SetTest {
 
     @Test
     public void clear() {
-        TestForehead forehead1 = TestForehead.brow(Brow.area(1)).withEars(ear(1), ear(2), ear(3)).asTestForehead();
+        TestForehead forehead1 = TestForehead.brow(1).withEars(ear(1), ear(2), ear(3)).asTestForehead();
         forehead1.getEars().clear();
         TestForehead forehead2 = forehead1.asTestForehead();
 

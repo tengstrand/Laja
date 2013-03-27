@@ -1,7 +1,6 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.behaviour.ear.TheEar;
-import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
+import net.sf.laja.cdd.behaviour.ear.*;
 
 import java.util.ArrayList;
 import java.util.Collection;

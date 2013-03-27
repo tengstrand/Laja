@@ -4,6 +4,7 @@ import net.sf.laja.exception.LajaException;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
 public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String classname;
@@ -24,6 +25,10 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
     public String outputDir;
     public String templateClassname;
     public StateTemplateErrors errors = new StateTemplateErrors();
+
+    public StateTemplate(String templateClassname) {
+        this.templateClassname = templateClassname;
+    }
 
     // Workaround a bug in Laja.
     public void setRootSrcDir(String rootSrcDir) {
@@ -60,8 +65,29 @@ public class StateTemplate implements StateTemplateParser.IStateTemplate {
         this.attributes = attributes;
     }
 
-    public StateTemplate(String templateClassname) {
-        this.templateClassname = templateClassname;
+    public Attribute getSingleChainedConstructorArgument(Map<String,StateTemplate> templates) {
+        int numberOfObjectsInChainedConstructor = 0;
+        StateTemplate template = null;
+        for (Attribute attribute : attributes) {
+            if (attribute.isStateObject && !attribute.isHidden && !attribute.isOptional) {
+                numberOfObjectsInChainedConstructor++;
+                template = templates.get(attribute.cleanedStateType);
+            }
+        }
+        if (numberOfObjectsInChainedConstructor == 1) {
+            int numberOfPrimitiveAttributes = 0;
+            Attribute singleAttribute = null;
+            for (Attribute attribute : template.attributes) {
+                if (!attribute.isState && !attribute.isHidden && !attribute.isOptional) {
+                    numberOfPrimitiveAttributes++;
+                    singleAttribute = attribute;
+                }
+            }
+            if (numberOfPrimitiveAttributes == 1) {
+                return singleAttribute;
+            }
+        }
+        return null;
     }
 
     public void setPackagename(String packagename) {

@@ -1,4 +1,19 @@
 
+#macro initChainedCreator(template, mandatory)
+  #set (firstChainedAttribute = null)
+  #set (chainedReturnClass = null)
+  #foreach (attribute in template.attributes where chainedReturnClass == null)
+    #if (!mandatory || (attribute.isMandatory && !attribute.isHidden))
+      #if (firstChainedAttribute == null)
+        #set (firstChainedAttribute = attribute)
+        #set (firstChainedParameterClass = "{strings.capitalize(attribute.variable)}")
+      #else
+        #set (chainedReturnClass = "{strings.capitalize(attribute.variable)}_")
+      #end
+    #end
+  #end
+#end
+
 #macro imports()
   #set (imports = new java.util.TreeSet())
   #foreach (importstatement in behaviour.imports)
@@ -12,6 +27,9 @@
   #if (firstChainedAttribute != null && firstChainedAttribute.isState)
     #set (b = behaviours.get(firstChainedAttribute.cleanedStateType))
     #imports.add("import {b.packagename}.{firstChainedAttribute.encapsulator};")
+    #if (firstChainedAttribute.isStateObject)
+      #imports.add("import {b.packagename}.{firstChainedAttribute.cleanedStateType};")
+    #end
   #end
   #foreach (importstatement in imports)
 {importstatement}
@@ -35,11 +53,18 @@ public class {factoryClass} extends {stateBehaviourClass} {
       #if (firstChainedAttribute.isStateSet || firstChainedAttribute.isStateList)
     public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator}... {firstChainedAttribute.variable}) {
       #else if (firstChainedAttribute.isState)
+        #set (singleAttribute = template.singleChainedConstructorArgument(templates))
+        #if (singleAttribute != null)
+    public static {encapsulatorClass} {firstChainedAttribute.variable}({singleAttribute.type} {singleAttribute.variable}) {
+        return new {creatorClass}().new {firstChainedParameterClass}_().{firstChainedAttribute.variable}({firstChainedParameterClass}.{singleAttribute.variable}({singleAttribute.variable}));
+        #else
     public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.encapsulator} {firstChainedAttribute.variable}) {
+        return new {creatorClass}().new {firstChainedParameterClass}_().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
+        #end
       #else
     public static {encapsulatorClass} {firstChainedAttribute.variable}({firstChainedAttribute.type} {firstChainedAttribute.variable}) {
+        return new {creatorClass}().new {firstChainedParameterClass}_().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
       #end
-        return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
     }
     #else
       #if (firstChainedAttribute.isStateSet || firstChainedAttribute.isStateList)
@@ -49,7 +74,7 @@ public class {factoryClass} extends {stateBehaviourClass} {
       #else
     public static {creatorClass}.{chainedReturnClass} {firstChainedAttribute.variable}({firstChainedAttribute.type} {firstChainedAttribute.variable}) {
       #end
-        return new {creatorClass}().new {firstChainedParameterClass}().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
+        return new {creatorClass}().new {firstChainedParameterClass}_().{firstChainedAttribute.variable}({firstChainedAttribute.variable});
     }
     #end
   #end

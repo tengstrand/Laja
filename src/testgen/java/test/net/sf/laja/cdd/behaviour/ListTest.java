@@ -65,7 +65,7 @@ public class ListTest {
 
     @Test
     public void remove_createdFromStateList() {
-        TestForehead forehead = TestForehead.brow(Brow.area(1)).withBrows(Brow.area(1), Brow.area(2), Brow.area(3)).asTestForehead();
+        TestForehead forehead = TestForehead.brow(1).withBrows(Brow.area(1), Brow.area(2), Brow.area(3)).asTestForehead();
 
         AreaBrowList list = new AreaBrowList(forehead.removeBrow(1));
 

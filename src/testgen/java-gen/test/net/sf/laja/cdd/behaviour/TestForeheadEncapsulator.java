@@ -2,9 +2,7 @@ package net.sf.laja.cdd.behaviour;
 
 import net.sf.laja.cdd.state.forehead.*;
 import net.sf.laja.cdd.behaviour.brow.BrowArrayList;
-import net.sf.laja.cdd.behaviour.ear.TheEar;
-import net.sf.laja.cdd.behaviour.ear.TheEarHashSet;
-import net.sf.laja.cdd.behaviour.ear.TheEarSet;
+import net.sf.laja.cdd.behaviour.ear.*;
 import net.sf.laja.cdd.state.ear.EarState;
 import net.sf.laja.cdd.state.forehead.ForeheadState;
 import java.util.ArrayList;
