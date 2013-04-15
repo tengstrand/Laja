@@ -6,22 +6,21 @@ import net.sf.laja.cdd.state.PersonState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
 public class PersonIntegrator {
-
     private final PersonMutableState state;
-
-    public PersonIntegrator(PersonMutableState state) {
-        this.state = state;
-    }
 
     public Person asPerson() {
         return new Person(state.asImmutable());
     }
 
-    public SpecialPerson asPersonMutable() {
+    public SpecialPerson asSpecialPerson() {
         return new SpecialPerson(state);
     }
 
-    // *** Generated code starts here, do not change ***
+    // Generated code goes here...
+
+    public PersonIntegrator(PersonMutableState state) {
+        this.state = state;
+    }
 
     public PersonState getState() {
         return state.asImmutable();

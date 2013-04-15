@@ -15,7 +15,7 @@ public class SpecialPerson {
         return state.asImmutable();
     }
 
-    public boolean equals(Object o) { return state.equals(o); }
-    public int hashCode() { return state.hashCode(); }
-    public String toString() { return "PersonMutable" + state; }
+    @Override public boolean equals(Object o) { return state.equals(o); }
+    @Override public int hashCode() { return state.hashCode(); }
+    @Override public String toString() { return "PersonMutable" + state; }
 }

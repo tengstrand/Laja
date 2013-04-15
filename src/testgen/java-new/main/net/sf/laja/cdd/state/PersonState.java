@@ -1,10 +1,12 @@
 package net.sf.laja.cdd.state;
 
-public final class PersonState {
+public class PersonState {
     public final int age;
     public final String name;
     public final AddressState address;
     public final AddressState address2;
+
+    // Generated code goes here...
 
     public PersonState(int age, String name, AddressState address, AddressState address2) {
         this.age = age;
@@ -12,8 +14,6 @@ public final class PersonState {
         this.address = address;
         this.address2 = address2;
     }
-
-    // Generated code starts here
 
     public PersonState withAge(int age) { return new PersonState(age, name, address, address2); }
     public PersonState withName(String name) { return new PersonState(age, name, address, address2); }

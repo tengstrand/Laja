@@ -1,14 +1,14 @@
 package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.PersonState;
-import net.sf.laja.cdd.state.PersonValidator;
+import net.sf.laja.cdd.state.PersonStateValidator;
 
 public class Person {
     public PersonState state;
 
     public Person(PersonState state) {
         this.state = state;
-        PersonValidator.throwExceptionIfNotValid(state);
+        PersonStateValidator.throwExceptionIfInvalid(state);
     }
 
     public void setName(String name) {
@@ -23,7 +23,7 @@ public class Person {
         return state.age >= 18;
     }
 
-    public boolean equals(Object o) { return state.equals(o); }
-    public int hashCode() { return state.hashCode(); }
-    public String toString() { return getClass().getSimpleName() + state; }
+    @Override public boolean equals(Object o) { return state.equals(o); }
+    @Override public int hashCode() { return state.hashCode(); }
+    @Override public String toString() { return getClass().getSimpleName() + state; }
 }

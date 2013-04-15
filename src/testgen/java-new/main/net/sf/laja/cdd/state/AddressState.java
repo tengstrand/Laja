@@ -5,7 +5,7 @@ public class AddressState {
     public final String streetName;
     public final String city; // (optional)
 
-    // Generated code starts here
+    // Generated code goes here...
 
     public AddressState(String streetName, String city) {
         this.id = 0;

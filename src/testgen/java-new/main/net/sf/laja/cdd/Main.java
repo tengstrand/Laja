@@ -15,7 +15,7 @@ public class Main {
         System.out.println("hashCode()=" + state);
         System.out.println("super.hashCode()=" + state.superHashCode());
 
-        SpecialPerson personMutable = createPerson().age(1).name("").address().asPersonMutable();
+        SpecialPerson personMutable = createPerson().age(1).name("").address().asSpecialPerson();
 
         //new AddressStateBuilder().withId(1).
     }

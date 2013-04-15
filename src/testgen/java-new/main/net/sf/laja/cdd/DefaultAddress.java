@@ -13,7 +13,7 @@ public class DefaultAddress implements Address {
         return "Uppsala".equals(state.city);
     }
 
-    public boolean equals(Object o) { return state.equals(o); }
-    public int hashCode() { return state.hashCode(); }
-    public String toString() { return getClass().getSimpleName() + state; }
+    @Override public boolean equals(Object o) { return state.equals(o); }
+    @Override public int hashCode() { return state.hashCode(); }
+    @Override public String toString() { return getClass().getSimpleName() + state; }
 }

@@ -7,15 +7,15 @@ import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 public class AddressIntegrator {
     private final AddressMutableState state;
 
-    public AddressIntegrator(AddressMutableState state) {
-        this.state = state;
-    }
-
-    public DefaultAddress asAddress() {
+    public Address asAddress() {
         return new DefaultAddress(state.asImmutable());
     }
 
-    // *** Generated code starts here, do not change ***
+    // Generated code goes here...
+
+    public AddressIntegrator(AddressMutableState state) {
+        this.state = state;
+    }
 
     public AddressState getState() {
         return state.asImmutable();
