@@ -1,12 +1,13 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.state.PersonMutableState;
 import net.sf.laja.cdd.state.PersonState;
 
-public class PersonMutable {
+import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
+
+public class SpecialPerson {
     private final PersonMutableState state;
 
-    public PersonMutable(PersonMutableState state) {
+    public SpecialPerson(PersonMutableState state) {
         this.state = state;
     }
 

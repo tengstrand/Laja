@@ -1,11 +1,13 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.state.AddressStateBuilder;
 import net.sf.laja.cdd.state.PersonState;
 
-public class Main2 {
+import static net.sf.laja.cdd.AddressIntegrator.AddressFactory.streetName;
+import static net.sf.laja.cdd.PersonIntegrator.PersonFactory.createPerson;
+
+public class Main {
     public static void main(String[] args) {
-        Person person = Person.age(10).name("Kalle").address(AddressFactory.streetName("gatan").withCity("Uppsala")).asPerson();
+        Person person = createPerson().age(10).name("Kalle").address(streetName("gatan").withCity("Uppsala")).asPerson();
 
         PersonText personText = new PersonText(person.state);
 
@@ -13,9 +15,8 @@ public class Main2 {
         System.out.println("hashCode()=" + state);
         System.out.println("super.hashCode()=" + state.superHashCode());
 
-        PersonMutable personMutable = Person.age(1).name("").address().asPersonMutable();
+        SpecialPerson personMutable = createPerson().age(1).name("").address().asPersonMutable();
 
         //new AddressStateBuilder().withId(1).
     }
 }
-

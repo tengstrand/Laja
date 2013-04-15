@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd;
 
 public interface Address {
     boolean isFromUppsala();
