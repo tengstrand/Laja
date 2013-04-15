@@ -13,10 +13,6 @@ public class PersonIntegrator {
         this.state = state;
     }
 
-    public PersonMutableState asSpecialPerson() {
-        return state;
-    }
-
     public Person asPerson() {
         return new Person(state.asImmutable());
     }
@@ -27,8 +23,12 @@ public class PersonIntegrator {
 
     // *** Generated code starts here, do not change ***
 
-    public PersonState asState() {
+    public PersonState getState() {
         return state.asImmutable();
+    }
+
+    public PersonMutableState getMutableState() {
+        return state;
     }
 
     public PersonIntegrator withAddress(AddressState.AddressMutableState address) {
@@ -75,7 +75,7 @@ public class PersonIntegrator {
                 }
 
                 public PersonIntegrator address(AddressIntegrator integrator) {
-                    person.address = integrator.asMutableState();
+                    person.address = integrator.getMutableState();
                     return new PersonIntegrator(person);
                 }
             }

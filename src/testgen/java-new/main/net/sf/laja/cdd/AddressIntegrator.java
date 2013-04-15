@@ -11,16 +11,18 @@ public class AddressIntegrator {
         this.state = state;
     }
 
-    public AddressState asState() {
+    public DefaultAddress asAddress() {
+        return new DefaultAddress(state.asImmutable());
+    }
+
+    // *** Generated code starts here, do not change ***
+
+    public AddressState getState() {
         return state.asImmutable();
     }
 
-    public AddressMutableState asMutableState() {
+    public AddressMutableState getMutableState() {
         return state;
-    }
-
-    public DefaultAddress asAddress() {
-        return new DefaultAddress(state.asImmutable());
     }
 
     public AddressIntegrator withId(int id) {
@@ -32,8 +34,6 @@ public class AddressIntegrator {
         state.city = city;
         return this;
     }
-
-    // *** Generated code starts here, do not change ***
 
     public static class AddressFactory {
 
