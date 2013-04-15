@@ -17,6 +17,10 @@ public class AddressIntegrator {
         return new AddressFactory();
     }
 
+    public static AddressBuilder buildAddress() {
+        return new AddressBuilder();
+    }
+
     public AddressIntegrator(AddressMutableState state) {
         this.state = state;
     }
@@ -59,10 +63,6 @@ public class AddressIntegrator {
 
     public static class AddressBuilder {
         private AddressMutableState state = new AddressMutableState();
-
-        public static AddressBuilder buildAddress() {
-            return new AddressBuilder();
-        }
 
         public AddressBuilder withId(int id) {
             state.id = id;

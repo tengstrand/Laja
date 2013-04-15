@@ -4,7 +4,7 @@ import net.sf.laja.cdd.Address;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
-import static net.sf.laja.cdd.AddressIntegrator.AddressBuilder.buildAddress;
+import static net.sf.laja.cdd.AddressIntegrator.buildAddress;
 
 public class AddressTest {
 

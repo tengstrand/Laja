@@ -16,6 +16,10 @@ public class Person {
         state = state.withName(name);
     }
 
+    public boolean hasShortName() {
+        return state.name.length() <= 6;
+    }
+
     public boolean isFromUppsala() {
         return new DefaultAddress(state.address).isFromUppsala();
     }

@@ -26,6 +26,10 @@ public class PersonIntegrator {
         return new PersonFactory();
     }
 
+    public static PersonBuilder buildPerson() {
+        return new PersonBuilder();
+    }
+
     public PersonIntegrator(PersonMutableState state) {
         this.state = state;
     }
@@ -111,6 +115,39 @@ public class PersonIntegrator {
                     return new PersonIntegrator(state);
                 }
             }
+        }
+    }
+
+    public static class PersonBuilder {
+        private PersonMutableState state = new PersonMutableState();
+
+        public PersonBuilder withName(String name) {
+            state.name = name;
+            return this;
+        }
+
+        public PersonBuilder withBirthday(DateMidnight birthday) {
+            state.birthday = birthday;
+            return this;
+        }
+
+        public PersonBuilder withChildren(List<PersonMutableState> children) {
+            state.children = children;
+            return this;
+        }
+
+        public PersonBuilder withAddress(AddressMutableState address) {
+            state.address = address;
+            return this;
+        }
+
+        public PersonBuilder withAddress2(AddressMutableState address2) {
+            state.address2 = address2;
+            return this;
+        }
+
+        public Person asPerson() {
+            return new Person(state.asImmutable());
         }
     }
 }

@@ -72,6 +72,8 @@ public class AddressState {
         public String city; // (optional)
 
         public AddressMutableState() {
+            streetName = "";
+            city = "";
         }
 
         public AddressMutableState(int id, String streetName, String city) {

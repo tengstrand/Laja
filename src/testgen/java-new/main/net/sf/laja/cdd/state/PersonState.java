@@ -126,6 +126,8 @@ public class PersonState {
         public AddressMutableState address2;
 
         public PersonMutableState() {
+            name = "";
+            birthday = new DateMidnight();
             children = new ArrayList<PersonMutableState>();
             address = new AddressMutableState();
             address2 = new AddressMutableState();
