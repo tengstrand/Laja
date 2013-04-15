@@ -13,6 +13,10 @@ public class AddressIntegrator {
 
     // Generated code goes here...
 
+    public static AddressFactory createAddress() {
+        return new AddressFactory();
+    }
+
     public AddressIntegrator(AddressMutableState state) {
         this.state = state;
     }
@@ -37,7 +41,7 @@ public class AddressIntegrator {
 
     public static class AddressFactory {
 
-        public static AddressIntegrator streetName(String streetName) {
+        public AddressIntegrator streetName(String streetName) {
             return new Factory().new StreetName().streetName(streetName);
         }
 

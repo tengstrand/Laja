@@ -1,14 +1,15 @@
 package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.PersonState;
-import net.sf.laja.cdd.state.PersonStateValidator;
+import org.joda.time.DateMidnight;
+import org.joda.time.Period;
 
 public class Person {
     public PersonState state;
 
     public Person(PersonState state) {
+        state.assertValidState();
         this.state = state;
-        PersonStateValidator.throwExceptionIfInvalid(state);
     }
 
     public void setName(String name) {
@@ -20,7 +21,7 @@ public class Person {
     }
 
     public boolean isAdult() {
-        return state.age >= 18;
+        return new Period(state.birthday, new DateMidnight()).getYears() >= 18;
     }
 
     @Override public boolean equals(Object o) { return state.equals(o); }

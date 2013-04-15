@@ -5,6 +5,9 @@ public class AddressState {
     public final String streetName;
     public final String city; // (optional)
 
+    public void postAssertValidState() {
+    }
+
     // Generated code goes here...
 
     public AddressState(String streetName, String city) {
@@ -17,6 +20,18 @@ public class AddressState {
         this.id = id;
         this.streetName = streetName;
         this.city = city;
+    }
+
+    public static class IllegalAddressStateException extends RuntimeException { }
+    public static class IllegalStreetNameException extends IllegalAddressStateException { }
+    public static class StreetNameNullException extends IllegalAddressStateException { }
+
+    public void assertValidState() {
+        if (streetName == null) {
+            throw new StreetNameNullException();
+        }
+
+        postAssertValidState();
     }
 
     public AddressMutableState asMutable() {
@@ -63,6 +78,12 @@ public class AddressState {
             this.id = id;
             this.streetName = streetName;
             this.city = city;
+        }
+
+        public void assertValidState() {
+            if (streetName == null) {
+                throw new StreetNameNullException();
+            }
         }
 
         public AddressState asImmutable() {

@@ -1,8 +1,12 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.state.AddressState;
 import net.sf.laja.cdd.state.PersonState;
+import org.joda.time.DateMidnight;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
 public class PersonIntegrator {
@@ -18,6 +22,10 @@ public class PersonIntegrator {
 
     // Generated code goes here...
 
+    public static PersonFactory createPerson() {
+        return new PersonFactory();
+    }
+
     public PersonIntegrator(PersonMutableState state) {
         this.state = state;
     }
@@ -30,52 +38,77 @@ public class PersonIntegrator {
         return state;
     }
 
-    public PersonIntegrator withAddress(AddressState.AddressMutableState address) {
+    public PersonIntegrator withAddress(AddressMutableState address) {
         state.address = address;
         return this;
     }
 
     public static class PersonFactory {
 
-        public static PersonFactory createPerson() {
-            return new PersonFactory();
-        }
-
-        public Factory.Name age(int age) {
-            return new Factory().new Age().age(age);
+        public Factory.Birthday name(String name) {
+            return new Factory().new Name().name(name);
         }
 
         private static class Factory {
-            private final PersonMutableState person = new PersonMutableState();
+            private final PersonMutableState state = new PersonMutableState();
 
-            public class Age {
-                public Name age(int age) {
-                    person.age = age;
-                    return new Name();
+            public class Name {
+                public Birthday name(String name) {
+                    state.name = name;
+                    return new Birthday();
                 }
             }
 
-            public class Name {
-                public Address name(String name) {
-                    person.name = name;
+            public class Birthday {
+                public Children birthday(DateMidnight birthday) {
+                    state.birthday = birthday;
+                    return new Children();
+                }
+            }
+
+            public class Children {
+                public Address children() {
+                    state.children = new ArrayList<PersonMutableState>();
+                    return new Address();
+                }
+
+                public Address children(List<PersonMutableState> children) {
+                    state.children = children;
                     return new Address();
                 }
             }
 
             public class Address {
                 public PersonIntegrator address() {
-                    person.address = null;
-                    return new PersonIntegrator(person);
+                    state.address = null;
+                    return new PersonIntegrator(state);
                 }
 
-                public PersonIntegrator address(AddressState.AddressMutableState address) {
-                    person.address = address;
-                    return new PersonIntegrator(person);
+                public Address2 address(AddressMutableState address) {
+                    state.address = address;
+                    return new Address2();
                 }
 
-                public PersonIntegrator address(AddressIntegrator integrator) {
-                    person.address = integrator.getMutableState();
-                    return new PersonIntegrator(person);
+                public Address2 address(AddressIntegrator integrator) {
+                    state.address = integrator.getMutableState();
+                    return new Address2();
+                }
+            }
+
+            public class Address2 {
+                public PersonIntegrator address2() {
+                    state.address2 = null;
+                    return new PersonIntegrator(state);
+                }
+
+                public PersonIntegrator address2(AddressMutableState address2) {
+                    state.address2 = address2;
+                    return new PersonIntegrator(state);
+                }
+
+                public PersonIntegrator address2(AddressIntegrator integrator) {
+                    state.address2 = integrator.getMutableState();
+                    return new PersonIntegrator(state);
                 }
             }
         }

@@ -1,22 +1,21 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.state.PersonState;
+import org.joda.time.DateMidnight;
 
-import static net.sf.laja.cdd.AddressIntegrator.AddressFactory.streetName;
-import static net.sf.laja.cdd.PersonIntegrator.PersonFactory.createPerson;
+import static net.sf.laja.cdd.AddressIntegrator.createAddress;
+import static net.sf.laja.cdd.PersonIntegrator.createPerson;
 
 public class Main {
     public static void main(String[] args) {
-        Person person = createPerson().age(10).name("Kalle").address(streetName("gatan").withCity("Uppsala")).asPerson();
+        AddressIntegrator address = createAddress().streetName("gatan").withCity("Uppsala");
 
-        PersonText personText = new PersonText(person.state);
+        Person person = createPerson()
+                .name("Kalle")
+                .birthday(new DateMidnight(1987, 10, 20))
+                .children()
+                .address(address)
+                .address2(address).asPerson();
 
-        PersonState state = person.state.asMutable().setAge(10).asImmutable();
-        System.out.println("hashCode()=" + state);
-        System.out.println("super.hashCode()=" + state.superHashCode());
-
-        SpecialPerson personMutable = createPerson().age(1).name("").address().asSpecialPerson();
-
-        //new AddressStateBuilder().withId(1).
+        System.out.println(person);
     }
 }
