@@ -92,6 +92,13 @@ public class AddressState {
             return new AddressState(id, streetName, city);
         }
 
+        public AddressStringState asStringState() {
+            return new AddressStringState(
+                    String.valueOf(id),
+                    streetName,
+                    city);
+        }
+
         @Override
         public int hashCode() {
             int result = id;
@@ -117,6 +124,60 @@ public class AddressState {
         @Override
         public String toString() {
             return "{id=" + id + ", streetName='" + streetName + "\', city='" + city + "\'}";
+        }
+    }
+
+    public static class AddressStringState {
+        public String id;
+        public String streetName;
+        public String city;
+
+        public AddressStringState() {
+        }
+
+        public AddressStringState(String id, String streetName, String city) {
+            this.id = id;
+            this.streetName = streetName;
+            this.city = city;
+        }
+
+        public AddressState asState() {
+            return new AddressState(Integer.parseInt(id), streetName, city);
+        }
+
+        public AddressMutableState asMutableState() {
+            return new AddressMutableState(Integer.parseInt(id), streetName, city);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = id != null ? id.hashCode() : 0;
+            result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
+            result = 31 * result + (city != null ? city.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            AddressStringState that = (AddressStringState) o;
+
+            if (city != null ? !city.equals(that.city) : that.city != null) return false;
+            if (id != null ? !id.equals(that.id) : that.id != null) return false;
+            if (streetName != null ? !streetName.equals(that.streetName) : that.streetName != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "AddressStringState{" +
+                    "id='" + id + '\'' +
+                    ", streetName='" + streetName + '\'' +
+                    ", city='" + city + '\'' +
+                    '}';
         }
     }
 }

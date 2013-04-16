@@ -3,6 +3,7 @@ package net.sf.laja.cdd;
 import net.sf.laja.cdd.state.AddressState;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
+import static net.sf.laja.cdd.state.AddressState.AddressStringState;
 
 public class AddressIntegrator {
     private final AddressMutableState state;
@@ -81,6 +82,18 @@ public class AddressIntegrator {
 
         public DefaultAddress asAddress() {
             return new DefaultAddress(state.asImmutable());
+        }
+
+        public AddressState getState() {
+            return state.asImmutable();
+        }
+
+        public AddressMutableState getMutableState() {
+            return state;
+        }
+
+        public AddressStringState getStringState() {
+            return state.asStringState();
         }
     }
 }

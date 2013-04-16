@@ -16,8 +16,8 @@ public class Person {
         state = state.withName(name);
     }
 
-    public boolean hasShortName() {
-        return state.name.length() <= 6;
+    public boolean hasLongName() {
+        return state.name.length() > 8;
     }
 
     public boolean isFromUppsala() {
