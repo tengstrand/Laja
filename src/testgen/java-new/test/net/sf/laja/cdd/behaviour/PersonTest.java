@@ -1,10 +1,10 @@
 package net.sf.laja.cdd.behaviour;
 
+import net.sf.laja.cdd.Data;
 import org.junit.Test;
 
 import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
-import static net.sf.laja.cdd.state.PersonState.PersonStringState;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -26,8 +26,8 @@ public class PersonTest {
     }
 
     @Test
-    public void convertToStringState() {
-        PersonStringState personState = buildPerson().withName("Carl").getStringState();
-        System.out.println(personState);
+    public void convertToData() {
+        Data data = buildPerson().withName("Carl").getData();
+        assertThat(data.toString(), is("Data{version=1, type=net.sf.laja.cdd.state.PersonState.PersonMutableState, attributes={name=Carl, birthday=1366149600000, children=[], address=Data{version=1, type=net.sf.laja.cdd.state.AddressState.AddressMutableState, attributes={id=0, streetName=, city=}}}}"));
     }
 }

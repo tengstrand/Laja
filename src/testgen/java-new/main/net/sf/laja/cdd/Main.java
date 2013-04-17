@@ -1,5 +1,7 @@
 package net.sf.laja.cdd;
 
+import net.sf.laja.cdd.state.PersonState;
+
 import static net.sf.laja.cdd.AddressCreator.createAddress;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
@@ -16,8 +18,7 @@ public class Main {
 
         Data object = person.state.asData();
 
-        PersonMutableState.PersonToDataConverter converter = new PersonMutableState.PersonToDataConverter();
-        PersonMutableState mutableState = converter.convert(object);
+        PersonMutableState mutableState = PersonState.converter.convert(object);
 
         System.out.println(object);
         System.out.println(person.state.asMutable());

@@ -76,7 +76,7 @@ public class Data implements Serializable {
     }
 
     public static interface DataConverter<T> {
-        public T convert(Data data);
+        T convert(Data data);
     }
 
     @Override

@@ -9,7 +9,6 @@ import java.util.List;
 import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
-import static net.sf.laja.cdd.state.PersonState.PersonStringState;
 
 public class PersonCreator {
     private final PersonMutableState state;
@@ -44,8 +43,8 @@ public class PersonCreator {
         return state;
     }
 
-    public PersonStringState getStringState() {
-        return state.asStringState();
+    public Data getData() {
+        return state.asData();
     }
 
     public PersonCreator withAddress(AddressMutableState address) {
@@ -151,16 +150,16 @@ public class PersonCreator {
             return new Person(state.asImmutable());
         }
 
+        public Data getData() {
+            return state.asData();
+        }
+
         public PersonState getState() {
             return state.asImmutable();
         }
 
         public PersonMutableState getMutableState() {
             return state;
-        }
-
-        public PersonStringState getStringState() {
-            return state.asStringState();
         }
     }
 }

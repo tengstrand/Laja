@@ -1,7 +1,6 @@
 package net.sf.laja.cdd.state;
 
 import com.google.common.collect.ImmutableList;
-import net.sf.laja.cdd.Converters;
 import net.sf.laja.cdd.Data;
 import org.joda.time.DateMidnight;
 
@@ -9,11 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.Data.createMap;
+import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.state.AddressState.AddressStringState;
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState.PersonToDataConverter;
 
 public class PersonState implements Serializable {
     public final String name;
@@ -23,23 +20,22 @@ public class PersonState implements Serializable {
 
     private static int _version_ = 1;
 
-    private void postAssertValidState() {
-        if (birthday.isBeforeNow()) {
-            throw new IllegalBirthdayException();
-        }
-    }
-
-    // TODO: Add support for this method.
-    private void defaults(PersonMutableState state) {
+    private static void defaults(PersonMutableState state) {
         state.name = "";
         state.birthday = new DateMidnight();
         state.children = new ArrayList<PersonMutableState>();
         state.address = new AddressMutableState();
     }
 
+    private void postAssertValidState() {
+        if (birthday.isBeforeNow()) {
+            throw new IllegalBirthdayException();
+        }
+    }
+
     // Generated code goes here...
 
-    public static PersonToDataConverter converter = new PersonToDataConverter();
+    public static PersonMutableState.PersonToDataConverter converter = new PersonMutableState.PersonToDataConverter();
 
     public PersonState(String name, DateMidnight birthday, ImmutableList<PersonState> children, AddressState address) {
         this.name = name;
@@ -87,15 +83,14 @@ public class PersonState implements Serializable {
     }
 
     public Data asData() {
-        return asMutable().asData();
-    }
-
-    public int superHashCode() {
-        return super.hashCode();
-    }
-
-    public boolean superEquals(Object o) {
-        return super.equals(o);
+        return new Data(
+                _version_,
+                getClass().getCanonicalName(),
+                createMap()
+                    .value("name", name)
+                    .value("birthday", birthday)
+                    .value("children", asDataList(children))
+                    .value("address", address.asData()).build());
     }
 
     @Override
@@ -140,10 +135,7 @@ public class PersonState implements Serializable {
         public AddressMutableState address;
 
         public PersonMutableState() {
-            name = "";
-            birthday = new DateMidnight();
-            children = new ArrayList<PersonMutableState>();
-            address = new AddressMutableState();
+            defaults(this);
         }
 
         public PersonMutableState(String name, DateMidnight birthday, List<PersonMutableState> children, AddressMutableState address) {
@@ -167,46 +159,15 @@ public class PersonState implements Serializable {
             return new PersonState(name, birthday, Converter.asImmutableList(children), address.asImmutable());
         }
 
-        public PersonStringState asStringState() {
-            return new PersonStringState(
-                    name,
-                    Converters.asString(birthday),
-                    asStringList(children),
-                    address.asStringState()
-                );
-        }
-
-        private List<PersonStringState> asStringList(List<PersonMutableState> list) {
-            List<PersonStringState> result = new ArrayList<PersonStringState>();
-
-            for (PersonMutableState mutableState : list) {
-                result.add(mutableState.asStringState());
-            }
-            return result;
-        }
-
         public Data asData() {
             return new Data(
                     _version_,
-                    fullClassName(),
+                    getClass().getCanonicalName(),
                     createMap()
                         .value("name", name)
                         .value("birthday", birthday)
                         .value("children", asDataList(children))
                         .value("address", address.asData()).build());
-        }
-
-        private String fullClassName() {
-            return getClass().getCanonicalName();
-        }
-
-        private List<Data> asDataList(List<PersonMutableState> list) {
-            List<Data> result = new ArrayList<Data>();
-
-            for (PersonMutableState mutableState : list) {
-                result.add(mutableState.asData());
-            }
-            return result;
         }
 
         public static class PersonToDataConverter implements Data.DataConverter<PersonMutableState> {
@@ -264,95 +225,22 @@ public class PersonState implements Serializable {
         }
     }
 
-    public static class PersonStringState {
-        public String name;
-        public String birthday;
-        public List<PersonStringState> children;
-        public AddressStringState address;
+    private static List<Data> asDataList(ImmutableList<PersonState> list) {
+        List<Data> result = new ArrayList<Data>();
 
-        public PersonStringState() {
+        for (PersonState state : list) {
+            result.add(state.asData());
         }
+        return result;
+    }
 
-        public PersonStringState(String name, String birthday, List<PersonStringState> children, AddressStringState address) {
-            this.name = name;
-            this.birthday = birthday;
-            this.children = children;
-            this.address = address;
+    private static List<Data> asDataList(List<PersonMutableState> list) {
+        List<Data> result = new ArrayList<Data>();
+
+        for (PersonMutableState mutableState : list) {
+            result.add(mutableState.asData());
         }
-
-        public PersonState asState() {
-            return new PersonState(
-                    name,
-                    Converters.asDateMidnight(birthday),
-                    asImmutableList(children),
-                    address.asState()
-            );
-        }
-
-        public PersonMutableState asMutableState() {
-            return new PersonMutableState(
-                    name,
-                    Converters.asDateMidnight(birthday),
-                    asMutableList(children),
-                    address.asMutableState()
-            );
-        }
-
-        public Data asData() {
-            return asMutableState().asData();
-        }
-
-        private ImmutableList<PersonState> asImmutableList(List<PersonStringState> list) {
-            ImmutableList.Builder<PersonState> result = ImmutableList.builder();
-
-            for (PersonStringState stringState : list) {
-                result.add(stringState.asState());
-            }
-            return result.build();
-        }
-
-        public List<PersonMutableState> asMutableList(List<PersonStringState> list) {
-            List<PersonMutableState> result = new ArrayList<PersonMutableState>();
-
-            for (PersonStringState stringState : list) {
-                result.add(stringState.asMutableState());
-            }
-            return result;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            PersonStringState that = (PersonStringState) o;
-
-            if (address != null ? !address.equals(that.address) : that.address != null) return false;
-            if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-            if (children != null ? !children.equals(that.children) : that.children != null) return false;
-            if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = name != null ? name.hashCode() : 0;
-            result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-            result = 31 * result + (children != null ? children.hashCode() : 0);
-            result = 31 * result + (address != null ? address.hashCode() : 0);
-            return result;
-        }
-
-        @Override
-        public String toString() {
-            return "{" +
-                    "name='" + name + '\'' +
-                    ", birthday='" + birthday + '\'' +
-                    ", children=" + children +
-                    ", address=" + address +
-                    '}';
-        }
+        return result;
     }
 
     public static class Converter {
