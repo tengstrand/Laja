@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.common.collect.ImmutableList;
+import net.sf.laja.cdd.Converters;
 import org.joda.time.DateMidnight;
 import org.joda.time.format.DateTimeFormat;
 
@@ -155,7 +156,7 @@ public class PersonState {
         public PersonStringState asStringState() {
             return new PersonStringState(
                     name,
-                    Converter.asString(birthday),
+                    Converters.asString(birthday),
                     asStringList(children),
                     address.asStringState()
                 );
@@ -224,7 +225,7 @@ public class PersonState {
         public PersonState asState() {
             return new PersonState(
                     name,
-                    Converter.asDateMidnight(birthday),
+                    Converters.asDateMidnight(birthday),
                     asImmutableList(children),
                     address.asState()
             );
@@ -233,7 +234,7 @@ public class PersonState {
         public PersonMutableState asMutableState() {
             return new PersonMutableState(
                     name,
-                    Converter.asDateMidnight(birthday),
+                    Converters.asDateMidnight(birthday),
                     asMutableList(children),
                     address.asMutableState()
             );
@@ -308,16 +309,6 @@ public class PersonState {
                 result.add(state.asMutable());
             }
             return result;
-        }
-
-        private static String DATE_MIDNIGHT_FORMAT = "yyyy-MM-dd";
-
-        public static String asString(DateMidnight date) {
-            return new SimpleDateFormat(DATE_MIDNIGHT_FORMAT).format(date.toDate());
-        }
-
-        public static DateMidnight asDateMidnight(String date) {
-            return DateTimeFormat.forPattern(DATE_MIDNIGHT_FORMAT).parseDateTime(date).toDateMidnight();
         }
     }
 }
