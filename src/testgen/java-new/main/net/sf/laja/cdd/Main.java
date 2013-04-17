@@ -1,12 +1,12 @@
 package net.sf.laja.cdd;
 
-import static net.sf.laja.cdd.AddressIntegrator.createAddress;
-import static net.sf.laja.cdd.PersonIntegrator.createPerson;
+import static net.sf.laja.cdd.AddressCreator.createAddress;
+import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonStringState;
 
 public class Main {
     public static void main(String[] args) {
-        AddressIntegrator address = createAddress().streetName("gatan").withCity("Uppsala");
+        AddressCreator address = createAddress().streetName("gatan").withCity("Uppsala");
 
         Person person = createPerson()
                 .name("Kalle")

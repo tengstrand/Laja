@@ -6,12 +6,12 @@ import org.joda.time.DateMidnight;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.sf.laja.cdd.AddressIntegrator.*;
+import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonStringState;
 
-public class PersonIntegrator {
+public class PersonCreator {
     private final PersonMutableState state;
 
     public Person asPerson() {
@@ -32,7 +32,7 @@ public class PersonIntegrator {
         return new PersonBuilder();
     }
 
-    public PersonIntegrator(PersonMutableState state) {
+    public PersonCreator(PersonMutableState state) {
         this.state = state;
     }
 
@@ -48,7 +48,7 @@ public class PersonIntegrator {
         return state.asStringState();
     }
 
-    public PersonIntegrator withAddress(AddressMutableState address) {
+    public PersonCreator withAddress(AddressMutableState address) {
         state.address = address;
         return this;
     }
@@ -59,10 +59,6 @@ public class PersonIntegrator {
             return new Factory().new Name().name(name);
         }
 
-        public PersonIntegrator defaults() {
-            return new Factory().new Name().defaults();
-        }
-
         private static class Factory {
             private final PersonMutableState state = new PersonMutableState();
 
@@ -70,10 +66,6 @@ public class PersonIntegrator {
                 public Birthday name(String name) {
                     state.name = name;
                     return new Birthday();
-                }
-
-                public PersonIntegrator defaults() {
-                    return new PersonIntegrator(state);
                 }
             }
 
@@ -88,10 +80,6 @@ public class PersonIntegrator {
                     state.birthday = birthday;
                     return new Children();
                 }
-
-                public PersonIntegrator defaults() {
-                    return new PersonIntegrator(state);
-                }
             }
 
             public class Children {
@@ -104,31 +92,23 @@ public class PersonIntegrator {
                     state.children = children;
                     return new Address();
                 }
-
-                public PersonIntegrator defaults() {
-                    return new PersonIntegrator(state);
-                }
             }
 
             public class Address {
                 // TODO: Make sure this row is preserved when generated.
-                public PersonIntegrator defaultAddress() {
+                public PersonCreator defaultAddress() {
                     state.address = buildAddress().getMutableState();
-                    return new PersonIntegrator(state);
+                    return new PersonCreator(state);
                 }
 
-                public PersonIntegrator address(AddressMutableState address) {
+                public PersonCreator address(AddressMutableState address) {
                     state.address = address;
-                    return new PersonIntegrator(state);
+                    return new PersonCreator(state);
                 }
 
-                public PersonIntegrator address(AddressIntegrator integrator) {
+                public PersonCreator address(AddressCreator integrator) {
                     state.address = integrator.getMutableState();
-                    return new PersonIntegrator(state);
-                }
-
-                public PersonIntegrator defaults() {
-                    return new PersonIntegrator(state);
+                    return new PersonCreator(state);
                 }
             }
         }
@@ -159,6 +139,18 @@ public class PersonIntegrator {
 
         public Person asPerson() {
             return new Person(state.asImmutable());
+        }
+
+        public PersonState getState() {
+            return state.asImmutable();
+        }
+
+        public PersonMutableState getMutableState() {
+            return state;
+        }
+
+        public PersonStringState getStringState() {
+            return state.asStringState();
         }
     }
 }

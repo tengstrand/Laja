@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.AddressState;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.AddressState.AddressStringState;
 
-public class AddressIntegrator {
+public class AddressCreator {
     private final AddressMutableState state;
 
     public Address asAddress() {
@@ -22,7 +22,7 @@ public class AddressIntegrator {
         return new AddressBuilder();
     }
 
-    public AddressIntegrator(AddressMutableState state) {
+    public AddressCreator(AddressMutableState state) {
         this.state = state;
     }
 
@@ -34,19 +34,19 @@ public class AddressIntegrator {
         return state;
     }
 
-    public AddressIntegrator withId(int id) {
+    public AddressCreator withId(int id) {
         state.id = id;
         return this;
     }
 
-    public AddressIntegrator withCity(String city) {
+    public AddressCreator withCity(String city) {
         state.city = city;
         return this;
     }
 
     public static class AddressFactory {
 
-        public AddressIntegrator streetName(String streetName) {
+        public AddressCreator streetName(String streetName) {
             return new Factory().new StreetName().streetName(streetName);
         }
 
@@ -54,9 +54,9 @@ public class AddressIntegrator {
             private final AddressMutableState state = new AddressMutableState();
 
             public class StreetName {
-                public AddressIntegrator streetName(String streetName) {
+                public AddressCreator streetName(String streetName) {
                     state.streetName = streetName;
-                    return new AddressIntegrator(state);
+                    return new AddressCreator(state);
                 }
             }
         }
