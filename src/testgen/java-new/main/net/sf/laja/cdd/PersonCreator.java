@@ -6,7 +6,7 @@ import org.joda.time.DateMidnight;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.sf.laja.cdd.AddressCreator.*;
+import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonStringState;
@@ -85,6 +85,16 @@ public class PersonCreator {
             public class Children {
                 public Address children() {
                     state.children = new ArrayList<PersonMutableState>();
+                    return new Address();
+                }
+
+                public Address children(PersonCreator... creators) {
+                    List<PersonMutableState> children = new ArrayList<PersonMutableState>();
+
+                    for (PersonCreator creator : creators) {
+                        children.add(creator.getMutableState());
+                    }
+                    state.children = children;
                     return new Address();
                 }
 

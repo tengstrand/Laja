@@ -1,23 +1,29 @@
 package net.sf.laja.cdd.state;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import com.google.common.collect.ImmutableList;
 import net.sf.laja.cdd.Converters;
+import net.sf.laja.cdd.Data;
 import org.joda.time.DateMidnight;
-import org.joda.time.format.DateTimeFormat;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import static net.sf.laja.cdd.PersonCreator.buildPerson;
+import static net.sf.laja.cdd.Data.createMap;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.AddressState.AddressStringState;
+import static net.sf.laja.cdd.state.PersonState.PersonMutableState.PersonToDataConverter;
 
-public class PersonState {
+public class PersonState implements Serializable {
     public final String name;
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
 
-    public void postAssertValidState() {
+    private static int _version_ = 1;
+
+    private void postAssertValidState() {
         if (birthday.isBeforeNow()) {
             throw new IllegalBirthdayException();
         }
@@ -32,6 +38,8 @@ public class PersonState {
     }
 
     // Generated code goes here...
+
+    public static PersonToDataConverter converter = new PersonToDataConverter();
 
     public PersonState(String name, DateMidnight birthday, ImmutableList<PersonState> children, AddressState address) {
         this.name = name;
@@ -66,6 +74,8 @@ public class PersonState {
             throw new AddressNullException();
         }
         address.assertValidState();
+
+        postAssertValidState();
     }
 
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address); }
@@ -74,6 +84,10 @@ public class PersonState {
 
     public PersonMutableState asMutable() {
         return new PersonMutableState(name, birthday, Converter.asMutableList(children), address.asMutable());
+    }
+
+    public Data asData() {
+        return asMutable().asData();
     }
 
     public int superHashCode() {
@@ -171,6 +185,50 @@ public class PersonState {
             return result;
         }
 
+        public Data asData() {
+            return new Data(
+                    _version_,
+                    fullClassName(),
+                    createMap()
+                        .value("name", name)
+                        .value("birthday", birthday)
+                        .value("children", asDataList(children))
+                        .value("address", address.asData()).build());
+        }
+
+        private String fullClassName() {
+            return getClass().getCanonicalName();
+        }
+
+        private List<Data> asDataList(List<PersonMutableState> list) {
+            List<Data> result = new ArrayList<Data>();
+
+            for (PersonMutableState mutableState : list) {
+                result.add(mutableState.asData());
+            }
+            return result;
+        }
+
+        public static class PersonToDataConverter implements Data.DataConverter<PersonMutableState> {
+
+            public PersonMutableState convert(Data data) {
+                return buildPerson()
+                        .withName(data.string("name"))
+                        .withBirthday(data.dateMidnight("birthday"))
+                        .withChildren(asPersonMutableState(data.list("children")))
+                        .withAddress(AddressState.converter.convert(data.data("address"))).getMutableState();
+            }
+
+            private List<PersonMutableState> asPersonMutableState(List<Data> list) {
+                List<PersonMutableState> result = new ArrayList<PersonMutableState>();
+
+                for (Data data : list) {
+                    result.add(convert(data));
+                }
+                return result;
+            }
+        }
+
         @Override
         public int hashCode() {
             int result = name != null ? name.hashCode() : 0;
@@ -238,6 +296,10 @@ public class PersonState {
                     asMutableList(children),
                     address.asMutableState()
             );
+        }
+
+        public Data asData() {
+            return asMutableState().asData();
         }
 
         private ImmutableList<PersonState> asImmutableList(List<PersonStringState> list) {

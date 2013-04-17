@@ -2,7 +2,7 @@ package net.sf.laja.cdd;
 
 import static net.sf.laja.cdd.AddressCreator.createAddress;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
-import static net.sf.laja.cdd.state.PersonState.PersonStringState;
+import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,12 +10,17 @@ public class Main {
 
         Person person = createPerson()
                 .name("Kalle")
-                .birthday(1987,10,20)
-                .children()
+                .birthday(1987, 10, 20)
+                .children(createPerson().name("").birthday(2010, 1, 1).children().defaultAddress())
                 .address(address).asPerson();
 
-        PersonStringState personState = createPerson().name("Nils").birthday(1977,7,7).children().defaultAddress().getStringState();
+        Data object = person.state.asData();
 
-        System.out.println(personState);
+        PersonMutableState.PersonToDataConverter converter = new PersonMutableState.PersonToDataConverter();
+        PersonMutableState mutableState = converter.convert(object);
+
+        System.out.println(object);
+        System.out.println(person.state.asMutable());
+        System.out.println(mutableState);
     }
 }

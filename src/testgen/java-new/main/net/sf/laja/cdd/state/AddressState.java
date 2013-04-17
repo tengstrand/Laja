@@ -1,14 +1,26 @@
 package net.sf.laja.cdd.state;
 
-public class AddressState {
+import net.sf.laja.cdd.Data;
+
+import java.io.Serializable;
+
+import static net.sf.laja.cdd.AddressCreator.buildAddress;
+import static net.sf.laja.cdd.Data.createMap;
+import static net.sf.laja.cdd.state.AddressState.AddressMutableState.AddressToDataConverter;
+
+public class AddressState implements Serializable {
     public final int id; // (id)
     public final String streetName;
     public final String city; // (optional)
 
-    public void postAssertValidState() {
+    private static int _version_ = 1;
+
+    private void postAssertValidState() {
     }
 
     // Generated code goes here...
+
+    public static AddressToDataConverter converter = new AddressToDataConverter();
 
     public AddressState(String streetName, String city) {
         this.id = 0;
@@ -97,6 +109,26 @@ public class AddressState {
                     String.valueOf(id),
                     streetName,
                     city);
+        }
+
+        public Data asData() {
+            return new Data(
+                    _version_,
+                    getClass().getCanonicalName(),
+                    createMap()
+                        .value("id", id)
+                        .value("streetName", streetName)
+                        .value("city", city).build());
+        }
+
+        public static class AddressToDataConverter implements Data.DataConverter<AddressMutableState> {
+
+            public AddressMutableState convert(Data data) {
+                return buildAddress()
+                        .withId(data.integer("id"))
+                        .withStreetName(data.string("streetName"))
+                        .withCity(data.string("city")).getMutableState();
+            }
         }
 
         @Override
