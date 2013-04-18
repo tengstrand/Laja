@@ -8,7 +8,7 @@ public class Person {
     public PersonState state;
 
     public Person(PersonState state) {
-        state.assertValidState();
+        state.assertIsValid();
         this.state = state;
     }
 

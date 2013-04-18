@@ -82,11 +82,6 @@ public class PersonCreator {
             }
 
             public class Children {
-                public Address children() {
-                    state.children = new ArrayList<PersonMutableState>();
-                    return new Address();
-                }
-
                 public Address children(PersonCreator... creators) {
                     List<PersonMutableState> children = new ArrayList<PersonMutableState>();
 

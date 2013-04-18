@@ -19,7 +19,7 @@ public class AddressState implements Serializable {
         state.city = "";
     }
 
-    private void postAssertValidState() {
+    private void postAssertIsValid() {
     }
 
     // Generated code goes here...
@@ -42,12 +42,12 @@ public class AddressState implements Serializable {
     public static class IllegalStreetNameException extends IllegalAddressStateException { }
     public static class StreetNameNullException extends IllegalAddressStateException { }
 
-    public void assertValidState() {
+    public void assertIsValid() {
         if (streetName == null) {
             throw new StreetNameNullException();
         }
 
-        postAssertValidState();
+        postAssertIsValid();
     }
 
     public AddressMutableState asMutable() {
@@ -107,7 +107,7 @@ public class AddressState implements Serializable {
             this.city = city;
         }
 
-        public void assertValidState() {
+        public void assertIsValid() {
             if (streetName == null) {
                 throw new StreetNameNullException();
             }

@@ -27,7 +27,7 @@ public class PersonState implements Serializable {
         state.address = new AddressMutableState();
     }
 
-    private void postAssertValidState() {
+    private void postAssertIsValid() {
         if (birthday.isBeforeNow()) {
             throw new IllegalBirthdayException();
         }
@@ -56,7 +56,7 @@ public class PersonState implements Serializable {
     public static class ChildrenNullException extends IllegalPersonStateException {  }
     public static class AddressNullException extends IllegalPersonStateException {  }
 
-    public void assertValidState() {
+    public void assertIsValid() {
         if (name == null) {
             throw new NameNullException();
         }
@@ -69,9 +69,9 @@ public class PersonState implements Serializable {
         if (address == null) {
             throw new AddressNullException();
         }
-        address.assertValidState();
+        address.assertIsValid();
 
-        postAssertValidState();
+        postAssertIsValid();
     }
 
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address); }
