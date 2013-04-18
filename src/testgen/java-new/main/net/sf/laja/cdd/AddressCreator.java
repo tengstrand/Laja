@@ -2,6 +2,8 @@ package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.AddressState;
 
+import java.util.Map;
+
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 
 public class AddressCreator {
@@ -83,7 +85,7 @@ public class AddressCreator {
             return new DefaultAddress(state.asImmutable());
         }
 
-        public Data getData() {
+        public Map getData() {
             return state.asData();
         }
 

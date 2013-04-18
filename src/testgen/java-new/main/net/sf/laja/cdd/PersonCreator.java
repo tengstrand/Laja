@@ -5,6 +5,7 @@ import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
@@ -43,7 +44,7 @@ public class PersonCreator {
         return state;
     }
 
-    public Data getData() {
+    public Map getData() {
         return state.asData();
     }
 
@@ -145,7 +146,7 @@ public class PersonCreator {
             return new Person(state.asImmutable());
         }
 
-        public Data getData() {
+        public Map getData() {
             return state.asData();
         }
 

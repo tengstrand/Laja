@@ -1,7 +1,8 @@
 package net.sf.laja.cdd.behaviour;
 
-import net.sf.laja.cdd.Data;
 import org.junit.Test;
+
+import java.util.Map;
 
 import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
@@ -27,7 +28,7 @@ public class PersonTest {
 
     @Test
     public void convertToData() {
-        Data data = buildPerson().withName("Carl").getData();
-        assertThat(data.toString(), is("Data{version=1, type=net.sf.laja.cdd.state.PersonState.PersonMutableState, attributes={name=Carl, birthday=1366149600000, children=[], address=Data{version=1, type=net.sf.laja.cdd.state.AddressState.AddressMutableState, attributes={id=0, streetName=, city=}}}}"));
+        Map data = buildPerson().withName("Carl").getData();
+        assertThat(data.toString(), is("{version=1, type=net.sf.laja.cdd.state.PersonState.PersonMutableState, attributes={name=Carl, birthday=1366236000000, children=[], address={version=1, type=net.sf.laja.cdd.state.AddressState.AddressMutableState, attributes={id=0, streetName=, city=}}}}"));
     }
 }

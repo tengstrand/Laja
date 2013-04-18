@@ -2,6 +2,8 @@ package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.PersonState;
 
+import java.util.Map;
+
 import static net.sf.laja.cdd.AddressCreator.createAddress;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
@@ -16,7 +18,7 @@ public class Main {
                 .children(createPerson().name("").birthday(2010, 1, 1).children().defaultAddress())
                 .address(address).asPerson();
 
-        Data object = person.state.asData();
+        Map object = person.state.asData();
 
         PersonMutableState mutableState = PersonState.converter.convert(object);
 

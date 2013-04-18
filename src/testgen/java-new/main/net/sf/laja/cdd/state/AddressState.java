@@ -3,16 +3,17 @@ package net.sf.laja.cdd.state;
 import net.sf.laja.cdd.Data;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import static net.sf.laja.cdd.AddressCreator.buildAddress;
-import static net.sf.laja.cdd.Data.createMap;
 
 public class AddressState implements Serializable {
     public final int id; // (id)
     public final String streetName;
     public final String city; // (optional)
 
-    private static int _version_ = 1;
+    // Only increase version if making not backward compatible changes in the data structure.
+    private static int VERSION = 1;
 
     private static void defaults(AddressMutableState state) {
         state.streetName = "";
@@ -54,14 +55,11 @@ public class AddressState implements Serializable {
         return new AddressMutableState(id, streetName, city);
     }
 
-    public Data asData() {
-        return new Data(
-                _version_,
-                getClass().getCanonicalName(),
-                createMap()
+    public Map<String, Object> asData() {
+        return Data.build(VERSION, getClass().getCanonicalName())
                     .value("id", id)
                     .value("streetName", streetName)
-                    .value("city", city).build());
+                    .value("city", city).map();
     }
 
     public AddressState withAge(int id) { return new AddressState(id, streetName, city); }
@@ -117,19 +115,17 @@ public class AddressState implements Serializable {
             return new AddressState(id, streetName, city);
         }
 
-        public Data asData() {
-            return new Data(
-                    _version_,
-                    getClass().getCanonicalName(),
-                    createMap()
-                            .value("id", id)
-                            .value("streetName", streetName)
-                            .value("city", city).build());
+        public Map<String,Object> asData() {
+            return Data.build(VERSION, getClass().getCanonicalName())
+                        .value("id", id)
+                        .value("streetName", streetName)
+                        .value("city", city).map();
         }
 
         public static class AddressToDataConverter implements Data.DataConverter<AddressMutableState> {
 
-            public AddressMutableState convert(Data data) {
+            public AddressMutableState convert(Map map) {
+                Data data = new Data(map);
                 return buildAddress()
                         .withId(data.integer("id"))
                         .withStreetName(data.string("streetName"))
