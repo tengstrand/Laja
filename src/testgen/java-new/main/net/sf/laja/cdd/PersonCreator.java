@@ -1,5 +1,6 @@
 package net.sf.laja.cdd;
 
+import net.sf.laja.cdd.state.AddressState;
 import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 
@@ -29,7 +30,11 @@ public class PersonCreator {
     }
 
     public static PersonBuilder buildPerson() {
-        return new PersonBuilder();
+        return PersonBuilder.create();
+    }
+
+    public static PersonBuilder buildPersonWithDefaults() {
+        return PersonBuilder.createWithDefaults();
     }
 
     public PersonCreator(PersonMutableState state) {
@@ -60,7 +65,7 @@ public class PersonCreator {
         }
 
         private static class Factory {
-            private final PersonMutableState state = new PersonMutableState();
+            private final PersonMutableState state = PersonMutableState.create();
 
             public class Name {
                 public Birthday name(String name) {
@@ -120,7 +125,19 @@ public class PersonCreator {
     }
 
     public static class PersonBuilder {
-        private PersonMutableState state = new PersonMutableState();
+        private final PersonMutableState state;
+
+        private PersonBuilder(PersonMutableState state) {
+            this.state = state;
+        }
+
+        public static PersonBuilder create() {
+            return new PersonBuilder(PersonMutableState.create());
+        }
+
+        public static PersonBuilder createWithDefaults() {
+            return new PersonBuilder(PersonMutableState.createWithDefaults());
+        }
 
         public PersonBuilder withName(String name) {
             state.name = name;
@@ -132,6 +149,11 @@ public class PersonCreator {
             return this;
         }
 
+        public PersonBuilder withBirthday(int year, int month, int day) {
+            state.birthday = new DateMidnight(year, month, day);
+            return this;
+        }
+
         public PersonBuilder withChildren(List<PersonMutableState> children) {
             state.children = children;
             return this;
@@ -139,6 +161,11 @@ public class PersonCreator {
 
         public PersonBuilder withAddress(AddressMutableState address) {
             state.address = address;
+            return this;
+        }
+
+        public PersonBuilder withAddress(AddressCreator.AddressBuilder address) {
+            state.address = address.getMutableState();
             return this;
         }
 

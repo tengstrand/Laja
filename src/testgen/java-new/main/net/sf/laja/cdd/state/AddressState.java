@@ -95,8 +95,18 @@ public class AddressState implements Serializable {
         public String streetName;
         public String city; // (optional)
 
-        public AddressMutableState() {
+        private AddressMutableState() {
             defaults(this);
+        }
+
+        public static AddressMutableState create() {
+            return new AddressMutableState();
+        }
+
+        public static AddressMutableState createWithDefaults() {
+            AddressMutableState state = create();
+            defaults(state);
+            return state;
         }
 
         public AddressMutableState(int id, String streetName, String city) {
@@ -116,7 +126,7 @@ public class AddressState implements Serializable {
         }
 
         public Map<String,Object> asData() {
-            return Data.build(VERSION, getClass().getCanonicalName())
+            return Data.build(VERSION, AddressState.class.getCanonicalName())
                         .value("id", id)
                         .value("streetName", streetName)
                         .value("city", city).map();
@@ -125,7 +135,7 @@ public class AddressState implements Serializable {
         public static class AddressToDataConverter implements Data.DataConverter<AddressMutableState> {
 
             public AddressMutableState convert(Map map) {
-                Data data = new Data(map);
+                Data data = Data.create(map);
                 return buildAddress()
                         .withId(data.integer("id"))
                         .withStreetName(data.string("streetName"))

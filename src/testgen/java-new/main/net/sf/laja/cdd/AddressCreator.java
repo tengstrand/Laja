@@ -20,7 +20,7 @@ public class AddressCreator {
     }
 
     public static AddressBuilder buildAddress() {
-        return new AddressBuilder();
+        return AddressBuilder.create();
     }
 
     public AddressCreator(AddressMutableState state) {
@@ -52,7 +52,7 @@ public class AddressCreator {
         }
 
         private static class Factory {
-            private final AddressMutableState state = new AddressMutableState();
+            private final AddressMutableState state = AddressMutableState.create();
 
             public class StreetName {
                 public AddressCreator streetName(String streetName) {
@@ -64,7 +64,15 @@ public class AddressCreator {
     }
 
     public static class AddressBuilder {
-        private AddressMutableState state = new AddressMutableState();
+        private final AddressMutableState state;
+
+        private AddressBuilder(AddressMutableState state) {
+            this.state = state;
+        }
+
+        public static AddressBuilder create() {
+            return new AddressBuilder(AddressMutableState.create());
+        }
 
         public AddressBuilder withId(int id) {
             state.id = id;

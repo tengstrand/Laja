@@ -4,7 +4,9 @@ import org.junit.Test;
 
 import java.util.Map;
 
+import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.PersonCreator.buildPerson;
+import static net.sf.laja.cdd.PersonCreator.buildPersonWithDefaults;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -28,7 +30,13 @@ public class PersonTest {
 
     @Test
     public void convertToData() {
-        Map data = buildPerson().withName("Carl").getData();
-        assertThat(data.toString(), is("{version=1, type=net.sf.laja.cdd.state.PersonState.PersonMutableState, attributes={name=Carl, birthday=1366236000000, children=[], address={version=1, type=net.sf.laja.cdd.state.AddressState.AddressMutableState, attributes={id=0, streetName=, city=}}}}"));
+        Map data = buildPerson().withName("Carl").withAddress(buildAddress().withCity("Uppsala")).getData();
+        assertThat(data.toString(), is("{version=1, type=net.sf.laja.cdd.state.PersonState, attributes={name=Carl, children=[], address={version=1, type=net.sf.laja.cdd.state.AddressState, attributes={id=0, streetName=, city=Uppsala}}}}"));
+    }
+
+    @Test
+    public void convertToDataWithDefaults() {
+        Map data = buildPersonWithDefaults().withName("Carl").withAddress(buildAddress().withCity("Uppsala")).getData();
+        assertThat(data.toString(), is("{version=1, type=net.sf.laja.cdd.state.PersonState, attributes={name=Carl, birthday=936828000000, children=[], address={version=1, type=net.sf.laja.cdd.state.AddressState, attributes={id=0, streetName=, city=Uppsala}}}}"));
     }
 }

@@ -19,12 +19,12 @@ public class Data implements Serializable {
         map.put("attributes", attributes);
     }
 
-    public Data(Map<String, Object> map) {
+    private Data(Map<String, Object> map) {
         this.map = map;
         attributes = (Map<String, Object>)map.get("attributes");
     }
 
-    public static Data build(Map<String, Object> map) {
+    public static Data create(Map<String, Object> map) {
         return new Data(map);
     }
 
@@ -40,22 +40,30 @@ public class Data implements Serializable {
         }
 
         public AttributesBuilder value(String attribute, String value) {
-            attributes.put(attribute, value);
+            if (value != null) {
+                attributes.put(attribute, value);
+            }
             return this;
         }
 
         public AttributesBuilder value(String attribute, List<Map> value) {
-            attributes.put(attribute, value);
+            if (value != null) {
+                attributes.put(attribute, value);
+            }
             return this;
         }
 
         public AttributesBuilder value(String attribute, Map map) {
-            attributes.put(attribute, map);
+            if (map != null) {
+                attributes.put(attribute, map);
+            }
             return this;
         }
 
         public AttributesBuilder value(String attribute, DateMidnight value) {
-            attributes.put(attribute, value.getMillis());
+            if (value != null) {
+                attributes.put(attribute, value.getMillis());
+            }
             return this;
         }
 
