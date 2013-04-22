@@ -1,6 +1,5 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.state.AddressState;
 import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 
@@ -31,10 +30,6 @@ public class PersonCreator {
 
     public static PersonBuilder buildPerson() {
         return PersonBuilder.create();
-    }
-
-    public static PersonBuilder buildPersonWithDefaults() {
-        return PersonBuilder.createWithDefaults();
     }
 
     public PersonCreator(PersonMutableState state) {
@@ -135,10 +130,6 @@ public class PersonCreator {
             return new PersonBuilder(PersonMutableState.create());
         }
 
-        public static PersonBuilder createWithDefaults() {
-            return new PersonBuilder(PersonMutableState.createWithDefaults());
-        }
-
         public PersonBuilder withName(String name) {
             state.name = name;
             return this;
@@ -151,6 +142,11 @@ public class PersonCreator {
 
         public PersonBuilder withBirthday(int year, int month, int day) {
             state.birthday = new DateMidnight(year, month, day);
+            return this;
+        }
+
+        public PersonBuilder withChildren() {
+            state.children = new ArrayList<PersonMutableState>();
             return this;
         }
 

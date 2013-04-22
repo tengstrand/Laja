@@ -18,15 +18,8 @@ public class PersonState implements Serializable {
     public final ImmutableList<PersonState> children;
     public final AddressState address;
 
-    // Only increase version if making not backward compatible changes in the data structure.
+    // Only increase version if making changes that is not backward compatible.
     private static int VERSION = 1;
-
-    private static void defaults(PersonMutableState state) {
-        state.name = "";
-        state.birthday = new DateMidnight(1999, 9, 9);
-        state.children = new ArrayList<PersonMutableState>();
-        state.address = AddressMutableState.create();
-    }
 
     private void postAssertIsValid() {
         if (birthday.isAfterNow()) {
@@ -36,7 +29,7 @@ public class PersonState implements Serializable {
 
     // Generated code goes here...
 
-    public static PersonMutableState.PersonToDataConverter converter = new PersonMutableState.PersonToDataConverter();
+    public static PersonToDataConverter converter = new PersonToDataConverter();
 
     public PersonState(String name, DateMidnight birthday, ImmutableList<PersonState> children, AddressState address) {
         this.name = name;
@@ -84,11 +77,7 @@ public class PersonState implements Serializable {
     }
 
     public Map asData() {
-        return Data.build(VERSION, getClass().getCanonicalName())
-                    .value("name", name)
-                    .value("birthday", birthday)
-                    .value("children", asDataList(children))
-                    .value("address", address.asData()).map();
+        return converter.asDataFromState(this);
     }
 
     @Override
@@ -139,12 +128,6 @@ public class PersonState implements Serializable {
             return new PersonMutableState();
         }
 
-        public static PersonMutableState createWithDefaults() {
-            PersonMutableState state = create();
-            defaults(state);
-            return state;
-        }
-
         public PersonMutableState(String name, DateMidnight birthday, List<PersonMutableState> children, AddressMutableState address) {
             this.name = name;
             this.birthday = birthday;
@@ -167,43 +150,7 @@ public class PersonState implements Serializable {
         }
 
         public Map<String, Object> asData() {
-            return Data.build(VERSION, PersonState.class.getCanonicalName())
-                        .value("name", name)
-                        .value("birthday", birthday)
-                        .value("children", asDataList(children))
-                        .value("address", (address == null ? null : address.asData())).map();
-        }
-
-        private List<Map> asDataList(List<PersonMutableState> list) {
-            List<Map> result = new ArrayList<Map>();
-
-            if (list != null) {
-                for (PersonMutableState mutableState : list) {
-                    result.add(mutableState.asData());
-                }
-            }
-            return result;
-        }
-
-        public static class PersonToDataConverter implements Data.DataConverter<PersonMutableState> {
-
-            public PersonMutableState convert(Map map) {
-                Data data = Data.create(map);
-                return buildPerson()
-                        .withName(data.string("name"))
-                        .withBirthday(data.dateMidnight("birthday"))
-                        .withChildren(asPersonMutableState(data.list("children")))
-                        .withAddress(AddressState.converter.convert(data.data("address"))).getMutableState();
-            }
-
-            private List<PersonMutableState> asPersonMutableState(List<Map> list) {
-                List<PersonMutableState> result = new ArrayList<PersonMutableState>();
-
-                for (Map map : list) {
-                    result.add(convert(map));
-                }
-                return result;
-            }
+            return converter.asDataFromMutableState(this);
         }
 
         @Override
@@ -248,6 +195,69 @@ public class PersonState implements Serializable {
             result.add(state.asData());
         }
         return result;
+    }
+
+    public static class PersonToDataConverter implements Data.DataConverter<PersonState,PersonMutableState> {
+
+        public PersonState asState(Map map) {
+            return asMutableState(map).asImmutable();
+        }
+
+        public PersonMutableState asMutableState(Map map) {
+            Data data = new Data(map);
+            return buildPerson()
+                    .withName(data.string("name"))
+                    .withBirthday(data.dateMidnight("birthday"))
+                    .withChildren(asPersonMutableState(data.list("children")))
+                    .withAddress(AddressState.converter.asMutableState(data.data("address"))).getMutableState();
+        }
+
+        public Map asDataFromState(PersonState state) {
+            return Data.build(VERSION, PersonState.class.getCanonicalName())
+                    .value("name", state.name)
+                    .value("birthday", state.birthday)
+                    .value("children", asDataFromList(state.children))
+                    .value("address", (state.address == null ? null : state.address.asData())).map();
+        }
+
+        public Map asDataFromMutableState(PersonMutableState state) {
+            return Data.build(VERSION, PersonState.class.getCanonicalName())
+                    .value("name", state.name)
+                    .value("birthday", state.birthday)
+                    .value("children", asDataFromMutableList(state.children))
+                    .value("address", (state.address == null ? null : state.address.asData())).map();
+        }
+
+        private List<PersonMutableState> asPersonMutableState(List<Map> list) {
+            List<PersonMutableState> result = new ArrayList<PersonMutableState>();
+
+            for (Map map : list) {
+                result.add(asMutableState(map));
+            }
+            return result;
+        }
+
+        private List<Map> asDataFromList(ImmutableList<PersonState> list) {
+            List<Map> result = new ArrayList<Map>();
+
+            if (list != null) {
+                for (PersonState state : list) {
+                    result.add(state.asData());
+                }
+            }
+            return result;
+        }
+
+        private List<Map> asDataFromMutableList(List<PersonMutableState> list) {
+            List<Map> result = new ArrayList<Map>();
+
+            if (list != null) {
+                for (PersonMutableState mutableState : list) {
+                    result.add(mutableState.asData());
+                }
+            }
+            return result;
+        }
     }
 
     public static class Converter {

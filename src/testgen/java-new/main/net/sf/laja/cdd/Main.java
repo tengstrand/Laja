@@ -20,7 +20,7 @@ public class Main {
 
         Map object = person.state.asData();
 
-        PersonMutableState mutableState = PersonState.converter.convert(object);
+        PersonMutableState mutableState = PersonState.converter.asMutableState(object);
 
         System.out.println(object);
         System.out.println(person.state.asMutable());

@@ -11,21 +11,17 @@ public class Data implements Serializable {
     private final Map<String, Object> map;
     private final Map<String, Object> attributes;
 
+    public Data(Map<String, Object> map) {
+        this.map = map;
+        attributes = (Map<String, Object>)map.get("attributes");
+    }
+
     private Data(int version, String type, Map<String, Object> attributes) {
         this.attributes = attributes;
         map = new LinkedHashMap<String, Object>();
         map.put("version", version);
         map.put("type", type);
         map.put("attributes", attributes);
-    }
-
-    private Data(Map<String, Object> map) {
-        this.map = map;
-        attributes = (Map<String, Object>)map.get("attributes");
-    }
-
-    public static Data create(Map<String, Object> map) {
-        return new Data(map);
     }
 
     public static AttributesBuilder build(int version, String type) {
@@ -92,8 +88,11 @@ public class Data implements Serializable {
         return (List<Map>) attributes.get(attribute);
     }
 
-    public static interface DataConverter<T> {
-        T convert(Map map);
+    public static interface DataConverter<S,MS> {
+        S asState(Map map);
+        MS asMutableState(Map map);
+        Map asDataFromState(S state);
+        Map asDataFromMutableState(MS state);
     }
 
     @Override

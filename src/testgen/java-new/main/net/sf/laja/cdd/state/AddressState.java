@@ -12,7 +12,7 @@ public class AddressState implements Serializable {
     public final String streetName;
     public final String city; // (optional)
 
-    // Only increase version if making not backward compatible changes in the data structure.
+    // Only increase version if making changes that is not backward compatible.
     private static int VERSION = 1;
 
     private static void defaults(AddressMutableState state) {
@@ -25,7 +25,7 @@ public class AddressState implements Serializable {
 
     // Generated code goes here...
 
-    public static AddressMutableState.AddressToDataConverter converter = new AddressMutableState.AddressToDataConverter();
+    public static AddressToDataConverter converter = new AddressToDataConverter();
 
     public AddressState(String streetName, String city) {
         this.id = 0;
@@ -56,10 +56,7 @@ public class AddressState implements Serializable {
     }
 
     public Map<String, Object> asData() {
-        return Data.build(VERSION, getClass().getCanonicalName())
-                    .value("id", id)
-                    .value("streetName", streetName)
-                    .value("city", city).map();
+        return converter.asDataFromState(this);
     }
 
     public AddressState withAge(int id) { return new AddressState(id, streetName, city); }
@@ -126,21 +123,7 @@ public class AddressState implements Serializable {
         }
 
         public Map<String,Object> asData() {
-            return Data.build(VERSION, AddressState.class.getCanonicalName())
-                        .value("id", id)
-                        .value("streetName", streetName)
-                        .value("city", city).map();
-        }
-
-        public static class AddressToDataConverter implements Data.DataConverter<AddressMutableState> {
-
-            public AddressMutableState convert(Map map) {
-                Data data = Data.create(map);
-                return buildAddress()
-                        .withId(data.integer("id"))
-                        .withStreetName(data.string("streetName"))
-                        .withCity(data.string("city")).getMutableState();
-            }
+            return converter.asDataFromMutableState(this);
         }
 
         @Override
@@ -168,6 +151,35 @@ public class AddressState implements Serializable {
         @Override
         public String toString() {
             return "{id=" + id + ", streetName='" + streetName + "\', city='" + city + "\'}";
+        }
+    }
+
+    public static class AddressToDataConverter implements Data.DataConverter<AddressState,AddressMutableState> {
+
+        public AddressState asState(Map map) {
+            return asMutableState(map).asImmutable();
+        }
+
+        public AddressMutableState asMutableState(Map map) {
+            Data data = new Data(map);
+            return buildAddress()
+                    .withId(data.integer("id"))
+                    .withStreetName(data.string("streetName"))
+                    .withCity(data.string("city")).getMutableState();
+        }
+
+        public Map asDataFromState(AddressState state) {
+            return Data.build(VERSION, getClass().getCanonicalName())
+                    .value("id", state.id)
+                    .value("streetName", state.streetName)
+                    .value("city", state.city).map();
+        }
+
+        public Map asDataFromMutableState(AddressMutableState state) {
+            return Data.build(VERSION, AddressState.class.getCanonicalName())
+                    .value("id", state.id)
+                    .value("streetName", state.streetName)
+                    .value("city", state.city).map();
         }
     }
 }
