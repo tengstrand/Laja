@@ -44,10 +44,6 @@ public class PersonCreator {
         return state;
     }
 
-    public Map getData() {
-        return state.asData();
-    }
-
     public PersonCreator withAddress(AddressMutableState address) {
         state.address = address;
         return this;
@@ -167,10 +163,6 @@ public class PersonCreator {
 
         public Person asPerson() {
             return new Person(state.asImmutable());
-        }
-
-        public Map getData() {
-            return state.asData();
         }
 
         public PersonState getState() {

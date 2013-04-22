@@ -1,19 +1,11 @@
 package net.sf.laja.cdd.state;
 
-import net.sf.laja.cdd.Data;
-
 import java.io.Serializable;
-import java.util.Map;
-
-import static net.sf.laja.cdd.AddressCreator.buildAddress;
 
 public class AddressState implements Serializable {
     public final int id; // (id)
     public final String streetName;
     public final String city; // (optional)
-
-    // Only increase version if making changes that is not backward compatible.
-    private static int VERSION = 1;
 
     private static void defaults(AddressMutableState state) {
         state.streetName = "";
@@ -24,8 +16,6 @@ public class AddressState implements Serializable {
     }
 
     // Generated code goes here...
-
-    public static AddressToDataConverter converter = new AddressToDataConverter();
 
     public AddressState(String streetName, String city) {
         this.id = 0;
@@ -53,10 +43,6 @@ public class AddressState implements Serializable {
 
     public AddressMutableState asMutable() {
         return new AddressMutableState(id, streetName, city);
-    }
-
-    public Map<String, Object> asData() {
-        return converter.asDataFromState(this);
     }
 
     public AddressState withAge(int id) { return new AddressState(id, streetName, city); }
@@ -122,10 +108,6 @@ public class AddressState implements Serializable {
             return new AddressState(id, streetName, city);
         }
 
-        public Map<String,Object> asData() {
-            return converter.asDataFromMutableState(this);
-        }
-
         @Override
         public int hashCode() {
             int result = id;
@@ -151,35 +133,6 @@ public class AddressState implements Serializable {
         @Override
         public String toString() {
             return "{id=" + id + ", streetName='" + streetName + "\', city='" + city + "\'}";
-        }
-    }
-
-    public static class AddressToDataConverter implements Data.DataConverter<AddressState,AddressMutableState> {
-
-        public AddressState asState(Map map) {
-            return asMutableState(map).asImmutable();
-        }
-
-        public AddressMutableState asMutableState(Map map) {
-            Data data = new Data(map);
-            return buildAddress()
-                    .withId(data.integer("id"))
-                    .withStreetName(data.string("streetName"))
-                    .withCity(data.string("city")).getMutableState();
-        }
-
-        public Map asDataFromState(AddressState state) {
-            return Data.build(VERSION, getClass().getCanonicalName())
-                    .value("id", state.id)
-                    .value("streetName", state.streetName)
-                    .value("city", state.city).map();
-        }
-
-        public Map asDataFromMutableState(AddressMutableState state) {
-            return Data.build(VERSION, AddressState.class.getCanonicalName())
-                    .value("id", state.id)
-                    .value("streetName", state.streetName)
-                    .value("city", state.city).map();
         }
     }
 }

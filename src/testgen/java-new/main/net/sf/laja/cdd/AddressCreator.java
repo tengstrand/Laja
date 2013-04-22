@@ -93,10 +93,6 @@ public class AddressCreator {
             return new DefaultAddress(state.asImmutable());
         }
 
-        public Map getData() {
-            return state.asData();
-        }
-
         public AddressState getState() {
             return state.asImmutable();
         }

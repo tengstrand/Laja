@@ -28,18 +28,6 @@ public class PersonTest {
         createPerson().name("Carl").birthday(1991,2,3).children().defaultAddress();
     }
 
-    @Test
-    public void convertToData() {
-        Map data = buildPerson().withName("Carl").withAddress(buildAddress().withCity("Uppsala")).getData();
-        assertThat(data.toString(), is("{version=1, type=net.sf.laja.cdd.state.PersonState, attributes={name=Carl, children=[], address={version=1, type=net.sf.laja.cdd.state.AddressState, attributes={id=0, streetName=, city=Uppsala}}}}"));
-    }
-
-    @Test
-    public void convertToDataWithDefaults() {
-        Map data = defaultPerson().withName("Carl").withAddress(buildAddress().withCity("Uppsala")).getData();
-        assertThat(data.toString(), is("{version=1, type=net.sf.laja.cdd.state.PersonState, attributes={name=Carl, birthday=936828000000, children=[], address={version=1, type=net.sf.laja.cdd.state.AddressState, attributes={id=0, streetName=, city=Uppsala}}}}"));
-    }
-
     private PersonBuilder defaultPerson() {
         PersonBuilder builder = buildPerson()
                 .withName("")
