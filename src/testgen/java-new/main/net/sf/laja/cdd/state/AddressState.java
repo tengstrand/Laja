@@ -1,6 +1,10 @@
 package net.sf.laja.cdd.state;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AddressState implements Serializable {
     public final int id; // (id)
@@ -16,12 +20,6 @@ public class AddressState implements Serializable {
     }
 
     // Generated code goes here...
-
-    public AddressState(String streetName, String city) {
-        this.id = 0;
-        this.streetName = streetName;
-        this.city = city;
-    }
 
     public AddressState(int id, String streetName, String city) {
         this.id = id;
@@ -133,6 +131,27 @@ public class AddressState implements Serializable {
         @Override
         public String toString() {
             return "{id=" + id + ", streetName='" + streetName + "\', city='" + city + "\'}";
+        }
+    }
+
+    public static class AddressStateConverter {
+
+        public static Set<AddressMutableState> asMutableSet(ImmutableSet<AddressState> set) {
+            Set<AddressMutableState> result = new HashSet<AddressMutableState>();
+
+            for (AddressState state : set) {
+                result.add(state.asMutable());
+            }
+            return result;
+        }
+
+        public static ImmutableSet<AddressState> asImmutableSet(Set<AddressMutableState> set) {
+            ImmutableSet.Builder<AddressState> builder = new ImmutableSet.Builder<AddressState>();
+
+            for (AddressMutableState state : set) {
+                builder.add(state.asImmutable());
+            }
+            return builder.build();
         }
     }
 }
