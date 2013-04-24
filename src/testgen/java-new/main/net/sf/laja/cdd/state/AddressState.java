@@ -4,19 +4,20 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 public class AddressState implements Serializable {
     public final int id; // (id)
     public final String streetName;
     public final String city; // (optional)
 
-    private static void defaults(AddressMutableState state) {
-        state.streetName = "";
-        state.city = "";
+    private static void setDefaults(AddressMutableState state) {
     }
 
     private void postAssertIsValid() {
@@ -30,6 +31,10 @@ public class AddressState implements Serializable {
         this.city = city;
     }
 
+    public int getId() { return id; }
+    public String getStreetName() { return streetName; }
+    public String getCity() { return city; }
+
     public static class IllegalAddressStateException extends IllegalStateException { }
     public static class IllegalAddressStateIsNullException extends IllegalAddressStateException { }
 
@@ -40,7 +45,6 @@ public class AddressState implements Serializable {
         if (streetName == null) {
             throw new IllegalAddressStateStreetNameIsNullException();
         }
-
         postAssertIsValid();
     }
 
@@ -48,8 +52,8 @@ public class AddressState implements Serializable {
         return new AddressMutableState(id, streetName, city);
     }
 
-    public AddressState setAge(int id) { return new AddressState(id, streetName, city); }
-    public AddressState setStreetName(String streetName) { return new AddressState(id, streetName, city); }
+    public AddressState withAge(int id) { return new AddressState(id, streetName, city); }
+    public AddressState withStreetName(String streetName) { return new AddressState(id, streetName, city); }
     public AddressState withCity(String city) { return new AddressState(id, streetName, city); }
 
     public int hashCode() {
@@ -81,18 +85,26 @@ public class AddressState implements Serializable {
         public String streetName;
         public String city; // (optional)
 
-        private AddressMutableState() {
-            defaults(this);
-        }
-
-        public static AddressMutableState create() {
-            return new AddressMutableState();
+        public AddressMutableState() {
+            setDefaults(this);
         }
 
         public AddressMutableState(int id, String streetName, String city) {
             this.id = id;
             this.streetName = streetName;
             this.city = city;
+        }
+
+        public static AddressMutableState addressMutableState() {
+            return new AddressMutableState();
+        }
+
+        public static List<AddressMutableState> addressMutableStateArrayList(AddressMutableState... states) {
+            return new ArrayList<AddressMutableState>(Arrays.asList(states));
+        }
+
+        public static Set<AddressMutableState> addressMutableStateHashSet(AddressMutableState... states) {
+            return new HashSet<AddressMutableState>(Arrays.asList(states));
         }
 
         public int getId() { return id; }

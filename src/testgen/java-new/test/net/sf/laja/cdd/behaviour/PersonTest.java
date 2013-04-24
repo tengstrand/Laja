@@ -3,11 +3,8 @@ package net.sf.laja.cdd.behaviour;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
-import java.util.Map;
-
 import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.PersonCreator.*;
-import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -30,10 +27,8 @@ public class PersonTest {
 
     private PersonBuilder defaultPerson() {
         PersonBuilder builder = buildPerson()
-                .withName("")
                 .withBirthday(new DateMidnight(1999, 9, 9))
-                .withChildren()
-                .withAddress(AddressMutableState.create());
+                .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
         return builder;
     }
 }

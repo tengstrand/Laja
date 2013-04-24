@@ -7,6 +7,8 @@ import org.joda.time.DateMidnight;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,8 +21,15 @@ public class PersonState implements Serializable {
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
-    public final ImmutableSet<AddressState> oldAddresses;
-    public final ImmutableMap<String,AddressState> groupedAddresses;
+    public final ImmutableSet<AddressState> oldAddresses; // (optional)
+    public final ImmutableMap<String,AddressState> groupedAddresses; // (optional)
+
+    private static void setDefaults(PersonMutableState state) {
+        state.children = new ArrayList<PersonMutableState>();
+        state.address = new AddressMutableState();
+        state.oldAddresses = new HashSet<AddressMutableState>();
+        state.groupedAddresses = new HashMap<String, AddressMutableState>();
+    }
 
     private void postAssertIsValid() {
         if (birthday.isAfterNow()) {
@@ -74,12 +83,6 @@ public class PersonState implements Serializable {
         }
         if (address == null) {
             throw new IllegalPersonStateAddressIsNullException();
-        }
-        if (oldAddresses == null) {
-            throw new IllegalPersonStateOldAddressesIsNullException();
-        }
-        if (groupedAddresses == null) {
-            throw new IllegalPersonStateGroupedAddressesIsNullException();
         }
         address.assertIsValid();
 
@@ -151,11 +154,8 @@ public class PersonState implements Serializable {
         public Set<AddressMutableState> oldAddresses;
         public Map<String, AddressMutableState> groupedAddresses;
 
-        private PersonMutableState() {
-        }
-
-        public static PersonMutableState create() {
-            return new PersonMutableState();
+        public PersonMutableState() {
+            PersonState.setDefaults(this);
         }
 
         public PersonMutableState(String name, DateMidnight birthday, List<PersonMutableState> children, AddressMutableState address,

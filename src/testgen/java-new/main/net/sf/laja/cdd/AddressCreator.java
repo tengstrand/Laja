@@ -2,7 +2,10 @@ package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.AddressState;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 
@@ -21,6 +24,14 @@ public class AddressCreator {
 
     public static AddressBuilder buildAddress() {
         return AddressBuilder.create();
+    }
+
+    public static AddressListBuilder addressList(AddressBuilder... builders) {
+        return new AddressListBuilder(builders);
+    }
+
+    public static AddressSetBuilder addressSet(AddressBuilder... builders) {
+        return new AddressSetBuilder(builders);
     }
 
     public AddressCreator(AddressMutableState state) {
@@ -52,7 +63,7 @@ public class AddressCreator {
         }
 
         private static class Factory {
-            private final AddressMutableState state = AddressMutableState.create();
+            private final AddressMutableState state = new AddressMutableState();
 
             public class StreetName {
                 public AddressCreator streetName(String streetName) {
@@ -71,7 +82,7 @@ public class AddressCreator {
         }
 
         public static AddressBuilder create() {
-            return new AddressBuilder(AddressMutableState.create());
+            return new AddressBuilder(new AddressMutableState());
         }
 
         public AddressBuilder withId(int id) {
@@ -99,6 +110,101 @@ public class AddressCreator {
 
         public AddressMutableState getMutableState() {
             return state;
+        }
+    }
+
+    public static class AddressListBuilder {
+        private AddressBuilder[] builders;
+
+        public AddressListBuilder(AddressBuilder... builders) {
+            this.builders = builders;
+        }
+
+        public List<Address> asAddressList() {
+            return asAddressArrayList();
+        }
+
+        public List<Address> asAddressArrayList() {
+            List<Address> result = new ArrayList<Address>();
+
+            for (AddressBuilder builder : builders) {
+                result.add(builder.asAddress());
+            }
+            return result;
+        }
+
+        public List<AddressState> asImmutableStateList() {
+            return asImmutableStateArrayList();
+        }
+
+        public List<AddressState> asImmutableStateArrayList() {
+            List<AddressState> result = new ArrayList<AddressState>();
+
+            for (AddressBuilder builder : builders) {
+                result.add(builder.getState());
+            }
+            return result;
+        }
+
+        public List<AddressMutableState> asMutableStateList() {
+            return asMutableStateArrayList();
+        }
+
+
+        public List<AddressMutableState> asMutableStateArrayList() {
+            List<AddressMutableState> result = new ArrayList<AddressMutableState>();
+
+            for (AddressBuilder builder : builders) {
+                result.add(builder.getMutableState());
+            }
+            return result;
+        }
+    }
+
+    public static class AddressSetBuilder {
+        private AddressBuilder[] builders;
+
+        public AddressSetBuilder(AddressBuilder... builders) {
+            this.builders = builders;
+        }
+
+        public Set<Address> asAddressSet() {
+            return asAddressHashSet();
+        }
+
+        public Set<Address> asAddressHashSet() {
+            Set<Address> result = new HashSet<Address>();
+
+            for (AddressBuilder builder : builders) {
+                result.add(builder.asAddress());
+            }
+            return result;
+        }
+
+        public Set<AddressState> asImmutableStateSet() {
+            return asImmutableStateHashSet();
+        }
+
+        public Set<AddressState> asImmutableStateHashSet() {
+            Set<AddressState> result = new HashSet<AddressState>();
+
+            for (AddressBuilder builder : builders) {
+                result.add(builder.getState());
+            }
+            return result;
+        }
+
+        public Set<AddressMutableState> asMutableStateSet() {
+            return asMutableStateHashSet();
+        }
+
+        public Set<AddressMutableState> asMutableStateHashSet() {
+            Set<AddressMutableState> result = new HashSet<AddressMutableState>();
+
+            for (AddressBuilder builder : builders) {
+                result.add(builder.getMutableState());
+            }
+            return result;
         }
     }
 }
