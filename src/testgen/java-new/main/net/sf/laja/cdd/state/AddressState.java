@@ -1,9 +1,12 @@
 package net.sf.laja.cdd.state;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class AddressState implements Serializable {
@@ -27,13 +30,15 @@ public class AddressState implements Serializable {
         this.city = city;
     }
 
-    public static class IllegalAddressStateException extends RuntimeException { }
-    public static class IllegalStreetNameException extends IllegalAddressStateException { }
-    public static class StreetNameNullException extends IllegalAddressStateException { }
+    public static class IllegalAddressStateException extends IllegalStateException { }
+    public static class IllegalAddressStateIsNullException extends IllegalAddressStateException { }
+
+    public static class IllegalAddressStateStreetNameException extends IllegalAddressStateException { }
+    public static class IllegalAddressStateStreetNameIsNullException extends IllegalAddressStateIsNullException { }
 
     public void assertIsValid() {
         if (streetName == null) {
-            throw new StreetNameNullException();
+            throw new IllegalAddressStateStreetNameIsNullException();
         }
 
         postAssertIsValid();
@@ -43,8 +48,8 @@ public class AddressState implements Serializable {
         return new AddressMutableState(id, streetName, city);
     }
 
-    public AddressState withAge(int id) { return new AddressState(id, streetName, city); }
-    public AddressState withStreetName(String streetName) { return new AddressState(id, streetName, city); }
+    public AddressState setAge(int id) { return new AddressState(id, streetName, city); }
+    public AddressState setStreetName(String streetName) { return new AddressState(id, streetName, city); }
     public AddressState withCity(String city) { return new AddressState(id, streetName, city); }
 
     public int hashCode() {
@@ -84,21 +89,23 @@ public class AddressState implements Serializable {
             return new AddressMutableState();
         }
 
-        public static AddressMutableState createWithDefaults() {
-            AddressMutableState state = create();
-            defaults(state);
-            return state;
-        }
-
         public AddressMutableState(int id, String streetName, String city) {
             this.id = id;
             this.streetName = streetName;
             this.city = city;
         }
 
+        public int getId() { return id; }
+        public String getStreetName() { return streetName; }
+        public String getCity() { return city; }
+
+        public void setId(int id) { this.id = id; }
+        public void setStreetName(String streetName) { this.streetName = streetName; }
+        public void setCity(String city) { this.city = city; }
+
         public void assertIsValid() {
             if (streetName == null) {
-                throw new StreetNameNullException();
+                throw new IllegalAddressStateStreetNameIsNullException();
             }
         }
 
@@ -152,6 +159,24 @@ public class AddressState implements Serializable {
                 builder.add(state.asImmutable());
             }
             return builder.build();
+        }
+
+        public static ImmutableMap<String, AddressState> asImmutableMap(Map<String, AddressMutableState> groupedAddresses) {
+            ImmutableMap.Builder<String, AddressState> builder = new ImmutableMap.Builder<String, AddressState>();
+
+            for (Map.Entry<String, AddressMutableState> entry : groupedAddresses.entrySet()) {
+                builder.put(entry.getKey(), entry.getValue().asImmutable());
+            }
+            return builder.build();
+        }
+
+        public static Map<String, AddressMutableState> asMutableMap(ImmutableMap<String, AddressState> groupedAddresses) {
+            Map<String, AddressMutableState> result = new HashMap<String, AddressMutableState>();
+
+            for (Map.Entry<String, AddressState> entry : groupedAddresses.entrySet()) {
+                result.put(entry.getKey(), entry.getValue().asMutable());
+            }
+            return result;
         }
     }
 }

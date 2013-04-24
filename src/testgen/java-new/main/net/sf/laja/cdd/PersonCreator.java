@@ -165,6 +165,10 @@ public class PersonCreator {
             return new Person(state.asImmutable());
         }
 
+        public SpecialPerson asSpecialPerson() {
+            return new SpecialPerson(state);
+        }
+
         public PersonState getState() {
             return state.asImmutable();
         }
