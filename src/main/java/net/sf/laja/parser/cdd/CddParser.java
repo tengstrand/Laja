@@ -6,9 +6,9 @@ import net.sf.laja.parser.cdd.behaviour.BehaviourParser;
 import net.sf.laja.parser.cdd.behaviour.constructor.Constructor;
 import net.sf.laja.parser.cdd.behaviour.constructor.ConstructorFactory;
 import net.sf.laja.parser.cdd.behaviour.constructor.ConstructorParser;
-import net.sf.laja.parser.cdd.statetemplate.StateTemplate;
-import net.sf.laja.parser.cdd.statetemplate.StateTemplateFactory;
-import net.sf.laja.parser.cdd.statetemplate.StateTemplateParser;
+import net.sf.laja.parser.cdd.state.State;
+import net.sf.laja.parser.cdd.state.StateFactory;
+import net.sf.laja.parser.cdd.state.StateParser;
 import net.sf.laja.parser.engine2.ParsingResult;
 import net.sf.laja.parser.engine2.source.FileSource;
 
@@ -31,12 +31,12 @@ public class CddParser {
         }
     }
 
-    public StateTemplate parseStateTemplate(final String filePath) {
-        StateTemplateParser parser = new StateTemplateParser(new StateTemplateParser.IStateTemplateFactoryFactory() {
-            public StateTemplateParser.IStateTemplateFactory getFactory(int phase) {
+    public State parseState(final String filePath) {
+        StateParser parser = new StateParser(new StateParser.IStateFactoryFactory() {
+            public StateParser.IStateFactory getFactory(int phase) {
                 String filename = new File(filePath).getName();
                 String classname = filename.substring(0, filename.length()-".java".length());
-                return new StateTemplateFactory(classname);
+                return new StateFactory(classname);
             }
         });
 
@@ -46,14 +46,9 @@ public class CddParser {
             return null;
         }
 
-        StateTemplateFactory stateTemplateFactory = (StateTemplateFactory)parser.getFactory();
-        StateTemplate stateTemplate = stateTemplateFactory.getStateTemplate();
+        StateFactory stateFactory = (StateFactory)parser.getFactory();
 
-        if (stateTemplate.isValidStatement != null) {
-            stateTemplate.isValidStatement = stateTemplate.isValidStatement.trim();
-        }
-
-        return stateTemplate;
+        return stateFactory.state;
     }
 
     public Behaviour parseBehaviour(final String filePath) {

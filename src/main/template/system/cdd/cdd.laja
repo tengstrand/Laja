@@ -3,31 +3,6 @@
   #if ($laja.isCddImported == null)
     #set ($laja.isCddImported = true)
     #set (cddParser = new net.sf.laja.parser.cdd.CddParser())
-    #set (stateTemplateFileReader = new net.sf.laja.parser.cdd.StateTemplateFileReader())
-    #set (behaviourFileReader = new net.sf.laja.parser.cdd.BehaviourFileReader())
-    #set (outputDirectoryReader = new net.sf.laja.parser.cdd.OutputDirectoryReader())
-    #set (behaviourCreator = new net.sf.laja.parser.cdd.BehaviourCreator())
-    #set (statementConverter = new net.sf.laja.parser.cdd.StatementConverter())
-    #set (directoryConverter = new net.sf.laja.parser.cdd.DirectoryConverter())
-    #set (messageFormatter = new net.sf.laja.parser.cdd.MessageFormatter())
-  #end
-#end
-
-#macro cleanupInputParameters()
-  #set (srcDir = null)
-  #set (outDir = null)
-  #set (stateOutDir = null)
-  #set (behaviourOutDir = null)
-  #set (defaultStateOutDir = null)
-  #set (defaultBehaviourOutDir = null)
-  #set (certificatePackage = null)
-  #set (certificatePath = null)
-#end
-
-#macro addBehaviour(classname)
-  #behaviours.put(classname, behaviour)
-  #if (behaviour.isFactory && (!factories.containsKey(behaviour.cleanedStateClass) || behaviour.classname == behaviour.cleanedStateClass))
-    #factories.put(behaviour.cleanedStateClass, behaviour)
   #end
 #end
 
@@ -38,164 +13,16 @@
     #error("The argument must be a list of maps, e.g: #generateCdd([{ srcDir: \"/src\" outDir: \"/out\" statePackage: \"com.a.state\" behaviourPackage: \"com.a.behaviour\" }])")
   #end
 
-  #set (behaviours = new java.util.LinkedHashMap())
-  #set (factories = new java.util.HashMap())
-
-  #set (certificateAssigned = false)
-  #set (templateFiles = new java.util.ArrayList())
-  #set (behaviourFiles = new java.util.ArrayList())
-
   #set (parserError = false)
-  #set (templates = new java.util.HashMap())
-  #set (errors = new net.sf.laja.parser.cdd.statetemplate.StateTemplateErrors())
-
-  #set (processedFiles = new net.sf.laja.parser.cdd.OutputDirectoryReader$Result())
-
-  #if (_i == null)
-    #set(_i = false)
-  #end
 
   #foreach (parameterMap in parameters)
-    #set (templateFilesInDir = new java.util.ArrayList())
-    #set (behaviourFilesInDir = new java.util.ArrayList())
-
     #$.putAll(parameterMap)
 
-    #if (parameterMap.srcDir == null)
-      #error("Missing parameter: 'srcDir'")
-    #end
-    #if (parameterMap.outDir == null)
-      #error("Missing parameter: 'outDir'")
-    #end
-    #if (defaultStatePackage == null)
-      #if (parameterMap.statePackage == null)
-        #error("Missing parameter: 'statePackage'")
-      #else
-        #set (defaultStatePackage = statePackage)
-      #end
-    #end
-    #if (defaultBehaviourPackage == null)
-      #if (parameterMap.behaviourPackage == null)
-        #error("Missing parameter: 'behaviourPackage'")
-      #else
-        #set (defaultBehaviourPackage = behaviourPackage)
-      #end
-    #end
+    #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.java"))
 
-    #set (stateSrcDir = directoryConverter.asDirectoryPath(srcDir, statePackage))
-    #set (behaviourSrcDir = directoryConverter.asDirectoryPath(srcDir, behaviourPackage))
-
-    #set (stateOutDir = directoryConverter.asDirectoryPath(outDir, statePackage))
-    #set (behaviourOutDir = directoryConverter.asDirectoryPath(outDir, behaviourPackage))
-
-    #if (!certificateAssigned)
-      #if (certificatePath == null)
-        #set (certificatePath = stateOutDir)
-      #end
-
-      #if (certificatePackage == null)
-        #set (certificatePackage = statePackage)
-        #set (certificatePath = stateOutDir)
-      #else
-        #set (certificatePath = directoryConverter.asDirectoryPath(outDir, certificatePackage))
-      #end
-
-      #set (certificateAssigned = true)
-    #end
-
-    #stateTemplateFileReader.populateFiles(stateSrcDir, templateFilesInDir)
-    #behaviourFileReader.populateFiles(behaviourSrcDir, behaviourFilesInDir)
-
-    #templateFiles.addAll(templateFilesInDir)
-    #behaviourFiles.addAll(behaviourFilesInDir)
-
-    #foreach (templateFile in templateFilesInDir)
-      #set (file = new java.io.File(templateFile))
-      #set (template = cddParser.parseStateTemplate(templateFile))
-
-      #if (template != null)
-        #if (!template.errors.hasErrors)
-          #outputDirectoryReader.readFiles(stateOutDir, processedFiles)
-
-          #set (template.rootSrcDir = srcDir)
-          #set (template.rootOutDir = outDir)
-          #set (template.rootStatePackage = statePackage)
-          #set (template.rootBehaviourPackage = behaviourPackage)
-          #set (template.sourceDir = file.parent)
-          #set (template.outputDir = directoryConverter.convertSourceDirToOutputDir(template.sourceDir, stateSrcDir, stateOutDir, errors))
-          #if (!template.packagename.startsWith(statePackage))
-            #errors.addMessage("Illegal package '{template.packagename}' in class '{template.classname}', must start with '{statePackage}'")
-          #end
-          #if (errors.hasErrors)
-            #set (parserError = true)
-          #end
-          #templates.put(template.classname, template)
-        #else
-          #errors.addMessages(template.errors)
-          #set (parserError = true)
-        #end
-      #else
-        #set (parserError = true)
-      #end
-    #end
-
-    #foreach (behaviourFile in behaviourFilesInDir)
-      #outputDirectoryReader.readFiles(behaviourOutDir, processedFiles)
-
-      #set (behaviour = cddParser.parseBehaviour(behaviourFile))
-      #if (behaviour != null)
-        #if (behaviour.cleanedStateClass != null)
-          #set (behaviour.srcFilename = behaviourFile)
-          #set (file = new java.io.File(behaviourFile))
-          #set (behaviour.srcDir = srcDir)
-          #set (behaviour.sourceDir = file.parent)
-          #set (behaviour.outDir = outDir)
-          #set (behaviour.outputDir = directoryConverter.convertSourceDirToOutputDir(behaviour.sourceDir, behaviourSrcDir, behaviourOutDir, errors))
-          #set (behaviourClass = statementConverter.asClassname(file))
-          #set (behaviour.classname = behaviourClass)
-          ## behaviour.classname is set in the previous statement (by calling setClassname).
-          #addBehaviour(behaviour.classname)
-        #end
-      #else
-        #set (parserError = true)
-      #end
-    #end
-
-    #foreach (behaviour in behaviours.values())
-      #behaviour.updateFactoryClassIfNeeded(behaviours)
-    #end
+    #println("{state}")
   #end
 
-  #macro attributeError(errorMessage)
-    #errors.addMessage("{errorMessage}, error in '{template.classname}StateTemplate', attribute '{attribute.variable}'.")
-  #end
-
-  #validateStates()
-
-  #if (!parserError && !errors.hasErrors)
-    #createMissingBehaviours()
-
-    #import "{..}/../java/cdd/shared.java.laja"
-    #import "{..}/../java/cdd/certificate.java.laja"
-
-    #messageFormatter.printTable(behaviours)
-  #end
-
-  #if (!parserError && !errors.hasErrors)
-    #generateState()
-    #generateBehaviour()
-
-    #if (autoRemove == null)
-      #set (autoRemove = true)
-    #end
-    #if (autoRemove)
-      #processedFiles.removeFilesMarkedForDeletion()
-    #end
-    #processedFiles.printProcessedMessage(verbose, autoRemove)
-  #else
-    #errors.printMessages()
-  #end
-  #cleanupInputParameters()
 #end
 
 #macro validateStates()

@@ -21,6 +21,7 @@
   		<zipfileset dir="src/main/template/system" prefix="template/system" excludes=".svn"/>
   		<zipfileset dir="src/main/template/java/parser" prefix="template/java/parser" excludes=".svn"/>
         <zipfileset dir="src/main/template/java/cdd" prefix="template/java/cdd" excludes=".svn"/>
+        <zipfileset dir="src/main/template/java/cdd2" prefix="template/java/cdd2" excludes=".svn"/>
   		<zipfileset dir="src/test/laja" prefix="template/java/examples/code-generator-intregration-tests" excludes=".svn"/>
   		<zipfileset dir="src/main/template/java/examples" prefix="template/java/examples" excludes=".svn"/>
   		<zipfileset dir="target" includes="laja.jar" prefix="system-lib"/>
