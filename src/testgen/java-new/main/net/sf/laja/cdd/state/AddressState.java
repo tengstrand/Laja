@@ -42,13 +42,17 @@ public class AddressState implements Serializable {
     public static class IllegalAddressStateStreetNameIsNullException extends IllegalAddressStateIsNullException { }
 
     public void assertIsValid() {
-        if (streetName == null) {
-            throw new IllegalAddressStateStreetNameIsNullException();
-        }
+        assertNotNull();
         postAssertIsValid();
     }
 
-    public AddressMutableState asMutable() {
+    private void assertNotNull() {
+        if (streetName == null) {
+            throw new IllegalAddressStateStreetNameIsNullException();
+        }
+    }
+
+    public AddressMutableState asMutableState() {
         return new AddressMutableState(id, streetName, city);
     }
 
@@ -121,8 +125,11 @@ public class AddressState implements Serializable {
             }
         }
 
-        public AddressState asImmutable() {
-            return new AddressState(id, streetName, city);
+        public AddressState asState() {
+            AddressState state = new AddressState(id, streetName, city);
+            state.assertIsValid();
+
+            return state;
         }
 
         @Override
@@ -159,7 +166,7 @@ public class AddressState implements Serializable {
             Set<AddressMutableState> result = new HashSet<AddressMutableState>();
 
             for (AddressState state : set) {
-                result.add(state.asMutable());
+                result.add(state.asMutableState());
             }
             return result;
         }
@@ -168,7 +175,7 @@ public class AddressState implements Serializable {
             ImmutableSet.Builder<AddressState> builder = new ImmutableSet.Builder<AddressState>();
 
             for (AddressMutableState state : set) {
-                builder.add(state.asImmutable());
+                builder.add(state.asState());
             }
             return builder.build();
         }
@@ -177,7 +184,7 @@ public class AddressState implements Serializable {
             ImmutableMap.Builder<String, AddressState> builder = new ImmutableMap.Builder<String, AddressState>();
 
             for (Map.Entry<String, AddressMutableState> entry : groupedAddresses.entrySet()) {
-                builder.put(entry.getKey(), entry.getValue().asImmutable());
+                builder.put(entry.getKey(), entry.getValue().asState());
             }
             return builder.build();
         }
@@ -186,7 +193,7 @@ public class AddressState implements Serializable {
             Map<String, AddressMutableState> result = new HashMap<String, AddressMutableState>();
 
             for (Map.Entry<String, AddressState> entry : groupedAddresses.entrySet()) {
-                result.put(entry.getKey(), entry.getValue().asMutable());
+                result.put(entry.getKey(), entry.getValue().asMutableState());
             }
             return result;
         }

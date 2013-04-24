@@ -17,7 +17,7 @@ public class PersonCreator {
     private final PersonMutableState state;
 
     public Person asPerson() {
-        return new Person(state.asImmutable());
+        return new Person(state.asState());
     }
 
     public SpecialPerson asSpecialPerson() {
@@ -34,12 +34,12 @@ public class PersonCreator {
         return PersonBuilder.create();
     }
 
-    public static PersonListBuilder personList(PersonBuilder... builders) {
-        return new PersonListBuilder(builders);
+    public static PersonListBuilder createPersonList(PersonCreator... creators) {
+        return new PersonListBuilder(creators);
     }
 
-    public static PersonSetBuilder personSet(PersonBuilder... builders) {
-        return new PersonSetBuilder(builders);
+    public static PersonSetBuilder createPersonSet(PersonCreator... creators) {
+        return new PersonSetBuilder(creators);
     }
 
     public PersonCreator(PersonMutableState state) {
@@ -47,7 +47,7 @@ public class PersonCreator {
     }
 
     public PersonState getState() {
-        return state.asImmutable();
+        return state.asState();
     }
 
     public PersonMutableState getMutableState() {
@@ -76,7 +76,6 @@ public class PersonCreator {
             }
 
             public class Birthday {
-                // TODO: Add support for the (y,m,d) format.
                 public Children birthday(int year, int month, int day) {
                     state.birthday = new DateMidnight(year, month, day);
                     return new Children();
@@ -182,7 +181,7 @@ public class PersonCreator {
         }
 
         public Person asPerson() {
-            return new Person(state.asImmutable());
+            return new Person(state.asState());
         }
 
         public SpecialPerson asSpecialPerson() {
@@ -190,7 +189,7 @@ public class PersonCreator {
         }
 
         public PersonState getState() {
-            return state.asImmutable();
+            return state.asState();
         }
 
         public PersonMutableState getMutableState() {
@@ -199,30 +198,30 @@ public class PersonCreator {
     }
 
     public static class PersonListBuilder {
-        private PersonBuilder[] builders;
+        private PersonCreator[] creators;
 
-        public PersonListBuilder(PersonBuilder... builders) {
-            this.builders = builders;
+        public PersonListBuilder(PersonCreator... creators) {
+            this.creators = creators;
         }
 
         public List<Person> asArrayList() {
             List<Person> result = new ArrayList<Person>();
 
-            for (PersonBuilder builder : builders) {
-                result.add(builder.asPerson());
+            for (PersonCreator creator : creators) {
+                result.add(creator.asPerson());
             }
             return result;
         }
 
-        public List<PersonState> asImmutableStateList() {
-            return asImmutableStateArrayList();
+        public List<PersonState> asStateList() {
+            return asStateArrayList();
         }
 
-        public List<PersonState> asImmutableStateArrayList() {
+        public List<PersonState> asStateArrayList() {
             List<PersonState> result = new ArrayList<PersonState>();
 
-            for (PersonBuilder builder : builders) {
-                result.add(builder.getState());
+            for (PersonCreator creator : creators) {
+                result.add(creator.getState());
             }
             return result;
         }
@@ -234,38 +233,38 @@ public class PersonCreator {
         public List<PersonMutableState> asMutableStateArrayList() {
             List<PersonMutableState> result = new ArrayList<PersonMutableState>();
 
-            for (PersonBuilder builder : builders) {
-                result.add(builder.getMutableState());
+            for (PersonCreator creator : creators) {
+                result.add(creator.getMutableState());
             }
             return result;
         }
     }
 
     public static class PersonSetBuilder {
-        private PersonBuilder[] builders;
+        private PersonCreator[] creators;
 
-        public PersonSetBuilder(PersonBuilder... builders) {
-            this.builders = builders;
+        public PersonSetBuilder(PersonCreator... creators) {
+            this.creators = creators;
         }
 
         public Set<Person> asHashSet() {
             Set<Person> result = new HashSet<Person>();
 
-            for (PersonBuilder builder : builders) {
-                result.add(builder.asPerson());
+            for (PersonCreator creator : creators) {
+                result.add(creator.asPerson());
             }
             return result;
         }
 
-        public Set<PersonState> asImmutableStateSet() {
-            return asImmutableStateHashSet();
+        public Set<PersonState> asStateSet() {
+            return asStateHashSet();
         }
 
-        public Set<PersonState> asImmutableStateHashSet() {
-            Set<PersonState> result = new HashSet<PersonState>(builders.length);
+        public Set<PersonState> asStateHashSet() {
+            Set<PersonState> result = new HashSet<PersonState>();
 
-            for (PersonBuilder builder : builders) {
-                result.add(builder.getState());
+            for (PersonCreator creator : creators) {
+                result.add(creator.getState());
             }
             return result;
         }
@@ -277,8 +276,8 @@ public class PersonCreator {
         public Set<PersonMutableState> asMutableStateHashSet() {
             Set<PersonMutableState> result = new HashSet<PersonMutableState>();
 
-            for (PersonBuilder builder : builders) {
-                result.add(builder.getMutableState());
+            for (PersonCreator creator : creators) {
+                result.add(creator.getMutableState());
             }
             return result;
         }

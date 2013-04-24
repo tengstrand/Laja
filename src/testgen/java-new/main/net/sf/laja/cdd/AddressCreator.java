@@ -13,7 +13,7 @@ public class AddressCreator {
     private final AddressMutableState state;
 
     public Address asAddress() {
-        return new DefaultAddress(state.asImmutable());
+        return new DefaultAddress(state.asState());
     }
 
     // Generated code goes here...
@@ -26,12 +26,12 @@ public class AddressCreator {
         return AddressBuilder.create();
     }
 
-    public static AddressListBuilder addressList(AddressBuilder... builders) {
-        return new AddressListBuilder(builders);
+    public static AddressListBuilder createAddressList(AddressCreator... creators) {
+        return new AddressListBuilder(creators);
     }
 
-    public static AddressSetBuilder addressSet(AddressBuilder... builders) {
-        return new AddressSetBuilder(builders);
+    public static AddressSetBuilder createAddressSet(AddressCreator... creators) {
+        return new AddressSetBuilder(creators);
     }
 
     public AddressCreator(AddressMutableState state) {
@@ -39,7 +39,7 @@ public class AddressCreator {
     }
 
     public AddressState getState() {
-        return state.asImmutable();
+        return state.asState();
     }
 
     public AddressMutableState getMutableState() {
@@ -101,11 +101,11 @@ public class AddressCreator {
         }
 
         public DefaultAddress asAddress() {
-            return new DefaultAddress(state.asImmutable());
+            return new DefaultAddress(state.asState());
         }
 
         public AddressState getState() {
-            return state.asImmutable();
+            return state.asState();
         }
 
         public AddressMutableState getMutableState() {
@@ -114,10 +114,10 @@ public class AddressCreator {
     }
 
     public static class AddressListBuilder {
-        private AddressBuilder[] builders;
+        private AddressCreator[] creators;
 
-        public AddressListBuilder(AddressBuilder... builders) {
-            this.builders = builders;
+        public AddressListBuilder(AddressCreator... creators) {
+            this.creators = creators;
         }
 
         public List<Address> asAddressList() {
@@ -127,8 +127,8 @@ public class AddressCreator {
         public List<Address> asAddressArrayList() {
             List<Address> result = new ArrayList<Address>();
 
-            for (AddressBuilder builder : builders) {
-                result.add(builder.asAddress());
+            for (AddressCreator creator : creators) {
+                result.add(creator.asAddress());
             }
             return result;
         }
@@ -140,8 +140,8 @@ public class AddressCreator {
         public List<AddressState> asImmutableStateArrayList() {
             List<AddressState> result = new ArrayList<AddressState>();
 
-            for (AddressBuilder builder : builders) {
-                result.add(builder.getState());
+            for (AddressCreator creator : creators) {
+                result.add(creator.getState());
             }
             return result;
         }
@@ -150,46 +150,45 @@ public class AddressCreator {
             return asMutableStateArrayList();
         }
 
-
         public List<AddressMutableState> asMutableStateArrayList() {
             List<AddressMutableState> result = new ArrayList<AddressMutableState>();
 
-            for (AddressBuilder builder : builders) {
-                result.add(builder.getMutableState());
+            for (AddressCreator creator : creators) {
+                result.add(creator.getMutableState());
             }
             return result;
         }
     }
 
     public static class AddressSetBuilder {
-        private AddressBuilder[] builders;
+        private AddressCreator[] creators;
 
-        public AddressSetBuilder(AddressBuilder... builders) {
-            this.builders = builders;
+        public AddressSetBuilder(AddressCreator... creators) {
+            this.creators = creators;
         }
 
-        public Set<Address> asAddressSet() {
-            return asAddressHashSet();
+        public Set<Address> asSet() {
+            return asHashSet();
         }
 
-        public Set<Address> asAddressHashSet() {
+        public Set<Address> asHashSet() {
             Set<Address> result = new HashSet<Address>();
 
-            for (AddressBuilder builder : builders) {
-                result.add(builder.asAddress());
+            for (AddressCreator creator : creators) {
+                result.add(creator.asAddress());
             }
             return result;
         }
 
-        public Set<AddressState> asImmutableStateSet() {
-            return asImmutableStateHashSet();
+        public Set<AddressState> asStateSet() {
+            return asStateHashSet();
         }
 
-        public Set<AddressState> asImmutableStateHashSet() {
+        public Set<AddressState> asStateHashSet() {
             Set<AddressState> result = new HashSet<AddressState>();
 
-            for (AddressBuilder builder : builders) {
-                result.add(builder.getState());
+            for (AddressCreator creator : creators) {
+                result.add(creator.getState());
             }
             return result;
         }
@@ -201,8 +200,8 @@ public class AddressCreator {
         public Set<AddressMutableState> asMutableStateHashSet() {
             Set<AddressMutableState> result = new HashSet<AddressMutableState>();
 
-            for (AddressBuilder builder : builders) {
-                result.add(builder.getMutableState());
+            for (AddressCreator creator : creators) {
+                result.add(creator.getMutableState());
             }
             return result;
         }

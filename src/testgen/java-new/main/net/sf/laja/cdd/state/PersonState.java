@@ -72,6 +72,12 @@ public class PersonState implements Serializable {
     public static class IllegalPersonStateGroupedAddressesIsNullException extends IllegalPersonStateIsNullException {  }
 
     public void assertIsValid() {
+        assertNotNull();
+        address.assertIsValid();
+        postAssertIsValid();
+    }
+
+    private void assertNotNull() {
         if (name == null) {
             throw new IllegalPersonStateNameIsNullException();
         }
@@ -84,9 +90,6 @@ public class PersonState implements Serializable {
         if (address == null) {
             throw new IllegalPersonStateAddressIsNullException();
         }
-        address.assertIsValid();
-
-        postAssertIsValid();
     }
 
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
@@ -95,12 +98,12 @@ public class PersonState implements Serializable {
     public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
     public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
 
-    public PersonMutableState asMutable() {
+    public PersonMutableState asMutableState() {
         return new PersonMutableState(
                 name,
                 birthday,
                 PersonStateConverter.asMutableList(children),
-                address.asMutable(),
+                address.asMutableState(),
                 AddressStateConverter.asMutableSet(oldAddresses),
                 AddressStateConverter.asMutableMap(groupedAddresses));
     }
@@ -182,16 +185,6 @@ public class PersonState implements Serializable {
         public void setOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; }
         public void setGroupedAddresses(Map<String, AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
 
-        public PersonState asImmutable() {
-            return new PersonState(
-                    name,
-                    birthday,
-                    PersonStateConverter.asImmutableList(children),
-                    address.asImmutable(),
-                    AddressStateConverter.asImmutableSet(oldAddresses),
-                    AddressStateConverter.asImmutableMap(groupedAddresses));
-        }
-
         @Override
         public int hashCode() {
             int result = name != null ? name.hashCode() : 0;
@@ -201,6 +194,20 @@ public class PersonState implements Serializable {
             result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
             result = 31 * result + (groupedAddresses != null ? groupedAddresses.hashCode() : 0);
             return result;
+        }
+
+        public PersonState asState() {
+            PersonState state = new PersonState(
+                    name,
+                    birthday,
+                    PersonStateConverter.asImmutableList(children),
+                    address.asState(),
+                    AddressStateConverter.asImmutableSet(oldAddresses),
+                    AddressStateConverter.asImmutableMap(groupedAddresses));
+
+            state.assertIsValid();
+
+            return state;
         }
 
         @Override
@@ -240,7 +247,7 @@ public class PersonState implements Serializable {
             ImmutableList.Builder<PersonState> builder = ImmutableList.<PersonState>builder();
             if (list != null) {
                 for (PersonMutableState state : list) {
-                    builder.add(state.asImmutable());
+                    builder.add(state.asState());
                 }
             }
             return builder.build();
@@ -250,7 +257,7 @@ public class PersonState implements Serializable {
             List<PersonMutableState> result = new ArrayList<PersonMutableState>();
 
             for (PersonState state : list) {
-                result.add(state.asMutable());
+                result.add(state.asMutableState());
             }
             return result;
         }
