@@ -31,8 +31,8 @@ public class PersonState implements Serializable {
         state.groupedAddresses = new HashMap<String, AddressMutableState>();
     }
 
-    private void postAssertIsValid() {
-        if (birthday.isAfterNow()) {
+    private static void assertIsValid(PersonMutableState state) {
+        if (state.birthday.isAfterNow()) {
             throw new IllegalPersonStateBirthdayException();
         }
     }
@@ -70,27 +70,6 @@ public class PersonState implements Serializable {
     public static class IllegalPersonStateAddressIsNullException extends IllegalPersonStateIsNullException {  }
     public static class IllegalPersonStateOldAddressesIsNullException extends IllegalPersonStateIsNullException {  }
     public static class IllegalPersonStateGroupedAddressesIsNullException extends IllegalPersonStateIsNullException {  }
-
-    public void assertIsValid() {
-        assertNotNull();
-        address.assertIsValid();
-        postAssertIsValid();
-    }
-
-    private void assertNotNull() {
-        if (name == null) {
-            throw new IllegalPersonStateNameIsNullException();
-        }
-        if (birthday == null) {
-            throw new IllegalPersonStateBirthdayIsNullException();
-        }
-        if (children == null) {
-            throw new IllegalPersonStateChildrenIsNullException();
-        }
-        if (address == null) {
-            throw new IllegalPersonStateAddressIsNullException();
-        }
-    }
 
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
     public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
@@ -185,6 +164,27 @@ public class PersonState implements Serializable {
         public void setOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; }
         public void setGroupedAddresses(Map<String, AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
 
+        public void assertIsValid() {
+            assertNotNull();
+            address.assertIsValid();
+            PersonState.assertIsValid(this);
+        }
+
+        private void assertNotNull() {
+            if (name == null) {
+                throw new IllegalPersonStateNameIsNullException();
+            }
+            if (birthday == null) {
+                throw new IllegalPersonStateBirthdayIsNullException();
+            }
+            if (children == null) {
+                throw new IllegalPersonStateChildrenIsNullException();
+            }
+            if (address == null) {
+                throw new IllegalPersonStateAddressIsNullException();
+            }
+        }
+
         @Override
         public int hashCode() {
             int result = name != null ? name.hashCode() : 0;
@@ -197,17 +197,15 @@ public class PersonState implements Serializable {
         }
 
         public PersonState asState() {
-            PersonState state = new PersonState(
+            assertIsValid();
+
+            return new PersonState(
                     name,
                     birthday,
                     PersonStateConverter.asImmutableList(children),
                     address.asState(),
                     AddressStateConverter.asImmutableSet(oldAddresses),
                     AddressStateConverter.asImmutableMap(groupedAddresses));
-
-            state.assertIsValid();
-
-            return state;
         }
 
         @Override

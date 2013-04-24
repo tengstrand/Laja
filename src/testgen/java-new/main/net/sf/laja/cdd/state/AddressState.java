@@ -20,7 +20,7 @@ public class AddressState implements Serializable {
     private static void setDefaults(AddressMutableState state) {
     }
 
-    private void postAssertIsValid() {
+    private static void assertIsValid() {
     }
 
     // Generated code goes here...
@@ -40,17 +40,6 @@ public class AddressState implements Serializable {
 
     public static class IllegalAddressStateStreetNameException extends IllegalAddressStateException { }
     public static class IllegalAddressStateStreetNameIsNullException extends IllegalAddressStateIsNullException { }
-
-    public void assertIsValid() {
-        assertNotNull();
-        postAssertIsValid();
-    }
-
-    private void assertNotNull() {
-        if (streetName == null) {
-            throw new IllegalAddressStateStreetNameIsNullException();
-        }
-    }
 
     public AddressMutableState asMutableState() {
         return new AddressMutableState(id, streetName, city);
@@ -120,16 +109,20 @@ public class AddressState implements Serializable {
         public void setCity(String city) { this.city = city; }
 
         public void assertIsValid() {
+            assertNotNull();
+            AddressState.assertIsValid();
+        }
+
+        private void assertNotNull() {
             if (streetName == null) {
                 throw new IllegalAddressStateStreetNameIsNullException();
             }
         }
 
         public AddressState asState() {
-            AddressState state = new AddressState(id, streetName, city);
-            state.assertIsValid();
+            assertIsValid();
 
-            return state;
+            return new AddressState(id, streetName, city);
         }
 
         @Override
