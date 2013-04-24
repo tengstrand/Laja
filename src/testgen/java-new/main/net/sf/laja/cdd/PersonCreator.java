@@ -24,6 +24,10 @@ public class PersonCreator {
         return new SpecialPerson(state);
     }
 
+    public DbPerson asDbPerson() {
+        return new DbPerson(state.asState());
+    }
+
     // Generated code goes here...
 
     public static PersonFactory createPerson() {
@@ -107,7 +111,7 @@ public class PersonCreator {
             public class Address {
                 // TODO: Make sure this row is preserved when generated.
                 public PersonCreator defaultAddress() {
-                    state.address = buildAddress().getMutableState();
+                    state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").getMutableState();
                     return new PersonCreator(state);
                 }
 
