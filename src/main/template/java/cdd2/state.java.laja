@@ -2,6 +2,7 @@
 #set (packagename = state.packagename)
 #set (classname = state.classname)
 #set (classvariable = state.classvariable)
+#set (mutableClass = state.mutableClass)
 #set (attributes = state.attributes)
 #set (imports = state.imports)
 
@@ -22,24 +23,15 @@
 #end
 
 #macro constructor()
-    public {classname}(##
+    public {classname}(
   #set (iterator = attributes.iterator)
-  #set (line = "")
   #set (space = " ")
-  #set (spaces = strings.repeat(" ", add(classname.length, 12)))
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-      #set (line = "{line}{attribute.type} {attribute.variable}")
-      #if (line.length > 50)
-{attribute.type} {attribute.variable},
-{spaces}##
-        #set (line = "")
-      #else
-{attribute.type} {attribute.variable},{space}##
-      #end
+            {attribute.type} {attribute.variable},
     #else
-{attribute.type} {attribute.variable}) {
+            {attribute.type} {attribute.variable}) {
     #end
   #end
   #foreach (attribute in attributes)
@@ -62,6 +54,22 @@
   #end
 #end
 
+#macro asMutableState()
+
+    public {mutableClass} asMutableState() {
+        return new {mutableClass}(
+  #set (iterator = attributes.iterator)
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+            {attribute.variable},
+    #else
+            {attribute.variable});
+    #end
+  #end
+    }
+#end
+
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.txt"
 package {packagename};
   #imports()
@@ -72,5 +80,6 @@ public class {classname} {
 
   #constructor()
   #exceptions()
+  #asMutableState()
 }
 #end

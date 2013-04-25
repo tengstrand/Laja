@@ -8,6 +8,7 @@ public class State implements StateParser.IState {
     public String packagename;
     public String classname;
     public String classvariable;
+    public String mutableClass;
     public List<Attribute> attributes;
     public Imports imports;
 
@@ -23,6 +24,7 @@ public class State implements StateParser.IState {
         ClassStatement classStatement = (ClassStatement)iclassStatement;
         classname = classStatement.classname;
         classvariable = StringUtils.uncapitalize(classname);
+        mutableClass = StringUtils.left(classname, classname.length() - 5) + "MutableState";
         attributes = classStatement.attributes;
     }
 
