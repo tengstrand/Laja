@@ -20,7 +20,7 @@
 
     #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.java"))
 
-    #println("{state}")
+    #import "{..}/../java/cdd2/state.java.laja"
   #end
 
 #end

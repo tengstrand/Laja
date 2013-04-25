@@ -1,0 +1,61 @@
+
+#set (packagename = state.packagename)
+#set (classname = state.classname)
+#set (classvariable = state.classvariable)
+#set (attributes = state.attributes)
+#set (imports = state.imports)
+
+#macro imports()
+
+  #if (imports.hasImports)
+    #foreach (import in imports)
+{import.statement}
+    #end
+
+  #end
+#end
+
+#macro attributes()
+  #foreach (attribute in attributes)
+    public final {attribute.type} {attribute.variable};{attribute.comment}
+  #end
+#end
+
+#macro constructor()
+    public {classname}(##
+  #set (iterator = attributes.iterator)
+  #set (line = "")
+  #set (space = " ")
+  #set (spaces = strings.repeat(" ", add(classname.length, 12)))
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+      #set (line = "{line}{attribute.type} {attribute.variable}")
+      #if (line.length > 50)
+{attribute.type} {attribute.variable},
+{spaces}##
+        #set (line = "")
+      #else
+{attribute.type} {attribute.variable},{space}##
+      #end
+    #else
+{attribute.type} {attribute.variable}) {
+    #end
+  #end
+  #foreach (attribute in attributes)
+        this.{attribute.variable} = {attribute.variable};
+  #end
+    }
+#end
+
+#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.txt"
+package {packagename};
+  #imports()
+public class {classname} {
+  #attributes()
+
+    // Generated code goes here...
+
+  #constructor()
+}
+#end

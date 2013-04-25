@@ -13,6 +13,13 @@
   #end
 #end
 
+#macro lazyImportCalculator()
+  #if (calculator == null)
+    #import "{.}/Calculator.groovy"
+    #set (calculator = new Calculator())
+  #end
+#end
+
 #function counter(initialValue)
   #lazyImportCounter()
   #return new Counter(initialValue);
@@ -21,4 +28,14 @@
 #function stack()
   #lazyImportStack()
   #return new Stack();
+#end
+
+#function add(x, y)
+  #lazyImportCalculator()
+  #return calculator.add(x, y)
+#end
+
+#function sub(x, y)
+  #lazyImportCalculator()
+  #return calculator.sub(x, y)
 #end

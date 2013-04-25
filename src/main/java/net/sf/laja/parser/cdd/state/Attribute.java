@@ -3,7 +3,7 @@ package net.sf.laja.parser.cdd.state;
 public class Attribute implements StateParser.IAttribute {
     public String type;
     public String variable;
-    public String comment;
+    public String comment = "";
 
     public void setType(String type) {
         this.type = type;
