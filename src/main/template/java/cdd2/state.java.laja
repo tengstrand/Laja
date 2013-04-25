@@ -48,6 +48,20 @@
     }
 #end
 
+#macro exceptions()
+
+    public static class Illegal{classname}Exception extends IllegalStateException { }
+    public static class Illegal{classname}IsNullException extends Illegal{classname}Exception { }
+
+  #foreach (attribute in attributes)
+    public static class Illegal{classname}{attribute.variableAsClass}Exception extends Illegal{classname}Exception { }
+  #end
+
+  #foreach (attribute in attributes)
+    public static class Illegal{classname}{attribute.variableAsClass}IsNullException extends Illegal{classname}IsNullException { }
+  #end
+#end
+
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.txt"
 package {packagename};
   #imports()
@@ -57,5 +71,6 @@ public class {classname} {
     // Generated code goes here...
 
   #constructor()
+  #exceptions()
 }
 #end

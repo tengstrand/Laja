@@ -1,8 +1,11 @@
 package net.sf.laja.parser.cdd.state;
 
+import org.apache.commons.lang.StringUtils;
+
 public class Attribute implements StateParser.IAttribute {
     public String type;
     public String variable;
+    public String variableAsClass;
     public String comment = "";
 
     public void setType(String type) {
@@ -11,6 +14,7 @@ public class Attribute implements StateParser.IAttribute {
 
     public void setVariable(String variable) {
         this.variable = variable;
+        this.variableAsClass = StringUtils.capitalize(variable);
     }
 
     public void setComment(String comment) {
