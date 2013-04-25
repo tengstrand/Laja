@@ -54,6 +54,19 @@
   #end
 #end
 
+#macro withMethods()
+
+  #set (parameterList = "")
+  #set (delimiter = "")
+  #foreach (attribute in attributes)
+    #set (parameterList = "{parameterList}{delimiter}{attribute.variable}")
+    #set (delimiter = ", ")
+  #end
+  #foreach (attribute in attributes)
+    public {classname} with{attribute.variableAsClass}({attribute.type} {attribute.variable}) { return new {classname}({parameterList}); }
+  #end
+#end
+
 #macro asMutableState()
 
     public {mutableClass} asMutableState() {
@@ -80,6 +93,7 @@ public class {classname} {
 
   #constructor()
   #exceptions()
+  #withMethods()
   #asMutableState()
 }
 #end
