@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd;
 
 import org.joda.time.DateMidnight;
 import org.junit.Test;

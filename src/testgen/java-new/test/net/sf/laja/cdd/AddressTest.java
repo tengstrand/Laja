@@ -1,6 +1,5 @@
-package net.sf.laja.cdd.behaviour;
+package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.Address;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;

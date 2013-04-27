@@ -90,7 +90,7 @@ public class PersonState implements ImmutableState {
                 name,
                 birthday,
                 asMutableList(children),
-                address.asMutableState(),
+                address.asMutable(),
                 asMutableSet(oldAddresses, toMutable),
                 asMutableMap(groupedAddresses, toMutable),
                 asMutableList(listOfSetOfListOfIntegers, toMutableSet, toMutableList));
@@ -217,7 +217,7 @@ public class PersonState implements ImmutableState {
                     name,
                     birthday,
                     asImmutableList(children),
-                    address.asState(),
+                    address.asImmutable(),
                     asImmutableSet(oldAddresses),
                     asImmutableMap(groupedAddresses),
                     asImmutableList(listOfSetOfListOfIntegers));

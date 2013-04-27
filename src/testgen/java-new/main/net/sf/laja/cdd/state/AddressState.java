@@ -1,13 +1,15 @@
 package net.sf.laja.cdd.state;
 
-import java.io.Serializable;
+import net.sf.laja.cdd.ImmutableState;
+import net.sf.laja.cdd.MutableState;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AddressState implements Serializable {
+public class AddressState implements ImmutableState {
     public final int id; // (id)
     public final String streetName;
     public final String city; // (optional)
@@ -36,7 +38,7 @@ public class AddressState implements Serializable {
     public static class IllegalAddressStateStreetNameException extends IllegalAddressStateException { }
     public static class IllegalAddressStateStreetNameIsNullException extends IllegalAddressStateIsNullException { }
 
-    public AddressMutableState asMutableState() {
+    public AddressMutableState asMutable() {
         return new AddressMutableState(id, streetName, city);
     }
 
@@ -68,7 +70,7 @@ public class AddressState implements Serializable {
         return "{id=" + id + ", streetName='" + streetName + "\', city='" + city + "\'}";
     }
 
-    public static class AddressMutableState {
+    public static class AddressMutableState implements MutableState {
         public int id; // (id)
         public String streetName;
         public String city; // (optional)
@@ -114,7 +116,7 @@ public class AddressState implements Serializable {
             }
         }
 
-        public AddressState asState() {
+        public AddressState asImmutable() {
             assertIsValid();
 
             return new AddressState(id, streetName, city);

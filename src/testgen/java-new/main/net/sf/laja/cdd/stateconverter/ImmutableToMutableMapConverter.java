@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ImmutableToMutableMapConverter implements TypeConverter {
+
     public Map convert(Object from, TypeConverter... converters) {
         Map result = new HashMap();
 

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ImmutableToMutableListConverter implements TypeConverter {
+
     public List convert(Object from, TypeConverter... converters) {
         List result = new ArrayList();
 

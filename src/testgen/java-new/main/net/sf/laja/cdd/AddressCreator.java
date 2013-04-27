@@ -1,5 +1,6 @@
 package net.sf.laja.cdd;
 
+import com.google.common.collect.ImmutableList;
 import net.sf.laja.cdd.state.AddressState;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class AddressCreator {
     private final AddressMutableState state;
 
     public Address asAddress() {
-        return new DefaultAddress(state.asState());
+        return new DefaultAddress(state.asImmutable());
     }
 
     // Generated code goes here...
@@ -39,7 +40,7 @@ public class AddressCreator {
     }
 
     public AddressState getState() {
-        return state.asState();
+        return state.asImmutable();
     }
 
     public AddressMutableState getMutableState() {
@@ -101,11 +102,11 @@ public class AddressCreator {
         }
 
         public DefaultAddress asAddress() {
-            return new DefaultAddress(state.asState());
+            return new DefaultAddress(state.asImmutable());
         }
 
         public AddressState getState() {
-            return state.asState();
+            return state.asImmutable();
         }
 
         public AddressMutableState getMutableState() {
@@ -113,6 +114,7 @@ public class AddressCreator {
         }
     }
 
+    // TODO: add tests!
     public static class AddressListBuilder {
         private AddressCreator[] creators;
 
@@ -120,12 +122,27 @@ public class AddressCreator {
             this.creators = creators;
         }
 
-        public List<Address> asAddressList() {
-            return asAddressArrayList();
+        public ImmutableList<Address> asList() {
+            ImmutableList.Builder<Address> builder = ImmutableList.builder();
+
+            for (AddressCreator creator : creators) {
+                builder.add(creator.asAddress());
+            }
+            return builder.build();
         }
 
-        public List<Address> asAddressArrayList() {
-            List<Address> result = new ArrayList<Address>();
+        public ImmutableList<AddressState> asStateList() {
+            ImmutableList.Builder<AddressState> builder = ImmutableList.builder();
+
+            for (AddressCreator creator : creators) {
+                builder.add(creator.getState());
+            }
+            return builder.build();
+        }
+
+
+        public List<Address> asMutableList() {
+            ArrayList<Address> result = new ArrayList<Address>();
 
             for (AddressCreator creator : creators) {
                 result.add(creator.asAddress());
@@ -133,24 +150,7 @@ public class AddressCreator {
             return result;
         }
 
-        public List<AddressState> asImmutableStateList() {
-            return asImmutableStateArrayList();
-        }
-
-        public List<AddressState> asImmutableStateArrayList() {
-            List<AddressState> result = new ArrayList<AddressState>();
-
-            for (AddressCreator creator : creators) {
-                result.add(creator.getState());
-            }
-            return result;
-        }
-
         public List<AddressMutableState> asMutableStateList() {
-            return asMutableStateArrayList();
-        }
-
-        public List<AddressMutableState> asMutableStateArrayList() {
             List<AddressMutableState> result = new ArrayList<AddressMutableState>();
 
             for (AddressCreator creator : creators) {

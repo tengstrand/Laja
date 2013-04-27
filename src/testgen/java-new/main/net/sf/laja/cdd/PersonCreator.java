@@ -1,5 +1,6 @@
 package net.sf.laja.cdd;
 
+import com.google.common.collect.ImmutableList;
 import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 
@@ -208,7 +209,25 @@ public class PersonCreator {
             this.creators = creators;
         }
 
-        public List<Person> asArrayList() {
+        public ImmutableList<Person> asList() {
+            ImmutableList.Builder<Person> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asPerson());
+            }
+            return builder.build();
+        }
+
+        public ImmutableList<PersonState> asStateList() {
+            ImmutableList.Builder<PersonState> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.getState());
+            }
+            return builder.build();
+        }
+
+        public List<Person> asMutableList() {
             List<Person> result = new ArrayList<Person>();
 
             for (PersonCreator creator : creators) {
@@ -217,24 +236,7 @@ public class PersonCreator {
             return result;
         }
 
-        public List<PersonState> asStateList() {
-            return asStateArrayList();
-        }
-
-        public List<PersonState> asStateArrayList() {
-            List<PersonState> result = new ArrayList<PersonState>();
-
-            for (PersonCreator creator : creators) {
-                result.add(creator.getState());
-            }
-            return result;
-        }
-
         public List<PersonMutableState> asMutableStateList() {
-            return asMutableStateArrayList();
-        }
-
-        public List<PersonMutableState> asMutableStateArrayList() {
             List<PersonMutableState> result = new ArrayList<PersonMutableState>();
 
             for (PersonCreator creator : creators) {

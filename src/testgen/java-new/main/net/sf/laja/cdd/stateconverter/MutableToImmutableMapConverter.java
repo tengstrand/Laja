@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class MutableToImmutableMapConverter implements TypeConverter {
+
     public ImmutableMap convert(Object from, TypeConverter... converters) {
         ImmutableMap.Builder builder = ImmutableMap.builder();
 

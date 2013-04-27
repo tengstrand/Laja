@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ImmutableToMutableSetConverter implements TypeConverter {
+
     public Set convert(Object from, TypeConverter... converters) {
         Set result = new HashSet();
 
