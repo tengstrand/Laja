@@ -13,7 +13,7 @@ public class Main {
                 .children(createPerson().name("").birthday(2010, 1, 1).children().defaultAddress())
                 .address(address).asPerson();
 
-        System.out.println(person.state.asMutableState());
+        System.out.println(person.state.asMutable());
 
         PersonCreator.createPersonList(PersonCreator.createPerson().name("").birthday(2010, 1, 2).children().defaultAddress()).asArrayList();
 
@@ -21,5 +21,4 @@ public class Main {
         String sqlStatement = dbPerson.getInsertStatement();
         System.out.println(sqlStatement);
     }
-
 }

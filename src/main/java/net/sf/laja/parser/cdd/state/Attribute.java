@@ -8,13 +8,17 @@ public class Attribute implements StateParser.IAttribute {
     public String variableAsClass;
     public String comment = "";
 
+    public boolean isList;
+
     public void setType(String type) {
         this.type = type;
+
+        isList = type.endsWith("List");
     }
 
     public void setVariable(String variable) {
         this.variable = variable;
-        this.variableAsClass = StringUtils.capitalize(variable);
+        variableAsClass = StringUtils.capitalize(variable);
     }
 
     public void setComment(String comment) {

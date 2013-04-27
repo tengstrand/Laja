@@ -12,4 +12,5 @@ public class XState {
     public AddressState address;
     public ImmutableSet<AddressState> oldAddresses; // (optional)
     public ImmutableMap<String,AddressState> groupedAddresses; // (optional)
+    public ImmutableList<ImmutableSet<Integer>> listOfSetOfInteger;
 }

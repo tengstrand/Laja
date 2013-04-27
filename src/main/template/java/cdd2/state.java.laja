@@ -67,6 +67,15 @@
   #end
 #end
 
+#macro mutableStateVariable()
+  #if (attribute.isList)
+{attribute.variable}##
+PersonStateConverter.asMutableList(children),
+  #else
+{attribute.variable}##
+  #end
+#end
+
 #macro asMutableState()
 
     public {mutableClass} asMutableState() {
@@ -75,9 +84,9 @@
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-            {attribute.variable},
+            {mutableStateVariable()},
     #else
-            {attribute.variable});
+            {mutableStateVariable()});
     #end
   #end
     }

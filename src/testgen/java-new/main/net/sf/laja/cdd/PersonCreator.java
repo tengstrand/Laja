@@ -17,7 +17,7 @@ public class PersonCreator {
     private final PersonMutableState state;
 
     public Person asPerson() {
-        return new Person(state.asState());
+        return new Person(state.asImmutable());
     }
 
     public SpecialPerson asSpecialPerson() {
@@ -25,7 +25,7 @@ public class PersonCreator {
     }
 
     public DbPerson asDbPerson() {
-        return new DbPerson(state.asState());
+        return new DbPerson(state.asImmutable());
     }
 
     // Generated code goes here...
@@ -51,7 +51,7 @@ public class PersonCreator {
     }
 
     public PersonState getState() {
-        return state.asState();
+        return state.asImmutable();
     }
 
     public PersonMutableState getMutableState() {
@@ -185,7 +185,7 @@ public class PersonCreator {
         }
 
         public Person asPerson() {
-            return new Person(state.asState());
+            return new Person(state.asImmutable());
         }
 
         public SpecialPerson asSpecialPerson() {
@@ -193,7 +193,7 @@ public class PersonCreator {
         }
 
         public PersonState getState() {
-            return state.asState();
+            return state.asImmutable();
         }
 
         public PersonMutableState getMutableState() {

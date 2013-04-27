@@ -12,7 +12,7 @@ public class SpecialPerson {
     }
 
     public PersonState getState() {
-        return state.asState();
+        return state.asImmutable();
     }
 
     @Override public boolean equals(Object o) { return state.equals(o); }

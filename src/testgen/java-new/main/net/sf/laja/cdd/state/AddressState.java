@@ -1,16 +1,11 @@
 package net.sf.laja.cdd.state;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 public class AddressState implements Serializable {
     public final int id; // (id)
@@ -150,45 +145,6 @@ public class AddressState implements Serializable {
         @Override
         public String toString() {
             return "{id=" + id + ", streetName='" + streetName + "\', city='" + city + "\'}";
-        }
-    }
-
-    public static class AddressStateConverter {
-
-        public static Set<AddressMutableState> asMutableSet(ImmutableSet<AddressState> set) {
-            Set<AddressMutableState> result = new HashSet<AddressMutableState>();
-
-            for (AddressState state : set) {
-                result.add(state.asMutableState());
-            }
-            return result;
-        }
-
-        public static ImmutableSet<AddressState> asImmutableSet(Set<AddressMutableState> set) {
-            ImmutableSet.Builder<AddressState> builder = new ImmutableSet.Builder<AddressState>();
-
-            for (AddressMutableState state : set) {
-                builder.add(state.asState());
-            }
-            return builder.build();
-        }
-
-        public static ImmutableMap<String, AddressState> asImmutableMap(Map<String, AddressMutableState> groupedAddresses) {
-            ImmutableMap.Builder<String, AddressState> builder = new ImmutableMap.Builder<String, AddressState>();
-
-            for (Map.Entry<String, AddressMutableState> entry : groupedAddresses.entrySet()) {
-                builder.put(entry.getKey(), entry.getValue().asState());
-            }
-            return builder.build();
-        }
-
-        public static Map<String, AddressMutableState> asMutableMap(ImmutableMap<String, AddressState> groupedAddresses) {
-            Map<String, AddressMutableState> result = new HashMap<String, AddressMutableState>();
-
-            for (Map.Entry<String, AddressState> entry : groupedAddresses.entrySet()) {
-                result.put(entry.getKey(), entry.getValue().asMutableState());
-            }
-            return result;
         }
     }
 }

@@ -3,9 +3,10 @@ package net.sf.laja.cdd.state;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.ImmutableState;
+import net.sf.laja.cdd.MutableState;
 import org.joda.time.DateMidnight;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,21 +15,24 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.state.AddressState.AddressStateConverter;
+import static net.sf.laja.cdd.stateconverter.TypeConversion.*;
+import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
 
-public class PersonState implements Serializable {
+public class PersonState implements ImmutableState {
     public final String name;
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
     public final ImmutableSet<AddressState> oldAddresses; // (optional)
     public final ImmutableMap<String,AddressState> groupedAddresses; // (optional)
+    public final ImmutableList<ImmutableSet<ImmutableList<Integer>>> listOfSetOfListOfIntegers;
 
     private static void setDefaults(PersonMutableState state) {
         state.children = new ArrayList<PersonMutableState>();
         state.address = new AddressMutableState();
         state.oldAddresses = new HashSet<AddressMutableState>();
         state.groupedAddresses = new HashMap<String, AddressMutableState>();
+        state.listOfSetOfListOfIntegers = new ArrayList<Set<List<Integer>>>();
     }
 
     private static void assertIsValid(PersonMutableState state) {
@@ -45,13 +49,15 @@ public class PersonState implements Serializable {
             ImmutableList<PersonState> children,
             AddressState address,
             ImmutableSet<AddressState> oldAddresses,
-            ImmutableMap<String,AddressState> groupedAddresses) {
+            ImmutableMap<String,AddressState> groupedAddresses,
+            ImmutableList<ImmutableSet<ImmutableList<Integer>>> listOfSetOfListOfIntegers) {
         this.name = name;
         this.birthday = birthday;
         this.children = children;
         this.address = address;
         this.oldAddresses = oldAddresses;
         this.groupedAddresses = groupedAddresses;
+        this.listOfSetOfListOfIntegers = listOfSetOfListOfIntegers;
     }
 
     public static class IllegalPersonStateException extends IllegalStateException {  }
@@ -63,6 +69,7 @@ public class PersonState implements Serializable {
     public static class IllegalPersonStateAddressException extends IllegalPersonStateException {  }
     public static class IllegalPersonStateOldAddressesException extends IllegalPersonStateException {  }
     public static class IllegalPersonStateGroupedAddressesException extends IllegalPersonStateException {  }
+    public static class IllegalPersonStateListOfSetOfIntegerException extends IllegalPersonStateException {  }
 
     public static class IllegalPersonStateNameIsNullException extends IllegalPersonStateIsNullException {  }
     public static class IllegalPersonStateBirthdayIsNullException extends IllegalPersonStateIsNullException {  }
@@ -70,21 +77,23 @@ public class PersonState implements Serializable {
     public static class IllegalPersonStateAddressIsNullException extends IllegalPersonStateIsNullException {  }
     public static class IllegalPersonStateOldAddressesIsNullException extends IllegalPersonStateIsNullException {  }
     public static class IllegalPersonStateGroupedAddressesIsNullException extends IllegalPersonStateIsNullException {  }
+    public static class IllegalPersonStateListOfSetOfIntegerIsNullException extends IllegalPersonStateIsNullException {  }
 
-    public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
-    public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
-    public PersonState withAddress(AddressState address) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
-    public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
-    public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses); }
+    public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
+    public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
+    public PersonState withAddress(AddressState address) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
+    public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
+    public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
 
-    public PersonMutableState asMutableState() {
+    public PersonMutableState asMutable() {
         return new PersonMutableState(
                 name,
                 birthday,
-                PersonStateConverter.asMutableList(children),
+                asMutableList(children),
                 address.asMutableState(),
-                AddressStateConverter.asMutableSet(oldAddresses),
-                AddressStateConverter.asMutableMap(groupedAddresses));
+                asMutableSet(oldAddresses, toMutable),
+                asMutableMap(groupedAddresses, toMutable),
+                asMutableList(listOfSetOfListOfIntegers, toMutableSet, toMutableList));
     }
 
     @Override
@@ -128,26 +137,29 @@ public class PersonState implements Serializable {
                 '}';
     }
 
-    public static class PersonMutableState {
+    public static class PersonMutableState implements MutableState {
         public String name;
         public DateMidnight birthday;
         public List<PersonMutableState> children;
         public AddressMutableState address;
         public Set<AddressMutableState> oldAddresses;
         public Map<String, AddressMutableState> groupedAddresses;
+        public List<Set<List<Integer>>> listOfSetOfListOfIntegers;
 
         public PersonMutableState() {
             PersonState.setDefaults(this);
         }
 
         public PersonMutableState(String name, DateMidnight birthday, List<PersonMutableState> children, AddressMutableState address,
-                                  Set<AddressMutableState> oldAddresses, Map<String, AddressMutableState> groupedAddresses) {
+                                  Set<AddressMutableState> oldAddresses, Map<String, AddressMutableState> groupedAddresses,
+                                  List<Set<List<Integer>>> listOfSetOfListOfIntegers) {
             this.name = name;
             this.birthday = birthday;
             this.children = children;
             this.address = address;
             this.oldAddresses = oldAddresses;
             this.groupedAddresses = groupedAddresses;
+            this.listOfSetOfListOfIntegers = listOfSetOfListOfIntegers;
         }
 
         public String getName() { return name; }
@@ -156,6 +168,7 @@ public class PersonState implements Serializable {
         public AddressMutableState getAddress() { return address; }
         public Set<AddressMutableState> getOldAddresses() { return oldAddresses; }
         public Map<String, AddressMutableState> getGroupedAddresses() { return groupedAddresses; }
+        public List<Set<List<Integer>>> getListOfSetOfListOfIntegers() { return listOfSetOfListOfIntegers; }
 
         public void setName(String name) { this.name = name; }
         public void setBirthday(DateMidnight birthday) { this.birthday = birthday; }
@@ -163,6 +176,7 @@ public class PersonState implements Serializable {
         public void setAddress(AddressMutableState address) { this.address = address; }
         public void setOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; }
         public void setGroupedAddresses(Map<String, AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
+        public void setListOfSetOfListOfIntegers(List<Set<List<Integer>>> listOfSetOfListOfIntegers) { this.listOfSetOfListOfIntegers = listOfSetOfListOfIntegers; }
 
         public void assertIsValid() {
             assertNotNull();
@@ -196,16 +210,17 @@ public class PersonState implements Serializable {
             return result;
         }
 
-        public PersonState asState() {
+        public PersonState asImmutable() {
             assertIsValid();
 
             return new PersonState(
                     name,
                     birthday,
-                    PersonStateConverter.asImmutableList(children),
+                    asImmutableList(children),
                     address.asState(),
-                    AddressStateConverter.asImmutableSet(oldAddresses),
-                    AddressStateConverter.asImmutableMap(groupedAddresses));
+                    asImmutableSet(oldAddresses),
+                    asImmutableMap(groupedAddresses),
+                    asImmutableList(listOfSetOfListOfIntegers));
         }
 
         @Override
@@ -237,27 +252,6 @@ public class PersonState implements Serializable {
                     ", oldAddresses=" + oldAddresses +
                     ", groupedAddresses=" + groupedAddresses +
                     '}';
-        }
-    }
-
-    public static class PersonStateConverter {
-        public static ImmutableList<PersonState> asImmutableList(List<PersonMutableState> list) {
-            ImmutableList.Builder<PersonState> builder = ImmutableList.<PersonState>builder();
-            if (list != null) {
-                for (PersonMutableState state : list) {
-                    builder.add(state.asState());
-                }
-            }
-            return builder.build();
-        }
-
-        public static List<PersonMutableState> asMutableList(ImmutableList<PersonState> list) {
-            List<PersonMutableState> result = new ArrayList<PersonMutableState>();
-
-            for (PersonState state : list) {
-                result.add(state.asMutableState());
-            }
-            return result;
         }
     }
 }
