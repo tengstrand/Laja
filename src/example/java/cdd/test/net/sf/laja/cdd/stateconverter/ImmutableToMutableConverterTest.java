@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ImmutableToMutableConverterTest {
 
     @Test
-    public void shouldConvertFromImmutableToMutablePerson() {
+    public void shouldConvertFromImmutableToMutableState() {
         TypeConverter converter = new ImmutableToMutableConverter();
 
         PersonState state = PersonCreator.createPerson().name("Carl").birthday(2010,1,15).children().defaultAddress().getState();
