@@ -60,8 +60,8 @@ public class AddressState implements ImmutableState {
         AddressState that = (AddressState) o;
 
         if (id != that.id) return false;
-        if (!city.equals(that.city)) return false;
-        if (!streetName.equals(that.streetName)) return false;
+        if (city != null ? !city.equals(that.city) : that.city != null) return false;
+        if (streetName != null ? !streetName.equals(that.streetName) : that.streetName != null) return false;
 
         return true;
     }

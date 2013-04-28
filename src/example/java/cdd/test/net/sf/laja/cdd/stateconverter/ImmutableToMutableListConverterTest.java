@@ -25,7 +25,7 @@ public class ImmutableToMutableListConverterTest {
     }
 
     @Test
-    public void shouldConvertFromImmutableListOfAddressStateToMutableStateList() {
+    public void shouldConvertFromImmutableListOfStateToMutableStateList() {
         AddressListBuilder addresses = createAddressList(
                 createAddress().streetName("First street"),
                 createAddress().streetName("Second street")

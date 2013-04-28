@@ -20,14 +20,17 @@ public class Person {
     }
 
     public boolean isFromUppsala() {
-        return new DefaultAddress(state.address).isFromUppsala();
+        return new RegularAddress(state.address).isFromUppsala();
     }
 
     public boolean isAdult() {
         return new Period(state.birthday, new DateMidnight()).getYears() >= 18;
     }
 
-    @Override public boolean equals(Object o) { return state.equals(o); }
+    @Override public boolean equals(Object that) {
+        return this == that ? true : that == null || getClass() != that.getClass() ? false :
+                state.equals(((Person)that).state);
+    }
     @Override public int hashCode() { return state.hashCode(); }
     @Override public String toString() { return getClass().getSimpleName() + state; }
 }

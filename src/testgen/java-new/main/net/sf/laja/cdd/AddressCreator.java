@@ -1,20 +1,23 @@
 package net.sf.laja.cdd;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import net.sf.laja.cdd.state.AddressState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 
-public class AddressCreator {
+public class AddressCreator implements AddressMaker {
     private final AddressMutableState state;
 
     public Address asAddress() {
-        return new DefaultAddress(state.asImmutable());
+        return new RegularAddress(state.asImmutable());
     }
 
     // Generated code goes here...
@@ -33,6 +36,18 @@ public class AddressCreator {
 
     public static AddressSetBuilder createAddressSet(AddressCreator... creators) {
         return new AddressSetBuilder(creators);
+    }
+
+    public static AddressMapBuilder createAddressMap(AddressMapEntryBuilder... builders) {
+        return new AddressMapBuilder(builders);
+    }
+
+    public static AddressMapEntryBuilder addressEntry(Object key, AddressCreator creator) {
+        return new AddressMapEntryBuilder(key, creator);
+    }
+
+    public static AddressMapEntryBuilder addressEntry(Object key, AddressBuilder builder) {
+        return new AddressMapEntryBuilder(key, builder);
     }
 
     public AddressCreator(AddressMutableState state) {
@@ -75,7 +90,7 @@ public class AddressCreator {
         }
     }
 
-    public static class AddressBuilder {
+    public static class AddressBuilder implements AddressMaker {
         private final AddressMutableState state;
 
         private AddressBuilder(AddressMutableState state) {
@@ -101,8 +116,8 @@ public class AddressCreator {
             return this;
         }
 
-        public DefaultAddress asAddress() {
-            return new DefaultAddress(state.asImmutable());
+        public Address asAddress() {
+            return new RegularAddress(state.asImmutable());
         }
 
         public AddressState getState() {
@@ -206,4 +221,76 @@ public class AddressCreator {
             return result;
         }
     }
+
+    public static class AddressMapEntryBuilder {
+        private final Object key;
+        private final AddressMaker maker;
+
+        public AddressMapEntryBuilder(Object key, AddressMaker maker) {
+            this.key = key;
+            this.maker = maker;
+        }
+
+        public Address asAddress() {
+            return maker.asAddress();
+        }
+
+        public AddressState asState() {
+            return maker.getState();
+        }
+
+        public AddressMutableState asMutableState() {
+            return maker.getMutableState();
+        }
+    }
+
+    public static class AddressMapBuilder {
+        private final AddressMapEntryBuilder[] entries;
+
+        public AddressMapBuilder(AddressMapEntryBuilder... entries) {
+            this.entries = entries;
+        }
+
+        public ImmutableMap asAddressMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asAddress());
+            }
+            return builder.build();
+        }
+
+        public Map asAddressMutableMap() {
+            Map<Object,Address> result = new HashMap<Object,Address>();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asAddress());
+            }
+            return result;
+        }
+
+        public ImmutableMap asStateMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asState());
+            }
+            return builder.build();
+        }
+
+        public Map asMutableStateMap() {
+            Map result = new HashMap();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asMutableState());
+            }
+            return result;
+        }
+    }
+}
+
+interface AddressMaker {
+    Address asAddress();
+    AddressState getState();
+    AddressMutableState getMutableState();
 }
