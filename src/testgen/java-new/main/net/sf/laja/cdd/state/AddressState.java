@@ -46,10 +46,11 @@ public class AddressState implements ImmutableState {
     public AddressState withStreetName(String streetName) { return new AddressState(id, streetName, city); }
     public AddressState withCity(String city) { return new AddressState(id, streetName, city); }
 
+    @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + streetName.hashCode();
-        result = 31 * result + city.hashCode();
+        result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
         return result;
     }
 

@@ -155,9 +155,8 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
-
         public List<Address> asMutableList() {
-            ArrayList<Address> result = new ArrayList<Address>();
+            List<Address> result = new ArrayList<Address>();
 
             for (AddressCreator creator : creators) {
                 result.add(creator.asAddress());
