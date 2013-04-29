@@ -31,6 +31,10 @@ public class PersonCreator {
         return new DbPerson(state.asImmutable());
     }
 
+    public TextPerson asTextPerson() {
+        return new TextPerson(state.asImmutable());
+    }
+
     // Generated code goes here...
 
     public static PersonFactory createPerson() {
@@ -64,6 +68,50 @@ public class PersonCreator {
     public PersonCreator withAddress(AddressMutableState address) {
         state.address = address;
         return this;
+    }
+
+    public static class PersonBehaviour {
+        public PersonState state;
+
+        public PersonBehaviour(PersonState state) {
+            this.state = state;
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof PersonBehaviour)) return false;
+            return state.equals(((PersonBehaviour)that).state);
+        }
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+        @Override public String toString() {
+            return getClass().getSimpleName() + state;
+        }
+    }
+
+    public static class PersonMutableBehaviour {
+        private PersonMutableState state;
+
+        public PersonMutableBehaviour(PersonMutableState state) {
+            this.state = state;
+        }
+
+        public PersonState state() {
+            return state.asImmutable();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof PersonMutableBehaviour)) return false;
+            return state.equals(((PersonMutableBehaviour)that).state);
+        }
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+        @Override public String toString() {
+            return getClass().getSimpleName() + state;
+        }
     }
 
     public static class PersonFactory {

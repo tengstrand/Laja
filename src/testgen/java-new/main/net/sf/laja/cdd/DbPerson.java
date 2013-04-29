@@ -2,11 +2,12 @@ package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.PersonState;
 
-public class DbPerson {
-    public final PersonState state;
+import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
+
+public class DbPerson extends PersonBehaviour {
 
     public DbPerson(PersonState state) {
-        this.state = state;
+        super(state);
     }
 
     public String getInsertStatement() {

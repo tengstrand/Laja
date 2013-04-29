@@ -4,11 +4,12 @@ import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 import org.joda.time.Period;
 
-public class Person {
-    public PersonState state;
+import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
 
     public Person(PersonState state) {
-        this.state = state;
+        super(state);
     }
 
     public void setName(String name) {
@@ -23,14 +24,8 @@ public class Person {
         return new RegularAddress(state.address).isFromUppsala();
     }
 
-    public boolean isAdult() {
-        return new Period(state.birthday, new DateMidnight()).getYears() >= 18;
+    public boolean isTeenager() {
+        int years = new Period(state.birthday, new DateMidnight()).getYears();
+        return years >= 13 && years <= 19;
     }
-
-    @Override public boolean equals(Object that) {
-        return this == that ? true : that == null || getClass() != that.getClass() ? false :
-                state.equals(((Person)that).state);
-    }
-    @Override public int hashCode() { return state.hashCode(); }
-    @Override public String toString() { return getClass().getSimpleName() + state; }
 }

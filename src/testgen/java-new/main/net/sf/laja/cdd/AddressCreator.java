@@ -72,6 +72,46 @@ public class AddressCreator implements AddressMaker {
         return this;
     }
 
+    public static class AddressBehaviour {
+        public final AddressState state;
+
+        public AddressBehaviour(AddressState state) {
+            this.state = state;
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof AddressBehaviour)) return false;
+            return state.equals(((AddressBehaviour)that).state);
+        }
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+        @Override public String toString() {
+            return getClass().getSimpleName() + state;
+        }
+    }
+
+    public static class AddressMutableBehaviour {
+        private final AddressMutableState state;
+
+        public AddressMutableBehaviour(AddressMutableState state) {
+            this.state = state;
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof AddressMutableBehaviour)) return false;
+            return state.equals(((AddressMutableBehaviour)that).state);
+        }
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+        @Override public String toString() {
+            return getClass().getSimpleName() + state;
+        }
+    }
+
     public static class AddressFactory {
 
         public AddressCreator streetName(String streetName) {
