@@ -15,7 +15,7 @@ public class MutableToImmutableConverterTest {
     public void shouldConvertFromMutableToImmutableState() {
         TypeConverter converter = new MutableToImmutableConverter();
 
-        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children().defaultAddress().getMutableState();
+        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children().defaultAddress().asMutableState();
         PersonState state = (PersonState)converter.convert(mutableState);
 
         assertThat(state.name, equalTo("Carl"));

@@ -51,11 +51,11 @@ public class PersonCreator {
         this.state = state;
     }
 
-    public PersonState getState() {
+    public PersonState asState() {
         return state.asImmutable();
     }
 
-    public PersonMutableState getMutableState() {
+    public PersonMutableState asMutableState() {
         return state;
     }
 
@@ -97,7 +97,7 @@ public class PersonCreator {
                     List<PersonMutableState> children = new ArrayList<PersonMutableState>();
 
                     for (PersonCreator creator : creators) {
-                        children.add(creator.getMutableState());
+                        children.add(creator.asMutableState());
                     }
                     state.children = children;
                     return new Address();
@@ -112,7 +112,7 @@ public class PersonCreator {
             public class Address {
                 // TODO: Make sure this row is preserved when generated.
                 public PersonCreator defaultAddress() {
-                    state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").getMutableState();
+                    state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
                     return new PersonCreator(state);
                 }
 
@@ -122,7 +122,7 @@ public class PersonCreator {
                 }
 
                 public PersonCreator address(AddressCreator integrator) {
-                    state.address = integrator.getMutableState();
+                    state.address = integrator.asMutableState();
                     return new PersonCreator(state);
                 }
             }
@@ -171,7 +171,7 @@ public class PersonCreator {
         }
 
         public PersonBuilder withAddress(AddressCreator.AddressBuilder address) {
-            state.address = address.getMutableState();
+            state.address = address.asMutableState();
             return this;
         }
 
@@ -222,7 +222,7 @@ public class PersonCreator {
             ImmutableList.Builder<PersonState> builder = ImmutableList.builder();
 
             for (PersonCreator creator : creators) {
-                builder.add(creator.getState());
+                builder.add(creator.asState());
             }
             return builder.build();
         }
@@ -240,7 +240,7 @@ public class PersonCreator {
             List<PersonMutableState> result = new ArrayList<PersonMutableState>();
 
             for (PersonCreator creator : creators) {
-                result.add(creator.getMutableState());
+                result.add(creator.asMutableState());
             }
             return result;
         }
@@ -270,7 +270,7 @@ public class PersonCreator {
             Set<PersonState> result = new HashSet<PersonState>();
 
             for (PersonCreator creator : creators) {
-                result.add(creator.getState());
+                result.add(creator.asState());
             }
             return result;
         }
@@ -283,7 +283,7 @@ public class PersonCreator {
             Set<PersonMutableState> result = new HashSet<PersonMutableState>();
 
             for (PersonCreator creator : creators) {
-                result.add(creator.getMutableState());
+                result.add(creator.asMutableState());
             }
             return result;
         }

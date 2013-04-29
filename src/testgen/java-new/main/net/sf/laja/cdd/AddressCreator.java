@@ -54,11 +54,11 @@ public class AddressCreator implements AddressMaker {
         this.state = state;
     }
 
-    public AddressState getState() {
+    public AddressState asState() {
         return state.asImmutable();
     }
 
-    public AddressMutableState getMutableState() {
+    public AddressMutableState asMutableState() {
         return state;
     }
 
@@ -120,11 +120,11 @@ public class AddressCreator implements AddressMaker {
             return new RegularAddress(state.asImmutable());
         }
 
-        public AddressState getState() {
+        public AddressState asState() {
             return state.asImmutable();
         }
 
-        public AddressMutableState getMutableState() {
+        public AddressMutableState asMutableState() {
             return state;
         }
     }
@@ -150,7 +150,7 @@ public class AddressCreator implements AddressMaker {
             ImmutableList.Builder<AddressState> builder = ImmutableList.builder();
 
             for (AddressCreator creator : creators) {
-                builder.add(creator.getState());
+                builder.add(creator.asState());
             }
             return builder.build();
         }
@@ -168,7 +168,7 @@ public class AddressCreator implements AddressMaker {
             List<AddressMutableState> result = new ArrayList<AddressMutableState>();
 
             for (AddressCreator creator : creators) {
-                result.add(creator.getMutableState());
+                result.add(creator.asMutableState());
             }
             return result;
         }
@@ -202,7 +202,7 @@ public class AddressCreator implements AddressMaker {
             Set<AddressState> result = new HashSet<AddressState>();
 
             for (AddressCreator creator : creators) {
-                result.add(creator.getState());
+                result.add(creator.asState());
             }
             return result;
         }
@@ -215,7 +215,7 @@ public class AddressCreator implements AddressMaker {
             Set<AddressMutableState> result = new HashSet<AddressMutableState>();
 
             for (AddressCreator creator : creators) {
-                result.add(creator.getMutableState());
+                result.add(creator.asMutableState());
             }
             return result;
         }
@@ -235,11 +235,11 @@ public class AddressCreator implements AddressMaker {
         }
 
         public AddressState asState() {
-            return maker.getState();
+            return maker.asState();
         }
 
         public AddressMutableState asMutableState() {
-            return maker.getMutableState();
+            return maker.asMutableState();
         }
     }
 
@@ -290,6 +290,6 @@ public class AddressCreator implements AddressMaker {
 
 interface AddressMaker {
     Address asAddress();
-    AddressState getState();
-    AddressMutableState getMutableState();
+    AddressState asState();
+    AddressMutableState asMutableState();
 }
