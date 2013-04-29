@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.asImmutableMap;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.toImmutable;
@@ -15,6 +16,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class MutableToImmutableMapConverterTest {
+
+    @Test
+    public void shouldConvertFromNullToNull() {
+        assertNull(asImmutableMap(null));
+    }
 
     @Test
     public void shouldConvertFromMutableMapOfIntegersToImmutableMap() {
@@ -28,7 +34,7 @@ public class MutableToImmutableMapConverterTest {
         expectedMap.put("a", 123);
         expectedMap.put("b", 456);
 
-        assertThat(immutableMap, equalTo(ImmutableMap.<String,Integer>builder().put("a", 123).put("b", 456).build()));
+        assertThat(immutableMap, equalTo(ImmutableMap.<String, Integer>builder().put("a", 123).put("b", 456).build()));
     }
 
     @Test

@@ -8,18 +8,19 @@ import java.util.Set;
 public class MutableToImmutableSetConverter {
 
     public ImmutableSet convert(Object from, TypeConverter... converters) {
+        if (from == null) {
+            return null;
+        }
         ImmutableSet.Builder<Object> builder = ImmutableSet.builder();
 
-        if (from != null) {
-            if (converters.length == 0) {
-                builder.addAll((Set) from);
-            } else {
-                TypeConverter typeConverter = converters[0];
-                TypeConverter[] typeConverters = Arrays.copyOfRange(converters, 1, converters.length);
+        if (converters.length == 0) {
+            builder.addAll((Set) from);
+        } else {
+            TypeConverter typeConverter = converters[0];
+            TypeConverter[] typeConverters = Arrays.copyOfRange(converters, 1, converters.length);
 
-                for (Object element : (Set)from) {
-                    builder.add(typeConverter.convert(element, typeConverters));
-                }
+            for (Object element : (Set)from) {
+                builder.add(typeConverter.convert(element, typeConverters));
             }
         }
         return builder.build();

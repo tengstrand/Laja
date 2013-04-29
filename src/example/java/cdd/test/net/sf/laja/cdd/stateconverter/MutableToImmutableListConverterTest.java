@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.asImmutableList;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.toImmutable;
@@ -15,6 +16,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class MutableToImmutableListConverterTest {
+
+    @Test
+    public void shouldConvertFromNullToNull() {
+        assertNull(asImmutableList(null));
+    }
 
     @Test
     public void shouldConvertFromMutableListOfIntegersToImmutableList() {

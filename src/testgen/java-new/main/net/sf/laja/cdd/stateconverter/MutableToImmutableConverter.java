@@ -6,6 +6,6 @@ import net.sf.laja.cdd.MutableState;
 public class MutableToImmutableConverter implements TypeConverter {
 
     public ImmutableState convert(Object from, TypeConverter... converters) {
-        return ((MutableState)from).asImmutable();
+        return from == null ? null : ((MutableState)from).asImmutable();
     }
 }

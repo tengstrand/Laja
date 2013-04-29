@@ -4,12 +4,19 @@ import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.stateconverter.TypeConversion.asImmutable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class MutableToImmutableConverterTest {
+
+    @Test
+    public void shouldConvertFromNullToNull() {
+        assertNull(asImmutable(null));
+    }
 
     @Test
     public void shouldConvertFromMutableToImmutableState() {

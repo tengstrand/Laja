@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.asImmutableSet;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.toImmutable;
@@ -16,6 +17,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class MutableToImmutableSetConverterTest {
+
+    @Test
+    public void shouldConvertFromNullToNull() {
+        assertNull(asImmutableSet(null));
+    }
 
     @Test
     public void shouldConvertFromMutableSetOfIntegersToImmutableSet() {
