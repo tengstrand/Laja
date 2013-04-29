@@ -65,8 +65,8 @@ public class MutableToImmutableMapConverterTest {
         ImmutableMap<String,Integer> expected2 = ImmutableMap.<String,Integer>builder().put("b", 456).build();
         ImmutableMap<String,ImmutableMap<String,Integer>> expectedMap =
                 ImmutableMap.<String,ImmutableMap<String,Integer>>builder()
-                .put("c", expected1)
-                .put("d", expected2).build();
+                        .put("c", expected1)
+                        .put("d", expected2).build();
 
         assertThat(immutableMap, equalTo(expectedMap));
     }

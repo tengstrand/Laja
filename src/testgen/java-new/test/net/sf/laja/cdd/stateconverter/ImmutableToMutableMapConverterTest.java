@@ -55,8 +55,8 @@ public class ImmutableToMutableMapConverterTest {
         ImmutableMap<String,Integer> immutableMap2 = ImmutableMap.<String,Integer>builder().put("b", 456).build();
         ImmutableMap<String,ImmutableMap<String,Integer>> immutableMap =
                 ImmutableMap.<String,ImmutableMap<String,Integer>>builder()
-                .put("c", immutableMap1)
-                .put("d", immutableMap2).build();
+                        .put("c", immutableMap1)
+                        .put("d", immutableMap2).build();
 
         Map mutableMap = asMutableMap(immutableMap, toMutableMap);
 
