@@ -5,6 +5,8 @@ import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -110,19 +112,44 @@ public class PersonCreator {
             }
 
             public class Address {
+
+                public PersonCreator defaults() {
+                    defaultAddress();
+                    new ListOfSetOfListOfIntegers().defaultListOfSetOfMapOfIntegers();
+                    return new PersonCreator(state);
+                }
+
                 // TODO: Make sure this row is preserved when generated.
-                public PersonCreator defaultAddress() {
+                public ListOfSetOfListOfIntegers defaultAddress() {
                     state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
-                    return new PersonCreator(state);
+                    return new ListOfSetOfListOfIntegers();
                 }
 
-                public PersonCreator address(AddressMutableState address) {
+                public ListOfSetOfListOfIntegers address(AddressMutableState address) {
                     state.address = address;
+                    return new ListOfSetOfListOfIntegers();
+                }
+
+                public ListOfSetOfListOfIntegers address(AddressCreator integrator) {
+                    state.address = integrator.asMutableState();
+                    return new ListOfSetOfListOfIntegers();
+                }
+            }
+
+            public class ListOfSetOfListOfIntegers {
+                // TODO: Make sure this row is preserved when generated.
+                public PersonCreator defaultListOfSetOfMapOfIntegers() {
+                    Map map1 = new HashMap();
+                    map1.put("a", 123);
+                    map1.put("b", 456);
+                    Set set = new HashSet(Arrays.asList(map1));
+                    List list = Arrays.asList(set);
+                    state.listOfSetOfMapOfIntegers = list;
                     return new PersonCreator(state);
                 }
 
-                public PersonCreator address(AddressCreator integrator) {
-                    state.address = integrator.asMutableState();
+                public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
+                    state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
                     return new PersonCreator(state);
                 }
             }

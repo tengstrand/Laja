@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import java.util.Arrays;
 import java.util.Set;
 
-public class MutableToImmutableSetConverter {
+public class MutableToImmutableSetConverter implements TypeConverter {
 
     public ImmutableSet convert(Object from, TypeConverter... converters) {
         if (from == null) {

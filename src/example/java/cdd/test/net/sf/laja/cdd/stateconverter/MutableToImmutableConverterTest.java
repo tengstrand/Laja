@@ -22,7 +22,7 @@ public class MutableToImmutableConverterTest {
     public void shouldConvertFromMutableToImmutableState() {
         TypeConverter converter = new MutableToImmutableConverter();
 
-        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children().defaultAddress().asMutableState();
+        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children().defaults().asMutableState();
         PersonState state = (PersonState)converter.convert(mutableState);
 
         assertThat(state.name, equalTo("Carl"));

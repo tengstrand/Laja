@@ -25,14 +25,14 @@ public class PersonState implements ImmutableState {
     public final AddressState address;
     public final ImmutableSet<AddressState> oldAddresses; // (optional)
     public final ImmutableMap<String,AddressState> groupedAddresses; // (optional)
-    public final ImmutableList<ImmutableSet<ImmutableList<Integer>>> listOfSetOfListOfIntegers;
+    public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
 
     private static void setDefaults(PersonMutableState state) {
         state.children = new ArrayList<PersonMutableState>();
         state.address = new AddressMutableState();
         state.oldAddresses = new HashSet<AddressMutableState>();
         state.groupedAddresses = new HashMap<String, AddressMutableState>();
-        state.listOfSetOfListOfIntegers = new ArrayList<Set<List<Integer>>>();
+        state.listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
     }
 
     private static void assertIsValid(PersonMutableState state) {
@@ -50,14 +50,14 @@ public class PersonState implements ImmutableState {
             AddressState address,
             ImmutableSet<AddressState> oldAddresses,
             ImmutableMap<String,AddressState> groupedAddresses,
-            ImmutableList<ImmutableSet<ImmutableList<Integer>>> listOfSetOfListOfIntegers) {
+            ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers) {
         this.name = name;
         this.birthday = birthday;
         this.children = children;
         this.address = address;
         this.oldAddresses = oldAddresses;
         this.groupedAddresses = groupedAddresses;
-        this.listOfSetOfListOfIntegers = listOfSetOfListOfIntegers;
+        this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
     }
 
     public static class IllegalPersonStateException extends IllegalStateException {  }
@@ -79,11 +79,12 @@ public class PersonState implements ImmutableState {
     public static class IllegalPersonStateGroupedAddressesIsNullException extends IllegalPersonStateIsNullException {  }
     public static class IllegalPersonStateListOfSetOfIntegerIsNullException extends IllegalPersonStateIsNullException {  }
 
-    public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
-    public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
-    public PersonState withAddress(AddressState address) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
-    public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
-    public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfListOfIntegers); }
+    public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withAddress(AddressState address) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withListOfSetOfMapOfIntegers(ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
 
     public PersonMutableState asMutable() {
         return new PersonMutableState(
@@ -93,7 +94,7 @@ public class PersonState implements ImmutableState {
                 address.asMutable(),
                 asMutableSet(oldAddresses, toMutable),
                 asMutableMap(groupedAddresses, toMutable),
-                asMutableList(listOfSetOfListOfIntegers, toMutableSet, toMutableList));
+                asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
     }
 
     @Override
@@ -104,6 +105,7 @@ public class PersonState implements ImmutableState {
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
         result = 31 * result + (groupedAddresses != null ? groupedAddresses.hashCode() : 0);
+        result = 31 * result + (listOfSetOfMapOfIntegers != null ? listOfSetOfMapOfIntegers.hashCode() : 0);
         return result;
     }
 
@@ -117,10 +119,10 @@ public class PersonState implements ImmutableState {
         if (address != null ? !address.equals(that.address) : that.address != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (children != null ? !children.equals(that.children) : that.children != null) return false;
-        if (groupedAddresses != null ? !groupedAddresses.equals(that.groupedAddresses) : that.groupedAddresses != null)
-            return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (oldAddresses != null ? !oldAddresses.equals(that.oldAddresses) : that.oldAddresses != null) return false;
+        if (groupedAddresses != null ? !groupedAddresses.equals(that.groupedAddresses) : that.groupedAddresses != null) return false;
+        if (listOfSetOfMapOfIntegers != null ? !listOfSetOfMapOfIntegers.equals(that.listOfSetOfMapOfIntegers) : that.listOfSetOfMapOfIntegers != null) return false;
 
         return true;
     }
@@ -134,6 +136,7 @@ public class PersonState implements ImmutableState {
                 ", address=" + address +
                 ", oldAddresses=" + oldAddresses +
                 ", groupedAddresses=" + groupedAddresses +
+                ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers +
                 '}';
     }
 
@@ -144,7 +147,7 @@ public class PersonState implements ImmutableState {
         public AddressMutableState address;
         public Set<AddressMutableState> oldAddresses;
         public Map<String, AddressMutableState> groupedAddresses;
-        public List<Set<List<Integer>>> listOfSetOfListOfIntegers;
+        public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
 
         public PersonMutableState() {
             PersonState.setDefaults(this);
@@ -152,14 +155,14 @@ public class PersonState implements ImmutableState {
 
         public PersonMutableState(String name, DateMidnight birthday, List<PersonMutableState> children, AddressMutableState address,
                                   Set<AddressMutableState> oldAddresses, Map<String, AddressMutableState> groupedAddresses,
-                                  List<Set<List<Integer>>> listOfSetOfListOfIntegers) {
+                                  List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
             this.name = name;
             this.birthday = birthday;
             this.children = children;
             this.address = address;
             this.oldAddresses = oldAddresses;
             this.groupedAddresses = groupedAddresses;
-            this.listOfSetOfListOfIntegers = listOfSetOfListOfIntegers;
+            this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
         }
 
         public String getName() { return name; }
@@ -168,7 +171,7 @@ public class PersonState implements ImmutableState {
         public AddressMutableState getAddress() { return address; }
         public Set<AddressMutableState> getOldAddresses() { return oldAddresses; }
         public Map<String, AddressMutableState> getGroupedAddresses() { return groupedAddresses; }
-        public List<Set<List<Integer>>> getListOfSetOfListOfIntegers() { return listOfSetOfListOfIntegers; }
+        public List<Set<Map<String,Integer>>> getListOfSetOfMapOfIntegers() { return listOfSetOfMapOfIntegers; }
 
         public void setName(String name) { this.name = name; }
         public void setBirthday(DateMidnight birthday) { this.birthday = birthday; }
@@ -176,7 +179,7 @@ public class PersonState implements ImmutableState {
         public void setAddress(AddressMutableState address) { this.address = address; }
         public void setOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; }
         public void setGroupedAddresses(Map<String, AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
-        public void setListOfSetOfListOfIntegers(List<Set<List<Integer>>> listOfSetOfListOfIntegers) { this.listOfSetOfListOfIntegers = listOfSetOfListOfIntegers; }
+        public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
         public void assertIsValid() {
             assertNotNull();
@@ -207,6 +210,7 @@ public class PersonState implements ImmutableState {
             result = 31 * result + (address != null ? address.hashCode() : 0);
             result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
             result = 31 * result + (groupedAddresses != null ? groupedAddresses.hashCode() : 0);
+            result = 31 * result + (listOfSetOfMapOfIntegers != null ? listOfSetOfMapOfIntegers.hashCode() : 0);
             return result;
         }
 
@@ -218,9 +222,9 @@ public class PersonState implements ImmutableState {
                     birthday,
                     asImmutableList(children),
                     address.asImmutable(),
-                    asImmutableSet(oldAddresses),
-                    asImmutableMap(groupedAddresses),
-                    asImmutableList(listOfSetOfListOfIntegers));
+                    asImmutableSet(oldAddresses, toImmutable),
+                    asImmutableMap(groupedAddresses, toImmutable),
+                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
         }
 
         @Override
@@ -251,6 +255,7 @@ public class PersonState implements ImmutableState {
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses +
                     ", groupedAddresses=" + groupedAddresses +
+                    ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers +
                     '}';
         }
     }

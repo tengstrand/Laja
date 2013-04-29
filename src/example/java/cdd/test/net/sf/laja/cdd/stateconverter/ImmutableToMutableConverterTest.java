@@ -19,7 +19,7 @@ public class ImmutableToMutableConverterTest {
 
     @Test
     public void shouldConvertFromImmutableToMutableState() {
-        PersonCreator creator = createPerson().name("Carl").birthday(2010,1,15).children().defaultAddress();
+        PersonCreator creator = createPerson().name("Carl").birthday(2010,1,15).children().defaults();
         PersonMutableState mutableState = (PersonMutableState) asMutable(creator.asState());
 
         assertThat(mutableState, equalTo(creator.asMutableState()));
