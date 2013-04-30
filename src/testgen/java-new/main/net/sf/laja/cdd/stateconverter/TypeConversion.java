@@ -16,7 +16,6 @@ import java.util.Set;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
 
 public class TypeConversion {
-    private static String DATE_MIDNIGHT_FORMAT = "yyyy-MM-dd";
 
     public static ImmutableState asImmutable(MutableState from) { return toImmutable.convert(from); }
     public static MutableState asMutable(ImmutableState from) { return toMutable.convert(from); }
@@ -29,6 +28,8 @@ public class TypeConversion {
 
     public static Map asMutableMap(Object from, TypeConverter... converters) { return toMutableMap.convert(from, converters); }
     public static ImmutableMap asImmutableMap(Object from, TypeConverter... converters) { return toImmutableMap.convert(from, converters); }
+
+    private static String DATE_MIDNIGHT_FORMAT = "yyyy-MM-dd";
 
     // TODO: May be moved when introducing StringState.
     public static String asString(DateMidnight date) {
