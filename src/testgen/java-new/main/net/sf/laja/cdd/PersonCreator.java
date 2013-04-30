@@ -94,11 +94,14 @@ public class PersonCreator implements PersonMaker {
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (!(that instanceof PersonBehaviour)) return false;
+
             return state.equals(((PersonBehaviour)that).state);
         }
+
         @Override public int hashCode() {
             return state.hashCode();
         }
+
         @Override public String toString() {
             return getClass().getSimpleName() + state;
         }
@@ -118,11 +121,14 @@ public class PersonCreator implements PersonMaker {
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (!(that instanceof PersonMutableBehaviour)) return false;
+
             return state.equals(((PersonMutableBehaviour)that).state);
         }
+
         @Override public int hashCode() {
             return state.hashCode();
         }
+
         @Override public String toString() {
             return getClass().getSimpleName() + state;
         }
