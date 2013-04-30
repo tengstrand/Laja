@@ -13,12 +13,12 @@ public class PersonTest {
 
     @Test
     public void shouldBePossibleToBuildIllegalMutableState() {
-        buildPerson().getMutableState();
+        buildPerson().asMutableState();
     }
 
     @Test(expected = IllegalPersonStateNameIsNullException.class)
     public void shouldNotBePossibleToBuildIllegalImmutableState() {
-        buildPerson().getState();
+        buildPerson().asState();
     }
 
     @Test

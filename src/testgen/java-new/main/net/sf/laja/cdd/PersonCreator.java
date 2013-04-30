@@ -1,6 +1,8 @@
 package net.sf.laja.cdd;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 
@@ -16,7 +18,7 @@ import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
-public class PersonCreator {
+public class PersonCreator implements PersonMaker {
     private final PersonMutableState state;
 
     public Person asPerson() {
@@ -51,6 +53,18 @@ public class PersonCreator {
 
     public static PersonSetBuilder createPersonSet(PersonCreator... creators) {
         return new PersonSetBuilder(creators);
+    }
+
+    public static PersonMapBuilder createAddressMap(PersonMapEntryBuilder... builders) {
+        return new PersonMapBuilder(builders);
+    }
+
+    public static PersonMapEntryBuilder addressEntry(Object key, PersonCreator creator) {
+        return new PersonMapEntryBuilder(key, creator);
+    }
+
+    public static PersonMapEntryBuilder addressEntry(Object key, PersonBuilder builder) {
+        return new PersonMapEntryBuilder(key, builder);
     }
 
     public PersonCreator(PersonMutableState state) {
@@ -204,7 +218,7 @@ public class PersonCreator {
         }
     }
 
-    public static class PersonBuilder {
+    public static class PersonBuilder implements PersonMaker {
         private final PersonMutableState state;
 
         private PersonBuilder(PersonMutableState state) {
@@ -264,15 +278,15 @@ public class PersonCreator {
             return new Person(state.asImmutable());
         }
 
-        public SpecialPerson asSpecialPerson() {
-            return new SpecialPerson(state);
+        public TextPerson asTextPerson() {
+            return new TextPerson(state.asImmutable());
         }
 
-        public PersonState getState() {
+        public PersonState asState() {
             return state.asImmutable();
         }
 
-        public PersonMutableState getMutableState() {
+        public PersonMutableState asMutableState() {
             return state;
         }
     }
@@ -284,7 +298,9 @@ public class PersonCreator {
             this.creators = creators;
         }
 
-        public ImmutableList<Person> asList() {
+        // Person
+
+        public ImmutableList<Person> asPersonList() {
             ImmutableList.Builder<Person> builder = ImmutableList.builder();
 
             for (PersonCreator creator : creators) {
@@ -293,6 +309,17 @@ public class PersonCreator {
             return builder.build();
         }
 
+        public List<Person> asPersonMutableList() {
+            List<Person> result = new ArrayList<Person>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asPerson());
+            }
+            return result;
+        }
+
+        // State
+
         public ImmutableList<PersonState> asStateList() {
             ImmutableList.Builder<PersonState> builder = ImmutableList.builder();
 
@@ -300,15 +327,6 @@ public class PersonCreator {
                 builder.add(creator.asState());
             }
             return builder.build();
-        }
-
-        public List<Person> asMutableList() {
-            List<Person> result = new ArrayList<Person>();
-
-            for (PersonCreator creator : creators) {
-                result.add(creator.asPerson());
-            }
-            return result;
         }
 
         public List<PersonMutableState> asMutableStateList() {
@@ -328,7 +346,18 @@ public class PersonCreator {
             this.creators = creators;
         }
 
-        public Set<Person> asHashSet() {
+        // Person
+
+        public ImmutableSet<Person> asPersonSet() {
+            ImmutableSet.Builder<Person> builder = ImmutableSet.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asPerson());
+            }
+            return builder.build();
+        }
+
+        public Set<Person> asPersonMutableSet() {
             Set<Person> result = new HashSet<Person>();
 
             for (PersonCreator creator : creators) {
@@ -337,11 +366,29 @@ public class PersonCreator {
             return result;
         }
 
-        public Set<PersonState> asStateSet() {
-            return asStateHashSet();
+        // TextPerson
+
+        public ImmutableSet<TextPerson> asTextPersonSet() {
+            ImmutableSet.Builder<TextPerson> builder = ImmutableSet.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asTextPerson());
+            }
+            return builder.build();
         }
 
-        public Set<PersonState> asStateHashSet() {
+        public Set<TextPerson> asTextPersonMutableSet() {
+            Set<TextPerson> result = new HashSet<TextPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asTextPerson());
+            }
+            return result;
+        }
+
+        // State
+
+        public Set<PersonState> asStateSet() {
             Set<PersonState> result = new HashSet<PersonState>();
 
             for (PersonCreator creator : creators) {
@@ -351,10 +398,6 @@ public class PersonCreator {
         }
 
         public Set<PersonMutableState> asMutableStateSet() {
-            return asMutableStateHashSet();
-        }
-
-        public Set<PersonMutableState> asMutableStateHashSet() {
             Set<PersonMutableState> result = new HashSet<PersonMutableState>();
 
             for (PersonCreator creator : creators) {
@@ -363,4 +406,81 @@ public class PersonCreator {
             return result;
         }
     }
+
+    public static class PersonMapEntryBuilder {
+        private final Object key;
+        private final PersonMaker maker;
+
+        public PersonMapEntryBuilder(Object key, PersonMaker maker) {
+            this.key = key;
+            this.maker = maker;
+        }
+
+        public Person asPerson() {
+            return maker.asPerson();
+        }
+
+        public TextPerson asTextPerson() {
+            return maker.asTextPerson();
+        }
+
+        public PersonState asState() {
+            return maker.asState();
+        }
+
+        public PersonMutableState asMutableState() {
+            return maker.asMutableState();
+        }
+    }
+
+    public static class PersonMapBuilder {
+        private final PersonMapEntryBuilder[] entries;
+
+        public PersonMapBuilder(PersonMapEntryBuilder... entries) {
+            this.entries = entries;
+        }
+
+        public ImmutableMap asAddressMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asPerson());
+            }
+            return builder.build();
+        }
+
+        public Map asAddressMutableMap() {
+            Map<Object,Person> result = new HashMap<Object,Person>();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asPerson());
+            }
+            return result;
+        }
+
+        public ImmutableMap asStateMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asState());
+            }
+            return builder.build();
+        }
+
+        public Map asMutableStateMap() {
+            Map result = new HashMap();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asMutableState());
+            }
+            return result;
+        }
+    }
+}
+
+interface PersonMaker {
+    Person asPerson();
+    TextPerson asTextPerson();
+    PersonState asState();
+    PersonMutableState asMutableState();
 }

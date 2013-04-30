@@ -12,7 +12,7 @@ public class Main {
 
         System.out.println(person.state.asMutable());
 
-        PersonCreator.createPersonList(PersonCreator.createPerson().name("").birthday(2010, 1, 2).children().defaults()).asList();
+        PersonCreator.createPersonList(PersonCreator.createPerson().name("").birthday(2010, 1, 2).children().defaults()).asPersonList();
 
         DbPerson dbPerson = createPerson().name("Carl").birthday(1971,2,3).children().defaults().asDbPerson();
         String sqlStatement = dbPerson.getInsertStatement();
