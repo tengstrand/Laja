@@ -19,7 +19,7 @@ public class AddressState implements ImmutableState {
     private static void setDefaults(AddressMutableState state) {
     }
 
-    private static void validate(AddressMutableState state, String parent, ValidationErrors errors) {
+    private static void validate(AddressMutableState state, String parent, ValidationErrors.Builder errors) {
     }
 
     // Generated code goes here...
@@ -125,12 +125,12 @@ public class AddressState implements ImmutableState {
         }
 
         public ValidationErrors validate() {
-            ValidationErrors errors = new ValidationErrors();
+            ValidationErrors.Builder errors = ValidationErrors.builder();
             validate("", errors);
-            return errors;
+            return errors.build();
         }
 
-        public void validate(String parent, ValidationErrors errors) {
+        public void validate(String parent, ValidationErrors.Builder errors) {
             if (streetName == null) { errors.addIsNullError(parent, "streetName"); }
 
             AddressState.validate(this, parent, errors);

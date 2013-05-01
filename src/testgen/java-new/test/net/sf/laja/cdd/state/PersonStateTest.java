@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.state;
 
+import net.sf.laja.cdd.ValidationErrors;
 import org.junit.Test;
 
 import static net.sf.laja.cdd.PersonCreator.buildPerson;
@@ -40,23 +41,15 @@ public class PersonStateTest {
         assertThat(state.isValid(), is(false));
     }
 
-/*
     @Test
     public void shouldReturn() {
         PersonMutableState state = buildPerson().withName("Carl").asMutableState();
         ValidationErrors errors = state.validate();
 
-        ValidationErrors addressStreetNameError = new ValidationErrors(
-                nullError("birthday"),
-                nullError("address", "streetName")
-        );
+        ValidationErrors expectedErrors = ValidationErrors.builder()
+                .addIsNullError("birthday")
+                .addIsNullError("address", "streetName").build();
 
-        assertEquals(errors, addressStreetNameError);
-        //assertThat(errors, equalTo(addressStreetNameError));
-        System.out.println(errors);
-
-//        assertThat(errors, equalTo(ValidationError.nullError("address", "streetName")));
-//        System.out.println(errors);
+        assertThat(errors, equalTo(expectedErrors));
     }
-    */
 }

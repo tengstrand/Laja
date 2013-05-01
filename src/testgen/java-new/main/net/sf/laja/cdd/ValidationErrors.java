@@ -1,26 +1,32 @@
  package net.sf.laja.cdd;
 
-import com.google.common.collect.ImmutableList;
+ import com.google.common.collect.ImmutableList;
 
-import java.util.Arrays;
-import java.util.Iterator;
+ import java.util.Iterator;
 
-public class ValidationErrors implements Iterable<ValidationError> {
-    private final ImmutableList.Builder<ValidationError> errors = ImmutableList.<ValidationError>builder();
+public class ValidationErrors implements Iterable<ValidationErrors.ValidationError> {
+    private final ImmutableList<ValidationError> errors;
 
-    public ValidationErrors() {
+    private static final String NULL_ERROR = "is_null";
+
+    public static String concatenate(String parent, String attribute) {
+        return parent == null || parent.isEmpty() ? attribute : parent + "." + attribute;
     }
 
-    public ValidationErrors(ValidationError... errors) {
-        this.errors.addAll(Arrays.asList(errors));
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    private ValidationErrors(ImmutableList<ValidationError> errors) {
+        this.errors = errors;
     }
 
     public Iterator<ValidationError> iterator() {
-        return errors.build().iterator();
+        return errors.iterator();
     }
 
     public boolean isEmpty() {
-        return errors.build().isEmpty();
+        return errors.isEmpty();
     }
 
     public boolean hasErrors() {
@@ -28,19 +34,11 @@ public class ValidationErrors implements Iterable<ValidationError> {
     }
 
     public int size() {
-        return errors.build().size();
+        return errors.size();
     }
 
     public ValidationError first() {
         return iterator().next();
-    }
-
-    public void addError(String parent, String attribute, String errorType) {
-        errors.add(new ValidationError(parent, attribute, errorType));
-    }
-
-    public void addIsNullError(String parent, String attribute) {
-        errors.add(ValidationError.nullError(parent, attribute));
     }
 
     @Override
@@ -62,6 +60,78 @@ public class ValidationErrors implements Iterable<ValidationError> {
 
     @Override
     public String toString() {
-        return errors.build().toString();
+        return errors.toString();
+    }
+
+    public static class Builder {
+        private final ImmutableList.Builder<ValidationError> errors = ImmutableList.<ValidationError>builder();
+
+        private Builder() {
+        }
+
+        public ValidationErrors build() {
+            return new ValidationErrors(errors.build());
+        }
+
+        public Builder addIsNullError(String attribute) {
+            errors.add(new ValidationError("", attribute, NULL_ERROR));
+            return this;
+        }
+
+        public Builder addIsNullError(String parent, String attribute) {
+            errors.add(new ValidationError(parent, attribute, NULL_ERROR));
+            return this;
+        }
+
+        public Builder addError(String parent, String attribute, String errorType) {
+            errors.add(new ValidationError(parent, attribute, errorType));
+            return this;
+        }
+    }
+
+    public static class ValidationError {
+        public final String attribute;
+        public final String errorType;
+
+        private ValidationError(String parent, String attribute, String errorType) {
+            this.attribute = concatenate(parent, attribute);
+            this.errorType = errorType;
+        }
+
+        public boolean isSameAs(String attribute, String errorType) {
+            return this.attribute.equals(attribute) && this.errorType.equals(errorType);
+        }
+
+        public boolean isNullError(String attribute) {
+            return isSameAs(attribute, NULL_ERROR);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = attribute != null ? attribute.hashCode() : 0;
+            result = 31 * result + (errorType != null ? errorType.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof ValidationError)) return false;
+
+            ValidationError result = (ValidationError) o;
+
+            if (attribute != null ? !attribute.equals(result.attribute) : result.attribute != null) return false;
+            if (errorType != null ? !errorType.equals(result.errorType) : result.errorType != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "ValidationError{" +
+                    "attribute='" + attribute + '\'' +
+                    ", errorType='" + errorType + '\'' +
+                    '}';
+        }
     }
 }

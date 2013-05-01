@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.ValidationError.concatenate;
+import static net.sf.laja.cdd.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.*;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
@@ -38,7 +38,7 @@ public class PersonState implements ImmutableState {
         state.listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
     }
 
-    private static void validate(PersonMutableState state, String parent, ValidationErrors errors) {
+    private static void validate(PersonMutableState state, String parent, ValidationErrors.Builder errors) {
         if (state.birthday != null && state.birthday.isAfterNow()) {
             errors.addError(parent, BIRTHDAY, "born_after_today");
         }
@@ -192,12 +192,12 @@ public class PersonState implements ImmutableState {
         }
 
         public ValidationErrors validate() {
-            ValidationErrors errors = new ValidationErrors();
+            ValidationErrors.Builder errors = ValidationErrors.builder();
             validate("", errors);
-            return errors;
+            return errors.build();
         }
 
-        public void validate(String parent, ValidationErrors errors) {
+        public void validate(String parent, ValidationErrors.Builder errors) {
             if (name == null) { errors.addIsNullError(parent, "name"); }
             if (birthday == null) { errors.addIsNullError(parent, "birthday"); }
             if (children == null) { errors.addIsNullError(parent, "children"); }
