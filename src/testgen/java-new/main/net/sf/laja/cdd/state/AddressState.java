@@ -1,7 +1,9 @@
 package net.sf.laja.cdd.state;
 
 import net.sf.laja.cdd.ImmutableState;
+import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
+import net.sf.laja.cdd.ValidationErrors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +19,14 @@ public class AddressState implements ImmutableState {
     private static void setDefaults(AddressMutableState state) {
     }
 
-    private static void assertIsValid() {
+    private static void validate(AddressMutableState state, String parent, ValidationErrors errors) {
     }
 
     // Generated code goes here...
+
+    public static final String ID = "id";
+    public static final String STREET_NAME = "streetName";
+    public static final String CITY = "city";
 
     public AddressState(int id, String streetName, String city) {
         this.id = id;
@@ -28,15 +34,15 @@ public class AddressState implements ImmutableState {
         this.city = city;
     }
 
+    public static class IllegalAddressStateException extends InvalidStateException {
+        public IllegalAddressStateException(ValidationErrors errors) {
+            super(errors);
+        }
+    }
+
     public int getId() { return id; }
     public String getStreetName() { return streetName; }
     public String getCity() { return city; }
-
-    public static class IllegalAddressStateException extends IllegalStateException { }
-    public static class IllegalAddressStateIsNullException extends IllegalAddressStateException { }
-
-    public static class IllegalAddressStateStreetNameException extends IllegalAddressStateException { }
-    public static class IllegalAddressStateStreetNameIsNullException extends IllegalAddressStateIsNullException { }
 
     public AddressMutableState asMutable() {
         return new AddressMutableState(id, streetName, city);
@@ -107,14 +113,27 @@ public class AddressState implements ImmutableState {
         public void setCity(String city) { this.city = city; }
 
         public void assertIsValid() {
-            assertNotNull();
-            AddressState.assertIsValid();
+            ValidationErrors errors = validate();
+
+            if (errors.hasErrors()) {
+                throw new IllegalAddressStateException(errors);
+            }
         }
 
-        private void assertNotNull() {
-            if (streetName == null) {
-                throw new IllegalAddressStateStreetNameIsNullException();
-            }
+        public boolean isValid() {
+            return validate().isEmpty();
+        }
+
+        public ValidationErrors validate() {
+            ValidationErrors errors = new ValidationErrors();
+            validate("", errors);
+            return errors;
+        }
+
+        public void validate(String parent, ValidationErrors errors) {
+            if (streetName == null) { errors.addIsNullError(parent, "streetName"); }
+
+            AddressState.validate(this, parent, errors);
         }
 
         public AddressState asImmutable() {

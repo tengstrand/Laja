@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.PersonCreator.*;
-import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateNameIsNullException;
+import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -16,7 +16,7 @@ public class PersonTest {
         buildPerson().asMutableState();
     }
 
-    @Test(expected = IllegalPersonStateNameIsNullException.class)
+    @Test(expected = IllegalPersonStateException.class)
     public void shouldNotBePossibleToBuildIllegalImmutableState() {
         buildPerson().asState();
     }

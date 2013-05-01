@@ -2,9 +2,11 @@ package net.sf.laja.cdd.state;
 
 import org.junit.Test;
 
+import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PersonStateTest {
@@ -30,4 +32,31 @@ public class PersonStateTest {
 
         assertThat(mutableState.listOfSetOfMapOfIntegers.get(0).iterator().next().get("b"), equalTo(456));
     }
+
+    @Test
+    public void shouldNotBeValidIfValidatingWithMissingAddress() {
+        PersonMutableState state = buildPerson().withName("Carl").asMutableState();
+
+        assertThat(state.isValid(), is(false));
+    }
+
+/*
+    @Test
+    public void shouldReturn() {
+        PersonMutableState state = buildPerson().withName("Carl").asMutableState();
+        ValidationErrors errors = state.validate();
+
+        ValidationErrors addressStreetNameError = new ValidationErrors(
+                nullError("birthday"),
+                nullError("address", "streetName")
+        );
+
+        assertEquals(errors, addressStreetNameError);
+        //assertThat(errors, equalTo(addressStreetNameError));
+        System.out.println(errors);
+
+//        assertThat(errors, equalTo(ValidationError.nullError("address", "streetName")));
+//        System.out.println(errors);
+    }
+    */
 }

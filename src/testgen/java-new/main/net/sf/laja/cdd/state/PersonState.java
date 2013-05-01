@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.ImmutableState;
+import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
+import net.sf.laja.cdd.ValidationErrors;
 import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static net.sf.laja.cdd.ValidationError.concatenate;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.*;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
@@ -35,13 +38,21 @@ public class PersonState implements ImmutableState {
         state.listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
     }
 
-    private static void assertIsValid(PersonMutableState state) {
-        if (state.birthday.isAfterNow()) {
-            throw new IllegalPersonStateBirthdayException();
+    private static void validate(PersonMutableState state, String parent, ValidationErrors errors) {
+        if (state.birthday != null && state.birthday.isAfterNow()) {
+            errors.addError(parent, BIRTHDAY, "born_after_today");
         }
     }
 
     // Generated code goes here...
+
+    public static final String NAME = "name";
+    public static final String BIRTHDAY = "birthday";
+    public static final String CHILDREN = "children";
+    public static final String ADDRESS = "address";
+    public static final String OLD_ADDRESS = "oldAddresses";
+    public static final String GROUPED_ADDRESSES = "groupedAddresses";
+    public static final String LIST_OF_SET_OF_MAP_OF_INTEGERS = "listOfSetOfMapOfIntegers";
 
     public PersonState(
             String name,
@@ -60,24 +71,11 @@ public class PersonState implements ImmutableState {
         this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
     }
 
-    public static class IllegalPersonStateException extends IllegalStateException {  }
-    public static class IllegalPersonStateIsNullException extends IllegalPersonStateException {  }
-
-    public static class IllegalPersonStateNameException extends IllegalPersonStateException  {  }
-    public static class IllegalPersonStateBirthdayException extends IllegalPersonStateException {  }
-    public static class IllegalPersonStateChildrenException extends IllegalPersonStateException {  }
-    public static class IllegalPersonStateAddressException extends IllegalPersonStateException {  }
-    public static class IllegalPersonStateOldAddressesException extends IllegalPersonStateException {  }
-    public static class IllegalPersonStateGroupedAddressesException extends IllegalPersonStateException {  }
-    public static class IllegalPersonStateListOfSetOfIntegerException extends IllegalPersonStateException {  }
-
-    public static class IllegalPersonStateNameIsNullException extends IllegalPersonStateIsNullException {  }
-    public static class IllegalPersonStateBirthdayIsNullException extends IllegalPersonStateIsNullException {  }
-    public static class IllegalPersonStateChildrenIsNullException extends IllegalPersonStateIsNullException {  }
-    public static class IllegalPersonStateAddressIsNullException extends IllegalPersonStateIsNullException {  }
-    public static class IllegalPersonStateOldAddressesIsNullException extends IllegalPersonStateIsNullException {  }
-    public static class IllegalPersonStateGroupedAddressesIsNullException extends IllegalPersonStateIsNullException {  }
-    public static class IllegalPersonStateListOfSetOfIntegerIsNullException extends IllegalPersonStateIsNullException {  }
+    public static class IllegalPersonStateException extends InvalidStateException {
+        public IllegalPersonStateException(ValidationErrors errors) {
+            super(errors);
+        }
+    }
 
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
@@ -182,24 +180,32 @@ public class PersonState implements ImmutableState {
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
         public void assertIsValid() {
-            assertNotNull();
-            address.assertIsValid();
-            PersonState.assertIsValid(this);
+            ValidationErrors errors = validate();
+
+            if (errors.hasErrors()) {
+                throw new IllegalPersonStateException(errors);
+            }
         }
 
-        private void assertNotNull() {
-            if (name == null) {
-                throw new IllegalPersonStateNameIsNullException();
-            }
-            if (birthday == null) {
-                throw new IllegalPersonStateBirthdayIsNullException();
-            }
-            if (children == null) {
-                throw new IllegalPersonStateChildrenIsNullException();
-            }
-            if (address == null) {
-                throw new IllegalPersonStateAddressIsNullException();
-            }
+        public boolean isValid() {
+            return validate().isEmpty();
+        }
+
+        public ValidationErrors validate() {
+            ValidationErrors errors = new ValidationErrors();
+            validate("", errors);
+            return errors;
+        }
+
+        public void validate(String parent, ValidationErrors errors) {
+            if (name == null) { errors.addIsNullError(parent, "name"); }
+            if (birthday == null) { errors.addIsNullError(parent, "birthday"); }
+            if (children == null) { errors.addIsNullError(parent, "children"); }
+            if (address == null) { errors.addIsNullError(parent, "address"); }
+
+            address.validate(concatenate(parent, "address"), errors);
+
+            PersonState.validate(this, parent, errors);
         }
 
         @Override

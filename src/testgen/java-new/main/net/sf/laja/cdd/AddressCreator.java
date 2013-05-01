@@ -80,6 +80,18 @@ public class AddressCreator implements AddressMaker {
         return this;
     }
 
+    public void assertIsValid() {
+        state.assertIsValid();
+    }
+
+    public boolean isValid() {
+        return state.isValid();
+    }
+
+    public ValidationErrors validate() {
+        return state.validate();
+    }
+
     public static class AddressBehaviour {
         public final AddressState state;
 
@@ -187,6 +199,18 @@ public class AddressCreator implements AddressMaker {
 
         public AddressMutableState asMutableState() {
             return state;
+        }
+
+        public void assertIsValid() {
+            state.assertIsValid();
+        }
+
+        public boolean isValid() {
+            return state.isValid();
+        }
+
+        public ValidationErrors validate() {
+            return state.validate();
         }
     }
 

@@ -84,6 +84,18 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
+    public void assertIsValid() {
+        state.assertIsValid();
+    }
+
+    public boolean isValid() {
+        return state.isValid();
+    }
+
+    public ValidationErrors validate() {
+        return state.validate();
+    }
+
     public static class PersonBehaviour {
         public PersonState state;
 
@@ -295,6 +307,18 @@ public class PersonCreator implements PersonMaker {
         public PersonMutableState asMutableState() {
             return state;
         }
+
+        public void assertIsValid() {
+            state.assertIsValid();
+        }
+
+        public boolean isValid() {
+            return state.isValid();
+        }
+
+        public ValidationErrors validate() {
+            return state.validate();
+        }
     }
 
     public static class PersonListBuilder {
@@ -485,6 +509,9 @@ public class PersonCreator implements PersonMaker {
 }
 
 interface PersonMaker {
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate();
     Person asPerson();
     TextPerson asTextPerson();
     PersonState asState();

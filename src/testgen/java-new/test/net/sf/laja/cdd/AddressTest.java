@@ -1,8 +1,9 @@
 package net.sf.laja.cdd;
 
+import net.sf.laja.cdd.state.AddressState;
 import org.junit.Test;
 
-import static net.sf.laja.cdd.AddressCreator.createAddress;
+import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.ProtectedAddress.ProtectedAddressException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -36,5 +37,17 @@ public class AddressTest {
     public void accessingMethodOnProtectedAddressShouldThrowException() {
         Address address = createAddress().streetName("First street").withCity("Stockholm").asAddress(AddressType.PROTECTED);
         address.isFromUppsala();
+    }
+
+    @Test
+    public void shouldBePossibleToValidateBeforeEncapsulation() {
+        AddressBuilder builder = buildAddress();
+
+        ValidationErrors errors = builder.validate();
+
+        if (errors.hasErrors() && errors.first().isNullError(AddressState.STREET_NAME)) {
+            builder.withStreetName("First street");
+        }
+        builder.assertIsValid();
     }
 }
