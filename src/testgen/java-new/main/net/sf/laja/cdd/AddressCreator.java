@@ -18,7 +18,14 @@ public class AddressCreator implements AddressMaker {
     private final AddressMutableState state;
 
     public Address asAddress() {
-        return new RegularAddress(state.asImmutable());
+       return asAddress(AddressType.REGULAR);
+    }
+
+    public Address asAddress(AddressType type) {
+        if (type == AddressType.REGULAR) {
+            return new RegularAddress(state.asImmutable());
+        }
+        return new ProtectedAddress(state.asImmutable());
     }
 
     // Generated code goes here...
@@ -164,7 +171,14 @@ public class AddressCreator implements AddressMaker {
         }
 
         public Address asAddress() {
-            return new RegularAddress(state.asImmutable());
+            return asAddress(AddressType.REGULAR);
+        }
+
+        public Address asAddress(AddressType type) {
+            if (type == AddressType.REGULAR) {
+                return new RegularAddress(state.asImmutable());
+            }
+            return new ProtectedAddress(state.asImmutable());
         }
 
         public AddressState asState() {
@@ -195,11 +209,20 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
-        public List<Address> asAddressMutableList() {
+        public ImmutableList<Address> asAddressList(AddressType type) {
+            ImmutableList.Builder<Address> builder = ImmutableList.builder();
+
+            for (AddressCreator creator : creators) {
+                builder.add(creator.asAddress(type));
+            }
+            return builder.build();
+        }
+
+        public List<Address> asAddressMutableList(AddressType type) {
             List<Address> result = new ArrayList<Address>();
 
             for (AddressCreator creator : creators) {
-                result.add(creator.asAddress());
+                result.add(creator.asAddress(type));
             }
             return result;
         }
@@ -243,11 +266,20 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
-        public Set<Address> asAddressMutableSet() {
+        public ImmutableSet<Address> asAddressSet(AddressType type) {
+            ImmutableSet.Builder<Address> builder = ImmutableSet.builder();
+
+            for (AddressCreator creator : creators) {
+                builder.add(creator.asAddress(type));
+            }
+            return builder.build();
+        }
+
+        public Set<Address> asAddressMutableSet(AddressType type) {
             Set<Address> result = new HashSet<Address>();
 
             for (AddressCreator creator : creators) {
-                result.add(creator.asAddress());
+                result.add(creator.asAddress(type));
             }
             return result;
         }
@@ -286,6 +318,10 @@ public class AddressCreator implements AddressMaker {
             return maker.asAddress();
         }
 
+        public Address asAddress(AddressType type) {
+            return maker.asAddress(type);
+        }
+
         public AddressState asState() {
             return maker.asState();
         }
@@ -302,6 +338,8 @@ public class AddressCreator implements AddressMaker {
             this.entries = entries;
         }
 
+        // Address
+
         public ImmutableMap asAddressMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
@@ -311,14 +349,25 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
-        public Map asAddressMutableMap() {
+        public ImmutableMap asAddressMap(AddressType type) {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asAddress(type));
+            }
+            return builder.build();
+        }
+
+        public Map asAddressMutableMap(AddressType type) {
             Map<Object,Address> result = new HashMap<Object,Address>();
 
             for (AddressMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asAddress());
+                result.put(entry.key, entry.asAddress(type));
             }
             return result;
         }
+
+        // State
 
         public ImmutableMap asStateMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
@@ -328,6 +377,8 @@ public class AddressCreator implements AddressMaker {
             }
             return builder.build();
         }
+
+        // Mutable state
 
         public Map asMutableStateMap() {
             Map result = new HashMap();
@@ -342,6 +393,7 @@ public class AddressCreator implements AddressMaker {
 
 interface AddressMaker {
     Address asAddress();
+    Address asAddress(AddressType type);
     AddressState asState();
     AddressMutableState asMutableState();
 }

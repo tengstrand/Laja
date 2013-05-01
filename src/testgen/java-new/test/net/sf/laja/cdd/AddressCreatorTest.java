@@ -3,15 +3,22 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.AddressState;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static net.sf.laja.cdd.AddressCreator.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddressCreatorTest {
+
+    // Context
 
     @Test
     public void shouldBePossibleToCreateList() {
@@ -32,18 +39,76 @@ public class AddressCreatorTest {
 
     @Test
     public void shouldBePossibleToCreateMap() {
-        ImmutableMap<String,Address> map = createAddressMap(
-                addressEntry("a", createAddress().streetName("First street").withCity("Uppsala")),
-                addressEntry("b", createAddress().streetName("Second street").withCity("Stockholm"))
-        ).asAddressMap();
+        ImmutableMap<String,Address> map = addressMapBuilder().asAddressMap();
 
         assertThat(map.get("a").isFromUppsala(), is(true));
         assertThat(map.get("b").isFromUppsala(), is(false));
+    }
+
+    // State
+
+    @Test
+    public void shouldBePossibleToCreateStateList() {
+        ImmutableList<AddressState> addresses = createAddressList(addresses()).asStateList();
+
+        assertThat(addresses.get(0).city, equalTo("Uppsala"));
+        assertThat(addresses.get(1).city, equalTo("Stockholm"));
+    }
+
+    @Test
+    public void shouldBePossibleToCreateStateSet() {
+        ImmutableSet<AddressState> addresses = createAddressSet(addresses()).asStateSet();
+
+        Iterator<AddressState> iterator = addresses.iterator();
+        assertThat(iterator.next().city, equalTo("Uppsala"));
+        assertThat(iterator.next().city, equalTo("Stockholm"));
+    }
+
+    @Test
+    public void shouldBePossibleToCreateStateMap() {
+        ImmutableMap<String,AddressState> map = addressMapBuilder().asStateMap();
+
+        assertThat(map.get("a").city, equalTo("Uppsala"));
+        assertThat(map.get("b").city, equalTo("Stockholm"));
+    }
+
+    // MutableState
+
+    @Test
+    public void shouldBePossibleToCreateMutableStateList() {
+        List<AddressState.AddressMutableState> addresses = createAddressList(addresses()).asMutableStateList();
+
+        assertThat(addresses.get(0).city, equalTo("Uppsala"));
+        assertThat(addresses.get(1).city, equalTo("Stockholm"));
+    }
+
+    @Test
+    public void shouldBePossibleToCreateMutableStateSet() {
+        Set<AddressState.AddressMutableState> addresses = createAddressSet(addresses()).asMutableStateSet();
+
+        Iterator<AddressState.AddressMutableState> iterator = addresses.iterator();
+        assertThat(iterator.next().city, equalTo("Uppsala"));
+        assertThat(iterator.next().city, equalTo("Stockholm"));
+    }
+
+    @Test
+    public void shouldBePossibleToCreateMutableStateMap() {
+        Map<String,AddressState.AddressMutableState> map = addressMapBuilder().asMutableStateMap();
+
+        assertThat(map.get("a").city, equalTo("Uppsala"));
+        assertThat(map.get("b").city, equalTo("Stockholm"));
     }
 
     private AddressCreator[] addresses() {
         return new AddressCreator[] {
                 createAddress().streetName("First street").withCity("Uppsala"),
                 createAddress().streetName("Second street").withCity("Stockholm") };
+    }
+
+    private AddressMapBuilder addressMapBuilder() {
+        return createAddressMap(
+                addressEntry("a", createAddress().streetName("First street").withCity("Uppsala")),
+                addressEntry("b", createAddress().streetName("Second street").withCity("Stockholm"))
+        );
     }
 }

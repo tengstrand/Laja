@@ -3,11 +3,12 @@ package net.sf.laja.cdd;
 import org.junit.Test;
 
 import static net.sf.laja.cdd.AddressCreator.createAddress;
+import static net.sf.laja.cdd.ProtectedAddress.ProtectedAddressException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RegularAddressTest {
+public class AddressTest {
 
     @Test
     public void equalObjectsShouldMatch() throws Exception {
@@ -29,5 +30,11 @@ public class RegularAddressTest {
         Address address = createAddress().streetName("First street").withCity("Stockholm").asAddress();
 
         assertThat(address.isFromUppsala(), is(false));
+    }
+
+    @Test (expected = ProtectedAddressException.class)
+    public void accessingMethodOnProtectedAddressShouldThrowException() {
+        Address address = createAddress().streetName("First street").withCity("Stockholm").asAddress(AddressType.PROTECTED);
+        address.isFromUppsala();
     }
 }
