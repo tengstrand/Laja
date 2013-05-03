@@ -1,11 +1,11 @@
  package net.sf.laja.cdd;
 
- import com.google.common.collect.ImmutableList;
+ import com.google.common.collect.ImmutableSet;
 
  import java.util.Iterator;
 
-public class ValidationErrors implements Iterable<ValidationErrors.ValidationError> {
-    private final ImmutableList<ValidationError> errors;
+ public class ValidationErrors implements Iterable<ValidationErrors.ValidationError> {
+    private final ImmutableSet<ValidationError> errors;
 
     private static final String NULL_ERROR = "is_null";
 
@@ -17,7 +17,7 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
         return new Builder();
     }
 
-    private ValidationErrors(ImmutableList<ValidationError> errors) {
+    private ValidationErrors(ImmutableSet<ValidationError> errors) {
         this.errors = errors;
     }
 
@@ -64,7 +64,8 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
     }
 
     public static class Builder {
-        private final ImmutableList.Builder<ValidationError> errors = ImmutableList.<ValidationError>builder();
+        private int size;
+        private final ImmutableSet.Builder<ValidationError> errors = ImmutableSet.<ValidationError>builder();
 
         private Builder() {
         }
@@ -74,26 +75,42 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
         }
 
         public Builder addIsNullError(String attribute) {
+            size++;
             errors.add(new ValidationError("", attribute, NULL_ERROR));
             return this;
         }
 
         public Builder addIsNullError(String parent, String attribute) {
+            size++;
             errors.add(new ValidationError(parent, attribute, NULL_ERROR));
             return this;
         }
 
         public Builder addError(String parent, String attribute, String errorType) {
+            size++;
             errors.add(new ValidationError(parent, attribute, errorType));
             return this;
         }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        public int size() {
+            return size;
+        }
     }
 
-    public static class ValidationError {
+    public static class ValidationError implements Comparable<ValidationError> {
         public final String attribute;
         public final String errorType;
 
-        private ValidationError(String parent, String attribute, String errorType) {
+        public ValidationError(String attribute, String errorType) {
+            this.attribute = attribute;
+            this.errorType = errorType;
+        }
+
+        public ValidationError(String parent, String attribute, String errorType) {
             this.attribute = concatenate(parent, attribute);
             this.errorType = errorType;
         }
@@ -104,6 +121,10 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
 
         public boolean isNullError(String attribute) {
             return isSameAs(attribute, NULL_ERROR);
+        }
+
+        public int compareTo(ValidationError error) {
+            return (attribute + ":" + errorType).compareTo(error.attribute + ":" + error.errorType);
         }
 
         @Override

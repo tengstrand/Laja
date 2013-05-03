@@ -6,8 +6,10 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
+import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.asImmutable;
+import static net.sf.laja.cdd.stateconverter.TypeConverters.toImmutable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -20,12 +22,24 @@ public class MutableToImmutableConverterTest {
 
     @Test
     public void shouldConvertFromMutableToImmutableState() {
-        TypeConverter converter = new MutableToImmutableConverter();
-
         PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children().defaults().asMutableState();
-        PersonState state = (PersonState)converter.convert(mutableState);
+        PersonState state = (PersonState) toImmutable.convert(mutableState);
 
         assertThat(state.name, equalTo("Carl"));
         assertThat(state.birthday, equalTo(new DateMidnight(2010,1,15)));
+    }
+
+    @Test(expected = IllegalPersonStateException.class)
+    public void shouldThrowExceptionIfConvertingToInvalidImmutableState() {
+        PersonMutableState mutableState = createPerson().name(null).birthday(2010,1,15).children().defaults().asMutableState();
+        toImmutable.convert(mutableState);
+    }
+
+    @Test
+    public void shouldThrowExceptionIfConvertingListWithInvalidStateToImmutableState() {
+        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children(
+                createPerson().name(null).birthday(2011,1,1).children().defaults()
+        ).defaults().asMutableState();
+        toImmutable.convert(mutableState);
     }
 }
