@@ -23,7 +23,7 @@ public class CollectionValidatorTest {
         ).asMutableStateList();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
-        collectionValidator().validate(states, "", "persons", errors);
+        collectionValidator().validate(states, "", "persons", errors, 0);
 
         assertTrue(errors.isEmpty());
     }
@@ -36,7 +36,7 @@ public class CollectionValidatorTest {
         ).asMutableStateList();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
-        collectionValidator().validate(states, "", "persons", errors);
+        collectionValidator().validate(states, "", "persons", errors, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
                 .addIsNullError("persons", "name")

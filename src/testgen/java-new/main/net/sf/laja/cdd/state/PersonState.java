@@ -205,10 +205,10 @@ public class PersonState implements ImmutableState {
             if (children == null) { errors.addIsNullError(parent, "children"); }
             if (address == null) { errors.addIsNullError(parent, "address"); }
 
-            collectionValidator().validate(children, parent, "children", errors);
+            collectionValidator().validate(children, parent, "children", errors, 0);
             address.validate(concatenate(parent, "address"), errors);
-            collectionValidator().validate(oldAddresses, parent, "oldAddresses", errors);
-            mapValidator().validate(groupedAddresses, parent, "groupedAddresses", errors);
+            collectionValidator().validate(oldAddresses, parent, "oldAddresses", errors, 0);
+            mapValidator().validate(groupedAddresses, parent, "groupedAddresses", errors, 0);
 
             PersonState.validate(this, parent, errors);
         }
