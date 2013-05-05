@@ -2,15 +2,11 @@ package net.sf.laja.cdd.validator;
 
 public class Validators {
 
-    public static Validator validateState() {
-        return new StateValidator();
-    }
-
-    public static Validator validateCollection() {
+    public static Validator collectionValidator() {
         return new CollectionValidator();
     }
 
-    public static Validator validateMap() {
+    public static Validator mapValidator() {
         return new MapValidator();
     }
 }

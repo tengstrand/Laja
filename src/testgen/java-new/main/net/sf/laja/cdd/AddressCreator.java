@@ -28,7 +28,7 @@ public class AddressCreator implements AddressMaker {
         return new ProtectedAddress(state.asImmutable());
     }
 
-    // Generated code goes here...
+    // ------ Generated code ------
 
     public static AddressFactory createAddress() {
         return new AddressFactory();

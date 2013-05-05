@@ -37,7 +37,7 @@ public class PersonCreator implements PersonMaker {
         return new TextPerson(state.asImmutable());
     }
 
-    // Generated code goes here...
+    // ------ Generated code ------
 
     public static PersonFactory createPerson() {
         return new PersonFactory();
@@ -55,15 +55,15 @@ public class PersonCreator implements PersonMaker {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createAddressMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 
-    public static PersonMapEntryBuilder addressEntry(Object key, PersonCreator creator) {
+    public static PersonMapEntryBuilder personEntry(Object key, PersonCreator creator) {
         return new PersonMapEntryBuilder(key, creator);
     }
 
-    public static PersonMapEntryBuilder addressEntry(Object key, PersonBuilder builder) {
+    public static PersonMapEntryBuilder personEntry(Object key, PersonBuilder builder) {
         return new PersonMapEntryBuilder(key, builder);
     }
 
@@ -470,7 +470,7 @@ public class PersonCreator implements PersonMaker {
             this.entries = entries;
         }
 
-        public ImmutableMap asAddressMap() {
+        public ImmutableMap asPersonMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
             for (PersonMapEntryBuilder entry : entries) {
@@ -479,8 +479,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
-        public Map asAddressMutableMap() {
-            Map<Object,Person> result = new HashMap<Object,Person>();
+        public Map asPersonMutableMap() {
+            Map result = new HashMap();
 
             for (PersonMapEntryBuilder entry : entries) {
                 result.put(entry.key, entry.asPerson());

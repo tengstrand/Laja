@@ -22,7 +22,7 @@ public class AddressState implements ImmutableState {
     private static void validate(AddressMutableState state, String parent, ValidationErrors.Builder errors) {
     }
 
-    // Generated code goes here...
+    // ------ Generated code ------
 
     public static final String ID = "id";
     public static final String STREET_NAME = "streetName";

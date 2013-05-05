@@ -20,7 +20,8 @@ import static net.sf.laja.cdd.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.stateconverter.TypeConversion.*;
 import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
-import static net.sf.laja.cdd.validator.Validators.*;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
 public class PersonState implements ImmutableState {
     public final String name;
@@ -45,7 +46,7 @@ public class PersonState implements ImmutableState {
         }
     }
 
-    // Generated code goes here...
+    // ------ Generated code ------
 
     public static final String NAME = "name";
     public static final String BIRTHDAY = "birthday";
@@ -204,10 +205,10 @@ public class PersonState implements ImmutableState {
             if (children == null) { errors.addIsNullError(parent, "children"); }
             if (address == null) { errors.addIsNullError(parent, "address"); }
 
-            validateCollection().validate(children, parent, "children", errors, validateState());
+            collectionValidator().validate(children, parent, "children", errors);
             address.validate(concatenate(parent, "address"), errors);
-            validateCollection().validate(oldAddresses, parent, "oldAddresses", errors, validateState());
-            validateMap().validate(groupedAddresses, parent, "groupedAddresses", errors, validateState());
+            collectionValidator().validate(oldAddresses, parent, "oldAddresses", errors);
+            mapValidator().validate(groupedAddresses, parent, "groupedAddresses", errors);
 
             PersonState.validate(this, parent, errors);
         }
