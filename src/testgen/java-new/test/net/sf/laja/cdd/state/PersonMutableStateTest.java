@@ -66,9 +66,9 @@ public class PersonMutableStateTest {
 
     static class CarlCanNotLiveInStockholmValidator implements Validator<PersonState.PersonMutableState> {
 
-        public void validate(Object element, PersonMutableState state, String parent, String attribute, ValidationErrors.Builder errors) {
+        public void validate(Object rootElement, PersonMutableState state, String parent, String attribute, ValidationErrors.Builder errors) {
             if ("Carl".equals(state.name) && state.address != null && "Stockholm".equals(state.address.city)) {
-                errors.addError(element, parent, "address", "carl_can_not_live_in_stockholm");
+                errors.addError(rootElement, parent, "address", "carl_can_not_live_in_stockholm");
             }
         }
     }
