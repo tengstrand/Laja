@@ -7,20 +7,26 @@ import java.util.Collection;
 
 import static net.sf.laja.cdd.ValidationErrors.concatenate;
 
-public class CollectionValidator implements Validator {
+public class CollectionValidator implements CoreValidator {
 
-    public void validate(Object elements, String parent, String attribute, ValidationErrors.Builder errors,
-                         int validatorIndex, Validator... validators) {
+    public void validate(Object rootElement, Object elements, String parent, String attribute, ValidationErrors.Builder errors,
+                         Validator[] customValidators, int validatorIndex, CoreValidator... validators) {
         if (validators.length == 0) {
             String newParent = concatenate(parent, attribute);
 
             for (Object element : (Collection)elements) {
                 MutableState state = (MutableState)element;
-                state.validate(newParent, errors);
+                Object root = rootElement == null ? element : rootElement;
+                state.validate(root, newParent, errors);
+
+                for (Validator validator : customValidators) {
+                    validator.validate(root, state, parent, attribute, errors);
+                }
             }
         } else {
             for (Object element : (Collection)elements) {
-                validators[0].validate(element, parent, attribute, errors, validatorIndex + 1);
+                validators[0].validate(rootElement == null ? element : rootElement, element, parent, attribute, errors,
+                        customValidators, validatorIndex + 1);
             }
         }
     }

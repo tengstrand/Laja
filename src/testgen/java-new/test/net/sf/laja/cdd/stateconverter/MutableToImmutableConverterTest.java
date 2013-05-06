@@ -35,7 +35,7 @@ public class MutableToImmutableConverterTest {
         toImmutable.convert(mutableState);
     }
 
-    @Test
+    @Test(expected = IllegalPersonStateException.class)
     public void shouldThrowExceptionIfConvertingListWithInvalidStateToImmutableState() {
         PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children(
                 createPerson().name(null).birthday(2011,1,1).children().defaults()

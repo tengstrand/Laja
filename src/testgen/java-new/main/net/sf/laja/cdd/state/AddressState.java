@@ -4,6 +4,7 @@ import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ public class AddressState implements ImmutableState {
     private static void setDefaults(AddressMutableState state) {
     }
 
-    private static void validate(AddressMutableState state, String parent, ValidationErrors.Builder errors) {
+    private static void validate(AddressMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
     }
 
     // ------ Generated code ------
@@ -124,16 +125,20 @@ public class AddressState implements ImmutableState {
             return validate().isEmpty();
         }
 
-        public ValidationErrors validate() {
+        public ValidationErrors validate(Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate("", errors);
+            validate(this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(String parent, ValidationErrors.Builder errors) {
-            if (streetName == null) { errors.addIsNullError(parent, "streetName"); }
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            if (streetName == null) { errors.addIsNullError(rootElement, parent, "streetName"); }
 
-            AddressState.validate(this, parent, errors);
+            AddressState.validate(this, rootElement, parent, errors);
+
+            for (Validator validator : validators) {
+                validator.validate(rootElement, this, parent, "", errors);
+            }
         }
 
         public AddressState asImmutable() {

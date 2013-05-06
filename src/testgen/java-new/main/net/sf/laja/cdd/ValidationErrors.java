@@ -74,21 +74,21 @@
             return new ValidationErrors(errors.build());
         }
 
-        public Builder addIsNullError(String attribute) {
-            size++;
-            errors.add(new ValidationError("", attribute, NULL_ERROR));
-            return this;
+        public Builder addIsNullError(Object rootElement, String attribute) {
+            return addError(rootElement, "", attribute, NULL_ERROR);
         }
 
-        public Builder addIsNullError(String parent, String attribute) {
-            size++;
-            errors.add(new ValidationError(parent, attribute, NULL_ERROR));
-            return this;
+        public Builder addIsNullError(Object rootElement, String parent, String attribute) {
+            return addError(rootElement, parent, attribute, NULL_ERROR);
         }
 
-        public Builder addError(String parent, String attribute, String errorType) {
+        public Builder addError(Object rootElement, String attribute, String errorType) {
+            return addError(rootElement, "", attribute, errorType);
+        }
+
+        public Builder addError(Object rootElement, String parent, String attribute, String errorType) {
             size++;
-            errors.add(new ValidationError(parent, attribute, errorType));
+            errors.add(new ValidationError(parent, attribute, errorType, rootElement));
             return this;
         }
 
@@ -104,15 +104,18 @@
     public static class ValidationError implements Comparable<ValidationError> {
         public final String attribute;
         public final String errorType;
+        public final Object element;
 
-        public ValidationError(String attribute, String errorType) {
+        public ValidationError(String attribute, String errorType, Object element) {
             this.attribute = attribute;
             this.errorType = errorType;
+            this.element = element;
         }
 
-        public ValidationError(String parent, String attribute, String errorType) {
+        public ValidationError(String parent, String attribute, String errorType, Object element) {
             this.attribute = concatenate(parent, attribute);
             this.errorType = errorType;
+            this.element = element;
         }
 
         public boolean isSameAs(String attribute, String errorType) {
@@ -131,6 +134,7 @@
         public int hashCode() {
             int result = attribute != null ? attribute.hashCode() : 0;
             result = 31 * result + (errorType != null ? errorType.hashCode() : 0);
+            result = 31 * result + (element != null ? element.hashCode() : 0);
             return result;
         }
 
@@ -139,10 +143,11 @@
             if (this == o) return true;
             if (!(o instanceof ValidationError)) return false;
 
-            ValidationError result = (ValidationError) o;
+            ValidationError that = (ValidationError) o;
 
-            if (attribute != null ? !attribute.equals(result.attribute) : result.attribute != null) return false;
-            if (errorType != null ? !errorType.equals(result.errorType) : result.errorType != null) return false;
+            if (attribute != null ? !attribute.equals(that.attribute) : that.attribute != null) return false;
+            if (element != null ? !element.equals(that.element) : that.element != null) return false;
+            if (errorType != null ? !errorType.equals(that.errorType) : that.errorType != null) return false;
 
             return true;
         }
@@ -152,6 +157,7 @@
             return "ValidationError{" +
                     "attribute='" + attribute + '\'' +
                     ", errorType='" + errorType + '\'' +
+                    ", element=" + element +
                     '}';
         }
     }

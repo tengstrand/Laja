@@ -37,9 +37,8 @@ public class PersonTest {
     }
 
     private PersonBuilder defaultPerson() {
-        PersonBuilder builder = buildPerson()
+        return buildPerson()
                 .withBirthday(new DateMidnight(1999, 9, 9))
                 .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
-        return builder;
     }
 }

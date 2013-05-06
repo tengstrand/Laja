@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.validator;
 
+import net.sf.laja.cdd.PersonCreator;
 import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.state.PersonState;
 import org.junit.Test;
@@ -23,24 +24,26 @@ public class CollectionValidatorTest {
         ).asMutableStateList();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
-        collectionValidator().validate(states, "", "persons", errors, 0);
+
+        collectionValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
 
         assertTrue(errors.isEmpty());
     }
 
     @Test
     public void invalidListOfPersonsShouldReturnValidationErrors() {
-        List<PersonState.PersonMutableState> states = createPersonList(
-                createPerson().name(null).birthday(2012, 12, 12).children().defaults(),
-                createPerson().name("Inga").birthday(null).children().defaults()
-        ).asMutableStateList();
+        PersonCreator person1 = createPerson().name(null).birthday(2012, 12, 12).children().defaults();
+        PersonCreator person2 = createPerson().name("Inga").birthday(null).children().defaults();
+
+        List<PersonState.PersonMutableState> states = createPersonList(person1, person2).asMutableStateList();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
-        collectionValidator().validate(states, "", "persons", errors, 0);
+
+        collectionValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError("persons", "name")
-                .addIsNullError("persons", "birthday").build();
+                .addIsNullError(person1.asMutableState(), "persons", "name")
+                .addIsNullError(person2.asMutableState(), "persons", "birthday").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }

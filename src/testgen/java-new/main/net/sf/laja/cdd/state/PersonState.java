@@ -7,6 +7,7 @@ import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PersonState implements ImmutableState {
         state.listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
     }
 
-    private static void validate(PersonMutableState state, String parent, ValidationErrors.Builder errors) {
+    private static void validate(PersonMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
         if (state.birthday != null && state.birthday.isAfterNow()) {
             errors.addError(parent, BIRTHDAY, "born_after_today");
         }
@@ -193,24 +194,28 @@ public class PersonState implements ImmutableState {
             return validate().isEmpty();
         }
 
-        public ValidationErrors validate() {
+        public ValidationErrors validate(Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate("", errors);
+            validate(this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(String parent, ValidationErrors.Builder errors) {
-            if (name == null) { errors.addIsNullError(parent, "name"); }
-            if (birthday == null) { errors.addIsNullError(parent, "birthday"); }
-            if (children == null) { errors.addIsNullError(parent, "children"); }
-            if (address == null) { errors.addIsNullError(parent, "address"); }
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            if (name == null) { errors.addIsNullError(rootElement, parent, "name"); }
+            if (birthday == null) { errors.addIsNullError(rootElement, parent, "birthday"); }
+            if (children == null) { errors.addIsNullError(rootElement, parent, "children"); }
+            if (address == null) { errors.addIsNullError(rootElement, parent, "address"); }
 
-            collectionValidator().validate(children, parent, "children", errors, 0);
-            address.validate(concatenate(parent, "address"), errors);
-            collectionValidator().validate(oldAddresses, parent, "oldAddresses", errors, 0);
-            mapValidator().validate(groupedAddresses, parent, "groupedAddresses", errors, 0);
+            collectionValidator().validate(rootElement, children, parent, "children", errors, validators, 0);
+            address.validate(rootElement, concatenate(parent, "address"), errors);
+            collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, validators, 0);
+            mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, validators, 0);
 
-            PersonState.validate(this, parent, errors);
+            PersonState.validate(this, rootElement, parent, errors);
+
+            for (Validator validator : validators) {
+                validator.validate(rootElement, rootElement, parent, "", errors);
+            }
         }
 
         @Override

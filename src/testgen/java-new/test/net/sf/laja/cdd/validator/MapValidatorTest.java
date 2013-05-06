@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.validator;
 
+import net.sf.laja.cdd.PersonCreator;
 import net.sf.laja.cdd.ValidationErrors;
 import org.junit.Test;
 
@@ -22,25 +23,27 @@ public class MapValidatorTest {
         ).asMutableStateMap();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
-        mapValidator().validate(states, "", "persons", errors, 0);
+
+        mapValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
 
         assertTrue(errors.isEmpty());
     }
 
     @Test
     public void invalidMapOfPersonsShouldReturnValidationErrors() {
+        PersonCreator person1 = createPerson().name("Carl").birthday(null).children().defaults();
+        PersonCreator person2 = createPerson().name(null).birthday(2012, 12, 12).children().defaults();
+
         Map<String,PersonMutableState> states = createPersonMap(
-                personEntry("a", createPerson().name("Carl").birthday(null).children().defaults()),
-                personEntry("b", createPerson().name(null).birthday(2012, 12, 12).children().defaults())
-        ).asMutableStateMap();
+                personEntry("a", person1), personEntry("b", person2)).asMutableStateMap();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        mapValidator().validate(states, "", "persons", errors, 0);
+        mapValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError("persons", "name")
-                .addIsNullError("persons", "birthday").build();
+                .addIsNullError(person2.asMutableState(), "persons", "name")
+                .addIsNullError(person1.asMutableState(), "persons", "birthday").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }
