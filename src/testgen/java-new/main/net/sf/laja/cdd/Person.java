@@ -12,8 +12,8 @@ public class Person extends PersonBehaviour {
         super(state);
     }
 
-    public void setName(String name) {
-        state = state.withName(name);
+    public Person withName(String name) {
+        return new Person(state.withName(name));
     }
 
     public boolean hasLongName() {

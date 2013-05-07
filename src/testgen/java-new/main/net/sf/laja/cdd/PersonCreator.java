@@ -97,7 +97,7 @@ public class PersonCreator implements PersonMaker {
     }
 
     public static class PersonBehaviour {
-        public PersonState state;
+        public final PersonState state;
 
         public PersonBehaviour(PersonState state) {
             this.state = state;
