@@ -7,6 +7,7 @@ import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
@@ -24,6 +25,7 @@ import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
+@State
 public class PersonState implements ImmutableState {
     public final String name;
     public final DateMidnight birthday;

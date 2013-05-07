@@ -3,6 +3,7 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 
@@ -18,6 +19,7 @@ import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
+@Creator
 public class PersonCreator implements PersonMaker {
     private final PersonMutableState state;
 

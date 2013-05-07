@@ -3,6 +3,7 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.HairColorState;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 import static net.sf.laja.cdd.state.HairColorState.HairColorMutableState;
 
+@Creator
 public class HairColorCreator implements HairColorMaker {
     private final HairColorMutableState state;
 

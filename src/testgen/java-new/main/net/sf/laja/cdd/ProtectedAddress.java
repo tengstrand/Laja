@@ -2,7 +2,9 @@ package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.AddressState;
 
-public class ProtectedAddress extends AddressCreator.AddressBehaviour implements Address {
+import static net.sf.laja.cdd.AddressCreator.AddressBehaviour;
+
+public class ProtectedAddress extends AddressBehaviour implements Address {
 
     public ProtectedAddress(AddressState state) {
         super(state);

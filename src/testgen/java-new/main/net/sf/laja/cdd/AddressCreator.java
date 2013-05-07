@@ -3,6 +3,7 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.AddressState;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 
+@Creator
 public class AddressCreator implements AddressMaker {
     private final AddressMutableState state;
 
@@ -214,7 +216,6 @@ public class AddressCreator implements AddressMaker {
         }
     }
 
-    // TODO: add tests!
     public static class AddressListBuilder {
         private AddressCreator[] creators;
 
