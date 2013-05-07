@@ -27,8 +27,16 @@ public class HairColorCreator implements HairColorMaker {
         return new HairColorFactory.Factory().new Color().color(color);
     }
 
+    public static HairColorCreator createHairColor(HairColor color) {
+        return new HairColorFactory.Factory().new Color().color(color.name());
+    }
+
     public static HairColorBuilder buildHairColor() {
         return HairColorBuilder.create();
+    }
+
+    public static HairColorListBuilder createHairColorList(String... colorList) {
+        return new HairColorListBuilder(colorList);
     }
 
     public static HairColorListBuilder createHairColorList(HairColorCreator... creators) {
@@ -41,6 +49,14 @@ public class HairColorCreator implements HairColorMaker {
 
     public static HairColorMapBuilder createHairColorMap(HairColorMapEntryBuilder... builders) {
         return new HairColorMapBuilder(builders);
+    }
+
+    public static HairColorMapEntryBuilder hairColorEntry(Object key, String color) {
+        return new HairColorMapEntryBuilder(key, createHairColor(color));
+    }
+
+    public static HairColorMapEntryBuilder hairColorEntry(Object key, HairColor color) {
+        return new HairColorMapEntryBuilder(key, createHairColor(color));
     }
 
     public static HairColorMapEntryBuilder hairColorEntry(Object key, HairColorCreator creator) {
@@ -57,6 +73,10 @@ public class HairColorCreator implements HairColorMaker {
 
     public HairColorState asState() {
         return state.asImmutable();
+    }
+
+    public String asValue() {
+        return state.color;
     }
 
     public HairColorMutableState asMutableState() {
@@ -182,7 +202,12 @@ public class HairColorCreator implements HairColorMaker {
     }
 
     public static class HairColorListBuilder {
+        private String[] colorList;
         private HairColorCreator[] creators;
+
+        public HairColorListBuilder(String... colorList) {
+            this.colorList = colorList;
+        }
 
         public HairColorListBuilder(HairColorCreator... creators) {
             this.creators = creators;
@@ -191,6 +216,22 @@ public class HairColorCreator implements HairColorMaker {
         // HairColor
 
         public ImmutableList<HairColor> asHairColorList() {
+            if (colorList != null) {
+                return asListFromElements();
+            }
+            return asListFromCreators();
+        }
+
+        private ImmutableList<HairColor> asListFromElements() {
+            ImmutableList.Builder<HairColor> builder = ImmutableList.builder();
+
+            for (String element : colorList) {
+                builder.add(createHairColor(element).asHairColor());
+            }
+            return builder.build();
+        }
+
+        private ImmutableList<HairColor> asListFromCreators() {
             ImmutableList.Builder<HairColor> builder = ImmutableList.builder();
 
             for (HairColorCreator creator : creators) {
@@ -198,6 +239,8 @@ public class HairColorCreator implements HairColorMaker {
             }
             return builder.build();
         }
+
+        // TODO: follow the same pattern as for asList.
 
         public List<HairColor> asHairColorMutableList() {
             List<HairColor> result = new ArrayList<HairColor>();
@@ -208,7 +251,21 @@ public class HairColorCreator implements HairColorMaker {
             return result;
         }
 
+        // TODO: follow the same pattern as for asList.
+
+        public List<HairColor> asMutableList() {
+            List<HairColor> result = new ArrayList<HairColor>();
+
+            for (HairColorCreator creator : creators) {
+                result.add(creator.asHairColor());
+            }
+            return result;
+        }
+
+
         // State
+
+        // TODO: follow the same pattern as for asList.
 
         public ImmutableList<HairColorState> asStateList() {
             ImmutableList.Builder<HairColorState> builder = ImmutableList.builder();
@@ -218,6 +275,8 @@ public class HairColorCreator implements HairColorMaker {
             }
             return builder.build();
         }
+
+        // TODO: follow the same pattern as for asList.
 
         public List<HairColorState.HairColorMutableState> asMutableStateList() {
             List<HairColorState.HairColorMutableState> result = new ArrayList<HairColorState.HairColorMutableState>();
@@ -237,6 +296,8 @@ public class HairColorCreator implements HairColorMaker {
         }
 
         // HairColor
+
+        // TODO: follow the same pattern as for asList...
 
         public ImmutableSet<HairColor> asHairColorSet() {
             ImmutableSet.Builder<HairColor> builder = ImmutableSet.builder();
