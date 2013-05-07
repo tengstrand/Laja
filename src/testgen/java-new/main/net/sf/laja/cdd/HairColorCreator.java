@@ -21,14 +21,14 @@ public class HairColorCreator implements HairColorMaker {
         return HairColor.valueOf(state.color.toUpperCase());
     }
 
+    public static HairColorCreator createHairColor(HairColor color) {
+        return createHairColor(color.name());
+    }
+
     // ------ Generated code ------
 
     public static HairColorCreator createHairColor(String color) {
         return new HairColorFactory.Factory().new Color().color(color);
-    }
-
-    public static HairColorCreator createHairColor(HairColor color) {
-        return new HairColorFactory.Factory().new Color().color(color.name());
     }
 
     public static HairColorBuilder buildHairColor() {
