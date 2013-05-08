@@ -5,20 +5,24 @@
 #set (mutableClass = state.mutableClass)
 #set (attributes = state.attributes)
 #set (imports = state.imports)
+#set (defaultsMethod = state.defaultsMethod)
 
 #macro imports()
-
-  #if (imports.hasImports)
-    #foreach (import in imports)
-{import.statement}
-    #end
-
+  #foreach (import in imports)
+{import.statement}##
   #end
 #end
 
 #macro attributes()
   #foreach (attribute in attributes)
     public final {attribute.type} {attribute.variable};{attribute.comment}
+  #end
+#end
+
+#macro defaultsMethod()
+  #if (defaultsMethod != null)
+
+    {defaultsMethod}
   #end
 #end
 
@@ -94,9 +98,11 @@ PersonStateConverter.asMutableList(children),
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.txt"
 package {packagename};
+
   #imports()
 public class {classname} {
   #attributes()
+  #defaultsMethod()
 
     // Generated code goes here...
 
