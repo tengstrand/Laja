@@ -5,7 +5,7 @@
 #set (mutableClass = state.mutableClass)
 #set (attributes = state.attributes)
 #set (imports = state.imports)
-#set (defaultsMethod = state.defaultsMethod)
+#set (manualCode = state.manualCode)
 
 #macro imports()
   #foreach (import in imports)
@@ -15,14 +15,7 @@
 
 #macro attributes()
   #foreach (attribute in attributes)
-    public final {attribute.type} {attribute.variable};{attribute.comment}
-  #end
-#end
-
-#macro defaultsMethod()
-  #if (defaultsMethod != null)
-
-    {defaultsMethod}
+    public final {attribute.type} {attribute.variable};
   #end
 #end
 
@@ -101,10 +94,9 @@ package {packagename};
 
   #imports()
 public class {classname} {
-  #attributes()
-  #defaultsMethod()
-
-    // Generated code goes here...
+  #attributes()##
+{manualCode}##
+// Generated code goes here...
 
   #constructor()
   #exceptions()

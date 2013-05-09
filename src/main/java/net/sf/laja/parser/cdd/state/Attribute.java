@@ -6,7 +6,6 @@ public class Attribute implements StateParser.IAttribute {
     public String type;
     public String variable;
     public String variableAsClass;
-    public String comment = "";
 
     public boolean isList;
 
@@ -21,16 +20,11 @@ public class Attribute implements StateParser.IAttribute {
         variableAsClass = StringUtils.capitalize(variable);
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     @Override
     public String toString() {
         return "Attribute{" +
                 "type='" + type + '\'' +
                 ", variable='" + variable + '\'' +
-                ", comment='" + comment + '\'' +
                 '}';
     }
 }

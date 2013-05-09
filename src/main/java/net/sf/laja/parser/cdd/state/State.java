@@ -11,7 +11,7 @@ public class State implements StateParser.IState {
     public String mutableClass;
     public List<Attribute> attributes;
     public Imports imports;
-    public String defaultsMethod;
+    public String manualCode;
 
     public void setPackagename(String packagename) {
         this.packagename = packagename;
@@ -27,7 +27,7 @@ public class State implements StateParser.IState {
         classvariable = StringUtils.uncapitalize(classname);
         mutableClass = StringUtils.left(classname, classname.length() - 5) + "MutableState";
         attributes = classStatement.attributes;
-        defaultsMethod = classStatement.defaultsMethod;
+        manualCode = classStatement.manualCode;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class State implements StateParser.IState {
                 ", mutableClass='" + mutableClass + '\'' +
                 ", attributes=" + attributes +
                 ", imports=" + imports +
-                ", defaultsMethod='" + defaultsMethod + '\'' +
+                ", manualCode='" + manualCode + '\'' +
                 '}';
     }
 }

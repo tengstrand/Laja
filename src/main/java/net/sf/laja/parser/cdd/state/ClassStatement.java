@@ -6,7 +6,7 @@ import java.util.List;
 public class ClassStatement implements StateParser.IClassStatement {
     public String classname;
     public final List<Attribute> attributes = new ArrayList<Attribute>();
-    public String defaultsMethod;
+    public String manualCode;
 
     public void setClassname(String classname) {
         this.classname = classname;
@@ -16,8 +16,8 @@ public class ClassStatement implements StateParser.IClassStatement {
         attributes.add((Attribute)iattribute);
     }
 
-    public void setDefaultsMethod(String defaults) {
-        this.defaultsMethod = defaults;
+    public void setManualCode(String manualCode) {
+        this.manualCode = manualCode;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ClassStatement implements StateParser.IClassStatement {
         return "ClassStatement{" +
                 "classname='" + classname + '\'' +
                 ", attributes=" + attributes +
-                ", defaultsMethod='" + defaultsMethod + '\'' +
+                ", manualCode='" + manualCode + '\'' +
                 '}';
     }
 }
