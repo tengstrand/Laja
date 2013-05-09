@@ -12,6 +12,7 @@ public class State implements StateParser.IState {
     public List<Attribute> attributes;
     public Imports imports;
     public String manualCode;
+    public boolean isGeneratedEnd;
 
     public void setPackagename(String packagename) {
         this.packagename = packagename;
@@ -28,6 +29,7 @@ public class State implements StateParser.IState {
         mutableClass = StringUtils.left(classname, classname.length() - 5) + "MutableState";
         attributes = classStatement.attributes;
         manualCode = classStatement.manualCode;
+        isGeneratedEnd = classStatement.isGeneratedEnd;
     }
 
     @Override
@@ -40,6 +42,7 @@ public class State implements StateParser.IState {
                 ", attributes=" + attributes +
                 ", imports=" + imports +
                 ", manualCode='" + manualCode + '\'' +
+                ", isGeneratedEnd='" + isGeneratedEnd + '\'' +
                 '}';
     }
 }

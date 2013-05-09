@@ -6,6 +6,7 @@
 #set (attributes = state.attributes)
 #set (imports = state.imports)
 #set (manualCode = state.manualCode)
+#set (isGeneratedEnd = state.isGeneratedEnd)
 
 #macro imports()
   #foreach (import in imports)
@@ -15,7 +16,7 @@
 
 #macro attributes()
   #foreach (attribute in attributes)
-    public final {attribute.type} {attribute.variable};
+    {attribute.allAnnotations}public final {attribute.type} {attribute.variable};
   #end
 #end
 
@@ -93,10 +94,16 @@ PersonStateConverter.asMutableList(children),
 package {packagename};
 
   #imports()
+@State
 public class {classname} {
   #attributes()##
+  #if (isGeneratedEnd)
 {manualCode}##
 // Generated code goes here...
+  #else
+{manualCode}
+    // Generated code goes here...
+  #end
 
   #constructor()
   #exceptions()

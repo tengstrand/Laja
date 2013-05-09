@@ -4,6 +4,8 @@ import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -15,9 +17,11 @@ import java.util.Set;
 
 @State
 public class AddressState implements ImmutableState {
-    public final int id; // (id)
+    @Id
+    public final int id;
     public final String streetName;
-    public final String city; // (optional)
+    @Optional
+    public final String city;
 
     private static void setDefaults(AddressMutableState state) {
     }

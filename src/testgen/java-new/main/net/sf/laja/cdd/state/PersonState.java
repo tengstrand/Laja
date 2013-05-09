@@ -7,6 +7,7 @@ import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -31,8 +32,10 @@ public class PersonState implements ImmutableState {
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
-    public final ImmutableSet<AddressState> oldAddresses; // (optional)
-    public final ImmutableMap<String,AddressState> groupedAddresses; // (optional)
+    @Optional
+    public final ImmutableSet<AddressState> oldAddresses;
+    @Optional
+    public final ImmutableMap<String,AddressState> groupedAddresses;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
 
     private static void setDefaults(PersonMutableState state) {
