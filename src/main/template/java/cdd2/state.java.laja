@@ -45,24 +45,19 @@
         this.{attribute.variable} = {attribute.variable};
   #end
     }
+
 #end
 
-#macro exceptions()
+#macro exception()
+    public static class IllegalPersonStateException extends InvalidStateException {
+        public IllegalPersonStateException(ValidationErrors errors) {
+            super(errors);
+        }
+    }
 
-    public static class Illegal{classname}Exception extends IllegalStateException { }
-    public static class Illegal{classname}IsNullException extends Illegal{classname}Exception { }
-
-  #foreach (attribute in attributes)
-    public static class Illegal{classname}{attribute.variableAsClass}Exception extends Illegal{classname}Exception { }
-  #end
-
-  #foreach (attribute in attributes)
-    public static class Illegal{classname}{attribute.variableAsClass}IsNullException extends Illegal{classname}IsNullException { }
-  #end
 #end
 
 #macro withMethods()
-
   #set (parameterList = "")
   #set (delimiter = "")
   #foreach (attribute in attributes)
@@ -70,7 +65,7 @@
     #set (delimiter = ", ")
   #end
   #foreach (attribute in attributes)
-    public {classname} with{attribute.variableAsClass}({attribute.type} {attribute.variable}) { return new {classname}({parameterList}); }
+    public {classname} with{attribute.variableAsClass}({attribute.typeContent} {attribute.variable}) { return new {classname}({parameterList}); }
   #end
 #end
 
@@ -119,7 +114,7 @@ public class {classname} implements ImmutableState {
 
   #constants()
   #constructor()
-  #exceptions()
+  #exception()
   #withMethods()
 ##  #asMutableState()
 }
