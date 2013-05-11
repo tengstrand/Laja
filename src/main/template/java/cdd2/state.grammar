@@ -31,7 +31,7 @@ grammar state {
    body = "{" s [(body | str | !"}")+]:innerStatement "}";
 
    manualEnd = ("}" s END);
-   generatedEnd = ("// Generated" *);
+   generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *;
    manualCode = !(manualEnd | generatedEnd)+;
 
    classStatement = "@State" ws public "class" ws name:classname s ["extends" ws name s]
@@ -64,7 +64,7 @@ grammar state {
    ClassStatement classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);
    classStatement.setManualCode(String manualCode);
-   classStatement.setGeneratedEnd(void generatedEnd);
+   classStatement.setGeneratedText(String generatedEnd.generatedText);
 
    State state.setPackagename(String packagestatement.packagename);
    state.setImports(Imports imports);

@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-05-10 by Laja:
+ * Auto generated 2013-05-11 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -128,10 +128,10 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         Data.AttributeAttributeAnnotations attributeAttributeAnnotations = data2.new AttributeAttributeAnnotations("attributeAttributeAnnotations");
         Data.AttributeAttributeType attributeAttributeType = data2.new AttributeAttributeType("attributeAttributeType");
         Data.AttributeAttributeVariable attributeAttributeVariable = data2.new AttributeAttributeVariable("attributeAttributeVariable");
+        Data.ClassStatementGeneratedEndGeneratedText classStatementGeneratedEndGeneratedText = data2.new ClassStatementGeneratedEndGeneratedText("classStatementGeneratedEndGeneratedText");
         Data.ClassStatementClassStatementClassname classStatementClassStatementClassname = data2.new ClassStatementClassStatementClassname("classStatementClassStatementClassname");
         Data.ClassStatementClassStatementAttribute classStatementClassStatementAttribute = data2.new ClassStatementClassStatementAttribute("classStatementClassStatementAttribute");
         Data.ClassStatementClassStatementManualCode classStatementClassStatementManualCode = data2.new ClassStatementClassStatementManualCode("classStatementClassStatementManualCode");
-        Data.ClassStatementClassStatementGeneratedEnd classStatementClassStatementGeneratedEnd = data2.new ClassStatementClassStatementGeneratedEnd("classStatementClassStatementGeneratedEnd");
         Data.StateStateImports stateStateImports = data2.new StateStateImports("stateStateImports");
         Data.StateStateClassStatement stateStateClassStatement = data2.new StateStateClassStatement("stateStateClassStatement");
 
@@ -387,69 +387,92 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(237, s);
         manualEnd.add(239, new End(238, "manualEnd"));
 
-        // generatedEnd = ("// Generated" *)
-        generatedEnd.add(241, new Str(240, "// Generated"));
-        generatedEnd.add(243, new Complete(242, "generatedEnd"));
+        // generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *
+        ElementList generatedEnd_1 = new ElementList(240, "generatedEnd_1", classStatementGeneratedEndGeneratedText);
+        generatedEnd_1.add(242, new Str(241, "//"));
+        generatedEnd_1.add(243, s);
+        Optional generatedEnd_1_1 = new Optional(244, "generatedEnd_1_1");
+        OrList generatedEnd_1_1_1 = new OrList(245, "generatedEnd_1_1_1");
+        Repeat generatedEnd_1_1_1_1 = new Repeat(246, "generatedEnd_1_1_1_1");
+        generatedEnd_1_1_1_1.add(248, new Str(247, "*"));
+        generatedEnd_1_1_1.add(249, generatedEnd_1_1_1_1);
+        Repeat generatedEnd_1_1_1_2 = new Repeat(250, "generatedEnd_1_1_1_2");
+        generatedEnd_1_1_1_2.add(252, new Str(251, "-"));
+        generatedEnd_1_1_1.add(253, generatedEnd_1_1_1_2);
+        Repeat generatedEnd_1_1_1_3 = new Repeat(254, "generatedEnd_1_1_1_3");
+        generatedEnd_1_1_1_3.add(256, new Str(255, "="));
+        generatedEnd_1_1_1.add(257, generatedEnd_1_1_1_3);
+        generatedEnd_1_1.add(258, generatedEnd_1_1_1);
+        generatedEnd_1.add(259, generatedEnd_1_1);
+        generatedEnd_1.add(260, s);
+        generatedEnd_1.add(262, new Str(261, "Generated"));
+        Optional generatedEnd_1_2 = new Optional(263, "generatedEnd_1_2");
+        Repeat generatedEnd_1_2_1 = new Repeat(264, "generatedEnd_1_2_1");
+        generatedEnd_1_2_1.add(265, newline, NOT);
+        generatedEnd_1_2.add(266, generatedEnd_1_2_1);
+        generatedEnd_1.add(267, generatedEnd_1_2);
+        generatedEnd.add(268, generatedEnd_1);
+        generatedEnd.add(270, new Complete(269, "generatedEnd"));
 
         // manualCode = !(manualEnd | generatedEnd)+
-        OrList manualCode_1 = new OrList(244, "manualCode_1");
-        manualCode_1.add(245, manualEnd);
-        manualCode_1.add(246, generatedEnd);
-        manualCode.add(247, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(271, "manualCode_1");
+        manualCode_1.add(272, manualEnd);
+        manualCode_1.add(273, generatedEnd);
+        manualCode.add(274, manualCode_1, NOT);
 
         // classStatement =
         //   "@State" ws public "class" ws name:classname s ["extends" ws name s]
         //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
         //   manualEnd|generatedEnd *
-        classStatement.add(249, new Str(248, "@State"));
-        classStatement.add(250, ws);
-        classStatement.add(251, _public);
-        classStatement.add(253, new Str(252, "class"));
-        classStatement.add(254, ws);
-        classStatement.add(255, name, classStatementClassStatementClassname);
-        classStatement.add(256, s);
-        Optional classStatement_1 = new Optional(257, "classStatement_1");
-        classStatement_1.add(259, new Str(258, "extends"));
-        classStatement_1.add(260, ws);
-        classStatement_1.add(261, name);
-        classStatement_1.add(262, s);
-        classStatement.add(263, classStatement_1);
-        Optional classStatement_2 = new Optional(264, "classStatement_2");
-        classStatement_2.add(266, new Str(265, "implements"));
-        classStatement_2.add(267, ws);
-        classStatement_2.add(268, name);
-        Optional classStatement_2_1 = new Optional(269, "classStatement_2_1");
-        Repeat classStatement_2_1_1 = new Repeat(270, "classStatement_2_1_1");
-        classStatement_2_1_1.add(271, s);
-        classStatement_2_1_1.add(273, new Str(272, ","));
-        classStatement_2_1_1.add(274, s);
-        classStatement_2_1_1.add(275, name);
-        classStatement_2_1.add(276, classStatement_2_1_1);
-        classStatement_2.add(277, classStatement_2_1);
-        classStatement_2.add(278, s);
-        classStatement.add(279, classStatement_2);
-        classStatement.add(281, new Str(280, "{"));
-        classStatement.add(282, s);
-        Optional classStatement_3 = new Optional(283, "classStatement_3");
-        Repeat classStatement_3_1 = new Repeat(284, "classStatement_3_1");
-        classStatement_3_1.add(285, attribute, classStatementClassStatementAttribute);
-        classStatement_3.add(286, classStatement_3_1);
-        classStatement.add(287, classStatement_3);
-        classStatement.add(288, manualCode, classStatementClassStatementManualCode);
-        OrList classStatement_4 = new OrList(289, "classStatement_4");
-        classStatement_4.add(290, manualEnd);
-        classStatement_4.add(291, generatedEnd, classStatementClassStatementGeneratedEnd);
-        classStatement.add(292, classStatement_4);
-        classStatement.add(294, new Complete(293, "classStatement"));
+        classStatement.add(276, new Str(275, "@State"));
+        classStatement.add(277, ws);
+        classStatement.add(278, _public);
+        classStatement.add(280, new Str(279, "class"));
+        classStatement.add(281, ws);
+        classStatement.add(282, name, classStatementClassStatementClassname);
+        classStatement.add(283, s);
+        Optional classStatement_1 = new Optional(284, "classStatement_1");
+        classStatement_1.add(286, new Str(285, "extends"));
+        classStatement_1.add(287, ws);
+        classStatement_1.add(288, name);
+        classStatement_1.add(289, s);
+        classStatement.add(290, classStatement_1);
+        Optional classStatement_2 = new Optional(291, "classStatement_2");
+        classStatement_2.add(293, new Str(292, "implements"));
+        classStatement_2.add(294, ws);
+        classStatement_2.add(295, name);
+        Optional classStatement_2_1 = new Optional(296, "classStatement_2_1");
+        Repeat classStatement_2_1_1 = new Repeat(297, "classStatement_2_1_1");
+        classStatement_2_1_1.add(298, s);
+        classStatement_2_1_1.add(300, new Str(299, ","));
+        classStatement_2_1_1.add(301, s);
+        classStatement_2_1_1.add(302, name);
+        classStatement_2_1.add(303, classStatement_2_1_1);
+        classStatement_2.add(304, classStatement_2_1);
+        classStatement_2.add(305, s);
+        classStatement.add(306, classStatement_2);
+        classStatement.add(308, new Str(307, "{"));
+        classStatement.add(309, s);
+        Optional classStatement_3 = new Optional(310, "classStatement_3");
+        Repeat classStatement_3_1 = new Repeat(311, "classStatement_3_1");
+        classStatement_3_1.add(312, attribute, classStatementClassStatementAttribute);
+        classStatement_3.add(313, classStatement_3_1);
+        classStatement.add(314, classStatement_3);
+        classStatement.add(315, manualCode, classStatementClassStatementManualCode);
+        OrList classStatement_4 = new OrList(316, "classStatement_4");
+        classStatement_4.add(317, manualEnd);
+        classStatement_4.add(318, generatedEnd);
+        classStatement.add(319, classStatement_4);
+        classStatement.add(321, new Complete(320, "classStatement"));
 
         // state = s packagestatement s imports s classStatement s
-        state.add(295, s);
-        state.add(296, packagestatement);
-        state.add(297, s);
-        state.add(298, imports, stateStateImports);
-        state.add(299, s);
-        state.add(300, classStatement, stateStateClassStatement);
-        state.add(301, s);
+        state.add(322, s);
+        state.add(323, packagestatement);
+        state.add(324, s);
+        state.add(325, imports, stateStateImports);
+        state.add(326, s);
+        state.add(327, classStatement, stateStateClassStatement);
+        state.add(328, s);
 
         return new TopElement(data2, state);
     }
@@ -709,69 +732,92 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(237, s);
         manualEnd.add(239, new End(238, "manualEnd"));
 
-        // generatedEnd = ("// Generated" *)
-        generatedEnd.add(241, new Str(240, "// Generated"));
-        generatedEnd.add(243, new Complete(242, "generatedEnd"));
+        // generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *
+        ElementList generatedEnd_1 = new ElementList(240, "generatedEnd_1");
+        generatedEnd_1.add(242, new Str(241, "//"));
+        generatedEnd_1.add(243, s);
+        Optional generatedEnd_1_1 = new Optional(244, "generatedEnd_1_1");
+        OrList generatedEnd_1_1_1 = new OrList(245, "generatedEnd_1_1_1");
+        Repeat generatedEnd_1_1_1_1 = new Repeat(246, "generatedEnd_1_1_1_1");
+        generatedEnd_1_1_1_1.add(248, new Str(247, "*"));
+        generatedEnd_1_1_1.add(249, generatedEnd_1_1_1_1);
+        Repeat generatedEnd_1_1_1_2 = new Repeat(250, "generatedEnd_1_1_1_2");
+        generatedEnd_1_1_1_2.add(252, new Str(251, "-"));
+        generatedEnd_1_1_1.add(253, generatedEnd_1_1_1_2);
+        Repeat generatedEnd_1_1_1_3 = new Repeat(254, "generatedEnd_1_1_1_3");
+        generatedEnd_1_1_1_3.add(256, new Str(255, "="));
+        generatedEnd_1_1_1.add(257, generatedEnd_1_1_1_3);
+        generatedEnd_1_1.add(258, generatedEnd_1_1_1);
+        generatedEnd_1.add(259, generatedEnd_1_1);
+        generatedEnd_1.add(260, s);
+        generatedEnd_1.add(262, new Str(261, "Generated"));
+        Optional generatedEnd_1_2 = new Optional(263, "generatedEnd_1_2");
+        Repeat generatedEnd_1_2_1 = new Repeat(264, "generatedEnd_1_2_1");
+        generatedEnd_1_2_1.add(265, newline, NOT);
+        generatedEnd_1_2.add(266, generatedEnd_1_2_1);
+        generatedEnd_1.add(267, generatedEnd_1_2);
+        generatedEnd.add(268, generatedEnd_1);
+        generatedEnd.add(270, new Complete(269, "generatedEnd"));
 
         // manualCode = !(manualEnd | generatedEnd)+
-        OrList manualCode_1 = new OrList(244, "manualCode_1");
-        manualCode_1.add(245, manualEnd);
-        manualCode_1.add(246, generatedEnd);
-        manualCode.add(247, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(271, "manualCode_1");
+        manualCode_1.add(272, manualEnd);
+        manualCode_1.add(273, generatedEnd);
+        manualCode.add(274, manualCode_1, NOT);
 
         // classStatement =
         //   "@State" ws public "class" ws name:classname s ["extends" ws name s]
         //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
         //   manualEnd|generatedEnd *
-        classStatement.add(249, new Str(248, "@State"));
-        classStatement.add(250, ws);
-        classStatement.add(251, _public);
-        classStatement.add(253, new Str(252, "class"));
-        classStatement.add(254, ws);
-        classStatement.add(255, name);
-        classStatement.add(256, s);
-        Optional classStatement_1 = new Optional(257, "classStatement_1");
-        classStatement_1.add(259, new Str(258, "extends"));
-        classStatement_1.add(260, ws);
-        classStatement_1.add(261, name);
-        classStatement_1.add(262, s);
-        classStatement.add(263, classStatement_1);
-        Optional classStatement_2 = new Optional(264, "classStatement_2");
-        classStatement_2.add(266, new Str(265, "implements"));
-        classStatement_2.add(267, ws);
-        classStatement_2.add(268, name);
-        Optional classStatement_2_1 = new Optional(269, "classStatement_2_1");
-        Repeat classStatement_2_1_1 = new Repeat(270, "classStatement_2_1_1");
-        classStatement_2_1_1.add(271, s);
-        classStatement_2_1_1.add(273, new Str(272, ","));
-        classStatement_2_1_1.add(274, s);
-        classStatement_2_1_1.add(275, name);
-        classStatement_2_1.add(276, classStatement_2_1_1);
-        classStatement_2.add(277, classStatement_2_1);
-        classStatement_2.add(278, s);
-        classStatement.add(279, classStatement_2);
-        classStatement.add(281, new Str(280, "{"));
-        classStatement.add(282, s);
-        Optional classStatement_3 = new Optional(283, "classStatement_3");
-        Repeat classStatement_3_1 = new Repeat(284, "classStatement_3_1");
-        classStatement_3_1.add(285, attribute);
-        classStatement_3.add(286, classStatement_3_1);
-        classStatement.add(287, classStatement_3);
-        classStatement.add(288, manualCode);
-        OrList classStatement_4 = new OrList(289, "classStatement_4");
-        classStatement_4.add(290, manualEnd);
-        classStatement_4.add(291, generatedEnd);
-        classStatement.add(292, classStatement_4);
-        classStatement.add(294, new Complete(293, "classStatement"));
+        classStatement.add(276, new Str(275, "@State"));
+        classStatement.add(277, ws);
+        classStatement.add(278, _public);
+        classStatement.add(280, new Str(279, "class"));
+        classStatement.add(281, ws);
+        classStatement.add(282, name);
+        classStatement.add(283, s);
+        Optional classStatement_1 = new Optional(284, "classStatement_1");
+        classStatement_1.add(286, new Str(285, "extends"));
+        classStatement_1.add(287, ws);
+        classStatement_1.add(288, name);
+        classStatement_1.add(289, s);
+        classStatement.add(290, classStatement_1);
+        Optional classStatement_2 = new Optional(291, "classStatement_2");
+        classStatement_2.add(293, new Str(292, "implements"));
+        classStatement_2.add(294, ws);
+        classStatement_2.add(295, name);
+        Optional classStatement_2_1 = new Optional(296, "classStatement_2_1");
+        Repeat classStatement_2_1_1 = new Repeat(297, "classStatement_2_1_1");
+        classStatement_2_1_1.add(298, s);
+        classStatement_2_1_1.add(300, new Str(299, ","));
+        classStatement_2_1_1.add(301, s);
+        classStatement_2_1_1.add(302, name);
+        classStatement_2_1.add(303, classStatement_2_1_1);
+        classStatement_2.add(304, classStatement_2_1);
+        classStatement_2.add(305, s);
+        classStatement.add(306, classStatement_2);
+        classStatement.add(308, new Str(307, "{"));
+        classStatement.add(309, s);
+        Optional classStatement_3 = new Optional(310, "classStatement_3");
+        Repeat classStatement_3_1 = new Repeat(311, "classStatement_3_1");
+        classStatement_3_1.add(312, attribute);
+        classStatement_3.add(313, classStatement_3_1);
+        classStatement.add(314, classStatement_3);
+        classStatement.add(315, manualCode);
+        OrList classStatement_4 = new OrList(316, "classStatement_4");
+        classStatement_4.add(317, manualEnd);
+        classStatement_4.add(318, generatedEnd);
+        classStatement.add(319, classStatement_4);
+        classStatement.add(321, new Complete(320, "classStatement"));
 
         // state = s packagestatement s imports s classStatement s
-        state.add(295, s);
-        state.add(296, packagestatement);
-        state.add(297, s);
-        state.add(298, imports);
-        state.add(299, s);
-        state.add(300, classStatement);
-        state.add(301, s);
+        state.add(322, s);
+        state.add(323, packagestatement);
+        state.add(324, s);
+        state.add(325, imports);
+        state.add(326, s);
+        state.add(327, classStatement);
+        state.add(328, s);
 
         return new TopElement(data1, state);
     }
@@ -861,7 +907,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         public void setClassname(String classname);
         public void addAttribute(IAttribute iattribute);
         public void setManualCode(String manualCode);
-        public void setGeneratedEnd();
+        public void setGeneratedText(String generatedText);
     }
 
     // State
@@ -1127,6 +1173,17 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
+        // classStatement.setGeneratedText(String generatedEnd.generatedText);
+        public class ClassStatementGeneratedEndGeneratedText implements Output {
+            private String name;
+            public ClassStatementGeneratedEndGeneratedText(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekClassStatement().setGeneratedText(source.get(bookmark));
+            }
+        }
+
         // ClassStatement classStatement.setClassname(String classname);
         public class ClassStatementClassStatementClassname implements Output {
             private String name;
@@ -1157,17 +1214,6 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekClassStatement().setManualCode(source.get(bookmark));
-            }
-        }
-
-        // classStatement.setGeneratedEnd(void generatedEnd);
-        public class ClassStatementClassStatementGeneratedEnd implements Output {
-            private String name;
-            public ClassStatementClassStatementGeneratedEnd(String name) { this.name = name; }
-            public boolean receive() { return false; }
-            public void init(Source source) { }
-            public void set(Source source, int bookmark) {
-                peekClassStatement().setGeneratedEnd();
             }
         }
 

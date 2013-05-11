@@ -6,7 +6,7 @@
 #set (attributes = state.attributes)
 #set (imports = state.imports)
 #set (manualCode = state.manualCode)
-#set (isGeneratedEnd = state.isGeneratedEnd)
+#set (generatedText = state.generatedText)
 
 #macro imports()
   #foreach (import in imports)
@@ -100,12 +100,12 @@ package {packagename};
 @State
 public class {classname} {
   #attributes()##
-  #if (isGeneratedEnd)
+  #if (generatedText != null)
 {manualCode}##
-// Generated code goes here...
+{generatedText}
   #else
 {manualCode}
-    // Generated code goes here...
+    // ===== Generated code =====
   #end
 
   #constructor()
