@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Attribute implements StateParser.IAttribute {
-    public String type;
+    public Type type;
+    public String typeContent;
     public String variable;
     public String variableAsClass;
     public String allAnnotations;
     public List<String> annotations = new ArrayList<String>();
-
-    public boolean isList;
 
     public void setAnnotations(String annotations) {
         allAnnotations = annotations;
@@ -22,10 +21,8 @@ public class Attribute implements StateParser.IAttribute {
         annotations.add(annotation);
     }
 
-    public void setType(String type) {
-        this.type = type;
-
-        isList = type.endsWith("List");
+    public void setType(StateParser.IType itype) {
+        type = (Type)itype;
     }
 
     public void setVariable(String variable) {
@@ -33,15 +30,19 @@ public class Attribute implements StateParser.IAttribute {
         variableAsClass = StringUtils.capitalize(variable);
     }
 
+    public void setTypeContent(String typeContent) {
+        this.typeContent = typeContent;
+    }
+
     @Override
     public String toString() {
         return "Attribute{" +
                 "type='" + type + '\'' +
+                ", typeContent='" + typeContent + '\'' +
                 ", variable='" + variable + '\'' +
                 ", variableAsClass='" + variableAsClass + '\'' +
                 ", allAnnotations=" + allAnnotations +
                 ", annotations=" + annotations +
-                ", isList=" + isList +
                 '}';
     }
 }

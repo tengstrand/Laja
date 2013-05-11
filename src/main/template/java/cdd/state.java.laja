@@ -14,7 +14,7 @@ public interface {stateClass} {
     #end
     {attribute.type} {attribute.getter}();{attribute.comment}
     void {setter(attribute)};
-    #set (first = false)
+    #set (first= false)
   #end
 
     boolean isValid();

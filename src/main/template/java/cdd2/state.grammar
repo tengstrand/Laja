@@ -20,7 +20,9 @@ grammar state {
 
    annotations = [("@" name s):annotation]+;
    keywords = ["public "|"private "|"final " s]+;
-   type = name [s "<" s type s ">"] [s "," s type];
+   collectionType = s "<" s type s ">";
+   mapType = s "<" s type:key s "," s type:entry s ">";
+   type = name  [collectionType | mapType];
    attribute = s annotations keywords s type ws name:variable s ";" [!newline+] newline;
 
    uname = "A".."Z" [letter | digit]+;
@@ -44,10 +46,20 @@ grammar state {
 
    Imports imports.addImportstatement(Importstatement importstatement);
 
+   CollectionType collectionType.setType(Type type);
+
+   MapType mapType.setKey(Type key);
+   mapType.setEntry(Type entry);
+
+   Type type.setName(String name);
+   type.setCollectionType(CollectionType collectionType);
+   type.setMapType(MapType mapType);
+
    Attribute attribute.setAnnotations(String annotations);
    attribute.addAnnotation(String annotations.annotation);
-   attribute.setType(String type);
+   attribute.setType(Type type);
    attribute.setVariable(String variable);
+   attribute.setTypeContent(String type.*);
 
    ClassStatement classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);

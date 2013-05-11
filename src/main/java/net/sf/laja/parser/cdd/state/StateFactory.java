@@ -16,6 +16,18 @@ public class StateFactory implements StateParser.IStateFactory {
         return new Imports();
     }
 
+    public StateParser.ICollectionType createCollectionType() {
+        return new CollectionType();
+    }
+
+    public StateParser.IMapType createMapType() {
+        return new MapType();
+    }
+
+    public StateParser.IType createType() {
+        return new Type();
+    }
+
     public StateParser.IAttribute createAttribute() {
         return new Attribute();
     }
