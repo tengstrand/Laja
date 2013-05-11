@@ -58,7 +58,7 @@ public class PersonState implements ImmutableState {
     public static final String BIRTHDAY = "birthday";
     public static final String CHILDREN = "children";
     public static final String ADDRESS = "address";
-    public static final String OLD_ADDRESS = "oldAddresses";
+    public static final String OLD_ADDRESSES = "oldAddresses";
     public static final String GROUPED_ADDRESSES = "groupedAddresses";
     public static final String LIST_OF_SET_OF_MAP_OF_INTEGERS = "listOfSetOfMapOfIntegers";
 

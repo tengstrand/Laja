@@ -102,12 +102,12 @@ PersonStateConverter.asMutableList(children),
 #end
 *#
 
-#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/XState.txt"
+#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
 package {packagename};
 
   #imports()
 @State
-public class {classname} {
+public class {classname} implements ImmutableState {
   #attributes()##
   #if (generatedText != null)
 {manualCode}##
