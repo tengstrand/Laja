@@ -86,7 +86,8 @@ public class PersonState implements ImmutableState {
     }
 
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
-    public PersonState withAge(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withBirthday(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withChildren(ImmutableList<PersonState> children) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withAddress(AddressState address) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
