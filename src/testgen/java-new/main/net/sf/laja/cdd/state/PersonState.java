@@ -97,7 +97,7 @@ public class PersonState implements ImmutableState {
         return new PersonMutableState(
                 name,
                 birthday,
-                asMutableList(children),
+                asMutableList(children, toMutable),
                 address.asMutable(),
                 asMutableSet(oldAddresses, toMutable),
                 asMutableMap(groupedAddresses, toMutable),
@@ -242,7 +242,7 @@ public class PersonState implements ImmutableState {
             return new PersonState(
                     name,
                     birthday,
-                    asImmutableList(children),
+                    asImmutableList(children, toImmutable),
                     address.asImmutable(),
                     asImmutableSet(oldAddresses, toImmutable),
                     asImmutableMap(groupedAddresses, toImmutable),

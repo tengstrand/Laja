@@ -17,6 +17,22 @@ public class Type implements StateParser.IType {
         mapType = (MapType)imapType;
     }
 
+    public boolean isState() {
+        return name.endsWith("State");
+    }
+
+    public boolean isList() {
+        return collectionType != null && name.endsWith("List");
+    }
+
+    public boolean isSet() {
+        return collectionType != null && name.endsWith("Set");
+    }
+
+    public boolean isMap() {
+        return mapType != null;
+    }
+
     @Override
     public String toString() {
         return "Type{" +

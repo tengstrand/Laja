@@ -67,35 +67,51 @@
   #foreach (attribute in attributes)
     public {classname} with{attribute.variableAsClass}({attribute.typeContent} {attribute.variable}) { return new {classname}({parameterList}); }
   #end
+
 #end
 
-#*
-#macro mutableStateVariable()
-  #if (attribute.isList)
-{attribute.variable}##
-PersonStateConverter.asMutableList(children),
+## Fortsätt här!
+#macro mutableConverters(type)
+  #if (type.isState)
+, toMutable##
+  #else if (type.isMap)
+, toMutableMap{mutableConverters(type.mapType.entry)}##
+  #else if (type.isList)
+, toMutableList{mutableConverters(type.collectionType.type)}##
+  #else if (type.isSet)
+, toMutableSet{mutableConverters(type.collectionType.type)}##
+  #end
+#end
+
+#macro mutableStateAttribute()
+  #if (attribute.type.isMap)
+asMutableMap({attribute.variable}{mutableConverters(attribute.type.mapType.entry)})##
+  #else if (attribute.type.isList)
+asMutableList({attribute.variable}{mutableConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isSet)
+asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isState)
+{attribute.variable}.asMutable()##
   #else
 {attribute.variable}##
   #end
 #end
 
-
-#macro asMutableState()
-
+#macro asMutable()
     public {mutableClass} asMutableState() {
         return new {mutableClass}(
   #set (iterator = attributes.iterator)
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-            {mutableStateVariable()},
+            {mutableStateAttribute()},
     #else
-            {mutableStateVariable()});
+            {mutableStateAttribute()});
     #end
   #end
     }
+
 #end
-*#
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
 package {packagename};
@@ -116,6 +132,6 @@ public class {classname} implements ImmutableState {
   #constructor()
   #exception()
   #withMethods()
-##  #asMutableState()
+  #asMutable()
 }
 #end
