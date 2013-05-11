@@ -8,6 +8,8 @@
 #set (manualCode = state.manualCode)
 #set (generatedText = state.generatedText)
 
+#set (attributeConverter = new net.sf.laja.parser.cdd.AttributeToConstantConverter())
+
 #macro imports()
   #foreach (import in imports)
 {import.statement}##
@@ -20,6 +22,13 @@
   #end
 #end
 
+#macro constants()
+  #foreach (attribute in attributes)
+    public static final String {attributeConverter.toConstant(attribute.variable)} = "{attribute.variable}";
+  #end
+
+#end
+
 #macro constructor()
     public {classname}(
   #set (iterator = attributes.iterator)
@@ -27,9 +36,9 @@
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-            {attribute.type} {attribute.variable},
+            {attribute.typeContent} {attribute.variable},
     #else
-            {attribute.type} {attribute.variable}) {
+            {attribute.typeContent} {attribute.variable}) {
     #end
   #end
   #foreach (attribute in attributes)
@@ -108,6 +117,7 @@ public class {classname} {
     // ===== Generated code =====
   #end
 
+  #constants()
   #constructor()
   #exceptions()
   #withMethods()
