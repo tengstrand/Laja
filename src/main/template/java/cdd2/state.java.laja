@@ -113,6 +113,62 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 
 #end
 
+#function keyAttributes()
+  #set (keys = new java.util.ArrayList())
+  #foreach (attribute in attributes where attribute.isKey)
+    #keys.add(attribute)
+  #end
+  #if (keys.size == 0)
+    #return attributes
+  #end
+  #return keys
+#end
+
+#macro hashCode()
+    @Override
+    public int hashCode() {
+  #set (keyAttributes = keyAttributes())
+  #if (keyAttributes.isEmpty)
+        return super.hashCode();
+  #else
+    #set (first = true)
+    #set (intTypes = ["byte", "char", "short", "int"])
+    #set (castTypes = ["float", "double"])
+    #foreach (attribute in keyAttributes)
+      #if (first)
+        #if (intTypes.contains(attribute.type))
+        int result = {attribute.variable};
+        #else if (castTypes.contains(attribute.type))
+        int result = (int){attribute.variable};
+        #else if (attribute.type == "long")
+        int result = (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
+        #else if (attribute.type == "boolean")
+        int result = {attribute.variable} ? 1 : 0;
+        #else
+        int result = {attribute.variable} != null ? {attribute.variable}.hashCode() : 0;
+        #end
+      #else
+        #if (intTypes.contains(attribute.type))
+        result = 31 * result + {attribute.variable};
+        #else if (castTypes.contains(attribute.type))
+        result = 31 * result + (int){attribute.variable};
+        #else if (attribute.type == "long")
+        result = 31 * result + (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
+        #else if (attribute.type == "boolean")
+        result = 31 * result + ({attribute.variable} ? 1 : 0);
+        #else
+        result = 31 * result + ({attribute.variable} != null ? {attribute.variable}.hashCode() : 0);
+        #end
+      #end
+      #set (first = false)
+    #end
+
+        return result;
+  #end
+    }
+
+#end
+
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
 package {packagename};
 
@@ -133,5 +189,6 @@ public class {classname} implements ImmutableState {
   #exception()
   #withMethods()
   #asMutable()
+  #hashCode()
 }
 #end

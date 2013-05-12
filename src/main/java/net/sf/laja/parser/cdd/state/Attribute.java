@@ -11,14 +11,19 @@ public class Attribute implements StateParser.IAttribute {
     public String variable;
     public String variableAsClass;
     public String allAnnotations;
-    public List<String> annotations = new ArrayList<String>();
+    public List<Annotation> annotations = new ArrayList<Annotation>();
 
     public void setAnnotations(String annotations) {
         allAnnotations = annotations;
     }
 
     public void addAnnotation(String annotation) {
-        annotations.add(annotation);
+        if (Annotation.isValid(annotation)) {
+            annotations.add(new Annotation(annotation));
+        } else {
+            // TODO: add error handling
+            System.out.println("# Unknown annotation: " + annotation);
+        }
     }
 
     public void setType(StateParser.IType itype) {
@@ -32,6 +37,27 @@ public class Attribute implements StateParser.IAttribute {
 
     public void setTypeContent(String typeContent) {
         this.typeContent = typeContent;
+    }
+
+    public boolean isPrimitive() {
+        return type.isPrimitive();
+    }
+
+    public boolean isCollection() {
+        return type.isCollection();
+    }
+
+    public boolean isMap() {
+        return type.isMap();
+    }
+
+    public boolean isKey() {
+        for (Annotation annotation : annotations) {
+            if (annotation.isKey()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

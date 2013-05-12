@@ -21,16 +21,24 @@ public class Type implements StateParser.IType {
         return name.endsWith("State");
     }
 
+    public boolean isCollection() {
+        return collectionType != null;
+    }
+
     public boolean isList() {
-        return collectionType != null && name.endsWith("List");
+        return isCollection() && name.endsWith("List");
     }
 
     public boolean isSet() {
-        return collectionType != null && name.endsWith("Set");
+        return isCollection() && name.endsWith("Set");
     }
 
     public boolean isMap() {
         return mapType != null;
+    }
+
+    public boolean isPrimitive() {
+        return collectionType == null && mapType == null && net.sf.laja.parser.cdd.Type.isPrimitive(name);
     }
 
     @Override
