@@ -7,6 +7,7 @@
 #set (imports = state.imports)
 #set (manualCode = state.manualCode)
 #set (generatedText = state.generatedText)
+#set (isEntity = state.isEntity)
 
 #set (attributeConverter = new net.sf.laja.parser.cdd.AttributeToConstantConverter())
 
@@ -18,7 +19,7 @@
 
 #macro attributes()
   #foreach (attribute in attributes)
-    {attribute.allAnnotations}public final {attribute.typeContent} {attribute.variable};
+    {attribute.annotationsContent}public final {attribute.typeContent} {attribute.variable};
   #end
 #end
 
@@ -70,7 +71,6 @@
 
 #end
 
-## Fortsätt här!
 #macro mutableConverters(type)
   #if (type.isState)
 , toMutable##
@@ -113,13 +113,28 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 
 #end
 
-#function keyAttributes()
+#function entityAttributes()
   #set (keys = new java.util.ArrayList())
   #foreach (attribute in attributes where attribute.isKey)
+    ## 1. At least one @Key was found => use @Key attributes for identity.
     #keys.add(attribute)
   #end
   #if (keys.size == 0)
-    #return attributes
+    ## No @Key, but one @Id attribute was found.
+    #foreach (attribute in attributes where !attribute.isId && !attribute.isCollection && !attribute.isMap)
+      ## 2. Use all none @Id/collection/map attributes for identity.
+      #keys.add(attribute)
+    #end
+    #if (keys.size == 0)
+      #foreach (attribute in attributes where !attribute.isId)
+        ## 3. Use all none @Id attributes for identity.
+        #keys.add(attribute)
+      #end
+      #if (keys.size == 0)
+        ## 4. Use the @Id attribute for identity.
+        #return attributes
+      #end
+    #end
   #end
   #return keys
 #end
@@ -127,14 +142,32 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 #macro hashCode()
     @Override
     public int hashCode() {
-  #set (keyAttributes = keyAttributes())
-  #if (keyAttributes.isEmpty)
+  #if (isEntity)
+    #hashCodeBody(entityAttributes())
+  #else
+    #hashCodeBody(attributes)
+  #end
+    }
+
+#end
+
+#macro valueHashCode()
+  #if (isEntity)
+    public int valueHashCode() {
+    #hashCodeBody(attributes)
+    }
+
+  #end
+#end
+
+#macro hashCodeBody(attributes)
+  #if (attributes.isEmpty)
         return super.hashCode();
   #else
     #set (first = true)
     #set (intTypes = ["byte", "char", "short", "int"])
     #set (castTypes = ["float", "double"])
-    #foreach (attribute in keyAttributes)
+    #foreach (attribute in attributes)
       #if (first)
         #if (intTypes.contains(attribute.type))
         int result = {attribute.variable};
@@ -165,9 +198,52 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 
         return result;
   #end
+#end
+
+#macro equals()
+    @Override
+    public boolean equals(Object that) {
+  #if (isEntity)
+    #equalsBody(entityAttributes())
+  #else
+    #equalsBody(attributes)
+  #end
     }
 
 #end
+
+#macro valueEquals()
+  #if (isEntity)
+    public boolean valueEquals(Object that) {
+    #equalsBody(attributes)
+    }
+
+  #end
+#end
+
+#macro equalsBody(attributes)
+  #if (attributes.isEmpty)
+        return super.equals(that);
+  #else
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
+
+        {classname} state = ({classname})that;
+
+    #foreach (attribute in attributes)
+      #if (attribute.isPrimitive)
+        if ({attribute.variable} != state.{attribute.variable) return false;
+      #else
+        if ({attribute.variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
+      #end
+    #end
+
+        return true;
+  #end
+#end
+
+
+
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
 package {packagename};
@@ -190,5 +266,8 @@ public class {classname} implements ImmutableState {
   #withMethods()
   #asMutable()
   #hashCode()
+  #equals()
+  #valueHashCode()
+  #valueEquals()
 }
 #end

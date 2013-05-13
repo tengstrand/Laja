@@ -7,6 +7,8 @@ import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
@@ -28,7 +30,9 @@ import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
 @State
 public class PersonState implements ImmutableState {
+    @Key
     public final String name;
+    @Id
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
@@ -52,7 +56,7 @@ public class PersonState implements ImmutableState {
         }
     }
 
-    // ------ Generated code ------
+    // ===== Generated code =====
 
     public static final String NAME = "name";
     public static final String BIRTHDAY = "birthday";
@@ -124,10 +128,10 @@ public class PersonState implements ImmutableState {
 
         PersonState that = (PersonState) o;
 
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (children != null ? !children.equals(that.children) : that.children != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
         if (oldAddresses != null ? !oldAddresses.equals(that.oldAddresses) : that.oldAddresses != null) return false;
         if (groupedAddresses != null ? !groupedAddresses.equals(that.groupedAddresses) : that.groupedAddresses != null) return false;
         if (listOfSetOfMapOfIntegers != null ? !listOfSetOfMapOfIntegers.equals(that.listOfSetOfMapOfIntegers) : that.listOfSetOfMapOfIntegers != null) return false;

@@ -2,28 +2,15 @@ package net.sf.laja.parser.cdd.state;
 
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Attribute implements StateParser.IAttribute {
     public Type type;
     public String typeContent;
     public String variable;
     public String variableAsClass;
-    public String allAnnotations;
-    public List<Annotation> annotations = new ArrayList<Annotation>();
+    public Annotations annotations;
 
-    public void setAnnotations(String annotations) {
-        allAnnotations = annotations;
-    }
-
-    public void addAnnotation(String annotation) {
-        if (Annotation.isValid(annotation)) {
-            annotations.add(new Annotation(annotation));
-        } else {
-            // TODO: add error handling
-            System.out.println("# Unknown annotation: " + annotation);
-        }
+    public void setAnnotations(StateParser.IAnnotations iannotations) {
+        annotations = (Annotations)iannotations;
     }
 
     public void setType(StateParser.IType itype) {
@@ -39,6 +26,10 @@ public class Attribute implements StateParser.IAttribute {
         this.typeContent = typeContent;
     }
 
+    public String getAnnotationsContent() {
+        return annotations.content;
+    }
+
     public boolean isPrimitive() {
         return type.isPrimitive();
     }
@@ -51,13 +42,20 @@ public class Attribute implements StateParser.IAttribute {
         return type.isMap();
     }
 
+    public boolean isId() {
+        return annotations.isId();
+    }
+
     public boolean isKey() {
-        for (Annotation annotation : annotations) {
-            if (annotation.isKey()) {
-                return true;
-            }
-        }
-        return false;
+        return annotations.isKey();
+    }
+
+    public boolean isOptional() {
+        return annotations.isOptional();
+    }
+
+    public boolean isEntity() {
+        return annotations.isEntity();
     }
 
     @Override
@@ -67,7 +65,6 @@ public class Attribute implements StateParser.IAttribute {
                 ", typeContent='" + typeContent + '\'' +
                 ", variable='" + variable + '\'' +
                 ", variableAsClass='" + variableAsClass + '\'' +
-                ", allAnnotations=" + allAnnotations +
                 ", annotations=" + annotations +
                 '}';
     }

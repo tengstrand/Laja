@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-05-11 by Laja:
+ * Auto generated 2013-05-13 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -113,12 +113,13 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
     private net.sf.laja.parser.engine2.element.Element getGrammar2() {
         // *** Output classes ***
         Data.ImportstatementImportstatement importstatementImportstatement = data2.new ImportstatementImportstatement("importstatementImportstatement");
+        Data.AnnotationsAnnotations annotationsAnnotations = data2.new AnnotationsAnnotations("annotationsAnnotations");
         Data.AttributeType attributeType = data2.new AttributeType("attributeType");
         Data.StatePackagestatementPackagename statePackagestatementPackagename = data2.new StatePackagestatementPackagename("statePackagestatementPackagename");
         Data.ImportstatementImportstatementStatic importstatementImportstatementStatic = data2.new ImportstatementImportstatementStatic("importstatementImportstatementStatic");
         Data.ImportstatementImportstatementFullclassname importstatementImportstatementFullclassname = data2.new ImportstatementImportstatementFullclassname("importstatementImportstatementFullclassname");
         Data.ImportsImportsImportstatement importsImportsImportstatement = data2.new ImportsImportsImportstatement("importsImportsImportstatement");
-        Data.AttributeAnnotationsAnnotation attributeAnnotationsAnnotation = data2.new AttributeAnnotationsAnnotation("attributeAnnotationsAnnotation");
+        Data.AnnotationsAnnotationsAnnotation annotationsAnnotationsAnnotation = data2.new AnnotationsAnnotationsAnnotation("annotationsAnnotationsAnnotation");
         Data.CollectionTypeCollectionTypeType collectionTypeCollectionTypeType = data2.new CollectionTypeCollectionTypeType("collectionTypeCollectionTypeType");
         Data.MapTypeMapTypeKey mapTypeMapTypeKey = data2.new MapTypeMapTypeKey("mapTypeMapTypeKey");
         Data.MapTypeMapTypeEntry mapTypeMapTypeEntry = data2.new MapTypeMapTypeEntry("mapTypeMapTypeEntry");
@@ -151,7 +152,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement", importstatementImportstatement);
         Optional imports = new Optional(15, "imports");
-        Optional annotations = new Optional(16, "annotations");
+        Optional annotations = new Optional(16, "annotations", annotationsAnnotations);
         Optional keywords = new Optional(17, "keywords");
         ElementList collectionType = new ElementList(18, "collectionType");
         ElementList mapType = new ElementList(19, "mapType");
@@ -286,12 +287,12 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         imports_1.add(138, importstatement, importsImportsImportstatement);
         imports.add(139, imports_1);
 
-        // annotations = [("@" name s):annotation]+
+        // annotations = [("@" name s):annotation+]
         Repeat annotations_1 = new Repeat(140, "annotations_1");
         annotations_1.add(142, new Str(141, "@"));
         annotations_1.add(143, name);
         annotations_1.add(144, s);
-        annotations.add(145, annotations_1);
+        annotations.add(145, annotations_1, annotationsAnnotationsAnnotation);
 
         // keywords = ["public "|"private "|"final " s]+
         Repeat keywords_1 = new Repeat(146, "keywords_1");
@@ -631,7 +632,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         imports_1.add(138, importstatement);
         imports.add(139, imports_1);
 
-        // annotations = [("@" name s):annotation]+
+        // annotations = [("@" name s):annotation+]
         Repeat annotations_1 = new Repeat(140, "annotations_1");
         annotations_1.add(142, new Str(141, "@"));
         annotations_1.add(143, name);
@@ -857,6 +858,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         StateParser.ICollectionType createCollectionType();
         StateParser.IMapType createMapType();
         StateParser.IType createType();
+        StateParser.IAnnotations createAnnotations();
         StateParser.IAttribute createAttribute();
         StateParser.IClassStatement createClassStatement();
         StateParser.IState createState();
@@ -893,10 +895,15 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         public void setMapType(IMapType imapType);
     }
 
+    // Annotations
+    public interface IAnnotations {
+        public void addAnnotation(String annotation);
+        public void setContent(String annotations);
+    }
+
     // Attribute
     public interface IAttribute {
-        public void setAnnotations(String annotations);
-        public void addAnnotation(String annotation);
+        public void setAnnotations(IAnnotations iannotations);
         public void setType(IType itype);
         public void setVariable(String variable);
         public void setTypeContent(String type);
@@ -925,6 +932,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         private Stack<ICollectionType> collectionTypeStack = new Stack<ICollectionType>();
         private Stack<IMapType> mapTypeStack = new Stack<IMapType>();
         private Stack<IType> typeStack = new Stack<IType>();
+        private Stack<IAnnotations> annotationsStack = new Stack<IAnnotations>();
         private Stack<IAttribute> attributeStack = new Stack<IAttribute>();
         private Stack<IClassStatement> classStatementStack = new Stack<IClassStatement>();
         private Stack<IState> stateStack = new Stack<IState>();
@@ -973,6 +981,14 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             return typeStack.peek();
         }
 
+        // Annotations
+        public void pushAnnotations() { annotationsStack.push(factory.createAnnotations()); }
+        public StateParser.IAnnotations popAnnotations() { return (StateParser.IAnnotations)annotationsStack.pop(); }
+        public StateParser.IAnnotations peekAnnotations() {
+            if (annotationsStack.empty()) { return null; }
+            return annotationsStack.peek();
+        }
+
         // Attribute
         public void pushAttribute() { attributeStack.push(factory.createAttribute()); }
         public StateParser.IAttribute popAttribute() { return (StateParser.IAttribute)attributeStack.pop(); }
@@ -1005,6 +1021,17 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekImportstatement().setStatement(source.get(bookmark));
+            }
+        }
+
+        // annotations.setContent(String *);
+        public class AnnotationsAnnotations implements Output {
+            private String name;
+            public AnnotationsAnnotations(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekAnnotations().setContent(source.get(bookmark));
             }
         }
 
@@ -1063,14 +1090,14 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
-        // attribute.addAnnotation(String annotations.annotation);
-        public class AttributeAnnotationsAnnotation implements Output {
+        // Annotations annotations.addAnnotation(String annotation);
+        public class AnnotationsAnnotationsAnnotation implements Output {
             private String name;
-            public AttributeAnnotationsAnnotation(String name) { this.name = name; }
+            public AnnotationsAnnotationsAnnotation(String name) { this.name = name; }
             public boolean receive() { return false; }
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
-                peekAttribute().addAnnotation(source.get(bookmark));
+                peekAnnotations().addAnnotation(source.get(bookmark));
             }
         }
 
@@ -1140,14 +1167,14 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
-        // Attribute attribute.setAnnotations(String annotations);
+        // Attribute attribute.setAnnotations(Annotations annotations);
         public class AttributeAttributeAnnotations implements Output {
             private String name;
             public AttributeAttributeAnnotations(String name) { this.name = name; }
             public boolean receive() { return false; }
-            public void init(Source source) { }
+            public void init(Source source) { pushAnnotations(); }
             public void set(Source source, int bookmark) {
-                peekAttribute().setAnnotations(source.get(bookmark));
+                peekAttribute().setAnnotations(popAnnotations());
             }
         }
 

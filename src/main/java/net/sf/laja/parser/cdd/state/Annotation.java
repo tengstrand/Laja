@@ -8,10 +8,14 @@ public class Annotation {
 
     private static final List<String> annotations = new ArrayList<String>();
 
+    public static final String ID = "@Id";
+    public static final String KEY = "@Key";
+    public static final String OPTIONAL = "@Optional";
+
     static {
-        annotations.add("Id");
-        annotations.add("Key");
-        annotations.add("Optional");
+        annotations.add(ID);
+        annotations.add(KEY);
+        annotations.add(OPTIONAL);
     }
 
     public static boolean isValid(String annotation) {
@@ -19,19 +23,23 @@ public class Annotation {
     }
 
     public Annotation(String name) {
-        this.name = name;
+        this.name = name.trim();
+    }
+
+    public boolean is(String annotation) {
+        return name.equals(annotation);
     }
 
     public boolean isId() {
-        return name.equals("Id");
+        return name.equals(ID);
     }
 
     public boolean isKey() {
-        return name.equals("Key");
+        return name.equals(KEY);
     }
 
     public boolean isOptional() {
-        return name.equals("Optional");
+        return name.equals(OPTIONAL);
     }
 
     @Override

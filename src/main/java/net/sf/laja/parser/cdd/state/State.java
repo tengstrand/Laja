@@ -14,6 +14,8 @@ public class State implements StateParser.IState {
     public String manualCode;
     public String generatedText;
 
+    public boolean isEntity;
+
     public void setPackagename(String packagename) {
         this.packagename = packagename;
     }
@@ -30,6 +32,12 @@ public class State implements StateParser.IState {
         attributes = classStatement.attributes;
         manualCode = classStatement.manualCode;
         generatedText = classStatement.generatedText;
+
+        for (Attribute attribute : attributes) {
+            if (attribute.isEntity()) {
+                isEntity = true;
+            }
+        }
     }
 
     @Override
