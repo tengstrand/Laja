@@ -23,7 +23,7 @@ public class MutableToImmutableConverterTest {
     @Test
     public void shouldConvertFromMutableToImmutableState() {
         PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children().defaults().asMutableState();
-        PersonState state = (PersonState) toImmutable.convert(mutableState);
+        PersonState state = (PersonState) toImmutable.convert(mutableState, 0);
 
         assertThat(state.name, equalTo("Carl"));
         assertThat(state.birthday, equalTo(new DateMidnight(2010,1,15)));
@@ -32,7 +32,7 @@ public class MutableToImmutableConverterTest {
     @Test(expected = IllegalPersonStateException.class)
     public void shouldThrowExceptionIfConvertingToInvalidImmutableState() {
         PersonMutableState mutableState = createPerson().name(null).birthday(2010,1,15).children().defaults().asMutableState();
-        toImmutable.convert(mutableState);
+        toImmutable.convert(mutableState, 0);
     }
 
     @Test(expected = IllegalPersonStateException.class)
@@ -40,6 +40,6 @@ public class MutableToImmutableConverterTest {
         PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).children(
                 createPerson().name(null).birthday(2011,1,1).children().defaults()
         ).defaults().asMutableState();
-        toImmutable.convert(mutableState);
+        toImmutable.convert(mutableState, 0);
     }
 }

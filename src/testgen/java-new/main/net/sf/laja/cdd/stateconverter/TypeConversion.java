@@ -17,17 +17,17 @@ import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
 
 public class TypeConversion {
 
-    public static ImmutableState asImmutable(MutableState from) { return toImmutable.convert(from); }
-    public static MutableState asMutable(ImmutableState from) { return toMutable.convert(from); }
+    public static ImmutableState asImmutable(MutableState from) { return toImmutable.convert(from, 0); }
+    public static MutableState asMutable(ImmutableState from) { return toMutable.convert(from, 0); }
 
-    public static Set asMutableSet(Object from, TypeConverter... converters) { return toMutableSet.convert(from, converters); }
-    public static ImmutableSet asImmutableSet(Object from, TypeConverter... converters) { return toImmutableSet.convert(from, converters); }
+    public static Set asMutableSet(Object from, TypeConverter... converters) { return toMutableSet.convert(from, 0, converters); }
+    public static ImmutableSet asImmutableSet(Object from, TypeConverter... converters) { return toImmutableSet.convert(from, 0, converters); }
 
-    public static List asMutableList(Object from, TypeConverter... converters) { return toMutableList.convert(from, converters); }
-    public static ImmutableList asImmutableList(Object from, TypeConverter... converters) { return toImmutableList.convert(from, converters); }
+    public static List asMutableList(Object from, TypeConverter... converters) { return toMutableList.convert(from, 0, converters); }
+    public static ImmutableList asImmutableList(Object from, TypeConverter... converters) { return toImmutableList.convert(from, 0, converters); }
 
-    public static Map asMutableMap(Object from, TypeConverter... converters) { return toMutableMap.convert(from, converters); }
-    public static ImmutableMap asImmutableMap(Object from, TypeConverter... converters) { return toImmutableMap.convert(from, converters); }
+    public static Map asMutableMap(Object from, TypeConverter... converters) { return toMutableMap.convert(from, 0, converters); }
+    public static ImmutableMap asImmutableMap(Object from, TypeConverter... converters) { return toImmutableMap.convert(from, 0, converters); }
 
     private static String DATE_MIDNIGHT_FORMAT = "yyyy-MM-dd";
 

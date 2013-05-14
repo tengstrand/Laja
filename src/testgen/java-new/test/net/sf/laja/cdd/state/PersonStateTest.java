@@ -42,6 +42,5 @@ public class PersonStateTest {
         assertThat(state.children.get(0).birthday, equalTo(new DateMidnight(2010,11,12)));
         assertThat(state.groupedAddresses.get("aaa").streetName, equalTo("First street"));
         assertThat(state.listOfSetOfMapOfIntegers.get(0).iterator().next().get("b"), equalTo(456));
-
     }
 }

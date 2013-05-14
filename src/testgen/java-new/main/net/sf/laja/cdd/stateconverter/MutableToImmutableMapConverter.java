@@ -2,26 +2,24 @@ package net.sf.laja.cdd.stateconverter;
 
 import com.google.common.collect.ImmutableMap;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class MutableToImmutableMapConverter implements TypeConverter {
 
-    public ImmutableMap convert(Object from, TypeConverter... converters) {
+    public ImmutableMap convert(Object from, int index, TypeConverter... converters) {
         if (from == null) {
             return null;
         }
         ImmutableMap.Builder builder = ImmutableMap.builder();
 
-        if (converters.length == 0) {
+        if (index == converters.length) {
             builder.putAll((Map) from);
         } else {
-            TypeConverter typeConverter = converters[0];
-            TypeConverter[] typeConverters = Arrays.copyOfRange(converters, 1, converters.length);
+            TypeConverter typeConverter = converters[index];
 
             for (Object object : ((Map)from).entrySet()) {
                 Map.Entry entry = (Map.Entry)object;
-                builder.put(entry.getKey(), typeConverter.convert(entry.getValue(), typeConverters));
+                builder.put(entry.getKey(), typeConverter.convert(entry.getValue(), index + 1, converters));
             }
         }
         return builder.build();
