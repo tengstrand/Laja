@@ -151,9 +151,9 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 
 #end
 
-#macro valueHashCode()
+#macro hashCodeValue()
   #if (isEntity)
-    public int valueHashCode() {
+    public int hashCodeValue() {
     #hashCodeBody(attributes)
     }
 
@@ -212,9 +212,9 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 
 #end
 
-#macro valueEquals()
+#macro equalsValue()
   #if (isEntity)
-    public boolean valueEquals(Object that) {
+    public boolean equalsValue(Object that) {
     #equalsBody(attributes)
     }
 
@@ -267,7 +267,7 @@ public class {classname} implements ImmutableState {
   #asMutable()
   #hashCode()
   #equals()
-  #valueHashCode()
-  #valueEquals()
+  #hashCodeValue()
+  #equalsValue()
 }
 #end

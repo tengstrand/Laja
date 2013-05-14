@@ -127,7 +127,7 @@ public class PersonState implements ImmutableState {
         return true;
     }
 
-    public int valueHashCode() {
+    public int hashCodeValue() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
@@ -139,7 +139,7 @@ public class PersonState implements ImmutableState {
         return result;
     }
 
-    public boolean valueEquals(Object that) {
+    public boolean equalsValue(Object that) {
         if (this == that) return true;
         if (that == null || getClass() != that.getClass()) return false;
 
