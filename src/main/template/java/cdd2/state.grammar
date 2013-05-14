@@ -25,11 +25,6 @@ grammar state {
    type = name  [collectionType | mapType];
    attribute = s annotations keywords s type ws name:variable s ";" [!newline+] newline;
 
-   uname = "A".."Z" [letter | digit]+;
-   getter = "get" uname s "(" s ")";
-
-   body = "{" s [(body | str | !"}")+]:innerStatement "}";
-
    manualEnd = ("}" s END);
    generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *;
    manualCode = !(manualEnd | generatedEnd)+;
