@@ -18,7 +18,7 @@ public class Type implements StateParser.IType {
     }
 
     public boolean isState() {
-        return name.endsWith("State");
+        return !isCollection() && !isMap() && name.endsWith("State");
     }
 
     public boolean isCollection() {
@@ -35,6 +35,10 @@ public class Type implements StateParser.IType {
 
     public boolean isMap() {
         return mapType != null;
+    }
+
+    public boolean isString() {
+        return !isCollection() && !isMap() && name.equals("String");
     }
 
     public boolean isPrimitive() {

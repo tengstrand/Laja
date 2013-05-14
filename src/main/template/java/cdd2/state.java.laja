@@ -19,13 +19,13 @@
 
 #macro attributes()
   #foreach (attribute in attributes)
-    {attribute.annotationsContent}public final {attribute.typeContent} {attribute.variable};
+    {attribute.annotationsContent}public final {attribute.typeContent} {attribute.name};
   #end
 #end
 
 #macro constants()
   #foreach (attribute in attributes)
-    public static final String {attributeConverter.toConstant(attribute.variable)} = "{attribute.variable}";
+    public static final String {attributeConverter.toConstant(attribute.name)} = "{attribute.name}";
   #end
 
 #end
@@ -37,13 +37,13 @@
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-            {attribute.typeContent} {attribute.variable},
+            {attribute.typeContent} {attribute.name},
     #else
-            {attribute.typeContent} {attribute.variable}) {
+            {attribute.typeContent} {attribute.name}) {
     #end
   #end
   #foreach (attribute in attributes)
-        this.{attribute.variable} = {attribute.variable};
+        this.{attribute.name} = {attribute.name};
   #end
     }
 
@@ -62,11 +62,11 @@
   #set (parameterList = "")
   #set (delimiter = "")
   #foreach (attribute in attributes)
-    #set (parameterList = "{parameterList}{delimiter}{attribute.variable}")
+    #set (parameterList = "{parameterList}{delimiter}{attribute.name}")
     #set (delimiter = ", ")
   #end
   #foreach (attribute in attributes)
-    public {classname} with{attribute.variableAsClass}({attribute.typeContent} {attribute.variable}) { return new {classname}({parameterList}); }
+    public {classname} with{attribute.nameAsClass}({attribute.typeContent} {attribute.name}) { return new {classname}({parameterList}); }
   #end
 
 #end
@@ -85,15 +85,15 @@
 
 #macro mutableStateAttribute()
   #if (attribute.type.isMap)
-asMutableMap({attribute.variable}{mutableConverters(attribute.type.mapType.entry)})##
+asMutableMap({attribute.name}{mutableConverters(attribute.type.mapType.entry)})##
   #else if (attribute.type.isList)
-asMutableList({attribute.variable}{mutableConverters(attribute.type.collectionType.type)})##
+asMutableList({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isSet)
-asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionType.type)})##
+asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isState)
-{attribute.variable}.asMutable()##
+{attribute.name}.asMutable()##
   #else
-{attribute.variable}##
+{attribute.name}##
   #end
 #end
 
@@ -170,27 +170,27 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
     #foreach (attribute in attributes)
       #if (first)
         #if (intTypes.contains(attribute.type))
-        int result = {attribute.variable};
+        int result = {attribute.name};
         #else if (castTypes.contains(attribute.type))
-        int result = (int){attribute.variable};
+        int result = (int){attribute.name};
         #else if (attribute.type == "long")
-        int result = (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
+        int result = (int)({attribute.name} ^ ({attribute.name} >>> 32));
         #else if (attribute.type == "boolean")
-        int result = {attribute.variable} ? 1 : 0;
+        int result = {attribute.name} ? 1 : 0;
         #else
-        int result = {attribute.variable} != null ? {attribute.variable}.hashCode() : 0;
+        int result = {attribute.name} != null ? {attribute.name}.hashCode() : 0;
         #end
       #else
         #if (intTypes.contains(attribute.type))
-        result = 31 * result + {attribute.variable};
+        result = 31 * result + {attribute.name};
         #else if (castTypes.contains(attribute.type))
-        result = 31 * result + (int){attribute.variable};
+        result = 31 * result + (int){attribute.name};
         #else if (attribute.type == "long")
-        result = 31 * result + (int)({attribute.variable} ^ ({attribute.variable} >>> 32));
+        result = 31 * result + (int)({attribute.name} ^ ({attribute.name} >>> 32));
         #else if (attribute.type == "boolean")
-        result = 31 * result + ({attribute.variable} ? 1 : 0);
+        result = 31 * result + ({attribute.name} ? 1 : 0);
         #else
-        result = 31 * result + ({attribute.variable} != null ? {attribute.variable}.hashCode() : 0);
+        result = 31 * result + ({attribute.name} != null ? {attribute.name}.hashCode() : 0);
         #end
       #end
       #set (first = false)
@@ -232,9 +232,9 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
 
     #foreach (attribute in attributes)
       #if (attribute.isPrimitive)
-        if ({attribute.variable} != state.{attribute.variable) return false;
+        if ({attribute.name} != state.{attribute.name) return false;
       #else
-        if ({attribute.variable} != null ? !{attribute.variable}.equals(state.{attribute.variable}) : state.{attribute.variable} != null) return false;
+        if ({attribute.name} != null ? !{attribute.name}.equals(state.{attribute.name}) : state.{attribute.name} != null) return false;
       #end
     #end
 
@@ -242,8 +242,49 @@ asMutableSet({attribute.variable}{mutableConverters(attribute.type.collectionTyp
   #end
 #end
 
+#macro toString()
 
-
+    @Override
+    public String toString() {
+  #set (iterator = attributes.iterator())
+  #set (hasNext = iterator.hasNext)
+  #set (first = true)
+  #if (hasNext)
+    #set (attribute = iterator.next)
+  #end
+  #while (hasNext)
+    #set (hasNext = iterator.hasNext)
+    #set (value = attribute.name)
+    #if (hasNext)
+      #if (first)
+        #if (attribute.isString)
+        return "{{attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+        #else
+        return "{{attribute.name}=" + {value} +
+        #end
+      #else
+        #if (attribute.isString)
+                ", {attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+        #else
+                ", {attribute.name}=" + {value} +
+        #end
+      #end
+      #set (attribute = iterator.next)
+    #else
+      #if (first)
+        return "{{attribute.name}=" + {value} + "}";
+      #else
+        #if (attribute.isString)
+                ", {attribute.name}='" + {value} + '\'' + "}";
+        #else
+                ", {attribute.name}=" + {value} + "}";
+        #end
+      #end
+    #end
+    #set (first = false)
+  #end
+    }
+#end
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
 package {packagename};
@@ -269,5 +310,6 @@ public class {classname} implements ImmutableState {
   #equals()
   #hashCodeValue()
   #equalsValue()
+  #toString()
 }
 #end

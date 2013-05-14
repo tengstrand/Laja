@@ -5,8 +5,8 @@ import org.apache.commons.lang.StringUtils;
 public class Attribute implements StateParser.IAttribute {
     public Type type;
     public String typeContent;
-    public String variable;
-    public String variableAsClass;
+    public String name;
+    public String nameAsClass;
     public Annotations annotations;
 
     public void setAnnotations(StateParser.IAnnotations iannotations) {
@@ -18,8 +18,8 @@ public class Attribute implements StateParser.IAttribute {
     }
 
     public void setVariable(String variable) {
-        this.variable = variable;
-        variableAsClass = StringUtils.capitalize(variable);
+        name = variable;
+        nameAsClass = StringUtils.capitalize(variable);
     }
 
     public void setTypeContent(String typeContent) {
@@ -40,6 +40,10 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isMap() {
         return type.isMap();
+    }
+
+    public boolean isString() {
+        return type.isString();
     }
 
     public boolean isId() {
@@ -63,8 +67,8 @@ public class Attribute implements StateParser.IAttribute {
         return "Attribute{" +
                 "type='" + type + '\'' +
                 ", typeContent='" + typeContent + '\'' +
-                ", variable='" + variable + '\'' +
-                ", variableAsClass='" + variableAsClass + '\'' +
+                ", name='" + name + '\'' +
+                ", nameAsClass='" + nameAsClass + '\'' +
                 ", annotations=" + annotations +
                 '}';
     }
