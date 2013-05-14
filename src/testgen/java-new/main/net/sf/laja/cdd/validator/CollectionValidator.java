@@ -10,8 +10,8 @@ import static net.sf.laja.cdd.ValidationErrors.concatenate;
 public class CollectionValidator implements CoreValidator {
 
     public void validate(Object rootElement, Object elements, String parent, String attribute, ValidationErrors.Builder errors,
-                         Validator[] customValidators, int validatorIndex, CoreValidator... validators) {
-        if (validators.length == 0) {
+                         Validator[] customValidators, int index, CoreValidator... validators) {
+        if (index == validators.length) {
             String newParent = concatenate(parent, attribute);
 
             for (Object element : (Collection)elements) {
@@ -26,7 +26,7 @@ public class CollectionValidator implements CoreValidator {
         } else {
             for (Object element : (Collection)elements) {
                 validators[0].validate(rootElement == null ? element : rootElement, element, parent, attribute, errors,
-                        customValidators, validatorIndex + 1);
+                        customValidators, index + 1, validators);
             }
         }
     }

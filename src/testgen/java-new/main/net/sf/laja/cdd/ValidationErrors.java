@@ -134,7 +134,6 @@
         public int hashCode() {
             int result = attribute != null ? attribute.hashCode() : 0;
             result = 31 * result + (errorType != null ? errorType.hashCode() : 0);
-            result = 31 * result + (element != null ? element.hashCode() : 0);
             return result;
         }
 
@@ -146,7 +145,6 @@
             ValidationError that = (ValidationError) o;
 
             if (attribute != null ? !attribute.equals(that.attribute) : that.attribute != null) return false;
-            if (element != null ? !element.equals(that.element) : that.element != null) return false;
             if (errorType != null ? !errorType.equals(that.errorType) : that.errorType != null) return false;
 
             return true;
@@ -157,7 +155,6 @@
             return "ValidationError{" +
                     "attribute='" + attribute + '\'' +
                     ", errorType='" + errorType + '\'' +
-                    ", element=" + element +
                     '}';
         }
     }
