@@ -22,7 +22,7 @@ grammar state {
    keywords = ["public "|"private "|"final " s]+;
    collectionType = s "<" s type s ">";
    mapType = s "<" s type:key s "," s type:entry s ">";
-   type = name  [collectionType | mapType];
+   type = name [collectionType | mapType];
    attribute = s annotations keywords s type ws name:variable s ";" [!newline+] newline;
 
    manualEnd = ("}" s END);
