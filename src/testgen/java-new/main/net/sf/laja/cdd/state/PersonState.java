@@ -111,6 +111,24 @@ public class PersonState implements ImmutableState {
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
+
+        PersonState state = (PersonState)that;
+
+        if (name != null ? !name.equals(state.name) : state.name != null) return false;
+
+        return true;
+    }
+
+    public int valueHashCode() {
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
@@ -121,20 +139,19 @@ public class PersonState implements ImmutableState {
         return result;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean valueEquals(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
 
-        PersonState that = (PersonState) o;
+        PersonState state = (PersonState)that;
 
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (children != null ? !children.equals(that.children) : that.children != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-        if (oldAddresses != null ? !oldAddresses.equals(that.oldAddresses) : that.oldAddresses != null) return false;
-        if (groupedAddresses != null ? !groupedAddresses.equals(that.groupedAddresses) : that.groupedAddresses != null) return false;
-        if (listOfSetOfMapOfIntegers != null ? !listOfSetOfMapOfIntegers.equals(that.listOfSetOfMapOfIntegers) : that.listOfSetOfMapOfIntegers != null) return false;
+        if (name != null ? !name.equals(state.name) : state.name != null) return false;
+        if (birthday != null ? !birthday.equals(state.birthday) : state.birthday != null) return false;
+        if (children != null ? !children.equals(state.children) : state.children != null) return false;
+        if (address != null ? !address.equals(state.address) : state.address != null) return false;
+        if (oldAddresses != null ? !oldAddresses.equals(state.oldAddresses) : state.oldAddresses != null) return false;
+        if (groupedAddresses != null ? !groupedAddresses.equals(state.groupedAddresses) : state.groupedAddresses != null) return false;
+        if (listOfSetOfMapOfIntegers != null ? !listOfSetOfMapOfIntegers.equals(state.listOfSetOfMapOfIntegers) : state.listOfSetOfMapOfIntegers != null) return false;
 
         return true;
     }
