@@ -2,6 +2,7 @@ package net.sf.laja.parser.cdd.state;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class State implements StateParser.IState {
@@ -15,6 +16,14 @@ public class State implements StateParser.IState {
     public String generatedText;
 
     public boolean isEntity;
+
+    public List<Attribute> mutableAttributes() {
+        List<Attribute> result = new ArrayList<Attribute>();
+        for (Attribute attribute : attributes) {
+            result.add(attribute.asMutable());
+        }
+        return result;
+    }
 
     public void setPackagename(String packagename) {
         this.packagename = packagename;

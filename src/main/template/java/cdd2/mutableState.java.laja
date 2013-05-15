@@ -1,0 +1,7 @@
+
+#macro mutableState()
+
+    public static class {mutableClass} implements MutableState {
+#attributes("        ")
+    }
+#end

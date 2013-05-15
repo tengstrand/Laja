@@ -8,9 +8,28 @@ public class Attribute implements StateParser.IAttribute {
     public String name;
     public String nameAsClass;
     public Annotations annotations;
+    public String annotationsContent;
+
+    public Attribute asMutable() {
+        Attribute result = new Attribute();
+        result.type = type.asMutable();
+        result.typeContent = type.asMutable().asString();
+        result.name = name;
+        result.nameAsClass = nameAsClass;
+        result.annotations = annotations;
+
+        if (annotationsContent.contains("\n")) {
+            result.annotationsContent = annotationsContent + "    ";
+        } else {
+            result.annotationsContent = annotationsContent;
+        }
+
+        return result;
+    }
 
     public void setAnnotations(StateParser.IAnnotations iannotations) {
         annotations = (Annotations)iannotations;
+        annotationsContent = annotations.content;
     }
 
     public void setType(StateParser.IType itype) {
@@ -24,10 +43,6 @@ public class Attribute implements StateParser.IAttribute {
 
     public void setTypeContent(String typeContent) {
         this.typeContent = typeContent;
-    }
-
-    public String getAnnotationsContent() {
-        return annotations.content;
     }
 
     public boolean isPrimitive() {

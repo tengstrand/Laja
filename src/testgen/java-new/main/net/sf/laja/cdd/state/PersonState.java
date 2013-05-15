@@ -30,8 +30,7 @@ import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
 @State
 public class PersonState implements ImmutableState {
-    @Key
-    public final String name;
+    @Key public final String name;
     @Id
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
@@ -170,11 +169,14 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonMutableState implements MutableState {
-        public String name;
+        @Key public String name;
+        @Id
         public DateMidnight birthday;
         public List<PersonMutableState> children;
         public AddressMutableState address;
+        @Optional
         public Set<AddressMutableState> oldAddresses;
+        @Optional
         public Map<String, AddressMutableState> groupedAddresses;
         public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
 

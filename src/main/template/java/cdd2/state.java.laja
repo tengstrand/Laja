@@ -17,9 +17,9 @@
   #end
 #end
 
-#macro attributes()
+#macro attributes(tab)
   #foreach (attribute in attributes)
-    {attribute.annotationsContent}public final {attribute.typeContent} {attribute.name};
+{tab}{attribute.annotationsContent}public final {attribute.typeContent} {attribute.name};
   #end
 #end
 
@@ -286,13 +286,15 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     }
 #end
 
+#import "{.}/mutableState.java.laja"
+
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
 package {packagename};
 
   #imports()
 @State
 public class {classname} implements ImmutableState {
-  #attributes()##
+  #attributes("    ")##
   #if (generatedText != null)
 {manualCode}##
 {generatedText}
@@ -311,5 +313,7 @@ public class {classname} implements ImmutableState {
   #hashCodeValue()
   #equalsValue()
   #toString()
+  #set (attributes = state.mutableAttributes)
+  #mutableState()
 }
 #end
