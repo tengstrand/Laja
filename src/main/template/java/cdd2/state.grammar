@@ -56,7 +56,6 @@ grammar state {
    Attribute attribute.setAnnotations(Annotations annotations);
    attribute.setType(Type type);
    attribute.setVariable(String variable);
-   attribute.setTypeContent(String type.*);
 
    ClassStatement classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);

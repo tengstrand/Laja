@@ -4,7 +4,6 @@ import org.apache.commons.lang.StringUtils;
 
 public class Attribute implements StateParser.IAttribute {
     public Type type;
-    public String typeContent;
     public String name;
     public String nameAsClass;
     public Annotations annotations;
@@ -13,7 +12,6 @@ public class Attribute implements StateParser.IAttribute {
     public Attribute asMutable() {
         Attribute result = new Attribute();
         result.type = type.asMutable();
-        result.typeContent = type.asMutable().asString();
         result.name = name;
         result.nameAsClass = nameAsClass;
         result.annotations = annotations;
@@ -33,16 +31,12 @@ public class Attribute implements StateParser.IAttribute {
     }
 
     public void setType(StateParser.IType itype) {
-        type = (Type)itype;
+        type = ((Type)itype).asImmutable();
     }
 
     public void setVariable(String variable) {
         name = variable;
         nameAsClass = StringUtils.capitalize(variable);
-    }
-
-    public void setTypeContent(String typeContent) {
-        this.typeContent = typeContent;
     }
 
     public boolean isPrimitive() {
@@ -81,7 +75,6 @@ public class Attribute implements StateParser.IAttribute {
     public String toString() {
         return "Attribute{" +
                 "type='" + type + '\'' +
-                ", typeContent='" + typeContent + '\'' +
                 ", name='" + name + '\'' +
                 ", nameAsClass='" + nameAsClass + '\'' +
                 ", annotations=" + annotations +

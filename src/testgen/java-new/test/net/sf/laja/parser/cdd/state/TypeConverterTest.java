@@ -16,26 +16,26 @@ public class TypeConverterTest {
 
     @Test
     public void convertString() {
-        assertThat(converter.convert("String"), equalTo("String"));
+        assertThat(converter.asMutable("String"), equalTo("String"));
     }
 
     @Test
     public void convertState() {
-        assertThat(converter.convert("AddressState"), equalTo("AddressMutableState"));
+        assertThat(converter.asMutable("AddressState"), equalTo("AddressMutableState"));
     }
 
     @Test
     public void convertImmutableSet() {
-        assertThat(converter.convert("ImmutableSet"), equalTo("Set"));
+        assertThat(converter.asMutable("ImmutableSet"), equalTo("Set"));
     }
 
     @Test
     public void convertImmutableList() {
-        assertThat(converter.convert("ImmutableList"), equalTo("List"));
+        assertThat(converter.asMutable("ImmutableList"), equalTo("List"));
     }
 
     @Test
     public void convertImmutableMap() {
-        assertThat(converter.convert("ImmutableMap"), equalTo("Map"));
+        assertThat(converter.asMutable("ImmutableMap"), equalTo("Map"));
     }
 }

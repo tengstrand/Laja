@@ -19,7 +19,7 @@
 
 #macro attributes(tab)
   #foreach (attribute in attributes)
-{tab}{attribute.annotationsContent}public final {attribute.typeContent} {attribute.name};
+{tab}{attribute.annotationsContent}public final {attribute.type} {attribute.name};
   #end
 #end
 
@@ -37,9 +37,9 @@
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-            {attribute.typeContent} {attribute.name},
+            {attribute.type} {attribute.name},
     #else
-            {attribute.typeContent} {attribute.name}) {
+            {attribute.type} {attribute.name}) {
     #end
   #end
   #foreach (attribute in attributes)
@@ -66,7 +66,7 @@
     #set (delimiter = ", ")
   #end
   #foreach (attribute in attributes)
-    public {classname} with{attribute.nameAsClass}({attribute.typeContent} {attribute.name}) { return new {classname}({parameterList}); }
+    public {classname} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { return new {classname}({parameterList}); }
   #end
 
 #end
@@ -98,7 +98,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 #end
 
 #macro asMutable()
-    public {mutableClass} asMutableState() {
+    public {mutableClass} asMutable() {
         return new {mutableClass}(
   #set (iterator = attributes.iterator)
   #while (iterator.hasNext)

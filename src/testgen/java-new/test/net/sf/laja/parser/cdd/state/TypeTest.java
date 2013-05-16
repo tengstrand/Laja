@@ -11,14 +11,30 @@ public class TypeTest {
     public void asString() {
         Type type = type("ImmutableMap", null, map("String", "AddressState", null, null));
 
-        assertThat(type.asString(), equalTo("ImmutableMap<String,AddressState>"));
+        assertThat(type.toString(), equalTo("ImmutableMap<String,AddressState>"));
     }
 
     @Test
     public void asMutable() {
         Type type = type("ImmutableMap", null, map("String", "AddressState", null, null));
 
-        assertThat(type.asMutable().asString(), equalTo("Map<String,AddressMutableState>"));
+        assertThat(type.asMutable().toString(), equalTo("Map<String,AddressMutableState>"));
+    }
+
+    @Test
+    public void asImmutable() {
+        // List<Set<Map<String,Integer>>>
+        Type type = type("List",
+                         collection(
+                            "Set",
+                            collection(
+                                "Map",
+                                null,
+                                map("String", "Integer", null, null)), null
+                            ), null
+                         );
+
+        assertThat(type.asImmutable().toString(), equalTo("ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>>"));
     }
 
     private Type string(String name) {

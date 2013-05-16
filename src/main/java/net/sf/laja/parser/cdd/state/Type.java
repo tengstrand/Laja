@@ -49,7 +49,7 @@ public class Type implements StateParser.IType {
 
     public Type asMutable() {
         Type result = new Type();
-        result.setName(typeConverter.convert(name));
+        result.setName(typeConverter.asMutable(name));
         CollectionType ctype = null;
         if (collectionType != null) {
             ctype = new CollectionType();
@@ -67,22 +67,34 @@ public class Type implements StateParser.IType {
         return result;
     }
 
-    public String asString() {
+    public Type asImmutable() {
+        Type result = new Type();
+        result.setName(typeConverter.asImmutable(name));
+        CollectionType ctype = null;
         if (collectionType != null) {
-            return name + "<" + collectionType.type.asString() + ">";
+            ctype = new CollectionType();
+            ctype.setType(collectionType.type.asImmutable());
         }
+        MapType mtype = null;
         if (mapType != null) {
-            return name + "<" + mapType.key.asString() + "," + mapType.entry.asString() + ">";
+            mtype = new MapType();
+            mtype.setKey(mapType.key.asMutable());
+            mtype.setEntry(mapType.entry.asImmutable());
         }
-        return name;
+        result.setCollectionType(ctype);
+        result.setMapType(mtype);
+
+        return result;
     }
 
     @Override
     public String toString() {
-        return "Type{" +
-                "name='" + name + '\'' +
-                ", collectionType=" + collectionType +
-                ", mapType=" + mapType +
-                '}';
+        if (collectionType != null) {
+            return name + "<" + collectionType.type + ">";
+        }
+        if (mapType != null) {
+            return name + "<" + mapType.key + "," + mapType.entry + ">";
+        }
+        return name;
     }
 }
