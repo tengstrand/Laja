@@ -17,9 +17,9 @@
   #end
 #end
 
-#macro attributes(tab)
+#macro attributes(tab, final)
   #foreach (attribute in attributes)
-{tab}{attribute.annotationsContent}public final {attribute.type} {attribute.name};
+{tab}{attribute.annotationsContent}public {final}{attribute.type} {attribute.name};
   #end
 #end
 
@@ -29,9 +29,9 @@
   #end
 #end
 
-#macro constructor(tab)
+#macro constructor(constructorClass, tab)
 
-{tab}public {classname}(
+{tab}public {constructorClass}(
   #set (iterator = attributes.iterator)
   #set (space = " ")
   #while (iterator.hasNext)
@@ -46,19 +46,19 @@
 {tab}    this.{attribute.name} = {attribute.name};
   #end
 {tab}}
-
 #end
 
 #macro exception()
+
     public static class IllegalPersonStateException extends InvalidStateException {
         public IllegalPersonStateException(ValidationErrors errors) {
             super(errors);
         }
     }
-
 #end
 
 #macro withMethods()
+
   #set (parameterList = "")
   #set (delimiter = "")
   #foreach (attribute in attributes)
@@ -68,7 +68,6 @@
   #foreach (attribute in attributes)
     public {classname} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { return new {classname}({parameterList}); }
   #end
-
 #end
 
 #macro mutableConverters(type)
@@ -98,6 +97,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 #end
 
 #macro asMutable()
+
     public {mutableClass} asMutable() {
         return new {mutableClass}(
   #set (iterator = attributes.iterator)
@@ -110,7 +110,6 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #end
   #end
     }
-
 #end
 
 #function entityAttributes()
@@ -140,6 +139,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 #end
 
 #macro hashCode()
+
     @Override
     public int hashCode() {
   #if (isEntity)
@@ -148,15 +148,14 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #hashCodeBody(attributes)
   #end
     }
-
 #end
 
 #macro hashCodeValue()
   #if (isEntity)
+
     public int hashCodeValue() {
     #hashCodeBody(attributes)
     }
-
   #end
 #end
 
@@ -201,6 +200,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 #end
 
 #macro equals()
+
     @Override
     public boolean equals(Object that) {
   #if (isEntity)
@@ -209,15 +209,14 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #equalsBody(attributes)
   #end
     }
-
 #end
 
 #macro equalsValue()
   #if (isEntity)
+
     public boolean equalsValue(Object that) {
     #equalsBody(attributes)
     }
-
   #end
 #end
 
@@ -294,7 +293,7 @@ package {packagename};
   #imports()
 @State
 public class {classname} implements ImmutableState {
-  #attributes("    ")##
+  #attributes("    ", "final ")##
   #if (generatedText != null)
 {manualCode}##
 {generatedText}
@@ -304,7 +303,7 @@ public class {classname} implements ImmutableState {
   #end
 
   #constants()
-  #constructor("    ")
+  #constructor("{classname}", "    ")
   #exception()
   #withMethods()
   #asMutable()

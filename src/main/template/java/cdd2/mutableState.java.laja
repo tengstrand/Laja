@@ -7,12 +7,28 @@
         }
 #end
 
+#macro getters()
+
+  #foreach (attribute in attributes)
+        public {attribute.type} get{attribute.nameAsClass}() { return {attribute.name}; }
+  #end
+#end
+
+#macro setters()
+
+  #foreach (attribute in attributes)
+        public void set{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; }
+  #end
+#end
+
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
     public static class {mutableClass} implements MutableState {
-  #attributes("        ")
+  #attributes("        ", "")
   #emptyConstructor()
-  #constructor("        ")
+  #constructor("{mutableClass}", "        ")
+  #getters()
+  #setters()
     }
 #end

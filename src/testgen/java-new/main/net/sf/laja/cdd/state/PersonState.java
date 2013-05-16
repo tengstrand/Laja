@@ -188,8 +188,7 @@ public class PersonState implements ImmutableState {
                 List<PersonMutableState> children,
                 AddressMutableState address,
                 Set<AddressMutableState> oldAddresses,
-                Map<String,
-                AddressMutableState> groupedAddresses,
+                Map<String,AddressMutableState> groupedAddresses,
                 List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
             this.name = name;
             this.birthday = birthday;
@@ -201,7 +200,7 @@ public class PersonState implements ImmutableState {
         }
 
         public String getName() { return name; }
-        public DateMidnight getBirthday() { return birthday;  }
+        public DateMidnight getBirthday() { return birthday; }
         public List<PersonMutableState> getChildren() { return children; }
         public AddressMutableState getAddress() { return address; }
         public Set<AddressMutableState> getOldAddresses() { return oldAddresses; }
