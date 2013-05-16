@@ -21,6 +21,17 @@
   #end
 #end
 
+#macro assertIsValid()
+
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
+
+            if (errors.hasErrors()) {
+                throw new {stateException}(errors);
+            }
+        }
+#end
+
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
@@ -30,5 +41,6 @@
   #constructor("{mutableClass}", "        ")
   #getters()
   #setters()
+  #assertIsValid()
     }
 #end

@@ -8,6 +8,7 @@
 #set (manualCode = state.manualCode)
 #set (generatedText = state.generatedText)
 #set (isEntity = state.isEntity)
+#set (stateException = "Illegal{classname}Exception")
 
 #set (attributeConverter = new net.sf.laja.parser.cdd.AttributeToConstantConverter())
 
@@ -50,8 +51,8 @@
 
 #macro exception()
 
-    public static class IllegalPersonStateException extends InvalidStateException {
-        public IllegalPersonStateException(ValidationErrors errors) {
+    public static class {stateException} extends InvalidStateException {
+        public {stateException}(ValidationErrors errors) {
             super(errors);
         }
     }
