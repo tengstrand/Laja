@@ -27,25 +27,25 @@
   #foreach (attribute in attributes)
     public static final String {attributeConverter.toConstant(attribute.name)} = "{attribute.name}";
   #end
-
 #end
 
-#macro constructor()
-    public {classname}(
+#macro constructor(tab)
+
+{tab}public {classname}(
   #set (iterator = attributes.iterator)
   #set (space = " ")
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-            {attribute.type} {attribute.name},
+{tab}        {attribute.type} {attribute.name},
     #else
-            {attribute.type} {attribute.name}) {
+{tab}        {attribute.type} {attribute.name}) {
     #end
   #end
   #foreach (attribute in attributes)
-        this.{attribute.name} = {attribute.name};
+{tab}    this.{attribute.name} = {attribute.name};
   #end
-    }
+{tab}}
 
 #end
 
@@ -304,7 +304,7 @@ public class {classname} implements ImmutableState {
   #end
 
   #constants()
-  #constructor()
+  #constructor("    ")
   #exception()
   #withMethods()
   #asMutable()
@@ -313,7 +313,6 @@ public class {classname} implements ImmutableState {
   #hashCodeValue()
   #equalsValue()
   #toString()
-  #set (attributes = state.mutableAttributes)
-  #mutableState()
+  #$mutable.mutableState()
 }
 #end

@@ -182,9 +182,15 @@ public class PersonState implements ImmutableState {
             PersonState.setDefaults(this);
         }
 
-        public PersonMutableState(String name, DateMidnight birthday, List<PersonMutableState> children, AddressMutableState address,
-                                  Set<AddressMutableState> oldAddresses, Map<String, AddressMutableState> groupedAddresses,
-                                  List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
+        public PersonMutableState(
+                String name,
+                DateMidnight birthday,
+                List<PersonMutableState> children,
+                AddressMutableState address,
+                Set<AddressMutableState> oldAddresses,
+                Map<String,
+                AddressMutableState> groupedAddresses,
+                List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
             this.name = name;
             this.birthday = birthday;
             this.children = children;

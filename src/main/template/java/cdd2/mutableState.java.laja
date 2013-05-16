@@ -1,7 +1,18 @@
+#namespace mutable
+
+#macro emptyConstructor()
+
+        public {mutableClass}() {
+            {classname}.setDefaults(this);
+        }
+#end
 
 #macro mutableState()
+  #set ($.attributes = state.mutableAttributes)
 
     public static class {mutableClass} implements MutableState {
-#attributes("        ")
+  #attributes("        ")
+  #emptyConstructor()
+  #constructor("        ")
     }
 #end
