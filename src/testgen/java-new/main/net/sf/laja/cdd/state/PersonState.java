@@ -98,13 +98,13 @@ public class PersonState implements ImmutableState {
 
     public PersonMutableState asMutable() {
         return new PersonMutableState(
-                name,
-                birthday,
-                asMutableList(children, toMutable),
-                address.asMutable(),
-                asMutableSet(oldAddresses, toMutable),
-                asMutableMap(groupedAddresses, toMutable),
-                asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
+            name,
+            birthday,
+            asMutableList(children, toMutable),
+            address.asMutable(),
+            asMutableSet(oldAddresses, toMutable),
+            asMutableMap(groupedAddresses, toMutable),
+            asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
     }
 
     @Override
@@ -175,7 +175,7 @@ public class PersonState implements ImmutableState {
         @Optional
         public Set<AddressMutableState> oldAddresses;
         @Optional
-        public Map<String, AddressMutableState> groupedAddresses;
+        public Map<String,AddressMutableState> groupedAddresses;
         public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
 
         public PersonMutableState() {
@@ -204,7 +204,7 @@ public class PersonState implements ImmutableState {
         public List<PersonMutableState> getChildren() { return children; }
         public AddressMutableState getAddress() { return address; }
         public Set<AddressMutableState> getOldAddresses() { return oldAddresses; }
-        public Map<String, AddressMutableState> getGroupedAddresses() { return groupedAddresses; }
+        public Map<String,AddressMutableState> getGroupedAddresses() { return groupedAddresses; }
         public List<Set<Map<String,Integer>>> getListOfSetOfMapOfIntegers() { return listOfSetOfMapOfIntegers; }
 
         public void setName(String name) { this.name = name; }
@@ -212,7 +212,7 @@ public class PersonState implements ImmutableState {
         public void setChildren(List<PersonMutableState> children) { this.children = children; }
         public void setAddress(AddressMutableState address) { this.address = address; }
         public void setOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; }
-        public void setGroupedAddresses(Map<String, AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
+        public void setGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
         public void assertIsValid() {

@@ -32,6 +32,13 @@
         }
 #end
 
+#macro isValid()
+
+        public boolean isValid() {
+            return validate().isEmpty();
+        }
+#end
+
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
@@ -42,5 +49,6 @@
   #getters()
   #setters()
   #assertIsValid()
+  #isValid()
     }
 #end
