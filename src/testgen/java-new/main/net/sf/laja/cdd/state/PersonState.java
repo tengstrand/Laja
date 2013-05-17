@@ -253,18 +253,6 @@ public class PersonState implements ImmutableState {
             }
         }
 
-        @Override
-        public int hashCode() {
-            int result = name != null ? name.hashCode() : 0;
-            result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-            result = 31 * result + (children != null ? children.hashCode() : 0);
-            result = 31 * result + (address != null ? address.hashCode() : 0);
-            result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
-            result = 31 * result + (groupedAddresses != null ? groupedAddresses.hashCode() : 0);
-            result = 31 * result + (listOfSetOfMapOfIntegers != null ? listOfSetOfMapOfIntegers.hashCode() : 0);
-            return result;
-        }
-
         public PersonState asImmutable() {
             assertIsValid();
 
@@ -276,6 +264,13 @@ public class PersonState implements ImmutableState {
                     asImmutableSet(oldAddresses, toImmutable),
                     asImmutableMap(groupedAddresses, toImmutable),
                     asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
+        }
+
+        @Override
+        public int hashCode() {
+            int result = name != null ? name.hashCode() : 0;
+
+            return result;
         }
 
         @Override

@@ -141,30 +141,30 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #return keys
 #end
 
-#macro hashCode()
+#macro hashCode(tab)
 
-    @Override
-    public int hashCode() {
+{tab}@Override
+{tab}public int hashCode() {
   #if (isEntity)
-    #hashCodeBody(entityAttributes())
+    #hashCodeBody(entityAttributes(), tab)
   #else
-    #hashCodeBody(attributes)
+    #hashCodeBody(attributes, tab)
   #end
-    }
+{tab}}
 #end
 
-#macro hashCodeValue()
+#macro hashCodeValue(tab)
   #if (isEntity)
 
     public int hashCodeValue() {
-    #hashCodeBody(attributes)
+    #hashCodeBody(attributes, tab)
     }
   #end
 #end
 
-#macro hashCodeBody(attributes)
+#macro hashCodeBody(attributes, tab)
   #if (attributes.isEmpty)
-        return super.hashCode();
+{tab}    return super.hashCode();
   #else
     #set (first = true)
     #set (intTypes = ["byte", "char", "short", "int"])
@@ -172,33 +172,33 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #foreach (attribute in attributes)
       #if (first)
         #if (intTypes.contains(attribute.type))
-        int result = {attribute.name};
+{tab}    int result = {attribute.name};
         #else if (castTypes.contains(attribute.type))
-        int result = (int){attribute.name};
+{tab}    int result = (int){attribute.name};
         #else if (attribute.type == "long")
-        int result = (int)({attribute.name} ^ ({attribute.name} >>> 32));
+{tab}    int result = (int)({attribute.name} ^ ({attribute.name} >>> 32));
         #else if (attribute.type == "boolean")
-        int result = {attribute.name} ? 1 : 0;
+{tab}    int result = {attribute.name} ? 1 : 0;
         #else
-        int result = {attribute.name} != null ? {attribute.name}.hashCode() : 0;
+{tab}    int result = {attribute.name} != null ? {attribute.name}.hashCode() : 0;
         #end
       #else
         #if (intTypes.contains(attribute.type))
-        result = 31 * result + {attribute.name};
+{tab}    result = 31 * result + {attribute.name};
         #else if (castTypes.contains(attribute.type))
-        result = 31 * result + (int){attribute.name};
+{tab}    result = 31 * result + (int){attribute.name};
         #else if (attribute.type == "long")
-        result = 31 * result + (int)({attribute.name} ^ ({attribute.name} >>> 32));
+{tab}    result = 31 * result + (int)({attribute.name} ^ ({attribute.name} >>> 32));
         #else if (attribute.type == "boolean")
-        result = 31 * result + ({attribute.name} ? 1 : 0);
+{tab}    result = 31 * result + ({attribute.name} ? 1 : 0);
         #else
-        result = 31 * result + ({attribute.name} != null ? {attribute.name}.hashCode() : 0);
+{tab}    result = 31 * result + ({attribute.name} != null ? {attribute.name}.hashCode() : 0);
         #end
       #end
       #set (first = false)
     #end
 
-        return result;
+{tab}    return result;
   #end
 #end
 
@@ -310,9 +310,9 @@ public class {classname} implements ImmutableState {
   #exception()
   #withMethods()
   #asMutable()
-  #hashCode()
+  #hashCode("    ")
   #equals()
-  #hashCodeValue()
+  #hashCodeValue("    ")
   #equalsValue()
   #toString()
   #$mutable.mutableState()
