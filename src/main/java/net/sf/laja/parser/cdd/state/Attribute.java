@@ -43,6 +43,10 @@ public class Attribute implements StateParser.IAttribute {
         return type.isPrimitive();
     }
 
+    public boolean isState() {
+        return type.isState();
+    }
+
     public boolean isCollection() {
         return type.isCollection();
     }
@@ -61,6 +65,10 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isKey() {
         return annotations.isKey();
+    }
+
+    public boolean isMandatory() {
+        return !isOptional();
     }
 
     public boolean isOptional() {

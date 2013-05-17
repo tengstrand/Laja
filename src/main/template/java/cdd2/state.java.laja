@@ -9,6 +9,8 @@
 #set (generatedText = state.generatedText)
 #set (isEntity = state.isEntity)
 #set (stateException = "Illegal{classname}Exception")
+#set (hasMandatoryAttribute = state.hasMandatoryAttribute)
+#set (hasObjectAttribute = state.hasObjectAttribute)
 
 #set (attributeConverter = new net.sf.laja.parser.cdd.AttributeToConstantConverter())
 

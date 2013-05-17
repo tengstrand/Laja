@@ -49,6 +49,24 @@ public class State implements StateParser.IState {
         }
     }
 
+    public boolean hasMandatoryAttribute() {
+        for (Attribute attribute : attributes) {
+            if (attribute.isMandatory()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasObjectAttribute() {
+        for (Attribute attribute : attributes) {
+            if (!attribute.isPrimitive()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "State{" +

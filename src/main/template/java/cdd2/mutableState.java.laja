@@ -39,6 +39,44 @@
         }
 #end
 
+#macro rootValidate()
+
+        public ValidationErrors validate(Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(this, "", errors, validators);
+            return errors.build();
+        }
+#end
+
+#macro validate()
+
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+  #if (hasMandatoryAttribute)
+    #foreach (attribute in attributes where attribute.isMandatory)
+            if ({attribute.name} == null) { errors.addIsNullError(rootElement, parent, "{attribute.name}"); }
+    #end
+
+  #end
+  #if (hasObjectAttribute)
+    #foreach (attribute in attributes where !attribute.isPrimitive)
+      #if (attribute.isState)
+            address.validate(rootElement, concatenate(parent, "{attribute.name}"), errors);
+      #else if (attribute.isCollection)
+            collectionValidator().validate(rootElement, "{attribute.name}", parent, "{attribute.name}", errors, validators, 0);
+      #else if (attribute.isMap)
+            mapValidator().validate(rootElement, "{attribute.name}", parent, "{attribute.name}", errors, validators, 0);
+      #end
+    #end
+
+  #end
+            {classname}.validate(this, rootElement, parent, errors);
+
+            for (Validator validator : validators) {
+                validator.validate(rootElement, rootElement, parent, "", errors);
+            }
+        }
+#end
+
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
@@ -50,5 +88,7 @@
   #setters()
   #assertIsValid()
   #isValid()
+  #rootValidate()
+  #validate()
     }
 #end
