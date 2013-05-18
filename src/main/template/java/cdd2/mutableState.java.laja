@@ -125,9 +125,10 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #set ($.attributes = state.mutableAttributes)
 
     public static class {mutableClass} implements MutableState {
-  #attributes("        ", "")
+  #set (tab = "        ")
+  #attributes(tab, "")
   #emptyConstructor()
-  #constructor("{mutableClass}", "        ")
+  #constructor("{mutableClass}", tab)
   #getters()
   #setters()
   #assertIsValid()
@@ -135,7 +136,8 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #rootValidate()
   #validate()
   #asImmutable()
-  #hashCode("        ")
-  #equals(mutableClass, "        ")
+  #hashCode(tab)
+  #equals(mutableClass, tab)
+  #toString(tab)
     }
 #end

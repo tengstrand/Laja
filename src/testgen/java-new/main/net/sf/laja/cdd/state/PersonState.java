@@ -163,7 +163,7 @@ public class PersonState implements ImmutableState {
                 ", address=" + address +
                 ", oldAddresses=" + oldAddresses +
                 ", groupedAddresses=" + groupedAddresses +
-                ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + "}";
+                ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
     }
 
     public static class PersonMutableState implements MutableState {
@@ -287,15 +287,13 @@ public class PersonState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{" +
-                    "name='" + name + '\'' +
+            return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
                     ", birthday=" + birthday +
                     ", children=" + children +
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses +
                     ", groupedAddresses=" + groupedAddresses +
-                    ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers +
-                    '}';
+                    ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
         }
     }
 }

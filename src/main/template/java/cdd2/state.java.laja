@@ -244,10 +244,10 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #end
 #end
 
-#macro toString()
+#macro toString(tab)
 
-    @Override
-    public String toString() {
+{tab}@Override
+{tab}public String toString() {
   #set (iterator = attributes.iterator())
   #set (hasNext = iterator.hasNext)
   #set (first = true)
@@ -260,32 +260,32 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #if (hasNext)
       #if (first)
         #if (attribute.isString)
-        return "{{attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+{tab}    return "{{attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
         #else
-        return "{{attribute.name}=" + {value} +
+{tab}    return "{{attribute.name}=" + {value} +
         #end
       #else
         #if (attribute.isString)
-                ", {attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+{tab}            ", {attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
         #else
-                ", {attribute.name}=" + {value} +
+{tab}            ", {attribute.name}=" + {value} +
         #end
       #end
       #set (attribute = iterator.next)
     #else
       #if (first)
-        return "{{attribute.name}=" + {value} + "}";
+{tab}    return "{{attribute.name}=" + {value} + "}";
       #else
         #if (attribute.isString)
-                ", {attribute.name}='" + {value} + '\'' + "}";
+{tab}            ", {attribute.name}='" + {value} + "'}";
         #else
-                ", {attribute.name}=" + {value} + "}";
+{tab}            ", {attribute.name}=" + {value} + '}';
         #end
       #end
     #end
     #set (first = false)
   #end
-    }
+{tab}}
 #end
 
 #import "{.}/mutableState.java.laja"
@@ -305,16 +305,17 @@ public class {classname} implements ImmutableState {
     // ===== Generated code =====
   #end
 
+  #set (tab = "    ")
   #constants()
-  #constructor("{classname}", "    ")
+  #constructor("{classname}", tab)
   #exception()
   #withMethods()
   #asMutable()
-  #hashCode("    ")
-  #equals(classname, "    ")
-  #hashCodeValue("    ")
-  #equalsValue(classname, "    ")
-  #toString()
+  #hashCode(tab)
+  #equals(classname, tab)
+  #hashCodeValue(tab)
+  #equalsValue(classname, tab)
+  #toString(tab)
   #$mutable.mutableState()
 }
 #end
