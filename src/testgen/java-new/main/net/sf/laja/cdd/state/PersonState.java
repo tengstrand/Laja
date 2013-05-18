@@ -88,6 +88,14 @@ public class PersonState implements ImmutableState {
         }
     }
 
+    public String getName() { return name; }
+    public DateMidnight getBirthday() { return birthday; }
+    public ImmutableList<PersonState> getChildren() { return children; }
+    public AddressState getAddress() { return address; }
+    public ImmutableSet<AddressState> getOldAddresses() { return oldAddresses; }
+    public ImmutableMap<String,AddressState> getGroupedAddresses() { return groupedAddresses; }
+    public ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> getListOfSetOfMapOfIntegers() { return listOfSetOfMapOfIntegers; }
+
     public PersonState withName(String name) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withBirthday(DateMidnight birthday) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withChildren(ImmutableList<PersonState> children) { return new PersonState(name, birthday, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
@@ -249,7 +257,7 @@ public class PersonState implements ImmutableState {
             PersonState.validate(this, rootElement, parent, errors);
 
             for (Validator validator : validators) {
-                validator.validate(rootElement, rootElement, parent, "", errors);
+                validator.validate(rootElement, this, parent, "", errors);
             }
         }
 

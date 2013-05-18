@@ -47,6 +47,10 @@ public class Type implements StateParser.IType {
         return collectionType == null && mapType == null && net.sf.laja.parser.cdd.Type.isPrimitive(name);
     }
 
+    public boolean isLong() {
+        return isPrimitive() && name.equals("long");
+    }
+
     public Type asMutable() {
         Type result = new Type();
         result.setName(typeConverter.asMutable(name));

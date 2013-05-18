@@ -7,13 +7,6 @@
         }
 #end
 
-#macro getters()
-
-  #foreach (attribute in attributes)
-        public {attribute.type} get{attribute.nameAsClass}() { return {attribute.name}; }
-  #end
-#end
-
 #macro setters()
 
   #foreach (attribute in attributes)
@@ -48,16 +41,32 @@
         }
 #end
 
+#function hasMandatoryOrObject()
+  #foreach (attribute in attributes)
+    #if (attribute.isMandatory && !attribute.isPrimitive())
+      #return true
+    #end
+  #end
+  #return false
+#end
+
+#function hasStateOrCollectionOrMap()
+  #foreach (attribute in attributes where attribute.isState || attribute.isCollection || attribute.isMap)
+    #return true
+  #end
+  #return false
+#end
+
 #macro validate()
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-  #if (hasMandatoryAttribute)
-    #foreach (attribute in attributes where attribute.isMandatory)
+  #if (hasMandatoryOrObject())
+    #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
             if ({attribute.name} == null) { errors.addIsNullError(rootElement, parent, "{attribute.name}"); }
     #end
 
   #end
-  #if (hasObjectAttribute)
+  #if (hasStateOrCollectionOrMap())
     #foreach (attribute in attributes where !attribute.isPrimitive)
       #if (attribute.isState)
             address.validate(rootElement, concatenate(parent, "{attribute.name}"), errors);
@@ -72,7 +81,7 @@
             {classname}.validate(this, rootElement, parent, errors);
 
             for (Validator validator : validators) {
-                validator.validate(rootElement, rootElement, parent, "", errors);
+                validator.validate(rootElement, this, parent, "", errors);
             }
         }
 #end
@@ -129,7 +138,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #attributes(tab, "")
   #emptyConstructor()
   #constructor("{mutableClass}", tab)
-  #getters()
+  #getters(tab)
   #setters()
   #assertIsValid()
   #isValid()

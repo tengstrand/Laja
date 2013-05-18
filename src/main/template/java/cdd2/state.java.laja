@@ -9,8 +9,6 @@
 #set (generatedText = state.generatedText)
 #set (isEntity = state.isEntity)
 #set (stateException = "Illegal{classname}Exception")
-#set (hasMandatoryAttribute = state.hasMandatoryAttribute)
-#set (hasObjectAttribute = state.hasObjectAttribute)
 
 #set (attributeConverter = new net.sf.laja.parser.cdd.AttributeToConstantConverter())
 
@@ -58,6 +56,13 @@
             super(errors);
         }
     }
+#end
+
+#macro getters(tab)
+
+  #foreach (attribute in attributes)
+{tab}public {attribute.type} get{attribute.nameAsClass}() { return {attribute.name}; }
+  #end
 #end
 
 #macro withMethods()
@@ -171,25 +176,25 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #set (castTypes = ["float", "double"])
     #foreach (attribute in attributes)
       #if (first)
-        #if (intTypes.contains(attribute.type))
+        #if (intTypes.contains(attribute.type.name))
 {tab}    int result = {attribute.name};
-        #else if (castTypes.contains(attribute.type))
+        #else if (castTypes.contains(attribute.type.name))
 {tab}    int result = (int){attribute.name};
-        #else if (attribute.type == "long")
+        #else if (attribute.type.name == "long")
 {tab}    int result = (int)({attribute.name} ^ ({attribute.name} >>> 32));
-        #else if (attribute.type == "boolean")
+        #else if (attribute.type.name == "boolean")
 {tab}    int result = {attribute.name} ? 1 : 0;
         #else
 {tab}    int result = {attribute.name} != null ? {attribute.name}.hashCode() : 0;
         #end
       #else
-        #if (intTypes.contains(attribute.type))
+        #if (intTypes.contains(attribute.type.name))
 {tab}    result = 31 * result + {attribute.name};
-        #else if (castTypes.contains(attribute.type))
+        #else if (castTypes.contains(attribute.type.name))
 {tab}    result = 31 * result + (int){attribute.name};
-        #else if (attribute.type == "long")
+        #else if (attribute.type.name == "long")
 {tab}    result = 31 * result + (int)({attribute.name} ^ ({attribute.name} >>> 32));
-        #else if (attribute.type == "boolean")
+        #else if (attribute.type.name == "boolean")
 {tab}    result = 31 * result + ({attribute.name} ? 1 : 0);
         #else
 {tab}    result = 31 * result + ({attribute.name} != null ? {attribute.name}.hashCode() : 0);
@@ -234,7 +239,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
     #foreach (attribute in attributes)
       #if (attribute.isPrimitive)
-{tab}    if ({attribute.name} != state.{attribute.name) return false;
+{tab}    if ({attribute.name} != state.{attribute.name}) return false;
       #else
 {tab}    if ({attribute.name} != null ? !{attribute.name}.equals(state.{attribute.name}) : state.{attribute.name} != null) return false;
       #end
@@ -309,6 +314,7 @@ public class {classname} implements ImmutableState {
   #constants()
   #constructor("{classname}", tab)
   #exception()
+  #getters(tab)
   #withMethods()
   #asMutable()
   #hashCode(tab)
