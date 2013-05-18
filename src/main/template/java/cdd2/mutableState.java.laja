@@ -114,6 +114,23 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 
 #macro asImmutable()
 
+  #if (attributes.size == 1)
+    #singleAsImmutable()
+  #else
+    #multipleAsImmutable()
+  #end
+#end
+
+#macro singleAsImmutable()
+  #set (attribute = attributes.iterator.next)
+        public {classname} asImmutable() {
+            assertIsValid();
+
+            return new {classname}({immutableStateAttribute()});
+        }
+#end
+
+#macro multipleAsImmutable()
         public {classname} asImmutable() {
             assertIsValid();
 

@@ -32,6 +32,21 @@
 
 #macro constructor(constructorClass, tab)
 
+  #if (attributes.size == 1)
+    #singleConstructor(constructorClass, tab)
+  #else
+    #multiConstructor(constructorClass, tab)
+  #end
+#end
+
+#macro singleConstructor(constructorClass, tab)
+  #set (attribute = attributes.iterator.next)
+{tab}public {constructorClass}({attribute.type} {attribute.name}) {
+{tab}    this.{attribute.name} = {attribute.name};
+{tab}}
+#end
+
+#macro multiConstructor(constructorClass, tab)
 {tab}public {constructorClass}(
   #set (iterator = attributes.iterator)
   #set (space = " ")
@@ -106,6 +121,21 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #macro asMutable()
 
+  #if (attributes.size == 1)
+    #singleAsMutable()
+  #else
+    #multipleAsMutable()
+  #end
+#end
+
+#macro singleAsMutable()
+  #set (attribute = attributes.iterator.next)
+    public {mutableClass} asMutable() {
+        return new {mutableClass}({mutableStateAttribute()});
+    }
+#end
+
+#macro multipleAsMutable()
     public {mutableClass} asMutable() {
         return new {mutableClass}(
   #set (iterator = attributes.iterator)
@@ -297,7 +327,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #import "{.}/mutableState.java.laja"
 
-#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.txt"
+#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.txt"
 package {packagename};
 
   #imports()

@@ -1,4 +1,8 @@
 
+##set (stateName = "AddressState")
+#set (stateName = "PersonState")
+##set (stateName = "HairColorState")
+
 #macro lazyDefineCdd()
   #if ($laja.isCddImported == null)
     #set ($laja.isCddImported = true)
@@ -18,7 +22,7 @@
   #foreach (parameterMap in parameters)
     #$.putAll(parameterMap)
 
-    #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/PersonState.java"))
+    #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.java"))
 
     #import "{..}/../java/cdd2/state.java.laja"
   #end

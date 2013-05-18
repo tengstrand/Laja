@@ -7,15 +7,9 @@ import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 @State
 public class HairColorState implements ImmutableState {
-    private String color;
+    public final String color;
 
     private static void setDefaults(HairColorMutableState state) {
     }
@@ -39,57 +33,45 @@ public class HairColorState implements ImmutableState {
 
     public String getColor() { return color; }
 
+    public HairColorState withColor(String color) { return new HairColorState(color); }
+
     public HairColorMutableState asMutable() {
         return new HairColorMutableState(color);
     }
 
-    public HairColorState withColor(String color) { return new HairColorState(color); }
-
     @Override
     public int hashCode() {
-        return color != null ? color.hashCode() : 0;
+        int result = color != null ? color.hashCode() : 0;
+
+        return result;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HairColorState)) return false;
+    public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
 
-        HairColorState that = (HairColorState) o;
+        HairColorState state = (HairColorState)that;
 
-        if (color != null ? !color.equals(that.color) : that.color != null) return false;
+        if (color != null ? !color.equals(state.color) : state.color != null) return false;
 
         return true;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "color='" + color + '\'' +
-                '}';
+        return "{color=" + color + "}";
     }
 
     public static class HairColorMutableState implements MutableState {
         public String color;
 
         public HairColorMutableState() {
-            setDefaults(this);
+            HairColorState.setDefaults(this);
         }
 
         public HairColorMutableState(String color) {
             this.color = color;
-        }
-
-        public static HairColorMutableState hairColorMutableState() {
-            return new HairColorMutableState();
-        }
-
-        public static List<HairColorMutableState> hairColorMutableStateArrayList(HairColorMutableState... states) {
-            return new ArrayList<HairColorMutableState>(Arrays.asList(states));
-        }
-
-        public static Set<HairColorMutableState> hairColorMutableStateHashSet(HairColorMutableState... states) {
-            return new HashSet<HairColorMutableState>(Arrays.asList(states));
         }
 
         public String getColor() { return color; }
@@ -132,26 +114,26 @@ public class HairColorState implements ImmutableState {
 
         @Override
         public int hashCode() {
-            return color != null ? color.hashCode() : 0;
+            int result = color != null ? color.hashCode() : 0;
+
+            return result;
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof HairColorMutableState)) return false;
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
 
-            HairColorMutableState that = (HairColorMutableState) o;
+            HairColorMutableState state = (HairColorMutableState)that;
 
-            if (color != null ? !color.equals(that.color) : that.color != null) return false;
+            if (color != null ? !color.equals(state.color) : state.color != null) return false;
 
             return true;
         }
 
         @Override
         public String toString() {
-            return "{" +
-                    "color='" + color + '\'' +
-                    '}';
+            return "{color=" + color + "}";
         }
     }
 }
