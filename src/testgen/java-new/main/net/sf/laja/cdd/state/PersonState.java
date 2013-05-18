@@ -28,7 +28,7 @@ import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
-@State
+@State(version = 1)
 public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id

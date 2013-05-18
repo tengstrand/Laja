@@ -9,7 +9,7 @@ import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
-@State
+@State(version = 1)
 public class AddressState implements ImmutableState {
     @Id
     public final int id;

@@ -7,7 +7,7 @@ import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
-@State
+@State(version = 1)
 public class HairColorState implements ImmutableState {
     public final String color;
 
