@@ -77,6 +77,50 @@
         }
 #end
 
+#macro immutableConverters(type)
+  #if (type.isState)
+, toImmutable##
+  #else if (type.isMap)
+, toImmutableMap{immutableConverters(type.mapType.entry)}##
+  #else if (type.isList)
+, toImmutableList{immutableConverters(type.collectionType.type)}##
+  #else if (type.isSet)
+, toImmutableSet{immutableConverters(type.collectionType.type)}##
+  #end
+#end
+
+#macro immutableStateAttribute()
+  #if (attribute.type.isMap)
+asImmutableMap({attribute.name}{immutableConverters(attribute.type.mapType.entry)})##
+  #else if (attribute.type.isList)
+asImmutableList({attribute.name}{immutableConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isSet)
+asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isState)
+{attribute.name}.asImmutable()##
+  #else
+{attribute.name}##
+  #end
+#end
+
+#macro asImmutable()
+
+        public {classname} asImmutable() {
+            assertIsValid();
+
+            return new {classname}(
+  #set (iterator = attributes.iterator)
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+                {immutableStateAttribute()},
+    #else
+                {immutableStateAttribute()});
+    #end
+  #end
+        }
+#end
+
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
@@ -90,6 +134,7 @@
   #isValid()
   #rootValidate()
   #validate()
+  #asImmutable()
   #hashCode("        ")
     }
 #end

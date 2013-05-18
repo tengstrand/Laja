@@ -257,13 +257,13 @@ public class PersonState implements ImmutableState {
             assertIsValid();
 
             return new PersonState(
-                    name,
-                    birthday,
-                    asImmutableList(children, toImmutable),
-                    address.asImmutable(),
-                    asImmutableSet(oldAddresses, toImmutable),
-                    asImmutableMap(groupedAddresses, toImmutable),
-                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
+                name,
+                birthday,
+                asImmutableList(children, toImmutable),
+                address.asImmutable(),
+                asImmutableSet(oldAddresses, toImmutable),
+                asImmutableMap(groupedAddresses, toImmutable),
+                asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
         }
 
         @Override
