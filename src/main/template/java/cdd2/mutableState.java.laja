@@ -136,5 +136,6 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #validate()
   #asImmutable()
   #hashCode("        ")
+  #equals(mutableClass, "        ")
     }
 #end

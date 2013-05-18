@@ -274,20 +274,13 @@ public class PersonState implements ImmutableState {
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
 
-            PersonMutableState that = (PersonMutableState) o;
+            PersonMutableState state = (PersonMutableState)that;
 
-            if (address != null ? !address.equals(that.address) : that.address != null) return false;
-            if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-            if (children != null ? !children.equals(that.children) : that.children != null) return false;
-            if (groupedAddresses != null ? !groupedAddresses.equals(that.groupedAddresses) : that.groupedAddresses != null)
-                return false;
-            if (name != null ? !name.equals(that.name) : that.name != null) return false;
-            if (oldAddresses != null ? !oldAddresses.equals(that.oldAddresses) : that.oldAddresses != null)
-                return false;
+            if (name != null ? !name.equals(state.name) : state.name != null) return false;
 
             return true;
         }

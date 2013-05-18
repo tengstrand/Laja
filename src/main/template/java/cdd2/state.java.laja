@@ -202,45 +202,45 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #end
 #end
 
-#macro equals()
+#macro equals(stateclass, tab)
 
-    @Override
-    public boolean equals(Object that) {
+{tab}@Override
+{tab}public boolean equals(Object that) {
   #if (isEntity)
-    #equalsBody(entityAttributes())
+    #equalsBody(entityAttributes(), stateclass, tab)
   #else
-    #equalsBody(attributes)
+    #equalsBody(attributes, stateclass, tab)
   #end
-    }
+{tab}}
 #end
 
-#macro equalsValue()
+#macro equalsValue(stateclass, tab)
   #if (isEntity)
 
     public boolean equalsValue(Object that) {
-    #equalsBody(attributes)
+    #equalsBody(attributes, stateclass, tab)
     }
   #end
 #end
 
-#macro equalsBody(attributes)
+#macro equalsBody(attributes, stateclass, tab)
   #if (attributes.isEmpty)
-        return super.equals(that);
+{tab}    return super.equals(that);
   #else
-        if (this == that) return true;
-        if (that == null || getClass() != that.getClass()) return false;
+{tab}    if (this == that) return true;
+{tab}    if (that == null || getClass() != that.getClass()) return false;
 
-        {classname} state = ({classname})that;
+{tab}    {stateclass} state = ({stateclass})that;
 
     #foreach (attribute in attributes)
       #if (attribute.isPrimitive)
-        if ({attribute.name} != state.{attribute.name) return false;
+{tab}    if ({attribute.name} != state.{attribute.name) return false;
       #else
-        if ({attribute.name} != null ? !{attribute.name}.equals(state.{attribute.name}) : state.{attribute.name} != null) return false;
+{tab}    if ({attribute.name} != null ? !{attribute.name}.equals(state.{attribute.name}) : state.{attribute.name} != null) return false;
       #end
     #end
 
-        return true;
+{tab}    return true;
   #end
 #end
 
@@ -311,9 +311,9 @@ public class {classname} implements ImmutableState {
   #withMethods()
   #asMutable()
   #hashCode("    ")
-  #equals()
+  #equals(classname, "    ")
   #hashCodeValue("    ")
-  #equalsValue()
+  #equalsValue(classname, "    ")
   #toString()
   #$mutable.mutableState()
 }
