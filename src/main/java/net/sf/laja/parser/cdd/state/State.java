@@ -7,6 +7,7 @@ import java.util.List;
 
 public class State implements StateParser.IState {
     public String packagename;
+    public int version;
     public String classname;
     public String classvariable;
     public String mutableClass;
@@ -35,6 +36,7 @@ public class State implements StateParser.IState {
 
     public void setClassStatement(StateParser.IClassStatement iclassStatement) {
         ClassStatement classStatement = (ClassStatement)iclassStatement;
+        version = classStatement.version;
         classname = classStatement.classname;
         classvariable = StringUtils.uncapitalize(classname);
         mutableClass = StringUtils.left(classname, classname.length() - 5) + "MutableState";

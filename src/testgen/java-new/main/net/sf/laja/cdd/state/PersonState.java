@@ -174,6 +174,7 @@ public class PersonState implements ImmutableState {
                 ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
     }
 
+    @State(version = 1)
     public static class PersonMutableState implements MutableState {
         @Key public String name;
         @Id

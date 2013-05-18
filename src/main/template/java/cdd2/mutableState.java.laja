@@ -150,6 +150,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
+    @State(version = {version})
     public static class {mutableClass} implements MutableState {
   #set (tab = "        ")
   #attributes(tab, "")

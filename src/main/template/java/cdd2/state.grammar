@@ -29,7 +29,8 @@ grammar state {
    generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *;
    manualCode = !(manualEnd | generatedEnd)+;
 
-   classStatement = "@State" ws public "class" ws name:classname s ["extends" ws name s]
+   version = digit+;
+   classStatement = "@State(" s "version" s "=" s version s ")" ws public "class" ws name:classname s ["extends" ws name s]
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
                     manualEnd|generatedEnd *;
 
@@ -57,7 +58,8 @@ grammar state {
    attribute.setType(Type type);
    attribute.setVariable(String variable);
 
-   ClassStatement classStatement.setClassname(String classname);
+   ClassStatement classStatement.setVersion(String version);
+   classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);
    classStatement.setManualCode(String manualCode);
    classStatement.setGeneratedText(String generatedEnd.generatedText);

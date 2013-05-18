@@ -1,5 +1,6 @@
 
 #set (packagename = state.packagename)
+#set (version = state.version)
 #set (classname = state.classname)
 #set (classvariable = state.classvariable)
 #set (mutableClass = state.mutableClass)
@@ -331,7 +332,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 package {packagename};
 
   #imports()
-@State
+@State(version = {version})
 public class {classname} implements ImmutableState {
   #attributes("    ", "final ")##
   #if (generatedText != null)

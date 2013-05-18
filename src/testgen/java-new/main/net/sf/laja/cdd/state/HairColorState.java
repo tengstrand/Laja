@@ -63,6 +63,7 @@ public class HairColorState implements ImmutableState {
         return "{color=" + color + "}";
     }
 
+    @State(version = 1)
     public static class HairColorMutableState implements MutableState {
         public String color;
 

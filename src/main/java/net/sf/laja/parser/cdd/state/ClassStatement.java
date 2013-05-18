@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassStatement implements StateParser.IClassStatement {
+    public int version;
     public String classname;
     public final List<Attribute> attributes = new ArrayList<Attribute>();
     public String manualCode;
     public String generatedText;
+
+    public void setVersion(String version) {
+        this.version = Integer.parseInt(version);
+    }
 
     public void setClassname(String classname) {
         this.classname = classname;
