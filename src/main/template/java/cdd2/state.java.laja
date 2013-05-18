@@ -167,34 +167,36 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #end
 #end
 
+#function canBeCastToInt(attribute)
+    #return ["float", "double"].contains(attribute.type.name)
+#end
+
 #macro hashCodeBody(attributes, tab)
   #if (attributes.isEmpty)
 {tab}    return super.hashCode();
   #else
     #set (first = true)
-    #set (intTypes = ["byte", "char", "short", "int"])
-    #set (castTypes = ["float", "double"])
     #foreach (attribute in attributes)
       #if (first)
-        #if (intTypes.contains(attribute.type.name))
+        #if (attribute.isPrimitiveInteger)
 {tab}    int result = {attribute.name};
-        #else if (castTypes.contains(attribute.type.name))
+        #else if (canBeCastToInt(attribute))
 {tab}    int result = (int){attribute.name};
-        #else if (attribute.type.name == "long")
+        #else if (attribute.isLong)
 {tab}    int result = (int)({attribute.name} ^ ({attribute.name} >>> 32));
-        #else if (attribute.type.name == "boolean")
+        #else if (attribute.isBoolean)
 {tab}    int result = {attribute.name} ? 1 : 0;
         #else
 {tab}    int result = {attribute.name} != null ? {attribute.name}.hashCode() : 0;
         #end
       #else
-        #if (intTypes.contains(attribute.type.name))
+        #if (attribute.isPrimitiveInteger)
 {tab}    result = 31 * result + {attribute.name};
-        #else if (castTypes.contains(attribute.type.name))
+        #else if (canBeCastToInt(attribute)))
 {tab}    result = 31 * result + (int){attribute.name};
-        #else if (attribute.type.name == "long")
+        #else if (attribute.isLong)
 {tab}    result = 31 * result + (int)({attribute.name} ^ ({attribute.name} >>> 32));
-        #else if (attribute.type.name == "boolean")
+        #else if (attribute.isBoolean)
 {tab}    result = 31 * result + ({attribute.name} ? 1 : 0);
         #else
 {tab}    result = 31 * result + ({attribute.name} != null ? {attribute.name}.hashCode() : 0);

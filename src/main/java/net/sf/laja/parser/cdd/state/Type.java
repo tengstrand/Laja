@@ -43,8 +43,20 @@ public class Type implements StateParser.IType {
         return !isCollection() && !isMap() && name.equals("String");
     }
 
+    private boolean isNameType() {
+        return collectionType == null && mapType == null;
+    }
+
     public boolean isPrimitive() {
-        return collectionType == null && mapType == null && net.sf.laja.parser.cdd.Type.isPrimitive(name);
+        return isNameType() && net.sf.laja.parser.cdd.Type.isPrimitive(name);
+    }
+
+    public boolean isPrimitiveInteger() {
+        return isNameType() && net.sf.laja.parser.cdd.Type.isPrimitiveInteger(name);
+    }
+
+    public boolean isBoolean() {
+        return isPrimitive() && name.equals("boolean");
     }
 
     public boolean isLong() {

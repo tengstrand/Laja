@@ -43,6 +43,14 @@ public class Attribute implements StateParser.IAttribute {
         return type.isPrimitive();
     }
 
+    public boolean isPrimitiveInteger() {
+        return type.isPrimitiveInteger();
+    }
+
+    public boolean isBoolean() {
+        return type.isBoolean();
+    }
+
     public boolean isLong() {
         return type.isLong();
     }
