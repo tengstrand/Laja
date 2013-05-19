@@ -6,8 +6,8 @@ import static net.sf.laja.cdd.AddressCreator.AddressBehaviour;
 
 public class ProtectedAddress extends AddressBehaviour implements Address {
 
-    public ProtectedAddress(AddressState state) {
-        super(state);
+    public ProtectedAddress(AddressState s) {
+        super(s);
     }
 
     public boolean isFromUppsala() {

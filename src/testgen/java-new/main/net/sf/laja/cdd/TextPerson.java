@@ -8,7 +8,7 @@ import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
 @Behaviour
 public class TextPerson extends PersonBehaviour {
 
-    public TextPerson(PersonState state) {
-        super(state);
+    public TextPerson(PersonState s) {
+        super(s);
     }
 }
