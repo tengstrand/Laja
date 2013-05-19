@@ -39,7 +39,7 @@ public class PersonCreator implements PersonMaker {
         return new TextPerson(state.asImmutable());
     }
 
-    // ------ Generated code ------
+    // ===== Generated code =====
 
     public static PersonFactory createPerson() {
         return new PersonFactory();

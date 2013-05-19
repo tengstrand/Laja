@@ -30,7 +30,7 @@ public class AddressCreator implements AddressMaker {
         return new ProtectedAddress(state.asImmutable());
     }
 
-    // ------ Generated code ------
+    // ===== Generated code =====
 
     public static AddressFactory createAddress() {
         return new AddressFactory();
