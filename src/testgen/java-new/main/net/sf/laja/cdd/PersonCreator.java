@@ -109,52 +109,52 @@ public class PersonCreator implements PersonMaker {
     }
 
     public static class PersonBehaviour {
-        public final PersonState state;
+        public final PersonState s;
 
-        public PersonBehaviour(PersonState state) {
-            this.state = state;
+        public PersonBehaviour(PersonState s) {
+            this.s = s;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (!(that instanceof PersonBehaviour)) return false;
 
-            return state.equals(((PersonBehaviour)that).state);
+            return s.equals(((PersonBehaviour)that).s);
         }
 
         @Override public int hashCode() {
-            return state.hashCode();
+            return s.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + state;
+            return getClass().getSimpleName() + s;
         }
     }
 
     public static class PersonMutableBehaviour {
-        private PersonMutableState state;
+        private PersonMutableState s;
 
-        public PersonMutableBehaviour(PersonMutableState state) {
-            this.state = state;
+        public PersonMutableBehaviour(PersonMutableState s) {
+            this.s = s;
         }
 
         public PersonState state() {
-            return state.asImmutable();
+            return s.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (!(that instanceof PersonMutableBehaviour)) return false;
 
-            return state.equals(((PersonMutableBehaviour)that).state);
+            return s.equals(((PersonMutableBehaviour)that).s);
         }
 
         @Override public int hashCode() {
-            return state.hashCode();
+            return s.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + state;
+            return getClass().getSimpleName() + s;
         }
     }
 

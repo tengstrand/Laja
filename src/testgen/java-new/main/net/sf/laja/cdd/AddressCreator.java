@@ -95,48 +95,48 @@ public class AddressCreator implements AddressMaker {
     }
 
     public static class AddressBehaviour {
-        public final AddressState state;
+        public final AddressState s;
 
-        public AddressBehaviour(AddressState state) {
-            this.state = state;
+        public AddressBehaviour(AddressState s) {
+            this.s = s;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (!(that instanceof AddressBehaviour)) return false;
 
-            return state.equals(((AddressBehaviour)that).state);
+            return s.equals(((AddressBehaviour)that).s);
         }
 
         @Override public int hashCode() {
-            return state.hashCode();
+            return s.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + state;
+            return getClass().getSimpleName() + s;
         }
     }
 
     public static class AddressMutableBehaviour {
-        private final AddressMutableState state;
+        private final AddressMutableState s;
 
-        public AddressMutableBehaviour(AddressMutableState state) {
-            this.state = state;
+        public AddressMutableBehaviour(AddressMutableState s) {
+            this.s = s;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (!(that instanceof AddressMutableBehaviour)) return false;
 
-            return state.equals(((AddressMutableBehaviour)that).state);
+            return s.equals(((AddressMutableBehaviour)that).s);
         }
 
         @Override public int hashCode() {
-            return state.hashCode();
+            return s.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + state;
+            return getClass().getSimpleName() + s;
         }
     }
 

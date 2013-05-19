@@ -8,11 +8,11 @@ import static net.sf.laja.cdd.AddressCreator.AddressBehaviour;
 @Behaviour
 public class RegularAddress extends AddressBehaviour implements Address {
 
-    public RegularAddress(AddressState state) {
-        super(state);
+    public RegularAddress(AddressState s) {
+        super(s);
     }
 
     public boolean isFromUppsala() {
-        return "Uppsala".equals(state.city);
+        return "Uppsala".equals(s.city);
     }
 }

@@ -8,24 +8,24 @@ import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
 
 public class Person extends PersonBehaviour {
 
-    public Person(PersonState state) {
-        super(state);
+    public Person(PersonState s) {
+        super(s);
     }
 
     public Person withName(String name) {
-        return new Person(state.withName(name));
+        return new Person(s.withName(name));
     }
 
     public boolean hasLongName() {
-        return state.name.length() > 8;
+        return s.name.length() > 8;
     }
 
     public boolean isFromUppsala() {
-        return new RegularAddress(state.address).isFromUppsala();
+        return new RegularAddress(s.address).isFromUppsala();
     }
 
     public boolean isTeenager() {
-        int years = new Period(state.birthday, new DateMidnight()).getYears();
+        int years = new Period(s.birthday, new DateMidnight()).getYears();
         return years >= 13 && years <= 19;
     }
 }
