@@ -224,8 +224,8 @@ public class PersonState implements ImmutableState {
         public void setGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
-        public void assertIsValid() {
-            ValidationErrors errors = validate();
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
             if (errors.hasErrors()) {
                 throw new IllegalPersonStateException(errors);
@@ -262,8 +262,8 @@ public class PersonState implements ImmutableState {
             }
         }
 
-        public PersonState asImmutable() {
-            assertIsValid();
+        public PersonState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
             return new PersonState(
                 name,

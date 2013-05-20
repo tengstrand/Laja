@@ -23,7 +23,7 @@ public class AddressState implements ImmutableState {
     private static void validate(AddressMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
     }
 
-    // ------ Generated code ------
+    // ===== Generated code =====
 
     public static final String ID = "id";
     public static final String STREET_NAME = "streetName";
@@ -137,8 +137,8 @@ public class AddressState implements ImmutableState {
         public void setStreetName(String streetName) { this.streetName = streetName; }
         public void setCity(String city) { this.city = city; }
 
-        public void assertIsValid() {
-            ValidationErrors errors = validate();
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
             if (errors.hasErrors()) {
                 throw new IllegalAddressStateException(errors);
@@ -165,8 +165,8 @@ public class AddressState implements ImmutableState {
             }
         }
 
-        public AddressState asImmutable() {
-            assertIsValid();
+        public AddressState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
             return new AddressState(
                 id,

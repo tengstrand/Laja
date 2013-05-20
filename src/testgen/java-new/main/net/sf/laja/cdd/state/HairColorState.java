@@ -17,7 +17,7 @@ public class HairColorState implements ImmutableState {
     private static void validate(HairColorMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
     }
 
-    // ------ Generated code ------
+    // ===== Generated code =====
 
     public static final String COLOR = "color";
 
@@ -63,7 +63,7 @@ public class HairColorState implements ImmutableState {
         return "{color=" + color + "}";
     }
 
-    @State(version = 1)
+    @State(version = 1, type = "mutable")
     public static class HairColorMutableState implements MutableState {
         public String color;
 
@@ -79,8 +79,8 @@ public class HairColorState implements ImmutableState {
 
         public void setColor(String color) { this.color = color; }
 
-        public void assertIsValid() {
-            ValidationErrors errors = validate();
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
             if (errors.hasErrors()) {
                 throw new IllegalHairColorStateException(errors);
@@ -107,8 +107,8 @@ public class HairColorState implements ImmutableState {
             }
         }
 
-        public HairColorState asImmutable() {
-            assertIsValid();
+        public HairColorState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
             return new HairColorState(color);
         }

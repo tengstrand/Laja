@@ -5,7 +5,7 @@ import net.sf.laja.cdd.validator.Validator;
 import java.io.Serializable;
 
 public interface MutableState extends Serializable {
-    ImmutableState asImmutable();
+    ImmutableState asImmutable(Validator... validators);
     boolean isValid();
     ValidationErrors validate(Validator... validators);
     void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators);

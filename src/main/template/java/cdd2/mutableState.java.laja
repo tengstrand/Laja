@@ -16,8 +16,8 @@
 
 #macro assertIsValid()
 
-        public void assertIsValid() {
-            ValidationErrors errors = validate();
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
             if (errors.hasErrors()) {
                 throw new {stateException}(errors);
@@ -123,16 +123,16 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 
 #macro singleAsImmutable()
   #set (attribute = attributes.iterator.next)
-        public {classname} asImmutable() {
-            assertIsValid();
+        public {classname} asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
             return new {classname}({immutableStateAttribute()});
         }
 #end
 
 #macro multipleAsImmutable()
-        public {classname} asImmutable() {
-            assertIsValid();
+        public {classname} asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
             return new {classname}(
   #set (iterator = attributes.iterator)
