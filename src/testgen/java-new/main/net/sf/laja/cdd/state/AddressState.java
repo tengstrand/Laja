@@ -108,7 +108,7 @@ public class AddressState implements ImmutableState {
                 ", city='" + city + "'}";
     }
 
-    @State(version = 1)
+    @State(version = 1, type = "mutable")
     public static class AddressMutableState implements MutableState {
         @Id
         public int id;
