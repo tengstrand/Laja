@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-05-18 by Laja:
+ * Auto generated 2013-05-20 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -285,12 +285,12 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         imports_1.add(136, importstatement, importsImportsImportstatement);
         imports.add(137, imports_1);
 
-        // annotations = [("@" name s):annotation+]
-        Repeat annotations_1 = new Repeat(138, "annotations_1");
+        // annotations = [(("@" name s)+):annotation]
+        Repeat annotations_1 = new Repeat(138, "annotations_1", annotationsAnnotationsAnnotation);
         annotations_1.add(140, new Str(139, "@"));
         annotations_1.add(141, name);
         annotations_1.add(142, s);
-        annotations.add(143, annotations_1, annotationsAnnotationsAnnotation);
+        annotations.add(143, annotations_1);
 
         // keywords = ["public "|"private "|"final " s]+
         Repeat keywords_1 = new Repeat(144, "keywords_1");
@@ -606,7 +606,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         imports_1.add(136, importstatement);
         imports.add(137, imports_1);
 
-        // annotations = [("@" name s):annotation+]
+        // annotations = [(("@" name s)+):annotation]
         Repeat annotations_1 = new Repeat(138, "annotations_1");
         annotations_1.add(140, new Str(139, "@"));
         annotations_1.add(141, name);

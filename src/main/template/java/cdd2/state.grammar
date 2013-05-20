@@ -18,7 +18,7 @@ grammar state {
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
    imports = [importstatement+];
 
-   annotations = [("@" name s):annotation+];
+   annotations = [(("@" name s)+):annotation];
    keywords = ["public "|"private "|"final " s]+;
    collectionType = s "<" s type s ">";
    mapType = s "<" s type:key s "," s type:entry s ">";
