@@ -10,9 +10,9 @@ import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 public class SpecialPerson extends PersonMutableBehaviour {
     private final PersonMutableState s;
 
-    public SpecialPerson(PersonMutableState state) {
-        super(state);
-        this.s = state;
+    public SpecialPerson(PersonMutableState s) {
+        super(s);
+        this.s = s;
     }
 
     public boolean isSpecial() {
