@@ -3,7 +3,21 @@
 #macro emptyConstructor()
 
         public {mutableClass}() {
-            {classname}.setDefaults(this);
+  #foreach (attribute in attributes)
+    #if (attribute.isOptional && attribute.optional.value != null)
+            {attribute.name} = {attribute.optional.value};
+    #else
+      #if (attribute.isState)
+            {attribute.name} = new {attribute.type}();
+      #else if (attribute.isSet)
+            {attribute.name} = new Hash{attribute.type}();
+      #else if (attribute.isList)
+            {attribute.name} = new Array{attribute.type}();
+      #else if (attribute.isMap)
+            {attribute.name} = new HashMap<{attribute.type.mapType.key},{attribute.type.mapType.entry}>();
+      #end
+    #end
+  #end
         }
 #end
 

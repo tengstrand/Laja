@@ -16,7 +16,7 @@ import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,19 +35,11 @@ public class PersonState implements ImmutableState {
     public final DateMidnight birthday;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
-    @Optional
+    @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
     public final ImmutableSet<AddressState> oldAddresses;
     @Optional
     public final ImmutableMap<String,AddressState> groupedAddresses;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
-
-    private static void setDefaults(PersonMutableState state) {
-        state.children = new ArrayList<PersonMutableState>();
-        state.address = new AddressMutableState();
-        state.oldAddresses = new HashSet<AddressMutableState>();
-        state.groupedAddresses = new HashMap<String, AddressMutableState>();
-        state.listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
-    }
 
     private static void validate(PersonMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
         if (state.birthday != null && state.birthday.isAfterNow()) {
@@ -181,14 +173,18 @@ public class PersonState implements ImmutableState {
         public DateMidnight birthday;
         public List<PersonMutableState> children;
         public AddressMutableState address;
-        @Optional
+        @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
         public Set<AddressMutableState> oldAddresses;
         @Optional
         public Map<String,AddressMutableState> groupedAddresses;
         public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
 
         public PersonMutableState() {
-            PersonState.setDefaults(this);
+            children = new ArrayList<PersonMutableState>();
+            address = new AddressMutableState();
+            oldAddresses = new LinkedHashSet<AddressMutableState>();
+            groupedAddresses = new HashMap<String,AddressMutableState>();
+            listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
         }
 
         public PersonMutableState(

@@ -18,7 +18,8 @@ grammar state {
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
    imports = [importstatement+];
 
-   annotations = [(("@" name s)+):annotation];
+   annotation = "@" name s ["(" s name:attribute s "=" s str:value s ")"] s;
+   annotations = [s annotation]+;
    keywords = ["public "|"private "|"final " s]+;
    collectionType = s "<" s type s ">";
    mapType = s "<" s type:key s "," s type:entry s ">";
@@ -51,7 +52,11 @@ grammar state {
    type.setCollectionType(CollectionType collectionType);
    type.setMapType(MapType mapType);
 
-   Annotations annotations.addAnnotation(String annotation);
+   Annotation annotation.setName(String name);
+   annotation.setAttribute(String attribute);
+   annotation.setValue(String value);
+
+   Annotations annotations.addAnnotation(Annotation annotation);
    annotations.setContent(String *);
 
    Attribute attribute.setAnnotations(Annotations annotations);

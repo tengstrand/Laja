@@ -28,6 +28,10 @@ public class StateFactory implements StateParser.IStateFactory {
         return new Type();
     }
 
+    public StateParser.IAnnotation createAnnotation() {
+        return new Annotation();
+    }
+
     public StateParser.IAnnotations createAnnotations() {
         return new Annotations();
     }

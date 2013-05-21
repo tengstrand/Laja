@@ -3,14 +3,16 @@ package net.sf.laja.parser.cdd.state;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Annotation {
-    private final String name;
+public class Annotation implements StateParser.IAnnotation{
+    public String name;
+    public String attribute;
+    public String value;
 
     private static final List<String> annotations = new ArrayList<String>();
 
-    public static final String ID = "@Id";
-    public static final String KEY = "@Key";
-    public static final String OPTIONAL = "@Optional";
+    public static final String ID = "Id";
+    public static final String KEY = "Key";
+    public static final String OPTIONAL = "Optional";
 
     static {
         annotations.add(ID);
@@ -18,12 +20,20 @@ public class Annotation {
         annotations.add(OPTIONAL);
     }
 
-    public static boolean isValid(String annotation) {
-        return annotation != null && annotations.contains(annotation);
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Annotation(String name) {
-        this.name = name.trim();
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public void setValue(String value) {
+        this.value = value.substring(1, value.length()-1);
+    }
+
+    public boolean isValid() {
+        return name != null && annotations.contains(name);
     }
 
     public boolean is(String annotation) {
@@ -43,24 +53,33 @@ public class Annotation {
     }
 
     @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (attribute != null ? attribute.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Annotation that = (Annotation) o;
 
-        return name.equals(that.name);
-    }
+        if (attribute != null ? !attribute.equals(that.attribute) : that.attribute != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
 
-    @Override
-    public int hashCode() {
-        return name.hashCode();
+        return true;
     }
 
     @Override
     public String toString() {
         return "Annotation{" +
                 "name='" + name + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

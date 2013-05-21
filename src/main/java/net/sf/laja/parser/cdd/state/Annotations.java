@@ -8,12 +8,11 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
     public String content;
     public List<Annotation> annotations = new ArrayList<Annotation>();
 
-    public void addAnnotation(String annotation) {
-        if (Annotation.isValid(annotation.trim())) {
-            annotations.add(new Annotation(annotation));
-        } else {
-            // TODO: add error handling
-            System.out.println("# Unknown annotation: " + annotation);
+    public void addAnnotation(StateParser.IAnnotation iannotation) {
+        Annotation annotation = (Annotation)iannotation;
+
+        if (annotation.isValid()) {
+            annotations.add(annotation);
         }
     }
 
@@ -44,6 +43,19 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
             }
         }
         return false;
+    }
+
+    public Annotation get(String annotationName) {
+        for (Annotation annotation : annotations) {
+            if (annotation.is(annotationName)) {
+                return annotation;
+            }
+        }
+        return null;
+    }
+
+    public Annotation getOptional() {
+        return get(Annotation.OPTIONAL);
     }
 
     public Iterator<Annotation> iterator() {

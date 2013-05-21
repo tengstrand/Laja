@@ -59,6 +59,14 @@ public class Attribute implements StateParser.IAttribute {
         return type.isState();
     }
 
+    public boolean isList() {
+        return type.isList();
+    }
+
+    public boolean isSet() {
+        return type.isSet();
+    }
+
     public boolean isCollection() {
         return type.isCollection();
     }
@@ -85,6 +93,10 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isOptional() {
         return annotations.isOptional();
+    }
+
+    public Annotation getOptional() {
+        return annotations.getOptional();
     }
 
     public boolean isEntity() {
