@@ -1,5 +1,14 @@
 #namespace mutable
 
+#macro classHeader()
+  #if (version < 1)
+    @State(type = "mutable")
+  #else
+    @State(version = {version}, type = "mutable")
+  #end
+    public static class {mutableClass} implements MutableState {
+#end
+
 #macro emptyConstructor()
 
         public {mutableClass}() {
@@ -164,9 +173,8 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
 
-    @State(version = {version}, type = "mutable")
-    public static class {mutableClass} implements MutableState {
   #set (tab = "        ")
+  #classHeader()
   #attributes(tab, "")
   #emptyConstructor()
   #constructor("{mutableClass}", tab)

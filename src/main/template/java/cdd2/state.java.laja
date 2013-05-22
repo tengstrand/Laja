@@ -25,6 +25,15 @@
   #end
 #end
 
+#macro classHeader()
+  #if (version < 1)
+@State
+  #else
+@State(version = {version})
+  #end
+public class {classname} implements ImmutableState {
+#end
+
 #macro constants()
   #foreach (attribute in attributes)
     public static final String {attributeConverter.toConstant(attribute.name)} = "{attribute.name}";
@@ -332,8 +341,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 package {packagename};
 
   #imports()
-@State(version = {version})
-public class {classname} implements ImmutableState {
+  #classHeader()
   #attributes("    ", "final ")##
   #if (generatedText != null)
 {manualCode}##

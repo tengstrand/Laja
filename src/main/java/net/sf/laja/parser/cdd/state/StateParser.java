@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-05-21 by Laja:
+ * Auto generated 2013-05-22 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -155,321 +155,335 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement", importstatementImportstatement);
         Optional imports = new Optional(15, "imports");
-        ElementList annotation = new ElementList(16, "annotation");
-        Optional annotations = new Optional(17, "annotations", annotationsAnnotations);
-        Optional keywords = new Optional(18, "keywords");
-        ElementList collectionType = new ElementList(19, "collectionType");
-        ElementList mapType = new ElementList(20, "mapType");
-        ElementList type = new ElementList(21, "type");
-        ElementList attribute = new ElementList(22, "attribute");
-        ElementList manualEnd = new ElementList(23, "manualEnd");
-        ElementList generatedEnd = new ElementList(24, "generatedEnd");
-        Repeat manualCode = new Repeat(25, "manualCode");
-        Repeat version = new Repeat(26, "version");
-        ElementList classStatement = new ElementList(27, "classStatement");
-        ElementList state = new ElementList(28, "state");
+        OrList value = new OrList(16, "value");
+        ElementList annotation = new ElementList(17, "annotation");
+        Optional annotations = new Optional(18, "annotations", annotationsAnnotations);
+        Optional keywords = new Optional(19, "keywords");
+        ElementList collectionType = new ElementList(20, "collectionType");
+        ElementList mapType = new ElementList(21, "mapType");
+        ElementList type = new ElementList(22, "type");
+        ElementList attribute = new ElementList(23, "attribute");
+        ElementList manualEnd = new ElementList(24, "manualEnd");
+        ElementList generatedEnd = new ElementList(25, "generatedEnd");
+        Repeat manualCode = new Repeat(26, "manualCode");
+        Repeat version = new Repeat(27, "version");
+        ElementList classStatement = new ElementList(28, "classStatement");
+        ElementList state = new ElementList(29, "state");
 
         // *** Statements ***
 
         // newline = "\r\n" | "\n"
-        newline.add(30, new Str(29, "\r\n"));
-        newline.add(32, new Str(31, "\n"));
+        newline.add(31, new Str(30, "\r\n"));
+        newline.add(33, new Str(32, "\n"));
 
         // comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END)
-        ElementList comment_1 = new ElementList(33, "comment_1");
-        comment_1.add(35, new Str(34, "/*"));
-        Optional comment_1_1 = new Optional(36, "comment_1_1");
-        Repeat comment_1_1_1 = new Repeat(37, "comment_1_1_1");
-        OrList comment_1_1_1_1 = new OrList(38, "comment_1_1_1_1");
-        comment_1_1_1_1.add(39, comment);
-        comment_1_1_1_1.add(41, new Str(40, "*/", NOT));
-        comment_1_1_1.add(42, comment_1_1_1_1);
-        comment_1_1.add(43, comment_1_1_1);
-        comment_1.add(44, comment_1_1);
-        comment_1.add(46, new Str(45, "*/"));
-        comment.add(47, comment_1);
-        ElementList comment_2 = new ElementList(48, "comment_2");
-        comment_2.add(50, new Str(49, "//"));
-        Optional comment_2_1 = new Optional(51, "comment_2_1");
-        Repeat comment_2_1_1 = new Repeat(52, "comment_2_1_1");
-        comment_2_1_1.add(53, newline, NOT);
-        comment_2_1.add(54, comment_2_1_1);
-        comment_2.add(55, comment_2_1);
-        OrList comment_2_2 = new OrList(56, "comment_2_2");
-        comment_2_2.add(57, newline);
-        comment_2_2.add(59, new End(58, "comment_2_2"));
-        comment_2.add(60, comment_2_2);
-        comment.add(61, comment_2);
+        ElementList comment_1 = new ElementList(34, "comment_1");
+        comment_1.add(36, new Str(35, "/*"));
+        Optional comment_1_1 = new Optional(37, "comment_1_1");
+        Repeat comment_1_1_1 = new Repeat(38, "comment_1_1_1");
+        OrList comment_1_1_1_1 = new OrList(39, "comment_1_1_1_1");
+        comment_1_1_1_1.add(40, comment);
+        comment_1_1_1_1.add(42, new Str(41, "*/", NOT));
+        comment_1_1_1.add(43, comment_1_1_1_1);
+        comment_1_1.add(44, comment_1_1_1);
+        comment_1.add(45, comment_1_1);
+        comment_1.add(47, new Str(46, "*/"));
+        comment.add(48, comment_1);
+        ElementList comment_2 = new ElementList(49, "comment_2");
+        comment_2.add(51, new Str(50, "//"));
+        Optional comment_2_1 = new Optional(52, "comment_2_1");
+        Repeat comment_2_1_1 = new Repeat(53, "comment_2_1_1");
+        comment_2_1_1.add(54, newline, NOT);
+        comment_2_1.add(55, comment_2_1_1);
+        comment_2.add(56, comment_2_1);
+        OrList comment_2_2 = new OrList(57, "comment_2_2");
+        comment_2_2.add(58, newline);
+        comment_2_2.add(60, new End(59, "comment_2_2"));
+        comment_2.add(61, comment_2_2);
+        comment.add(62, comment_2);
 
         // ws = (newline | " " | "\t" | comment)+
-        OrList ws_1 = new OrList(62, "ws_1");
-        ws_1.add(63, newline);
-        ws_1.add(65, new Str(64, " "));
-        ws_1.add(67, new Str(66, "\t"));
-        ws_1.add(68, comment);
-        ws.add(69, ws_1);
+        OrList ws_1 = new OrList(63, "ws_1");
+        ws_1.add(64, newline);
+        ws_1.add(66, new Str(65, " "));
+        ws_1.add(68, new Str(67, "\t"));
+        ws_1.add(69, comment);
+        ws.add(70, ws_1);
 
         // s = [ws]
-        s.add(70, ws);
+        s.add(71, ws);
 
         // ff = "\""
 
         // str = ff (("\\\"" | !(ff|newline))+):strval ff
-        str.add(71, ff);
-        Repeat str_1 = new Repeat(72, "str_1");
-        OrList str_1_1 = new OrList(73, "str_1_1");
-        str_1_1.add(75, new Str(74, "\\\""));
-        OrList str_1_1_1 = new OrList(76, "str_1_1_1", NOT);
-        str_1_1_1.add(77, ff);
-        str_1_1_1.add(78, newline);
-        str_1_1.add(79, str_1_1_1);
-        str_1.add(80, str_1_1);
-        str.add(81, str_1);
-        str.add(82, ff);
+        str.add(72, ff);
+        Repeat str_1 = new Repeat(73, "str_1");
+        OrList str_1_1 = new OrList(74, "str_1_1");
+        str_1_1.add(76, new Str(75, "\\\""));
+        OrList str_1_1_1 = new OrList(77, "str_1_1_1", NOT);
+        str_1_1_1.add(78, ff);
+        str_1_1_1.add(79, newline);
+        str_1_1.add(80, str_1_1_1);
+        str_1.add(81, str_1_1);
+        str.add(82, str_1);
+        str.add(83, ff);
 
         // letter = "a".."z" | "A".."Z" | "_" | "$"
-        letter.add(84, new Range(83, "letter", "a", "z"));
-        letter.add(86, new Range(85, "letter", "A", "Z"));
-        letter.add(88, new Str(87, "_"));
-        letter.add(90, new Str(89, "$"));
+        letter.add(85, new Range(84, "letter", "a", "z"));
+        letter.add(87, new Range(86, "letter", "A", "Z"));
+        letter.add(89, new Str(88, "_"));
+        letter.add(91, new Str(90, "$"));
 
         // digit = "0".."9"
 
         // name = letter [letter | digit]+
-        name.add(91, letter);
-        Optional name_1 = new Optional(92, "name_1");
-        Repeat name_1_1 = new Repeat(93, "name_1_1");
-        OrList name_1_1_1 = new OrList(94, "name_1_1_1");
-        name_1_1_1.add(95, letter);
-        name_1_1_1.add(96, digit);
-        name_1_1.add(97, name_1_1_1);
-        name_1.add(98, name_1_1);
-        name.add(99, name_1);
+        name.add(92, letter);
+        Optional name_1 = new Optional(93, "name_1");
+        Repeat name_1_1 = new Repeat(94, "name_1_1");
+        OrList name_1_1_1 = new OrList(95, "name_1_1_1");
+        name_1_1_1.add(96, letter);
+        name_1_1_1.add(97, digit);
+        name_1_1.add(98, name_1_1_1);
+        name_1.add(99, name_1_1);
+        name.add(100, name_1);
 
         // public = ["public" ws]
-        _public.add(101, new Str(100, "public"));
-        _public.add(102, ws);
+        _public.add(102, new Str(101, "public"));
+        _public.add(103, ws);
 
         // packagestatement = "package" ws packagename s ";"
-        packagestatement.add(104, new Str(103, "package"));
-        packagestatement.add(105, ws);
-        packagestatement.add(106, packagename, statePackagestatementPackagename);
-        packagestatement.add(107, s);
-        packagestatement.add(109, new Str(108, ";"));
+        packagestatement.add(105, new Str(104, "package"));
+        packagestatement.add(106, ws);
+        packagestatement.add(107, packagename, statePackagestatementPackagename);
+        packagestatement.add(108, s);
+        packagestatement.add(110, new Str(109, ";"));
 
         // packagename = name ["." name|"*"]+
-        packagename.add(110, name);
-        Optional packagename_1 = new Optional(111, "packagename_1");
-        Repeat packagename_1_1 = new Repeat(112, "packagename_1_1");
-        packagename_1_1.add(114, new Str(113, "."));
-        OrList packagename_1_1_1 = new OrList(115, "packagename_1_1_1");
-        packagename_1_1_1.add(116, name);
-        packagename_1_1_1.add(118, new Str(117, "*"));
-        packagename_1_1.add(119, packagename_1_1_1);
-        packagename_1.add(120, packagename_1_1);
-        packagename.add(121, packagename_1);
+        packagename.add(111, name);
+        Optional packagename_1 = new Optional(112, "packagename_1");
+        Repeat packagename_1_1 = new Repeat(113, "packagename_1_1");
+        packagename_1_1.add(115, new Str(114, "."));
+        OrList packagename_1_1_1 = new OrList(116, "packagename_1_1_1");
+        packagename_1_1_1.add(117, name);
+        packagename_1_1_1.add(119, new Str(118, "*"));
+        packagename_1_1.add(120, packagename_1_1_1);
+        packagename_1.add(121, packagename_1_1);
+        packagename.add(122, packagename_1);
 
         // fullclassname = packagename
-        fullclassname.add(122, packagename);
+        fullclassname.add(123, packagename);
 
         // importstatement = "import" ws ["static":static ws] fullclassname s ";" s
-        importstatement.add(124, new Str(123, "import"));
-        importstatement.add(125, ws);
-        Optional importstatement_1 = new Optional(126, "importstatement_1");
-        importstatement_1.add(128, new Str(127, "static", importstatementImportstatementStatic));
-        importstatement_1.add(129, ws);
-        importstatement.add(130, importstatement_1);
-        importstatement.add(131, fullclassname, importstatementImportstatementFullclassname);
-        importstatement.add(132, s);
-        importstatement.add(134, new Str(133, ";"));
-        importstatement.add(135, s);
+        importstatement.add(125, new Str(124, "import"));
+        importstatement.add(126, ws);
+        Optional importstatement_1 = new Optional(127, "importstatement_1");
+        importstatement_1.add(129, new Str(128, "static", importstatementImportstatementStatic));
+        importstatement_1.add(130, ws);
+        importstatement.add(131, importstatement_1);
+        importstatement.add(132, fullclassname, importstatementImportstatementFullclassname);
+        importstatement.add(133, s);
+        importstatement.add(135, new Str(134, ";"));
+        importstatement.add(136, s);
 
         // imports = [importstatement+]
-        Repeat imports_1 = new Repeat(136, "imports_1");
-        imports_1.add(137, importstatement, importsImportsImportstatement);
-        imports.add(138, imports_1);
+        Repeat imports_1 = new Repeat(137, "imports_1");
+        imports_1.add(138, importstatement, importsImportsImportstatement);
+        imports.add(139, imports_1);
 
-        // annotation = "@" name s ["(" s name:attribute s "=" s str:value s ")"] s
-        annotation.add(140, new Str(139, "@"));
-        annotation.add(141, name, annotationAnnotationName);
-        annotation.add(142, s);
-        Optional annotation_1 = new Optional(143, "annotation_1");
-        annotation_1.add(145, new Str(144, "("));
-        annotation_1.add(146, s);
-        annotation_1.add(147, name, annotationAnnotationAttribute);
-        annotation_1.add(148, s);
-        annotation_1.add(150, new Str(149, "="));
-        annotation_1.add(151, s);
-        annotation_1.add(152, str, annotationAnnotationValue);
-        annotation_1.add(153, s);
-        annotation_1.add(155, new Str(154, ")"));
-        annotation.add(156, annotation_1);
-        annotation.add(157, s);
+        // value = str | (!(ws | ")")+)
+        value.add(140, str);
+        Repeat value_1 = new Repeat(141, "value_1");
+        OrList value_1_1 = new OrList(142, "value_1_1");
+        value_1_1.add(143, ws);
+        value_1_1.add(145, new Str(144, ")"));
+        value_1.add(146, value_1_1, NOT);
+        value.add(147, value_1);
 
-        // annotations = [s annotation]+
-        Repeat annotations_1 = new Repeat(158, "annotations_1");
-        annotations_1.add(159, s);
-        annotations_1.add(160, annotation, annotationsAnnotationsAnnotation);
-        annotations.add(161, annotations_1);
+        // annotation = "@" name s ["(" s name:attribute s "=" s value s ")" s]
+        annotation.add(149, new Str(148, "@"));
+        annotation.add(150, name, annotationAnnotationName);
+        annotation.add(151, s);
+        Optional annotation_1 = new Optional(152, "annotation_1");
+        annotation_1.add(154, new Str(153, "("));
+        annotation_1.add(155, s);
+        annotation_1.add(156, name, annotationAnnotationAttribute);
+        annotation_1.add(157, s);
+        annotation_1.add(159, new Str(158, "="));
+        annotation_1.add(160, s);
+        annotation_1.add(161, value, annotationAnnotationValue);
+        annotation_1.add(162, s);
+        annotation_1.add(164, new Str(163, ")"));
+        annotation_1.add(165, s);
+        annotation.add(166, annotation_1);
+
+        // annotations = [annotation]+
+        Repeat annotations_1 = new Repeat(167, "annotations_1");
+        annotations_1.add(168, annotation, annotationsAnnotationsAnnotation);
+        annotations.add(169, annotations_1);
 
         // keywords = ["public "|"private "|"final " s]+
-        Repeat keywords_1 = new Repeat(162, "keywords_1");
-        OrList keywords_1_1 = new OrList(163, "keywords_1_1");
-        keywords_1_1.add(165, new Str(164, "public "));
-        keywords_1_1.add(167, new Str(166, "private "));
-        keywords_1_1.add(169, new Str(168, "final "));
-        keywords_1.add(170, keywords_1_1);
-        keywords_1.add(171, s);
-        keywords.add(172, keywords_1);
+        Repeat keywords_1 = new Repeat(170, "keywords_1");
+        OrList keywords_1_1 = new OrList(171, "keywords_1_1");
+        keywords_1_1.add(173, new Str(172, "public "));
+        keywords_1_1.add(175, new Str(174, "private "));
+        keywords_1_1.add(177, new Str(176, "final "));
+        keywords_1.add(178, keywords_1_1);
+        keywords_1.add(179, s);
+        keywords.add(180, keywords_1);
 
         // collectionType = s "<" s type s ">"
-        collectionType.add(173, s);
-        collectionType.add(175, new Str(174, "<"));
-        collectionType.add(176, s);
-        collectionType.add(177, type, collectionTypeCollectionTypeType);
-        collectionType.add(178, s);
-        collectionType.add(180, new Str(179, ">"));
+        collectionType.add(181, s);
+        collectionType.add(183, new Str(182, "<"));
+        collectionType.add(184, s);
+        collectionType.add(185, type, collectionTypeCollectionTypeType);
+        collectionType.add(186, s);
+        collectionType.add(188, new Str(187, ">"));
 
         // mapType = s "<" s type:key s "," s type:entry s ">"
-        mapType.add(181, s);
-        mapType.add(183, new Str(182, "<"));
-        mapType.add(184, s);
-        mapType.add(185, type, mapTypeMapTypeKey);
-        mapType.add(186, s);
-        mapType.add(188, new Str(187, ","));
         mapType.add(189, s);
-        mapType.add(190, type, mapTypeMapTypeEntry);
-        mapType.add(191, s);
-        mapType.add(193, new Str(192, ">"));
+        mapType.add(191, new Str(190, "<"));
+        mapType.add(192, s);
+        mapType.add(193, type, mapTypeMapTypeKey);
+        mapType.add(194, s);
+        mapType.add(196, new Str(195, ","));
+        mapType.add(197, s);
+        mapType.add(198, type, mapTypeMapTypeEntry);
+        mapType.add(199, s);
+        mapType.add(201, new Str(200, ">"));
 
         // type = name [collectionType | mapType]
-        type.add(194, name, typeTypeName);
-        Optional type_1 = new Optional(195, "type_1");
-        OrList type_1_1 = new OrList(196, "type_1_1");
-        type_1_1.add(197, collectionType, typeTypeCollectionType);
-        type_1_1.add(198, mapType, typeTypeMapType);
-        type_1.add(199, type_1_1);
-        type.add(200, type_1);
+        type.add(202, name, typeTypeName);
+        Optional type_1 = new Optional(203, "type_1");
+        OrList type_1_1 = new OrList(204, "type_1_1");
+        type_1_1.add(205, collectionType, typeTypeCollectionType);
+        type_1_1.add(206, mapType, typeTypeMapType);
+        type_1.add(207, type_1_1);
+        type.add(208, type_1);
 
-        // attribute = s annotations keywords s type ws name:variable s ";" [!newline+] newline
-        attribute.add(201, s);
-        attribute.add(202, annotations, attributeAttributeAnnotations);
-        attribute.add(203, keywords);
-        attribute.add(204, s);
-        attribute.add(205, type, attributeAttributeType);
-        attribute.add(206, ws);
-        attribute.add(207, name, attributeAttributeVariable);
-        attribute.add(208, s);
-        attribute.add(210, new Str(209, ";"));
-        Optional attribute_1 = new Optional(211, "attribute_1");
-        Repeat attribute_1_1 = new Repeat(212, "attribute_1_1");
-        attribute_1_1.add(213, newline, NOT);
-        attribute_1.add(214, attribute_1_1);
-        attribute.add(215, attribute_1);
-        attribute.add(216, newline);
+        // attribute = s annotations s keywords s type ws name:variable s ";" [!newline+] newline
+        attribute.add(209, s);
+        attribute.add(210, annotations, attributeAttributeAnnotations);
+        attribute.add(211, s);
+        attribute.add(212, keywords);
+        attribute.add(213, s);
+        attribute.add(214, type, attributeAttributeType);
+        attribute.add(215, ws);
+        attribute.add(216, name, attributeAttributeVariable);
+        attribute.add(217, s);
+        attribute.add(219, new Str(218, ";"));
+        Optional attribute_1 = new Optional(220, "attribute_1");
+        Repeat attribute_1_1 = new Repeat(221, "attribute_1_1");
+        attribute_1_1.add(222, newline, NOT);
+        attribute_1.add(223, attribute_1_1);
+        attribute.add(224, attribute_1);
+        attribute.add(225, newline);
 
         // manualEnd = ("}" s END)
-        manualEnd.add(218, new Str(217, "}"));
-        manualEnd.add(219, s);
-        manualEnd.add(221, new End(220, "manualEnd"));
+        manualEnd.add(227, new Str(226, "}"));
+        manualEnd.add(228, s);
+        manualEnd.add(230, new End(229, "manualEnd"));
 
         // generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *
-        ElementList generatedEnd_1 = new ElementList(222, "generatedEnd_1", classStatementGeneratedEndGeneratedText);
-        generatedEnd_1.add(224, new Str(223, "//"));
-        generatedEnd_1.add(225, s);
-        Optional generatedEnd_1_1 = new Optional(226, "generatedEnd_1_1");
-        OrList generatedEnd_1_1_1 = new OrList(227, "generatedEnd_1_1_1");
-        Repeat generatedEnd_1_1_1_1 = new Repeat(228, "generatedEnd_1_1_1_1");
-        generatedEnd_1_1_1_1.add(230, new Str(229, "*"));
-        generatedEnd_1_1_1.add(231, generatedEnd_1_1_1_1);
-        Repeat generatedEnd_1_1_1_2 = new Repeat(232, "generatedEnd_1_1_1_2");
-        generatedEnd_1_1_1_2.add(234, new Str(233, "-"));
-        generatedEnd_1_1_1.add(235, generatedEnd_1_1_1_2);
-        Repeat generatedEnd_1_1_1_3 = new Repeat(236, "generatedEnd_1_1_1_3");
-        generatedEnd_1_1_1_3.add(238, new Str(237, "="));
-        generatedEnd_1_1_1.add(239, generatedEnd_1_1_1_3);
-        generatedEnd_1_1.add(240, generatedEnd_1_1_1);
-        generatedEnd_1.add(241, generatedEnd_1_1);
-        generatedEnd_1.add(242, s);
-        generatedEnd_1.add(244, new Str(243, "Generated"));
-        Optional generatedEnd_1_2 = new Optional(245, "generatedEnd_1_2");
-        Repeat generatedEnd_1_2_1 = new Repeat(246, "generatedEnd_1_2_1");
-        generatedEnd_1_2_1.add(247, newline, NOT);
-        generatedEnd_1_2.add(248, generatedEnd_1_2_1);
-        generatedEnd_1.add(249, generatedEnd_1_2);
-        generatedEnd.add(250, generatedEnd_1);
-        generatedEnd.add(252, new Complete(251, "generatedEnd"));
+        ElementList generatedEnd_1 = new ElementList(231, "generatedEnd_1", classStatementGeneratedEndGeneratedText);
+        generatedEnd_1.add(233, new Str(232, "//"));
+        generatedEnd_1.add(234, s);
+        Optional generatedEnd_1_1 = new Optional(235, "generatedEnd_1_1");
+        OrList generatedEnd_1_1_1 = new OrList(236, "generatedEnd_1_1_1");
+        Repeat generatedEnd_1_1_1_1 = new Repeat(237, "generatedEnd_1_1_1_1");
+        generatedEnd_1_1_1_1.add(239, new Str(238, "*"));
+        generatedEnd_1_1_1.add(240, generatedEnd_1_1_1_1);
+        Repeat generatedEnd_1_1_1_2 = new Repeat(241, "generatedEnd_1_1_1_2");
+        generatedEnd_1_1_1_2.add(243, new Str(242, "-"));
+        generatedEnd_1_1_1.add(244, generatedEnd_1_1_1_2);
+        Repeat generatedEnd_1_1_1_3 = new Repeat(245, "generatedEnd_1_1_1_3");
+        generatedEnd_1_1_1_3.add(247, new Str(246, "="));
+        generatedEnd_1_1_1.add(248, generatedEnd_1_1_1_3);
+        generatedEnd_1_1.add(249, generatedEnd_1_1_1);
+        generatedEnd_1.add(250, generatedEnd_1_1);
+        generatedEnd_1.add(251, s);
+        generatedEnd_1.add(253, new Str(252, "Generated"));
+        Optional generatedEnd_1_2 = new Optional(254, "generatedEnd_1_2");
+        Repeat generatedEnd_1_2_1 = new Repeat(255, "generatedEnd_1_2_1");
+        generatedEnd_1_2_1.add(256, newline, NOT);
+        generatedEnd_1_2.add(257, generatedEnd_1_2_1);
+        generatedEnd_1.add(258, generatedEnd_1_2);
+        generatedEnd.add(259, generatedEnd_1);
+        generatedEnd.add(261, new Complete(260, "generatedEnd"));
 
         // manualCode = !(manualEnd | generatedEnd)+
-        OrList manualCode_1 = new OrList(253, "manualCode_1");
-        manualCode_1.add(254, manualEnd);
-        manualCode_1.add(255, generatedEnd);
-        manualCode.add(256, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(262, "manualCode_1");
+        manualCode_1.add(263, manualEnd);
+        manualCode_1.add(264, generatedEnd);
+        manualCode.add(265, manualCode_1, NOT);
 
         // version = digit+
-        version.add(257, digit);
+        version.add(266, digit);
 
         // classStatement =
-        //   "@State(" s "version" s "=" s version s ")" ws public "class" ws name:classname s ["extends" ws name s]
+        //   "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
         //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
         //   manualEnd|generatedEnd *
-        classStatement.add(259, new Str(258, "@State("));
-        classStatement.add(260, s);
-        classStatement.add(262, new Str(261, "version"));
-        classStatement.add(263, s);
-        classStatement.add(265, new Str(264, "="));
-        classStatement.add(266, s);
-        classStatement.add(267, version, classStatementClassStatementVersion);
-        classStatement.add(268, s);
-        classStatement.add(270, new Str(269, ")"));
-        classStatement.add(271, ws);
-        classStatement.add(272, _public);
-        classStatement.add(274, new Str(273, "class"));
-        classStatement.add(275, ws);
-        classStatement.add(276, name, classStatementClassStatementClassname);
-        classStatement.add(277, s);
-        Optional classStatement_1 = new Optional(278, "classStatement_1");
-        classStatement_1.add(280, new Str(279, "extends"));
-        classStatement_1.add(281, ws);
-        classStatement_1.add(282, name);
-        classStatement_1.add(283, s);
+        classStatement.add(268, new Str(267, "@State"));
+        Optional classStatement_1 = new Optional(269, "classStatement_1");
+        classStatement_1.add(270, s);
+        classStatement_1.add(272, new Str(271, "("));
+        classStatement_1.add(273, s);
+        classStatement_1.add(275, new Str(274, "version"));
+        classStatement_1.add(276, s);
+        classStatement_1.add(278, new Str(277, "="));
+        classStatement_1.add(279, s);
+        classStatement_1.add(280, version, classStatementClassStatementVersion);
+        classStatement_1.add(281, s);
+        classStatement_1.add(283, new Str(282, ")"));
         classStatement.add(284, classStatement_1);
-        Optional classStatement_2 = new Optional(285, "classStatement_2");
-        classStatement_2.add(287, new Str(286, "implements"));
-        classStatement_2.add(288, ws);
-        classStatement_2.add(289, name);
-        Optional classStatement_2_1 = new Optional(290, "classStatement_2_1");
-        Repeat classStatement_2_1_1 = new Repeat(291, "classStatement_2_1_1");
-        classStatement_2_1_1.add(292, s);
-        classStatement_2_1_1.add(294, new Str(293, ","));
-        classStatement_2_1_1.add(295, s);
-        classStatement_2_1_1.add(296, name);
-        classStatement_2_1.add(297, classStatement_2_1_1);
-        classStatement_2.add(298, classStatement_2_1);
-        classStatement_2.add(299, s);
-        classStatement.add(300, classStatement_2);
-        classStatement.add(302, new Str(301, "{"));
-        classStatement.add(303, s);
-        Optional classStatement_3 = new Optional(304, "classStatement_3");
-        Repeat classStatement_3_1 = new Repeat(305, "classStatement_3_1");
-        classStatement_3_1.add(306, attribute, classStatementClassStatementAttribute);
-        classStatement_3.add(307, classStatement_3_1);
-        classStatement.add(308, classStatement_3);
-        classStatement.add(309, manualCode, classStatementClassStatementManualCode);
-        OrList classStatement_4 = new OrList(310, "classStatement_4");
-        classStatement_4.add(311, manualEnd);
-        classStatement_4.add(312, generatedEnd);
-        classStatement.add(313, classStatement_4);
-        classStatement.add(315, new Complete(314, "classStatement"));
+        classStatement.add(285, ws);
+        classStatement.add(286, _public);
+        classStatement.add(288, new Str(287, "class"));
+        classStatement.add(289, ws);
+        classStatement.add(290, name, classStatementClassStatementClassname);
+        classStatement.add(291, s);
+        Optional classStatement_2 = new Optional(292, "classStatement_2");
+        classStatement_2.add(294, new Str(293, "extends"));
+        classStatement_2.add(295, ws);
+        classStatement_2.add(296, name);
+        classStatement_2.add(297, s);
+        classStatement.add(298, classStatement_2);
+        Optional classStatement_3 = new Optional(299, "classStatement_3");
+        classStatement_3.add(301, new Str(300, "implements"));
+        classStatement_3.add(302, ws);
+        classStatement_3.add(303, name);
+        Optional classStatement_3_1 = new Optional(304, "classStatement_3_1");
+        Repeat classStatement_3_1_1 = new Repeat(305, "classStatement_3_1_1");
+        classStatement_3_1_1.add(306, s);
+        classStatement_3_1_1.add(308, new Str(307, ","));
+        classStatement_3_1_1.add(309, s);
+        classStatement_3_1_1.add(310, name);
+        classStatement_3_1.add(311, classStatement_3_1_1);
+        classStatement_3.add(312, classStatement_3_1);
+        classStatement_3.add(313, s);
+        classStatement.add(314, classStatement_3);
+        classStatement.add(316, new Str(315, "{"));
+        classStatement.add(317, s);
+        Optional classStatement_4 = new Optional(318, "classStatement_4");
+        Repeat classStatement_4_1 = new Repeat(319, "classStatement_4_1");
+        classStatement_4_1.add(320, attribute, classStatementClassStatementAttribute);
+        classStatement_4.add(321, classStatement_4_1);
+        classStatement.add(322, classStatement_4);
+        classStatement.add(323, manualCode, classStatementClassStatementManualCode);
+        OrList classStatement_5 = new OrList(324, "classStatement_5");
+        classStatement_5.add(325, manualEnd);
+        classStatement_5.add(326, generatedEnd);
+        classStatement.add(327, classStatement_5);
+        classStatement.add(329, new Complete(328, "classStatement"));
 
         // state = s packagestatement s imports s classStatement s
-        state.add(316, s);
-        state.add(317, packagestatement);
-        state.add(318, s);
-        state.add(319, imports, stateStateImports);
-        state.add(320, s);
-        state.add(321, classStatement, stateStateClassStatement);
-        state.add(322, s);
+        state.add(330, s);
+        state.add(331, packagestatement);
+        state.add(332, s);
+        state.add(333, imports, stateStateImports);
+        state.add(334, s);
+        state.add(335, classStatement, stateStateClassStatement);
+        state.add(336, s);
 
         return new TopElement(data2, state);
     }
@@ -493,321 +507,335 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement");
         Optional imports = new Optional(15, "imports");
-        ElementList annotation = new ElementList(16, "annotation");
-        Optional annotations = new Optional(17, "annotations");
-        Optional keywords = new Optional(18, "keywords");
-        ElementList collectionType = new ElementList(19, "collectionType");
-        ElementList mapType = new ElementList(20, "mapType");
-        ElementList type = new ElementList(21, "type");
-        ElementList attribute = new ElementList(22, "attribute");
-        ElementList manualEnd = new ElementList(23, "manualEnd");
-        ElementList generatedEnd = new ElementList(24, "generatedEnd");
-        Repeat manualCode = new Repeat(25, "manualCode");
-        Repeat version = new Repeat(26, "version");
-        ElementList classStatement = new ElementList(27, "classStatement");
-        ElementList state = new ElementList(28, "state");
+        OrList value = new OrList(16, "value");
+        ElementList annotation = new ElementList(17, "annotation");
+        Optional annotations = new Optional(18, "annotations");
+        Optional keywords = new Optional(19, "keywords");
+        ElementList collectionType = new ElementList(20, "collectionType");
+        ElementList mapType = new ElementList(21, "mapType");
+        ElementList type = new ElementList(22, "type");
+        ElementList attribute = new ElementList(23, "attribute");
+        ElementList manualEnd = new ElementList(24, "manualEnd");
+        ElementList generatedEnd = new ElementList(25, "generatedEnd");
+        Repeat manualCode = new Repeat(26, "manualCode");
+        Repeat version = new Repeat(27, "version");
+        ElementList classStatement = new ElementList(28, "classStatement");
+        ElementList state = new ElementList(29, "state");
 
         // *** Statements ***
 
         // newline = "\r\n" | "\n"
-        newline.add(30, new Str(29, "\r\n"));
-        newline.add(32, new Str(31, "\n"));
+        newline.add(31, new Str(30, "\r\n"));
+        newline.add(33, new Str(32, "\n"));
 
         // comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END)
-        ElementList comment_1 = new ElementList(33, "comment_1");
-        comment_1.add(35, new Str(34, "/*"));
-        Optional comment_1_1 = new Optional(36, "comment_1_1");
-        Repeat comment_1_1_1 = new Repeat(37, "comment_1_1_1");
-        OrList comment_1_1_1_1 = new OrList(38, "comment_1_1_1_1");
-        comment_1_1_1_1.add(39, comment);
-        comment_1_1_1_1.add(41, new Str(40, "*/", NOT));
-        comment_1_1_1.add(42, comment_1_1_1_1);
-        comment_1_1.add(43, comment_1_1_1);
-        comment_1.add(44, comment_1_1);
-        comment_1.add(46, new Str(45, "*/"));
-        comment.add(47, comment_1);
-        ElementList comment_2 = new ElementList(48, "comment_2");
-        comment_2.add(50, new Str(49, "//"));
-        Optional comment_2_1 = new Optional(51, "comment_2_1");
-        Repeat comment_2_1_1 = new Repeat(52, "comment_2_1_1");
-        comment_2_1_1.add(53, newline, NOT);
-        comment_2_1.add(54, comment_2_1_1);
-        comment_2.add(55, comment_2_1);
-        OrList comment_2_2 = new OrList(56, "comment_2_2");
-        comment_2_2.add(57, newline);
-        comment_2_2.add(59, new End(58, "comment_2_2"));
-        comment_2.add(60, comment_2_2);
-        comment.add(61, comment_2);
+        ElementList comment_1 = new ElementList(34, "comment_1");
+        comment_1.add(36, new Str(35, "/*"));
+        Optional comment_1_1 = new Optional(37, "comment_1_1");
+        Repeat comment_1_1_1 = new Repeat(38, "comment_1_1_1");
+        OrList comment_1_1_1_1 = new OrList(39, "comment_1_1_1_1");
+        comment_1_1_1_1.add(40, comment);
+        comment_1_1_1_1.add(42, new Str(41, "*/", NOT));
+        comment_1_1_1.add(43, comment_1_1_1_1);
+        comment_1_1.add(44, comment_1_1_1);
+        comment_1.add(45, comment_1_1);
+        comment_1.add(47, new Str(46, "*/"));
+        comment.add(48, comment_1);
+        ElementList comment_2 = new ElementList(49, "comment_2");
+        comment_2.add(51, new Str(50, "//"));
+        Optional comment_2_1 = new Optional(52, "comment_2_1");
+        Repeat comment_2_1_1 = new Repeat(53, "comment_2_1_1");
+        comment_2_1_1.add(54, newline, NOT);
+        comment_2_1.add(55, comment_2_1_1);
+        comment_2.add(56, comment_2_1);
+        OrList comment_2_2 = new OrList(57, "comment_2_2");
+        comment_2_2.add(58, newline);
+        comment_2_2.add(60, new End(59, "comment_2_2"));
+        comment_2.add(61, comment_2_2);
+        comment.add(62, comment_2);
 
         // ws = (newline | " " | "\t" | comment)+
-        OrList ws_1 = new OrList(62, "ws_1");
-        ws_1.add(63, newline);
-        ws_1.add(65, new Str(64, " "));
-        ws_1.add(67, new Str(66, "\t"));
-        ws_1.add(68, comment);
-        ws.add(69, ws_1);
+        OrList ws_1 = new OrList(63, "ws_1");
+        ws_1.add(64, newline);
+        ws_1.add(66, new Str(65, " "));
+        ws_1.add(68, new Str(67, "\t"));
+        ws_1.add(69, comment);
+        ws.add(70, ws_1);
 
         // s = [ws]
-        s.add(70, ws);
+        s.add(71, ws);
 
         // ff = "\""
 
         // str = ff (("\\\"" | !(ff|newline))+):strval ff
-        str.add(71, ff);
-        Repeat str_1 = new Repeat(72, "str_1");
-        OrList str_1_1 = new OrList(73, "str_1_1");
-        str_1_1.add(75, new Str(74, "\\\""));
-        OrList str_1_1_1 = new OrList(76, "str_1_1_1", NOT);
-        str_1_1_1.add(77, ff);
-        str_1_1_1.add(78, newline);
-        str_1_1.add(79, str_1_1_1);
-        str_1.add(80, str_1_1);
-        str.add(81, str_1);
-        str.add(82, ff);
+        str.add(72, ff);
+        Repeat str_1 = new Repeat(73, "str_1");
+        OrList str_1_1 = new OrList(74, "str_1_1");
+        str_1_1.add(76, new Str(75, "\\\""));
+        OrList str_1_1_1 = new OrList(77, "str_1_1_1", NOT);
+        str_1_1_1.add(78, ff);
+        str_1_1_1.add(79, newline);
+        str_1_1.add(80, str_1_1_1);
+        str_1.add(81, str_1_1);
+        str.add(82, str_1);
+        str.add(83, ff);
 
         // letter = "a".."z" | "A".."Z" | "_" | "$"
-        letter.add(84, new Range(83, "letter", "a", "z"));
-        letter.add(86, new Range(85, "letter", "A", "Z"));
-        letter.add(88, new Str(87, "_"));
-        letter.add(90, new Str(89, "$"));
+        letter.add(85, new Range(84, "letter", "a", "z"));
+        letter.add(87, new Range(86, "letter", "A", "Z"));
+        letter.add(89, new Str(88, "_"));
+        letter.add(91, new Str(90, "$"));
 
         // digit = "0".."9"
 
         // name = letter [letter | digit]+
-        name.add(91, letter);
-        Optional name_1 = new Optional(92, "name_1");
-        Repeat name_1_1 = new Repeat(93, "name_1_1");
-        OrList name_1_1_1 = new OrList(94, "name_1_1_1");
-        name_1_1_1.add(95, letter);
-        name_1_1_1.add(96, digit);
-        name_1_1.add(97, name_1_1_1);
-        name_1.add(98, name_1_1);
-        name.add(99, name_1);
+        name.add(92, letter);
+        Optional name_1 = new Optional(93, "name_1");
+        Repeat name_1_1 = new Repeat(94, "name_1_1");
+        OrList name_1_1_1 = new OrList(95, "name_1_1_1");
+        name_1_1_1.add(96, letter);
+        name_1_1_1.add(97, digit);
+        name_1_1.add(98, name_1_1_1);
+        name_1.add(99, name_1_1);
+        name.add(100, name_1);
 
         // public = ["public" ws]
-        _public.add(101, new Str(100, "public"));
-        _public.add(102, ws);
+        _public.add(102, new Str(101, "public"));
+        _public.add(103, ws);
 
         // packagestatement = "package" ws packagename s ";"
-        packagestatement.add(104, new Str(103, "package"));
-        packagestatement.add(105, ws);
-        packagestatement.add(106, packagename);
-        packagestatement.add(107, s);
-        packagestatement.add(109, new Str(108, ";"));
+        packagestatement.add(105, new Str(104, "package"));
+        packagestatement.add(106, ws);
+        packagestatement.add(107, packagename);
+        packagestatement.add(108, s);
+        packagestatement.add(110, new Str(109, ";"));
 
         // packagename = name ["." name|"*"]+
-        packagename.add(110, name);
-        Optional packagename_1 = new Optional(111, "packagename_1");
-        Repeat packagename_1_1 = new Repeat(112, "packagename_1_1");
-        packagename_1_1.add(114, new Str(113, "."));
-        OrList packagename_1_1_1 = new OrList(115, "packagename_1_1_1");
-        packagename_1_1_1.add(116, name);
-        packagename_1_1_1.add(118, new Str(117, "*"));
-        packagename_1_1.add(119, packagename_1_1_1);
-        packagename_1.add(120, packagename_1_1);
-        packagename.add(121, packagename_1);
+        packagename.add(111, name);
+        Optional packagename_1 = new Optional(112, "packagename_1");
+        Repeat packagename_1_1 = new Repeat(113, "packagename_1_1");
+        packagename_1_1.add(115, new Str(114, "."));
+        OrList packagename_1_1_1 = new OrList(116, "packagename_1_1_1");
+        packagename_1_1_1.add(117, name);
+        packagename_1_1_1.add(119, new Str(118, "*"));
+        packagename_1_1.add(120, packagename_1_1_1);
+        packagename_1.add(121, packagename_1_1);
+        packagename.add(122, packagename_1);
 
         // fullclassname = packagename
-        fullclassname.add(122, packagename);
+        fullclassname.add(123, packagename);
 
         // importstatement = "import" ws ["static":static ws] fullclassname s ";" s
-        importstatement.add(124, new Str(123, "import"));
-        importstatement.add(125, ws);
-        Optional importstatement_1 = new Optional(126, "importstatement_1");
-        importstatement_1.add(128, new Str(127, "static"));
-        importstatement_1.add(129, ws);
-        importstatement.add(130, importstatement_1);
-        importstatement.add(131, fullclassname);
-        importstatement.add(132, s);
-        importstatement.add(134, new Str(133, ";"));
-        importstatement.add(135, s);
+        importstatement.add(125, new Str(124, "import"));
+        importstatement.add(126, ws);
+        Optional importstatement_1 = new Optional(127, "importstatement_1");
+        importstatement_1.add(129, new Str(128, "static"));
+        importstatement_1.add(130, ws);
+        importstatement.add(131, importstatement_1);
+        importstatement.add(132, fullclassname);
+        importstatement.add(133, s);
+        importstatement.add(135, new Str(134, ";"));
+        importstatement.add(136, s);
 
         // imports = [importstatement+]
-        Repeat imports_1 = new Repeat(136, "imports_1");
-        imports_1.add(137, importstatement);
-        imports.add(138, imports_1);
+        Repeat imports_1 = new Repeat(137, "imports_1");
+        imports_1.add(138, importstatement);
+        imports.add(139, imports_1);
 
-        // annotation = "@" name s ["(" s name:attribute s "=" s str:value s ")"] s
-        annotation.add(140, new Str(139, "@"));
-        annotation.add(141, name);
-        annotation.add(142, s);
-        Optional annotation_1 = new Optional(143, "annotation_1");
-        annotation_1.add(145, new Str(144, "("));
-        annotation_1.add(146, s);
-        annotation_1.add(147, name);
-        annotation_1.add(148, s);
-        annotation_1.add(150, new Str(149, "="));
-        annotation_1.add(151, s);
-        annotation_1.add(152, str);
-        annotation_1.add(153, s);
-        annotation_1.add(155, new Str(154, ")"));
-        annotation.add(156, annotation_1);
-        annotation.add(157, s);
+        // value = str | (!(ws | ")")+)
+        value.add(140, str);
+        Repeat value_1 = new Repeat(141, "value_1");
+        OrList value_1_1 = new OrList(142, "value_1_1");
+        value_1_1.add(143, ws);
+        value_1_1.add(145, new Str(144, ")"));
+        value_1.add(146, value_1_1, NOT);
+        value.add(147, value_1);
 
-        // annotations = [s annotation]+
-        Repeat annotations_1 = new Repeat(158, "annotations_1");
-        annotations_1.add(159, s);
-        annotations_1.add(160, annotation);
-        annotations.add(161, annotations_1);
+        // annotation = "@" name s ["(" s name:attribute s "=" s value s ")" s]
+        annotation.add(149, new Str(148, "@"));
+        annotation.add(150, name);
+        annotation.add(151, s);
+        Optional annotation_1 = new Optional(152, "annotation_1");
+        annotation_1.add(154, new Str(153, "("));
+        annotation_1.add(155, s);
+        annotation_1.add(156, name);
+        annotation_1.add(157, s);
+        annotation_1.add(159, new Str(158, "="));
+        annotation_1.add(160, s);
+        annotation_1.add(161, value);
+        annotation_1.add(162, s);
+        annotation_1.add(164, new Str(163, ")"));
+        annotation_1.add(165, s);
+        annotation.add(166, annotation_1);
+
+        // annotations = [annotation]+
+        Repeat annotations_1 = new Repeat(167, "annotations_1");
+        annotations_1.add(168, annotation);
+        annotations.add(169, annotations_1);
 
         // keywords = ["public "|"private "|"final " s]+
-        Repeat keywords_1 = new Repeat(162, "keywords_1");
-        OrList keywords_1_1 = new OrList(163, "keywords_1_1");
-        keywords_1_1.add(165, new Str(164, "public "));
-        keywords_1_1.add(167, new Str(166, "private "));
-        keywords_1_1.add(169, new Str(168, "final "));
-        keywords_1.add(170, keywords_1_1);
-        keywords_1.add(171, s);
-        keywords.add(172, keywords_1);
+        Repeat keywords_1 = new Repeat(170, "keywords_1");
+        OrList keywords_1_1 = new OrList(171, "keywords_1_1");
+        keywords_1_1.add(173, new Str(172, "public "));
+        keywords_1_1.add(175, new Str(174, "private "));
+        keywords_1_1.add(177, new Str(176, "final "));
+        keywords_1.add(178, keywords_1_1);
+        keywords_1.add(179, s);
+        keywords.add(180, keywords_1);
 
         // collectionType = s "<" s type s ">"
-        collectionType.add(173, s);
-        collectionType.add(175, new Str(174, "<"));
-        collectionType.add(176, s);
-        collectionType.add(177, type);
-        collectionType.add(178, s);
-        collectionType.add(180, new Str(179, ">"));
+        collectionType.add(181, s);
+        collectionType.add(183, new Str(182, "<"));
+        collectionType.add(184, s);
+        collectionType.add(185, type);
+        collectionType.add(186, s);
+        collectionType.add(188, new Str(187, ">"));
 
         // mapType = s "<" s type:key s "," s type:entry s ">"
-        mapType.add(181, s);
-        mapType.add(183, new Str(182, "<"));
-        mapType.add(184, s);
-        mapType.add(185, type);
-        mapType.add(186, s);
-        mapType.add(188, new Str(187, ","));
         mapType.add(189, s);
-        mapType.add(190, type);
-        mapType.add(191, s);
-        mapType.add(193, new Str(192, ">"));
+        mapType.add(191, new Str(190, "<"));
+        mapType.add(192, s);
+        mapType.add(193, type);
+        mapType.add(194, s);
+        mapType.add(196, new Str(195, ","));
+        mapType.add(197, s);
+        mapType.add(198, type);
+        mapType.add(199, s);
+        mapType.add(201, new Str(200, ">"));
 
         // type = name [collectionType | mapType]
-        type.add(194, name);
-        Optional type_1 = new Optional(195, "type_1");
-        OrList type_1_1 = new OrList(196, "type_1_1");
-        type_1_1.add(197, collectionType);
-        type_1_1.add(198, mapType);
-        type_1.add(199, type_1_1);
-        type.add(200, type_1);
+        type.add(202, name);
+        Optional type_1 = new Optional(203, "type_1");
+        OrList type_1_1 = new OrList(204, "type_1_1");
+        type_1_1.add(205, collectionType);
+        type_1_1.add(206, mapType);
+        type_1.add(207, type_1_1);
+        type.add(208, type_1);
 
-        // attribute = s annotations keywords s type ws name:variable s ";" [!newline+] newline
-        attribute.add(201, s);
-        attribute.add(202, annotations);
-        attribute.add(203, keywords);
-        attribute.add(204, s);
-        attribute.add(205, type);
-        attribute.add(206, ws);
-        attribute.add(207, name);
-        attribute.add(208, s);
-        attribute.add(210, new Str(209, ";"));
-        Optional attribute_1 = new Optional(211, "attribute_1");
-        Repeat attribute_1_1 = new Repeat(212, "attribute_1_1");
-        attribute_1_1.add(213, newline, NOT);
-        attribute_1.add(214, attribute_1_1);
-        attribute.add(215, attribute_1);
-        attribute.add(216, newline);
+        // attribute = s annotations s keywords s type ws name:variable s ";" [!newline+] newline
+        attribute.add(209, s);
+        attribute.add(210, annotations);
+        attribute.add(211, s);
+        attribute.add(212, keywords);
+        attribute.add(213, s);
+        attribute.add(214, type);
+        attribute.add(215, ws);
+        attribute.add(216, name);
+        attribute.add(217, s);
+        attribute.add(219, new Str(218, ";"));
+        Optional attribute_1 = new Optional(220, "attribute_1");
+        Repeat attribute_1_1 = new Repeat(221, "attribute_1_1");
+        attribute_1_1.add(222, newline, NOT);
+        attribute_1.add(223, attribute_1_1);
+        attribute.add(224, attribute_1);
+        attribute.add(225, newline);
 
         // manualEnd = ("}" s END)
-        manualEnd.add(218, new Str(217, "}"));
-        manualEnd.add(219, s);
-        manualEnd.add(221, new End(220, "manualEnd"));
+        manualEnd.add(227, new Str(226, "}"));
+        manualEnd.add(228, s);
+        manualEnd.add(230, new End(229, "manualEnd"));
 
         // generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *
-        ElementList generatedEnd_1 = new ElementList(222, "generatedEnd_1");
-        generatedEnd_1.add(224, new Str(223, "//"));
-        generatedEnd_1.add(225, s);
-        Optional generatedEnd_1_1 = new Optional(226, "generatedEnd_1_1");
-        OrList generatedEnd_1_1_1 = new OrList(227, "generatedEnd_1_1_1");
-        Repeat generatedEnd_1_1_1_1 = new Repeat(228, "generatedEnd_1_1_1_1");
-        generatedEnd_1_1_1_1.add(230, new Str(229, "*"));
-        generatedEnd_1_1_1.add(231, generatedEnd_1_1_1_1);
-        Repeat generatedEnd_1_1_1_2 = new Repeat(232, "generatedEnd_1_1_1_2");
-        generatedEnd_1_1_1_2.add(234, new Str(233, "-"));
-        generatedEnd_1_1_1.add(235, generatedEnd_1_1_1_2);
-        Repeat generatedEnd_1_1_1_3 = new Repeat(236, "generatedEnd_1_1_1_3");
-        generatedEnd_1_1_1_3.add(238, new Str(237, "="));
-        generatedEnd_1_1_1.add(239, generatedEnd_1_1_1_3);
-        generatedEnd_1_1.add(240, generatedEnd_1_1_1);
-        generatedEnd_1.add(241, generatedEnd_1_1);
-        generatedEnd_1.add(242, s);
-        generatedEnd_1.add(244, new Str(243, "Generated"));
-        Optional generatedEnd_1_2 = new Optional(245, "generatedEnd_1_2");
-        Repeat generatedEnd_1_2_1 = new Repeat(246, "generatedEnd_1_2_1");
-        generatedEnd_1_2_1.add(247, newline, NOT);
-        generatedEnd_1_2.add(248, generatedEnd_1_2_1);
-        generatedEnd_1.add(249, generatedEnd_1_2);
-        generatedEnd.add(250, generatedEnd_1);
-        generatedEnd.add(252, new Complete(251, "generatedEnd"));
+        ElementList generatedEnd_1 = new ElementList(231, "generatedEnd_1");
+        generatedEnd_1.add(233, new Str(232, "//"));
+        generatedEnd_1.add(234, s);
+        Optional generatedEnd_1_1 = new Optional(235, "generatedEnd_1_1");
+        OrList generatedEnd_1_1_1 = new OrList(236, "generatedEnd_1_1_1");
+        Repeat generatedEnd_1_1_1_1 = new Repeat(237, "generatedEnd_1_1_1_1");
+        generatedEnd_1_1_1_1.add(239, new Str(238, "*"));
+        generatedEnd_1_1_1.add(240, generatedEnd_1_1_1_1);
+        Repeat generatedEnd_1_1_1_2 = new Repeat(241, "generatedEnd_1_1_1_2");
+        generatedEnd_1_1_1_2.add(243, new Str(242, "-"));
+        generatedEnd_1_1_1.add(244, generatedEnd_1_1_1_2);
+        Repeat generatedEnd_1_1_1_3 = new Repeat(245, "generatedEnd_1_1_1_3");
+        generatedEnd_1_1_1_3.add(247, new Str(246, "="));
+        generatedEnd_1_1_1.add(248, generatedEnd_1_1_1_3);
+        generatedEnd_1_1.add(249, generatedEnd_1_1_1);
+        generatedEnd_1.add(250, generatedEnd_1_1);
+        generatedEnd_1.add(251, s);
+        generatedEnd_1.add(253, new Str(252, "Generated"));
+        Optional generatedEnd_1_2 = new Optional(254, "generatedEnd_1_2");
+        Repeat generatedEnd_1_2_1 = new Repeat(255, "generatedEnd_1_2_1");
+        generatedEnd_1_2_1.add(256, newline, NOT);
+        generatedEnd_1_2.add(257, generatedEnd_1_2_1);
+        generatedEnd_1.add(258, generatedEnd_1_2);
+        generatedEnd.add(259, generatedEnd_1);
+        generatedEnd.add(261, new Complete(260, "generatedEnd"));
 
         // manualCode = !(manualEnd | generatedEnd)+
-        OrList manualCode_1 = new OrList(253, "manualCode_1");
-        manualCode_1.add(254, manualEnd);
-        manualCode_1.add(255, generatedEnd);
-        manualCode.add(256, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(262, "manualCode_1");
+        manualCode_1.add(263, manualEnd);
+        manualCode_1.add(264, generatedEnd);
+        manualCode.add(265, manualCode_1, NOT);
 
         // version = digit+
-        version.add(257, digit);
+        version.add(266, digit);
 
         // classStatement =
-        //   "@State(" s "version" s "=" s version s ")" ws public "class" ws name:classname s ["extends" ws name s]
+        //   "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
         //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
         //   manualEnd|generatedEnd *
-        classStatement.add(259, new Str(258, "@State("));
-        classStatement.add(260, s);
-        classStatement.add(262, new Str(261, "version"));
-        classStatement.add(263, s);
-        classStatement.add(265, new Str(264, "="));
-        classStatement.add(266, s);
-        classStatement.add(267, version);
-        classStatement.add(268, s);
-        classStatement.add(270, new Str(269, ")"));
-        classStatement.add(271, ws);
-        classStatement.add(272, _public);
-        classStatement.add(274, new Str(273, "class"));
-        classStatement.add(275, ws);
-        classStatement.add(276, name);
-        classStatement.add(277, s);
-        Optional classStatement_1 = new Optional(278, "classStatement_1");
-        classStatement_1.add(280, new Str(279, "extends"));
-        classStatement_1.add(281, ws);
-        classStatement_1.add(282, name);
-        classStatement_1.add(283, s);
+        classStatement.add(268, new Str(267, "@State"));
+        Optional classStatement_1 = new Optional(269, "classStatement_1");
+        classStatement_1.add(270, s);
+        classStatement_1.add(272, new Str(271, "("));
+        classStatement_1.add(273, s);
+        classStatement_1.add(275, new Str(274, "version"));
+        classStatement_1.add(276, s);
+        classStatement_1.add(278, new Str(277, "="));
+        classStatement_1.add(279, s);
+        classStatement_1.add(280, version);
+        classStatement_1.add(281, s);
+        classStatement_1.add(283, new Str(282, ")"));
         classStatement.add(284, classStatement_1);
-        Optional classStatement_2 = new Optional(285, "classStatement_2");
-        classStatement_2.add(287, new Str(286, "implements"));
-        classStatement_2.add(288, ws);
-        classStatement_2.add(289, name);
-        Optional classStatement_2_1 = new Optional(290, "classStatement_2_1");
-        Repeat classStatement_2_1_1 = new Repeat(291, "classStatement_2_1_1");
-        classStatement_2_1_1.add(292, s);
-        classStatement_2_1_1.add(294, new Str(293, ","));
-        classStatement_2_1_1.add(295, s);
-        classStatement_2_1_1.add(296, name);
-        classStatement_2_1.add(297, classStatement_2_1_1);
-        classStatement_2.add(298, classStatement_2_1);
-        classStatement_2.add(299, s);
-        classStatement.add(300, classStatement_2);
-        classStatement.add(302, new Str(301, "{"));
-        classStatement.add(303, s);
-        Optional classStatement_3 = new Optional(304, "classStatement_3");
-        Repeat classStatement_3_1 = new Repeat(305, "classStatement_3_1");
-        classStatement_3_1.add(306, attribute);
-        classStatement_3.add(307, classStatement_3_1);
-        classStatement.add(308, classStatement_3);
-        classStatement.add(309, manualCode);
-        OrList classStatement_4 = new OrList(310, "classStatement_4");
-        classStatement_4.add(311, manualEnd);
-        classStatement_4.add(312, generatedEnd);
-        classStatement.add(313, classStatement_4);
-        classStatement.add(315, new Complete(314, "classStatement"));
+        classStatement.add(285, ws);
+        classStatement.add(286, _public);
+        classStatement.add(288, new Str(287, "class"));
+        classStatement.add(289, ws);
+        classStatement.add(290, name);
+        classStatement.add(291, s);
+        Optional classStatement_2 = new Optional(292, "classStatement_2");
+        classStatement_2.add(294, new Str(293, "extends"));
+        classStatement_2.add(295, ws);
+        classStatement_2.add(296, name);
+        classStatement_2.add(297, s);
+        classStatement.add(298, classStatement_2);
+        Optional classStatement_3 = new Optional(299, "classStatement_3");
+        classStatement_3.add(301, new Str(300, "implements"));
+        classStatement_3.add(302, ws);
+        classStatement_3.add(303, name);
+        Optional classStatement_3_1 = new Optional(304, "classStatement_3_1");
+        Repeat classStatement_3_1_1 = new Repeat(305, "classStatement_3_1_1");
+        classStatement_3_1_1.add(306, s);
+        classStatement_3_1_1.add(308, new Str(307, ","));
+        classStatement_3_1_1.add(309, s);
+        classStatement_3_1_1.add(310, name);
+        classStatement_3_1.add(311, classStatement_3_1_1);
+        classStatement_3.add(312, classStatement_3_1);
+        classStatement_3.add(313, s);
+        classStatement.add(314, classStatement_3);
+        classStatement.add(316, new Str(315, "{"));
+        classStatement.add(317, s);
+        Optional classStatement_4 = new Optional(318, "classStatement_4");
+        Repeat classStatement_4_1 = new Repeat(319, "classStatement_4_1");
+        classStatement_4_1.add(320, attribute);
+        classStatement_4.add(321, classStatement_4_1);
+        classStatement.add(322, classStatement_4);
+        classStatement.add(323, manualCode);
+        OrList classStatement_5 = new OrList(324, "classStatement_5");
+        classStatement_5.add(325, manualEnd);
+        classStatement_5.add(326, generatedEnd);
+        classStatement.add(327, classStatement_5);
+        classStatement.add(329, new Complete(328, "classStatement"));
 
         // state = s packagestatement s imports s classStatement s
-        state.add(316, s);
-        state.add(317, packagestatement);
-        state.add(318, s);
-        state.add(319, imports);
-        state.add(320, s);
-        state.add(321, classStatement);
-        state.add(322, s);
+        state.add(330, s);
+        state.add(331, packagestatement);
+        state.add(332, s);
+        state.add(333, imports);
+        state.add(334, s);
+        state.add(335, classStatement);
+        state.add(336, s);
 
         return new TopElement(data1, state);
     }

@@ -5,6 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface State {
-    public int version();
+    public int version() default 1;
     public String type() default "immutable";
 }

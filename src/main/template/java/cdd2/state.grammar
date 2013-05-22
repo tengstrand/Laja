@@ -18,20 +18,21 @@ grammar state {
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
    imports = [importstatement+];
 
-   annotation = "@" name s ["(" s name:attribute s "=" s str:value s ")"] s;
-   annotations = [s annotation]+;
+   value = str | (!(ws | ")")+);
+   annotation = "@" name s ["(" s name:attribute s "=" s value s ")" s];
+   annotations = [annotation]+;
    keywords = ["public "|"private "|"final " s]+;
    collectionType = s "<" s type s ">";
    mapType = s "<" s type:key s "," s type:entry s ">";
    type = name [collectionType | mapType];
-   attribute = s annotations keywords s type ws name:variable s ";" [!newline+] newline;
+   attribute = s annotations s keywords s type ws name:variable s ";" [!newline+] newline;
 
    manualEnd = ("}" s END);
    generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *;
    manualCode = !(manualEnd | generatedEnd)+;
 
    version = digit+;
-   classStatement = "@State(" s "version" s "=" s version s ")" ws public "class" ws name:classname s ["extends" ws name s]
+   classStatement = "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
                     manualEnd|generatedEnd *;
 

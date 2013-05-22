@@ -28,7 +28,7 @@ import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
-@State(version = 1)
+@State
 public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id
@@ -166,7 +166,7 @@ public class PersonState implements ImmutableState {
                 ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
     }
 
-    @State(version = 1, type = "mutable")
+    @State(type = "mutable")
     public static class PersonMutableState implements MutableState {
         @Key public String name;
         @Id
