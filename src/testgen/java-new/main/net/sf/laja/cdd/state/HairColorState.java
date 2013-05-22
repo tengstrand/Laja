@@ -7,12 +7,9 @@ import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
-@State(version = 1)
+@State
 public class HairColorState implements ImmutableState {
     public final String color;
-
-    private static void setDefaults(HairColorMutableState state) {
-    }
 
     private static void validate(HairColorMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
     }
@@ -63,12 +60,11 @@ public class HairColorState implements ImmutableState {
         return "{color=" + color + "}";
     }
 
-    @State(version = 1, type = "mutable")
+    @State(type = "mutable")
     public static class HairColorMutableState implements MutableState {
         public String color;
 
         public HairColorMutableState() {
-            HairColorState.setDefaults(this);
         }
 
         public HairColorMutableState(String color) {

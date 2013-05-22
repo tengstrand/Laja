@@ -1,6 +1,6 @@
 
-##set (stateName = "AddressState")
 #set (stateName = "PersonState")
+##set (stateName = "AddressState")
 ##set (stateName = "HairColorState")
 
 #macro lazyDefineCdd()

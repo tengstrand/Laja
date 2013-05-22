@@ -9,16 +9,13 @@ import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
-@State(version = 1)
+@State
 public class AddressState implements ImmutableState {
     @Id
     public final int id;
     public final String streetName;
     @Optional
     public final String city;
-
-    private static void setDefaults(AddressMutableState state) {
-    }
 
     private static void validate(AddressMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
     }
@@ -108,7 +105,7 @@ public class AddressState implements ImmutableState {
                 ", city='" + city + "'}";
     }
 
-    @State(version = 1, type = "mutable")
+    @State(type = "mutable")
     public static class AddressMutableState implements MutableState {
         @Id
         public int id;
@@ -117,7 +114,6 @@ public class AddressState implements ImmutableState {
         public String city;
 
         public AddressMutableState() {
-            AddressState.setDefaults(this);
         }
 
         public AddressMutableState(
