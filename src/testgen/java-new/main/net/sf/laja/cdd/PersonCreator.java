@@ -25,6 +25,9 @@ import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 public class PersonCreator implements PersonMaker {
     private final PersonMutableState state;
 
+    /**
+     * This is a comment!
+     */
     public Person asPerson() {
         return new Person(state.asImmutable());
     }

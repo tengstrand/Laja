@@ -112,14 +112,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
     private net.sf.laja.parser.engine2.element.Element getGrammar2() {
         // *** Output classes ***
+        Data.CreatorPackagestatementPackagename creatorPackagestatementPackagename = data2.new CreatorPackagestatementPackagename("creatorPackagestatementPackagename");
         Data.ParameterParameterType parameterParameterType = data2.new ParameterParameterType("parameterParameterType");
         Data.ParameterParameterVariable parameterParameterVariable = data2.new ParameterParameterVariable("parameterParameterVariable");
         Data.ParametersParametersParameter parametersParametersParameter = data2.new ParametersParametersParameter("parametersParametersParameter");
+        Data.AsMethodAsMethodSpaces asMethodAsMethodSpaces = data2.new AsMethodAsMethodSpaces("asMethodAsMethodSpaces");
         Data.AsMethodAsMethodReturnclass asMethodAsMethodReturnclass = data2.new AsMethodAsMethodReturnclass("asMethodAsMethodReturnclass");
         Data.AsMethodAsMethodMethodName asMethodAsMethodMethodName = data2.new AsMethodAsMethodMethodName("asMethodAsMethodMethodName");
         Data.AsMethodAsMethodParameters asMethodAsMethodParameters = data2.new AsMethodAsMethodParameters("asMethodAsMethodParameters");
         Data.AsMethodAsMethodStatement asMethodAsMethodStatement = data2.new AsMethodAsMethodStatement("asMethodAsMethodStatement");
         Data.ClassStatementClassStatementClassname classStatementClassStatementClassname = data2.new ClassStatementClassStatementClassname("classStatementClassStatementClassname");
+        Data.ClassStatementClassStatementStateClass classStatementClassStatementStateClass = data2.new ClassStatementClassStatementStateClass("classStatementClassStatementStateClass");
         Data.ClassStatementClassStatementAsMethod classStatementClassStatementAsMethod = data2.new ClassStatementClassStatementAsMethod("classStatementClassStatementAsMethod");
         Data.CreatorCreatorImports creatorCreatorImports = data2.new CreatorCreatorImports("creatorCreatorImports");
         Data.CreatorCreatorClassStatement creatorCreatorClassStatement = data2.new CreatorCreatorClassStatement("creatorCreatorClassStatement");
@@ -243,7 +246,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         // packagestatement = "package" ws packagename s ";"
         packagestatement.add(109, new Str(108, "package"));
         packagestatement.add(110, ws);
-        packagestatement.add(111, packagename);
+        packagestatement.add(111, packagename, creatorPackagestatementPackagename);
         packagestatement.add(112, s);
         packagestatement.add(114, new Str(113, ";"));
 
@@ -300,28 +303,28 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         parameters_2.add(161, parameters_2_1);
         parameters.add(162, parameters_2);
 
-        // asMethod = "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement s
-        asMethod.add(164, new Str(163, "public"));
-        asMethod.add(165, s);
-        asMethod.add(166, name, asMethodAsMethodReturnclass);
-        asMethod.add(167, ws);
-        ElementList asMethod_1 = new ElementList(168, "asMethod_1", asMethodAsMethodMethodName);
-        asMethod_1.add(170, new Str(169, "as"));
-        asMethod_1.add(171, name);
-        asMethod.add(172, asMethod_1);
-        asMethod.add(173, s);
-        asMethod.add(175, new Str(174, "("));
-        asMethod.add(176, s);
-        asMethod.add(177, parameters, asMethodAsMethodParameters);
-        asMethod.add(178, s);
-        asMethod.add(180, new Str(179, ")"));
-        asMethod.add(181, s);
-        asMethod.add(182, statement, asMethodAsMethodStatement);
-        asMethod.add(183, s);
+        // asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement
+        asMethod.add(163, s, asMethodAsMethodSpaces);
+        asMethod.add(165, new Str(164, "public"));
+        asMethod.add(166, s);
+        asMethod.add(167, name, asMethodAsMethodReturnclass);
+        asMethod.add(168, ws);
+        ElementList asMethod_1 = new ElementList(169, "asMethod_1", asMethodAsMethodMethodName);
+        asMethod_1.add(171, new Str(170, "as"));
+        asMethod_1.add(172, name);
+        asMethod.add(173, asMethod_1);
+        asMethod.add(174, s);
+        asMethod.add(176, new Str(175, "("));
+        asMethod.add(177, s);
+        asMethod.add(178, parameters, asMethodAsMethodParameters);
+        asMethod.add(179, s);
+        asMethod.add(181, new Str(180, ")"));
+        asMethod.add(182, s);
+        asMethod.add(183, statement, asMethodAsMethodStatement);
 
         // classStatement =
         //   "@Creator" ws public "class" ws name:classname s "implements" s name s "{" s
-        //   "private final" s name s "state;" s asMethod+ *
+        //   "private final" s name:stateClass s "state;" asMethod+ *
         classStatement.add(185, new Str(184, "@Creator"));
         classStatement.add(186, ws);
         classStatement.add(187, _public);
@@ -337,21 +340,20 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(200, s);
         classStatement.add(202, new Str(201, "private final"));
         classStatement.add(203, s);
-        classStatement.add(204, name);
+        classStatement.add(204, name, classStatementClassStatementStateClass);
         classStatement.add(205, s);
         classStatement.add(207, new Str(206, "state;"));
-        classStatement.add(208, s);
-        Repeat classStatement_1 = new Repeat(209, "classStatement_1");
-        classStatement_1.add(210, asMethod, classStatementClassStatementAsMethod);
-        classStatement.add(211, classStatement_1);
-        classStatement.add(213, new Complete(212, "classStatement"));
+        Repeat classStatement_1 = new Repeat(208, "classStatement_1");
+        classStatement_1.add(209, asMethod, classStatementClassStatementAsMethod);
+        classStatement.add(210, classStatement_1);
+        classStatement.add(212, new Complete(211, "classStatement"));
 
         // creator = packagestatement s imports s classStatement
-        creator.add(214, packagestatement);
-        creator.add(215, s);
-        creator.add(216, imports, creatorCreatorImports);
-        creator.add(217, s);
-        creator.add(218, classStatement, creatorCreatorClassStatement);
+        creator.add(213, packagestatement);
+        creator.add(214, s);
+        creator.add(215, imports, creatorCreatorImports);
+        creator.add(216, s);
+        creator.add(217, classStatement, creatorCreatorClassStatement);
 
         return new TopElement(data2, creator);
     }
@@ -535,28 +537,28 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         parameters_2.add(161, parameters_2_1);
         parameters.add(162, parameters_2);
 
-        // asMethod = "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement s
-        asMethod.add(164, new Str(163, "public"));
-        asMethod.add(165, s);
-        asMethod.add(166, name);
-        asMethod.add(167, ws);
-        ElementList asMethod_1 = new ElementList(168, "asMethod_1");
-        asMethod_1.add(170, new Str(169, "as"));
-        asMethod_1.add(171, name);
-        asMethod.add(172, asMethod_1);
-        asMethod.add(173, s);
-        asMethod.add(175, new Str(174, "("));
-        asMethod.add(176, s);
-        asMethod.add(177, parameters);
-        asMethod.add(178, s);
-        asMethod.add(180, new Str(179, ")"));
-        asMethod.add(181, s);
-        asMethod.add(182, statement);
-        asMethod.add(183, s);
+        // asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement
+        asMethod.add(163, s);
+        asMethod.add(165, new Str(164, "public"));
+        asMethod.add(166, s);
+        asMethod.add(167, name);
+        asMethod.add(168, ws);
+        ElementList asMethod_1 = new ElementList(169, "asMethod_1");
+        asMethod_1.add(171, new Str(170, "as"));
+        asMethod_1.add(172, name);
+        asMethod.add(173, asMethod_1);
+        asMethod.add(174, s);
+        asMethod.add(176, new Str(175, "("));
+        asMethod.add(177, s);
+        asMethod.add(178, parameters);
+        asMethod.add(179, s);
+        asMethod.add(181, new Str(180, ")"));
+        asMethod.add(182, s);
+        asMethod.add(183, statement);
 
         // classStatement =
         //   "@Creator" ws public "class" ws name:classname s "implements" s name s "{" s
-        //   "private final" s name s "state;" s asMethod+ *
+        //   "private final" s name:stateClass s "state;" asMethod+ *
         classStatement.add(185, new Str(184, "@Creator"));
         classStatement.add(186, ws);
         classStatement.add(187, _public);
@@ -575,18 +577,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(204, name);
         classStatement.add(205, s);
         classStatement.add(207, new Str(206, "state;"));
-        classStatement.add(208, s);
-        Repeat classStatement_1 = new Repeat(209, "classStatement_1");
-        classStatement_1.add(210, asMethod);
-        classStatement.add(211, classStatement_1);
-        classStatement.add(213, new Complete(212, "classStatement"));
+        Repeat classStatement_1 = new Repeat(208, "classStatement_1");
+        classStatement_1.add(209, asMethod);
+        classStatement.add(210, classStatement_1);
+        classStatement.add(212, new Complete(211, "classStatement"));
 
         // creator = packagestatement s imports s classStatement
-        creator.add(214, packagestatement);
-        creator.add(215, s);
-        creator.add(216, imports);
-        creator.add(217, s);
-        creator.add(218, classStatement);
+        creator.add(213, packagestatement);
+        creator.add(214, s);
+        creator.add(215, imports);
+        creator.add(216, s);
+        creator.add(217, classStatement);
 
         return new TopElement(data1, creator);
     }
@@ -642,6 +643,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
     // AsMethod
     public interface IAsMethod {
+        public void setSpaces(String spaces);
         public void setReturnclass(String returnclass);
         public void setMethodName(String methodName);
         public void setParameters(IParameters iparameters);
@@ -651,11 +653,13 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
     // ClassStatement
     public interface IClassStatement {
         public void setClassname(String classname);
+        public void setStateClass(String stateClass);
         public void addAsMethod(IAsMethod iasMethod);
     }
 
     // Creator
     public interface ICreator {
+        public void setPackagename(String packagename);
         public void setImports(String imports);
         public void setClassStatement(IClassStatement iclassStatement);
     }
@@ -713,6 +717,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             return creatorStack.peek();
         }
 
+        // Creator creator.setPackagename(String packagestatement.packagename);
+        public class CreatorPackagestatementPackagename implements Output {
+            private String name;
+            public CreatorPackagestatementPackagename(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekCreator().setPackagename(source.get(bookmark));
+            }
+        }
+
         // Parameter parameter.setType(String type);
         public class ParameterParameterType implements Output {
             private String name;
@@ -746,7 +761,18 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
-        // AsMethod asMethod.setReturnclass(String returnclass);
+        // AsMethod asMethod.setSpaces(String spaces);
+        public class AsMethodAsMethodSpaces implements Output {
+            private String name;
+            public AsMethodAsMethodSpaces(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekAsMethod().setSpaces(source.get(bookmark));
+            }
+        }
+
+        // asMethod.setReturnclass(String returnclass);
         public class AsMethodAsMethodReturnclass implements Output {
             private String name;
             public AsMethodAsMethodReturnclass(String name) { this.name = name; }
@@ -801,6 +827,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
+        // classStatement.setStateClass(String stateClass);
+        public class ClassStatementClassStatementStateClass implements Output {
+            private String name;
+            public ClassStatementClassStatementStateClass(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekClassStatement().setStateClass(source.get(bookmark));
+            }
+        }
+
         // classStatement.addAsMethod(AsMethod asMethod);
         public class ClassStatementClassStatementAsMethod implements Output {
             private String name;
@@ -812,7 +849,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
-        // Creator creator.setImports(String imports);
+        // creator.setImports(String imports);
         public class CreatorCreatorImports implements Output {
             private String name;
             public CreatorCreatorImports(String name) { this.name = name; }

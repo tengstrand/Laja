@@ -1,4 +1,27 @@
 
-#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{creatorName}.txt"
-{creator}
+#set (packagename = creator.packagename)
+#set (imports = creator.imports)
+#set (classname = creator.classname)
+#set (asMethods = creator.asMethods)
+#set (state = creator.state)
+#set (maker = "{state}Maker")
+#set (mutableState = "{state}MutableState")
+
+#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
+package {packagename};
+
+{imports}##
+@Creator
+public class {classname} implements {maker} {
+    private final {mutableState} state;##
+  #foreach (method in asMethods)
+    #set (parameters = "")
+    #foreach (parameter in method.parame)
+      #set (parameters = "{delimiter}{parameters}")
+      #set (delimiter = ", ")
+    #end
+{method.spaces}public {method.returnclass} {method.methodName}({parameters}) {method.statement}##
+  #end
+
+}
 #end
