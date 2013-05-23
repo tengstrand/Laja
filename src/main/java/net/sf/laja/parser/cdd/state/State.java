@@ -14,7 +14,7 @@ public class State implements StateParser.IState {
     public List<Attribute> attributes;
     public Imports imports;
     public String manualCode;
-    public String generatedText;
+    public String generatedEnd;
 
     public boolean isEntity;
 
@@ -42,7 +42,7 @@ public class State implements StateParser.IState {
         mutableClass = StringUtils.left(classname, classname.length() - 5) + "MutableState";
         attributes = classStatement.attributes;
         manualCode = classStatement.manualCode;
-        generatedText = classStatement.generatedText;
+        generatedEnd = classStatement.generatedEnd;
 
         for (Attribute attribute : attributes) {
             if (attribute.isEntity()) {

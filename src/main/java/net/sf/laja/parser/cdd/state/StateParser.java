@@ -114,7 +114,6 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         // *** Output classes ***
         Data.ImportstatementImportstatement importstatementImportstatement = data2.new ImportstatementImportstatement("importstatementImportstatement");
         Data.AnnotationsAnnotations annotationsAnnotations = data2.new AnnotationsAnnotations("annotationsAnnotations");
-        Data.ClassStatementGeneratedEndGeneratedText classStatementGeneratedEndGeneratedText = data2.new ClassStatementGeneratedEndGeneratedText("classStatementGeneratedEndGeneratedText");
         Data.StatePackagestatementPackagename statePackagestatementPackagename = data2.new StatePackagestatementPackagename("statePackagestatementPackagename");
         Data.ImportstatementImportstatementStatic importstatementImportstatementStatic = data2.new ImportstatementImportstatementStatic("importstatementImportstatementStatic");
         Data.ImportstatementImportstatementFullclassname importstatementImportstatementFullclassname = data2.new ImportstatementImportstatementFullclassname("importstatementImportstatementFullclassname");
@@ -136,6 +135,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         Data.ClassStatementClassStatementClassname classStatementClassStatementClassname = data2.new ClassStatementClassStatementClassname("classStatementClassStatementClassname");
         Data.ClassStatementClassStatementAttribute classStatementClassStatementAttribute = data2.new ClassStatementClassStatementAttribute("classStatementClassStatementAttribute");
         Data.ClassStatementClassStatementManualCode classStatementClassStatementManualCode = data2.new ClassStatementClassStatementManualCode("classStatementClassStatementManualCode");
+        Data.ClassStatementClassStatementGeneratedEnd classStatementClassStatementGeneratedEnd = data2.new ClassStatementClassStatementGeneratedEnd("classStatementClassStatementGeneratedEnd");
         Data.StateStateImports stateStateImports = data2.new StateStateImports("stateStateImports");
         Data.StateStateClassStatement stateStateClassStatement = data2.new StateStateClassStatement("stateStateClassStatement");
 
@@ -164,7 +164,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         ElementList type = new ElementList(22, "type");
         ElementList attribute = new ElementList(23, "attribute");
         ElementList manualEnd = new ElementList(24, "manualEnd");
-        ElementList generatedEnd = new ElementList(25, "generatedEnd", classStatementGeneratedEndGeneratedText);
+        ElementList generatedEnd = new ElementList(25, "generatedEnd");
         Repeat manualCode = new Repeat(26, "manualCode");
         Repeat version = new Repeat(27, "version");
         ElementList classStatement = new ElementList(28, "classStatement");
@@ -383,7 +383,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(228, s);
         manualEnd.add(230, new End(229, "manualEnd"));
 
-        // generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText
+        // generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]
         generatedEnd.add(232, new Str(231, "//"));
         generatedEnd.add(233, s);
         Optional generatedEnd_1 = new Optional(234, "generatedEnd_1");
@@ -469,7 +469,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(319, manualCode, classStatementClassStatementManualCode);
         OrList classStatement_5 = new OrList(320, "classStatement_5");
         classStatement_5.add(321, manualEnd);
-        classStatement_5.add(322, generatedEnd);
+        classStatement_5.add(322, generatedEnd, classStatementClassStatementGeneratedEnd);
         classStatement.add(323, classStatement_5);
         classStatement.add(325, new Complete(324, "classStatement"));
 
@@ -732,7 +732,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(228, s);
         manualEnd.add(230, new End(229, "manualEnd"));
 
-        // generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText
+        // generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]
         generatedEnd.add(232, new Str(231, "//"));
         generatedEnd.add(233, s);
         Optional generatedEnd_1 = new Optional(234, "generatedEnd_1");
@@ -933,7 +933,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         public void setClassname(String classname);
         public void addAttribute(IAttribute iattribute);
         public void setManualCode(String manualCode);
-        public void setGeneratedText(String generatedText);
+        public void setGeneratedEnd(String generatedEnd);
     }
 
     // State
@@ -1060,17 +1060,6 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekAnnotations().setContent(source.get(bookmark));
-            }
-        }
-
-        // classStatement.setGeneratedText(String generatedEnd.generatedText);
-        public class ClassStatementGeneratedEndGeneratedText implements Output {
-            private String name;
-            public ClassStatementGeneratedEndGeneratedText(String name) { this.name = name; }
-            public boolean receive() { return false; }
-            public void init(Source source) { }
-            public void set(Source source, int bookmark) {
-                peekClassStatement().setGeneratedText(source.get(bookmark));
             }
         }
 
@@ -1302,6 +1291,17 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekClassStatement().setManualCode(source.get(bookmark));
+            }
+        }
+
+        // classStatement.setGeneratedEnd(String generatedEnd);
+        public class ClassStatementClassStatementGeneratedEnd implements Output {
+            private String name;
+            public ClassStatementClassStatementGeneratedEnd(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekClassStatement().setGeneratedEnd(source.get(bookmark));
             }
         }
 

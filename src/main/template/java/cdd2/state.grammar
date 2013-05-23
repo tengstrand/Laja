@@ -28,7 +28,7 @@ grammar state {
    attribute = s annotations s keywords s type ws name:variable s ";" [!newline+] newline;
 
    manualEnd = ("}" s END);
-   generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText;
+   generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+];
    manualCode = !(manualEnd | generatedEnd)+;
 
    version = digit+;
@@ -68,7 +68,7 @@ grammar state {
    classStatement.setClassname(String classname);
    classStatement.addAttribute(Attribute attribute);
    classStatement.setManualCode(String manualCode);
-   classStatement.setGeneratedText(String generatedEnd.generatedText);
+   classStatement.setGeneratedEnd(String generatedEnd);
 
    State state.setPackagename(String packagestatement.packagename);
    state.setImports(Imports imports);

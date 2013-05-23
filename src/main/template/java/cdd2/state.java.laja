@@ -7,7 +7,7 @@
 #set (attributes = state.attributes)
 #set (imports = state.imports)
 #set (manualCode = state.manualCode)
-#set (generatedText = state.generatedText)
+#set (generatedEnd = state.generatedEnd)
 #set (isEntity = state.isEntity)
 #set (stateException = "Illegal{classname}Exception")
 
@@ -343,12 +343,12 @@ package {packagename};
   #imports()
   #classHeader()
   #attributes("    ", "final ")##
-  #if (generatedText != null)
-{manualCode}##
-{generatedText}
-  #else
+  #if (generatedEnd == null)
 {manualCode}
     // ===== Generated code =====
+  #else
+{manualCode}##
+{generatedEnd}
   #end
 
   #set (tab = "    ")
