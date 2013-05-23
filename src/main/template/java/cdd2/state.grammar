@@ -11,8 +11,8 @@ grammar state {
    name = letter [letter | digit]+;
 
    public = ["public" ws];
-   packagestatement = "package" ws packagename s ";";
    packagename = name ["." name|"*"]+;
+   packagestatement = "package" ws packagename s ";";
    fullclassname = packagename;
 
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
