@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.PersonState;
+import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
@@ -104,8 +105,8 @@ public class PersonCreator implements PersonMaker {
         return state.isValid();
     }
 
-    public ValidationErrors validate() {
-        return state.validate();
+    public ValidationErrors validate(Validator... validators) {
+        return state.validate(validators);
     }
 
     public static class PersonBehaviour {
@@ -327,8 +328,8 @@ public class PersonCreator implements PersonMaker {
             return state.isValid();
         }
 
-        public ValidationErrors validate() {
-            return state.validate();
+        public ValidationErrors validate(Validator... validators) {
+            return state.validate(validators);
         }
     }
 
@@ -520,11 +521,12 @@ public class PersonCreator implements PersonMaker {
 }
 
 interface PersonMaker {
-    void assertIsValid();
-    boolean isValid();
-    ValidationErrors validate();
     Person asPerson();
     TextPerson asTextPerson();
+
     PersonState asState();
     PersonMutableState asMutableState();
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate(Validator... validators);
 }

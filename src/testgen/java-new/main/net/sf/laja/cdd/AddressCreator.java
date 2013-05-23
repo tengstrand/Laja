@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.AddressState;
+import net.sf.laja.cdd.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,8 +91,8 @@ public class AddressCreator implements AddressMaker {
         return state.isValid();
     }
 
-    public ValidationErrors validate() {
-        return state.validate();
+    public ValidationErrors validate(Validator... validators) {
+        return state.validate(validators);
     }
 
     public static class AddressBehaviour {
@@ -211,8 +212,8 @@ public class AddressCreator implements AddressMaker {
             return state.isValid();
         }
 
-        public ValidationErrors validate() {
-            return state.validate();
+        public ValidationErrors validate(Validator... validators) {
+            return state.validate(validators);
         }
     }
 
@@ -419,6 +420,20 @@ public class AddressCreator implements AddressMaker {
 interface AddressMaker {
     Address asAddress();
     Address asAddress(AddressType type);
+
     AddressState asState();
     AddressMutableState asMutableState();
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate(Validator... validators);
 }
+
+/*
+
+    PersonState asState();
+    PersonMutableState asMutableState();
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate(Validator... validators);
+
+ */
