@@ -43,7 +43,7 @@ public class PersonState implements ImmutableState {
 
     private static void validate(PersonMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
         if (state.birthday != null && state.birthday.isAfterNow()) {
-            errors.addError(parent, BIRTHDAY, "born_after_today");
+            errors.addError(rootElement, parent, BIRTHDAY, "born_after_today");
         }
     }
 
