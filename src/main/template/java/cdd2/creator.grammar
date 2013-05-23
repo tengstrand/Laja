@@ -18,10 +18,30 @@ grammar creator {
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
    imports = [importstatement+];
 
+   statement = "{" s [(statement | str | !"}")+]:innerStatement "}";
+   parameter = s name:type ws name:variable s;
+   parameters = [parameter] ["," s parameter]+;
+
+   asMethod = "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement s;
+
    classStatement = "@Creator" ws public "class" ws name:classname s "implements" s name s "{" s
-                    "private final" s name s "state;" s *;
+                    "private final" s name s "state;" s asMethod+ *;
 
    creator = packagestatement s imports s classStatement;
 
+   Parameter parameter.setType(String type);
+   parameter.setVariable(String variable);
+
+   Parameters parameters.addParameter(Parameter parameter);
+
+   AsMethod asMethod.setReturnclass(String returnclass);
+   asMethod.setMethodName(String methodName);
+   asMethod.setParameters(Parameters parameters);
+   asMethod.setStatement(String statement);
+
+   ClassStatement classStatement.setClassname(String classname);
+   classStatement.addAsMethod(AsMethod asMethod);
+
    Creator creator.setImports(String imports);
+   creator.setClassStatement(ClassStatement classStatement);
 }
