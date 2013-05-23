@@ -70,94 +70,7 @@ public class PersonCreator implements PersonMaker {
         return new PersonMapEntryBuilder(key, builder);
     }
 
-    public PersonCreator(PersonMutableState state) {
-        this.state = state;
-    }
-
-    public PersonState asState() {
-        return state.asImmutable();
-    }
-
-    public PersonMutableState asMutableState() {
-        return state;
-    }
-
-    public PersonCreator withAddress(AddressMutableState address) {
-        state.address = address;
-        return this;
-    }
-
-    public PersonCreator withOldAddresses(AddressSetBuilder addresses) {
-        state.oldAddresses = addresses.asMutableStateSet();
-        return this;
-    }
-
-    public PersonCreator withGroupedAddresses(AddressMapBuilder groupedAddresses) {
-        state.groupedAddresses = groupedAddresses.asMutableStateMap();
-        return this;
-    }
-
-    public void assertIsValid() {
-        state.assertIsValid();
-    }
-
-    public boolean isValid() {
-        return state.isValid();
-    }
-
-    public ValidationErrors validate(Validator... validators) {
-        return state.validate(validators);
-    }
-
-    public static class PersonBehaviour {
-        public final PersonState s;
-
-        public PersonBehaviour(PersonState s) {
-            this.s = s;
-        }
-
-        @Override public boolean equals(Object that) {
-            if (this == that) return true;
-            if (!(that instanceof PersonBehaviour)) return false;
-
-            return s.equals(((PersonBehaviour)that).s);
-        }
-
-        @Override public int hashCode() {
-            return s.hashCode();
-        }
-
-        @Override public String toString() {
-            return getClass().getSimpleName() + s;
-        }
-    }
-
-    public static class PersonMutableBehaviour {
-        private PersonMutableState s;
-
-        public PersonMutableBehaviour(PersonMutableState s) {
-            this.s = s;
-        }
-
-        public PersonState state() {
-            return s.asImmutable();
-        }
-
-        @Override public boolean equals(Object that) {
-            if (this == that) return true;
-            if (!(that instanceof PersonMutableBehaviour)) return false;
-
-            return s.equals(((PersonMutableBehaviour)that).s);
-        }
-
-        @Override public int hashCode() {
-            return s.hashCode();
-        }
-
-        @Override public String toString() {
-            return getClass().getSimpleName() + s;
-        }
-    }
+    // ------------------------------------------------
 
     public static class PersonFactory {
 
@@ -245,6 +158,95 @@ public class PersonCreator implements PersonMaker {
                     return new PersonCreator(state);
                 }
             }
+        }
+    }
+
+    public PersonCreator(PersonMutableState state) {
+        this.state = state;
+    }
+
+    public PersonState asState() {
+        return state.asImmutable();
+    }
+
+    public PersonMutableState asMutableState() {
+        return state;
+    }
+
+    public PersonCreator withAddress(AddressMutableState address) {
+        state.address = address;
+        return this;
+    }
+
+    public PersonCreator withOldAddresses(AddressSetBuilder addresses) {
+        state.oldAddresses = addresses.asMutableStateSet();
+        return this;
+    }
+
+    public PersonCreator withGroupedAddresses(AddressMapBuilder groupedAddresses) {
+        state.groupedAddresses = groupedAddresses.asMutableStateMap();
+        return this;
+    }
+
+    public void assertIsValid() {
+        state.assertIsValid();
+    }
+
+    public boolean isValid() {
+        return state.isValid();
+    }
+
+    public ValidationErrors validate(Validator... validators) {
+        return state.validate(validators);
+    }
+
+    public static class PersonBehaviour {
+        public final PersonState s;
+
+        public PersonBehaviour(PersonState s) {
+            this.s = s;
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof PersonBehaviour)) return false;
+
+            return s.equals(((PersonBehaviour)that).s);
+        }
+
+        @Override public int hashCode() {
+            return s.hashCode();
+        }
+
+        @Override public String toString() {
+            return getClass().getSimpleName() + s;
+        }
+    }
+
+    public static class PersonMutableBehaviour {
+        private PersonMutableState s;
+
+        public PersonMutableBehaviour(PersonMutableState s) {
+            this.s = s;
+        }
+
+        public PersonState state() {
+            return s.asImmutable();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof PersonMutableBehaviour)) return false;
+
+            return s.equals(((PersonMutableBehaviour)that).s);
+        }
+
+        @Override public int hashCode() {
+            return s.hashCode();
+        }
+
+        @Override public String toString() {
+            return getClass().getSimpleName() + s;
         }
     }
 
