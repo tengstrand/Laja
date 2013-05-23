@@ -28,7 +28,7 @@ grammar state {
    attribute = s annotations s keywords s type ws name:variable s ";" [!newline+] newline;
 
    manualEnd = ("}" s END);
-   generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText *;
+   generatedEnd = ("//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]):generatedText;
    manualCode = !(manualEnd | generatedEnd)+;
 
    version = digit+;
