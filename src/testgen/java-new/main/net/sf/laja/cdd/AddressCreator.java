@@ -61,7 +61,7 @@ public class AddressCreator implements AddressMaker {
         return new AddressMapEntryBuilder(key, builder);
     }
 
-    // ----- Factory -----
+    // ----- Factory ------
 
     public static class AddressFactory {
 
@@ -80,6 +80,8 @@ public class AddressCreator implements AddressMaker {
             }
         }
     }
+
+    // --------------------
 
     public AddressCreator(AddressMutableState state) {
         this.state = state;

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -70,7 +71,7 @@ public class PersonCreator implements PersonMaker {
         return new PersonMapEntryBuilder(key, builder);
     }
 
-    // ----- Factory -----
+    // ----- Factory ------
 
     public static class PersonFactory {
 
@@ -124,7 +125,7 @@ public class PersonCreator implements PersonMaker {
                     return new PersonCreator(state);
                 }
 
-                // TODO: Make sure this row is preserved when generated.
+                @Preserve
                 public ListOfSetOfListOfIntegers defaultAddress() {
                     state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
                     return new ListOfSetOfListOfIntegers();
@@ -142,7 +143,7 @@ public class PersonCreator implements PersonMaker {
             }
 
             public class ListOfSetOfListOfIntegers {
-                // TODO: Make sure this row is preserved when generated.
+                @Preserve
                 public PersonCreator defaultListOfSetOfMapOfIntegers() {
                     Map map1 = new HashMap();
                     map1.put("a", 123);
@@ -160,6 +161,8 @@ public class PersonCreator implements PersonMaker {
             }
         }
     }
+
+    // --------------------
 
     public PersonCreator(PersonMutableState state) {
         this.state = state;
