@@ -1,0 +1,27 @@
+grammar creator {
+   newline = "\r\n" | "\n";
+   comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END);
+   ws = (newline | " " | "\t" | comment)+;
+   s = [ws];
+   ff = "\"";
+   str = ff (("\\\"" | !(ff|newline))+):strval ff;
+
+   letter = "a".."z" | "A".."Z" | "_" | "$";
+   digit = "0".."9";
+   name = letter [letter | digit]+;
+
+   public = ["public" ws];
+   packagename = name ["." name|"*"]+;
+   packagestatement = "package" ws packagename s ";";
+   fullclassname = packagename;
+
+   importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
+   imports = [importstatement+];
+
+   classStatement = "@Creator" ws public "class" ws name:classname s "implements" s name s "{" s
+                    "private final" s name s "state;" s *;
+
+   creator = packagestatement s imports s classStatement;
+
+   Creator creator.setImports(String imports);
+}
