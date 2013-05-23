@@ -61,7 +61,7 @@ public class AddressCreator implements AddressMaker {
         return new AddressMapEntryBuilder(key, builder);
     }
 
-    // ------------------------------------------------
+    // ----- Factory -----
 
     public static class AddressFactory {
 

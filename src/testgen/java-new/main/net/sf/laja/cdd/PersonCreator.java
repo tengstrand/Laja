@@ -70,7 +70,7 @@ public class PersonCreator implements PersonMaker {
         return new PersonMapEntryBuilder(key, builder);
     }
 
-    // ------------------------------------------------
+    // ----- Factory -----
 
     public static class PersonFactory {
 
