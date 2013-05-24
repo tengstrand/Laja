@@ -4,6 +4,7 @@
 #set (classname = creator.classname)
 #set (asMethods = creator.asMethods)
 #set (state = creator.state)
+#set (manualCode = creator.manualCode)
 #set (maker = "{state}Maker")
 #set (mutableState = "{state}MutableState")
 
@@ -22,6 +23,8 @@ public class {classname} implements {maker} {
     #end
 {method.spaces}public {method.returnclass} {method.methodName}({parameters}) {method.statement}##
   #end
+{manualCode}##
+// ===== Generated code =====
 
 }
 #end

@@ -44,6 +44,10 @@ public class PersonCreator implements PersonMaker {
         return new TextPerson(state.asImmutable());
     }
 
+    private void manuallyAddedMethodThatWillBePreserved() {
+
+    }
+
     // ===== Generated code =====
 
     public static PersonFactory createPerson() {

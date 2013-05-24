@@ -25,9 +25,13 @@ grammar creator {
    asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement;
 
    classStatement = "@Creator" ws public "class" ws name:classname s "implements" s name s "{" s
-                    "private final" s name:stateClass s "state;" asMethod+ *;
+                    "private final" s name:stateClass s "state;" asMethod+;
 
-   creator = packagestatement s imports s classStatement;
+   manualEnd = ("}" s END);
+   generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+];
+   manualCode = !(manualEnd | generatedEnd)+;
+
+   creator = packagestatement s imports s classStatement manualCode *;
 
    Parameter parameter.setType(String type);
    parameter.setVariable(String variable);
@@ -47,4 +51,5 @@ grammar creator {
    Creator creator.setPackagename(String packagestatement.packagename);
    creator.setImports(String imports);
    creator.setClassStatement(ClassStatement classStatement);
+   creator.setManualCode(String manualCode);
 }

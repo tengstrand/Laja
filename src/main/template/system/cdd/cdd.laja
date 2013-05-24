@@ -27,8 +27,8 @@
     #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
     #import "{..}/../java/cdd2/creator.java.laja"
 
-##    #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.java"))
-##    #import "{..}/../java/cdd2/state.java.laja"
+    #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.java"))
+    #import "{..}/../java/cdd2/state.java.laja"
 
   #end
 #end

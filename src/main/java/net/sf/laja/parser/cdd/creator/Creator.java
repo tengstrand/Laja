@@ -7,6 +7,7 @@ public class Creator implements CreatorParser.ICreator{
     public String imports;
     public String classname;
     public String state;
+    public String manualCode;
     public List<AsMethod> asMethods;
 
     public void setPackagename(String packagename) {
@@ -24,6 +25,10 @@ public class Creator implements CreatorParser.ICreator{
         asMethods = classStatement.asMethods;
     }
 
+    public void setManualCode(String manualCode) {
+        this.manualCode = manualCode;
+    }
+
     @Override
     public String toString() {
         return "Creator{" +
@@ -31,6 +36,7 @@ public class Creator implements CreatorParser.ICreator{
                 ", imports='" + imports + '\'' +
                 ", classname='" + classname + '\'' +
                 ", state='" + state + '\'' +
+                ", manualCode='" + manualCode + '\'' +
                 ", asMethods=" + asMethods +
                 '}';
     }

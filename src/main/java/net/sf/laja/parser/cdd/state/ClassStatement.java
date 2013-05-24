@@ -8,7 +8,7 @@ public class ClassStatement implements StateParser.IClassStatement {
     public String classname;
     public final List<Attribute> attributes = new ArrayList<Attribute>();
     public String manualCode;
-    public String generatedText;
+    public String generatedEnd;
 
     public void setVersion(String version) {
         this.version = Integer.parseInt(version);
@@ -26,8 +26,8 @@ public class ClassStatement implements StateParser.IClassStatement {
         this.manualCode = manualCode;
     }
 
-    public void setGeneratedText(String generatedText) {
-        this.generatedText = generatedText;
+    public void setGeneratedEnd(String generatedEnd) {
+        this.generatedEnd = generatedEnd;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ClassStatement implements StateParser.IClassStatement {
                 "classname='" + classname + '\'' +
                 ", attributes=" + attributes +
                 ", manualCode='" + manualCode + '\'' +
-                ", generatedText='" + generatedText + '\'' +
+                ", generatedEnd='" + generatedEnd + '\'' +
                 '}';
     }
 }
