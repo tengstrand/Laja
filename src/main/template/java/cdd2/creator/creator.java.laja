@@ -89,5 +89,6 @@ public class {classname} implements {maker} {
   #createMap()
   #mapCreatorEntry()
   #mapBuilderEntry()
+  #import "{.}/factory.java.laja"
 }
 #end
