@@ -11,6 +11,7 @@
 #set (builder = "{state}Builder")
 #set (creator = "{state}Creator")
 #set (listBuilder = "{state}ListBuilder")
+#set (setBuilder = "{state}SetBuilder")
 
 #macro create()
     public static {factory} create{state}() {
@@ -29,6 +30,13 @@
 #macro createList()
     public static {listBuilder} create{state}List({creator}... creators) {
         return new {listBuilder}(creators);
+    }
+
+#end
+
+#macro createSet()
+    public static {setBuilder} create{state}Set({creator}... creators) {
+        return new {setBuilder}(creators);
     }
 
 #end
@@ -54,5 +62,6 @@ public class {classname} implements {maker} {
   #create()
   #build()
   #createList()
+  #createSet()
 }
 #end
