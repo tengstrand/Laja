@@ -4,14 +4,22 @@
 #set (classname = creator.classname)
 #set (asMethods = creator.asMethods)
 #set (state = creator.state)
-#set (factory = "{state}Factory")
 #set (manualCode = creator.manualCode)
 #set (maker = "{state}Maker")
 #set (mutableState = "{state}MutableState")
+#set (factory = "{state}Factory")
+#set (builder = "{state}Builder")
 
 #macro create()
     public static {factory} create{state}() {
         return new {factory}();
+    }
+
+#end
+
+#macro build()
+    public static {builder} build{state}() {
+        return {builder}.create();
     }
 
 #end
@@ -35,5 +43,6 @@ public class {classname} implements {maker} {
 // ===== Generated code =====
 
   #create()
+  #build()
 }
 #end
