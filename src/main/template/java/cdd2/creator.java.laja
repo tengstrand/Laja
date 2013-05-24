@@ -12,6 +12,8 @@
 #set (creator = "{state}Creator")
 #set (listBuilder = "{state}ListBuilder")
 #set (setBuilder = "{state}SetBuilder")
+#set (mapBuilder = "{state}MapBuilder")
+#set (mapEntryBuilder = "{state}MapEntryBuilder")
 
 #macro create()
     public static {factory} create{state}() {
@@ -41,6 +43,13 @@
 
 #end
 
+#macro createMap()
+    public static {mapBuilder} create{state}Map({mapEntryBuilder}... builders) {
+        return new {mapBuilder}(builders);
+    }
+
+#end
+
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
 
@@ -63,5 +72,6 @@ public class {classname} implements {maker} {
   #build()
   #createList()
   #createSet()
+  #createMap()
 }
 #end
