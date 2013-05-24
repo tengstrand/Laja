@@ -4,9 +4,17 @@
 #set (classname = creator.classname)
 #set (asMethods = creator.asMethods)
 #set (state = creator.state)
+#set (factory = "{state}Factory")
 #set (manualCode = creator.manualCode)
 #set (maker = "{state}Maker")
 #set (mutableState = "{state}MutableState")
+
+#macro create()
+    public static {factory} create{state}() {
+        return new {factory}();
+    }
+
+#end
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
@@ -26,5 +34,6 @@ public class {classname} implements {maker} {
 {manualCode}##
 // ===== Generated code =====
 
+  #create()
 }
 #end
