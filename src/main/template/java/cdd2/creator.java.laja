@@ -50,6 +50,20 @@
 
 #end
 
+#macro mapCreatorEntry()
+    public static {mapEntryBuilder} personEntry(Object key, {creator} creator) {
+        return new {mapEntryBuilder}(key, creator);
+    }
+
+#end
+
+#macro mapBuilderEntry()
+    public static {mapEntryBuilder} personEntry(Object key, {builder} builder) {
+        return new {mapEntryBuilder}(key, builder);
+    }
+
+#end
+
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
 
@@ -73,5 +87,7 @@ public class {classname} implements {maker} {
   #createList()
   #createSet()
   #createMap()
+  #mapCreatorEntry()
+  #mapBuilderEntry()
 }
 #end
