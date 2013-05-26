@@ -88,7 +88,7 @@ public class Attribute implements StateParser.IAttribute {
     }
 
     public boolean isMandatory() {
-        return !isOptional();
+        return !isOptional() && !isId();
     }
 
     public boolean isOptional() {
@@ -101,6 +101,10 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isEntity() {
         return annotations.isEntity();
+    }
+
+    public boolean isLeafState() {
+        return type.isLeafState();
     }
 
     @Override

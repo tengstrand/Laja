@@ -1,5 +1,6 @@
 
 #set (creatorName = "PersonCreator")
+##set (creatorName = "AddressCreator")
 
 #set (stateName = "PersonState")
 ##set (stateName = "AddressState")
@@ -24,11 +25,11 @@
   #foreach (parameterMap in parameters)
     #$.putAll(parameterMap)
 
-    #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
-    #import "{..}/../java/cdd2/creator/creator.java.laja"
-
     #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.java"))
     #import "{..}/../java/cdd2/state.java.laja"
+
+    #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
+    #import "{..}/../java/cdd2/creator/creator.java.laja"
 
   #end
 #end

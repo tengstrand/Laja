@@ -28,7 +28,7 @@ public class PersonStateTest {
                 .children(createPerson().name("Adam").birthday(2010,11,12).children().defaults())
                 .defaultAddress()
                 .defaultListOfSetOfMapOfIntegers()
-                .withGroupedAddresses((createAddressMap(addressEntry("aaa", createAddress().streetName("First street")))))
+                .withGroupedAddresses((createAddressMap(addressEntry("aaa", createAddress().withStreetName("First street")))))
                 .asMutableState();
 
         PersonState state = mutableState.asImmutable();

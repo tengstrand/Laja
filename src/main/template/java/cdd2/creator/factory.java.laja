@@ -1,5 +1,58 @@
+#namespace factory
+
+#macro factory()
+  #if (hasMandatoryAttributes)
+    #factoryClass()
+  #end
+#end
+
+#macro factoryClass()
     // ----- Factory ------
 
-    public static class PersonFactory {
-        // ...
-    }
+    public static class {factory} {
+
+        public Factory.Birthday name(String name) {
+            return new Factory().new Name().name(name);
+        }
+
+        private static class Factory {
+            private final {mutableState} state = new {mutableState}();
+  #set (iterator = mandatoryAttributes.iterator())
+  #set (hasNext = iterator.hasNext)
+  #if (hasNext)
+    #set (attribute = iterator.next)
+    #set (currentClass = "{strings.capitalize(attribute.name)}")
+  #end
+  #while (hasNext)
+    #set (hasNext = iterator.hasNext)
+    #if (hasNext)
+      #set (nextAttribute = iterator.next)
+      #set (nextClass = "{strings.capitalize(nextAttribute.name)}")
+
+            public class {currentClass} {
+      #if (attribute.isString)
+                public {nextClass} {attribute.name}(String {attribute.name}) {
+                    state.{attribute.name} = {attribute.name};
+                    return new {nextClass}();
+                }
+            }
+      #end
+      #set (attribute = nextAttribute)
+      #set (currentClass = nextClass)
+    #else
+
+            public class {currentClass} {
+      #if (attribute.isString)
+
+            public class ListOfSetOfListOfIntegers {
+                public {creator} {attribute.name}({attribute.type} {attribute.name}) {
+                    state.{attribute.name} = {attribute.name};
+                    return new {creator}(state);
+                }
+            }
+      #end
+    #end
+        }
+
+  #end
+#end

@@ -101,14 +101,14 @@ public class AddressCreatorTest {
 
     private AddressCreator[] addresses() {
         return new AddressCreator[] {
-                createAddress().streetName("First street").withCity("Uppsala"),
-                createAddress().streetName("Second street").withCity("Stockholm") };
+                createAddress().withStreetName("First street").withCity("Uppsala"),
+                createAddress().withStreetName("Second street").withCity("Stockholm") };
     }
 
     private AddressMapBuilder addressMapBuilder() {
         return createAddressMap(
-                addressEntry("a", createAddress().streetName("First street").withCity("Uppsala")),
-                addressEntry("b", createAddress().streetName("Second street").withCity("Stockholm"))
+                addressEntry("a", createAddress().withStreetName("First street").withCity("Uppsala")),
+                addressEntry("b", createAddress().withStreetName("Second street").withCity("Stockholm"))
         );
     }
 }

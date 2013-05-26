@@ -2,6 +2,7 @@
 #set (packagename = creator.packagename)
 #set (imports = creator.imports)
 #set (classname = creator.classname)
+#set (statevariable = creator.statevariable)
 #set (asMethods = creator.asMethods)
 #set (state = creator.state)
 #set (manualCode = creator.manualCode)
@@ -15,10 +16,22 @@
 #set (mapBuilder = "{state}MapBuilder")
 #set (mapEntryBuilder = "{state}MapEntryBuilder")
 
+#set (mandatoryAttributes = new java.util.ArrayList())
+#foreach (attribute in attributes where attribute.isMandatory)
+  #mandatoryAttributes.add(attribute)
+#end
+#set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
+
 #macro create()
+  #if (hasMandatoryAttributes)
     public static {factory} create{state}() {
         return new {factory}();
     }
+  #else
+    public static {creator} create{state}() {
+        return new {creator}(new {mutableState}());
+    }
+  #end
 
 #end
 
@@ -51,18 +64,20 @@
 #end
 
 #macro mapCreatorEntry()
-    public static {mapEntryBuilder} personEntry(Object key, {creator} creator) {
+    public static {mapEntryBuilder} {statevariable}Entry(Object key, {creator} creator) {
         return new {mapEntryBuilder}(key, creator);
     }
 
 #end
 
 #macro mapBuilderEntry()
-    public static {mapEntryBuilder} personEntry(Object key, {builder} builder) {
+    public static {mapEntryBuilder} {statevariable}Entry(Object key, {builder} builder) {
         return new {mapEntryBuilder}(key, builder);
     }
 
 #end
+
+#import "{.}/factory.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
@@ -72,9 +87,10 @@ package {packagename};
 public class {classname} implements {maker} {
     private final {mutableState} state;##
   #foreach (method in asMethods)
+    #set (delimiter = "")
     #set (parameters = "")
-    #foreach (parameter in method.parame)
-      #set (parameters = "{delimiter}{parameters}")
+    #foreach (parameter in method.parameters)
+      #set (parameters = "{delimiter}{parameter.type} {parameter.variable}")
       #set (delimiter = ", ")
     #end
 {method.spaces}public {method.returnclass} {method.methodName}({parameters}) {method.statement}##
@@ -89,6 +105,6 @@ public class {classname} implements {maker} {
   #createMap()
   #mapCreatorEntry()
   #mapBuilderEntry()
-  #import "{.}/factory.java.laja"
+  #$factory.factory()
 }
 #end

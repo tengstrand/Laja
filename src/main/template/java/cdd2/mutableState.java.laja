@@ -93,10 +93,10 @@
     #foreach (attribute in attributes where !attribute.isPrimitive)
       #if (attribute.isState)
             address.validate(rootElement, concatenate(parent, "{attribute.name}"), errors);
-      #else if (attribute.isCollection)
-            collectionValidator().validate(rootElement, "{attribute.name}", parent, "{attribute.name}", errors, validators, 0);
-      #else if (attribute.isMap)
-            mapValidator().validate(rootElement, "{attribute.name}", parent, "{attribute.name}", errors, validators, 0);
+      #else if (attribute.isCollection && attribute.isLeafState)
+            collectionValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, validators, 0);
+      #else if (attribute.isMap && attribute.isLeafState)
+            mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, validators, 0);
       #end
     #end
 

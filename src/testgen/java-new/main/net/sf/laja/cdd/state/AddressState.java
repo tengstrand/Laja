@@ -13,6 +13,7 @@ import net.sf.laja.cdd.validator.Validator;
 public class AddressState implements ImmutableState {
     @Id
     public final int id;
+    @Optional
     public final String streetName;
     @Optional
     public final String city;
@@ -152,8 +153,6 @@ public class AddressState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (streetName == null) { errors.addIsNullError(rootElement, parent, "streetName"); }
-
             AddressState.validate(this, rootElement, parent, errors);
 
             for (Validator validator : validators) {

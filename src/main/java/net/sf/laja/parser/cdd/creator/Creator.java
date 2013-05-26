@@ -1,5 +1,7 @@
 package net.sf.laja.parser.cdd.creator;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.List;
 
 public class Creator implements CreatorParser.ICreator{
@@ -7,6 +9,7 @@ public class Creator implements CreatorParser.ICreator{
     public String imports;
     public String classname;
     public String state;
+    public String statevariable;
     public String manualCode;
     public List<AsMethod> asMethods;
 
@@ -22,6 +25,7 @@ public class Creator implements CreatorParser.ICreator{
         ClassStatement classStatement = (ClassStatement)iclassStatement;
         classname = classStatement.classname;
         state = classStatement.state;
+        statevariable = StringUtils.uncapitalize(state);
         asMethods = classStatement.asMethods;
     }
 
@@ -36,6 +40,7 @@ public class Creator implements CreatorParser.ICreator{
                 ", imports='" + imports + '\'' +
                 ", classname='" + classname + '\'' +
                 ", state='" + state + '\'' +
+                ", statevariable='" + statevariable + '\'' +
                 ", manualCode='" + manualCode + '\'' +
                 ", asMethods=" + asMethods +
                 '}';

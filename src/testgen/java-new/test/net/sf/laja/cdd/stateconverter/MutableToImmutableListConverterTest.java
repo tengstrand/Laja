@@ -33,8 +33,8 @@ public class MutableToImmutableListConverterTest {
     @Test
     public void shouldConvertFromMutableListOfStateToImmutableStateList() {
         AddressListBuilder addresses = createAddressList(
-                createAddress().streetName("First street"),
-                createAddress().streetName("Second street")
+                createAddress().withStreetName("First street"),
+                createAddress().withStreetName("Second street")
         );
         ImmutableList<AddressState> immutableStates = asImmutableList(addresses.asMutableStateList(), toImmutable);
 

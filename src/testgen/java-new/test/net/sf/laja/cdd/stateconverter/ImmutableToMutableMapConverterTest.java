@@ -35,7 +35,7 @@ public class ImmutableToMutableMapConverterTest {
     @Test
     public void shouldConvertFromImmutableMapOfStateToMutableStateMap() {
         Map<String, Address> immutableMap = createAddressMap(
-                addressEntry("first", createAddress().streetName("First street")),
+                addressEntry("first", createAddress().withStreetName("First street")),
                 addressEntry("second", buildAddress().withStreetName("Second street"))).asAddressMap();
 
         assertThat(immutableMap.getClass().getSimpleName(), equalTo("RegularImmutableMap"));
@@ -43,8 +43,8 @@ public class ImmutableToMutableMapConverterTest {
         Map mutableMap = asMutableMap(immutableMap);
 
         Map expectedMap = new HashMap();
-        expectedMap.put("first", createAddress().streetName("First street").asAddress());
-        expectedMap.put("second", createAddress().streetName("Second street").asAddress());
+        expectedMap.put("first", createAddress().withStreetName("First street").asAddress());
+        expectedMap.put("second", createAddress().withStreetName("Second street").asAddress());
 
         assertThat(mutableMap, equalTo(expectedMap));
     }

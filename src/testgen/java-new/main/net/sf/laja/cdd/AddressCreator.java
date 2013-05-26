@@ -33,8 +33,8 @@ public class AddressCreator implements AddressMaker {
 
     // ===== Generated code =====
 
-    public static AddressFactory createAddress() {
-        return new AddressFactory();
+    public static AddressCreator createAddress() {
+        return new AddressCreator(new AddressMutableState());
     }
 
     public static AddressBuilder buildAddress() {
@@ -61,28 +61,6 @@ public class AddressCreator implements AddressMaker {
         return new AddressMapEntryBuilder(key, builder);
     }
 
-    // ----- Factory ------
-
-    public static class AddressFactory {
-
-        public AddressCreator streetName(String streetName) {
-            return new Factory().new StreetName().streetName(streetName);
-        }
-
-        private static class Factory {
-            private final AddressMutableState state = new AddressMutableState();
-
-            public class StreetName {
-                public AddressCreator streetName(String streetName) {
-                    state.streetName = streetName;
-                    return new AddressCreator(state);
-                }
-            }
-        }
-    }
-
-    // --------------------
-
     public AddressCreator(AddressMutableState state) {
         this.state = state;
     }
@@ -97,6 +75,11 @@ public class AddressCreator implements AddressMaker {
 
     public AddressCreator withId(int id) {
         state.id = id;
+        return this;
+    }
+
+    public AddressCreator withStreetName(String streetName) {
+        state.streetName = streetName;
         return this;
     }
 

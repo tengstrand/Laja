@@ -29,8 +29,7 @@ public class PersonMutableStateTest {
         ValidationErrors errors = mutableState.validate();
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(mutableState, "birthday")
-                .addIsNullError(mutableState, "address", "streetName").build();
+                .addIsNullError(mutableState, "birthday").build();
 
         assertThat(errors, equalTo(expectedErrors));
     }
@@ -53,7 +52,7 @@ public class PersonMutableStateTest {
     @Test
     public void invalidStateShouldReturnCustomValidationError() {
         PersonMutableState mutableState = createPerson().name("Carl").birthday(1988, 8, 8).children()
-                .address(AddressCreator.createAddress().streetName("First street").withCity("Stockholm"))
+                .address(AddressCreator.createAddress().withStreetName("First street").withCity("Stockholm"))
                 .defaultListOfSetOfMapOfIntegers().asMutableState();
 
         ValidationErrors errors = mutableState.validate(new CarlCanNotLiveInStockholmValidator());

@@ -25,7 +25,7 @@ public class CollectionValidator implements CoreValidator {
             }
         } else {
             for (Object element : (Collection)elements) {
-                validators[0].validate(rootElement == null ? element : rootElement, element, parent, attribute, errors,
+                validators[index].validate(rootElement == null ? element : rootElement, element, parent, attribute, errors,
                         customValidators, index + 1, validators);
             }
         }

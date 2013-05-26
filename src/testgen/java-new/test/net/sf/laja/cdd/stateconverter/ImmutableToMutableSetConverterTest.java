@@ -35,8 +35,8 @@ public class ImmutableToMutableSetConverterTest {
     @Test
     public void shouldConvertFromImmutableSetOfStateToMutableStateSet() {
         AddressSetBuilder addresses = createAddressSet(
-                createAddress().streetName("First street"),
-                createAddress().streetName("Second street")
+                createAddress().withStreetName("First street"),
+                createAddress().withStreetName("Second street")
         );
         Set<AddressMutableState> mutableStates = asMutableSet(addresses.asStateSet(), toMutable);
 

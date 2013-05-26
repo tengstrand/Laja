@@ -63,6 +63,16 @@ public class Type implements StateParser.IType {
         return isPrimitive() && name.equals("long");
     }
 
+    public boolean isLeafState() {
+        if (isNameType()) {
+            return isState();
+        }
+        if (isCollection()) {
+            return collectionType.type.isLeafState();
+        }
+        return mapType.entry.isLeafState();
+    }
+
     public Type asMutable() {
         Type result = new Type();
         result.setName(typeConverter.asMutable(name));

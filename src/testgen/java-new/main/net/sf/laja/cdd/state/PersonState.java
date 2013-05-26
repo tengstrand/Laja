@@ -240,16 +240,14 @@ public class PersonState implements ImmutableState {
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (name == null) { errors.addIsNullError(rootElement, parent, "name"); }
-            if (birthday == null) { errors.addIsNullError(rootElement, parent, "birthday"); }
             if (children == null) { errors.addIsNullError(rootElement, parent, "children"); }
             if (address == null) { errors.addIsNullError(rootElement, parent, "address"); }
             if (listOfSetOfMapOfIntegers == null) { errors.addIsNullError(rootElement, parent, "listOfSetOfMapOfIntegers"); }
 
-            collectionValidator().validate(rootElement, "children", parent, "children", errors, validators, 0);
+            collectionValidator().validate(rootElement, children, parent, "children", errors, validators, 0);
             address.validate(rootElement, concatenate(parent, "address"), errors);
-            collectionValidator().validate(rootElement, "oldAddresses", parent, "oldAddresses", errors, validators, 0);
-            mapValidator().validate(rootElement, "groupedAddresses", parent, "groupedAddresses", errors, validators, 0);
-            collectionValidator().validate(rootElement, "listOfSetOfMapOfIntegers", parent, "listOfSetOfMapOfIntegers", errors, validators, 0);
+            collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, validators, 0);
+            mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, validators, 0);
 
             PersonState.validate(this, rootElement, parent, errors);
 

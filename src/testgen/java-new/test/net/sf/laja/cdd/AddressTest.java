@@ -13,29 +13,29 @@ public class AddressTest {
 
     @Test
     public void equalObjectsShouldMatch() throws Exception {
-        Address address1 = createAddress().streetName("First street").asAddress();
-        Address address2 = createAddress().streetName("First street").asAddress();
+        Address address1 = createAddress().withStreetName("First street").asAddress();
+        Address address2 = createAddress().withStreetName("First street").asAddress();
 
         assertThat(address1, equalTo(address2));
     }
 
     @Test
     public void addressIsFromUppsala() {
-        Address address = createAddress().streetName("First street").withCity("Uppsala").asAddress();
+        Address address = createAddress().withStreetName("First street").withCity("Uppsala").asAddress();
 
         assertThat(address.isFromUppsala(), is(true));
     }
 
     @Test
     public void addressIsNotFromUppsala() {
-        Address address = createAddress().streetName("First street").withCity("Stockholm").asAddress();
+        Address address = createAddress().withStreetName("First street").withCity("Stockholm").asAddress();
 
         assertThat(address.isFromUppsala(), is(false));
     }
 
     @Test (expected = ProtectedAddressException.class)
     public void accessingMethodOnProtectedAddressShouldThrowException() {
-        Address address = createAddress().streetName("First street").withCity("Stockholm").asAddress(AddressType.PROTECTED);
+        Address address = createAddress().withStreetName("First street").withCity("Stockholm").asAddress(AddressType.PROTECTED);
         address.isFromUppsala();
     }
 
