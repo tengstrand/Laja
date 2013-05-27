@@ -4,7 +4,6 @@
 
 #set (stateName = "PersonState")
 ##set (stateName = "AddressState")
-##set (stateName = "HairColorState")
 
 #macro lazyDefineCdd()
   #if ($laja.isCddImported == null)

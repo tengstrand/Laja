@@ -36,9 +36,9 @@ public class PersonMutableStateTest {
 
     @Test
     public void invalidCollectionShouldReturnIsNullValidationErrors() {
-        PersonMutableState mutableState = createPerson().name(null).birthday(1988, 8, 8).children(
-                createPerson().name(null).birthday(2010, 10, 10).children().defaults(),
-                createPerson().name(null).birthday(2011, 11, 11).children().defaults()
+        PersonMutableState mutableState = createPerson().name(null).birthday(1988, 8, 8).hairColor(1).children(
+                createPerson().name(null).birthday(2010, 10, 10).hairColor(1).children().defaults(),
+                createPerson().name(null).birthday(2011, 11, 11).hairColor(1).children().defaults()
         ).defaults().asMutableState();
 
         ValidationErrors errors = mutableState.validate();
@@ -51,7 +51,7 @@ public class PersonMutableStateTest {
 
     @Test
     public void invalidStateShouldReturnCustomValidationError() {
-        PersonMutableState mutableState = createPerson().name("Carl").birthday(1988, 8, 8).children()
+        PersonMutableState mutableState = createPerson().name("Carl").birthday(1988, 8, 8).hairColor(1).children()
                 .address(AddressCreator.createAddress().withStreetName("First street").withCity("Stockholm"))
                 .defaultListOfSetOfMapOfIntegers().asMutableState();
 

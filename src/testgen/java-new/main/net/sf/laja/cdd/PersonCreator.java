@@ -97,13 +97,26 @@ public class PersonCreator implements PersonMaker {
             }
 
             public class Birthday {
-                public Children birthday(int year, int month, int day) {
+                public HairColor birthday(int year, int month, int day) {
                     state.birthday = new DateMidnight(year, month, day);
+                    return new HairColor();
+                }
+
+                public HairColor birthday(DateMidnight birthday) {
+                    state.birthday = birthday;
+                    return new HairColor();
+                }
+            }
+
+            public class HairColor {
+                public Children hairColor(int hairColor) {
+                    state.hairColor = hairColor;
                     return new Children();
                 }
 
-                public Children birthday(DateMidnight birthday) {
-                    state.birthday = birthday;
+                @Preserve
+                public Children hairColor(net.sf.laja.cdd.HairColor hairColor) {
+                    state.hairColor = hairColor.id;
                     return new Children();
                 }
             }

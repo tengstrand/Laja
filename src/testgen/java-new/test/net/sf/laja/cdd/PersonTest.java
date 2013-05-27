@@ -33,7 +33,7 @@ public class PersonTest {
 
     @Test
     public void preserveHandWrittenChainedAttributes() {
-        createPerson().name("Carl").birthday(1991,2,3).children().defaultAddress();
+        createPerson().name("Carl").birthday(1991,2,3).hairColor(1).children().defaultAddress();
     }
 
     private PersonBuilder defaultPerson() {

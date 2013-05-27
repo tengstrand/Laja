@@ -9,7 +9,7 @@ public class TextPersonTest {
 
     @Test
     public void ensureTwoInstancesFromDifferentContextIsEqual() {
-        PersonCreator creator = createPerson().name("Carl").birthday(1999,9,9).children().defaults();
+        PersonCreator creator = createPerson().name("Carl").birthday(1999,9,9).hairColor(1).children().defaults();
 
         TextPerson textPerson = creator.asTextPerson();
         DbPerson dbPerson = creator.asDbPerson();

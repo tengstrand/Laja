@@ -21,8 +21,8 @@ public class CollectionValidatorTest {
     @Test
     public void validListOfPersonsShouldNotReturnValidationErrors() {
         List<PersonState.PersonMutableState> states = createPersonList(
-                createPerson().name("Carl").birthday(2012, 12, 12).children().defaults(),
-                createPerson().name("Inga").birthday(2011, 11, 11).children().defaults()
+                createPerson().name("Carl").birthday(2012, 12, 12).hairColor(1).children().defaults(),
+                createPerson().name("Inga").birthday(2011, 11, 11).hairColor(1).children().defaults()
         ).asMutableStateList();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
@@ -34,8 +34,8 @@ public class CollectionValidatorTest {
 
     @Test
     public void invalidListOfPersonsShouldReturnValidationErrors() {
-        PersonCreator person1 = createPerson().name(null).birthday(2012, 12, 12).children().defaults();
-        PersonCreator person2 = createPerson().name("Inga").birthday(null).children().defaults();
+        PersonCreator person1 = createPerson().name(null).birthday(2012, 12, 12).hairColor(1).children().defaults();
+        PersonCreator person2 = createPerson().name("Inga").birthday(null).hairColor(1).children().defaults();
 
         List<PersonState.PersonMutableState> states = createPersonList(person1, person2).asMutableStateList();
 
@@ -52,8 +52,8 @@ public class CollectionValidatorTest {
 
     @Test
     public void invalidListOfListOfPersonsShouldReturnValidationErrors() {
-        PersonCreator person1 = createPerson().name(null).birthday(2012, 12, 12).children().defaults();
-        PersonCreator person2 = createPerson().name("Inga").birthday(null).children().defaults();
+        PersonCreator person1 = createPerson().name(null).birthday(2012, 12, 12).hairColor(1).children().defaults();
+        PersonCreator person2 = createPerson().name("Inga").birthday(null).hairColor(1).children().defaults();
 
         List<PersonMutableState> states = createPersonList(person1, person2).asMutableStateList();
 

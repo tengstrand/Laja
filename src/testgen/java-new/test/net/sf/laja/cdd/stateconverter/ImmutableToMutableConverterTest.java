@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.stateconverter;
 
+import net.sf.laja.cdd.HairColor;
 import net.sf.laja.cdd.PersonCreator;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class ImmutableToMutableConverterTest {
 
     @Test
     public void shouldConvertFromImmutableToMutableState() {
-        PersonCreator creator = createPerson().name("Carl").birthday(2010,1,15).children().defaults();
+        PersonCreator creator = createPerson().name("Carl").birthday(2010,1,15).hairColor(HairColor.BLACK).children().defaults();
         PersonMutableState mutableState = (PersonMutableState) asMutable(creator.asState());
 
         assertThat(mutableState, equalTo(creator.asMutableState()));

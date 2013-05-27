@@ -7,9 +7,11 @@ import org.joda.time.Period;
 import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
 
 public class Person extends PersonBehaviour {
+    private final HairColor hairColor;
 
     public Person(PersonState s) {
         super(s);
+        hairColor = HairColor.valueOf(s.hairColor);
     }
 
     public Person withName(String name) {
