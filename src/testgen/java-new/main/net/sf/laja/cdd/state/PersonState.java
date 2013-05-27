@@ -9,10 +9,10 @@ import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.ImmutableType;
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.annotation.Type;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
@@ -35,7 +35,7 @@ public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id
     public final DateMidnight birthday;
-    @Type(wrapper = HairColor.class)
+    @ImmutableType(type = HairColor.class)
     public final int hairColor;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
@@ -184,7 +184,7 @@ public class PersonState implements ImmutableState {
         @Key public String name;
         @Id
         public DateMidnight birthday;
-        @Type(wrapper = HairColor.class)
+        @ImmutableType(type = HairColor.class)
         public int hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;
@@ -263,11 +263,11 @@ public class PersonState implements ImmutableState {
             if (address == null) { errors.addIsNullError(rootElement, parent, "address"); }
             if (listOfSetOfMapOfIntegers == null) { errors.addIsNullError(rootElement, parent, "listOfSetOfMapOfIntegers"); }
 
-            HairColor.validate(hairColor, HAIR_COLOR, rootElement, parent, errors);
             collectionValidator().validate(rootElement, children, parent, "children", errors, validators, 0);
             address.validate(rootElement, concatenate(parent, "address"), errors);
             collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, validators, 0);
             mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, validators, 0);
+            HairColor.validate(hairColor, HAIR_COLOR, rootElement, parent, errors);
 
             PersonState.validate(this, rootElement, parent, errors);
 

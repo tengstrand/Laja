@@ -12,14 +12,14 @@ public class Annotation implements StateParser.IAnnotation{
 
     public static final String ID = "Id";
     public static final String KEY = "Key";
-    public static final String TYPE = "Type";
     public static final String OPTIONAL = "Optional";
+    public static final String IMMUTABLE_TYPE = "ImmutableType";
 
     static {
         annotations.add(ID);
         annotations.add(KEY);
-        annotations.add(TYPE);
         annotations.add(OPTIONAL);
+        annotations.add(IMMUTABLE_TYPE);
     }
 
     public void setName(String name) {
@@ -56,8 +56,8 @@ public class Annotation implements StateParser.IAnnotation{
         return name.equals(KEY);
     }
 
-    public boolean isType() {
-        return name.equals(TYPE);
+    public boolean isImmutableType() {
+        return name.equals(IMMUTABLE_TYPE);
     }
 
     public boolean isOptional() {

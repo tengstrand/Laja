@@ -94,8 +94,8 @@ public class Attribute implements StateParser.IAttribute {
         return annotations.isKey();
     }
 
-    public boolean isTypeAnnotation() {
-        return annotations.isType();
+    public boolean isImmutableType() {
+        return annotations.isImmutableType();
     }
 
     public boolean isOptional() {
@@ -106,8 +106,8 @@ public class Attribute implements StateParser.IAttribute {
         return !isOptional() && !isId();
     }
 
-    public Annotation getTypeAnnotation() {
-        return annotations.getType();
+    public Annotation getImmutableType() {
+        return annotations.getImmutableType();
     }
 
     public Annotation getOptional() {

@@ -28,8 +28,8 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
         return is(Annotation.KEY);
     }
 
-    public boolean isType() {
-        return is(Annotation.TYPE);
+    public boolean isImmutableType() {
+        return is(Annotation.IMMUTABLE_TYPE);
     }
 
     public boolean isOptional() {
@@ -58,8 +58,8 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
         return null;
     }
 
-    public Annotation getType() {
-        return get(Annotation.TYPE);
+    public Annotation getImmutableType() {
+        return get(Annotation.IMMUTABLE_TYPE);
     }
 
     public Annotation getOptional() {
