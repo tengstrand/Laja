@@ -11,8 +11,6 @@
 #set (isEntity = state.isEntity)
 #set (stateException = "Illegal{classname}Exception")
 
-#set (attributeConverter = new net.sf.laja.parser.cdd.AttributeToConstantConverter())
-
 #macro imports()
   #foreach (import in imports)
 {import.statement}##
@@ -36,7 +34,7 @@ public class {classname} implements ImmutableState {
 
 #macro constants()
   #foreach (attribute in attributes)
-    public static final String {attributeConverter.toConstant(attribute.name)} = "{attribute.name}";
+    public static final String {attribute.constantName} = "{attribute.name}";
   #end
 #end
 

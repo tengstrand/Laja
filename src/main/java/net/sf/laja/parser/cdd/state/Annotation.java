@@ -12,11 +12,13 @@ public class Annotation implements StateParser.IAnnotation{
 
     public static final String ID = "Id";
     public static final String KEY = "Key";
+    public static final String TYPE = "Type";
     public static final String OPTIONAL = "Optional";
 
     static {
         annotations.add(ID);
         annotations.add(KEY);
+        annotations.add(TYPE);
         annotations.add(OPTIONAL);
     }
 
@@ -29,7 +31,13 @@ public class Annotation implements StateParser.IAnnotation{
     }
 
     public void setValue(String value) {
-        this.value = value.substring(1, value.length()-1);
+        if (value.startsWith("\"")) {
+            this.value = value.substring(1, value.length() - 1);
+        } else if (value.endsWith(".class")) {
+            this.value = value.substring(0, value.length() - ".class".length());
+        } else {
+            this.value = value;
+        }
     }
 
     public boolean isValid() {
@@ -46,6 +54,10 @@ public class Annotation implements StateParser.IAnnotation{
 
     public boolean isKey() {
         return name.equals(KEY);
+    }
+
+    public boolean isType() {
+        return name.equals(TYPE);
     }
 
     public boolean isOptional() {

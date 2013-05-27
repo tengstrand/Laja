@@ -1,5 +1,6 @@
 package net.sf.laja.parser.cdd.state;
 
+import net.sf.laja.parser.cdd.AttributeToConstantConverter;
 import org.apache.commons.lang.StringUtils;
 
 public class Attribute implements StateParser.IAttribute {
@@ -8,6 +9,8 @@ public class Attribute implements StateParser.IAttribute {
     public String nameAsClass;
     public Annotations annotations;
     public String annotationsContent;
+
+    private AttributeToConstantConverter converter = new AttributeToConstantConverter();
 
     public Attribute asMutable() {
         Attribute result = new Attribute();
@@ -37,6 +40,10 @@ public class Attribute implements StateParser.IAttribute {
     public void setVariable(String variable) {
         name = variable;
         nameAsClass = StringUtils.capitalize(variable);
+    }
+
+    public String getConstantName() {
+        return converter.toConstant(name);
     }
 
     public boolean isPrimitive() {
@@ -87,12 +94,20 @@ public class Attribute implements StateParser.IAttribute {
         return annotations.isKey();
     }
 
-    public boolean isMandatory() {
-        return !isOptional() && !isId();
+    public boolean isTypeAnnotation() {
+        return annotations.isType();
     }
 
     public boolean isOptional() {
         return annotations.isOptional();
+    }
+
+    public boolean isMandatory() {
+        return !isOptional() && !isId();
+    }
+
+    public Annotation getTypeAnnotation() {
+        return annotations.getType();
     }
 
     public Annotation getOptional() {

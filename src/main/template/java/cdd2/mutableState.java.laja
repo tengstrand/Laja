@@ -99,6 +99,10 @@
             mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, validators, 0);
       #end
     #end
+    #foreach (attribute in attributes where attribute.isTypeAnnotation)
+      #set (annotation = attribute.typeAnnotation)
+            {annotation.value}.validate({attribute.name}, {attribute.constantName}, rootElement, parent, errors);
+    #end
 
   #end
             {classname}.validate(this, rootElement, parent, errors);

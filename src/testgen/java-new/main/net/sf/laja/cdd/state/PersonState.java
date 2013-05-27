@@ -35,7 +35,7 @@ public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id
     public final DateMidnight birthday;
-    @Type(className = HairColor.class)
+    @Type(wrapper = HairColor.class)
     public final int hairColor;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
@@ -107,14 +107,14 @@ public class PersonState implements ImmutableState {
 
     public PersonMutableState asMutable() {
         return new PersonMutableState(
-                name,
-                birthday,
-                hairColor,
-                asMutableList(children, toMutable),
-                address.asMutable(),
-                asMutableSet(oldAddresses, toMutable),
-                asMutableMap(groupedAddresses, toMutable),
-                asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
+            name,
+            birthday,
+            hairColor,
+            asMutableList(children, toMutable),
+            address.asMutable(),
+            asMutableSet(oldAddresses, toMutable),
+            asMutableMap(groupedAddresses, toMutable),
+            asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
     }
 
     @Override
@@ -184,7 +184,7 @@ public class PersonState implements ImmutableState {
         @Key public String name;
         @Id
         public DateMidnight birthday;
-        @Type(className = HairColor.class)
+        @Type(wrapper = HairColor.class)
         public int hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;
@@ -280,14 +280,14 @@ public class PersonState implements ImmutableState {
             assertIsValid(validators);
 
             return new PersonState(
-                    name,
-                    birthday,
-                    hairColor,
-                    asImmutableList(children, toImmutable),
-                    address.asImmutable(),
-                    asImmutableSet(oldAddresses, toImmutable),
-                    asImmutableMap(groupedAddresses, toImmutable),
-                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
+                name,
+                birthday,
+                hairColor,
+                asImmutableList(children, toImmutable),
+                address.asImmutable(),
+                asImmutableSet(oldAddresses, toImmutable),
+                asImmutableMap(groupedAddresses, toImmutable),
+                asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
         }
 
         @Override
