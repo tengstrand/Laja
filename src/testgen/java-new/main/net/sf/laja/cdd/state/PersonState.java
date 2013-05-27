@@ -35,7 +35,7 @@ public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id
     public final DateMidnight birthday;
-    @ImmutableType(type = HairColor.class)
+    @ImmutableType(type = HairColor.class, value = "hairColor.id")
     public final int hairColor;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
@@ -184,7 +184,7 @@ public class PersonState implements ImmutableState {
         @Key public String name;
         @Id
         public DateMidnight birthday;
-        @ImmutableType(type = HairColor.class)
+        @ImmutableType(type = HairColor.class, value = "hairColor.id")
         public int hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;

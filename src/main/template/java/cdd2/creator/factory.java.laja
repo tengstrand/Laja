@@ -29,11 +29,28 @@
       #set (nextAttribute = iterator.next)
       #set (nextClass = "{strings.capitalize(nextAttribute.name)}")
 
-            public class {currentClass} {
       #if (attribute.isString)
+            public class {currentClass} {
                 public {nextClass} {attribute.name}(String {attribute.name}) {
                     state.{attribute.name} = {attribute.name};
                     return new {nextClass}();
+                }
+            }
+      #else if (attribute.isCollection)
+            public class Children {
+                public Address children(PersonCreator... creators) {
+                    List<PersonMutableState> children = new ArrayList<PersonMutableState>();
+
+                    for (PersonCreator creator : creators) {
+                        children.add(creator.asMutableState());
+                    }
+                    state.children = children;
+                    return new Address();
+                }
+
+                public Address children(List<PersonMutableState> children) {
+                    state.children = children;
+                    return new Address();
                 }
             }
       #end
@@ -41,10 +58,8 @@
       #set (currentClass = nextClass)
     #else
 
-            public class {currentClass} {
       #if (attribute.isString)
-
-            public class ListOfSetOfListOfIntegers {
+            public class {currentClass} {
                 public {creator} {attribute.name}({attribute.type} {attribute.name}) {
                     state.{attribute.name} = {attribute.name};
                     return new {creator}(state);

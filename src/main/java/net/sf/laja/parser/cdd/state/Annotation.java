@@ -5,15 +5,14 @@ import java.util.List;
 
 public class Annotation implements StateParser.IAnnotation{
     public String name;
-    public String attribute;
-    public String value;
-
-    private static final List<String> annotations = new ArrayList<String>();
+    public List<AnnotationAttribute> annotationAttributes = new ArrayList<AnnotationAttribute>();
 
     public static final String ID = "Id";
     public static final String KEY = "Key";
     public static final String OPTIONAL = "Optional";
     public static final String IMMUTABLE_TYPE = "ImmutableType";
+
+    private static final List<String> annotations = new ArrayList<String>();
 
     static {
         annotations.add(ID);
@@ -26,18 +25,27 @@ public class Annotation implements StateParser.IAnnotation{
         this.name = name;
     }
 
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
+    public void addAnnotationAttribute(StateParser.IAnnotationAttribute iannotationAttribute) {
+        AnnotationAttribute annotationAttribute = (AnnotationAttribute)iannotationAttribute;
+        String value = annotationAttribute.value;
+
+        if (value.startsWith("\"")) {
+            annotationAttribute.value = value.substring(1, value.length() - 1);
+        } else if (value.endsWith(".class")) {
+            annotationAttribute.value = value.substring(0, value.length() - ".class".length());
+        } else {
+            annotationAttribute.value = value;
+        }
+        annotationAttributes.add(annotationAttribute);
     }
 
-    public void setValue(String value) {
-        if (value.startsWith("\"")) {
-            this.value = value.substring(1, value.length() - 1);
-        } else if (value.endsWith(".class")) {
-            this.value = value.substring(0, value.length() - ".class".length());
-        } else {
-            this.value = value;
+    public String getValueFor(String name) {
+        for (AnnotationAttribute annotationAttribute : annotationAttributes) {
+            if (annotationAttribute.name.equals(name)) {
+                return annotationAttribute.value;
+            }
         }
+        return null;
     }
 
     public boolean isValid() {
@@ -67,8 +75,7 @@ public class Annotation implements StateParser.IAnnotation{
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (attribute != null ? attribute.hashCode() : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (annotationAttributes != null ? annotationAttributes.hashCode() : 0);
         return result;
     }
 
@@ -79,9 +86,9 @@ public class Annotation implements StateParser.IAnnotation{
 
         Annotation that = (Annotation) o;
 
-        if (attribute != null ? !attribute.equals(that.attribute) : that.attribute != null) return false;
+        if (annotationAttributes != null ? !annotationAttributes.equals(that.annotationAttributes) : that.annotationAttributes != null)
+            return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (value != null ? !value.equals(that.value) : that.value != null) return false;
 
         return true;
     }
@@ -90,8 +97,7 @@ public class Annotation implements StateParser.IAnnotation{
     public String toString() {
         return "Annotation{" +
                 "name='" + name + '\'' +
-                ", attribute='" + attribute + '\'' +
-                ", value='" + value + '\'' +
+                ", annotationAttributes=" + annotationAttributes +
                 '}';
     }
 }

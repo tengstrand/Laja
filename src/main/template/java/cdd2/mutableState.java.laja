@@ -13,8 +13,8 @@
 
         public {mutableClass}() {
   #foreach (attribute in attributes)
-    #if (attribute.isOptional && attribute.optional.value != null)
-            {attribute.name} = {attribute.optional.value};
+    #if (attribute.isOptional && attribute.optional.valueFor("defaultValue") != null)
+            {attribute.name} = {attribute.optional.valueFor("defaultValue")};
     #else
       #if (attribute.isState)
             {attribute.name} = new {attribute.type}();
@@ -101,7 +101,7 @@
     #end
     #foreach (attribute in attributes where attribute.isImmutableType)
       #set (annotation = attribute.immutableType)
-            {annotation.value}.validate({attribute.name}, {attribute.constantName}, rootElement, parent, errors);
+            {annotation.valueFor("type")}.validate({attribute.name}, {attribute.constantName}, rootElement, parent, errors);
     #end
 
   #end

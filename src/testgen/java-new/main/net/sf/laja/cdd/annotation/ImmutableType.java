@@ -6,4 +6,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ImmutableType {
     public Class type();
+    public String value() default "*";
 }
