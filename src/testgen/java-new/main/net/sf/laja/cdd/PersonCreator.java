@@ -82,7 +82,7 @@ public class PersonCreator implements PersonMaker {
 
     public static class PersonFactory {
 
-        public Factory._Birthday name(String name) {
+        public Factory._HairColor name(String name) {
             return new Factory().new _Name().name(name);
         }
 
@@ -90,20 +90,8 @@ public class PersonCreator implements PersonMaker {
             private final PersonMutableState state = new PersonMutableState();
 
             public class _Name {
-                public _Birthday name(String name) {
+                public _HairColor name(String name) {
                     state.name = name;
-                    return new _Birthday();
-                }
-            }
-
-            public class _Birthday {
-                public _HairColor birthday(int year, int month, int day) {
-                    state.birthday = new DateMidnight(year, month, day);
-                    return new _HairColor();
-                }
-
-                public _HairColor birthday(DateMidnight birthday) {
-                    state.birthday = birthday;
                     return new _HairColor();
                 }
             }
