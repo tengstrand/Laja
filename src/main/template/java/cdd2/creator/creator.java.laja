@@ -16,9 +16,17 @@
 #set (mapBuilder = "{state}MapBuilder")
 #set (mapEntryBuilder = "{state}MapEntryBuilder")
 
+#set (firstMandatory = null)
+#set (secondMandatory = null)
 #set (mandatoryAttributes = new java.util.ArrayList())
 #foreach (attribute in attributes where attribute.isMandatory)
+  #if (firstMandatory != null && secondMandatory == null)
+    #set (secondMandatory = attribute)
+  #end
   #mandatoryAttributes.add(attribute)
+  #if (firstMandatory == null)
+    #set (firstMandatory = attribute)
+  #end
 #end
 #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
 

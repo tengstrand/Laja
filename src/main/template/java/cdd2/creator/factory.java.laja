@@ -11,8 +11,12 @@
 
     public static class {factory} {
 
-        public Factory._Birthday name(String name) {
-            return new Factory().new _Name().name(name);
+  #if (secondMandatory == null)
+        public {creator} name({firstMandatory.type} {firstMandatory.name}) {
+  #else
+        public Factory._{secondMandatory.nameAsClass} name({firstMandatory.type} {firstMandatory.name}) {
+  #end
+            return new Factory().new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
         }
 
         private static class Factory {
