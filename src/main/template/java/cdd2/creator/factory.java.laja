@@ -11,8 +11,8 @@
 
     public static class {factory} {
 
-        public Factory.Birthday name(String name) {
-            return new Factory().new Name().name(name);
+        public Factory._Birthday name(String name) {
+            return new Factory().new _Name().name(name);
         }
 
         private static class Factory {
@@ -21,13 +21,13 @@
   #set (hasNext = iterator.hasNext)
   #if (hasNext)
     #set (attribute = iterator.next)
-    #set (currentClass = "{strings.capitalize(attribute.name)}")
+    #set (currentClass = "_{strings.capitalize(attribute.name)}")
   #end
   #while (hasNext)
     #set (hasNext = iterator.hasNext)
     #if (hasNext)
       #set (nextAttribute = iterator.next)
-      #set (nextClass = "{strings.capitalize(nextAttribute.name)}")
+      #set (nextClass = "_{strings.capitalize(nextAttribute.name)}")
 
       #if (attribute.isString)
             public class {currentClass} {

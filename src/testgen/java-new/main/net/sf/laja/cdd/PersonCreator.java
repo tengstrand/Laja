@@ -82,87 +82,87 @@ public class PersonCreator implements PersonMaker {
 
     public static class PersonFactory {
 
-        public Factory.Birthday name(String name) {
-            return new Factory().new Name().name(name);
+        public Factory._Birthday name(String name) {
+            return new Factory().new _Name().name(name);
         }
 
         private static class Factory {
             private final PersonMutableState state = new PersonMutableState();
 
-            public class Name {
-                public Birthday name(String name) {
+            public class _Name {
+                public _Birthday name(String name) {
                     state.name = name;
-                    return new Birthday();
+                    return new _Birthday();
                 }
             }
 
-            public class Birthday {
-                public HairColor birthday(int year, int month, int day) {
+            public class _Birthday {
+                public _HairColor birthday(int year, int month, int day) {
                     state.birthday = new DateMidnight(year, month, day);
-                    return new HairColor();
+                    return new _HairColor();
                 }
 
-                public HairColor birthday(DateMidnight birthday) {
+                public _HairColor birthday(DateMidnight birthday) {
                     state.birthday = birthday;
-                    return new HairColor();
+                    return new _HairColor();
                 }
             }
 
-            public class HairColor {
-                public Children hairColor(int hairColor) {
+            public class _HairColor {
+                public _Children hairColor(int hairColor) {
                     state.hairColor = hairColor;
-                    return new Children();
+                    return new _Children();
                 }
 
                 @Preserve
-                public Children hairColor(net.sf.laja.cdd.HairColor hairColor) {
+                public _Children hairColor(net.sf.laja.cdd.HairColor hairColor) {
                     state.hairColor = hairColor.id;
-                    return new Children();
+                    return new _Children();
                 }
             }
 
-            public class Children {
-                public Address children(PersonCreator... creators) {
+            public class _Children {
+                public _Address children(PersonCreator... creators) {
                     List<PersonMutableState> children = new ArrayList<PersonMutableState>();
 
                     for (PersonCreator creator : creators) {
                         children.add(creator.asMutableState());
                     }
                     state.children = children;
-                    return new Address();
+                    return new _Address();
                 }
 
-                public Address children(List<PersonMutableState> children) {
+                public _Address children(List<PersonMutableState> children) {
                     state.children = children;
-                    return new Address();
+                    return new _Address();
                 }
             }
 
-            public class Address {
+            public class _Address {
                 public PersonCreator defaults() {
                     defaultAddress();
-                    new ListOfSetOfListOfIntegers().defaultListOfSetOfMapOfIntegers();
+                    new _ListOfSetOfListOfIntegers().defaultListOfSetOfMapOfIntegers();
                     return new PersonCreator(state);
                 }
 
                 @Preserve
-                public ListOfSetOfListOfIntegers defaultAddress() {
+                public _ListOfSetOfListOfIntegers defaultAddress() {
                     state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
-                    return new ListOfSetOfListOfIntegers();
+                    return new _ListOfSetOfListOfIntegers();
                 }
 
-                public ListOfSetOfListOfIntegers address(AddressMutableState address) {
+                public _ListOfSetOfListOfIntegers address(AddressMutableState address) {
                     state.address = address;
-                    return new ListOfSetOfListOfIntegers();
+                    return new _ListOfSetOfListOfIntegers();
                 }
 
-                public ListOfSetOfListOfIntegers address(AddressCreator integrator) {
+                public _ListOfSetOfListOfIntegers address(AddressCreator integrator) {
                     state.address = integrator.asMutableState();
-                    return new ListOfSetOfListOfIntegers();
+                    return new _ListOfSetOfListOfIntegers();
                 }
             }
 
-            public class ListOfSetOfListOfIntegers {
+            public class _ListOfSetOfListOfIntegers {
                 @Preserve
                 public PersonCreator defaultListOfSetOfMapOfIntegers() {
                     Map map1 = new HashMap();

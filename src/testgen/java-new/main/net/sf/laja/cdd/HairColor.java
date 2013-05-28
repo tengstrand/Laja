@@ -1,5 +1,7 @@
 package net.sf.laja.cdd;
 
+import net.sf.laja.cdd.annotation.TypeConverter;
+
 public enum HairColor {
     BLACK(0), BROWN(1), GREY(2), RED(3), BLOND(4);
 
@@ -24,5 +26,10 @@ public enum HairColor {
         } catch (IllegalArgumentException e) {
             errors.addError(rootElement, parent, attributeName, "Unknown hair color id: " + hairColor);
         }
+    }
+
+    @TypeConverter
+    public int hairColor(HairColor hairColor) {
+        return hairColor.id;
     }
 }
