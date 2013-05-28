@@ -25,12 +25,12 @@
         return errors.iterator();
     }
 
-    public boolean isEmpty() {
-        return errors.isEmpty();
-    }
+     public boolean isValid() {
+         return errors.isEmpty();
+     }
 
-    public boolean hasErrors() {
-        return !isEmpty();
+    public boolean isInvalid() {
+        return !isValid();
     }
 
     public int size() {

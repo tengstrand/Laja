@@ -45,7 +45,7 @@ public class AddressTest {
 
         ValidationErrors errors = builder.validate();
 
-        if (errors.hasErrors() && errors.first().isNullError(AddressState.STREET_NAME)) {
+        if (errors.isInvalid() && errors.first().isNullError(AddressState.STREET_NAME)) {
             builder.withStreetName("First street");
         }
         builder.assertIsValid();

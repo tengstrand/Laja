@@ -42,7 +42,7 @@
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 
-            if (errors.hasErrors()) {
+            if (errors.isInvalid()) {
                 throw new {stateException}(errors);
             }
         }
@@ -51,7 +51,7 @@
 #macro isValid()
 
         public boolean isValid() {
-            return validate().isEmpty();
+            return validate().isValid();
         }
 #end
 

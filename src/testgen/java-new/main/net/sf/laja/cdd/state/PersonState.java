@@ -242,13 +242,13 @@ public class PersonState implements ImmutableState {
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 
-            if (errors.hasErrors()) {
+            if (errors.isInvalid()) {
                 throw new IllegalPersonStateException(errors);
             }
         }
 
         public boolean isValid() {
-            return validate().isEmpty();
+            return validate().isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
