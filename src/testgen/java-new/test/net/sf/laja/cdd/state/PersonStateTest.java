@@ -13,8 +13,8 @@ public class PersonStateTest {
 
     @Test
     public void shouldConvertFromImmutableToMutableState() {
-        PersonState state = createPerson().name("Carl").birthday(1977,8,15)
-                .hairColor(1).children(createPerson().name("Adam").birthday(2010,11,12).hairColor(1).children().defaults())
+        PersonState state = createPerson().name("Carl")
+                .hairColor(1).children(createPerson().name("Adam").hairColor(1).children().defaults())
                 .defaults().asState();
 
         PersonMutableState mutableState = state.asMutable();
@@ -24,8 +24,8 @@ public class PersonStateTest {
 
     @Test
     public void shouldConvertFromMutableToImmutableState() {
-        PersonMutableState mutableState = createPerson().name("Carl").birthday(1977,8,15)
-                .hairColor(1).children(createPerson().name("Adam").birthday(2010,11,12).hairColor(1).children().defaults())
+        PersonMutableState mutableState = createPerson().name("Carl")
+                .hairColor(1).children(createPerson().name("Adam").hairColor(1).children().defaults())
                 .defaultAddress()
                 .defaultListOfSetOfMapOfIntegers()
                 .withGroupedAddresses((createAddressMap(addressEntry("aaa", createAddress().withStreetName("First street")))))

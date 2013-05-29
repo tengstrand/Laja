@@ -22,7 +22,7 @@ public class MutableToImmutableConverterTest {
 
     @Test
     public void shouldConvertFromMutableToImmutableState() {
-        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).hairColor(1).children().defaults().asMutableState();
+        PersonMutableState mutableState = createPerson().name("Carl").hairColor(1).children().defaults().asMutableState();
         PersonState state = (PersonState) toImmutable.convert(mutableState, 0);
 
         assertThat(state.name, equalTo("Carl"));
@@ -31,14 +31,14 @@ public class MutableToImmutableConverterTest {
 
     @Test(expected = IllegalPersonStateException.class)
     public void shouldThrowExceptionIfConvertingToInvalidImmutableState() {
-        PersonMutableState mutableState = createPerson().name(null).birthday(2010,1,15).hairColor(1).children().defaults().asMutableState();
+        PersonMutableState mutableState = createPerson().name(null).hairColor(1).children().defaults().asMutableState();
         toImmutable.convert(mutableState, 0);
     }
 
     @Test(expected = IllegalPersonStateException.class)
     public void shouldThrowExceptionIfConvertingListWithInvalidStateToImmutableState() {
-        PersonMutableState mutableState = createPerson().name("Carl").birthday(2010,1,15).hairColor(1).children(
-                createPerson().name(null).birthday(2011,1,1).hairColor(1).children().defaults()
+        PersonMutableState mutableState = createPerson().name("Carl").hairColor(1).children(
+                createPerson().name(null).hairColor(1).children().defaults()
         ).defaults().asMutableState();
         toImmutable.convert(mutableState, 0);
     }

@@ -3,16 +3,15 @@ package net.sf.laja.cdd.state;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.HairColor;
 import net.sf.laja.cdd.ImmutableState;
 import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
-import net.sf.laja.cdd.annotation.ImmutableType;
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.annotation.Value;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
@@ -35,7 +34,7 @@ public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id
     public final DateMidnight birthday;
-    @ImmutableType(type = HairColor.class)
+    @Value(state = HairColorStateValue.class)
     public final int hairColor;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
@@ -184,7 +183,6 @@ public class PersonState implements ImmutableState {
         @Key public String name;
         @Id
         public DateMidnight birthday;
-        @ImmutableType(type = HairColor.class)
         public int hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;
@@ -267,7 +265,7 @@ public class PersonState implements ImmutableState {
             address.validate(rootElement, concatenate(parent, "address"), errors);
             collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, validators, 0);
             mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, validators, 0);
-            HairColor.validate(hairColor, HAIR_COLOR, rootElement, parent, errors);
+            new HairColorStateValue(hairColor).validate(HAIR_COLOR, rootElement, parent, errors);
 
             PersonState.validate(this, rootElement, parent, errors);
 

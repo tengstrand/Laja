@@ -1,8 +1,6 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.annotation.TypeConverter;
-
-public enum HairColor {
+public enum HairColor implements ValueConverter<Integer> {
     BLACK(0), BROWN(1), GREY(2), RED(3), BLOND(4);
 
     public final int id;
@@ -20,16 +18,7 @@ public enum HairColor {
         throw new IllegalArgumentException("Unknown id: " + id);
     }
 
-    public static void validate(int hairColor, String attributeName, Object rootElement, String parent, ValidationErrors.Builder errors) {
-        try {
-            valueOf(hairColor);
-        } catch (IllegalArgumentException e) {
-            errors.addError(rootElement, parent, attributeName, "Unknown hair color id: " + hairColor);
-        }
-    }
-
-    @TypeConverter
-    public int hairColor(HairColor hairColor) {
-        return hairColor.id;
+    public Integer asValue() {
+        return id;
     }
 }

@@ -104,7 +104,7 @@ public class PersonCreator implements PersonMaker {
 
                 @Preserve
                 public _Children hairColor(net.sf.laja.cdd.HairColor hairColor) {
-                    state.hairColor = hairColor.id;
+                    state.hairColor = hairColor.asValue();
                     return new _Children();
                 }
             }
