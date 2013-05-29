@@ -7,10 +7,11 @@ import org.joda.time.DateMidnight;
 import org.joda.time.Period;
 
 import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
+import static net.sf.laja.cdd.state.PersonState.HAIR_COLOR;
 
 @Behaviour
 public class Person extends PersonBehaviour {
-    @Parameter(name = "hairColor", wrapper = HairColor.class)
+    @Parameter(name = HAIR_COLOR, wrapper = HairColor.class)
     private final HairColor hairColor;
 
     public Person(PersonState s) {
@@ -20,6 +21,10 @@ public class Person extends PersonBehaviour {
 
     public Person withName(String name) {
         return new Person(s.withName(name));
+    }
+
+    public boolean isRedHaired() {
+        return hairColor.isRedHaired();
     }
 
     public boolean hasLongName() {

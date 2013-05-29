@@ -9,6 +9,10 @@ public enum HairColor implements ValueConverter<Integer> {
         this.id = id;
     }
 
+    public boolean isRedHaired() {
+        return this == GREY;
+    }
+
     public static HairColor valueOf(int id) {
         for (HairColor color : values()) {
             if (color.id == id) {
