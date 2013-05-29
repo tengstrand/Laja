@@ -12,7 +12,7 @@ public class HairColorStateValue implements StateValue {
 
     public void validate(String attributeName, Object rootElement, String parent, ValidationErrors.Builder errors) {
         if (id < 0 || id > 4) {
-            errors.addError(rootElement, parent, attributeName, "Unknown hair color id: " + id);
+            errors.addError(attributeName, "Unknown hair color id: " + id, rootElement, parent);
         }
     }
 }

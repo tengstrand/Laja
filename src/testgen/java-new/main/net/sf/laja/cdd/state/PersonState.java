@@ -46,7 +46,7 @@ public class PersonState implements ImmutableState {
 
     private static void validate(PersonMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
         if (state.birthday != null && state.birthday.isAfterNow()) {
-            errors.addError(rootElement, parent, BIRTHDAY, "born_after_today");
+            errors.addError(BIRTHDAY, "born_after_today", rootElement, parent);
         }
     }
 
@@ -183,6 +183,7 @@ public class PersonState implements ImmutableState {
         @Key public String name;
         @Id
         public DateMidnight birthday;
+        @Value(state = HairColorStateValue.class)
         public int hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;

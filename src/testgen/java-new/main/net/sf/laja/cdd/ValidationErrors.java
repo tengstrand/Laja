@@ -75,18 +75,18 @@
         }
 
         public Builder addIsNullError(Object rootElement, String attribute) {
-            return addError(rootElement, "", attribute, NULL_ERROR);
+            return addError(attribute, NULL_ERROR, rootElement, "");
         }
 
         public Builder addIsNullError(Object rootElement, String parent, String attribute) {
-            return addError(rootElement, parent, attribute, NULL_ERROR);
+            return addError(attribute, NULL_ERROR, rootElement, parent);
         }
 
         public Builder addError(Object rootElement, String attribute, String errorType) {
-            return addError(rootElement, "", attribute, errorType);
+            return addError(attribute, errorType, rootElement, "");
         }
 
-        public Builder addError(Object rootElement, String parent, String attribute, String errorType) {
+        public Builder addError(String attribute, String errorType, Object rootElement, String parent) {
             size++;
             errors.add(new ValidationError(parent, attribute, errorType, rootElement));
             return this;
