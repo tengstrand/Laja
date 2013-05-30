@@ -29,15 +29,15 @@ public class Attribute implements StateTemplateParser.IAttribute {
     public boolean isMandatory = true;
 
     public boolean isValidType() {
-        return isPrimitive() || isImmutableObject() || isState;
+        return isPrimitive() || isImmutableType() || isState;
     }
 
     public boolean isPrimitive() {
         return Type.isPrimitive(type);
     }
 
-    public boolean isImmutableObject() {
-        return Type.isImmutableObject(type);
+    public boolean isImmutableType() {
+        return Type.isImmutableType(type);
     }
 
     public boolean isExplicitAssigned() {

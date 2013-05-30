@@ -20,7 +20,7 @@ public class Type implements StateParser.IType {
     }
 
     public boolean isState() {
-        return !isCollection() && !isMap() && name.endsWith("State");
+        return !isCollectionOrMap() && name.endsWith("State");
     }
 
     public boolean isCollection() {
@@ -39,20 +39,20 @@ public class Type implements StateParser.IType {
         return mapType != null;
     }
 
-    public boolean isString() {
-        return !isCollection() && !isMap() && name.equals("String");
+    public boolean isCollectionOrMap() {
+        return isCollection() || isMap();
     }
 
-    private boolean isNameType() {
-        return collectionType == null && mapType == null;
+    public boolean isString() {
+        return !isCollectionOrMap() && name.equals("String");
     }
 
     public boolean isPrimitive() {
-        return isNameType() && net.sf.laja.parser.cdd.Type.isPrimitive(name);
+        return !isCollectionOrMap() && net.sf.laja.parser.cdd.Type.isPrimitive(name);
     }
 
     public boolean isPrimitiveInteger() {
-        return isNameType() && net.sf.laja.parser.cdd.Type.isPrimitiveInteger(name);
+        return !isCollectionOrMap() && net.sf.laja.parser.cdd.Type.isPrimitiveInteger(name);
     }
 
     public boolean isBoolean() {
@@ -64,7 +64,7 @@ public class Type implements StateParser.IType {
     }
 
     public boolean isLeafState() {
-        if (isNameType()) {
+        if (!isCollectionOrMap()) {
             return isState();
         }
         if (isCollection()) {
