@@ -82,6 +82,10 @@ public class Attribute implements StateParser.IAttribute {
         return type.isMap();
     }
 
+    public boolean isCollectionOrMap() {
+        return isCollection() || isMap();
+    }
+
     public boolean isString() {
         return type.isString();
     }

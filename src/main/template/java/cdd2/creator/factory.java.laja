@@ -32,46 +32,54 @@
     #if (hasNext)
       #set (nextAttribute = iterator.next)
       #set (nextClass = "_{strings.capitalize(nextAttribute.name)}")
+      #set (returnClass = "{nextClass}")
+      #set (returnStatement = "return new {nextClass}();")
+    #else
+      #set (returnClass = "{creator}")
+      #set (returnStatement = "return new {creator}(state);")
+    #end
 
-      #if (attribute.isString)
+    #if (!attribute.isCollectionOrMap)
             public class {currentClass} {
-                public {nextClass} {attribute.name}(String {attribute.name}) {
+                public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
                     state.{attribute.name} = {attribute.name};
-                    return new {nextClass}();
+                    {returnStatement}
                 }
-            }
-      #else if (attribute.isCollection)
-            public class Children {
-                public Address children(PersonCreator... creators) {
-                    List<PersonMutableState> children = new ArrayList<PersonMutableState>();
+      #if (attribute.isState)
 
-                    for (PersonCreator creator : creators) {
-                        children.add(creator.asMutableState());
-                    }
-                    state.children = children;
-                    return new Address();
+                public {returnClass} {attribute.name}({attribute.nameAsClass}Creator {attribute.name}) {
+                    state.{attribute.name} = {attribute.name}.asMutableState();
+                    {returnStatement}
                 }
-
-                public Address children(List<PersonMutableState> children) {
-                    state.children = children;
-                    return new Address();
-                }
-            }
       #end
+            }
+    #else if (attribute.isCollection)
+            public class {currentClass} {
+                public {returnClass} {attribute.name}({attribute.type}> {attribute.name}) {
+                    state.{attribute.name} = {attribute.name};
+                    {returnStatement}
+                }
+      #if (attribute.isLeafState)
+
+                public {returnClass} {attribute.name}({creator}... creators) {
+                    List<{mutableState}> {attribute.name} = new ArrayList<{mutableState}>();
+
+                    for ({creator} creator : creators) {
+                        {attribute.name}.add(creator.asMutableState());
+                    }
+                    state.{attribute.name} = {attribute.name};
+                    {returnStatement}
+                }
+      #end
+            }
+    #else
+        // ******* MAP (1)
+    #end
+    #if (hasNext)
       #set (attribute = nextAttribute)
       #set (currentClass = nextClass)
-    #else
-
-      #if (attribute.isString)
-            public class {currentClass} {
-                public {creator} {attribute.name}({attribute.type} {attribute.name}) {
-                    state.{attribute.name} = {attribute.name};
-                    return new {creator}(state);
-                }
-            }
-      #end
     #end
-        }
-
   #end
+        }
+    }
 #end

@@ -110,6 +110,11 @@ public class PersonCreator implements PersonMaker {
             }
 
             public class _Children {
+                public _Address children(List<PersonMutableState> children) {
+                    state.children = children;
+                    return new _Address();
+                }
+
                 public _Address children(PersonCreator... creators) {
                     List<PersonMutableState> children = new ArrayList<PersonMutableState>();
 
@@ -119,14 +124,10 @@ public class PersonCreator implements PersonMaker {
                     state.children = children;
                     return new _Address();
                 }
-
-                public _Address children(List<PersonMutableState> children) {
-                    state.children = children;
-                    return new _Address();
-                }
             }
 
             public class _Address {
+                @Preserve
                 public PersonCreator defaults() {
                     defaultAddress();
                     new _ListOfSetOfListOfIntegers().defaultListOfSetOfMapOfIntegers();
@@ -144,8 +145,8 @@ public class PersonCreator implements PersonMaker {
                     return new _ListOfSetOfListOfIntegers();
                 }
 
-                public _ListOfSetOfListOfIntegers address(AddressCreator integrator) {
-                    state.address = integrator.asMutableState();
+                public _ListOfSetOfListOfIntegers address(AddressCreator address) {
+                    state.address = address.asMutableState();
                     return new _ListOfSetOfListOfIntegers();
                 }
             }
