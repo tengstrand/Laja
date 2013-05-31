@@ -40,7 +40,6 @@ public class PersonState implements ImmutableState {
     public final AddressState address;
     @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
     public final ImmutableSet<AddressState> oldAddresses;
-    @Optional
     public final ImmutableMap<String,AddressState> groupedAddresses;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
 

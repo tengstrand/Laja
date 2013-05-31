@@ -73,7 +73,12 @@
       #end
             }
     #else
-        // ******* MAP (1)
+            public class {currentClass} {
+                public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
+                    state.{attribute.name} = {attribute.name};
+                    {returnStatement}
+                }
+            }
     #end
     #if (hasNext)
       #set (attribute = nextAttribute)

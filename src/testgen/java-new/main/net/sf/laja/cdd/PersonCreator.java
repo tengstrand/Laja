@@ -130,28 +130,49 @@ public class PersonCreator implements PersonMaker {
                 @Preserve
                 public PersonCreator defaults() {
                     defaultAddress();
-                    new _ListOfSetOfListOfIntegers().defaultListOfSetOfMapOfIntegers();
+                    new _ListOfSetOfMapOfIntegers().defaultListOfSetOfMapOfIntegers();
                     return new PersonCreator(state);
                 }
 
                 @Preserve
-                public _ListOfSetOfListOfIntegers defaultAddress() {
+                public _GroupedAddresses defaultAddress() {
                     state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
-                    return new _ListOfSetOfListOfIntegers();
+                    return new _GroupedAddresses();
                 }
 
-                public _ListOfSetOfListOfIntegers address(AddressMutableState address) {
+                public _GroupedAddresses address(AddressMutableState address) {
                     state.address = address;
-                    return new _ListOfSetOfListOfIntegers();
+                    return new _GroupedAddresses();
                 }
 
-                public _ListOfSetOfListOfIntegers address(AddressCreator address) {
+                public _GroupedAddresses address(AddressCreator address) {
                     state.address = address.asMutableState();
-                    return new _ListOfSetOfListOfIntegers();
+                    return new _GroupedAddresses();
                 }
             }
 
-            public class _ListOfSetOfListOfIntegers {
+            public class _GroupedAddresses {
+                public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
+                    return new _ListOfSetOfMapOfIntegers();
+                }
+
+                public _ListOfSetOfMapOfIntegers groupedAddresses(Map<String,AddressMutableState> groupedAddresses) {
+                    state.groupedAddresses = groupedAddresses;
+                    return new _ListOfSetOfMapOfIntegers();
+                }
+
+                public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder) {
+                    state.groupedAddresses = mapBuilder.asAddressMutableMap(AddressType.REGULAR);
+                    return new _ListOfSetOfMapOfIntegers();
+                }
+
+                public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder, AddressType addressType) {
+                    state.groupedAddresses = mapBuilder.asAddressMutableMap(addressType);
+                    return new _ListOfSetOfMapOfIntegers();
+                }
+            }
+
+            public class _ListOfSetOfMapOfIntegers {
                 @Preserve
                 public PersonCreator defaultListOfSetOfMapOfIntegers() {
                     Map map1 = new HashMap();

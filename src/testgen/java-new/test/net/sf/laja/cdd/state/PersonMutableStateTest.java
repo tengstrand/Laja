@@ -1,12 +1,12 @@
 package net.sf.laja.cdd.state;
 
-import net.sf.laja.cdd.AddressCreator;
 import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.junit.Test;
 
 import java.util.Iterator;
 
+import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
@@ -52,7 +52,8 @@ public class PersonMutableStateTest {
     @Test
     public void invalidStateShouldReturnCustomValidationError() {
         PersonMutableState mutableState = createPerson().name("Carl").hairColor(1).children()
-                .address(AddressCreator.createAddress().withStreetName("First street").withCity("Stockholm"))
+                .address(createAddress().withStreetName("First street").withCity("Stockholm"))
+                .groupedAddresses(createAddressMap(addressEntry("A", createAddress())))
                 .defaultListOfSetOfMapOfIntegers().asMutableState();
 
         ValidationErrors errors = mutableState.validate(new CarlCanNotLiveInStockholmValidator());
