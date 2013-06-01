@@ -85,6 +85,38 @@
 
 #end
 
+#macro constructor()
+    public {creator}({mutableState} state) {
+        this.state = state;
+    }
+
+#end
+
+#macro asState()
+    // {state}
+    public {state} asState() {
+        return state.asImmutable();
+    }
+
+#end
+
+#macro asMutableState()
+    public {mutableState} asMutableState() {
+        return state;
+    }
+
+#end
+
+#macro withMethods()
+  #foreach (attribute in attributes where attribute.isOptional)
+    public {creator} {attribute.withMethod}({attribute.withType} {attribute.name}) {
+        state.{attribute.name} = {attribute.name};
+        return this;
+    }
+
+  #end
+#end
+
 #import "{.}/factory.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
@@ -114,5 +146,12 @@ public class {classname} implements {maker} {
   #mapCreatorEntry()
   #mapBuilderEntry()
   #$factory.factory()
+
+    // --------------------
+
+  #constructor()
+  #asState()
+  #asMutableState()
+  #withMethods()
 }
 #end

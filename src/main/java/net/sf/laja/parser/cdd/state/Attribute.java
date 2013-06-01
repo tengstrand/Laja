@@ -42,6 +42,21 @@ public class Attribute implements StateParser.IAttribute {
         nameAsClass = StringUtils.capitalize(variable);
     }
 
+    public String withMethod() {
+        return "with" + nameAsClass;
+    }
+
+    public String withType() {
+        if (type.isList()) {
+            return type.name + "SetBuilder";
+        } else if (type.isSet()) {
+            return type.name + "SetBuilder";
+        } else if (type.isMap()) {
+            return type.name + "MapBuilder";
+        }
+        return type.name;
+    }
+
     public String getConstantName() {
         return converter.toConstant(name);
     }
