@@ -55,7 +55,7 @@
             }
     #else if (attribute.isCollection)
             public class {currentClass} {
-                public {returnClass} {attribute.name}({attribute.type}> {attribute.name}) {
+                public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
                     state.{attribute.name} = {attribute.name};
                     {returnStatement}
                 }
