@@ -5,6 +5,7 @@
 #set (statevariable = creator.statevariable)
 #set (asMethods = creator.asMethods)
 #set (state = creator.state)
+#set (immutableState = "{state}State")
 #set (manualCode = creator.manualCode)
 #set (maker = "{state}Maker")
 #set (mutableState = "{state}MutableState")
@@ -93,7 +94,7 @@
 #end
 
 #macro asState()
-    public {state} asState() {
+    public {immutableState} asState() {
         return state.asImmutable();
     }
 
@@ -149,7 +150,7 @@ public class {classname} implements {maker} {
     // --------------------
 
   #constructor()
-##  #asState()
+  #asState()
 ##  #asMutableState()
 ##  #withMethods()
 }
