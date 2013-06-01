@@ -6,6 +6,7 @@
 #set (asMethods = creator.asMethods)
 #set (state = creator.state)
 #set (immutableState = "{state}State")
+#set (mutableState = "{state}MutableState")
 #set (manualCode = creator.manualCode)
 #set (maker = "{state}Maker")
 #set (mutableState = "{state}MutableState")
@@ -151,7 +152,7 @@ public class {classname} implements {maker} {
 
   #constructor()
   #asState()
-##  #asMutableState()
+  #asMutableState()
 ##  #withMethods()
 }
 #end
