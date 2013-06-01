@@ -93,7 +93,6 @@
 #end
 
 #macro asState()
-    // {state}
     public {state} asState() {
         return state.asImmutable();
     }
@@ -150,8 +149,8 @@ public class {classname} implements {maker} {
     // --------------------
 
   #constructor()
-  #asState()
-  #asMutableState()
-  #withMethods()
+##  #asState()
+##  #asMutableState()
+##  #withMethods()
 }
 #end

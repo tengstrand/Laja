@@ -162,7 +162,7 @@ public class PersonCreator implements PersonMaker {
                 }
 
                 public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder) {
-                    state.groupedAddresses = mapBuilder.asAddressMutableMap(AddressType.REGULAR);
+                    state.groupedAddresses = mapBuilder.asAddressMutableMap();
                     return new _ListOfSetOfMapOfIntegers();
                 }
 
@@ -294,15 +294,8 @@ public class PersonCreator implements PersonMaker {
             return new PersonBuilder(new PersonMutableState());
         }
 
-        public PersonBuilder withName(String name) {
-            state.name = name;
-            return this;
-        }
-
-        public PersonBuilder withBirthday(DateMidnight birthday) {
-            state.birthday = birthday;
-            return this;
-        }
+        public PersonBuilder withName(String name) { state.name = name; return this; }
+        public PersonBuilder withBirthday(DateMidnight birthday) { state.birthday = birthday; return this; }
 
         public PersonBuilder withBirthday(int year, int month, int day) {
             state.birthday = new DateMidnight(year, month, day);

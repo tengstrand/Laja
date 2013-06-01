@@ -73,6 +73,15 @@ public class Type implements StateParser.IType {
         return mapType.entry.isLeafState();
     }
 
+    public String getState() {
+        if (name.endsWith("MutableState")) {
+            return name.substring(0, name.length() - "MutableState".length());
+        } else if (name.endsWith("State")) {
+            return name.substring(0, name.length() - "State".length());
+        }
+        throw new IllegalStateException("The type " + name + " is not a state!");
+    }
+
     public Type asMutable() {
         Type result = new Type();
         result.setName(typeConverter.asMutable(name));

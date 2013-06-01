@@ -78,6 +78,14 @@
                     state.{attribute.name} = {attribute.name};
                     {returnStatement}
                 }
+      #if (attribute.type.mapType.entry.isState)
+        #set (stateName = attribute.type.mapType.entry.state)
+
+                public {returnClass} {attribute.name}({stateName}MapBuilder mapBuilder) {
+                    state.{attribute.name} = mapBuilder.as{stateName}MutableMap();
+                    {returnStatement}
+                }
+      #end
             }
     #end
     #if (hasNext)

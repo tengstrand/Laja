@@ -371,6 +371,15 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
+        public Map asAddressMutableMap() {
+            Map<Object,Address> result = new HashMap<Object,Address>();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asAddress());
+            }
+            return result;
+        }
+
         public Map asAddressMutableMap(AddressType type) {
             Map<Object,Address> result = new HashMap<Object,Address>();
 
