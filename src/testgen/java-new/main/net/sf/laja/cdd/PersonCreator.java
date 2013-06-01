@@ -152,6 +152,7 @@ public class PersonCreator implements PersonMaker {
             }
 
             public class _GroupedAddresses {
+                @Preserve
                 public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
                     return new _ListOfSetOfMapOfIntegers();
                 }
