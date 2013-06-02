@@ -207,18 +207,13 @@ public class PersonCreator implements PersonMaker {
         return state;
     }
 
-    public PersonCreator withAddress(AddressMutableState address) {
-        state.address = address;
+    public PersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
+        state.oldAddresses = oldAddresses;
         return this;
     }
 
-    public PersonCreator withOldAddresses(AddressSetBuilder addresses) {
-        state.oldAddresses = addresses.asMutableStateSet();
-        return this;
-    }
-
-    public PersonCreator withGroupedAddresses(AddressMapBuilder groupedAddresses) {
-        state.groupedAddresses = groupedAddresses.asMutableStateMap();
+    public PersonCreator withOldAddresses(AddressSetBuilder oldAddresses) {
+        state.oldAddresses = oldAddresses.asMutableStateSet();
         return this;
     }
 

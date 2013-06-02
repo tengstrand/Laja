@@ -110,11 +110,20 @@
 
 #macro withMethods()
   #foreach (attribute in attributes where attribute.isOptional)
-    public {creator} {attribute.withMethod}({attribute.withType} {attribute.name}) {
+    public {creator} {attribute.withMethod}({attribute.type} {attribute.name}) {
         state.{attribute.name} = {attribute.name};
         return this;
     }
 
+    #if (attribute.isCollectionOrMap && attribute.isLeafState)
+      #set (leafState = attribute.leafState)
+      #set (type = attribute.collectionOrMapType)
+    public {creator} {attribute.withMethod}({leafState}{type}Builder {attribute.name}) {
+        state.{attribute.name} = {attribute.name}.asMutableState{type}();
+        return this;
+    }
+
+    #end
   #end
 #end
 
@@ -153,6 +162,6 @@ public class {classname} implements {maker} {
   #constructor()
   #asState()
   #asMutableState()
-##  #withMethods()
+  #withMethods()
 }
 #end

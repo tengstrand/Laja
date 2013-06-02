@@ -73,6 +73,16 @@ public class Type implements StateParser.IType {
         return mapType.entry.isLeafState();
     }
 
+    public String getLeafState() {
+        if (!isCollectionOrMap()) {
+            return getState();
+        }
+        if (isCollection()) {
+            return collectionType.type.getLeafState();
+        }
+        return mapType.entry.getLeafState();
+    }
+
     public String getState() {
         if (name.endsWith("MutableState")) {
             return name.substring(0, name.length() - "MutableState".length());
@@ -80,6 +90,17 @@ public class Type implements StateParser.IType {
             return name.substring(0, name.length() - "State".length());
         }
         throw new IllegalStateException("The type " + name + " is not a state!");
+    }
+
+    public String collectionOrMapType() {
+        if (isSet()) {
+            return "Set";
+        } else if (isList()) {
+            return "List";
+        } else if (isMap()) {
+            return "Map";
+        }
+        throw new IllegalStateException("The type " + name + " is not a Set/List/Map");
     }
 
     public Type asMutable() {

@@ -46,17 +46,6 @@ public class Attribute implements StateParser.IAttribute {
         return "with" + nameAsClass;
     }
 
-    public String withType() {
-        if (type.isList()) {
-            return type.name + "SetBuilder";
-        } else if (type.isSet()) {
-            return type.name + "SetBuilder";
-        } else if (type.isMap()) {
-            return type.name + "MapBuilder";
-        }
-        return type.name;
-    }
-
     public String getConstantName() {
         return converter.toConstant(name);
     }
@@ -139,6 +128,14 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isLeafState() {
         return type.isLeafState();
+    }
+
+    public String getLeafState() {
+        return type.getLeafState();
+    }
+
+    public String collectionOrMapType() {
+        return type.collectionOrMapType();
     }
 
     @Override
