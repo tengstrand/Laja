@@ -17,6 +17,7 @@
 #set (setBuilder = "{state}SetBuilder")
 #set (mapBuilder = "{state}MapBuilder")
 #set (mapEntryBuilder = "{state}MapEntryBuilder")
+#set (superBehaviour = "{state}Behaviour")
 
 #set (firstMandatory = null)
 #set (secondMandatory = null)
@@ -149,6 +150,7 @@
 #end
 
 #import "{.}/factory.java.laja"
+#import "{.}/superBehaviour.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
@@ -187,5 +189,6 @@ public class {classname} implements {maker} {
   #assertIsValid()
   #isValid()
   #validate()
+  #superBehaviour()
 }
 #end

@@ -1,0 +1,26 @@
+
+#macro superBehaviour()
+    public static class {superBehaviour} {
+        public final {immutableState} s;
+
+        public {superBehaviour}({immutableState} s) {
+            this.s = s;
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof {superBehaviour})) return false;
+
+            return s.equals((({superBehaviour})that).s);
+        }
+
+        @Override public int hashCode() {
+            return s.hashCode();
+        }
+
+        @Override public String toString() {
+            return getClass().getSimpleName() + s;
+        }
+    }
+
+#end
