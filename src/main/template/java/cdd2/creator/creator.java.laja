@@ -141,6 +141,13 @@
 
 #end
 
+#macro validate()
+    public ValidationErrors validate(Validator... validators) {
+        return state.validate(validators);
+    }
+
+#end
+
 #import "{.}/factory.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
@@ -179,5 +186,6 @@ public class {classname} implements {maker} {
   #withMethods()
   #assertIsValid()
   #isValid()
+  #validate()
 }
 #end
