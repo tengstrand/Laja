@@ -134,6 +134,13 @@
 
 #end
 
+#macro isValid()
+    public boolean isValid() {
+        return state.isValid();
+    }
+
+#end
+
 #import "{.}/factory.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
@@ -171,5 +178,6 @@ public class {classname} implements {maker} {
   #asMutableState()
   #withMethods()
   #assertIsValid()
+  #isValid()
 }
 #end
