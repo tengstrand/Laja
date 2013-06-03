@@ -6,6 +6,7 @@ import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -17,9 +18,6 @@ public class AddressState implements ImmutableState {
     public final String streetName;
     @Optional
     public final String city;
-
-    private static void validate(AddressMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
-    }
 
     // ===== Generated code =====
 
@@ -134,6 +132,10 @@ public class AddressState implements ImmutableState {
         public void setStreetName(String streetName) { this.streetName = streetName; }
         public void setCity(String city) { this.city = city; }
 
+        @Preserve
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 
@@ -153,7 +155,7 @@ public class AddressState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            AddressState.validate(this, rootElement, parent, errors);
+            validate(rootElement, parent, errors);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

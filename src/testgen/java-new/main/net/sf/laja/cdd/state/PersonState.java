@@ -10,6 +10,7 @@ import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.annotation.Value;
 import net.sf.laja.cdd.validator.Validator;
@@ -42,12 +43,6 @@ public class PersonState implements ImmutableState {
     public final ImmutableSet<AddressState> oldAddresses;
     public final ImmutableMap<String,AddressState> groupedAddresses;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
-
-    private static void validate(PersonMutableState state, Object rootElement, String parent, ValidationErrors.Builder errors) {
-        if (state.birthday != null && state.birthday.isAfterNow()) {
-            errors.addError(BIRTHDAY, "born_after_today", rootElement, parent);
-        }
-    }
 
     // ===== Generated code =====
 
@@ -237,6 +232,13 @@ public class PersonState implements ImmutableState {
         public void setGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
+        @Preserve
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+            if (birthday != null && birthday.isAfterNow()) {
+                errors.addError(BIRTHDAY, "born_after_today", rootElement, parent);
+            }
+        }
+
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 
@@ -267,7 +269,7 @@ public class PersonState implements ImmutableState {
             if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
             new HairColorStateValue(hairColor).validate(HAIR_COLOR, rootElement, parent, errors);
 
-            PersonState.validate(this, rootElement, parent, errors);
+            validate(rootElement, parent, errors);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
