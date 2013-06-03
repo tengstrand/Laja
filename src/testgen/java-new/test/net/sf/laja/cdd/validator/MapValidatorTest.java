@@ -24,13 +24,13 @@ public class MapValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        mapValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
+        mapValidator().validate(null, states, "", "persons", errors, 0);
 
         assertTrue(errors.isEmpty());
     }
 
     @Test
-    public void invalidMapOfPersonsShouldReturnValidationErrors() {
+    public void invalidMapOfPersonsShouldReturnValidationError() {
         PersonCreator person1 = createPerson().name("Carl").hairColor(1).children().defaults();
         PersonCreator person2 = createPerson().name(null).hairColor(1).children().defaults();
 
@@ -39,11 +39,10 @@ public class MapValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        mapValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
+        mapValidator().validate(null, states, "", "persons", errors, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(person2.asMutableState(), "persons", "name")
-                .addIsNullError(person1.asMutableState(), "persons", "birthday").build();
+                .addIsNullError(person2.asMutableState(), "persons", "name").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }

@@ -10,7 +10,7 @@ import static net.sf.laja.cdd.ValidationErrors.concatenate;
 public class MapValidator implements CoreValidator {
 
     public void validate(Object rootElement, Object elements, String parent, String attribute, ValidationErrors.Builder errors,
-                         Validator[] customValidators, int index, CoreValidator... validators) {
+                         int index, CoreValidator... validators) {
         if (index == validators.length) {
             String newParent = concatenate(parent, attribute);
 
@@ -18,15 +18,10 @@ public class MapValidator implements CoreValidator {
                 MutableState state = (MutableState)element;
                 Object root = rootElement == null ? element : rootElement;
                 state.validate(root, newParent, errors);
-
-                for (Validator validator : customValidators) {
-                    validator.validate(root, state, parent, attribute, errors);
-                }
             }
         } else {
             for (Object element : ((Map)elements).values()) {
-                validators[index].validate(rootElement == null ? element : rootElement, element, parent, attribute, errors,
-                        customValidators, index + 1, validators);
+                validators[index].validate(rootElement == null ? element : rootElement, element, parent, attribute, errors, index + 1, validators);
             }
         }
     }

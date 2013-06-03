@@ -1,7 +1,6 @@
 package net.sf.laja.cdd.stateconverter;
 
 import net.sf.laja.cdd.state.PersonState;
-import org.joda.time.DateMidnight;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
@@ -26,7 +25,6 @@ public class MutableToImmutableConverterTest {
         PersonState state = (PersonState) toImmutable.convert(mutableState, 0);
 
         assertThat(state.name, equalTo("Carl"));
-        assertThat(state.birthday, equalTo(new DateMidnight(2010,1,15)));
     }
 
     @Test(expected = IllegalPersonStateException.class)

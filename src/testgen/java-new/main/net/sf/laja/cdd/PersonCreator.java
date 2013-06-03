@@ -163,12 +163,7 @@ public class PersonCreator implements PersonMaker {
                 }
 
                 public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder) {
-                    state.groupedAddresses = mapBuilder.asAddressMutableMap();
-                    return new _ListOfSetOfMapOfIntegers();
-                }
-
-                public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder, AddressType addressType) {
-                    state.groupedAddresses = mapBuilder.asAddressMutableMap(addressType);
+                    state.groupedAddresses = mapBuilder.asMutableStateMap();
                     return new _ListOfSetOfMapOfIntegers();
                 }
             }

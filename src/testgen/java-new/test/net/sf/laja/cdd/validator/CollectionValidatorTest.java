@@ -27,13 +27,13 @@ public class CollectionValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        collectionValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
+        collectionValidator().validate(null, states, "", "persons", errors, 0);
 
         assertTrue(errors.isEmpty());
     }
 
     @Test
-    public void invalidListOfPersonsShouldReturnValidationErrors() {
+    public void invalidListOfPersonsShouldReturnValidationError() {
         PersonCreator person1 = createPerson().name(null).hairColor(1).children().defaults();
         PersonCreator person2 = createPerson().name("Inga").hairColor(1).children().defaults();
 
@@ -41,17 +41,16 @@ public class CollectionValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        collectionValidator().validate(null, states, "", "persons", errors, new Validator[] {}, 0);
+        collectionValidator().validate(null, states, "", "persons", errors, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(person1.asMutableState(), "persons", "name")
-                .addIsNullError(person2.asMutableState(), "persons", "birthday").build();
+                .addIsNullError(person1.asMutableState(), "persons", "name").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }
 
     @Test
-    public void invalidListOfListOfPersonsShouldReturnValidationErrors() {
+    public void invalidListOfListOfPersonsShouldReturnValidationError() {
         PersonCreator person1 = createPerson().name(null).hairColor(1).children().defaults();
         PersonCreator person2 = createPerson().name("Inga").hairColor(1).children().defaults();
 
@@ -62,11 +61,10 @@ public class CollectionValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        collectionValidator().validate(null, listOfStates, "", "persons", errors, new Validator[] {}, 0, Validators.collectionValidator());
+        collectionValidator().validate(null, listOfStates, "", "persons", errors, 0, Validators.collectionValidator());
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(person1.asMutableState(), "persons", "name")
-                .addIsNullError(person2.asMutableState(), "persons", "birthday").build();
+                .addIsNullError(person1.asMutableState(), "persons", "name").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }

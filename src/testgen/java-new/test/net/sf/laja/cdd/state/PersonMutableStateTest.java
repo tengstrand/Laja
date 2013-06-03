@@ -18,18 +18,19 @@ public class PersonMutableStateTest {
 
     @Test
     public void shouldNotBeValidIfValidatingWithMissingAddress() {
-        PersonMutableState state = buildPerson().withName("Carl").asMutableState();
+        AddressState.AddressMutableState address = null;
+        PersonMutableState state = buildPerson().withAddress(address).asMutableState();
 
         assertThat(state.isValid(), is(false));
     }
 
     @Test
     public void shouldReturnIsNullValidationErrors() {
-        PersonMutableState mutableState = buildPerson().withName("Carl").asMutableState();
+        PersonMutableState mutableState = buildPerson().withName(null).asMutableState();
         ValidationErrors errors = mutableState.validate();
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(mutableState, "birthday").build();
+                .addIsNullError(mutableState, "name").build();
 
         assertThat(errors, equalTo(expectedErrors));
     }

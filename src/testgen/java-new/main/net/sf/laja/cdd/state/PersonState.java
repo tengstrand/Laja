@@ -256,15 +256,15 @@ public class PersonState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (name == null) { errors.addIsNullError(rootElement, parent, "name"); }
-            if (children == null) { errors.addIsNullError(rootElement, parent, "children"); }
+            if (name == null) errors.addIsNullError(rootElement, parent, "name");
+            if (children == null) errors.addIsNullError(rootElement, parent, "children");
             if (address == null) { errors.addIsNullError(rootElement, parent, "address"); }
             if (listOfSetOfMapOfIntegers == null) { errors.addIsNullError(rootElement, parent, "listOfSetOfMapOfIntegers"); }
 
-            collectionValidator().validate(rootElement, children, parent, "children", errors, validators, 0);
-            address.validate(rootElement, concatenate(parent, "address"), errors);
-            collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, validators, 0);
-            mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, validators, 0);
+            if (children != null) collectionValidator().validate(rootElement, children, parent, "children", errors, 0);
+            if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
+            if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
+            if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
             new HairColorStateValue(hairColor).validate(HAIR_COLOR, rootElement, parent, errors);
 
             PersonState.validate(this, rootElement, parent, errors);
