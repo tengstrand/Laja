@@ -1,0 +1,30 @@
+
+#macro superMutableBehaviour()
+    public static class {superMutableBehaviour} {
+        private {mutableState} s;
+
+        public {superMutableBehaviour}({mutableState} s) {
+            this.s = s;
+        }
+
+        public PersonState state() {
+            return s.asImmutable();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (!(that instanceof {superMutableBehaviour})) return false;
+
+            return s.equals((({superMutableBehaviour})that).s);
+        }
+
+        @Override public int hashCode() {
+            return s.hashCode();
+        }
+
+        @Override public String toString() {
+            return getClass().getSimpleName() + s;
+        }
+    }
+
+#end

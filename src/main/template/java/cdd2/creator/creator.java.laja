@@ -18,6 +18,7 @@
 #set (mapBuilder = "{state}MapBuilder")
 #set (mapEntryBuilder = "{state}MapEntryBuilder")
 #set (superBehaviour = "{state}Behaviour")
+#set (superMutableBehaviour = "{state}MutableBehaviour")
 
 #set (firstMandatory = null)
 #set (secondMandatory = null)
@@ -151,6 +152,7 @@
 
 #import "{.}/factory.java.laja"
 #import "{.}/superBehaviour.java.laja"
+#import "{.}/superMutableBehaviour.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
@@ -190,5 +192,6 @@ public class {classname} implements {maker} {
   #isValid()
   #validate()
   #superBehaviour()
+  #superMutableBehaviour()
 }
 #end
