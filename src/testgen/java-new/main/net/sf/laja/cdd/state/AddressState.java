@@ -108,6 +108,7 @@ public class AddressState implements ImmutableState {
     public static class AddressMutableState implements MutableState {
         @Id
         public int id;
+        @Optional
         public String streetName;
         @Optional
         public String city;

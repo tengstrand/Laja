@@ -183,7 +183,6 @@ public class PersonState implements ImmutableState {
         public AddressMutableState address;
         @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
         public Set<AddressMutableState> oldAddresses;
-        @Optional
         public Map<String,AddressMutableState> groupedAddresses;
         public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
 
@@ -260,8 +259,9 @@ public class PersonState implements ImmutableState {
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (name == null) errors.addIsNullError(rootElement, parent, "name");
             if (children == null) errors.addIsNullError(rootElement, parent, "children");
-            if (address == null) { errors.addIsNullError(rootElement, parent, "address"); }
-            if (listOfSetOfMapOfIntegers == null) { errors.addIsNullError(rootElement, parent, "listOfSetOfMapOfIntegers"); }
+            if (address == null) errors.addIsNullError(rootElement, parent, "address");
+            if (groupedAddresses == null) errors.addIsNullError(rootElement, parent, "groupedAddresses");
+            if (listOfSetOfMapOfIntegers == null) errors.addIsNullError(rootElement, parent, "listOfSetOfMapOfIntegers");
 
             if (children != null) collectionValidator().validate(rootElement, children, parent, "children", errors, 0);
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);

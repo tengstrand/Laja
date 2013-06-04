@@ -37,6 +37,13 @@
   #end
 #end
 
+#macro preservedValidation()
+
+        @Preserve
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+#end
+
 #macro assertIsValid()
 
         public void assertIsValid(Validator... validators) {
@@ -85,18 +92,18 @@
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
   #if (hasMandatoryOrObject())
     #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
-            if ({attribute.name} == null) { errors.addIsNullError(rootElement, parent, "{attribute.name}"); }
+            if ({attribute.name} == null) errors.addIsNullError(rootElement, parent, "{attribute.name}");
     #end
 
   #end
   #if (hasStateOrCollectionOrMap())
     #foreach (attribute in attributes where !attribute.isPrimitive)
       #if (attribute.isState)
-            address.validate(rootElement, concatenate(parent, "{attribute.name}"), errors);
+            if ({attribute.name} != null) {attribute.name}.validate(rootElement, concatenate(parent, "{attribute.name}"), errors);
       #else if (attribute.isCollection && attribute.isLeafState)
-            collectionValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, validators, 0);
+            if ({attribute.name} != null) collectionValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
       #else if (attribute.isMap && attribute.isLeafState)
-            mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, validators, 0);
+            if ({attribute.name} != null) mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
       #end
     #end
     #foreach (attribute in attributes where attribute.isValue)
@@ -104,7 +111,7 @@
     #end
 
   #end
-            {classname}.validate(this, rootElement, parent, errors);
+            validate(rootElement, parent, errors);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
@@ -183,6 +190,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #constructor("{mutableClass}", tab)
   #getters(tab)
   #setters()
+  #preservedValidation()
   #assertIsValid()
   #isValid()
   #rootValidate()
