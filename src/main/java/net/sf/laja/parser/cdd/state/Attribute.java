@@ -110,6 +110,10 @@ public class Attribute implements StateParser.IAttribute {
         return annotations.isOptional();
     }
 
+    public boolean isOptionalOrId() {
+        return annotations.isOptional() || annotations.isId();
+    }
+
     public boolean isMandatory() {
         return !isOptional() && !isId();
     }

@@ -202,6 +202,11 @@ public class PersonCreator implements PersonMaker {
         return state;
     }
 
+    public PersonCreator withBirthday(DateMidnight birthday) {
+        state.birthday = birthday;
+        return this;
+    }
+
     public PersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
         state.oldAddresses = oldAddresses;
         return this;

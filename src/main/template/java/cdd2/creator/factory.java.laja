@@ -82,7 +82,7 @@
         #set (stateName = attribute.type.mapType.entry.state)
 
                 public {returnClass} {attribute.name}({stateName}MapBuilder mapBuilder) {
-                    state.{attribute.name} = mapBuilder.as{stateName}MutableMap();
+                    state.{attribute.name} = mapBuilder.asMutableStateMap();
                     {returnStatement}
                 }
       #end
