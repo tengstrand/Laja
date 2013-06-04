@@ -1,10 +1,4 @@
 
-#set (creatorName = "PersonCreator")
-##set (creatorName = "AddressCreator")
-
-#set (stateName = "PersonState")
-##set (stateName = "AddressState")
-
 #macro lazyDefineCdd()
   #if ($laja.isCddImported == null)
     #set ($laja.isCddImported = true)
@@ -24,13 +18,19 @@
   #foreach (parameterMap in parameters)
     #$.putAll(parameterMap)
 
+    #generate("Address")
+    #generate("Person")
+  #end
+#end
+
+#macro generate(name)
+    #set (stateName = "{name}State")
     #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.java"))
     #import "{..}/../java/cdd2/state.java.laja"
 
+    #set (creatorName = "{name}Creator")
     #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
     #import "{..}/../java/cdd2/creator/creator.java.laja"
-
-  #end
 #end
 
 #macro validateStates()
