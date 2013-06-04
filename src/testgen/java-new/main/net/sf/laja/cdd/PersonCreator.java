@@ -292,41 +292,14 @@ public class PersonCreator implements PersonMaker {
 
         public PersonBuilder withName(String name) { state.name = name; return this; }
         public PersonBuilder withBirthday(DateMidnight birthday) { state.birthday = birthday; return this; }
-
-        public PersonBuilder withBirthday(int year, int month, int day) {
-            state.birthday = new DateMidnight(year, month, day);
-            return this;
-        }
-
-        public PersonBuilder withChildren() {
-            state.children = new ArrayList<PersonMutableState>();
-            return this;
-        }
-
-        public PersonBuilder withChildren(List<PersonMutableState> children) {
-            state.children = children;
-            return this;
-        }
-
-        public PersonBuilder withAddress(AddressMutableState address) {
-            state.address = address;
-            return this;
-        }
-
-        public PersonBuilder withAddress(AddressCreator.AddressBuilder address) {
-            state.address = address.asMutableState();
-            return this;
-        }
-
-        public PersonBuilder withOldAddresses(Set<AddressMutableState> oldAddresses) {
-            state.oldAddresses = oldAddresses;
-            return this;
-        }
-
-        public PersonBuilder withGroupedAddresses(Map<String, AddressMutableState> groupedAddresses) {
-            state.groupedAddresses = groupedAddresses;
-            return this;
-        }
+        public PersonBuilder withBirthday(int year, int month, int day) { state.birthday = new DateMidnight(year, month, day); return this; }
+        public PersonBuilder withHairColor(int hairColor) { state.hairColor = hairColor; return this; }
+        public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
+        public PersonBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
+        public PersonBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
+        public PersonBuilder withOldAddresses(Set<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
+        public PersonBuilder withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { state.groupedAddresses = groupedAddresses; return this; }
+        public PersonBuilder withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
         public Person asPerson() {
             return new Person(state.asImmutable());

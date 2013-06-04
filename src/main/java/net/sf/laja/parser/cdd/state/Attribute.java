@@ -50,6 +50,10 @@ public class Attribute implements StateParser.IAttribute {
         return converter.toConstant(name);
     }
 
+    public String getBuilder() {
+        return nameAsClass + "Creator." + nameAsClass + "Builder" ;
+    }
+
     public boolean isPrimitive() {
         return type.isPrimitive();
     }

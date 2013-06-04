@@ -1,0 +1,50 @@
+
+#macro builder()
+    public static class {builder} implements {maker} {
+        private final {mutableState} state;
+
+        private {builder}({mutableState} state) {
+            this.state = state;
+        }
+
+        public static {builder} create() {
+            return new {builder}(new {mutableState}());
+        }
+
+        #foreach (attribute in attributes)
+        public {builder} {attribute.withMethod}({attribute.type} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; }
+          #if (attribute.isState)
+        public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; }
+          #else if (attribute.type == "DateMidnight")
+        public {builder} {attribute.withMethod}(int year, int month, int day) { state.{attribute.name} = new DateMidnight(year, month, day); return this; }
+          #end
+        #end
+
+        #foreach (method in asMethods)
+        public {method.returnclass} {method.methodName}() {
+{method.tabbedStatement("            ")}##
+        }
+
+        #end
+        public {immutableState} asState() {
+            return state.asImmutable();
+        }
+
+        public {mutableState} asMutableState() {
+            return state;
+        }
+
+        public void assertIsValid() {
+            state.assertIsValid();
+        }
+
+        public boolean isValid() {
+            return state.isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return state.validate(validators);
+        }
+    }
+
+#end
