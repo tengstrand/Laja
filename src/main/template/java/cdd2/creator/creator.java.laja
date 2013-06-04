@@ -110,7 +110,7 @@
 #end
 
 #macro withMethods()
-  #foreach (attribute in attributes where attribute.isOptional)
+  #foreach (attribute in attributes where attribute.isOptional || attribute.isId)
     public {creator} {attribute.withMethod}({attribute.type} {attribute.name}) {
         state.{attribute.name} = {attribute.name};
         return this;
