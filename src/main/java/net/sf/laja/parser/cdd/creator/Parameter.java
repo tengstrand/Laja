@@ -14,9 +14,6 @@ public class Parameter implements CreatorParser.IParameter {
 
     @Override
     public String toString() {
-        return "Parameter{" +
-                "type='" + type + '\'' +
-                ", variable='" + variable + '\'' +
-                '}';
+        return type + " " + variable;
     }
 }

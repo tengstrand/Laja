@@ -29,17 +29,13 @@ public class AsMethod implements CreatorParser.IAsMethod {
 
     public String getTabbedStatement(String tab) {
         String input = statement.trim();
-        if (input.startsWith("{")) {
-            input = input.substring(1).trim();
-        }
-        if (input.endsWith("}")) {
-            input = input.substring(0, input.length()-1).trim();
-        }
         String[] rows = input.split("\n");
         String result = "";
 
-        for (String row : rows) {
-            result += tab + row.trim() + "\n";
+        if (rows.length >= 2) {
+            for (int i=1; i<rows.length-1; i++) {
+                result += tab + rows[i] + "\n";
+            }
         }
         return result;
     }
@@ -50,7 +46,7 @@ public class AsMethod implements CreatorParser.IAsMethod {
                 "spaces='" + spaces + '\'' +
                 ", returnclass='" + returnclass + '\'' +
                 ", methodName='" + methodName + '\'' +
-                ", parameters=" + parameters +
+                ", parameters=(" + parameters + ")" +
                 ", statement='" + statement + '\'' +
                 '}';
     }

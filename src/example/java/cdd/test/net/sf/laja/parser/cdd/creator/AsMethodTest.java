@@ -10,10 +10,17 @@ public class AsMethodTest {
         AsMethod asMethod = new AsMethod();
         asMethod.setStatement("{\n" +
                 "    int x = 1;\n" +
+                "    if (true) {\n" +
+                "        // do something\n" +
+                "    }\n" +
                 "    return new Person(state.asImmutable());\n" +
                 "    }");
 
-        assertEquals("        int x = 1;\n" +
-                "        return new Person(state.asImmutable());\n", asMethod.getTabbedStatement("        "));
+        assertEquals(
+                "        int x = 1;\n" +
+                "        if (true) {\n" +
+                "            // do something\n" +
+                "        }\n" +
+                "        return new Person(state.asImmutable());\n", asMethod.getTabbedStatement("    "));
     }
 }

@@ -7,7 +7,7 @@
             this.s = s;
         }
 
-        public PersonState state() {
+        public {immutableState} state() {
             return s.asImmutable();
         }
 

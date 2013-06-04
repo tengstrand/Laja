@@ -21,7 +21,7 @@ public class AddressCreator implements AddressMaker {
     private final AddressMutableState state;
 
     public Address asAddress() {
-       return asAddress(AddressType.REGULAR);
+        return asAddress(AddressType.REGULAR);
     }
 
     public Address asAddress(AddressType type) {
@@ -127,10 +127,14 @@ public class AddressCreator implements AddressMaker {
     }
 
     public static class AddressMutableBehaviour {
-        private final AddressMutableState s;
+        private AddressMutableState s;
 
         public AddressMutableBehaviour(AddressMutableState s) {
             this.s = s;
+        }
+
+        public AddressState state() {
+            return s.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
@@ -160,20 +164,9 @@ public class AddressCreator implements AddressMaker {
             return new AddressBuilder(new AddressMutableState());
         }
 
-        public AddressBuilder withId(int id) {
-            state.id = id;
-            return this;
-        }
-
-        public AddressBuilder withStreetName(String streetName) {
-            state.streetName = streetName;
-            return this;
-        }
-
-        public AddressBuilder withCity(String city) {
-            state.city = city;
-            return this;
-        }
+        public AddressBuilder withId(int id) { state.id = id; return this; }
+        public AddressBuilder withStreetName(String streetName) { state.streetName = streetName; return this; }
+        public AddressBuilder withCity(String city) { state.city = city; return this; }
 
         public Address asAddress() {
             return asAddress(AddressType.REGULAR);

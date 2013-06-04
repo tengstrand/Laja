@@ -305,6 +305,14 @@ public class PersonCreator implements PersonMaker {
             return new Person(state.asImmutable());
         }
 
+        public SpecialPerson asSpecialPerson() {
+            return new SpecialPerson(state);
+        }
+
+        public DbPerson asDbPerson() {
+            return new DbPerson(state.asImmutable());
+        }
+
         public TextPerson asTextPerson() {
             return new TextPerson(state.asImmutable());
         }

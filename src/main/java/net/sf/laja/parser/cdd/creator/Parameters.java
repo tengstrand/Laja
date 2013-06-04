@@ -6,9 +6,17 @@ import java.util.List;
 
 public class Parameters implements CreatorParser.IParameters, Iterable<Parameter> {
     private List<Parameter> parameters = new ArrayList<Parameter>();
+    private String stringValue = "";
 
     public void addParameter(CreatorParser.IParameter iparameter) {
-        parameters.add((Parameter)iparameter);
+        Parameter parameter = (Parameter)iparameter;
+
+        if (parameters.isEmpty()) {
+            stringValue = parameter.toString();
+        } else {
+            stringValue += ", " + parameter;
+        }
+        parameters.add(parameter);
     }
 
     public Iterator<Parameter> iterator() {
@@ -17,8 +25,6 @@ public class Parameters implements CreatorParser.IParameters, Iterable<Parameter
 
     @Override
     public String toString() {
-        return "Parameters{" +
-                "parameters=" + parameters +
-                '}';
+        return stringValue;
     }
 }
