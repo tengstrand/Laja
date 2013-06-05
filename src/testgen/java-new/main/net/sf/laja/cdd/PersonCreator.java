@@ -365,6 +365,66 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
+        // SpecialPerson
+
+        public ImmutableList<SpecialPerson> asSpecialPersonList() {
+            ImmutableList.Builder<SpecialPerson> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asSpecialPerson());
+            }
+            return builder.build();
+        }
+
+        public List<SpecialPerson> asSpecialPersonMutableList() {
+            List<SpecialPerson> result = new ArrayList<SpecialPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asSpecialPerson());
+            }
+            return result;
+        }
+
+        // DbPerson
+
+        public ImmutableList<DbPerson> asDbPersonList() {
+            ImmutableList.Builder<DbPerson> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asDbPerson());
+            }
+            return builder.build();
+        }
+
+        public List<DbPerson> asDbPersonMutableList() {
+            List<DbPerson> result = new ArrayList<DbPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asDbPerson());
+            }
+            return result;
+        }
+
+        // TextPerson
+
+        public ImmutableList<TextPerson> asTextPersonList() {
+            ImmutableList.Builder<TextPerson> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asTextPerson());
+            }
+            return builder.build();
+        }
+
+        public List<TextPerson> asTextPersonMutableList() {
+            List<TextPerson> result = new ArrayList<TextPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asTextPerson());
+            }
+            return result;
+        }
+
         // State
 
         public ImmutableList<PersonState> asStateList() {
