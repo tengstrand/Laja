@@ -284,7 +284,7 @@ public class PersonState implements ImmutableState {
                 birthday,
                 hairColor,
                 asImmutableList(children, toImmutable),
-                address.asImmutable(),
+                address != null ? address.asImmutable() : null,
                 asImmutableSet(oldAddresses, toImmutable),
                 asImmutableMap(groupedAddresses, toImmutable),
                 asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));

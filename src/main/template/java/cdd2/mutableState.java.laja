@@ -139,7 +139,7 @@ asImmutableList({attribute.name}{immutableConverters(attribute.type.collectionTy
   #else if (attribute.type.isSet)
 asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isState)
-{attribute.name}.asImmutable()##
+{attribute.name} != null ? {attribute.name}.asImmutable() : null##
   #else
 {attribute.name}##
   #end
