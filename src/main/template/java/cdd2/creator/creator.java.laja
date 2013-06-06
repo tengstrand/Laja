@@ -155,6 +155,7 @@
 #import "{.}/superMutableBehaviour.java.laja"
 #import "{.}/builder.java.laja"
 #import "{.}/listBuilder.java.laja"
+#import "{.}/setBuilder.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
@@ -197,5 +198,6 @@ public class {classname} implements {maker} {
   #superMutableBehaviour()
   #builder()
   #listBuilder()
+  #setBuilder()
 }
 #end

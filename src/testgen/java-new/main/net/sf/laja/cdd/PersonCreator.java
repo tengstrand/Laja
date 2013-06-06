@@ -345,7 +345,7 @@ public class PersonCreator implements PersonMaker {
             this.creators = creators;
         }
 
-        // Person
+        // asPersonList() : ImmutableList<Person>
 
         public ImmutableList<Person> asPersonList() {
             ImmutableList.Builder<Person> builder = ImmutableList.builder();
@@ -356,6 +356,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
+        // asPersonMutableList() : List<Person>
+
         public List<Person> asPersonMutableList() {
             List<Person> result = new ArrayList<Person>();
 
@@ -365,7 +367,7 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // SpecialPerson
+        // asSpecialPersonList() : ImmutableList<SpecialPerson>
 
         public ImmutableList<SpecialPerson> asSpecialPersonList() {
             ImmutableList.Builder<SpecialPerson> builder = ImmutableList.builder();
@@ -376,6 +378,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
+        // asSpecialPersonMutableList() : List<SpecialPerson>
+
         public List<SpecialPerson> asSpecialPersonMutableList() {
             List<SpecialPerson> result = new ArrayList<SpecialPerson>();
 
@@ -385,7 +389,7 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // DbPerson
+        // asDbPersonList() : ImmutableList<DbPerson>
 
         public ImmutableList<DbPerson> asDbPersonList() {
             ImmutableList.Builder<DbPerson> builder = ImmutableList.builder();
@@ -396,6 +400,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
+        // asDbPersonMutableList() : List<DbPerson>
+
         public List<DbPerson> asDbPersonMutableList() {
             List<DbPerson> result = new ArrayList<DbPerson>();
 
@@ -405,7 +411,7 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // TextPerson
+        // asTextPersonList() : ImmutableList<TextPerson>
 
         public ImmutableList<TextPerson> asTextPersonList() {
             ImmutableList.Builder<TextPerson> builder = ImmutableList.builder();
@@ -416,6 +422,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
+        // asTextPersonMutableList() : List<TextPerson>
+
         public List<TextPerson> asTextPersonMutableList() {
             List<TextPerson> result = new ArrayList<TextPerson>();
 
@@ -425,7 +433,7 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // State
+        // asStateList() : ImmutableList<PersonState>
 
         public ImmutableList<PersonState> asStateList() {
             ImmutableList.Builder<PersonState> builder = ImmutableList.builder();
@@ -435,6 +443,8 @@ public class PersonCreator implements PersonMaker {
             }
             return builder.build();
         }
+
+        // asMutableStateList() : List<PersonMutableState>
 
         public List<PersonMutableState> asMutableStateList() {
             List<PersonMutableState> result = new ArrayList<PersonMutableState>();
@@ -453,7 +463,7 @@ public class PersonCreator implements PersonMaker {
             this.creators = creators;
         }
 
-        // Person
+        // asPersonSet() : ImmutableSet<Person>
 
         public ImmutableSet<Person> asPersonSet() {
             ImmutableSet.Builder<Person> builder = ImmutableSet.builder();
@@ -464,6 +474,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
+        // asPersonMutableSet() : Set<Person>
+
         public Set<Person> asPersonMutableSet() {
             Set<Person> result = new HashSet<Person>();
 
@@ -473,7 +485,51 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // TextPerson
+        // asSpecialPersonSet() : ImmutableSet<SpecialPerson>
+
+        public ImmutableSet<SpecialPerson> asSpecialPersonSet() {
+            ImmutableSet.Builder<SpecialPerson> builder = ImmutableSet.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asSpecialPerson());
+            }
+            return builder.build();
+        }
+
+        // asSpecialPersonMutableSet() : Set<SpecialPerson>
+
+        public Set<SpecialPerson> asSpecialPersonMutableSet() {
+            Set<SpecialPerson> result = new HashSet<SpecialPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asSpecialPerson());
+            }
+            return result;
+        }
+
+        // asDbPersonSet() : ImmutableSet<DbPerson>
+
+        public ImmutableSet<DbPerson> asDbPersonSet() {
+            ImmutableSet.Builder<DbPerson> builder = ImmutableSet.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asDbPerson());
+            }
+            return builder.build();
+        }
+
+        // asDbPersonMutableSet() : Set<DbPerson>
+
+        public Set<DbPerson> asDbPersonMutableSet() {
+            Set<DbPerson> result = new HashSet<DbPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asDbPerson());
+            }
+            return result;
+        }
+
+        // asTextPersonSet() : ImmutableSet<TextPerson>
 
         public ImmutableSet<TextPerson> asTextPersonSet() {
             ImmutableSet.Builder<TextPerson> builder = ImmutableSet.builder();
@@ -484,6 +540,8 @@ public class PersonCreator implements PersonMaker {
             return builder.build();
         }
 
+        // asTextPersonMutableSet() : Set<TextPerson>
+
         public Set<TextPerson> asTextPersonMutableSet() {
             Set<TextPerson> result = new HashSet<TextPerson>();
 
@@ -493,16 +551,18 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // State
+        // asState()
 
-        public Set<PersonState> asStateSet() {
-            Set<PersonState> result = new HashSet<PersonState>();
+        public ImmutableSet<PersonState> asStateSet() {
+            ImmutableSet.Builder<PersonState> builder = ImmutableSet.builder();
 
             for (PersonCreator creator : creators) {
-                result.add(creator.asState());
+                builder.add(creator.asState());
             }
-            return result;
+            return builder.build();
         }
+
+        // asMutableState()
 
         public Set<PersonMutableState> asMutableStateSet() {
             Set<PersonMutableState> result = new HashSet<PersonMutableState>();

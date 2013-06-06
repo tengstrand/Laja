@@ -207,7 +207,7 @@ public class AddressCreator implements AddressMaker {
             this.creators = creators;
         }
 
-        // Address
+        // asAddressList() : ImmutableList<Address>
 
         public ImmutableList<Address> asAddressList() {
             ImmutableList.Builder<Address> builder = ImmutableList.builder();
@@ -218,6 +218,19 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
+        // asAddressMutableList() : List<Address>
+
+        public List<Address> asAddressMutableList() {
+            List<Address> result = new ArrayList<Address>();
+
+            for (AddressCreator creator : creators) {
+                result.add(creator.asAddress());
+            }
+            return result;
+        }
+
+        // asAddressList(AddressType type) : ImmutableList<Address>
+
         public ImmutableList<Address> asAddressList(AddressType type) {
             ImmutableList.Builder<Address> builder = ImmutableList.builder();
 
@@ -226,6 +239,8 @@ public class AddressCreator implements AddressMaker {
             }
             return builder.build();
         }
+
+        // asAddressMutableList(AddressType type) : List<Address>
 
         public List<Address> asAddressMutableList(AddressType type) {
             List<Address> result = new ArrayList<Address>();
@@ -236,7 +251,7 @@ public class AddressCreator implements AddressMaker {
             return result;
         }
 
-        // State
+        // asStateList() : ImmutableList<AddressState>
 
         public ImmutableList<AddressState> asStateList() {
             ImmutableList.Builder<AddressState> builder = ImmutableList.builder();
@@ -246,6 +261,8 @@ public class AddressCreator implements AddressMaker {
             }
             return builder.build();
         }
+
+        // asMutableStateList() : List<AddressMutableState>
 
         public List<AddressMutableState> asMutableStateList() {
             List<AddressMutableState> result = new ArrayList<AddressMutableState>();
@@ -264,7 +281,7 @@ public class AddressCreator implements AddressMaker {
             this.creators = creators;
         }
 
-        // Address
+        // asAddressSet() : ImmutableSet<Address>
 
         public ImmutableSet<Address> asAddressSet() {
             ImmutableSet.Builder<Address> builder = ImmutableSet.builder();
@@ -275,6 +292,19 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
+        // asAddressMutableSet() : Set<Address>
+
+        public Set<Address> asAddressMutableSet() {
+            Set<Address> result = new HashSet<Address>();
+
+            for (AddressCreator creator : creators) {
+                result.add(creator.asAddress());
+            }
+            return result;
+        }
+
+        // asAddressSet(AddressType type) : ImmutableSet<Address>
+
         public ImmutableSet<Address> asAddressSet(AddressType type) {
             ImmutableSet.Builder<Address> builder = ImmutableSet.builder();
 
@@ -283,6 +313,8 @@ public class AddressCreator implements AddressMaker {
             }
             return builder.build();
         }
+
+        // asAddressMutableSet(AddressType type) : Set<Address>
 
         public Set<Address> asAddressMutableSet(AddressType type) {
             Set<Address> result = new HashSet<Address>();
@@ -293,7 +325,7 @@ public class AddressCreator implements AddressMaker {
             return result;
         }
 
-        // Set
+        // asState()
 
         public ImmutableSet<AddressState> asStateSet() {
             ImmutableSet.Builder<AddressState> builder = ImmutableSet.builder();
@@ -303,6 +335,8 @@ public class AddressCreator implements AddressMaker {
             }
             return builder.build();
         }
+
+        // asMutableState()
 
         public Set<AddressMutableState> asMutableStateSet() {
             Set<AddressMutableState> result = new HashSet<AddressMutableState>();

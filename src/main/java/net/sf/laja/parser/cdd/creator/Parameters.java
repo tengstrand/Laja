@@ -23,6 +23,16 @@ public class Parameters implements CreatorParser.IParameters, Iterable<Parameter
         return parameters.iterator();
     }
 
+    public String arguments() {
+        String result = "";
+        String delimiter = "";
+        for (Parameter parameter : parameters) {
+            result += delimiter + parameter.variable;
+            delimiter = ", ";
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return stringValue;

@@ -1,0 +1,57 @@
+
+#macro setBuilder()
+    public static class {setBuilder} {
+        private {creator}[] creators;
+
+        public {setBuilder}({creator}... creators) {
+            this.creators = creators;
+        }
+
+  #foreach (method in asMethods)
+        // {method.methodName}Set({method.parameters}) : ImmutableSet<{method.returnclass}>
+
+        public ImmutableSet<{method.returnclass}> {method.methodName}Set({method.parameters}) {
+            ImmutableSet.Builder<{method.returnclass}> builder = ImmutableSet.builder();
+
+            for ({creator} creator : creators) {
+                builder.add(creator.{method.methodName}({method.arguments}));
+            }
+            return builder.build();
+        }
+
+        // {method.methodName}MutableSet({method.parameters}) : Set<{method.returnclass}>
+
+        public Set<{method.returnclass}> {method.methodName}MutableSet({method.parameters}) {
+            Set<{method.returnclass}> result = new HashSet<{method.returnclass}>();
+
+            for ({creator} creator : creators) {
+                result.add(creator.{method.methodName}({method.arguments}));
+            }
+            return result;
+        }
+
+  #end
+        // asState()
+
+        public ImmutableSet<{immutableState}> asStateSet() {
+            ImmutableSet.Builder<{immutableState}> builder = ImmutableSet.builder();
+
+            for ({creator} creator : creators) {
+                builder.add(creator.asState());
+            }
+            return builder.build();
+        }
+
+        // asMutableState()
+
+        public Set<{mutableState}> asMutableStateSet() {
+            Set<{mutableState}> result = new HashSet<{mutableState}>();
+
+            for ({creator} creator : creators) {
+                result.add(creator.asMutableState());
+            }
+            return result;
+        }
+    }
+
+#end

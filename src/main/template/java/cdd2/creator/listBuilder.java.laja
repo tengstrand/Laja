@@ -8,28 +8,30 @@
         }
 
   #foreach (method in asMethods)
-        // {method.returnclass}
+        // {method.methodName}List({method.parameters}) : ImmutableList<{method.returnclass}>
 
         public ImmutableList<{method.returnclass}> {method.methodName}List({method.parameters}) {
             ImmutableList.Builder<{method.returnclass}> builder = ImmutableList.builder();
 
             for ({creator} creator : creators) {
-                builder.add(creator.{method.methodName}({method.parameters}));
+                builder.add(creator.{method.methodName}({method.arguments}));
             }
             return builder.build();
         }
+
+        // {method.methodName}MutableList({method.parameters}) : List<{method.returnclass}>
 
         public List<{method.returnclass}> {method.methodName}MutableList({method.parameters}) {
             List<{method.returnclass}> result = new ArrayList<{method.returnclass}>();
 
             for ({creator} creator : creators) {
-                result.add(creator.{method.methodName}({method.parameters}));
+                result.add(creator.{method.methodName}({method.arguments}));
             }
             return result;
         }
 
   #end
-        // State
+        // asStateList() : ImmutableList<{immutableState}>
 
         public ImmutableList<{immutableState}> asStateList() {
             ImmutableList.Builder<{immutableState}> builder = ImmutableList.builder();
@@ -39,6 +41,8 @@
             }
             return builder.build();
         }
+
+        // asMutableStateList() : List<{mutableState}>
 
         public List<{mutableState}> asMutableStateList() {
             List<{mutableState}> result = new ArrayList<{mutableState}>();

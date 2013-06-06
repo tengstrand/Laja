@@ -27,6 +27,10 @@ public class AsMethod implements CreatorParser.IAsMethod {
         this.statement = statement;
     }
 
+    public String getArguments() {
+        return parameters.arguments();
+    }
+
     public String getTabbedStatement(String tab) {
         String input = statement.trim();
         String[] rows = input.split("\n");
