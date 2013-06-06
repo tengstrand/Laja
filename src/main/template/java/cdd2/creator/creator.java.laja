@@ -158,6 +158,7 @@
 #import "{.}/setBuilder.java.laja"
 #import "{.}/mapBuilder.java.laja"
 #import "{.}/mapEntryBuilder.java.laja"
+#import "{.}/maker.java.laja"
 
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
@@ -204,4 +205,5 @@ public class {classname} implements {maker} {
   #mapEntryBuilder()
   #mapBuilder()
 }
+  #maker()
 #end

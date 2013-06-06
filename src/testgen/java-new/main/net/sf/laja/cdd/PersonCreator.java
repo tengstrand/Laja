@@ -730,8 +730,8 @@ public class PersonCreator implements PersonMaker {
 interface PersonMaker {
     Person asPerson();
     SpecialPerson asSpecialPerson();
-    TextPerson asTextPerson();
     DbPerson asDbPerson();
+    TextPerson asTextPerson();
 
     PersonState asState();
     PersonMutableState asMutableState();

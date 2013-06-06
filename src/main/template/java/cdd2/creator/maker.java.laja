@@ -1,0 +1,15 @@
+
+#macro maker()
+
+interface {maker} {
+  #foreach (method in asMethods)
+    {method.returnclass} {method.methodName}({method.parameters});
+  #end
+
+    {immutableState} asState();
+    {mutableState} asMutableState();
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate(Validator... validators);
+}
+#end
