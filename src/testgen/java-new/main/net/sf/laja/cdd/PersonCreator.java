@@ -615,6 +615,8 @@ public class PersonCreator implements PersonMaker {
             this.entries = entries;
         }
 
+        // asPersonMap() : ImmutableMap
+
         public ImmutableMap asPersonMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
@@ -623,6 +625,8 @@ public class PersonCreator implements PersonMaker {
             }
             return builder.build();
         }
+
+        // asPersonMutableMap() : Map
 
         public Map asPersonMutableMap() {
             Map result = new HashMap();
@@ -633,6 +637,74 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
+        // asSpecialPersonMap() : ImmutableMap
+
+        public ImmutableMap asSpecialPersonMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asSpecialPerson());
+            }
+            return builder.build();
+        }
+
+        // asSpecialPersonMutableMap() : Map
+
+        public Map asSpecialPersonMutableMap() {
+            Map result = new HashMap();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asSpecialPerson());
+            }
+            return result;
+        }
+
+        // asDbPersonMap() : ImmutableMap
+
+        public ImmutableMap asDbPersonMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asDbPerson());
+            }
+            return builder.build();
+        }
+
+        // asDbPersonMutableMap() : Map
+
+        public Map asDbPersonMutableMap() {
+            Map result = new HashMap();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asDbPerson());
+            }
+            return result;
+        }
+
+        // asTextPersonMap() : ImmutableMap
+
+        public ImmutableMap asTextPersonMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asTextPerson());
+            }
+            return builder.build();
+        }
+
+        // asTextPersonMutableMap() : Map
+
+        public Map asTextPersonMutableMap() {
+            Map result = new HashMap();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asTextPerson());
+            }
+            return result;
+        }
+
+        // asStateMap() : ImmutableMap
+
         public ImmutableMap asStateMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
@@ -641,6 +713,8 @@ public class PersonCreator implements PersonMaker {
             }
             return builder.build();
         }
+
+        // asMutableStateMap() : Map
 
         public Map asMutableStateMap() {
             Map result = new HashMap();

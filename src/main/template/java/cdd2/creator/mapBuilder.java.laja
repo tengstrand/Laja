@@ -1,0 +1,57 @@
+
+#macro mapBuilder()
+    public static class {mapBuilder} {
+        private final {mapEntryBuilder}[] entries;
+
+        public {mapBuilder}({mapEntryBuilder}... entries) {
+            this.entries = entries;
+        }
+  #foreach (method in asMethods)
+
+        // {method.methodName}Map({method.parameters}) : ImmutableMap
+
+        public ImmutableMap {method.methodName}Map({method.parameters}) {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for ({mapEntryBuilder} entry : entries) {
+                builder.put(entry.key, entry.{method.methodName}({method.arguments}));
+            }
+            return builder.build();
+        }
+
+        // {method.methodName}MutableMap({method.parameters}) : Map
+
+        public Map {method.methodName}MutableMap({method.parameters}) {
+            Map result = new HashMap();
+
+            for ({mapEntryBuilder} entry : entries) {
+                result.put(entry.key, entry.{method.methodName}({method.arguments}));
+            }
+            return result;
+        }
+  #end
+
+        // asStateMap() : ImmutableMap
+
+        public ImmutableMap asStateMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for ({mapEntryBuilder} entry : entries) {
+                builder.put(entry.key, entry.asState());
+            }
+            return builder.build();
+        }
+
+        // asMutableStateMap() : Map
+
+        public Map asMutableStateMap() {
+            Map result = new HashMap();
+
+            for ({mapEntryBuilder} entry : entries) {
+                result.put(entry.key, entry.asMutableState());
+            }
+            return result;
+        }
+    }
+
+#end

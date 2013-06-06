@@ -381,7 +381,7 @@ public class AddressCreator implements AddressMaker {
             this.entries = entries;
         }
 
-        // Address
+        // asAddressMap() : ImmutableMap
 
         public ImmutableMap asAddressMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
@@ -392,6 +392,19 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
+        // asAddressMutableMap() : Map
+
+        public Map asAddressMutableMap() {
+            Map result = new HashMap();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asAddress());
+            }
+            return result;
+        }
+
+        // asAddressMap(AddressType type) : ImmutableMap
+
         public ImmutableMap asAddressMap(AddressType type) {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
@@ -401,17 +414,10 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
-        public Map asAddressMutableMap() {
-            Map<Object,Address> result = new HashMap<Object,Address>();
-
-            for (AddressMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asAddress());
-            }
-            return result;
-        }
+        // asAddressMutableMap(AddressType type) : Map
 
         public Map asAddressMutableMap(AddressType type) {
-            Map<Object,Address> result = new HashMap<Object,Address>();
+            Map result = new HashMap();
 
             for (AddressMapEntryBuilder entry : entries) {
                 result.put(entry.key, entry.asAddress(type));
@@ -419,7 +425,7 @@ public class AddressCreator implements AddressMaker {
             return result;
         }
 
-        // State
+        // asStateMap() : ImmutableMap
 
         public ImmutableMap asStateMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
@@ -430,7 +436,7 @@ public class AddressCreator implements AddressMaker {
             return builder.build();
         }
 
-        // Mutable state
+        // asMutableStateMap() : Map
 
         public Map asMutableStateMap() {
             Map result = new HashMap();
@@ -453,13 +459,3 @@ interface AddressMaker {
     boolean isValid();
     ValidationErrors validate(Validator... validators);
 }
-
-/*
-
-    PersonState asState();
-    PersonMutableState asMutableState();
-    void assertIsValid();
-    boolean isValid();
-    ValidationErrors validate(Validator... validators);
-
- */
