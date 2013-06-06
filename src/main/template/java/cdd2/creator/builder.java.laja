@@ -1,5 +1,7 @@
 
 #macro builder()
+    // ----- Builder -----
+
     public static class {builder} implements {maker} {
         private final {mutableState} state;
 

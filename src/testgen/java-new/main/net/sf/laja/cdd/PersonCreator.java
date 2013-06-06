@@ -48,7 +48,7 @@ public class PersonCreator implements PersonMaker {
 
     }
 
-    // ===== Generated code =====
+    // ===== Constructors =====
 
     public static PersonFactory createPerson() {
         return new PersonFactory();
@@ -188,7 +188,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // --------------------
+    // ----- Constructor -----
 
     public PersonCreator(PersonMutableState state) {
         this.state = state;
@@ -201,6 +201,8 @@ public class PersonCreator implements PersonMaker {
     public PersonMutableState asMutableState() {
         return state;
     }
+
+    // ----- With methods -----
 
     public PersonCreator withBirthday(DateMidnight birthday) {
         state.birthday = birthday;
@@ -217,6 +219,8 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
+    // ----- Validate -----
+
     public void assertIsValid() {
         state.assertIsValid();
     }
@@ -228,6 +232,8 @@ public class PersonCreator implements PersonMaker {
     public ValidationErrors validate(Validator... validators) {
         return state.validate(validators);
     }
+
+    // ----- Behaviour -----
 
     public static class PersonBehaviour {
         public final PersonState s;
@@ -251,6 +257,8 @@ public class PersonCreator implements PersonMaker {
             return getClass().getSimpleName() + s;
         }
     }
+
+    // ----- MutableBehaviour -----
 
     public static class PersonMutableBehaviour {
         private PersonMutableState s;
@@ -278,6 +286,8 @@ public class PersonCreator implements PersonMaker {
             return getClass().getSimpleName() + s;
         }
     }
+
+    // ----- Builder -----
 
     public static class PersonBuilder implements PersonMaker {
         private final PersonMutableState state;
@@ -337,6 +347,8 @@ public class PersonCreator implements PersonMaker {
             return state.validate(validators);
         }
     }
+
+    // ----- ListBuilder -----
 
     public static class PersonListBuilder {
         private PersonCreator[] creators;
@@ -456,6 +468,8 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
+    // ----- SetBuilder -----
+
     public static class PersonSetBuilder {
         private PersonCreator[] creators;
 
@@ -574,6 +588,8 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
+    // ----- MapEntryBuilder -----
+
     public static class PersonMapEntryBuilder {
         private final Object key;
         private final PersonMaker maker;
@@ -607,6 +623,8 @@ public class PersonCreator implements PersonMaker {
             return maker.asMutableState();
         }
     }
+
+    // ----- MapBuilder -----
 
     public static class PersonMapBuilder {
         private final PersonMapEntryBuilder[] entries;
@@ -726,6 +744,8 @@ public class PersonCreator implements PersonMaker {
         }
     }
 }
+
+// ----- Maker -----
 
 interface PersonMaker {
     Person asPerson();

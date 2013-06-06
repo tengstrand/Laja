@@ -31,7 +31,7 @@ public class AddressCreator implements AddressMaker {
         return new ProtectedAddress(state.asImmutable());
     }
 
-    // ===== Generated code =====
+    // ===== Constructors =====
 
     public static AddressCreator createAddress() {
         return new AddressCreator(new AddressMutableState());
@@ -62,7 +62,7 @@ public class AddressCreator implements AddressMaker {
     }
 
 
-    // --------------------
+    // ----- Constructor -----
 
     public AddressCreator(AddressMutableState state) {
         this.state = state;
@@ -75,6 +75,8 @@ public class AddressCreator implements AddressMaker {
     public AddressMutableState asMutableState() {
         return state;
     }
+
+    // ----- With methods -----
 
     public AddressCreator withId(int id) {
         state.id = id;
@@ -91,6 +93,8 @@ public class AddressCreator implements AddressMaker {
         return this;
     }
 
+    // ----- Validate -----
+
     public void assertIsValid() {
         state.assertIsValid();
     }
@@ -102,6 +106,8 @@ public class AddressCreator implements AddressMaker {
     public ValidationErrors validate(Validator... validators) {
         return state.validate(validators);
     }
+
+    // ----- Behaviour -----
 
     public static class AddressBehaviour {
         public final AddressState s;
@@ -125,6 +131,8 @@ public class AddressCreator implements AddressMaker {
             return getClass().getSimpleName() + s;
         }
     }
+
+    // ----- MutableBehaviour -----
 
     public static class AddressMutableBehaviour {
         private AddressMutableState s;
@@ -152,6 +160,8 @@ public class AddressCreator implements AddressMaker {
             return getClass().getSimpleName() + s;
         }
     }
+
+    // ----- Builder -----
 
     public static class AddressBuilder implements AddressMaker {
         private final AddressMutableState state;
@@ -199,6 +209,8 @@ public class AddressCreator implements AddressMaker {
             return state.validate(validators);
         }
     }
+
+    // ----- ListBuilder -----
 
     public static class AddressListBuilder {
         private AddressCreator[] creators;
@@ -274,6 +286,8 @@ public class AddressCreator implements AddressMaker {
         }
     }
 
+    // ----- SetBuilder -----
+
     public static class AddressSetBuilder {
         private AddressCreator[] creators;
 
@@ -348,6 +362,8 @@ public class AddressCreator implements AddressMaker {
         }
     }
 
+    // ----- MapEntryBuilder -----
+
     public static class AddressMapEntryBuilder {
         private final Object key;
         private final AddressMaker maker;
@@ -373,6 +389,8 @@ public class AddressCreator implements AddressMaker {
             return maker.asMutableState();
         }
     }
+
+    // ----- MapBuilder -----
 
     public static class AddressMapBuilder {
         private final AddressMapEntryBuilder[] entries;
@@ -448,6 +466,8 @@ public class AddressCreator implements AddressMaker {
         }
     }
 }
+
+// ----- Maker -----
 
 interface AddressMaker {
     Address asAddress();

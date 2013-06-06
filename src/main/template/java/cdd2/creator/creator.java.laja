@@ -90,6 +90,9 @@
 #end
 
 #macro constructor()
+
+    // ----- Constructor -----
+
     public {creator}({mutableState} state) {
         this.state = state;
     }
@@ -111,6 +114,10 @@
 #end
 
 #macro withMethods()
+  #if (!attributes.isEmpty)
+    // ----- With methods -----
+
+  #end
   #foreach (attribute in attributes where attribute.isOptionalOrId)
     public {creator} {attribute.withMethod}({attribute.type} {attribute.name}) {
         state.{attribute.name} = {attribute.name};
@@ -130,6 +137,8 @@
 #end
 
 #macro assertIsValid()
+    // ----- Validate -----
+
     public void assertIsValid() {
         state.assertIsValid();
     }
@@ -168,16 +177,10 @@ package {packagename};
 public class {classname} implements {maker} {
     private final {mutableState} state;##
   #foreach (method in asMethods)
-    #set (delimiter = "")
-    #set (parameters = "")
-    #foreach (parameter in method.parameters)
-      #set (parameters = "{delimiter}{parameter.type} {parameter.variable}")
-      #set (delimiter = ", ")
-    #end
-{method.spaces}public {method.returnclass} {method.methodName}({parameters}) {method.statement}##
+{method.spaces}public {method.returnclass} {method.methodName}({method.parameters}) {method.statement}##
   #end
 {manualCode}##
-// ===== Generated code =====
+// ===== Constructors =====
 
   #create()
   #build()
@@ -187,9 +190,6 @@ public class {classname} implements {maker} {
   #mapCreatorEntry()
   #mapBuilderEntry()
   #$factory.factory()
-
-    // --------------------
-
   #constructor()
   #asState()
   #asMutableState()

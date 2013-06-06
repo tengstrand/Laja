@@ -1,5 +1,7 @@
 
 #macro superMutableBehaviour()
+    // ----- MutableBehaviour -----
+
     public static class {superMutableBehaviour} {
         private {mutableState} s;
 

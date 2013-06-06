@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-05-23 by Laja:
+ * Auto generated 2013-06-06 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -150,7 +150,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList asMethod = new ElementList(19, "asMethod");
         ElementList classStatement = new ElementList(20, "classStatement");
         ElementList manualEnd = new ElementList(21, "manualEnd");
-        ElementList generatedEnd = new ElementList(22, "generatedEnd");
+        Str generatedEnd = new Str(22, "// ===== Constructors =====");
         Repeat manualCode = new Repeat(23, "manualCode");
         ElementList creator = new ElementList(24, "creator");
 
@@ -356,44 +356,22 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(216, s);
         manualEnd.add(218, new End(217, "manualEnd"));
 
-        // generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]
-        generatedEnd.add(220, new Str(219, "//"));
-        generatedEnd.add(221, s);
-        Optional generatedEnd_1 = new Optional(222, "generatedEnd_1");
-        OrList generatedEnd_1_1 = new OrList(223, "generatedEnd_1_1");
-        Repeat generatedEnd_1_1_1 = new Repeat(224, "generatedEnd_1_1_1");
-        generatedEnd_1_1_1.add(226, new Str(225, "*"));
-        generatedEnd_1_1.add(227, generatedEnd_1_1_1);
-        Repeat generatedEnd_1_1_2 = new Repeat(228, "generatedEnd_1_1_2");
-        generatedEnd_1_1_2.add(230, new Str(229, "-"));
-        generatedEnd_1_1.add(231, generatedEnd_1_1_2);
-        Repeat generatedEnd_1_1_3 = new Repeat(232, "generatedEnd_1_1_3");
-        generatedEnd_1_1_3.add(234, new Str(233, "="));
-        generatedEnd_1_1.add(235, generatedEnd_1_1_3);
-        generatedEnd_1.add(236, generatedEnd_1_1);
-        generatedEnd.add(237, generatedEnd_1);
-        generatedEnd.add(238, s);
-        generatedEnd.add(240, new Str(239, "Generated"));
-        Optional generatedEnd_2 = new Optional(241, "generatedEnd_2");
-        Repeat generatedEnd_2_1 = new Repeat(242, "generatedEnd_2_1");
-        generatedEnd_2_1.add(243, newline, NOT);
-        generatedEnd_2.add(244, generatedEnd_2_1);
-        generatedEnd.add(245, generatedEnd_2);
+        // generatedEnd = "// ===== Constructors ====="
 
         // manualCode = !(manualEnd | generatedEnd)+
-        OrList manualCode_1 = new OrList(246, "manualCode_1");
-        manualCode_1.add(247, manualEnd);
-        manualCode_1.add(248, generatedEnd);
-        manualCode.add(249, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(219, "manualCode_1");
+        manualCode_1.add(220, manualEnd);
+        manualCode_1.add(221, generatedEnd);
+        manualCode.add(222, manualCode_1, NOT);
 
         // creator = packagestatement s imports s classStatement manualCode *
-        creator.add(250, packagestatement);
-        creator.add(251, s);
-        creator.add(252, imports, creatorCreatorImports);
-        creator.add(253, s);
-        creator.add(254, classStatement, creatorCreatorClassStatement);
-        creator.add(255, manualCode, creatorCreatorManualCode);
-        creator.add(257, new Complete(256, "creator"));
+        creator.add(223, packagestatement);
+        creator.add(224, s);
+        creator.add(225, imports, creatorCreatorImports);
+        creator.add(226, s);
+        creator.add(227, classStatement, creatorCreatorClassStatement);
+        creator.add(228, manualCode, creatorCreatorManualCode);
+        creator.add(230, new Complete(229, "creator"));
 
         return new TopElement(data2, creator);
     }
@@ -423,7 +401,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList asMethod = new ElementList(19, "asMethod");
         ElementList classStatement = new ElementList(20, "classStatement");
         ElementList manualEnd = new ElementList(21, "manualEnd");
-        ElementList generatedEnd = new ElementList(22, "generatedEnd");
+        Str generatedEnd = new Str(22, "// ===== Constructors =====");
         Repeat manualCode = new Repeat(23, "manualCode");
         ElementList creator = new ElementList(24, "creator");
 
@@ -629,44 +607,22 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(216, s);
         manualEnd.add(218, new End(217, "manualEnd"));
 
-        // generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+]
-        generatedEnd.add(220, new Str(219, "//"));
-        generatedEnd.add(221, s);
-        Optional generatedEnd_1 = new Optional(222, "generatedEnd_1");
-        OrList generatedEnd_1_1 = new OrList(223, "generatedEnd_1_1");
-        Repeat generatedEnd_1_1_1 = new Repeat(224, "generatedEnd_1_1_1");
-        generatedEnd_1_1_1.add(226, new Str(225, "*"));
-        generatedEnd_1_1.add(227, generatedEnd_1_1_1);
-        Repeat generatedEnd_1_1_2 = new Repeat(228, "generatedEnd_1_1_2");
-        generatedEnd_1_1_2.add(230, new Str(229, "-"));
-        generatedEnd_1_1.add(231, generatedEnd_1_1_2);
-        Repeat generatedEnd_1_1_3 = new Repeat(232, "generatedEnd_1_1_3");
-        generatedEnd_1_1_3.add(234, new Str(233, "="));
-        generatedEnd_1_1.add(235, generatedEnd_1_1_3);
-        generatedEnd_1.add(236, generatedEnd_1_1);
-        generatedEnd.add(237, generatedEnd_1);
-        generatedEnd.add(238, s);
-        generatedEnd.add(240, new Str(239, "Generated"));
-        Optional generatedEnd_2 = new Optional(241, "generatedEnd_2");
-        Repeat generatedEnd_2_1 = new Repeat(242, "generatedEnd_2_1");
-        generatedEnd_2_1.add(243, newline, NOT);
-        generatedEnd_2.add(244, generatedEnd_2_1);
-        generatedEnd.add(245, generatedEnd_2);
+        // generatedEnd = "// ===== Constructors ====="
 
         // manualCode = !(manualEnd | generatedEnd)+
-        OrList manualCode_1 = new OrList(246, "manualCode_1");
-        manualCode_1.add(247, manualEnd);
-        manualCode_1.add(248, generatedEnd);
-        manualCode.add(249, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(219, "manualCode_1");
+        manualCode_1.add(220, manualEnd);
+        manualCode_1.add(221, generatedEnd);
+        manualCode.add(222, manualCode_1, NOT);
 
         // creator = packagestatement s imports s classStatement manualCode *
-        creator.add(250, packagestatement);
-        creator.add(251, s);
-        creator.add(252, imports);
-        creator.add(253, s);
-        creator.add(254, classStatement);
-        creator.add(255, manualCode);
-        creator.add(257, new Complete(256, "creator"));
+        creator.add(223, packagestatement);
+        creator.add(224, s);
+        creator.add(225, imports);
+        creator.add(226, s);
+        creator.add(227, classStatement);
+        creator.add(228, manualCode);
+        creator.add(230, new Complete(229, "creator"));
 
         return new TopElement(data1, creator);
     }

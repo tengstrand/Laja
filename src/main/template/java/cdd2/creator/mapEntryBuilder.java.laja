@@ -1,5 +1,7 @@
 
 #macro mapEntryBuilder()
+    // ----- MapEntryBuilder -----
+
     public static class {mapEntryBuilder} {
         private final Object key;
         private final {maker} maker;

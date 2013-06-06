@@ -28,7 +28,7 @@ grammar creator {
                     "private final" s name:stateClass s "state;" asMethod+;
 
    manualEnd = ("}" s END);
-   generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+];
+   generatedEnd = "// ===== Constructors =====";
    manualCode = !(manualEnd | generatedEnd)+;
 
    creator = packagestatement s imports s classStatement manualCode *;

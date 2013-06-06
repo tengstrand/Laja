@@ -1,6 +1,8 @@
 
 #macro maker()
 
+// ----- Maker -----
+
 interface {maker} {
   #foreach (method in asMethods)
     {method.returnclass} {method.methodName}({method.parameters});
