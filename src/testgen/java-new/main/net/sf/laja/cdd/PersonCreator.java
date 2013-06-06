@@ -587,6 +587,14 @@ public class PersonCreator implements PersonMaker {
             return maker.asPerson();
         }
 
+        public SpecialPerson asSpecialPerson() {
+            return maker.asSpecialPerson();
+        }
+
+        public DbPerson asDbPerson() {
+            return maker.asDbPerson();
+        }
+
         public TextPerson asTextPerson() {
             return maker.asTextPerson();
         }
@@ -647,7 +655,9 @@ public class PersonCreator implements PersonMaker {
 
 interface PersonMaker {
     Person asPerson();
+    SpecialPerson asSpecialPerson();
     TextPerson asTextPerson();
+    DbPerson asDbPerson();
 
     PersonState asState();
     PersonMutableState asMutableState();

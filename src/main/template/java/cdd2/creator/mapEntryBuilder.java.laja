@@ -1,0 +1,27 @@
+
+#macro mapEntryBuilder()
+    public static class {mapEntryBuilder} {
+        private final Object key;
+        private final {maker} maker;
+
+        public {mapEntryBuilder}(Object key, {maker} maker) {
+            this.key = key;
+            this.maker = maker;
+        }
+  #foreach (method in asMethods)
+
+        public {method.returnclass} {method.methodName}({method.parameters}) {
+            return maker.{method.methodName}({method.arguments});
+        }
+  #end
+
+        public {immutableState} asState() {
+            return maker.asState();
+        }
+
+        public {mutableState} asMutableState() {
+            return maker.asMutableState();
+        }
+    }
+
+#end
