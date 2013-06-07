@@ -12,7 +12,6 @@ import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.annotation.Value;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
@@ -35,8 +34,7 @@ public class PersonState implements ImmutableState {
     @Key public final String name;
     @Id
     public final DateMidnight birthday;
-    @Value(state = HairColorStateValue.class)
-    public final int hairColor;
+    public final String hairColor;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
     @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
@@ -58,7 +56,7 @@ public class PersonState implements ImmutableState {
     public PersonState(
             String name,
             DateMidnight birthday,
-            int hairColor,
+            String hairColor,
             ImmutableList<PersonState> children,
             AddressState address,
             ImmutableSet<AddressState> oldAddresses,
@@ -82,7 +80,7 @@ public class PersonState implements ImmutableState {
 
     public String getName() { return name; }
     public DateMidnight getBirthday() { return birthday; }
-    public int getHairColor() { return hairColor; }
+    public String getHairColor() { return hairColor; }
     public ImmutableList<PersonState> getChildren() { return children; }
     public AddressState getAddress() { return address; }
     public ImmutableSet<AddressState> getOldAddresses() { return oldAddresses; }
@@ -91,7 +89,7 @@ public class PersonState implements ImmutableState {
 
     public PersonState withName(String name) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withBirthday(DateMidnight birthday) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
-    public PersonState withHairColor(int hairColor) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
+    public PersonState withHairColor(String hairColor) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withChildren(ImmutableList<PersonState> children) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withAddress(AddressState address) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
     public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(name, birthday, hairColor, children, address, oldAddresses, groupedAddresses, listOfSetOfMapOfIntegers); }
@@ -132,7 +130,7 @@ public class PersonState implements ImmutableState {
     public int hashCodeValue() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + hairColor;
+        result = 31 * result + (hairColor != null ? hairColor.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
@@ -150,7 +148,7 @@ public class PersonState implements ImmutableState {
 
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
         if (birthday != null ? !birthday.equals(state.birthday) : state.birthday != null) return false;
-        if (hairColor != state.hairColor) return false;
+        if (hairColor != null ? !hairColor.equals(state.hairColor) : state.hairColor != null) return false;
         if (children != null ? !children.equals(state.children) : state.children != null) return false;
         if (address != null ? !address.equals(state.address) : state.address != null) return false;
         if (oldAddresses != null ? !oldAddresses.equals(state.oldAddresses) : state.oldAddresses != null) return false;
@@ -164,7 +162,7 @@ public class PersonState implements ImmutableState {
     public String toString() {
         return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
                 ", birthday=" + birthday +
-                ", hairColor=" + hairColor +
+                ", hairColor=" + (hairColor == null ? null : '\'' + hairColor + '\'' ) +
                 ", children=" + children +
                 ", address=" + address +
                 ", oldAddresses=" + oldAddresses +
@@ -177,8 +175,7 @@ public class PersonState implements ImmutableState {
         @Key public String name;
         @Id
         public DateMidnight birthday;
-        @Value(state = HairColorStateValue.class)
-        public int hairColor;
+        public String hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;
         @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
@@ -197,7 +194,7 @@ public class PersonState implements ImmutableState {
         public PersonMutableState(
                 String name,
                 DateMidnight birthday,
-                int hairColor,
+                String hairColor,
                 List<PersonMutableState> children,
                 AddressMutableState address,
                 Set<AddressMutableState> oldAddresses,
@@ -215,7 +212,7 @@ public class PersonState implements ImmutableState {
 
         public String getName() { return name; }
         public DateMidnight getBirthday() { return birthday; }
-        public int getHairColor() { return hairColor; }
+        public String getHairColor() { return hairColor; }
         public List<PersonMutableState> getChildren() { return children; }
         public AddressMutableState getAddress() { return address; }
         public Set<AddressMutableState> getOldAddresses() { return oldAddresses; }
@@ -224,7 +221,7 @@ public class PersonState implements ImmutableState {
 
         public void setName(String name) { this.name = name; }
         public void setBirthday(DateMidnight birthday) { this.birthday = birthday; }
-        public void setHairColor(int hairColor) { this.hairColor = hairColor; }
+        public void setHairColor(String hairColor) { this.hairColor = hairColor; }
         public void setChildren(List<PersonMutableState> children) { this.children = children; }
         public void setAddress(AddressMutableState address) { this.address = address; }
         public void setOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; }
@@ -258,6 +255,7 @@ public class PersonState implements ImmutableState {
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (name == null) errors.addIsNullError(rootElement, parent, "name");
+            if (hairColor == null) errors.addIsNullError(rootElement, parent, "hairColor");
             if (children == null) errors.addIsNullError(rootElement, parent, "children");
             if (address == null) errors.addIsNullError(rootElement, parent, "address");
             if (groupedAddresses == null) errors.addIsNullError(rootElement, parent, "groupedAddresses");
@@ -267,7 +265,6 @@ public class PersonState implements ImmutableState {
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
             if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
-            new HairColorStateValue(hairColor).validate(HAIR_COLOR, rootElement, parent, errors);
 
             validate(rootElement, parent, errors);
 
@@ -313,7 +310,7 @@ public class PersonState implements ImmutableState {
         public String toString() {
             return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
                     ", birthday=" + birthday +
-                    ", hairColor=" + hairColor +
+                    ", hairColor=" + (hairColor == null ? null : '\'' + hairColor + '\'' ) +
                     ", children=" + children +
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses +

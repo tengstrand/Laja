@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
+import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.*;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
@@ -18,8 +19,8 @@ public class MapValidatorTest {
     @Test
     public void validMapOfPersonsShouldNotReturnValidationErrors() {
         Map<String,PersonMutableState> states = createPersonMap(
-                personEntry("a", createPerson().name("Carl").hairColor(1).children().defaults()),
-                personEntry("b", createPerson().name("Anna").hairColor(1).children().defaults())
+                personEntry("a", createPerson().name("Carl").hairColor(BROWN).children().defaults()),
+                personEntry("b", createPerson().name("Anna").hairColor(BROWN).children().defaults())
         ).asMutableStateMap();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
@@ -31,8 +32,8 @@ public class MapValidatorTest {
 
     @Test
     public void invalidMapOfPersonsShouldReturnValidationError() {
-        PersonCreator person1 = createPerson().name("Carl").hairColor(1).children().defaults();
-        PersonCreator person2 = createPerson().name(null).hairColor(1).children().defaults();
+        PersonCreator person1 = createPerson().name("Carl").hairColor(BROWN).children().defaults();
+        PersonCreator person2 = createPerson().name(null).hairColor(BROWN).children().defaults();
 
         Map<String,PersonMutableState> states = createPersonMap(
                 personEntry("a", person1), personEntry("b", person2)).asMutableStateMap();

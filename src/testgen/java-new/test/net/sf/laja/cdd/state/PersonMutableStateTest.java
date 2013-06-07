@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static net.sf.laja.cdd.AddressCreator.*;
+import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
@@ -30,16 +31,18 @@ public class PersonMutableStateTest {
         ValidationErrors errors = mutableState.validate();
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(mutableState, "name").build();
+                .addIsNullError(mutableState, "name")
+                .addIsNullError(mutableState, "hairColor")
+                .build();
 
         assertThat(errors, equalTo(expectedErrors));
     }
 
     @Test
     public void invalidCollectionShouldReturnIsNullValidationErrors() {
-        PersonMutableState mutableState = createPerson().name(null).hairColor(1).children(
-                createPerson().name(null).hairColor(1).children().defaults(),
-                createPerson().name(null).hairColor(1).children().defaults()
+        PersonMutableState mutableState = createPerson().name(null).hairColor(BROWN).children(
+                createPerson().name(null).hairColor(BROWN).children().defaults(),
+                createPerson().name(null).hairColor(BROWN).children().defaults()
         ).defaults().asMutableState();
 
         ValidationErrors errors = mutableState.validate();
@@ -52,7 +55,7 @@ public class PersonMutableStateTest {
 
     @Test
     public void invalidStateShouldReturnCustomValidationError() {
-        PersonMutableState mutableState = createPerson().name("Carl").hairColor(1).children()
+        PersonMutableState mutableState = createPerson().name("Carl").hairColor(BROWN).children()
                 .address(createAddress().withStreetName("First street").withCity("Stockholm"))
                 .groupedAddresses(createAddressMap(addressEntry("A", createAddress())))
                 .defaultListOfSetOfMapOfIntegers().asMutableState();

@@ -4,6 +4,7 @@ import net.sf.laja.cdd.state.PersonState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
+import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
@@ -21,7 +22,7 @@ public class MutableToImmutableConverterTest {
 
     @Test
     public void shouldConvertFromMutableToImmutableState() {
-        PersonMutableState mutableState = createPerson().name("Carl").hairColor(1).children().defaults().asMutableState();
+        PersonMutableState mutableState = createPerson().name("Carl").hairColor(BROWN).children().defaults().asMutableState();
         PersonState state = (PersonState) toImmutable.convert(mutableState, 0);
 
         assertThat(state.name, equalTo("Carl"));
@@ -29,14 +30,14 @@ public class MutableToImmutableConverterTest {
 
     @Test(expected = IllegalPersonStateException.class)
     public void shouldThrowExceptionIfConvertingToInvalidImmutableState() {
-        PersonMutableState mutableState = createPerson().name(null).hairColor(1).children().defaults().asMutableState();
+        PersonMutableState mutableState = createPerson().name(null).hairColor(BROWN).children().defaults().asMutableState();
         toImmutable.convert(mutableState, 0);
     }
 
     @Test(expected = IllegalPersonStateException.class)
     public void shouldThrowExceptionIfConvertingListWithInvalidStateToImmutableState() {
-        PersonMutableState mutableState = createPerson().name("Carl").hairColor(1).children(
-                createPerson().name(null).hairColor(1).children().defaults()
+        PersonMutableState mutableState = createPerson().name("Carl").hairColor(BROWN).children(
+                createPerson().name(null).hairColor(BROWN).children().defaults()
         ).defaults().asMutableState();
         toImmutable.convert(mutableState, 0);
     }

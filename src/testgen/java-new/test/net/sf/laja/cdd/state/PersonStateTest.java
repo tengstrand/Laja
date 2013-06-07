@@ -3,6 +3,7 @@ package net.sf.laja.cdd.state;
 import org.junit.Test;
 
 import static net.sf.laja.cdd.AddressCreator.*;
+import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -13,7 +14,7 @@ public class PersonStateTest {
     @Test
     public void shouldConvertFromImmutableToMutableState() {
         PersonState state = createPerson().name("Carl")
-                .hairColor(1).children(createPerson().name("Adam").hairColor(1).children().defaults())
+                .hairColor(BROWN).children(createPerson().name("Adam").hairColor(BROWN).children().defaults())
                 .defaults().asState();
 
         PersonMutableState mutableState = state.asMutable();
@@ -24,11 +25,10 @@ public class PersonStateTest {
     @Test
     public void shouldConvertFromMutableToImmutableState() {
         PersonMutableState mutableState = createPerson().name("Carl")
-                .hairColor(1).children(createPerson().name("Adam").hairColor(1).children().defaults())
+                .hairColor(BROWN).children(createPerson().name("Adam").hairColor(BROWN).children().defaults())
                 .defaultAddress()
                 .groupedAddresses((createAddressMap(addressEntry("aaa", createAddress().withStreetName("First street")))))
-                .defaultListOfSetOfMapOfIntegers()
-                .asMutableState();
+                .defaultListOfSetOfMapOfIntegers().asMutableState();
 
         PersonState state = mutableState.asImmutable();
 

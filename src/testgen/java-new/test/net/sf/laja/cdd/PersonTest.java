@@ -4,6 +4,7 @@ import org.joda.time.DateMidnight;
 import org.junit.Test;
 
 import static net.sf.laja.cdd.AddressCreator.buildAddress;
+import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.*;
 import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
 import static org.hamcrest.core.Is.is;
@@ -33,11 +34,12 @@ public class PersonTest {
 
     @Test
     public void preserveHandWrittenChainedAttributes() {
-        createPerson().name("Carl").hairColor(1).children().defaultAddress();
+        createPerson().name("Carl").hairColor(BROWN).children().defaultAddress();
     }
 
     private PersonBuilder defaultPerson() {
         return buildPerson()
+                .withHairColor("RED")
                 .withBirthday(new DateMidnight(1999, 9, 9))
                 .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
     }

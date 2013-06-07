@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
+import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.PersonCreator.createPersonList;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
@@ -21,8 +22,8 @@ public class CollectionValidatorTest {
     @Test
     public void validListOfPersonsShouldNotReturnValidationErrors() {
         List<PersonState.PersonMutableState> states = createPersonList(
-                createPerson().name("Carl").hairColor(1).children().defaults(),
-                createPerson().name("Inga").hairColor(1).children().defaults()
+                createPerson().name("Carl").hairColor(BROWN).children().defaults(),
+                createPerson().name("Inga").hairColor(BROWN).children().defaults()
         ).asMutableStateList();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
@@ -34,8 +35,8 @@ public class CollectionValidatorTest {
 
     @Test
     public void invalidListOfPersonsShouldReturnValidationError() {
-        PersonCreator person1 = createPerson().name(null).hairColor(1).children().defaults();
-        PersonCreator person2 = createPerson().name("Inga").hairColor(1).children().defaults();
+        PersonCreator person1 = createPerson().name(null).hairColor(BROWN).children().defaults();
+        PersonCreator person2 = createPerson().name("Inga").hairColor(BROWN).children().defaults();
 
         List<PersonState.PersonMutableState> states = createPersonList(person1, person2).asMutableStateList();
 
@@ -51,8 +52,8 @@ public class CollectionValidatorTest {
 
     @Test
     public void invalidListOfListOfPersonsShouldReturnValidationError() {
-        PersonCreator person1 = createPerson().name(null).hairColor(1).children().defaults();
-        PersonCreator person2 = createPerson().name("Inga").hairColor(1).children().defaults();
+        PersonCreator person1 = createPerson().name(null).hairColor(BROWN).children().defaults();
+        PersonCreator person2 = createPerson().name("Inga").hairColor(BROWN).children().defaults();
 
         List<PersonMutableState> states = createPersonList(person1, person2).asMutableStateList();
 

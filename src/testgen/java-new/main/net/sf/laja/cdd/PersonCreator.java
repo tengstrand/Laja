@@ -97,14 +97,14 @@ public class PersonCreator implements PersonMaker {
             }
 
             public class _HairColor {
-                public _Children hairColor(int hairColor) {
+                public _Children hairColor(String hairColor) {
                     state.hairColor = hairColor;
                     return new _Children();
                 }
 
                 @Preserve
                 public _Children hairColor(HairColor hairColor) {
-                    state.hairColor = hairColor.asValue();
+                    state.hairColor = hairColor.name();
                     return new _Children();
                 }
             }
@@ -303,7 +303,7 @@ public class PersonCreator implements PersonMaker {
         public PersonBuilder withName(String name) { state.name = name; return this; }
         public PersonBuilder withBirthday(DateMidnight birthday) { state.birthday = birthday; return this; }
         public PersonBuilder withBirthday(int year, int month, int day) { state.birthday = new DateMidnight(year, month, day); return this; }
-        public PersonBuilder withHairColor(int hairColor) { state.hairColor = hairColor; return this; }
+        public PersonBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
         public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
         public PersonBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
         public PersonBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
