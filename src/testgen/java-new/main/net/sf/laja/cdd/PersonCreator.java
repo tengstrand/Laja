@@ -204,6 +204,11 @@ public class PersonCreator implements PersonMaker {
 
     // ----- With methods -----
 
+    public PersonCreator withId(int id) {
+        state.id = id;
+        return this;
+    }
+
     public PersonCreator withBirthday(DateMidnight birthday) {
         state.birthday = birthday;
         return this;
@@ -300,6 +305,7 @@ public class PersonCreator implements PersonMaker {
             return new PersonBuilder(new PersonMutableState());
         }
 
+        public PersonBuilder withId(int id) { state.id = id; return this; }
         public PersonBuilder withName(String name) { state.name = name; return this; }
         public PersonBuilder withBirthday(DateMidnight birthday) { state.birthday = birthday; return this; }
         public PersonBuilder withBirthday(int year, int month, int day) { state.birthday = new DateMidnight(year, month, day); return this; }

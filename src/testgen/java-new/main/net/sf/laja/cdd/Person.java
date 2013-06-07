@@ -1,17 +1,14 @@
 package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.annotation.Behaviour;
-import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.state.PersonState;
 import org.joda.time.DateMidnight;
 import org.joda.time.Period;
 
 import static net.sf.laja.cdd.PersonCreator.PersonBehaviour;
-import static net.sf.laja.cdd.state.PersonState.HAIR_COLOR;
 
 @Behaviour
 public class Person extends PersonBehaviour {
-    @Parameter(name = HAIR_COLOR, wrapper = HairColor.class)
     private final HairColor hairColor;
 
     public Person(PersonState s) {
