@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.validator.Validator;
@@ -19,7 +21,7 @@ import java.util.Set;
 
 import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.state.PersonState.*;
 
 @Creator
 public class PersonCreator implements PersonMaker {
@@ -48,10 +50,31 @@ public class PersonCreator implements PersonMaker {
 
     }
 
+    @Parameters({
+            @Parameter(name = ID, methodSignature = "PersonId personId", assignment = "personId.id"),
+            @Parameter(name = HAIR_COLOR, methodSignature = "HairColor hairColor", assignment = "hairColor.name()"),
+            @Parameter(name = ADDRESS, methodName = "defaults", statements = {
+                    "defaultAddress()",
+                    "new _ListOfSetOfMapOfIntegers().defaultListOfSetOfMapOfIntegers()"}, nextAttribute = "."),
+            @Parameter(name = ADDRESS, methodName = "defaultAddress", assignment = "buildAddress().withCity(\"Stockholm\").withStreetName(\"Street 1\").asMutableState()"),
+            @Parameter(name = GROUPED_ADDRESSES, methodName = "defaultGroupedAddresses"),
+            @Parameter(name = LIST_OF_SET_OF_MAP_OF_INTEGERS, methodName = "defaultListOfSetOfMapOfIntegers", assignment = "defaultListOfSetOfMapOfIntegers()")
+    })
+
+    private PersonCreator defaultListOfSetOfMapOfIntegers() {
+        Map map1 = new HashMap();
+        map1.put("a", 123);
+        map1.put("b", 456);
+        Set set = new HashSet(Arrays.asList(map1));
+        List list = Arrays.asList(set);
+        state.listOfSetOfMapOfIntegers = list;
+        return new PersonCreator(state);
+    }
+
     // ===== Constructors =====
 
     public static PersonFactory createPerson() {
-        return new PersonFactory();
+        return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
     public static PersonBuilder buildPerson() {
@@ -80,15 +103,13 @@ public class PersonCreator implements PersonMaker {
 
     // ----- Factory ------
 
-    public static class PersonFactory {
+    public class PersonFactory {
 
         public Factory._HairColor name(String name) {
             return new Factory().new _Name().name(name);
         }
 
-        private static class Factory {
-            private final PersonMutableState state = new PersonMutableState();
-
+        private class Factory {
             public class _Name {
                 public _HairColor name(String name) {
                     state.name = name;
@@ -206,6 +227,11 @@ public class PersonCreator implements PersonMaker {
 
     public PersonCreator withId(int id) {
         state.id = id;
+        return this;
+    }
+
+    public PersonCreator withId(PersonId personId) {
+        state.id = personId.id;
         return this;
     }
 

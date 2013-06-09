@@ -1,6 +1,5 @@
 package net.sf.laja.cdd.typeconverter;
 
-import net.sf.laja.cdd.annotation.TypeConverter;
 import org.joda.time.Chronology;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTimeZone;
@@ -9,7 +8,6 @@ import org.joda.time.ReadableInstant;
 import java.util.Calendar;
 import java.util.Date;
 
-@TypeConverter
 public class DateMidnightConverter {
     public DateMidnight convert() { return new DateMidnight(); }
     public DateMidnight convert(Chronology chronology) { return new DateMidnight(chronology); }
