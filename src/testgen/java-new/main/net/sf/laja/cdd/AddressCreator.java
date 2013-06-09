@@ -31,7 +31,11 @@ public class AddressCreator implements AddressMaker {
         return new ProtectedAddress(state.asImmutable());
     }
 
-    // ===== Constructors =====
+    // ===== Fields =====
+
+    private static final String id = "id";
+    private static final String streetName = "streetName";
+    private static final String city = "city";
 
     public static AddressCreator createAddress() {
         return new AddressCreator(new AddressMutableState());
