@@ -38,7 +38,11 @@
 // ===== Fields =====
 
   #foreach(attribute in attributes)
+    #if (attribute.name == "state")
+    private static final String state_ = "state";
+    #else
     private static final String {attribute.name} = "{attribute.name}";
+    #end
   #end
 
 #end
