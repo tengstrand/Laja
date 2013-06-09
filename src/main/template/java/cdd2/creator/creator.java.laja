@@ -37,7 +37,7 @@
 #macro create()
   #if (hasMandatoryAttributes)
     public static {factory} create{state}() {
-        return new {factory}();
+        return new {creator}(new {mutableState}()).new {factory}();
     }
   #else
     public static {creator} create{state}() {

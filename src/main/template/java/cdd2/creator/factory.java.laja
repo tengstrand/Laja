@@ -9,18 +9,15 @@
 #macro factoryClass()
     // ----- Factory ------
 
-    public static class {factory} {
+    public class {factory} {
 
   #if (secondMandatory == null)
         public {creator} name({firstMandatory.type} {firstMandatory.name}) {
   #else
-        public Factory._{secondMandatory.nameAsClass} name({firstMandatory.type} {firstMandatory.name}) {
+        public _{secondMandatory.nameAsClass} name({firstMandatory.type} {firstMandatory.name}) {
   #end
-            return new Factory().new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
+            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
         }
-
-        private static class Factory {
-            private final {mutableState} state = new {mutableState}();
   #set (iterator = mandatoryAttributes.iterator())
   #set (hasNext = iterator.hasNext)
   #if (hasNext)
@@ -40,59 +37,58 @@
     #end
 
     #if (!attribute.isCollectionOrMap)
-            public class {currentClass} {
-                public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
-                    state.{attribute.name} = {attribute.name};
-                    {returnStatement}
-                }
+        public class {currentClass} {
+            public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
+                state.{attribute.name} = {attribute.name};
+                {returnStatement}
+            }
       #if (attribute.isState)
 
-                public {returnClass} {attribute.name}({attribute.nameAsClass}Creator {attribute.name}) {
-                    state.{attribute.name} = {attribute.name}.asMutableState();
-                    {returnStatement}
-                }
-      #end
+            public {returnClass} {attribute.name}({attribute.nameAsClass}Creator {attribute.name}) {
+                state.{attribute.name} = {attribute.name}.asMutableState();
+                {returnStatement}
             }
+      #end
+        }
     #else if (attribute.isCollection)
-            public class {currentClass} {
-                public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
-                    state.{attribute.name} = {attribute.name};
-                    {returnStatement}
-                }
+        public class {currentClass} {
+            public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
+                state.{attribute.name} = {attribute.name};
+                {returnStatement}
+            }
       #if (attribute.isLeafState)
 
-                public {returnClass} {attribute.name}({creator}... creators) {
-                    List<{mutableState}> {attribute.name} = new ArrayList<{mutableState}>();
+            public {returnClass} {attribute.name}({creator}... creators) {
+                List<{mutableState}> {attribute.name} = new ArrayList<{mutableState}>();
 
-                    for ({creator} creator : creators) {
-                        {attribute.name}.add(creator.asMutableState());
-                    }
-                    state.{attribute.name} = {attribute.name};
-                    {returnStatement}
+                for ({creator} creator : creators) {
+                    {attribute.name}.add(creator.asMutableState());
                 }
-      #end
+                state.{attribute.name} = {attribute.name};
+                {returnStatement}
             }
+      #end
+        }
     #else
-            public class {currentClass} {
-                public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
-                    state.{attribute.name} = {attribute.name};
-                    {returnStatement}
-                }
+        public class {currentClass} {
+            public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
+                state.{attribute.name} = {attribute.name};
+                {returnStatement}
+            }
       #if (attribute.type.mapType.entry.isState)
         #set (stateName = attribute.type.mapType.entry.state)
 
-                public {returnClass} {attribute.name}({stateName}MapBuilder mapBuilder) {
-                    state.{attribute.name} = mapBuilder.asMutableStateMap();
-                    {returnStatement}
-                }
-      #end
+            public {returnClass} {attribute.name}({stateName}MapBuilder mapBuilder) {
+                state.{attribute.name} = mapBuilder.asMutableStateMap();
+                {returnStatement}
             }
+      #end
+        }
     #end
     #if (hasNext)
       #set (attribute = nextAttribute)
       #set (currentClass = nextClass)
     #end
   #end
-        }
     }
 #end

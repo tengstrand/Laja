@@ -105,106 +105,104 @@ public class PersonCreator implements PersonMaker {
 
     public class PersonFactory {
 
-        public Factory._HairColor name(String name) {
-            return new Factory().new _Name().name(name);
+        public _HairColor name(String name) {
+            return new _Name().name(name);
         }
 
-        private class Factory {
-            public class _Name {
-                public _HairColor name(String name) {
-                    state.name = name;
-                    return new _HairColor();
-                }
+        public class _Name {
+            public _HairColor name(String name) {
+                state.name = name;
+                return new _HairColor();
+            }
+        }
+
+        public class _HairColor {
+            public _Children hairColor(String hairColor) {
+                state.hairColor = hairColor;
+                return new _Children();
             }
 
-            public class _HairColor {
-                public _Children hairColor(String hairColor) {
-                    state.hairColor = hairColor;
-                    return new _Children();
-                }
+            @Preserve
+            public _Children hairColor(HairColor hairColor) {
+                state.hairColor = hairColor.name();
+                return new _Children();
+            }
+        }
 
-                @Preserve
-                public _Children hairColor(HairColor hairColor) {
-                    state.hairColor = hairColor.name();
-                    return new _Children();
-                }
+        public class _Children {
+            public _Address children(List<PersonMutableState> children) {
+                state.children = children;
+                return new _Address();
             }
 
-            public class _Children {
-                public _Address children(List<PersonMutableState> children) {
-                    state.children = children;
-                    return new _Address();
-                }
+            public _Address children(PersonCreator... creators) {
+                List<PersonMutableState> children = new ArrayList<PersonMutableState>();
 
-                public _Address children(PersonCreator... creators) {
-                    List<PersonMutableState> children = new ArrayList<PersonMutableState>();
-
-                    for (PersonCreator creator : creators) {
-                        children.add(creator.asMutableState());
-                    }
-                    state.children = children;
-                    return new _Address();
+                for (PersonCreator creator : creators) {
+                    children.add(creator.asMutableState());
                 }
+                state.children = children;
+                return new _Address();
+            }
+        }
+
+        public class _Address {
+            @Preserve
+            public PersonCreator defaults() {
+                defaultAddress();
+                new _ListOfSetOfMapOfIntegers().defaultListOfSetOfMapOfIntegers();
+                return new PersonCreator(state);
             }
 
-            public class _Address {
-                @Preserve
-                public PersonCreator defaults() {
-                    defaultAddress();
-                    new _ListOfSetOfMapOfIntegers().defaultListOfSetOfMapOfIntegers();
-                    return new PersonCreator(state);
-                }
-
-                @Preserve
-                public _GroupedAddresses defaultAddress() {
-                    state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
-                    return new _GroupedAddresses();
-                }
-
-                public _GroupedAddresses address(AddressMutableState address) {
-                    state.address = address;
-                    return new _GroupedAddresses();
-                }
-
-                public _GroupedAddresses address(AddressCreator address) {
-                    state.address = address.asMutableState();
-                    return new _GroupedAddresses();
-                }
+            @Preserve
+            public _GroupedAddresses defaultAddress() {
+                state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
+                return new _GroupedAddresses();
             }
 
-            public class _GroupedAddresses {
-                @Preserve
-                public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
-                    return new _ListOfSetOfMapOfIntegers();
-                }
-
-                public _ListOfSetOfMapOfIntegers groupedAddresses(Map<String,AddressMutableState> groupedAddresses) {
-                    state.groupedAddresses = groupedAddresses;
-                    return new _ListOfSetOfMapOfIntegers();
-                }
-
-                public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder) {
-                    state.groupedAddresses = mapBuilder.asMutableStateMap();
-                    return new _ListOfSetOfMapOfIntegers();
-                }
+            public _GroupedAddresses address(AddressMutableState address) {
+                state.address = address;
+                return new _GroupedAddresses();
             }
 
-            public class _ListOfSetOfMapOfIntegers {
-                @Preserve
-                public PersonCreator defaultListOfSetOfMapOfIntegers() {
-                    Map map1 = new HashMap();
-                    map1.put("a", 123);
-                    map1.put("b", 456);
-                    Set set = new HashSet(Arrays.asList(map1));
-                    List list = Arrays.asList(set);
-                    state.listOfSetOfMapOfIntegers = list;
-                    return new PersonCreator(state);
-                }
+            public _GroupedAddresses address(AddressCreator address) {
+                state.address = address.asMutableState();
+                return new _GroupedAddresses();
+            }
+        }
 
-                public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
-                    state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
-                    return new PersonCreator(state);
-                }
+        public class _GroupedAddresses {
+            @Preserve
+            public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
+                return new _ListOfSetOfMapOfIntegers();
+            }
+
+            public _ListOfSetOfMapOfIntegers groupedAddresses(Map<String,AddressMutableState> groupedAddresses) {
+                state.groupedAddresses = groupedAddresses;
+                return new _ListOfSetOfMapOfIntegers();
+            }
+
+            public _ListOfSetOfMapOfIntegers groupedAddresses(AddressMapBuilder mapBuilder) {
+                state.groupedAddresses = mapBuilder.asMutableStateMap();
+                return new _ListOfSetOfMapOfIntegers();
+            }
+        }
+
+        public class _ListOfSetOfMapOfIntegers {
+            @Preserve
+            public PersonCreator defaultListOfSetOfMapOfIntegers() {
+                Map map1 = new HashMap();
+                map1.put("a", 123);
+                map1.put("b", 456);
+                Set set = new HashSet(Arrays.asList(map1));
+                List list = Arrays.asList(set);
+                state.listOfSetOfMapOfIntegers = list;
+                return new PersonCreator(state);
+            }
+
+            public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
+                state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
+                return new PersonCreator(state);
             }
         }
     }
