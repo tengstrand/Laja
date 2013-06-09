@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.AddressCreator.*;
+import static net.sf.laja.cdd.AddressCreator.AddressMapBuilder;
+import static net.sf.laja.cdd.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
@@ -49,12 +50,12 @@ public class PersonCreator implements PersonMaker {
     }
 
     @Parameters({
-            @Parameter(name = id, signature = "PersonId personId", value = "personId.id"),
-            @Parameter(name = hairColor, signature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(name = "address", next = "*", method = "defaults", value = "addressDefaults(this, new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = "address", next = "*", method = "defaultAddress", value = "addressDefault()"),
-            @Parameter(name = groupedAddresses, method = "defaultGroupedAddresses"),
-            @Parameter(name = "listOfSetOfMapOfIntegers", method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
+            @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
+            @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(name = address_, next = "*", method = "defaults", value = "addressDefaults(this, new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address_, next = "*", method = "defaultAddress", value = "addressDefault()"),
+            @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
+            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
     })
 
     private void addressDefaults(_Address address, _ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
@@ -78,15 +79,15 @@ public class PersonCreator implements PersonMaker {
 
     // ===== Fields =====
 
-    private static final String id = "id";
-    private static final String name = "name";
-    private static final String birthday = "birthday";
-    private static final String hairColor = "hairColor";
-    private static final String children = "children";
-    private static final String address = "address";
-    private static final String oldAddresses = "oldAddresses";
-    private static final String groupedAddresses = "groupedAddresses";
-    private static final String listOfSetOfMapOfIntegers = "listOfSetOfMapOfIntegers";
+    private static final String id_ = "id";
+    private static final String name_ = "name";
+    private static final String birthday_ = "birthday";
+    private static final String hairColor_ = "hairColor";
+    private static final String children_ = "children";
+    private static final String address_ = "address";
+    private static final String oldAddresses_ = "oldAddresses";
+    private static final String groupedAddresses_ = "groupedAddresses";
+    private static final String listOfSetOfMapOfIntegers_ = "listOfSetOfMapOfIntegers";
 
     // ===== Constructors =====
 
@@ -176,13 +177,13 @@ public class PersonCreator implements PersonMaker {
                 return new _GroupedAddresses();
             }
 
-            public _GroupedAddresses address(AddressMutableState address) {
-                state.address = address;
+            public _GroupedAddresses address(AddressMutableState _address) {
+                state.address = _address;
                 return new _GroupedAddresses();
             }
 
-            public _GroupedAddresses address(AddressCreator address) {
-                state.address = address.asMutableState();
+            public _GroupedAddresses address(AddressCreator _address) {
+                state.address = _address.asMutableState();
                 return new _GroupedAddresses();
             }
         }
@@ -253,7 +254,7 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
-    public PersonCreator withOldAddresses(AddressSetBuilder oldAddresses) {
+    public PersonCreator withOldAddresses(AddressCreator.AddressSetBuilder oldAddresses) {
         state.oldAddresses = oldAddresses.asMutableStateSet();
         return this;
     }

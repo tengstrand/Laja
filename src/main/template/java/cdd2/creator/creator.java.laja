@@ -35,21 +35,11 @@
 #end
 #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
 
-#macro parameters()
-  #if (parameters != null)
-{parameters.content}##
-  #end
-#end
-
 #macro fields()
 // ===== Fields =====
 
   #foreach(attribute in attributes)
-    #if (attribute.name == "state")
-    private static final String state_ = "state";
-    #else
-    private static final String {attribute.name} = "{attribute.name}";
-    #end
+    private static final String {attribute.name}_ = "{attribute.name}";
   #end
 
 #end
@@ -201,7 +191,7 @@ public class {classname} implements {maker} {
   #foreach (method in asMethods)
 {method.spaces}public {method.returnclass} {method.methodName}({method.parameters}) {method.statement}##
   #end
-  #parameters()
+{parameters.content}##
 {manualCode}##
   #fields()
   #create()

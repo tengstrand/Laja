@@ -7,7 +7,7 @@ public class ClassStatement implements CreatorParser.IClassStatement {
     public String classname;
     public String state;
     public List<AsMethod> asMethods = new ArrayList<AsMethod>();
-    public Aparameters parameters;
+    public Aparameters parameters = new Aparameters();
 
     public void setClassname(String classname) {
         this.classname = classname;

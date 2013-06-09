@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Aparameters implements CreatorParser.IAparameters {
-    public String content;
+    public String content = "";
     public List<Aparameter> parameters = new ArrayList<Aparameter>();
 
     public void setContent(String content) {
