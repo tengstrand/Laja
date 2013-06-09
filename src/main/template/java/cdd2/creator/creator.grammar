@@ -24,8 +24,12 @@ grammar creator {
 
    asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement;
 
+   aparameterAttr = ("name"|"value"|"next"|"method"|"signature"):variable s "=" s (name|str):value;
+   aparameter = "@Parameter" s "(" s aparameterAttr [s "," s aparameterAttr]+ s ")";
+   aparameters = s "@Parameters" s "(" s "{" s aparameter [s "," s aparameter]+ s "}" s ")";
+
    classStatement = "@Creator" ws public "class" ws name:classname s "implements" s name s "{" s
-                    "private final" s name:stateClass s "state;" asMethod+;
+                    "private final" s name:stateClass s "state;" [asMethod|aparameters]+;
 
    manualEnd = ("}" s END);
    generatedEnd = "// ===== Fields =====";
@@ -44,9 +48,18 @@ grammar creator {
    asMethod.setParameters(Parameters parameters);
    asMethod.setStatement(String statement);
 
+   AparameterAttr aparameterAttr.setVariable(String variable);
+   aparameterAttr.setValue(String value);
+
+   Aparameter aparameter.addParameterAttr(AparameterAttr aparameterAttr);
+
+   Aparameters aparameters.addParameter(Aparameter aparameter);
+   aparameters.setContent(String *);
+
    ClassStatement classStatement.setClassname(String classname);
    classStatement.setStateClass(String stateClass);
    classStatement.addAsMethod(AsMethod asMethod);
+   classStatement.setAParameters(Aparameters aparameters);
 
    Creator creator.setPackagename(String packagestatement.packagename);
    creator.setImports(String imports);

@@ -12,6 +12,7 @@ public class Creator implements CreatorParser.ICreator{
     public String statevariable;
     public String manualCode;
     public List<AsMethod> asMethods;
+    public Aparameters parameters;
 
     public void setPackagename(String packagename) {
         this.packagename = packagename;
@@ -27,6 +28,7 @@ public class Creator implements CreatorParser.ICreator{
         state = classStatement.state;
         statevariable = StringUtils.uncapitalize(state);
         asMethods = classStatement.asMethods;
+        parameters = classStatement.parameters;
     }
 
     public void setManualCode(String manualCode) {

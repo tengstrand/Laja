@@ -4,6 +4,7 @@
 #set (classname = creator.classname)
 #set (statevariable = creator.statevariable)
 #set (asMethods = creator.asMethods)
+#set (parameters = creator.parameters)
 #set (state = creator.state)
 #set (immutableState = "{state}State")
 #set (mutableState = "{state}MutableState")
@@ -33,6 +34,12 @@
   #end
 #end
 #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
+
+#macro parameters()
+  #if (parameters != null)
+{parameters.content}##
+  #end
+#end
 
 #macro fields()
 // ===== Fields =====
@@ -194,6 +201,7 @@ public class {classname} implements {maker} {
   #foreach (method in asMethods)
 {method.spaces}public {method.returnclass} {method.methodName}({method.parameters}) {method.statement}##
   #end
+  #parameters()
 {manualCode}##
   #fields()
   #create()

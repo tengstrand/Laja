@@ -20,6 +20,18 @@ public class CreatorFactory implements CreatorParser.ICreatorFactory {
         return new AsMethod();
     }
 
+    public CreatorParser.IAparameterAttr createAparameterAttr() {
+        return new AparameterAttr();
+    }
+
+    public CreatorParser.IAparameter createAparameter() {
+        return new Aparameter();
+    }
+
+    public CreatorParser.IAparameters createAparameters() {
+        return new Aparameters();
+    }
+
     public CreatorParser.IClassStatement createClassStatement() {
         return new ClassStatement();
     }

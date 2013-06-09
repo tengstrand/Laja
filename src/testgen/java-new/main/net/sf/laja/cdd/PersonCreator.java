@@ -51,10 +51,10 @@ public class PersonCreator implements PersonMaker {
     @Parameters({
             @Parameter(name = id, signature = "PersonId personId", value = "personId.id"),
             @Parameter(name = hairColor, signature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(name = address, next = "*", method = "defaults", value = "addressDefaults(this, new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = address, next = "*", method = "defaultAddress", value = "addressDefault()"),
+            @Parameter(name = "address", next = "*", method = "defaults", value = "addressDefaults(this, new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = "address", next = "*", method = "defaultAddress", value = "addressDefault()"),
             @Parameter(name = groupedAddresses, method = "defaultGroupedAddresses"),
-            @Parameter(name = listOfSetOfMapOfIntegers, method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
+            @Parameter(name = "listOfSetOfMapOfIntegers", method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
     })
 
     private void addressDefaults(_Address address, _ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {

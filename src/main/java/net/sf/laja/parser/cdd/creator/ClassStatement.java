@@ -7,6 +7,7 @@ public class ClassStatement implements CreatorParser.IClassStatement {
     public String classname;
     public String state;
     public List<AsMethod> asMethods = new ArrayList<AsMethod>();
+    public Aparameters parameters;
 
     public void setClassname(String classname) {
         this.classname = classname;
@@ -24,12 +25,17 @@ public class ClassStatement implements CreatorParser.IClassStatement {
         asMethods.add((AsMethod)iasMethod);
     }
 
+    public void setAParameters(CreatorParser.IAparameters iaparameters) {
+        parameters = (Aparameters)iaparameters;
+    }
+
     @Override
     public String toString() {
         return "ClassStatement{" +
                 "classname='" + classname + '\'' +
                 ", state='" + state + '\'' +
                 ", asMethods=" + asMethods +
+                ", parameters=" + parameters +
                 '}';
     }
 }

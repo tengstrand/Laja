@@ -1,10 +1,10 @@
 package net.sf.laja.cdd;
 
-import static net.sf.laja.cdd.PersonCreator.PersonFactory;
+import static net.sf.laja.cdd.PersonCreator.createPerson;
 
 public class Main {
     public static void main(String[] args) {
-        PersonFactory personFactory = PersonCreator.createPerson();
+        PersonCreator.PersonFactory personFactory = createPerson();
         PersonCreator personCreator = personFactory.name("kalle").hairColor("RED").children().defaults();
 
         personCreator.isValid();
