@@ -34,7 +34,18 @@
 #end
 #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
 
+#macro fields()
+// ===== Fields =====
+
+  #foreach(attribute in attributes)
+    private static final String {attribute.name} = "{attribute.name}";
+  #end
+
+#end
+
 #macro create()
+    // ===== Constructors =====
+
   #if (hasMandatoryAttributes)
     public static {factory} create{state}() {
         return new {creator}(new {mutableState}()).new {factory}();
@@ -180,8 +191,7 @@ public class {classname} implements {maker} {
 {method.spaces}public {method.returnclass} {method.methodName}({method.parameters}) {method.statement}##
   #end
 {manualCode}##
-// ===== Constructors =====
-
+  #fields()
   #create()
   #build()
   #createList()

@@ -3,6 +3,8 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.PersonCreator.PersonFactory._Address;
+import net.sf.laja.cdd.PersonCreator.PersonFactory._ListOfSetOfMapOfIntegers;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.annotation.Parameters;
@@ -21,7 +23,7 @@ import java.util.Set;
 
 import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.state.PersonState.*;
+import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
 @Creator
 public class PersonCreator implements PersonMaker {
@@ -46,22 +48,25 @@ public class PersonCreator implements PersonMaker {
         return new TextPerson(state.asImmutable());
     }
 
-    private void manuallyAddedMethodThatWillBePreserved() {
-
-    }
-
     @Parameters({
-            @Parameter(name = ID, methodSignature = "PersonId personId", assignment = "personId.id"),
-            @Parameter(name = HAIR_COLOR, methodSignature = "HairColor hairColor", assignment = "hairColor.name()"),
-            @Parameter(name = ADDRESS, methodName = "defaults", statements = {
-                    "defaultAddress()",
-                    "new _ListOfSetOfMapOfIntegers().defaultListOfSetOfMapOfIntegers()"}, nextAttribute = "."),
-            @Parameter(name = ADDRESS, methodName = "defaultAddress", assignment = "buildAddress().withCity(\"Stockholm\").withStreetName(\"Street 1\").asMutableState()"),
-            @Parameter(name = GROUPED_ADDRESSES, methodName = "defaultGroupedAddresses"),
-            @Parameter(name = LIST_OF_SET_OF_MAP_OF_INTEGERS, methodName = "defaultListOfSetOfMapOfIntegers", assignment = "defaultListOfSetOfMapOfIntegers()")
+            @Parameter(name = id, signature = "PersonId personId", value = "personId.id"),
+            @Parameter(name = hairColor, signature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(name = address, next = "*", method = "defaults", value = "addressDefaults(this, new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address, next = "*", method = "defaultAddress", value = "addressDefault()"),
+            @Parameter(name = groupedAddresses, method = "defaultGroupedAddresses"),
+            @Parameter(name = listOfSetOfMapOfIntegers, method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
     })
 
-    private PersonCreator defaultListOfSetOfMapOfIntegers() {
+    private void addressDefaults(_Address address, _ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
+        address.defaultAddress();
+        listOfSetOfMapOfIntegers.defaultListOfSetOfMapOfIntegers();
+    }
+
+    private AddressMutableState addressDefault() {
+        return buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
+    }
+
+    private PersonCreator listOfSetOfMapOfIntegersDefault() {
         Map map1 = new HashMap();
         map1.put("a", 123);
         map1.put("b", 456);
@@ -70,6 +75,18 @@ public class PersonCreator implements PersonMaker {
         state.listOfSetOfMapOfIntegers = list;
         return new PersonCreator(state);
     }
+
+    // ===== Fields =====
+
+    private static final String id = "id";
+    private static final String name = "name";
+    private static final String birthday = "birthday";
+    private static final String hairColor = "hairColor";
+    private static final String children = "children";
+    private static final String address = "address";
+    private static final String oldAddresses = "oldAddresses";
+    private static final String groupedAddresses = "groupedAddresses";
+    private static final String listOfSetOfMapOfIntegers = "listOfSetOfMapOfIntegers";
 
     // ===== Constructors =====
 
@@ -149,14 +166,13 @@ public class PersonCreator implements PersonMaker {
         public class _Address {
             @Preserve
             public PersonCreator defaults() {
-                defaultAddress();
-                new _ListOfSetOfMapOfIntegers().defaultListOfSetOfMapOfIntegers();
+                addressDefaults(this, new _ListOfSetOfMapOfIntegers());
                 return new PersonCreator(state);
             }
 
             @Preserve
             public _GroupedAddresses defaultAddress() {
-                state.address = buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
+                state.address = addressDefault();
                 return new _GroupedAddresses();
             }
 
@@ -191,13 +207,7 @@ public class PersonCreator implements PersonMaker {
         public class _ListOfSetOfMapOfIntegers {
             @Preserve
             public PersonCreator defaultListOfSetOfMapOfIntegers() {
-                Map map1 = new HashMap();
-                map1.put("a", 123);
-                map1.put("b", 456);
-                Set set = new HashSet(Arrays.asList(map1));
-                List list = Arrays.asList(set);
-                state.listOfSetOfMapOfIntegers = list;
-                return new PersonCreator(state);
+                return listOfSetOfMapOfIntegersDefault();
             }
 
             public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
