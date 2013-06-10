@@ -10,7 +10,6 @@ import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
-import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -243,7 +242,6 @@ public class PersonState implements ImmutableState {
         public void setGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
-        @Preserve
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (birthday != null && birthday.isAfterNow()) {
                 errors.addError(BIRTHDAY, "born_after_today", rootElement, parent);

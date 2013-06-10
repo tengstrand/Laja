@@ -3,12 +3,10 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.PersonCreator.PersonFactory._Address;
 import net.sf.laja.cdd.PersonCreator.PersonFactory._ListOfSetOfMapOfIntegers;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.annotation.Parameters;
-import net.sf.laja.cdd.annotation.Preserve;
 import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -52,29 +50,27 @@ public class PersonCreator implements PersonMaker {
     @Parameters({
             @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
             @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(name = address_, next = "*", method = "defaults", value = "addressDefaults(this, new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = address_, next = "*", method = "defaultAddress", value = "addressDefault()"),
+            @Parameter(name = address_, next = "*", method = "defaults", value = "addressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address_, method = "defaultAddress", value = "addressDefault()"),
             @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
             @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
     })
 
-    private void addressDefaults(_Address address, _ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
-        address.defaultAddress();
+    private AddressMutableState addressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
         listOfSetOfMapOfIntegers.defaultListOfSetOfMapOfIntegers();
+        return addressDefault();
     }
 
     private AddressMutableState addressDefault() {
         return buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
     }
 
-    private PersonCreator listOfSetOfMapOfIntegersDefault() {
+    private List listOfSetOfMapOfIntegersDefault() {
         Map map1 = new HashMap();
         map1.put("a", 123);
         map1.put("b", 456);
         Set set = new HashSet(Arrays.asList(map1));
-        List list = Arrays.asList(set);
-        state.listOfSetOfMapOfIntegers = list;
-        return new PersonCreator(state);
+        return Arrays.asList(set);
     }
 
     // ===== Fields =====
@@ -140,7 +136,6 @@ public class PersonCreator implements PersonMaker {
                 return new _Children();
             }
 
-            @Preserve
             public _Children hairColor(HairColor hairColor) {
                 state.hairColor = hairColor.name();
                 return new _Children();
@@ -165,35 +160,28 @@ public class PersonCreator implements PersonMaker {
         }
 
         public class _Address {
-            @Preserve
+            public _GroupedAddresses address(AddressMutableState address) {
+                state.address = address;
+                return new _GroupedAddresses();
+            }
+
+            public _GroupedAddresses address(AddressCreator address) {
+                state.address = address.asMutableState();
+                return new _GroupedAddresses();
+            }
+
             public PersonCreator defaults() {
-                addressDefaults(this, new _ListOfSetOfMapOfIntegers());
+                state.address = addressDefaults(new _ListOfSetOfMapOfIntegers());
                 return new PersonCreator(state);
             }
 
-            @Preserve
             public _GroupedAddresses defaultAddress() {
                 state.address = addressDefault();
-                return new _GroupedAddresses();
-            }
-
-            public _GroupedAddresses address(AddressMutableState _address) {
-                state.address = _address;
-                return new _GroupedAddresses();
-            }
-
-            public _GroupedAddresses address(AddressCreator _address) {
-                state.address = _address.asMutableState();
                 return new _GroupedAddresses();
             }
         }
 
         public class _GroupedAddresses {
-            @Preserve
-            public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
-                return new _ListOfSetOfMapOfIntegers();
-            }
-
             public _ListOfSetOfMapOfIntegers groupedAddresses(Map<String,AddressMutableState> groupedAddresses) {
                 state.groupedAddresses = groupedAddresses;
                 return new _ListOfSetOfMapOfIntegers();
@@ -203,16 +191,20 @@ public class PersonCreator implements PersonMaker {
                 state.groupedAddresses = mapBuilder.asMutableStateMap();
                 return new _ListOfSetOfMapOfIntegers();
             }
+
+            public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
+                return new _ListOfSetOfMapOfIntegers();
+            }
         }
 
         public class _ListOfSetOfMapOfIntegers {
-            @Preserve
-            public PersonCreator defaultListOfSetOfMapOfIntegers() {
-                return listOfSetOfMapOfIntegersDefault();
-            }
-
             public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
                 state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
+                return new PersonCreator(state);
+            }
+
+            public PersonCreator defaultListOfSetOfMapOfIntegers() {
+                state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegersDefault();
                 return new PersonCreator(state);
             }
         }

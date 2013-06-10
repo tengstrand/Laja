@@ -6,6 +6,24 @@
   #end
 #end
 
+#macro parameterMethod()
+  #foreach (parameter in parameters where parameter.name == attribute.name)
+    #set (retClass = returnClass)
+    #set (retStatement = returnStatement)
+    #if (parameter.isLastAttribute)
+      #set (retClass = "{creator}")
+      #set (retStatement = "return new {creator}(state);")
+    #end
+
+            public {retClass} {parameter.method}({parameter.signature}) {
+    #if (!parameter.value.isEmpty)
+                state.{attribute.name} = {parameter.value};
+    #end
+                {retStatement}
+            }
+  #end
+#end
+
 #macro factoryClass()
     // ----- Factory ------
 
@@ -49,6 +67,7 @@
                 {returnStatement}
             }
       #end
+      #parameterMethod()
         }
     #else if (attribute.isCollection)
         public class {currentClass} {
@@ -68,6 +87,7 @@
                 {returnStatement}
             }
       #end
+      #parameterMethod()
         }
     #else
         public class {currentClass} {
@@ -83,6 +103,7 @@
                 {returnStatement}
             }
       #end
+      #parameterMethod()
         }
     #end
     #if (hasNext)

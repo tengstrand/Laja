@@ -1,9 +1,10 @@
 package net.sf.laja.parser.cdd.creator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Aparameters implements CreatorParser.IAparameters {
+public class Aparameters implements CreatorParser.IAparameters, Iterable<Aparameter> {
     public String content = "";
     public List<Aparameter> parameters = new ArrayList<Aparameter>();
 
@@ -13,6 +14,10 @@ public class Aparameters implements CreatorParser.IAparameters {
 
     public void addParameter(CreatorParser.IAparameter iaparameter) {
         parameters.add((Aparameter)iaparameter);
+    }
+
+    public Iterator<Aparameter> iterator() {
+        return parameters.iterator();
     }
 
     @Override
