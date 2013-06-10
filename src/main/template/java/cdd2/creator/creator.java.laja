@@ -145,6 +145,13 @@
     }
 
     #end
+    #foreach (parameter in parameters where parameter.name == attribute.name && parameter.useNext)
+    public {creator} {attribute.withMethod}({parameter.signature}) {
+        state.{attribute.name} = {parameter.value};
+        return this;
+    }
+
+    #end
   #end
 #end
 

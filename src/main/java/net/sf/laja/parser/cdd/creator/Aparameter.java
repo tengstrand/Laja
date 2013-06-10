@@ -45,6 +45,10 @@ public class Aparameter implements CreatorParser.IAparameter {
         return !next.isEmpty() && !isLastAttribute();
     }
 
+    public boolean useNext() {
+        return next.isEmpty();
+    }
+
     @Override
     public String toString() {
         return "Aparameter{" +

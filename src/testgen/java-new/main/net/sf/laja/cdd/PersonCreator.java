@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.AddressCreator.AddressMapBuilder;
-import static net.sf.laja.cdd.AddressCreator.buildAddress;
+import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
@@ -257,7 +256,7 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
-    public PersonCreator withOldAddresses(AddressCreator.AddressSetBuilder oldAddresses) {
+    public PersonCreator withOldAddresses(AddressSetBuilder oldAddresses) {
         state.oldAddresses = oldAddresses.asMutableStateSet();
         return this;
     }
