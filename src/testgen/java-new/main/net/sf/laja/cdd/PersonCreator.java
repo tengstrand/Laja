@@ -50,6 +50,7 @@ public class PersonCreator implements PersonMaker {
     @Parameters({
             @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
             @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "_defaultHairColorAndChildren()"),
             @Parameter(name = address_, next = "*", method = "defaults", value = "addressDefaults(new _ListOfSetOfMapOfIntegers())"),
             @Parameter(name = address_, method = "defaultAddress", value = "addressDefault()"),
             @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
@@ -71,6 +72,11 @@ public class PersonCreator implements PersonMaker {
         map1.put("b", 456);
         Set set = new HashSet(Arrays.asList(map1));
         return Arrays.asList(set);
+    }
+
+    private String _defaultHairColorAndChildren() {
+        state.children = createPersonList().asMutableStateList();
+        return HairColor.RED.name();
     }
 
     // ===== Fields =====
@@ -139,6 +145,11 @@ public class PersonCreator implements PersonMaker {
             public _Children hairColor(HairColor hairColor) {
                 state.hairColor = hairColor.name();
                 return new _Children();
+            }
+
+            public _Address defaultHairColorAndChildren() {
+                state.hairColor = _defaultHairColorAndChildren();
+                return new _Address();
             }
         }
 

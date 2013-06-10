@@ -10,7 +10,12 @@
   #foreach (parameter in parameters where parameter.name == attribute.name)
     #set (retClass = returnClass)
     #set (retStatement = returnStatement)
-    #if (parameter.isLastAttribute)
+    #if (parameter.hasNext)
+      #foreach (a in attributes where a.name == parameter.next)
+        #set (retClass = "_{a.nameAsClass}")
+        #set (retStatement = "return new {retClass}();")
+      #end
+    #else if (parameter.isLastAttribute)
       #set (retClass = "{creator}")
       #set (retStatement = "return new {creator}(state);")
     #end
