@@ -33,9 +33,11 @@ public class AddressCreator implements AddressMaker {
 
     // ===== Generated code =====
 
-    private static final String id = "id";
-    private static final String streetName = "streetName";
-    private static final String city = "city";
+    private static final String id_ = "id";
+    private static final String streetName_ = "streetName";
+    private static final String city_ = "city";
+
+    // ===== Constructors =====
 
     public static AddressCreator createAddress() {
         return new AddressCreator(new AddressMutableState());

@@ -9,9 +9,9 @@ import java.util.List;
 import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.AddressCreator.*;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.stateconverter.TypeConversion.asMutableList;
-import static net.sf.laja.cdd.stateconverter.TypeConverters.toMutable;
-import static net.sf.laja.cdd.stateconverter.TypeConverters.toMutableList;
+import static net.sf.laja.cdd.stateconverter.StateConversion.asMutableList;
+import static net.sf.laja.cdd.stateconverter.StateConverters.toMutable;
+import static net.sf.laja.cdd.stateconverter.StateConverters.toMutableList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 

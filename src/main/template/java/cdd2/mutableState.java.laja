@@ -39,7 +39,6 @@
 
 #macro preservedValidation()
 
-        @Preserve
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 #end

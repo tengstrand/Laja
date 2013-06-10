@@ -78,7 +78,7 @@ public class PersonCreator implements PersonMaker {
         return HairColor.RED.name();
     }
 
-    // ===== Fields =====
+    // ===== Generated code =====
 
     private static final String id_ = "id";
     private static final String name_ = "name";

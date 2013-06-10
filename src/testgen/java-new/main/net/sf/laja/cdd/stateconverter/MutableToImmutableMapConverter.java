@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class MutableToImmutableMapConverter implements TypeConverter {
+public class MutableToImmutableMapConverter implements StateConverter {
 
-    public ImmutableMap convert(Object from, int index, TypeConverter... converters) {
+    public ImmutableMap convert(Object from, int index, StateConverter... converters) {
         if (from == null) {
             return null;
         }
@@ -15,7 +15,7 @@ public class MutableToImmutableMapConverter implements TypeConverter {
         if (index == converters.length) {
             builder.putAll((Map) from);
         } else {
-            TypeConverter typeConverter = converters[index];
+            StateConverter typeConverter = converters[index];
 
             for (Object object : ((Map)from).entrySet()) {
                 Map.Entry entry = (Map.Entry)object;

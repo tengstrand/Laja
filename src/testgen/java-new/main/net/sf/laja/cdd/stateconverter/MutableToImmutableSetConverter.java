@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableSet;
 
 import java.util.Set;
 
-public class MutableToImmutableSetConverter implements TypeConverter {
+public class MutableToImmutableSetConverter implements StateConverter {
 
-    public ImmutableSet convert(Object from, int index, TypeConverter... converters) {
+    public ImmutableSet convert(Object from, int index, StateConverter... converters) {
         if (from == null) {
             return null;
         }
@@ -15,7 +15,7 @@ public class MutableToImmutableSetConverter implements TypeConverter {
         if (index == converters.length) {
             builder.addAll((Set) from);
         } else {
-            TypeConverter typeConverter = converters[index];
+            StateConverter typeConverter = converters[index];
 
             for (Object element : (Set)from) {
                 builder.add(typeConverter.convert(element, index + 1, converters));

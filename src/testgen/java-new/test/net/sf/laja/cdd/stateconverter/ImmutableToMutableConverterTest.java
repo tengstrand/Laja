@@ -7,7 +7,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertNull;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
-import static net.sf.laja.cdd.stateconverter.TypeConversion.asMutable;
+import static net.sf.laja.cdd.stateconverter.StateConversion.asMutable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 

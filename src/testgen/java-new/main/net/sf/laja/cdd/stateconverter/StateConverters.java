@@ -1,6 +1,6 @@
 package net.sf.laja.cdd.stateconverter;
 
-public class TypeConverters {
+public class StateConverters {
     public static ImmutableToMutableConverter toMutable = new ImmutableToMutableConverter();
     public static ImmutableToMutableListConverter toMutableList = new ImmutableToMutableListConverter();
     public static ImmutableToMutableMapConverter toMutableMap = new ImmutableToMutableMapConverter();

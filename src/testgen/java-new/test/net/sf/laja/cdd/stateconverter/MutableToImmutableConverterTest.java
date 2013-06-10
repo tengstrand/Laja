@@ -8,8 +8,8 @@ import static net.sf.laja.cdd.HairColor.BROWN;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
-import static net.sf.laja.cdd.stateconverter.TypeConversion.asImmutable;
-import static net.sf.laja.cdd.stateconverter.TypeConverters.toImmutable;
+import static net.sf.laja.cdd.stateconverter.StateConversion.asImmutable;
+import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 

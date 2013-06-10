@@ -23,8 +23,8 @@ import java.util.Set;
 
 import static net.sf.laja.cdd.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.stateconverter.TypeConversion.*;
-import static net.sf.laja.cdd.stateconverter.TypeConverters.*;
+import static net.sf.laja.cdd.stateconverter.StateConversion.*;
+import static net.sf.laja.cdd.stateconverter.StateConverters.*;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 

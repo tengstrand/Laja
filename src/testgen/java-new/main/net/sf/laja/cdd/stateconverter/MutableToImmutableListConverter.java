@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
-public class MutableToImmutableListConverter implements TypeConverter {
+public class MutableToImmutableListConverter implements StateConverter {
 
-    public ImmutableList convert(Object from, int index, TypeConverter... converters) {
+    public ImmutableList convert(Object from, int index, StateConverter... converters) {
         if (from == null) {
             return null;
         }
@@ -15,7 +15,7 @@ public class MutableToImmutableListConverter implements TypeConverter {
         if (index == converters.length) {
             builder.addAll((List) from);
         } else {
-            TypeConverter typeConverter = converters[index];
+            StateConverter typeConverter = converters[index];
 
             for (Object element : (List)from) {
                 builder.add(typeConverter.convert(element, index + 1, converters));
