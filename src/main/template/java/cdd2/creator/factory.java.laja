@@ -60,6 +60,7 @@
     #end
 
     #if (!attribute.isCollectionOrMap)
+        // {attribute.name}
         public class {currentClass} {
             public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
                 state.{attribute.name} = {attribute.name};
@@ -75,6 +76,7 @@
       #parameterMethod()
         }
     #else if (attribute.isCollection)
+        // {attribute.name}
         public class {currentClass} {
             public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
                 state.{attribute.name} = {attribute.name};
@@ -95,6 +97,7 @@
       #parameterMethod()
         }
     #else
+        // {attribute.name}
         public class {currentClass} {
             public {returnClass} {attribute.name}({attribute.type} {attribute.name}) {
                 state.{attribute.name} = {attribute.name};

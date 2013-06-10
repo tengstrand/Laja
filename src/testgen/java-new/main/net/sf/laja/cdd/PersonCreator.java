@@ -128,6 +128,7 @@ public class PersonCreator implements PersonMaker {
             return new _Name().name(name);
         }
 
+        // name
         public class _Name {
             public _HairColor name(String name) {
                 state.name = name;
@@ -135,6 +136,7 @@ public class PersonCreator implements PersonMaker {
             }
         }
 
+        // hairColor
         public class _HairColor {
             public _Children hairColor(String hairColor) {
                 state.hairColor = hairColor;
@@ -152,6 +154,7 @@ public class PersonCreator implements PersonMaker {
             }
         }
 
+        // children
         public class _Children {
             public _Address children(List<PersonMutableState> children) {
                 state.children = children;
@@ -169,6 +172,7 @@ public class PersonCreator implements PersonMaker {
             }
         }
 
+        // address
         public class _Address {
             public _GroupedAddresses address(AddressMutableState address) {
                 state.address = address;
@@ -191,6 +195,7 @@ public class PersonCreator implements PersonMaker {
             }
         }
 
+        // groupedAddresses
         public class _GroupedAddresses {
             public _ListOfSetOfMapOfIntegers groupedAddresses(Map<String,AddressMutableState> groupedAddresses) {
                 state.groupedAddresses = groupedAddresses;
@@ -207,6 +212,7 @@ public class PersonCreator implements PersonMaker {
             }
         }
 
+        // listOfSetOfMapOfIntegers
         public class _ListOfSetOfMapOfIntegers {
             public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
                 state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
