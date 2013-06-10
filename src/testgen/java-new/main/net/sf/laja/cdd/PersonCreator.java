@@ -50,22 +50,22 @@ public class PersonCreator implements PersonMaker {
             @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
             @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
             @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "_defaultHairColorAndChildren()"),
-            @Parameter(name = address_, next = "*", method = "defaults", value = "addressDefaults(new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = address_, method = "defaultAddress", value = "addressDefault()"),
+            @Parameter(name = address_, next = "*", method = "defaults", value = "_addressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address_, method = "defaultAddress", value = "_defaultAddress()"),
             @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
-            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "listOfSetOfMapOfIntegersDefault()")
+            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "_defaultListOfSetOfMapOfIntegers()")
     })
 
-    private AddressMutableState addressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
+    private AddressMutableState _addressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
         listOfSetOfMapOfIntegers.defaultListOfSetOfMapOfIntegers();
-        return addressDefault();
+        return _defaultAddress();
     }
 
-    private AddressMutableState addressDefault() {
+    private AddressMutableState _defaultAddress() {
         return buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
     }
 
-    private List listOfSetOfMapOfIntegersDefault() {
+    private List _defaultListOfSetOfMapOfIntegers() {
         Map map1 = new HashMap();
         map1.put("a", 123);
         map1.put("b", 456);
@@ -181,12 +181,12 @@ public class PersonCreator implements PersonMaker {
             }
 
             public PersonCreator defaults() {
-                state.address = addressDefaults(new _ListOfSetOfMapOfIntegers());
+                state.address = _addressDefaults(new _ListOfSetOfMapOfIntegers());
                 return new PersonCreator(state);
             }
 
             public _GroupedAddresses defaultAddress() {
-                state.address = addressDefault();
+                state.address = _defaultAddress();
                 return new _GroupedAddresses();
             }
         }
@@ -214,7 +214,7 @@ public class PersonCreator implements PersonMaker {
             }
 
             public PersonCreator defaultListOfSetOfMapOfIntegers() {
-                state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegersDefault();
+                state.listOfSetOfMapOfIntegers = _defaultListOfSetOfMapOfIntegers();
                 return new PersonCreator(state);
             }
         }
