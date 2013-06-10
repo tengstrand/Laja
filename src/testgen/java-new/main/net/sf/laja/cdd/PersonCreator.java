@@ -49,23 +49,23 @@ public class PersonCreator implements PersonMaker {
     @Parameters({
             @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
             @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "_defaultHairColorAndChildren()"),
-            @Parameter(name = address_, next = "*", method = "defaults", value = "_addressDefaults(new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = address_, method = "defaultAddress", value = "_defaultAddress()"),
+            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
+            @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
             @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
-            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "_defaultListOfSetOfMapOfIntegers()")
+            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
     })
 
-    private AddressMutableState _addressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
+    private AddressMutableState getAddressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
         listOfSetOfMapOfIntegers.defaultListOfSetOfMapOfIntegers();
-        return _defaultAddress();
+        return getDefaultAddress();
     }
 
-    private AddressMutableState _defaultAddress() {
+    private AddressMutableState getDefaultAddress() {
         return buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
     }
 
-    private List _defaultListOfSetOfMapOfIntegers() {
+    private List getDefaultListOfSetOfMapOfIntegers() {
         Map map1 = new HashMap();
         map1.put("a", 123);
         map1.put("b", 456);
@@ -73,7 +73,7 @@ public class PersonCreator implements PersonMaker {
         return Arrays.asList(set);
     }
 
-    private String _defaultHairColorAndChildren() {
+    private String getDefaultHairColorAndChildren() {
         state.children = createPersonList().asMutableStateList();
         return HairColor.RED.name();
     }
@@ -147,7 +147,7 @@ public class PersonCreator implements PersonMaker {
             }
 
             public _Address defaultHairColorAndChildren() {
-                state.hairColor = _defaultHairColorAndChildren();
+                state.hairColor = getDefaultHairColorAndChildren();
                 return new _Address();
             }
         }
@@ -181,12 +181,12 @@ public class PersonCreator implements PersonMaker {
             }
 
             public PersonCreator defaults() {
-                state.address = _addressDefaults(new _ListOfSetOfMapOfIntegers());
+                state.address = getAddressDefaults(new _ListOfSetOfMapOfIntegers());
                 return new PersonCreator(state);
             }
 
             public _GroupedAddresses defaultAddress() {
-                state.address = _defaultAddress();
+                state.address = getDefaultAddress();
                 return new _GroupedAddresses();
             }
         }
@@ -214,7 +214,7 @@ public class PersonCreator implements PersonMaker {
             }
 
             public PersonCreator defaultListOfSetOfMapOfIntegers() {
-                state.listOfSetOfMapOfIntegers = _defaultListOfSetOfMapOfIntegers();
+                state.listOfSetOfMapOfIntegers = getDefaultListOfSetOfMapOfIntegers();
                 return new PersonCreator(state);
             }
         }
