@@ -32,7 +32,7 @@ grammar creator {
                     "private final" s name:stateClass s "state;" [asMethod|aparameters]+;
 
    manualEnd = ("}" s END);
-   generatedEnd = "// ===== Fields =====";
+   generatedEnd = "// ===== Generated code =====";
    manualCode = !(manualEnd | generatedEnd)+;
 
    creator = packagestatement s imports s classStatement manualCode *;

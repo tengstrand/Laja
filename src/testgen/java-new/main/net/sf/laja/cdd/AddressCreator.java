@@ -31,7 +31,7 @@ public class AddressCreator implements AddressMaker {
         return new ProtectedAddress(state.asImmutable());
     }
 
-    // ===== Fields =====
+    // ===== Generated code =====
 
     private static final String id = "id";
     private static final String streetName = "streetName";

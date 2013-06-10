@@ -159,7 +159,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList aparameters = new ElementList(22, "aparameters", aparametersAparameters);
         ElementList classStatement = new ElementList(23, "classStatement");
         ElementList manualEnd = new ElementList(24, "manualEnd");
-        Str generatedEnd = new Str(25, "// ===== Fields =====");
+        Str generatedEnd = new Str(25, "// ===== Generated code =====");
         Repeat manualCode = new Repeat(26, "manualCode");
         ElementList creator = new ElementList(27, "creator");
 
@@ -425,7 +425,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(289, s);
         manualEnd.add(291, new End(290, "manualEnd"));
 
-        // generatedEnd = "// ===== Fields ====="
+        // generatedEnd = "// ===== Generated code ====="
 
         // manualCode = !(manualEnd | generatedEnd)+
         OrList manualCode_1 = new OrList(292, "manualCode_1");
@@ -473,7 +473,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList aparameters = new ElementList(22, "aparameters");
         ElementList classStatement = new ElementList(23, "classStatement");
         ElementList manualEnd = new ElementList(24, "manualEnd");
-        Str generatedEnd = new Str(25, "// ===== Fields =====");
+        Str generatedEnd = new Str(25, "// ===== Generated code =====");
         Repeat manualCode = new Repeat(26, "manualCode");
         ElementList creator = new ElementList(27, "creator");
 
@@ -739,7 +739,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(289, s);
         manualEnd.add(291, new End(290, "manualEnd"));
 
-        // generatedEnd = "// ===== Fields ====="
+        // generatedEnd = "// ===== Generated code ====="
 
         // manualCode = !(manualEnd | generatedEnd)+
         OrList manualCode_1 = new OrList(292, "manualCode_1");
