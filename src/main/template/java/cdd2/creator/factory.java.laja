@@ -79,15 +79,6 @@
 #end
 
 #macro attributeClass(hasNext, a)
-  #if (hasNext)
-    #set (nextAttribute = iterator.next)
-    #set (nextClass = "_{strings.capitalize(nextAttribute.name)}")
-    #set (returnClass = "{nextClass}")
-    #set (returnStatement = "return new {nextClass}();")
-  #else
-    #set (returnClass = "{creator}")
-    #set (returnStatement = "return new {creator}(state);")
-  #end
 
   #if (!a.isCollectionOrMap)
         // {a.name}
@@ -141,6 +132,15 @@
   #end
   #while (hasNext)
     #set (hasNext = iterator.hasNext)
+    #if (hasNext)
+      #set (nextAttribute = iterator.next)
+      #set (nextClass = "_{strings.capitalize(nextAttribute.name)}")
+      #set (returnClass = "{nextClass}")
+      #set (returnStatement = "return new {nextClass}();")
+    #else
+      #set (returnClass = "{creator}")
+      #set (returnStatement = "return new {creator}(state);")
+    #end
     #attributeClass(hasNext, attribute)
     #if (hasNext)
       #set (attribute = nextAttribute)
