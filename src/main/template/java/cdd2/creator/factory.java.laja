@@ -29,50 +29,50 @@
   #end
 #end
 
-#macro attributeMethod(a)
+#macro attributeMethod(a, tab)
   #if (!a.isCollectionOrMap)
-            public {returnClass} {a.name}({a.type} {a.name}) {
-                state.{a.name} = {a.name};
-                {returnStatement}
-            }
+{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}    state.{a.name} = {a.name};
+{tab}    {returnStatement}
+{tab}}
     #if (a.isState)
 
-            public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
-                state.{a.name} = {a.name}.asMutableState();
-                {returnStatement}
-            }
+{tab}public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
+{tab}    state.{a.name} = {a.name}.asMutableState();
+{tab}    {returnStatement}
+{tab}}
     #end
     #parameterMethod()
   #else if (a.isCollection)
-            public {returnClass} {a.name}({a.type} {a.name}) {
-                state.{a.name} = {a.name};
-                {returnStatement}
-            }
+{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}    state.{a.name} = {a.name};
+{tab}    {returnStatement}
+{tab}}
     #if (a.isLeafState)
 
-            public {returnClass} {a.name}({creator}... creators) {
-                List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
+{tab}public {returnClass} {a.name}({creator}... creators) {
+{tab}    List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
 
-                for ({creator} creator : creators) {
-                    {a.name}.add(creator.asMutableState());
-                }
-                state.{a.name} = {a.name};
-                {returnStatement}
-            }
+{tab}    for ({creator} creator : creators) {
+{tab}        {a.name}.add(creator.asMutableState());
+{tab}    }
+{tab}    state.{a.name} = {a.name};
+{tab}    {returnStatement}
+{tab}}
     #end
     #parameterMethod()
   #else
-            public {returnClass} {a.name}({a.type} {a.name}) {
-                state.{a.name} = {a.name};
-                {returnStatement}
-            }
+{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}    state.{a.name} = {a.name};
+{tab}    {returnStatement}
+{tab}}
     #if (a.type.mapType.entry.isState)
       #set (stateName = a.type.mapType.entry.state)
 
-            public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
-                state.{a.name} = mapBuilder.asMutableStateMap();
-                {returnStatement}
-            }
+{tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
+{tab}    state.{a.name} = mapBuilder.asMutableStateMap();
+{tab}    {returnStatement}
+{tab}}
     #end
     #parameterMethod()
   #end
@@ -83,17 +83,17 @@
   #if (!a.isCollectionOrMap)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a)
+    #attributeMethod(a, "            ")
         }
   #else if (a.isCollection)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a)
+    #attributeMethod(a, "            ")
         }
   #else
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a)
+    #attributeMethod(a, "            ")
         }
   #end
 #end
