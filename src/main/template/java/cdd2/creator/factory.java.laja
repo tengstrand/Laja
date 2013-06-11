@@ -36,11 +36,25 @@
 
   #if (secondMandatory == null)
         public {creator} {firstMandatory.name}({firstMandatory.type} {firstMandatory.name}) {
-  #else
-        public _{secondMandatory.nameAsClass} {firstMandatory.name}({firstMandatory.type} {firstMandatory.name}) {
-  #end
             return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
         }
+    #foreach (parameter in parameters where parameter.name == firstMandatory.name)
+
+        public {creator} {firstMandatory.name}({parameter.signature}) {
+            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({parameter.signatureArguments});
+        }
+    #end
+  #else
+        public _{secondMandatory.nameAsClass} {firstMandatory.name}({firstMandatory.type} {firstMandatory.name}) {
+            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
+        }
+    #foreach (parameter in parameters where parameter.name == firstMandatory.name)
+
+        public _{secondMandatory.nameAsClass} {firstMandatory.name}({parameter.signature}) {
+            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({parameter.signatureArguments});
+        }
+    #end
+  #end
   #set (iterator = mandatoryAttributes.iterator())
   #set (hasNext = iterator.hasNext)
   #if (hasNext)

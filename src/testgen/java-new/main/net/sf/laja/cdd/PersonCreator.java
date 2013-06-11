@@ -47,13 +47,14 @@ public class PersonCreator implements PersonMaker {
     }
 
     @Parameters({
-            @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
-            @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
-            @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
-            @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
-            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
+        @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
+        @Parameter(name = name_, signature = "int givenName, int surname", value = "givenName + \" \" + surname"),
+        @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
+        @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
+        @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
+        @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
+        @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
+        @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
     })
 
     private AddressMutableState getAddressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
@@ -128,10 +129,19 @@ public class PersonCreator implements PersonMaker {
             return new _Name().name(name);
         }
 
+        public _HairColor name(int givenName, int surname) {
+            return new _Name().name(givenName, surname);
+        }
+
         // name
         public class _Name {
             public _HairColor name(String name) {
                 state.name = name;
+                return new _HairColor();
+            }
+
+            public _HairColor name(int givenName, int surname) {
+                state.name = givenName + " " + surname;
                 return new _HairColor();
             }
         }

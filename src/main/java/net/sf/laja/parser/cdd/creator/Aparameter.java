@@ -9,18 +9,9 @@ public class Aparameter implements CreatorParser.IAparameter {
 
     public void addParameterAttr(CreatorParser.IAparameterAttr iaparameterAttr) {
         AparameterAttr attr = (AparameterAttr)iaparameterAttr;
+        String value = convertValue(attr.value);
+
         String variable = attr.variable;
-
-        String value = attr.value;
-        if (value.endsWith(";")) {
-            value = value.substring(0, value.length() - 1).trim();
-        }
-        if (value.startsWith("\"")) {
-            value = value.substring(1, value.length()-1);
-        } else if (value.endsWith("_")) {
-            value = value.substring(0, value.length() - 1);
-        }
-
         if (variable.equals("name")) {
             name = value;
             if (method.isEmpty()) {
@@ -37,6 +28,20 @@ public class Aparameter implements CreatorParser.IAparameter {
         }
     }
 
+    String convertValue(String value) {
+        if (value.endsWith(";")) {
+            value = value.substring(0, value.length() - 1).trim();
+        }
+        if (value.startsWith("\"")) {
+            value = value.substring(1, value.length()-1);
+        } else if (value.endsWith("_")) {
+            value = value.substring(0, value.length() - 1);
+        }
+        value = value.replaceAll("\\\\", "");
+
+        return value;
+    }
+
     public boolean isLastAttribute() {
         return next.equals("*");
     }
@@ -47,6 +52,29 @@ public class Aparameter implements CreatorParser.IAparameter {
 
     public boolean useNext() {
         return next.isEmpty();
+    }
+
+    public String signatureArguments() {
+        String[] values = signature.split("\\s");
+
+        String result = "";
+        String separator = "";
+        boolean isValue = false;
+        for (String value : values) {
+            if (value.equals(",")) {
+                continue;
+            }
+            if (isValue) {
+                if (value.endsWith(",")) {
+                    value = value.substring(0, value.length()-1);
+                }
+                result += separator + value;
+                separator = ", ";
+            }
+            isValue = !isValue;
+        }
+
+        return result;
     }
 
     @Override
