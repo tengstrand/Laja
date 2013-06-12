@@ -33,10 +33,28 @@
   #end
 #end
 
-#macro attributeMethod(a, returnClass, returnStatement, tab)
+#macro setState(a, isFactory, tab)
+  #if (!isFactory)
+{tab}    state.{a.name} = {a.name};
+  #end
+#end
+
+#macro setMutableState(a, isFactory, tab)
+  #if (!isFactory)
+{tab}    state.{a.name} = {a.name}.asMutableState();
+  #end
+#end
+
+#macro setStateMapBuilder(a, isFactory, tab)
+  #if (!isFactory)
+{tab}    state.{a.name} = mapBuilder.asMutableStateMap();
+  #end
+#end
+
+#macro attributeMethod(a, returnClass, returnStatement, isFactory, tab)
   #if (!a.isCollectionOrMap)
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
+    #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #if (a.isState)
@@ -49,7 +67,7 @@
     #parameterMethod(returnClass, returnStatement, a)
   #else if (a.isCollection)
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
+    #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #if (a.isLeafState)
@@ -60,14 +78,14 @@
 {tab}    for ({creator} creator : creators) {
 {tab}        {a.name}.add(creator.asMutableState());
 {tab}    }
-{tab}    state.{a.name} = {a.name};
+    #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #end
     #parameterMethod(returnClass, returnStatement, a)
   #else
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
+    #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #if (a.type.mapType.entry.isState)
@@ -87,17 +105,17 @@
   #if (!a.isCollectionOrMap)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, returnClass, returnStatement, "            ")
+    #attributeMethod(a, returnClass, returnStatement, false, "            ")
         }
   #else if (a.isCollection)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, returnClass, returnStatement, "            ")
+    #attributeMethod(a, returnClass, returnStatement, false, "            ")
         }
   #else
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, returnClass, returnStatement, "            ")
+    #attributeMethod(a, returnClass, returnStatement, false, "            ")
         }
   #end
 #end
