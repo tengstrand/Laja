@@ -138,51 +138,6 @@
   #end
 #end
 
-#macro factoryAttributeMethod(a, returnClass, returnStatement, tab)
-  #if (!a.isCollectionOrMap)
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    {returnStatement}
-{tab}}
-    #if (a.isState)
-
-{tab}public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
-{tab}    {returnStatement}
-{tab}}
-    #end
-    #factoryParameterMethod(returnClass, a)
-  #else if (a.isCollection)
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    {returnStatement}
-{tab}}
-    #if (a.isLeafState)
-
-{tab}public {returnClass} {a.name}({creator}... creators) {
-{tab}    List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
-
-{tab}    for ({creator} creator : creators) {
-{tab}        {a.name}.add(creator.asMutableState());
-{tab}    }
-{tab}    {returnStatement}
-{tab}}
-    #end
-    #factoryParameterMethod(returnClass, a)
-  #else
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
-{tab}    {returnStatement}
-{tab}}
-    #if (a.type.mapType.entry.isState)
-      #set (stateName = a.type.mapType.entry.state)
-
-{tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
-{tab}    {returnStatement}
-{tab}}
-    #end
-    #factoryParameterMethod(returnClass, a)
-  #end
-#end
-
-
 #macro factoryClass()
     // ----- Factory ------
 
@@ -194,7 +149,7 @@
     #set (returnClass = "_{secondMandatory.nameAsClass}")
   #end
   #set (returnStatement = "return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});")
-  #factoryAttributeMethod(firstMandatory, returnClass, returnStatement, "        ")
+  #attributeMethod(firstMandatory, returnClass, returnStatement, true, "        ")
   #set (iterator = mandatoryAttributes.iterator())
   #set (hasNext = iterator.hasNext)
   #if (hasNext)
