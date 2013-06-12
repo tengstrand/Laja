@@ -6,7 +6,7 @@
   #end
 #end
 
-#macro parameterMethod()
+#macro parameterMethod(returnClass, returnStatement)
   #foreach (parameter in parameters where parameter.name == attribute.name)
     #set (retClass = returnClass)
     #set (retStatement = returnStatement)
@@ -29,7 +29,7 @@
   #end
 #end
 
-#macro attributeMethod(a, tab)
+#macro attributeMethod(a, tab, returnClass, returnStatement)
   #if (!a.isCollectionOrMap)
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
 {tab}    state.{a.name} = {a.name};
@@ -42,7 +42,7 @@
 {tab}    {returnStatement}
 {tab}}
     #end
-    #parameterMethod()
+    #parameterMethod(returnClass, returnStatement)
   #else if (a.isCollection)
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
 {tab}    state.{a.name} = {a.name};
@@ -60,7 +60,7 @@
 {tab}    {returnStatement}
 {tab}}
     #end
-    #parameterMethod()
+    #parameterMethod(returnClass, returnStatement)
   #else
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
 {tab}    state.{a.name} = {a.name};
@@ -74,26 +74,26 @@
 {tab}    {returnStatement}
 {tab}}
     #end
-    #parameterMethod()
+    #parameterMethod(returnClass, returnStatement)
   #end
 #end
 
-#macro attributeClass(hasNext, a)
+#macro attributeClass(hasNext, a, returnClass, returnStatement)
 
   #if (!a.isCollectionOrMap)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, "            ")
+    #attributeMethod(a, "            ", returnClass, returnStatement)
         }
   #else if (a.isCollection)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, "            ")
+    #attributeMethod(a, "            ", returnClass, returnStatement)
         }
   #else
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, "            ")
+    #attributeMethod(a, "            ", returnClass, returnStatement)
         }
   #end
 #end
@@ -135,13 +135,10 @@
     #if (hasNext)
       #set (nextAttribute = iterator.next)
       #set (nextClass = "_{strings.capitalize(nextAttribute.name)}")
-      #set (returnClass = "{nextClass}")
-      #set (returnStatement = "return new {nextClass}();")
+      #attributeClass(hasNext, attribute, "{nextClass}", "return new {nextClass}();")
     #else
-      #set (returnClass = "{creator}")
-      #set (returnStatement = "return new {creator}(state);")
+      #attributeClass(hasNext, attribute, "{creator}", "return new {creator}(state);")
     #end
-    #attributeClass(hasNext, attribute)
     #if (hasNext)
       #set (attribute = nextAttribute)
       #set (currentClass = nextClass)
