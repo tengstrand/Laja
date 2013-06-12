@@ -6,8 +6,8 @@
   #end
 #end
 
-#macro parameterMethod(returnClass, returnStatement, attributeName)
-  #foreach (parameter in parameters where parameter.name == attributeName)
+#macro parameterMethod(returnClass, returnStatement, a)
+  #foreach (parameter in parameters where parameter.name == a.name)
     #set (retClass = returnClass)
     #set (retStatement = returnStatement)
     #if (parameter.hasNext)
@@ -22,7 +22,7 @@
 
             public {retClass} {parameter.method}({parameter.signature}) {
     #if (!parameter.value.isEmpty)
-                state.{attributeName} = {parameter.value};
+                state.{a.name} = {parameter.value};
     #end
                 {retStatement}
             }
@@ -42,7 +42,7 @@
                 {returnStatement}
             }
     #end
-    #parameterMethod(returnClass, returnStatement, a.name)
+    #parameterMethod(returnClass, returnStatement, a)
   #else if (a.isCollection)
             public {returnClass} {a.name}({a.type} {a.name}) {
                 state.{a.name} = {a.name};
@@ -60,7 +60,7 @@
                 {returnStatement}
             }
     #end
-    #parameterMethod(returnClass, returnStatement, a.name)
+    #parameterMethod(returnClass, returnStatement, a)
   #else
             public {returnClass} {a.name}({a.type} {a.name}) {
                 state.{a.name} = {a.name};
@@ -74,7 +74,7 @@
                 {returnStatement}
             }
     #end
-    #parameterMethod(returnClass, returnStatement, a.name)
+    #parameterMethod(returnClass, returnStatement, a)
   #end
 #end
 
