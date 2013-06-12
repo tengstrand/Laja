@@ -60,7 +60,7 @@
     #if (a.isState)
 
 {tab}public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
-{tab}    state.{a.name} = {a.name}.asMutableState();
+      #setMutableState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #end
@@ -92,7 +92,7 @@
       #set (stateName = a.type.mapType.entry.state)
 
 {tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
-{tab}    state.{a.name} = mapBuilder.asMutableStateMap();
+      #setStateMapBuilder(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #end
