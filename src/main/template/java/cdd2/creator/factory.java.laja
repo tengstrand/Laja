@@ -6,8 +6,8 @@
   #end
 #end
 
-#macro parameterMethod(returnClass, returnStatement)
-  #foreach (parameter in parameters where parameter.name == attribute.name)
+#macro parameterMethod(returnClass, returnStatement, attributeName)
+  #foreach (parameter in parameters where parameter.name == attributeName)
     #set (retClass = returnClass)
     #set (retStatement = returnStatement)
     #if (parameter.hasNext)
@@ -22,59 +22,59 @@
 
             public {retClass} {parameter.method}({parameter.signature}) {
     #if (!parameter.value.isEmpty)
-                state.{attribute.name} = {parameter.value};
+                state.{attributeName} = {parameter.value};
     #end
                 {retStatement}
             }
   #end
 #end
 
-#macro attributeMethod(a, tab, returnClass, returnStatement)
+#macro attributeMethod(a, returnClass, returnStatement)
   #if (!a.isCollectionOrMap)
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
-{tab}    {returnStatement}
-{tab}}
+            public {returnClass} {a.name}({a.type} {a.name}) {
+                state.{a.name} = {a.name};
+                {returnStatement}
+            }
     #if (a.isState)
 
-{tab}public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
-{tab}    state.{a.name} = {a.name}.asMutableState();
-{tab}    {returnStatement}
-{tab}}
+            public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
+                state.{a.name} = {a.name}.asMutableState();
+                {returnStatement}
+            }
     #end
-    #parameterMethod(returnClass, returnStatement)
+    #parameterMethod(returnClass, returnStatement, a.name)
   #else if (a.isCollection)
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
-{tab}    {returnStatement}
-{tab}}
+            public {returnClass} {a.name}({a.type} {a.name}) {
+                state.{a.name} = {a.name};
+                {returnStatement}
+            }
     #if (a.isLeafState)
 
-{tab}public {returnClass} {a.name}({creator}... creators) {
-{tab}    List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
+            public {returnClass} {a.name}({creator}... creators) {
+                List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
 
-{tab}    for ({creator} creator : creators) {
-{tab}        {a.name}.add(creator.asMutableState());
-{tab}    }
-{tab}    state.{a.name} = {a.name};
-{tab}    {returnStatement}
-{tab}}
+                for ({creator} creator : creators) {
+                    {a.name}.add(creator.asMutableState());
+                }
+                state.{a.name} = {a.name};
+                {returnStatement}
+            }
     #end
-    #parameterMethod(returnClass, returnStatement)
+    #parameterMethod(returnClass, returnStatement, a.name)
   #else
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
-{tab}    state.{a.name} = {a.name};
-{tab}    {returnStatement}
-{tab}}
+            public {returnClass} {a.name}({a.type} {a.name}) {
+                state.{a.name} = {a.name};
+                {returnStatement}
+            }
     #if (a.type.mapType.entry.isState)
       #set (stateName = a.type.mapType.entry.state)
 
-{tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
-{tab}    state.{a.name} = mapBuilder.asMutableStateMap();
-{tab}    {returnStatement}
-{tab}}
+            public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
+                state.{a.name} = mapBuilder.asMutableStateMap();
+                {returnStatement}
+            }
     #end
-    #parameterMethod(returnClass, returnStatement)
+    #parameterMethod(returnClass, returnStatement, a.name)
   #end
 #end
 
@@ -83,20 +83,83 @@
   #if (!a.isCollectionOrMap)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, "            ", returnClass, returnStatement)
+    #attributeMethod(a, returnClass, returnStatement)
         }
   #else if (a.isCollection)
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, "            ", returnClass, returnStatement)
+    #attributeMethod(a, returnClass, returnStatement)
         }
   #else
         // {a.name}
         public class {currentClass} {
-    #attributeMethod(a, "            ", returnClass, returnStatement)
+    #attributeMethod(a, returnClass, returnStatement)
         }
   #end
 #end
+
+#macro factoryParameterMethod(returnClass, a)
+  #foreach (parameter in parameters where parameter.name == a.name)
+    #set (retClass = returnClass)
+    #set (retStatement = returnStatement)
+    #if (parameter.hasNext)
+      #foreach (attr in attributes where attr.name == parameter.next)
+        #set (retClass = "_{attr.nameAsClass}")
+      #end
+    #else if (parameter.isLastAttribute)
+      #set (retClass = "{creator}")
+    #end
+
+        public {retClass} {parameter.method}({parameter.signature}) {
+            return new _{a.nameAsClass}().{a.name}({parameter.signatureArguments});
+        }
+  #end
+#end
+
+#macro factoryAttributeMethod(a, returnClass, returnStatement)
+  #if (!a.isCollectionOrMap)
+        public {returnClass} {a.name}({a.type} {a.name}) {
+            {returnStatement}
+        }
+    #if (a.isState)
+
+        public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
+            {returnStatement}
+        }
+    #end
+    #factoryParameterMethod(returnClass, a)
+  #else if (a.isCollection)
+        public {returnClass} {a.name}({a.type} {a.name}) {
+            {returnStatement}
+        }
+    #if (a.isLeafState)
+
+        public {returnClass} {a.name}({creator}... creators) {
+            List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
+
+            for ({creator} creator : creators) {
+                {a.name}.add(creator.asMutableState());
+            }
+            {returnStatement}
+        }
+    #end
+    #factoryParameterMethod(returnClass, a)
+  #else
+        public {returnClass} {a.name}({a.type} {a.name}) {
+            state.{a.name} = {a.name};
+            {returnStatement}
+        }
+    #if (a.type.mapType.entry.isState)
+      #set (stateName = a.type.mapType.entry.state)
+
+        public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
+            {returnStatement}
+        }
+    #end
+    #factoryParameterMethod(returnClass, a)
+  #end
+#end
+
 
 #macro factoryClass()
     // ----- Factory ------
@@ -104,26 +167,12 @@
     public class {factory} {
 
   #if (secondMandatory == null)
-        public {creator} {firstMandatory.name}({firstMandatory.type} {firstMandatory.name}) {
-            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
-        }
-    #foreach (parameter in parameters where parameter.name == firstMandatory.name)
-
-        public {creator} {firstMandatory.name}({parameter.signature}) {
-            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({parameter.signatureArguments});
-        }
-    #end
+    #set (returnClass = "{creator}")
   #else
-        public _{secondMandatory.nameAsClass} {firstMandatory.name}({firstMandatory.type} {firstMandatory.name}) {
-            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});
-        }
-    #foreach (parameter in parameters where parameter.name == firstMandatory.name)
-
-        public _{secondMandatory.nameAsClass} {firstMandatory.name}({parameter.signature}) {
-            return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({parameter.signatureArguments});
-        }
-    #end
+    #set (returnClass = "_{secondMandatory.nameAsClass}")
   #end
+  #set (returnStatement = "return new _{firstMandatory.nameAsClass}().{firstMandatory.name}({firstMandatory.name});")
+  #factoryAttributeMethod(firstMandatory, returnClass, returnStatement)
   #set (iterator = mandatoryAttributes.iterator())
   #set (hasNext = iterator.hasNext)
   #if (hasNext)
