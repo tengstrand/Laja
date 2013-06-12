@@ -51,6 +51,14 @@
   #end
 #end
 
+#macro parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
+  #if (isFactory)
+    #factoryParameterMethod(returnClass, a)
+  #else
+    #parameterMethod(returnClass, returnStatement, a)
+  #end
+#end
+
 #macro attributeMethod(a, returnClass, returnStatement, isFactory, tab)
   #if (!a.isCollectionOrMap)
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
@@ -64,7 +72,7 @@
 {tab}    {returnStatement}
 {tab}}
     #end
-    #parameterMethod(returnClass, returnStatement, a)
+    #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else if (a.isCollection)
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
     #setState(a, isFactory, tab)
@@ -82,7 +90,7 @@
 {tab}    {returnStatement}
 {tab}}
     #end
-    #parameterMethod(returnClass, returnStatement, a)
+    #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else
 {tab}public {returnClass} {a.name}({a.type} {a.name}) {
     #setState(a, isFactory, tab)
@@ -96,7 +104,7 @@
 {tab}    {returnStatement}
 {tab}}
     #end
-    #parameterMethod(returnClass, returnStatement, a)
+    #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #end
 #end
 
