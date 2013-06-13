@@ -42,6 +42,10 @@ public class Aparameter implements CreatorParser.IAparameter {
         return value;
     }
 
+    public boolean isParameterMethod() {
+        return name.equals(method);
+    }
+
     public boolean isLastAttribute() {
         return next.equals("*");
     }

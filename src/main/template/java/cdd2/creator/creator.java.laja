@@ -145,7 +145,7 @@
     }
 
     #end
-    #foreach (parameter in parameters where parameter.name == attribute.name && parameter.useNext)
+    #foreach (parameter in parameters where parameter.name == attribute.name && parameter.isParameterMethod && !parameter.value.isEmpty && parameter.useNext)
     public {creator} {attribute.withMethod}({parameter.signature}) {
         state.{attribute.name} = {parameter.value};
         return this;
