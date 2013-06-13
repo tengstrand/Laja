@@ -47,14 +47,14 @@ public class PersonCreator implements PersonMaker {
     }
 
     @Parameters({
-        @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
-        @Parameter(name = name_, signature = "int givenName, int surname", value = "givenName + \" \" + surname"),
-        @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
-        @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
-        @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
-        @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
-        @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
-        @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
+            @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
+            @Parameter(name = name_, signature = "int givenName, int surname", value = "givenName + \" \" + surname"),
+            @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
+            @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
+            @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
+            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
     })
 
     private AddressMutableState getAddressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
@@ -63,7 +63,7 @@ public class PersonCreator implements PersonMaker {
     }
 
     private AddressMutableState getDefaultAddress() {
-        return buildAddress().withCity("Stockholm").withStreetName("Street 1").asMutableState();
+        return buildAddress().withCity("Stockholm").withStreetName("First street").asMutableState();
     }
 
     private List getDefaultListOfSetOfMapOfIntegers() {
@@ -87,6 +87,7 @@ public class PersonCreator implements PersonMaker {
     private static final String hairColor_ = "hairColor";
     private static final String children_ = "children";
     private static final String address_ = "address";
+    private static final String oldAddress_ = "oldAddress";
     private static final String oldAddresses_ = "oldAddresses";
     private static final String groupedAddresses_ = "groupedAddresses";
     private static final String listOfSetOfMapOfIntegers_ = "listOfSetOfMapOfIntegers";
@@ -267,6 +268,11 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
+    public PersonCreator withOldAddress(AddressMutableState oldAddress) {
+        state.oldAddress = oldAddress;
+        return this;
+    }
+
     public PersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
         state.oldAddresses = oldAddresses;
         return this;
@@ -366,6 +372,8 @@ public class PersonCreator implements PersonMaker {
         public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
         public PersonBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
         public PersonBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
+        public PersonBuilder withOldAddress(AddressMutableState oldAddress) { state.oldAddress = oldAddress; return this; }
+        public PersonBuilder withOldAddress(AddressCreator.AddressBuilder oldAddress) { state.oldAddress = oldAddress.asMutableState(); return this; }
         public PersonBuilder withOldAddresses(Set<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
         public PersonBuilder withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { state.groupedAddresses = groupedAddresses; return this; }
         public PersonBuilder withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
