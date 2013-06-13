@@ -45,12 +45,6 @@
   #end
 #end
 
-#macro setStateMapBuilder(a, isFactory, tab)
-  #if (!isFactory)
-{tab}    state.{a.name} = mapBuilder.asMutableStateMap();
-  #end
-#end
-
 #macro parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #if (isFactory)
     #factoryParameterMethod(returnClass, a)
@@ -81,6 +75,9 @@
     #if (a.isLeafState)
 
 {tab}public {returnClass} {a.name}({creator}... creators) {
+      #if (isFactory)
+{tab}    return new _{a.nameAsClass}().children(creators);
+      #else
 {tab}    List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
 
 {tab}    for ({creator} creator : creators) {
@@ -88,6 +85,7 @@
 {tab}    }
     #setState(a, isFactory, tab)
 {tab}    {returnStatement}
+      #end
 {tab}}
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
@@ -100,8 +98,12 @@
       #set (stateName = a.type.mapType.entry.state)
 
 {tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
-      #setStateMapBuilder(a, isFactory, tab)
+      #if (isFactory)
+{tab}    return new _{a.nameAsClass}().{a.name}(mapBuilder);
+      #else
+{tab}    state.{a.name} = mapBuilder.asMutableStateMap();
 {tab}    {returnStatement}
+      #end
 {tab}}
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
