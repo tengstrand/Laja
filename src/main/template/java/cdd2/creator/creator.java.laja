@@ -44,14 +44,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-  #set (imports = new java.util.HashSet())
-  #foreach (attribute in attributes)
-    #if (attribute.isState)
-##      #imports.add("{attribute.type}")
+    #set (imports = new java.util.HashSet())
+    #foreach (attribute in attributes)
+      #if (attribute.isState)
+        #imports.add("{attribute.type}")
+      #end
     #end
-  #end
-  #foreach (
-
   #end
 {imports}##
 #end
@@ -212,7 +210,7 @@ import java.util.Set;
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
 
-  #imports()
+{imports}##
 @Creator
 public class {classname} implements {maker} {
     private final {mutableState} state;##

@@ -9,18 +9,14 @@
 #macro generateCdd(parameters)
   #lazyDefineCdd()
 
-  #if (parameters.class().simpleName != "ArrayList")
-    #error("The argument must be a list of maps, e.g: #generateCdd([{ srcDir: \"/src\" outDir: \"/out\" statePackage: \"com.a.state\" behaviourPackage: \"com.a.behaviour\" }])")
+  #if (parameters.class().simpleName != "LinkedHashMap")
+    #error("The argument must be a list of maps, e.g: #generateCdd({srcDir: \"{.}/main\"})")
   #end
 
-  #set (parserError = false)
+  #$.putAll(parameters)
 
-  #foreach (parameterMap in parameters)
-    #$.putAll(parameterMap)
-
-    #generate("Address")
-    #generate("Person")
-  #end
+  #generate("Address")
+  #generate("Person")
 #end
 
 #macro generate(name)
@@ -32,7 +28,7 @@
     #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
     #import "{..}/../java/cdd2/creator/creator.java.laja"
 
-    #if (name == "Person")
+    #if (name == "Person***********")
       #set (creatorName = "DbPersonCreator")
       #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
       #import "{..}/../java/cdd2/creator/creator.java.laja"
