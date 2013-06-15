@@ -38,10 +38,6 @@ public class PersonCreator implements PersonMaker {
         return new SpecialPerson(state);
     }
 
-    public DbPerson asDbPerson() {
-        return new DbPerson(state.asImmutable());
-    }
-
     public TextPerson asTextPerson() {
         return new TextPerson(state.asImmutable());
     }
@@ -386,10 +382,6 @@ public class PersonCreator implements PersonMaker {
             return new SpecialPerson(state);
         }
 
-        public DbPerson asDbPerson() {
-            return new DbPerson(state.asImmutable());
-        }
-
         public TextPerson asTextPerson() {
             return new TextPerson(state.asImmutable());
         }
@@ -464,28 +456,6 @@ public class PersonCreator implements PersonMaker {
 
             for (PersonCreator creator : creators) {
                 result.add(creator.asSpecialPerson());
-            }
-            return result;
-        }
-
-        // asDbPersonList() : ImmutableList<DbPerson>
-
-        public ImmutableList<DbPerson> asDbPersonList() {
-            ImmutableList.Builder<DbPerson> builder = ImmutableList.builder();
-
-            for (PersonCreator creator : creators) {
-                builder.add(creator.asDbPerson());
-            }
-            return builder.build();
-        }
-
-        // asDbPersonMutableList() : List<DbPerson>
-
-        public List<DbPerson> asDbPersonMutableList() {
-            List<DbPerson> result = new ArrayList<DbPerson>();
-
-            for (PersonCreator creator : creators) {
-                result.add(creator.asDbPerson());
             }
             return result;
         }
@@ -588,28 +558,6 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // asDbPersonSet() : ImmutableSet<DbPerson>
-
-        public ImmutableSet<DbPerson> asDbPersonSet() {
-            ImmutableSet.Builder<DbPerson> builder = ImmutableSet.builder();
-
-            for (PersonCreator creator : creators) {
-                builder.add(creator.asDbPerson());
-            }
-            return builder.build();
-        }
-
-        // asDbPersonMutableSet() : Set<DbPerson>
-
-        public Set<DbPerson> asDbPersonMutableSet() {
-            Set<DbPerson> result = new HashSet<DbPerson>();
-
-            for (PersonCreator creator : creators) {
-                result.add(creator.asDbPerson());
-            }
-            return result;
-        }
-
         // asTextPersonSet() : ImmutableSet<TextPerson>
 
         public ImmutableSet<TextPerson> asTextPersonSet() {
@@ -672,10 +620,6 @@ public class PersonCreator implements PersonMaker {
 
         public SpecialPerson asSpecialPerson() {
             return maker.asSpecialPerson();
-        }
-
-        public DbPerson asDbPerson() {
-            return maker.asDbPerson();
         }
 
         public TextPerson asTextPerson() {
@@ -744,28 +688,6 @@ public class PersonCreator implements PersonMaker {
             return result;
         }
 
-        // asDbPersonMap() : ImmutableMap
-
-        public ImmutableMap asDbPersonMap() {
-            ImmutableMap.Builder builder = ImmutableMap.builder();
-
-            for (PersonMapEntryBuilder entry : entries) {
-                builder.put(entry.key, entry.asDbPerson());
-            }
-            return builder.build();
-        }
-
-        // asDbPersonMutableMap() : Map
-
-        public Map asDbPersonMutableMap() {
-            Map result = new HashMap();
-
-            for (PersonMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asDbPerson());
-            }
-            return result;
-        }
-
         // asTextPersonMap() : ImmutableMap
 
         public ImmutableMap asTextPersonMap() {
@@ -817,7 +739,6 @@ public class PersonCreator implements PersonMaker {
 interface PersonMaker {
     Person asPerson();
     SpecialPerson asSpecialPerson();
-    DbPerson asDbPerson();
     TextPerson asTextPerson();
 
     PersonState asState();

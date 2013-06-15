@@ -9,11 +9,11 @@
 #set (immutableState = "{state}State")
 #set (mutableState = "{state}MutableState")
 #set (manualCode = creator.manualCode)
-#set (maker = "{state}Maker")
 #set (mutableState = "{state}MutableState")
 #set (factory = "{state}Factory")
 #set (builder = "{state}Builder")
-#set (creator = "{state}Creator")
+#set (maker = "{creator.maker}")
+#set (creator = "{creator.classname}")
 #set (listBuilder = "{state}ListBuilder")
 #set (setBuilder = "{state}SetBuilder")
 #set (mapBuilder = "{state}MapBuilder")
@@ -34,6 +34,27 @@
   #end
 #end
 #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
+
+#macro imports()
+  #if (manualCode.trim().isEmpty)
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+  #set (imports = new java.util.HashSet())
+  #foreach (attribute in attributes)
+    #if (attribute.isState)
+##      #imports.add("{attribute.type}")
+    #end
+  #end
+  #foreach (
+
+  #end
+{imports}##
+#end
 
 #macro fields()
 // ===== Generated code =====
@@ -191,7 +212,7 @@
 #write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
 package {packagename};
 
-{imports}##
+  #imports()
 @Creator
 public class {classname} implements {maker} {
     private final {mutableState} state;##

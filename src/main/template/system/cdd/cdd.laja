@@ -31,6 +31,12 @@
     #set (creatorName = "{name}Creator")
     #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
     #import "{..}/../java/cdd2/creator/creator.java.laja"
+
+    #if (name == "Person")
+      #set (creatorName = "DbPersonCreator")
+      #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
+      #import "{..}/../java/cdd2/creator/creator.java.laja"
+    #end
 #end
 
 #macro validateStates()

@@ -7,6 +7,7 @@ import java.util.List;
 public class Creator implements CreatorParser.ICreator{
     public String packagename;
     public String imports;
+    public String maker;
     public String classname;
     public String state;
     public String statevariable;
@@ -29,6 +30,12 @@ public class Creator implements CreatorParser.ICreator{
         statevariable = StringUtils.uncapitalize(state);
         asMethods = classStatement.asMethods;
         parameters = classStatement.parameters;
+
+        if (classname.endsWith("Creator")) {
+            maker = classname.substring(0, classname.length() - "Creator".length()) + "Maker";
+        } else {
+            maker = classname + "Maker";
+        }
     }
 
     public void setManualCode(String manualCode) {
