@@ -8,6 +8,7 @@ import java.util.List;
 public class State implements StateParser.IState {
     public String packagename;
     public int version;
+    public String name;
     public String classname;
     public String classvariable;
     public String mutableClass;
@@ -17,6 +18,12 @@ public class State implements StateParser.IState {
     public String generatedEnd;
 
     public boolean isEntity;
+    public String filename;
+
+    // Workaround a bug in Laja.
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public List<Attribute> mutableAttributes() {
         List<Attribute> result = new ArrayList<Attribute>();
@@ -39,7 +46,8 @@ public class State implements StateParser.IState {
         version = classStatement.version;
         classname = classStatement.classname;
         classvariable = StringUtils.uncapitalize(classname);
-        mutableClass = StringUtils.left(classname, classname.length() - 5) + "MutableState";
+        name = StringUtils.left(classname, classname.length() - "State".length());
+        mutableClass = name + "MutableState";
         attributes = classStatement.attributes;
         manualCode = classStatement.manualCode;
         generatedEnd = classStatement.generatedEnd;
@@ -63,7 +71,9 @@ public class State implements StateParser.IState {
     @Override
     public String toString() {
         return "State{" +
-                "packagename='" + packagename + '\'' +
+                "filename='" + filename + '\'' +
+                ", packagename='" + packagename + '\'' +
+                ", name='" + name + '\'' +
                 ", classname='" + classname + '\'' +
                 ", classvariable='" + classvariable + '\'' +
                 ", mutableClass='" + mutableClass + '\'' +

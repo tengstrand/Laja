@@ -15,6 +15,13 @@ public class Creator implements CreatorParser.ICreator{
     public List<AsMethod> asMethods;
     public Aparameters parameters;
 
+    public String filename;
+
+    // Workaround a bug in Laja.
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public void setPackagename(String packagename) {
         this.packagename = packagename;
     }
@@ -45,7 +52,8 @@ public class Creator implements CreatorParser.ICreator{
     @Override
     public String toString() {
         return "Creator{" +
-                "packagename='" + packagename + '\'' +
+                "filename='" + filename + '\'' +
+                ", packagename='" + packagename + '\'' +
                 ", imports='" + imports + '\'' +
                 ", classname='" + classname + '\'' +
                 ", state='" + state + '\'' +

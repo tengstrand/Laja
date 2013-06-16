@@ -16,17 +16,22 @@
 
   #$.putAll(parameters)
 
-  #set (errors = new java.util.ArrayList())
-
   #if (srcDir == null)
-    #errors.add("Missing parameter: 'srcDir'")
+    #println("Missing parameter: 'srcDir'")
+  #else
+    #set (states = parseStates())
+    #set (creators = parseCreators())
+    #generateStatesAndCreators()
   #end
+#end
 
-  #set (states = parseStates())
-  #set (creators = parseCreators())
-
-##  #generate("Address")
-##  #generate("Person")
+#macro generateStatesAndCreators()
+  #foreach (state in states)
+    #import "{..}/../java/cdd2/state.java.laja"
+    #foreach (creator in creators where creator.state == state.name)
+      #import "{..}/../java/cdd2/creator/creator.java.laja"
+    #end
+  #end
 #end
 
 #function parseStates()
@@ -37,8 +42,8 @@
     #if (!file.endsWith("ImmutableState.java") && !file.endsWith("MutableState.java"))
       #set (state = cddParser.parseState(file))
       #if (state != null)
+        #set (state.filename = file)
         #states.add(state)
-##        #import "{..}/../java/cdd2/state.java.laja"
       #end
     #end
   #end
@@ -53,28 +58,12 @@
     #if (!file.endsWith("DbPersonCreator.java"))
       #set (creator = cddParser.parseCreator(file))
       #if (creator != null)
+        #set (creator.filename = file)
         #creators.add(creator)
-##        #import "{..}/../java/cdd2/state.java.laja"
       #end
     #end
   #end
   #return creators
-#end
-
-#macro generate(name)
-    #set (stateName = "{name}State")
-    #set (state = cddParser.parseState("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.java"))
-    #import "{..}/../java/cdd2/state.java.laja"
-
-    #set (creatorName = "{name}Creator")
-    #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
-    #import "{..}/../java/cdd2/creator/creator.java.laja"
-
-    #if (name == "Person***********")
-      #set (creatorName = "DbPersonCreator")
-      #set (creator = cddParser.parseCreator("C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.java"))
-      #import "{..}/../java/cdd2/creator/creator.java.laja"
-    #end
 #end
 
 #macro validateStates()

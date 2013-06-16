@@ -1,4 +1,5 @@
 
+#set (filename = creator.filename)
 #set (packagename = creator.packagename)
 #set (imports = creator.imports)
 #set (classname = creator.classname)
@@ -207,7 +208,7 @@ import java.util.Set;
 #import "{.}/mapEntryBuilder.java.laja"
 #import "{.}/maker.java.laja"
 
-#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/{creatorName}.txt"
+#write "{filename}.txt"
 package {packagename};
 
 {imports}##

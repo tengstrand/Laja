@@ -1,4 +1,5 @@
 
+#set (filename = state.filename)
 #set (packagename = state.packagename)
 #set (version = state.version)
 #set (classname = state.classname)
@@ -335,7 +336,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #import "{.}/mutableState.java.laja"
 
-#write "{stateFile}.txt"
+#write "{filename}.txt"
 package {packagename};
 
   #imports()
