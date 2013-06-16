@@ -8,7 +8,7 @@ public class FileReader {
 
     public List<String> readFiles(String fileOrDir, String endsWith) {
         List<String> files = new ArrayList<String>();
-        templateFiles(new File(fileOrDir), endsWith, files);
+        readFiles(new File(fileOrDir), endsWith, files);
         return files;
     }
 
@@ -16,10 +16,10 @@ public class FileReader {
      * Loop all directories and search for files that ends with the given 'endsWith',
      * e.g. State.java or Creator.java.
      *
-     * @param fileOrDir a template file or a directory structure to search for state templates.
-     * @param files put the template files in this list
+     * @param fileOrDir a file or a directory structure to search for files ending with 'endsWith'.
+     * @param files populate this list with matching files.
      */
-    private void templateFiles(File fileOrDir, String endsWith, List<String> files) {
+    private void readFiles(File fileOrDir, String endsWith, List<String> files) {
         if (fileOrDir.isFile()) {
             String name = fileOrDir.getName();
             if (name.endsWith(endsWith) && name.length() > endsWith.length() && !name.startsWith(".")) {
@@ -29,7 +29,7 @@ public class FileReader {
             String[] children = fileOrDir.list();
 
             for (int i=0; i<children.length; i++) {
-                templateFiles(new File(fileOrDir, children[i]), endsWith, files);
+                readFiles(new File(fileOrDir, children[i]), endsWith, files);
             }
         }
     }

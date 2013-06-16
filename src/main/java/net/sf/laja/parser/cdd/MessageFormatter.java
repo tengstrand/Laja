@@ -1,3 +1,4 @@
+/*
 package net.sf.laja.parser.cdd;
 
 import net.sf.laja.parser.cdd.behaviour.Behaviour;
@@ -43,3 +44,4 @@ public class MessageFormatter {
         System.out.println(table.text());
     }
 }
+*/

@@ -13,8 +13,8 @@ public class TextPersonTest {
         PersonCreator creator = createPerson().name("Carl").hairColor(BROWN).children().defaults();
 
         TextPerson textPerson = creator.asTextPerson();
-        DbPerson dbPerson = creator.asDbPerson();
+        SpecialPerson specialPerson = creator.asSpecialPerson();
 
-        assertEquals(textPerson, dbPerson);
+        assertEquals(textPerson, specialPerson);
     }
 }

@@ -1,4 +1,4 @@
-package net.sf.laja.parser.cdd;
+package net.sf.laja.parser.cdd.state;
 
 public class AttributeToConstantConverter {
 

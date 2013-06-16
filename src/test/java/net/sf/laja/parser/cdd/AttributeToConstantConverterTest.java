@@ -1,5 +1,6 @@
 package net.sf.laja.parser.cdd;
 
+import net.sf.laja.parser.cdd.state.AttributeToConstantConverter;
 import org.junit.Before;
 import org.junit.Test;
 

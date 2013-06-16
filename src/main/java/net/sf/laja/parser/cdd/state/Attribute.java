@@ -1,6 +1,5 @@
 package net.sf.laja.parser.cdd.state;
 
-import net.sf.laja.parser.cdd.AttributeToConstantConverter;
 import org.apache.commons.lang.StringUtils;
 
 public class Attribute implements StateParser.IAttribute {

@@ -12,7 +12,6 @@ public class Main {
         personCreator.assertIsValid();
 
         personCreator.asPerson();
-        personCreator.asDbPerson();
         personCreator.asTextPerson();
         personCreator.asSpecialPerson();
         personCreator.asState();
