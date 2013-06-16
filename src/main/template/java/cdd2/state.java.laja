@@ -335,7 +335,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #import "{.}/mutableState.java.laja"
 
-#write "C:/Source/IDEA/Laja/src/testgen/java-new/main/net/sf/laja/cdd/state/{stateName}.txt"
+#write "{stateFile}.txt"
 package {packagename};
 
   #imports()

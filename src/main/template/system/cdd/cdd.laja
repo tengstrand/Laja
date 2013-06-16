@@ -3,6 +3,7 @@
   #if ($laja.isCddImported == null)
     #set ($laja.isCddImported = true)
     #set (cddParser = new net.sf.laja.parser.cdd.CddParser())
+    #set (fileReader = new net.sf.laja.parser.cdd.FileReader())
   #end
 #end
 
@@ -15,8 +16,25 @@
 
   #$.putAll(parameters)
 
-  #generate("Address")
-  #generate("Person")
+  #set (errors = new java.util.ArrayList())
+
+  #if (srcDir == null)
+    #errors.add("Missing parameter: 'srcDir'")
+  #end
+
+  #set (stateFiles = fileReader.readFiles(srcDir, "State.java"))
+
+  #foreach (stateFile in stateFiles)
+    #if (!stateFile.endsWith("ImmutableState.java") && !stateFile.endsWith("MutableState.java"))
+      #set (state = cddParser.parseState(stateFile))
+      #if (state != null)
+        #import "{..}/../java/cdd2/state.java.laja"
+      #end
+    #end
+  #end
+
+##  #generate("Address")
+##  #generate("Person")
 #end
 
 #macro generate(name)
