@@ -22,19 +22,43 @@
     #errors.add("Missing parameter: 'srcDir'")
   #end
 
-  #set (stateFiles = fileReader.readFiles(srcDir, "State.java"))
-
-  #foreach (stateFile in stateFiles)
-    #if (!stateFile.endsWith("ImmutableState.java") && !stateFile.endsWith("MutableState.java"))
-      #set (state = cddParser.parseState(stateFile))
-      #if (state != null)
-        #import "{..}/../java/cdd2/state.java.laja"
-      #end
-    #end
-  #end
+  #set (states = parseStates())
+  #set (creators = parseCreators())
 
 ##  #generate("Address")
 ##  #generate("Person")
+#end
+
+#function parseStates()
+  #set (states = new java.util.ArrayList())
+  #set (stateFiles = fileReader.readFiles(srcDir, "State.java"))
+
+  #foreach (file in stateFiles)
+    #if (!file.endsWith("ImmutableState.java") && !file.endsWith("MutableState.java"))
+      #set (state = cddParser.parseState(file))
+      #if (state != null)
+        #states.add(state)
+##        #import "{..}/../java/cdd2/state.java.laja"
+      #end
+    #end
+  #end
+  #return states
+#end
+
+#function parseCreators()
+  #set (creators = new java.util.ArrayList())
+  #set (creatorFiles = fileReader.readFiles(srcDir, "Creator.java"))
+
+  #foreach (file in creatorFiles)
+    #if (!file.endsWith("DbPersonCreator.java"))
+      #set (creator = cddParser.parseCreator(file))
+      #if (creator != null)
+        #creators.add(creator)
+##        #import "{..}/../java/cdd2/state.java.laja"
+      #end
+    #end
+  #end
+  #return creators
 #end
 
 #macro generate(name)
