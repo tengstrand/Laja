@@ -3,13 +3,20 @@ package net.sf.laja.parser.cdd.state;
 import org.apache.commons.lang.StringUtils;
 
 public class Attribute implements StateParser.IAttribute {
+    // When adding new attributes, remember to also add them to the method asMutable()!
     public Type type;
     public String name;
     public String nameAsClass;
     public Annotations annotations;
     public String annotationsContent;
+    public State state;
 
     private AttributeToConstantConverter converter = new AttributeToConstantConverter();
+
+    // Workaround - bug in Laja
+    public void setState(State state) {
+        this.state = state;
+    }
 
     public Attribute asMutable() {
         Attribute result = new Attribute();
@@ -17,6 +24,7 @@ public class Attribute implements StateParser.IAttribute {
         result.name = name;
         result.nameAsClass = nameAsClass;
         result.annotations = annotations;
+        result.state = state;
 
         if (annotationsContent.contains("\n")) {
             result.annotationsContent = annotationsContent + "    ";
@@ -50,7 +58,13 @@ public class Attribute implements StateParser.IAttribute {
     }
 
     public String getBuilder() {
-        return nameAsClass + "Creator." + nameAsClass + "Builder" ;
+        if (state != null && state.creator != null) {
+            String creator = state.creator.classname;
+            String builder = creator.endsWith("Creator") ? creator.substring(0, creator.length() - "Creator".length()) + "Builder" : creator + "Builder";
+            return state.creator.classname + "." + builder;
+        }
+        String type = this.type.asImmutable().name;
+        return state == null ? "[error - could not find state '" + type + "']" : "[error - could not find creator for state '" + type + "']";
     }
 
     public boolean isPrimitive() {
@@ -152,6 +166,7 @@ public class Attribute implements StateParser.IAttribute {
                 ", name='" + name + '\'' +
                 ", nameAsClass='" + nameAsClass + '\'' +
                 ", annotations=" + annotations +
+                ", state=" + (state == null ? null : state.classname) +
                 '}';
     }
 }

@@ -21,7 +21,21 @@
   #else
     #set (states = parseStates())
     #set (creators = parseCreators())
+    #updateStateAttributes()
     #generateStatesAndCreators()
+  #end
+#end
+
+#macro updateStateAttributes()
+  #foreach (state in states)
+    #foreach (creator in creators where creator.state == state.name)
+      #set (state.creator = creator)
+    #end
+    #foreach (attribute in state.attributes where attribute.isState)
+      #foreach (s in states where s.classname == attribute.type.name)
+        #set (attribute.state = s)
+      #end
+    #end
   #end
 #end
 
@@ -30,7 +44,6 @@
     #set (state = s)
     #import "{..}/../java/cdd2/state.java.laja"
     #foreach (creator in creators where creator.state == state.name)
-      #set (state.creator = creator)
       #import "{..}/../java/cdd2/creator/creator.java.laja"
     #end
   #end
