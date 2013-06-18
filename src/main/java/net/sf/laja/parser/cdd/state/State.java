@@ -1,5 +1,6 @@
 package net.sf.laja.parser.cdd.state;
 
+import net.sf.laja.parser.cdd.creator.Creator;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -19,10 +20,20 @@ public class State implements StateParser.IState {
 
     public boolean isEntity;
     public String filename;
+    public Creator creator;
 
     // Workaround a bug in Laja.
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    // Workaround a bug in Laja.
+    public void setCreator(Creator creator) {
+        if (this.creator == null) {
+            this.creator = creator;
+        } else if (creator.isMain && !this.creator.isMain) {
+            this.creator = creator;
+        }
     }
 
     public List<Attribute> mutableAttributes() {
@@ -80,6 +91,7 @@ public class State implements StateParser.IState {
                 ", attributes=" + attributes +
                 ", imports=" + imports +
                 ", manualCode='" + manualCode + '\'' +
+                ", creator=" + (creator == null ? null : '\'' + creator.classname + '\'') +
                 '}';
     }
 }

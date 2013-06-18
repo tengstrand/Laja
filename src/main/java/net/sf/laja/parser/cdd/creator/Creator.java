@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.List;
 
 public class Creator implements CreatorParser.ICreator{
+    public boolean isMain;
     public String packagename;
     public String imports;
     public String maker;
@@ -20,6 +21,10 @@ public class Creator implements CreatorParser.ICreator{
     // Workaround a bug in Laja.
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public void setIsMainCreator() {
+        isMain = true;
     }
 
     public void setPackagename(String packagename) {

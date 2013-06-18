@@ -26,9 +26,11 @@
 #end
 
 #macro generateStatesAndCreators()
-  #foreach (state in states)
+  #foreach (s in states)
+    #set (state = s)
     #import "{..}/../java/cdd2/state.java.laja"
     #foreach (creator in creators where creator.state == state.name)
+      #set (state.creator = creator)
       #import "{..}/../java/cdd2/creator/creator.java.laja"
     #end
   #end
