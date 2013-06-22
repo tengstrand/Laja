@@ -16,6 +16,40 @@
   #foreach (import in imports)
 {import.statement}##
   #end
+  #if (manualCode.isEmpty)
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.ImmutableState;
+import net.sf.laja.cdd.InvalidStateException;
+import net.sf.laja.cdd.MutableState;
+import net.sf.laja.cdd.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+    #set (staticImports = new java.util.TreeSet())
+    #staticImports.add("net.sf.laja.cdd.ValidationErrors.concatenate")
+    #staticImports.add("net.sf.laja.cdd.stateconverter.StateConversion.*")
+    #staticImports.add("net.sf.laja.cdd.stateconverter.StateConverters.*")
+    #staticImports.add("net.sf.laja.cdd.validator.Validators.collectionValidator")
+    #staticImports.add("net.sf.laja.cdd.validator.Validators.mapValidator")
+    #foreach (attribute in attributes where attribute.isState)
+      #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMutable.type}")
+    #end
+    #foreach (staticImport in staticImports)
+import static {staticImport};
+    #end
+  #end
+
 #end
 
 #macro attributes(tab, final)

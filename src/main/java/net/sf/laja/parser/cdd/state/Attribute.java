@@ -18,6 +18,10 @@ public class Attribute implements StateParser.IAttribute {
         this.state = state;
     }
 
+    public State stateObject() {
+        return state;
+    }
+
     public Attribute asMutable() {
         Attribute result = new Attribute();
         result.type = type.asMutable();
