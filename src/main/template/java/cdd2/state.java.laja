@@ -39,23 +39,24 @@ public class {classname} implements ImmutableState {
   #end
 #end
 
-#macro constructor(constructorClass, tab)
+#macro constructor(constructorClass, validateState, tab)
 
   #if (attributes.size == 1)
-    #singleConstructor(constructorClass, tab)
+    #singleConstructor(constructorClass, validateState, tab)
   #else
-    #multiConstructor(constructorClass, tab)
+    #multiConstructor(constructorClass, validateState, tab)
   #end
 #end
 
-#macro singleConstructor(constructorClass, tab)
+#macro singleConstructor(constructorClass, validateState, tab)
   #set (attribute = attributes.iterator.next)
 {tab}public {constructorClass}({attribute.type} {attribute.name}) {
 {tab}    this.{attribute.name} = {attribute.name};
+  #assertMandatoryAttributes(validateState)
 {tab}}
 #end
 
-#macro multiConstructor(constructorClass, tab)
+#macro multiConstructor(constructorClass, validateState, tab)
 {tab}public {constructorClass}(
   #set (iterator = attributes.iterator)
   #set (space = " ")
@@ -70,12 +71,30 @@ public class {classname} implements ImmutableState {
   #foreach (attribute in attributes)
 {tab}    this.{attribute.name} = {attribute.name};
   #end
+  #assertMandatoryAttributes(validateState)
 {tab}}
+#end
+
+#macro assertMandatoryAttributes(validateState)
+  #if (validateState)
+    #if (state.hasMandatoryObjectAttribute)
+
+      #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
+        if ({attribute.name} == null) throw new {stateException}("'{attribute.name}' can not be null");
+      #end
+    #end
+
+        assertIsValid();
+  #end
 #end
 
 #macro exception()
 
     public static class {stateException} extends InvalidStateException {
+        public {stateException}(String message) {
+            super(message);
+        }
+
         public {stateException}(ValidationErrors errors) {
             super(errors);
         }
@@ -332,7 +351,10 @@ package {packagename};
   #classHeader()
   #attributes("    ", "final ")##
   #if (generatedEnd == null)
-{manualCode}
+{manualCode}##
+    public void assertIsValid() {
+    }
+
     // ===== Generated code =====
   #else
 {manualCode}##
@@ -341,7 +363,7 @@ package {packagename};
 
   #set (tab = "    ")
   #constants()
-  #constructor("{classname}", tab)
+  #constructor("{classname}", true, tab)
   #exception()
   #getters(tab)
   #withMethods()

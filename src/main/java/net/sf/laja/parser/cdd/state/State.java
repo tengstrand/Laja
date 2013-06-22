@@ -79,6 +79,15 @@ public class State implements StateParser.IState {
         return false;
     }
 
+    public boolean hasMandatoryObjectAttribute() {
+        for (Attribute attribute : attributes) {
+            if (attribute.isMandatory() && !attribute.isPrimitive()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "State{" +

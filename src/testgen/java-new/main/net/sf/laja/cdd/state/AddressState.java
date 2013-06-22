@@ -18,6 +18,9 @@ public class AddressState implements ImmutableState {
     @Optional
     public final String city;
 
+    public void assertIsValid() {
+    }
+
     // ===== Generated code =====
 
     public static final String ID = "id";
@@ -31,9 +34,15 @@ public class AddressState implements ImmutableState {
         this.id = id;
         this.streetName = streetName;
         this.city = city;
+
+        assertIsValid();
     }
 
     public static class IllegalAddressStateException extends InvalidStateException {
+        public IllegalAddressStateException(String message) {
+            super(message);
+        }
+
         public IllegalAddressStateException(ValidationErrors errors) {
             super(errors);
         }

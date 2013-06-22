@@ -70,15 +70,6 @@
         }
 #end
 
-#function hasMandatoryOrObject()
-  #foreach (attribute in attributes)
-    #if (attribute.isMandatory && !attribute.isPrimitive())
-      #return true
-    #end
-  #end
-  #return false
-#end
-
 #function hasStateOrCollectionOrMap()
   #foreach (attribute in attributes where attribute.isState || attribute.isCollection || attribute.isMap)
     #return true
@@ -89,7 +80,7 @@
 #macro validate()
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-  #if (hasMandatoryOrObject())
+  #if (state.hasMandatoryObjectAttribute)
     #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
             if ({attribute.name} == null) errors.addIsNullError(rootElement, parent, "{attribute.name}");
     #end
@@ -183,7 +174,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #classHeader()
   #attributes(tab, "")
   #emptyConstructor()
-  #constructor("{mutableClass}", tab)
+  #constructor("{mutableClass}", false, tab)
   #getters(tab)
   #setters()
   #preservedValidation()

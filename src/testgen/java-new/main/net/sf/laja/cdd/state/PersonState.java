@@ -43,6 +43,9 @@ public class PersonState implements ImmutableState {
     public final ImmutableMap<String,AddressState> groupedAddresses;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
 
+    public void assertIsValid() {
+    }
+
     // ===== Generated code =====
 
     public static final String ID = "id";
@@ -77,9 +80,22 @@ public class PersonState implements ImmutableState {
         this.oldAddresses = oldAddresses;
         this.groupedAddresses = groupedAddresses;
         this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
+
+        if (name == null) throw new IllegalPersonStateException("'name' can not be null");
+        if (hairColor == null) throw new IllegalPersonStateException("'hairColor' can not be null");
+        if (children == null) throw new IllegalPersonStateException("'children' can not be null");
+        if (address == null) throw new IllegalPersonStateException("'address' can not be null");
+        if (groupedAddresses == null) throw new IllegalPersonStateException("'groupedAddresses' can not be null");
+        if (listOfSetOfMapOfIntegers == null) throw new IllegalPersonStateException("'listOfSetOfMapOfIntegers' can not be null");
+
+        assertIsValid();
     }
 
     public static class IllegalPersonStateException extends InvalidStateException {
+        public IllegalPersonStateException(String message) {
+            super(message);
+        }
+
         public IllegalPersonStateException(ValidationErrors errors) {
             super(errors);
         }
