@@ -1,5 +1,6 @@
 package net.sf.laja.parser.cdd;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,10 +54,26 @@ public class Type {
         return dates.contains(type);
     }
 
+    public static boolean isValid(String type) {
+        return isPrimitive(type) || immutableTypes.contains(type);
+    }
+
     public static String typeAsObject(String type) {
         if (!isPrimitive(type)) {
             return type;
         }
         return immutableTypes.get(primitives.indexOf(type));
+    }
+
+    public static String getTypesAsString() {
+        String result = "";
+        String separator = "";
+        List<String> types = new ArrayList<String>(primitives);
+        types.addAll(immutableTypes);
+        for (String type : types) {
+            result += separator + type;
+            separator = ", ";
+        }
+        return result;
     }
 }

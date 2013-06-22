@@ -67,6 +67,16 @@ public class Type implements StateParser.IType {
         return isPrimitive() && name.equals("long");
     }
 
+    public boolean isValid() {
+        if (!isCollectionOrMap()) {
+            return isState() || net.sf.laja.parser.cdd.Type.isValid(name);
+        }
+        if (isCollection()) {
+            return collectionType.type.isValid();
+        }
+        return mapType.entry.isValid();
+    }
+
     public boolean isLeafState() {
         if (!isCollectionOrMap()) {
             return isState();

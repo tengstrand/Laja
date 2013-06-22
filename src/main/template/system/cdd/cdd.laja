@@ -9,9 +9,10 @@
 
 #macro generateCdd(parameters)
   #lazyDefineCdd()
+  #set (errors = new java.util.ArrayList())
 
   #if (parameters.class().simpleName != "LinkedHashMap")
-    #error("The argument must be a list of maps, e.g: #generateCdd({srcDir: \"{.}/main\"})")
+    #errors.add("The argument must be a list of maps, e.g: #generateCdd({srcDir: \"{.}/main\"})")
   #end
 
   #$.putAll(parameters)
@@ -21,10 +22,34 @@
   #else
     #set (states = parseStates())
     #set (creators = parseCreators())
-    #updateStateAttributes()
-    #generateStatesAndCreators()
+    #findInvalidTypes()
+    #if (errors.isEmpty)
+      #updateStateAttributes()
+      #generateStatesAndCreators()
+    #else
+      #println("Errors found:")
+      #foreach (error in errors)
+        #println("  {error}")
+      #end
+    #end
   #end
 #end
+
+#macro findInvalidTypes()
+  #set (unknownTypeFound = false)
+  #foreach (state in states)
+    #foreach (attribute in state.attributes)
+      #if (!attribute.isValidType)
+        #set (unknownTypeFound = true)
+        #errors.add("Unsupported type '{attribute.type}' for attribute '{attribute.name}' in class '{state.classname}', file '{state.filename}'.")
+      #end
+    #end
+  #end
+  #if (unknownTypeFound)
+    #set (message = loadClass("net.sf.laja.parser.cdd.Type").typesAsString)
+    #errors.add("Valid types are types ending with 'State' and: {message}.")
+  #end
+#endo
 
 #macro updateStateAttributes()
   #foreach (state in states)
