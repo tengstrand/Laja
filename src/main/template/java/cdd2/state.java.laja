@@ -161,25 +161,14 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #function entityAttributes()
   #set (keys = new java.util.ArrayList())
-  #foreach (attribute in attributes where attribute.isKey)
-    ## 1. At least one @Key was found => use @Key attributes for identity.
+  #foreach (attribute in attributes where attribute.isId)
+    ## 1. One @Id was found => use the @Id attribute for identity.
     #keys.add(attribute)
   #end
   #if (keys.size == 0)
-    ## No @Key, but one @Id attribute was found.
-    #foreach (attribute in attributes where !attribute.isId && !attribute.isCollection && !attribute.isMap)
-      ## 2. Use all none @Id/collection/map attributes for identity.
+    #foreach (attribute in attributes where attribute.isKey)
+      ## 2. At least one @Key was found => use @Key attributes for identity.
       #keys.add(attribute)
-    #end
-    #if (keys.size == 0)
-      #foreach (attribute in attributes where !attribute.isId)
-        ## 3. Use all none @Id attributes for identity.
-        #keys.add(attribute)
-      #end
-      #if (keys.size == 0)
-        ## 4. Use the @Id attribute for identity.
-        #return attributes
-      #end
     #end
   #end
   #return keys

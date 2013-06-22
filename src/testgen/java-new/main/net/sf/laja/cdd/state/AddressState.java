@@ -56,8 +56,7 @@ public class AddressState implements ImmutableState {
 
     @Override
     public int hashCode() {
-        int result = streetName != null ? streetName.hashCode() : 0;
-        result = 31 * result + (city != null ? city.hashCode() : 0);
+        int result = id;
 
         return result;
     }
@@ -69,8 +68,7 @@ public class AddressState implements ImmutableState {
 
         AddressState state = (AddressState)that;
 
-        if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
-        if (city != null ? !city.equals(state.city) : state.city != null) return false;
+        if (id != state.id) return false;
 
         return true;
     }
@@ -172,8 +170,7 @@ public class AddressState implements ImmutableState {
 
         @Override
         public int hashCode() {
-            int result = streetName != null ? streetName.hashCode() : 0;
-            result = 31 * result + (city != null ? city.hashCode() : 0);
+            int result = id;
 
             return result;
         }
@@ -185,8 +182,7 @@ public class AddressState implements ImmutableState {
 
             AddressMutableState state = (AddressMutableState)that;
 
-            if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
-            if (city != null ? !city.equals(state.city) : state.city != null) return false;
+            if (id != state.id) return false;
 
             return true;
         }

@@ -8,7 +8,6 @@ import net.sf.laja.cdd.InvalidStateException;
 import net.sf.laja.cdd.MutableState;
 import net.sf.laja.cdd.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
-import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
@@ -31,7 +30,7 @@ import static net.sf.laja.cdd.validator.Validators.mapValidator;
 @State
 public class PersonState implements ImmutableState {
     @Id public final int id;
-    @Key public final String name;
+    public final String name;
     @Optional
     public final DateMidnight birthday;
     public final String hairColor;
@@ -124,7 +123,7 @@ public class PersonState implements ImmutableState {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id;
 
         return result;
     }
@@ -136,7 +135,7 @@ public class PersonState implements ImmutableState {
 
         PersonState state = (PersonState)that;
 
-        if (name != null ? !name.equals(state.name) : state.name != null) return false;
+        if (id != state.id) return false;
 
         return true;
     }
@@ -193,7 +192,7 @@ public class PersonState implements ImmutableState {
     @State(type = "mutable")
     public static class PersonMutableState implements MutableState {
         @Id public int id;
-        @Key public String name;
+        public String name;
         @Optional
         public DateMidnight birthday;
         public String hairColor;
@@ -320,7 +319,7 @@ public class PersonState implements ImmutableState {
 
         @Override
         public int hashCode() {
-            int result = name != null ? name.hashCode() : 0;
+            int result = id;
 
             return result;
         }
@@ -332,7 +331,7 @@ public class PersonState implements ImmutableState {
 
             PersonMutableState state = (PersonMutableState)that;
 
-            if (name != null ? !name.equals(state.name) : state.name != null) return false;
+            if (id != state.id) return false;
 
             return true;
         }
