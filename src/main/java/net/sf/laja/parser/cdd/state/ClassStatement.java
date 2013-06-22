@@ -7,7 +7,7 @@ public class ClassStatement implements StateParser.IClassStatement {
     public int version;
     public String classname;
     public final List<Attribute> attributes = new ArrayList<Attribute>();
-    public String manualCode;
+    public String manualCode = "";
     public String generatedEnd;
 
     public void setVersion(String version) {

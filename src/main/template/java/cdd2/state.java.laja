@@ -351,7 +351,7 @@ package {packagename};
   #classHeader()
   #attributes("    ", "final ")##
   #if (generatedEnd == null)
-{manualCode}##
+{manualCode}
     public void assertIsValid() {
     }
 
