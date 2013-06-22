@@ -34,7 +34,7 @@ grammar state {
 
    version = digit+;
    classStatement = "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
-                    ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
+                    ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
                     manualEnd|generatedEnd *;
 
    state = s packagestatement s imports s classStatement s;

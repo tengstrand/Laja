@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-05-27 by Laja:
+ * Auto generated 2013-06-22 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -432,7 +432,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
 
         // classStatement =
         //   "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
-        //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
+        //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
         //   manualEnd|generatedEnd *
         classStatement.add(277, new Str(276, "@State"));
         Optional classStatement_1 = new Optional(278, "classStatement_1");
@@ -480,21 +480,23 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         classStatement_4_1.add(329, attribute, classStatementClassStatementAttribute);
         classStatement_4.add(330, classStatement_4_1);
         classStatement.add(331, classStatement_4);
-        classStatement.add(332, manualCode, classStatementClassStatementManualCode);
-        OrList classStatement_5 = new OrList(333, "classStatement_5");
-        classStatement_5.add(334, manualEnd);
-        classStatement_5.add(335, generatedEnd, classStatementClassStatementGeneratedEnd);
-        classStatement.add(336, classStatement_5);
-        classStatement.add(338, new Complete(337, "classStatement"));
+        Optional classStatement_5 = new Optional(332, "classStatement_5");
+        classStatement_5.add(333, manualCode, classStatementClassStatementManualCode);
+        classStatement.add(334, classStatement_5);
+        OrList classStatement_6 = new OrList(335, "classStatement_6");
+        classStatement_6.add(336, manualEnd);
+        classStatement_6.add(337, generatedEnd, classStatementClassStatementGeneratedEnd);
+        classStatement.add(338, classStatement_6);
+        classStatement.add(340, new Complete(339, "classStatement"));
 
         // state = s packagestatement s imports s classStatement s
-        state.add(339, s);
-        state.add(340, packagestatement);
         state.add(341, s);
-        state.add(342, imports, stateStateImports);
+        state.add(342, packagestatement);
         state.add(343, s);
-        state.add(344, classStatement, stateStateClassStatement);
+        state.add(344, imports, stateStateImports);
         state.add(345, s);
+        state.add(346, classStatement, stateStateClassStatement);
+        state.add(347, s);
 
         return new TopElement(data2, state);
     }
@@ -794,7 +796,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
 
         // classStatement =
         //   "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
-        //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ manualCode
+        //   ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
         //   manualEnd|generatedEnd *
         classStatement.add(277, new Str(276, "@State"));
         Optional classStatement_1 = new Optional(278, "classStatement_1");
@@ -842,21 +844,23 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         classStatement_4_1.add(329, attribute);
         classStatement_4.add(330, classStatement_4_1);
         classStatement.add(331, classStatement_4);
-        classStatement.add(332, manualCode);
-        OrList classStatement_5 = new OrList(333, "classStatement_5");
-        classStatement_5.add(334, manualEnd);
-        classStatement_5.add(335, generatedEnd);
-        classStatement.add(336, classStatement_5);
-        classStatement.add(338, new Complete(337, "classStatement"));
+        Optional classStatement_5 = new Optional(332, "classStatement_5");
+        classStatement_5.add(333, manualCode);
+        classStatement.add(334, classStatement_5);
+        OrList classStatement_6 = new OrList(335, "classStatement_6");
+        classStatement_6.add(336, manualEnd);
+        classStatement_6.add(337, generatedEnd);
+        classStatement.add(338, classStatement_6);
+        classStatement.add(340, new Complete(339, "classStatement"));
 
         // state = s packagestatement s imports s classStatement s
-        state.add(339, s);
-        state.add(340, packagestatement);
         state.add(341, s);
-        state.add(342, imports);
+        state.add(342, packagestatement);
         state.add(343, s);
-        state.add(344, classStatement);
+        state.add(344, imports);
         state.add(345, s);
+        state.add(346, classStatement);
+        state.add(347, s);
 
         return new TopElement(data1, state);
     }
