@@ -17,8 +17,8 @@
         public {builder} {attribute.withMethod}({attribute.type} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; }
           #if (attribute.isState)
         public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; }
-          #else if (attribute.type == "DateMidnight")
-        public {builder} {attribute.withMethod}(int year, int month, int day) { state.{attribute.name} = new DateMidnight(year, month, day); return this; }
+          #else if (attribute.isDate)
+        public {builder} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) { state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth); return this; }
           #end
         #end
 

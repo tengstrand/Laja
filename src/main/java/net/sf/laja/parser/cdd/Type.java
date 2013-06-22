@@ -39,6 +39,8 @@ public class Type {
             "Seconds"
             );
 
+    private static final List<String> dates = Arrays.asList("LocalDate", "DateMidnight");
+
     public static boolean isPrimitiveInteger(String type) {
         return primitiveIntegers.contains(type);
     }
@@ -49,6 +51,10 @@ public class Type {
 
     public static boolean isImmutableType(String type) {
         return immutableTypes.contains(type);
+    }
+
+    public static boolean isDate(String type) {
+        return dates.contains(type);
     }
 
     public static String typeAsObject(String type) {

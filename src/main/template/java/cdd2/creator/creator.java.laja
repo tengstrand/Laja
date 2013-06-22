@@ -156,6 +156,13 @@ import java.util.Set;
         return this;
     }
 
+    #if (attribute.isDate)
+    public {creator} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) {
+        state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth);
+        return this;
+    }
+
+    #end
     #if (attribute.isCollectionOrMap && attribute.isLeafState)
       #set (leafState = attribute.leafState)
       #set (type = attribute.collectionOrMapType)

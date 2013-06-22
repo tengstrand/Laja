@@ -83,6 +83,10 @@ public class Attribute implements StateParser.IAttribute {
         return type.isLong();
     }
 
+    public boolean isDate() {
+        return type.isDate();
+    }
+
     public boolean isState() {
         return type.isState();
     }

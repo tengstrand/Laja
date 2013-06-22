@@ -19,6 +19,10 @@ public class Type implements StateParser.IType {
         mapType = (MapType)imapType;
     }
 
+    public boolean isDate() {
+        return !isCollectionOrMap() && net.sf.laja.parser.cdd.Type.isDate(name);
+    }
+
     public boolean isState() {
         return !isCollectionOrMap() && name.endsWith("State");
     }
