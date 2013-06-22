@@ -49,10 +49,6 @@ public class Type {
         return primitives.contains(type);
     }
 
-    public static boolean isImmutableType(String type) {
-        return immutableTypes.contains(type);
-    }
-
     public static boolean isDate(String type) {
         return dates.contains(type);
     }

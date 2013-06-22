@@ -28,10 +28,6 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
         return is(Annotation.KEY);
     }
 
-    public boolean isValue() {
-        return is(Annotation.VALUE);
-    }
-
     public boolean isOptional() {
         return is(Annotation.OPTIONAL);
     }
@@ -56,10 +52,6 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
             }
         }
         return null;
-    }
-
-    public Annotation getValue() {
-        return get(Annotation.VALUE);
     }
 
     public Annotation getOptional() {

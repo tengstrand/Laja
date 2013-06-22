@@ -9,7 +9,6 @@ public class Annotation implements StateParser.IAnnotation{
 
     public static final String ID = "Id";
     public static final String KEY = "Key";
-    public static final String VALUE = "Value";
     public static final String OPTIONAL = "Optional";
 
     private static final List<String> annotations = new ArrayList<String>();
@@ -18,7 +17,6 @@ public class Annotation implements StateParser.IAnnotation{
         annotations.add(ID);
         annotations.add(KEY);
         annotations.add(OPTIONAL);
-        annotations.add(VALUE);
     }
 
     public void setName(String name) {
@@ -62,10 +60,6 @@ public class Annotation implements StateParser.IAnnotation{
 
     public boolean isKey() {
         return name.equals(KEY);
-    }
-
-    public boolean isImmutableType() {
-        return name.equals(VALUE);
     }
 
     public boolean isOptional() {

@@ -123,10 +123,6 @@ public class Attribute implements StateParser.IAttribute {
         return annotations.isKey();
     }
 
-    public boolean isValue() {
-        return annotations.isValue();
-    }
-
     public boolean isOptional() {
         return annotations.isOptional();
     }
@@ -137,10 +133,6 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isMandatory() {
         return !isOptional() && !isId();
-    }
-
-    public Annotation getValue() {
-        return annotations.getValue();
     }
 
     public Annotation getOptional() {

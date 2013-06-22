@@ -105,9 +105,6 @@
             if ({attribute.name} != null) mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
       #end
     #end
-    #foreach (attribute in attributes where attribute.isValue)
-            new {attribute.value.valueFor("state")}({attribute.name}).validate({attribute.constantName}, rootElement, parent, errors);
-    #end
 
   #end
             validate(rootElement, parent, errors);
