@@ -48,8 +48,8 @@ import java.util.Set;
     #foreach (staticImport in staticImports)
 import static {staticImport};
     #end
-  #end
 
+  #end
 #end
 
 #macro attributes(tab, final)
