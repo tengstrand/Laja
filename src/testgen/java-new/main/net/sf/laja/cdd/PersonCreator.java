@@ -86,6 +86,7 @@ public class PersonCreator implements PersonMaker {
     private static final String oldAddress_ = "oldAddress";
     private static final String oldAddresses_ = "oldAddresses";
     private static final String groupedAddresses_ = "groupedAddresses";
+    private static final String listOfSetOfState_ = "listOfSetOfState";
     private static final String listOfSetOfMapOfIntegers_ = "listOfSetOfMapOfIntegers";
 
     // ===== Constructors =====
@@ -284,6 +285,11 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
+    public PersonCreator withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) {
+        state.listOfSetOfState = listOfSetOfState;
+        return this;
+    }
+
     // ----- Validate -----
 
     public void assertIsValid() {
@@ -377,6 +383,7 @@ public class PersonCreator implements PersonMaker {
         public PersonBuilder withOldAddress(AddressCreator.AddressBuilder oldAddress) { state.oldAddress = oldAddress.asMutableState(); return this; }
         public PersonBuilder withOldAddresses(Set<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
         public PersonBuilder withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { state.groupedAddresses = groupedAddresses; return this; }
+        public PersonBuilder withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { state.listOfSetOfState = listOfSetOfState; return this; }
         public PersonBuilder withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
         public Person asPerson() {
