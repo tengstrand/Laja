@@ -77,6 +77,11 @@ public class Type implements StateParser.IType {
         return mapType.entry.isValid();
     }
 
+    public boolean isCollectionOrMapWithState() {
+        return isCollection() && collectionType.type.isState() ||
+                isMap() && mapType.entry.isState();
+    }
+
     public boolean isLeafState() {
         if (!isCollectionOrMap()) {
             return isState();

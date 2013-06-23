@@ -151,6 +151,10 @@ public class Attribute implements StateParser.IAttribute {
         return annotations.isEntity();
     }
 
+    public boolean isCollectionOrMapWithState() {
+        return type.isCollectionOrMapWithState();
+    }
+
     public boolean isLeafState() {
         return type.isLeafState();
     }

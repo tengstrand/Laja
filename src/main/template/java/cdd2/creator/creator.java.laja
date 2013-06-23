@@ -163,7 +163,7 @@ import java.util.Set;
     }
 
     #end
-    #if (attribute.isCollectionOrMap && attribute.isLeafState)
+    #if (attribute.isCollectionOrMapWithState)
       #set (leafState = attribute.leafState)
       #set (type = attribute.collectionOrMapType)
     public {creator} {attribute.withMethod}({leafState}{type}Builder {attribute.name}) {
