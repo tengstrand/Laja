@@ -24,7 +24,7 @@
 
         #foreach (method in asMethods)
         public {method.returnclass} {method.methodName}({method.parameters}) {
-{method.tabbedStatement("    ")}##
+{method.tabbedBody("    ")}##
         }
 
         #end

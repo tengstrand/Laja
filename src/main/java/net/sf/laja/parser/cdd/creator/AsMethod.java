@@ -5,7 +5,7 @@ public class AsMethod implements CreatorParser.IAsMethod {
     public String returnclass;
     public String methodName;
     public Parameters parameters;
-    public String statement;
+    public String body;
 
     public void setSpaces(String spaces) {
         this.spaces = spaces;
@@ -23,16 +23,16 @@ public class AsMethod implements CreatorParser.IAsMethod {
         parameters = (Parameters)iparameters;
     }
 
-    public void setStatement(String statement) {
-        this.statement = statement;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getArguments() {
         return parameters.arguments();
     }
 
-    public String getTabbedStatement(String tab) {
-        String input = statement.trim();
+    public String getTabbedBody(String tab) {
+        String input = body.trim();
         String[] rows = input.split("\n");
         String result = "";
 
@@ -51,7 +51,7 @@ public class AsMethod implements CreatorParser.IAsMethod {
                 ", returnclass='" + returnclass + '\'' +
                 ", methodName='" + methodName + '\'' +
                 ", parameters=(" + parameters + ")" +
-                ", statement='" + statement + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }

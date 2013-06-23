@@ -223,7 +223,7 @@ package {packagename};
 public class {classname} implements {maker} {
     private final {mutableState} state;##
   #foreach (method in asMethods)
-{method.spaces}public {method.returnclass} {method.methodName}({method.parameters}) {method.statement}##
+{method.spaces}public {method.returnclass} {method.methodName}({method.parameters}) {method.body}##
   #end
 {parameters.content}##
 {manualCode}##

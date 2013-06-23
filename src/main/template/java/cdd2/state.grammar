@@ -32,6 +32,9 @@ grammar state {
    generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+];
    manualCode = !(manualEnd | generatedEnd)+;
 
+   body = "{" s [(statement | str | !"}")+]:innerStatement "}";
+   validateMethod = ""
+
    version = digit+;
    classStatement = "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]

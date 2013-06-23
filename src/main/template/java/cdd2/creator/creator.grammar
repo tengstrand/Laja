@@ -18,11 +18,11 @@ grammar creator {
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
    imports = [importstatement+];
 
-   statement = "{" s [(statement | str | !"}")+]:innerStatement "}";
+   body = "{" s [(body | str | !"}")+]:innerStatement "}";
    parameter = s name:type ws name:variable s;
    parameters = [parameter] ["," s parameter]+;
 
-   asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s statement;
+   asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s body;
 
    aparameterAttr = ("name"|"value"|"next"|"method"|"signature"):variable s "=" s (name|str):value;
    aparameter = "@Parameter" s "(" s aparameterAttr [s "," s aparameterAttr]+ s ")";
@@ -47,7 +47,7 @@ grammar creator {
    asMethod.setReturnclass(String returnclass);
    asMethod.setMethodName(String methodName);
    asMethod.setParameters(Parameters parameters);
-   asMethod.setStatement(String statement);
+   asMethod.setBody(String body);
 
    AparameterAttr aparameterAttr.setVariable(String variable);
    aparameterAttr.setValue(String value);

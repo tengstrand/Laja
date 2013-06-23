@@ -8,7 +8,7 @@ public class AsMethodTest {
     @Test
     public void testGetStatementContent() throws Exception {
         AsMethod asMethod = new AsMethod();
-        asMethod.setStatement("{\n" +
+        asMethod.setBody("{\n" +
                 "    int x = 1;\n" +
                 "    if (true) {\n" +
                 "        // do something\n" +
@@ -21,6 +21,6 @@ public class AsMethodTest {
                 "        if (true) {\n" +
                 "            // do something\n" +
                 "        }\n" +
-                "        return new Person(state.asImmutable());\n", asMethod.getTabbedStatement("    "));
+                "        return new Person(state.asImmutable());\n", asMethod.getTabbedBody("    "));
     }
 }
