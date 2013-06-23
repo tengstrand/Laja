@@ -37,10 +37,17 @@
   #end
 #end
 
-#macro preservedValidation()
+#macro userValidate()
+  #if (validateMethod == null)
 
+        /**
+         * Put validations here!
+         */
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
+  #else
+{validateMethod}
+  #end
 #end
 
 #macro assertIsValid()
@@ -175,9 +182,9 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #attributes(tab, "")
   #emptyConstructor()
   #constructor("{mutableClass}", false, tab)
+  #userValidate()
   #getters(tab)
   #setters()
-  #preservedValidation()
   #assertIsValid()
   #isValid()
   #rootValidate()

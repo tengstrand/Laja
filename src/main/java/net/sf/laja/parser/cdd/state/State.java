@@ -17,6 +17,7 @@ public class State implements StateParser.IState {
     public Imports imports;
     public String manualCode;
     public String generatedEnd;
+    public String validateMethod;
 
     public boolean isEntity;
     public String filename;
@@ -68,6 +69,16 @@ public class State implements StateParser.IState {
                 isEntity = true;
             }
         }
+    }
+
+    public void setValidateMethod(String method) {
+        if (method.startsWith("\r")) {
+            method = method.substring(1);
+        }
+        if (method.startsWith("\n")) {
+            method = method.substring(1);
+        }
+        validateMethod = method;
     }
 
     public boolean hasObjectAttribute() {

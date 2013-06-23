@@ -9,6 +9,7 @@
 #set (imports = state.imports)
 #set (manualCode = state.manualCode)
 #set (generatedEnd = state.generatedEnd)
+#set (validateMethod = state.validateMethod)
 #set (isEntity = state.isEntity)
 #set (stateException = "Illegal{classname}Exception")
 

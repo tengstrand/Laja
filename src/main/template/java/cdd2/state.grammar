@@ -32,13 +32,13 @@ grammar state {
    generatedEnd = "//" s  ["*"+ | "-"+ | "="+] s "Generated" [!newline+];
    manualCode = !(manualEnd | generatedEnd)+;
 
-   body = "{" s [(statement | str | !"}")+]:innerStatement "}";
-   validateMethod = ""
+   body = "{" s [(body | str | !"}")+]:innerStatement "}";
+   validateMethod = s "private void validate(Object rootElement, String parent, ValidationErrors.Builder errors)" s body;
 
    version = digit+;
    classStatement = "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
-                    manualEnd|generatedEnd *;
+                    manualEnd|generatedEnd [!validateMethod:m+ validateMethod] *;
 
    state = s packagestatement s imports s classStatement s;
 
@@ -79,4 +79,5 @@ grammar state {
    State state.setPackagename(String packagestatement.packagename);
    state.setImports(Imports imports);
    state.setClassStatement(ClassStatement classStatement);
+   state.setValidateMethod(String classStatement.validateMethod);
 }
