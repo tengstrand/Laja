@@ -269,6 +269,13 @@ public class PersonState implements ImmutableState {
             this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
         }
 
+        /**
+         * Put validations here!
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+            // And add something here!
+        }
+
         public int getId() { return id; }
         public String getName() { return name; }
         public DateMidnight getBirthday() { return birthday; }
@@ -292,13 +299,6 @@ public class PersonState implements ImmutableState {
         public void setGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
         public void setListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; }
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
-
-        /**
-         * Put validations here!
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-            // And add something here!
-        }
 
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);

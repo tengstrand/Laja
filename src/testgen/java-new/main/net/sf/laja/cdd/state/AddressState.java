@@ -131,6 +131,9 @@ public class AddressState implements ImmutableState {
             this.city = city;
         }
 
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
         public int getId() { return id; }
         public String getStreetName() { return streetName; }
         public String getCity() { return city; }
@@ -138,9 +141,6 @@ public class AddressState implements ImmutableState {
         public void setId(int id) { this.id = id; }
         public void setStreetName(String streetName) { this.streetName = streetName; }
         public void setCity(String city) { this.city = city; }
-
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
 
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);

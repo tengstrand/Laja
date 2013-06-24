@@ -40,7 +40,7 @@ grammar state {
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
                     manualEnd|generatedEnd [!validateMethod:m+ validateMethod] *;
 
-   state = s packagestatement s imports s classStatement s;
+   state = [s [packagestatement] s]:ps imports s classStatement s;
 
    Importstatement importstatement.setStatement(String *);
    importstatement.setStatic(void static);
@@ -76,7 +76,7 @@ grammar state {
    classStatement.setManualCode(String manualCode);
    classStatement.setGeneratedEnd(String generatedEnd);
 
-   State state.setPackagename(String packagestatement.packagename);
+   State state.setPackageStatement(String ps);
    state.setImports(Imports imports);
    state.setClassStatement(ClassStatement classStatement);
    state.setValidateMethod(String classStatement.validateMethod);
