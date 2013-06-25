@@ -12,7 +12,7 @@ grammar creator {
 
    public = ["public" ws];
    packagename = name ["." name|"*"]+;
-   packagestatement = "package" ws packagename s ";";
+   packageStatement = "package" ws packagename s ";";
    fullclassname = packagename;
 
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
@@ -33,10 +33,13 @@ grammar creator {
                     "private final" s name:stateClass s "state;" [asMethod|aparameters]+;
 
    manualEnd = ("}" s END);
-   generatedEnd = "// ===== Generated code =====";
-   manualCode = !(manualEnd | generatedEnd)+;
+   generatedCode = "// ===== Generated code =====";
+   manualCode = !(manualEnd | generatedCode)+;
 
-   creator = packagestatement s imports s classStatement manualCode *;
+   creator = packageStatement s imports s classStatement manualCode [generatedCode] *;
+
+   PackageStatement packageStatement.setPackagename(String packagename);
+   packageStatement.setContent(String *);
 
    Parameter parameter.setType(String type);
    parameter.setVariable(String variable);
@@ -62,9 +65,10 @@ grammar creator {
    classStatement.addAsMethod(AsMethod asMethod);
    classStatement.setAParameters(Aparameters aparameters);
 
-   Creator creator.setPackagename(String packagestatement.packagename);
+   Creator creator.setPackageStatement(PackageStatement packageStatement);
    creator.setImports(String imports);
    creator.setClassStatement(ClassStatement classStatement);
    creator.setManualCode(String manualCode);
+   creator.setGeneratedCode(void generatedCode);
    creator.setIsMainCreator(void annotation.main);
 }

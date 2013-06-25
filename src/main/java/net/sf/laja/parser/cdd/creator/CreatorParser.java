@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-06-23 by Laja:
+ * Auto generated 2013-06-25 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -112,8 +112,9 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
     private net.sf.laja.parser.engine2.element.Element getGrammar2() {
         // *** Output classes ***
+        Data.PackageStatementPackageStatement packageStatementPackageStatement = data2.new PackageStatementPackageStatement("packageStatementPackageStatement");
         Data.AparametersAparameters aparametersAparameters = data2.new AparametersAparameters("aparametersAparameters");
-        Data.CreatorPackagestatementPackagename creatorPackagestatementPackagename = data2.new CreatorPackagestatementPackagename("creatorPackagestatementPackagename");
+        Data.PackageStatementPackageStatementPackagename packageStatementPackageStatementPackagename = data2.new PackageStatementPackageStatementPackagename("packageStatementPackageStatementPackagename");
         Data.ParameterParameterType parameterParameterType = data2.new ParameterParameterType("parameterParameterType");
         Data.ParameterParameterVariable parameterParameterVariable = data2.new ParameterParameterVariable("parameterParameterVariable");
         Data.ParametersParametersParameter parametersParametersParameter = data2.new ParametersParametersParameter("parametersParametersParameter");
@@ -131,9 +132,11 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         Data.ClassStatementClassStatementStateClass classStatementClassStatementStateClass = data2.new ClassStatementClassStatementStateClass("classStatementClassStatementStateClass");
         Data.ClassStatementClassStatementAsMethod classStatementClassStatementAsMethod = data2.new ClassStatementClassStatementAsMethod("classStatementClassStatementAsMethod");
         Data.ClassStatementClassStatementAparameters classStatementClassStatementAparameters = data2.new ClassStatementClassStatementAparameters("classStatementClassStatementAparameters");
+        Data.CreatorCreatorPackageStatement creatorCreatorPackageStatement = data2.new CreatorCreatorPackageStatement("creatorCreatorPackageStatement");
         Data.CreatorCreatorImports creatorCreatorImports = data2.new CreatorCreatorImports("creatorCreatorImports");
         Data.CreatorCreatorClassStatement creatorCreatorClassStatement = data2.new CreatorCreatorClassStatement("creatorCreatorClassStatement");
         Data.CreatorCreatorManualCode creatorCreatorManualCode = data2.new CreatorCreatorManualCode("creatorCreatorManualCode");
+        Data.CreatorCreatorGeneratedCode creatorCreatorGeneratedCode = data2.new CreatorCreatorGeneratedCode("creatorCreatorGeneratedCode");
 
         // *** Declarations ***
         OrList newline = new OrList(1, "newline");
@@ -147,7 +150,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList name = new ElementList(9, "name");
         Optional _public = new Optional(10, "public");
         ElementList packagename = new ElementList(11, "packagename");
-        ElementList packagestatement = new ElementList(12, "packagestatement");
+        ElementList packageStatement = new ElementList(12, "packageStatement", packageStatementPackageStatement);
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement");
         Optional imports = new Optional(15, "imports");
@@ -161,7 +164,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList annotation = new ElementList(23, "annotation");
         ElementList classStatement = new ElementList(24, "classStatement");
         ElementList manualEnd = new ElementList(25, "manualEnd");
-        Str generatedEnd = new Str(26, "// ===== Generated code =====");
+        Str generatedCode = new Str(26, "// ===== Generated code =====");
         Repeat manualCode = new Repeat(27, "manualCode");
         ElementList creator = new ElementList(28, "creator");
 
@@ -258,12 +261,12 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         packagename_1.add(113, packagename_1_1);
         packagename.add(114, packagename_1);
 
-        // packagestatement = "package" ws packagename s ";"
-        packagestatement.add(116, new Str(115, "package"));
-        packagestatement.add(117, ws);
-        packagestatement.add(118, packagename, creatorPackagestatementPackagename);
-        packagestatement.add(119, s);
-        packagestatement.add(121, new Str(120, ";"));
+        // packageStatement = "package" ws packagename s ";"
+        packageStatement.add(116, new Str(115, "package"));
+        packageStatement.add(117, ws);
+        packageStatement.add(118, packagename, packageStatementPackageStatementPackagename);
+        packageStatement.add(119, s);
+        packageStatement.add(121, new Str(120, ";"));
 
         // fullclassname = packagename
         fullclassname.add(122, packagename);
@@ -449,22 +452,25 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(314, s);
         manualEnd.add(316, new End(315, "manualEnd"));
 
-        // generatedEnd = "// ===== Generated code ====="
+        // generatedCode = "// ===== Generated code ====="
 
-        // manualCode = !(manualEnd | generatedEnd)+
+        // manualCode = !(manualEnd | generatedCode)+
         OrList manualCode_1 = new OrList(317, "manualCode_1");
         manualCode_1.add(318, manualEnd);
-        manualCode_1.add(319, generatedEnd);
+        manualCode_1.add(319, generatedCode);
         manualCode.add(320, manualCode_1, NOT);
 
-        // creator = packagestatement s imports s classStatement manualCode *
-        creator.add(321, packagestatement);
+        // creator = packageStatement s imports s classStatement manualCode [generatedCode] *
+        creator.add(321, packageStatement, creatorCreatorPackageStatement);
         creator.add(322, s);
         creator.add(323, imports, creatorCreatorImports);
         creator.add(324, s);
         creator.add(325, classStatement, creatorCreatorClassStatement);
         creator.add(326, manualCode, creatorCreatorManualCode);
-        creator.add(328, new Complete(327, "creator"));
+        Optional creator_1 = new Optional(327, "creator_1");
+        creator_1.add(328, generatedCode, creatorCreatorGeneratedCode);
+        creator.add(329, creator_1);
+        creator.add(331, new Complete(330, "creator"));
 
         return new TopElement(data2, creator);
     }
@@ -484,7 +490,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList name = new ElementList(9, "name");
         Optional _public = new Optional(10, "public");
         ElementList packagename = new ElementList(11, "packagename");
-        ElementList packagestatement = new ElementList(12, "packagestatement");
+        ElementList packageStatement = new ElementList(12, "packageStatement");
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement");
         Optional imports = new Optional(15, "imports");
@@ -498,7 +504,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList annotation = new ElementList(23, "annotation");
         ElementList classStatement = new ElementList(24, "classStatement");
         ElementList manualEnd = new ElementList(25, "manualEnd");
-        Str generatedEnd = new Str(26, "// ===== Generated code =====");
+        Str generatedCode = new Str(26, "// ===== Generated code =====");
         Repeat manualCode = new Repeat(27, "manualCode");
         ElementList creator = new ElementList(28, "creator");
 
@@ -595,12 +601,12 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         packagename_1.add(113, packagename_1_1);
         packagename.add(114, packagename_1);
 
-        // packagestatement = "package" ws packagename s ";"
-        packagestatement.add(116, new Str(115, "package"));
-        packagestatement.add(117, ws);
-        packagestatement.add(118, packagename);
-        packagestatement.add(119, s);
-        packagestatement.add(121, new Str(120, ";"));
+        // packageStatement = "package" ws packagename s ";"
+        packageStatement.add(116, new Str(115, "package"));
+        packageStatement.add(117, ws);
+        packageStatement.add(118, packagename);
+        packageStatement.add(119, s);
+        packageStatement.add(121, new Str(120, ";"));
 
         // fullclassname = packagename
         fullclassname.add(122, packagename);
@@ -786,22 +792,25 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualEnd.add(314, s);
         manualEnd.add(316, new End(315, "manualEnd"));
 
-        // generatedEnd = "// ===== Generated code ====="
+        // generatedCode = "// ===== Generated code ====="
 
-        // manualCode = !(manualEnd | generatedEnd)+
+        // manualCode = !(manualEnd | generatedCode)+
         OrList manualCode_1 = new OrList(317, "manualCode_1");
         manualCode_1.add(318, manualEnd);
-        manualCode_1.add(319, generatedEnd);
+        manualCode_1.add(319, generatedCode);
         manualCode.add(320, manualCode_1, NOT);
 
-        // creator = packagestatement s imports s classStatement manualCode *
-        creator.add(321, packagestatement);
+        // creator = packageStatement s imports s classStatement manualCode [generatedCode] *
+        creator.add(321, packageStatement);
         creator.add(322, s);
         creator.add(323, imports);
         creator.add(324, s);
         creator.add(325, classStatement);
         creator.add(326, manualCode);
-        creator.add(328, new Complete(327, "creator"));
+        Optional creator_1 = new Optional(327, "creator_1");
+        creator_1.add(328, generatedCode);
+        creator.add(329, creator_1);
+        creator.add(331, new Complete(330, "creator"));
 
         return new TopElement(data1, creator);
     }
@@ -836,6 +845,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
     // *** ICreatorFactory ***
     public interface ICreatorFactory {
+        CreatorParser.IPackageStatement createPackageStatement();
         CreatorParser.IParameter createParameter();
         CreatorParser.IParameters createParameters();
         CreatorParser.IAsMethod createAsMethod();
@@ -847,6 +857,12 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
     }
 
     // *** Interfaces ***
+    // PackageStatement
+    public interface IPackageStatement {
+        public void setPackagename(String packagename);
+        public void setContent(String packageStatement);
+    }
+
     // Parameter
     public interface IParameter {
         public void setType(String type);
@@ -894,16 +910,18 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
     // Creator
     public interface ICreator {
-        public void setPackagename(String packagename);
+        public void setPackageStatement(IPackageStatement ipackageStatement);
         public void setImports(String imports);
         public void setClassStatement(IClassStatement iclassStatement);
         public void setManualCode(String manualCode);
+        public void setGeneratedCode();
         public void setIsMainCreator();
     }
 
     // *** Data ***
     public static final class Data {
         private CreatorParser.ICreatorFactory factory;
+        private Stack<IPackageStatement> packageStatementStack = new Stack<IPackageStatement>();
         private Stack<IParameter> parameterStack = new Stack<IParameter>();
         private Stack<IParameters> parametersStack = new Stack<IParameters>();
         private Stack<IAsMethod> asMethodStack = new Stack<IAsMethod>();
@@ -915,6 +933,14 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
         public Data(CreatorParser.ICreatorFactory factory) {
             this.factory = factory;
+        }
+
+        // PackageStatement
+        public void pushPackageStatement() { packageStatementStack.push(factory.createPackageStatement()); }
+        public CreatorParser.IPackageStatement popPackageStatement() { return (CreatorParser.IPackageStatement)packageStatementStack.pop(); }
+        public CreatorParser.IPackageStatement peekPackageStatement() {
+            if (packageStatementStack.empty()) { return null; }
+            return packageStatementStack.peek();
         }
 
         // Parameter
@@ -981,6 +1007,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             return creatorStack.peek();
         }
 
+        // packageStatement.setContent(String *);
+        public class PackageStatementPackageStatement implements Output {
+            private String name;
+            public PackageStatementPackageStatement(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekPackageStatement().setContent(source.get(bookmark));
+            }
+        }
+
         // aparameters.setContent(String *);
         public class AparametersAparameters implements Output {
             private String name;
@@ -992,14 +1029,14 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
-        // Creator creator.setPackagename(String packagestatement.packagename);
-        public class CreatorPackagestatementPackagename implements Output {
+        // PackageStatement packageStatement.setPackagename(String packagename);
+        public class PackageStatementPackageStatementPackagename implements Output {
             private String name;
-            public CreatorPackagestatementPackagename(String name) { this.name = name; }
+            public PackageStatementPackageStatementPackagename(String name) { this.name = name; }
             public boolean receive() { return false; }
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
-                peekCreator().setPackagename(source.get(bookmark));
+                peekPackageStatement().setPackagename(source.get(bookmark));
             }
         }
 
@@ -1190,6 +1227,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
+        // Creator creator.setPackageStatement(PackageStatement packageStatement);
+        public class CreatorCreatorPackageStatement implements Output {
+            private String name;
+            public CreatorCreatorPackageStatement(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushPackageStatement(); }
+            public void set(Source source, int bookmark) {
+                peekCreator().setPackageStatement(popPackageStatement());
+            }
+        }
+
         // creator.setImports(String imports);
         public class CreatorCreatorImports implements Output {
             private String name;
@@ -1220,6 +1268,17 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekCreator().setManualCode(source.get(bookmark));
+            }
+        }
+
+        // creator.setGeneratedCode(void generatedCode);
+        public class CreatorCreatorGeneratedCode implements Output {
+            private String name;
+            public CreatorCreatorGeneratedCode(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekCreator().setGeneratedCode();
             }
         }
     }

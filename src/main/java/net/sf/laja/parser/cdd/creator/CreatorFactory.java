@@ -8,6 +8,10 @@ public class CreatorFactory implements CreatorParser.ICreatorFactory {
         this.creatorClassname = creatorClassname;
     }
 
+    public CreatorParser.IPackageStatement createPackageStatement() {
+        return new PackageStatement();
+    }
+
     public CreatorParser.IParameter createParameter() {
         return new Parameter();
     }

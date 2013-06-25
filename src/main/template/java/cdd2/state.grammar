@@ -12,7 +12,7 @@ grammar state {
 
    public = ["public" ws];
    packagename = name ["." name|"*"]+;
-   packagestatement = "package" ws packagename s ";";
+   packageStatement = "package" ws packagename s ";";
    fullclassname = packagename;
 
    importstatement = "import" ws ["static":static ws] fullclassname s ";" s;
@@ -40,7 +40,10 @@ grammar state {
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
                     manualEnd|generatedEnd [!validateMethod:m+ validateMethod] *;
 
-   state = [s [packagestatement] s]:ps imports s classStatement s;
+   state = [s [packageStatement] s] imports s classStatement s;
+
+   PackageStatement packageStatement.setPackagename(String packagename);
+   packageStatement.setContent(String *);
 
    Importstatement importstatement.setStatement(String *);
    importstatement.setStatic(void static);
@@ -76,7 +79,7 @@ grammar state {
    classStatement.setManualCode(String manualCode);
    classStatement.setGeneratedEnd(String generatedEnd);
 
-   State state.setPackageStatement(String ps);
+   State state.setPackageStatement(PackageStatement packageStatement);
    state.setImports(Imports imports);
    state.setClassStatement(ClassStatement classStatement);
    state.setValidateMethod(String classStatement.validateMethod);

@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-06-24 by Laja:
+ * Auto generated 2013-06-25 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -112,8 +112,10 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
 
     private net.sf.laja.parser.engine2.element.Element getGrammar2() {
         // *** Output classes ***
+        Data.PackageStatementPackageStatement packageStatementPackageStatement = data2.new PackageStatementPackageStatement("packageStatementPackageStatement");
         Data.ImportstatementImportstatement importstatementImportstatement = data2.new ImportstatementImportstatement("importstatementImportstatement");
         Data.AnnotationsAnnotations annotationsAnnotations = data2.new AnnotationsAnnotations("annotationsAnnotations");
+        Data.PackageStatementPackageStatementPackagename packageStatementPackageStatementPackagename = data2.new PackageStatementPackageStatementPackagename("packageStatementPackageStatementPackagename");
         Data.ImportstatementImportstatementStatic importstatementImportstatementStatic = data2.new ImportstatementImportstatementStatic("importstatementImportstatementStatic");
         Data.ImportstatementImportstatementFullclassname importstatementImportstatementFullclassname = data2.new ImportstatementImportstatementFullclassname("importstatementImportstatementFullclassname");
         Data.ImportsImportsImportstatement importsImportsImportstatement = data2.new ImportsImportsImportstatement("importsImportsImportstatement");
@@ -137,7 +139,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         Data.ClassStatementClassStatementManualCode classStatementClassStatementManualCode = data2.new ClassStatementClassStatementManualCode("classStatementClassStatementManualCode");
         Data.ClassStatementClassStatementGeneratedEnd classStatementClassStatementGeneratedEnd = data2.new ClassStatementClassStatementGeneratedEnd("classStatementClassStatementGeneratedEnd");
         Data.StateClassStatementValidateMethod stateClassStatementValidateMethod = data2.new StateClassStatementValidateMethod("stateClassStatementValidateMethod");
-        Data.StateStatePs stateStatePs = data2.new StateStatePs("stateStatePs");
+        Data.StateStatePackageStatement stateStatePackageStatement = data2.new StateStatePackageStatement("stateStatePackageStatement");
         Data.StateStateImports stateStateImports = data2.new StateStateImports("stateStateImports");
         Data.StateStateClassStatement stateStateClassStatement = data2.new StateStateClassStatement("stateStateClassStatement");
 
@@ -153,7 +155,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         ElementList name = new ElementList(9, "name");
         Optional _public = new Optional(10, "public");
         ElementList packagename = new ElementList(11, "packagename");
-        ElementList packagestatement = new ElementList(12, "packagestatement");
+        ElementList packageStatement = new ElementList(12, "packageStatement", packageStatementPackageStatement);
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement", importstatementImportstatement);
         Optional imports = new Optional(15, "imports");
@@ -268,12 +270,12 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         packagename_1.add(117, packagename_1_1);
         packagename.add(118, packagename_1);
 
-        // packagestatement = "package" ws packagename s ";"
-        packagestatement.add(120, new Str(119, "package"));
-        packagestatement.add(121, ws);
-        packagestatement.add(122, packagename);
-        packagestatement.add(123, s);
-        packagestatement.add(125, new Str(124, ";"));
+        // packageStatement = "package" ws packagename s ";"
+        packageStatement.add(120, new Str(119, "package"));
+        packageStatement.add(121, ws);
+        packageStatement.add(122, packagename, packageStatementPackageStatementPackagename);
+        packageStatement.add(123, s);
+        packageStatement.add(125, new Str(124, ";"));
 
         // fullclassname = packagename
         fullclassname.add(126, packagename);
@@ -518,11 +520,11 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(366, classStatement_7);
         classStatement.add(368, new Complete(367, "classStatement"));
 
-        // state = [s [packagestatement] s]:ps imports s classStatement s
-        Optional state_1 = new Optional(369, "state_1", stateStatePs);
+        // state = [s [packageStatement] s] imports s classStatement s
+        Optional state_1 = new Optional(369, "state_1");
         state_1.add(370, s);
         Optional state_1_1 = new Optional(371, "state_1_1");
-        state_1_1.add(372, packagestatement);
+        state_1_1.add(372, packageStatement, stateStatePackageStatement);
         state_1.add(373, state_1_1);
         state_1.add(374, s);
         state.add(375, state_1);
@@ -549,7 +551,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         ElementList name = new ElementList(9, "name");
         Optional _public = new Optional(10, "public");
         ElementList packagename = new ElementList(11, "packagename");
-        ElementList packagestatement = new ElementList(12, "packagestatement");
+        ElementList packageStatement = new ElementList(12, "packageStatement");
         ElementList fullclassname = new ElementList(13, "fullclassname");
         ElementList importstatement = new ElementList(14, "importstatement");
         Optional imports = new Optional(15, "imports");
@@ -664,12 +666,12 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         packagename_1.add(117, packagename_1_1);
         packagename.add(118, packagename_1);
 
-        // packagestatement = "package" ws packagename s ";"
-        packagestatement.add(120, new Str(119, "package"));
-        packagestatement.add(121, ws);
-        packagestatement.add(122, packagename);
-        packagestatement.add(123, s);
-        packagestatement.add(125, new Str(124, ";"));
+        // packageStatement = "package" ws packagename s ";"
+        packageStatement.add(120, new Str(119, "package"));
+        packageStatement.add(121, ws);
+        packageStatement.add(122, packagename);
+        packageStatement.add(123, s);
+        packageStatement.add(125, new Str(124, ";"));
 
         // fullclassname = packagename
         fullclassname.add(126, packagename);
@@ -914,11 +916,11 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(366, classStatement_7);
         classStatement.add(368, new Complete(367, "classStatement"));
 
-        // state = [s [packagestatement] s]:ps imports s classStatement s
+        // state = [s [packageStatement] s] imports s classStatement s
         Optional state_1 = new Optional(369, "state_1");
         state_1.add(370, s);
         Optional state_1_1 = new Optional(371, "state_1_1");
-        state_1_1.add(372, packagestatement);
+        state_1_1.add(372, packageStatement);
         state_1.add(373, state_1_1);
         state_1.add(374, s);
         state.add(375, state_1);
@@ -960,6 +962,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
 
     // *** IStateFactory ***
     public interface IStateFactory {
+        StateParser.IPackageStatement createPackageStatement();
         StateParser.IImportstatement createImportstatement();
         StateParser.IImports createImports();
         StateParser.ICollectionType createCollectionType();
@@ -974,6 +977,12 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
     }
 
     // *** Interfaces ***
+    // PackageStatement
+    public interface IPackageStatement {
+        public void setPackagename(String packagename);
+        public void setContent(String packageStatement);
+    }
+
     // Importstatement
     public interface IImportstatement {
         public void setStatement(String importstatement);
@@ -1040,7 +1049,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
 
     // State
     public interface IState {
-        public void setPackageStatement(String ps);
+        public void setPackageStatement(IPackageStatement ipackageStatement);
         public void setImports(IImports iimports);
         public void setClassStatement(IClassStatement iclassStatement);
         public void setValidateMethod(String validateMethod);
@@ -1049,6 +1058,7 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
     // *** Data ***
     public static final class Data {
         private StateParser.IStateFactory factory;
+        private Stack<IPackageStatement> packageStatementStack = new Stack<IPackageStatement>();
         private Stack<IImportstatement> importstatementStack = new Stack<IImportstatement>();
         private Stack<IImports> importsStack = new Stack<IImports>();
         private Stack<ICollectionType> collectionTypeStack = new Stack<ICollectionType>();
@@ -1063,6 +1073,14 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
 
         public Data(StateParser.IStateFactory factory) {
             this.factory = factory;
+        }
+
+        // PackageStatement
+        public void pushPackageStatement() { packageStatementStack.push(factory.createPackageStatement()); }
+        public StateParser.IPackageStatement popPackageStatement() { return (StateParser.IPackageStatement)packageStatementStack.pop(); }
+        public StateParser.IPackageStatement peekPackageStatement() {
+            if (packageStatementStack.empty()) { return null; }
+            return packageStatementStack.peek();
         }
 
         // Importstatement
@@ -1153,6 +1171,17 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             return stateStack.peek();
         }
 
+        // packageStatement.setContent(String *);
+        public class PackageStatementPackageStatement implements Output {
+            private String name;
+            public PackageStatementPackageStatement(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekPackageStatement().setContent(source.get(bookmark));
+            }
+        }
+
         // Importstatement importstatement.setStatement(String *);
         public class ImportstatementImportstatement implements Output {
             private String name;
@@ -1172,6 +1201,17 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekAnnotations().setContent(source.get(bookmark));
+            }
+        }
+
+        // PackageStatement packageStatement.setPackagename(String packagename);
+        public class PackageStatementPackageStatementPackagename implements Output {
+            private String name;
+            public PackageStatementPackageStatementPackagename(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekPackageStatement().setPackagename(source.get(bookmark));
             }
         }
 
@@ -1428,14 +1468,14 @@ public final class StateParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
-        // State state.setPackageStatement(String ps);
-        public class StateStatePs implements Output {
+        // State state.setPackageStatement(PackageStatement packageStatement);
+        public class StateStatePackageStatement implements Output {
             private String name;
-            public StateStatePs(String name) { this.name = name; }
+            public StateStatePackageStatement(String name) { this.name = name; }
             public boolean receive() { return false; }
-            public void init(Source source) { }
+            public void init(Source source) { pushPackageStatement(); }
             public void set(Source source, int bookmark) {
-                peekState().setPackageStatement(source.get(bookmark));
+                peekState().setPackageStatement(popPackageStatement());
             }
         }
 

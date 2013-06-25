@@ -8,6 +8,10 @@ public class StateFactory implements StateParser.IStateFactory {
         this.stateClassname = stateClassname;
     }
 
+    public StateParser.IPackageStatement createPackageStatement() {
+        return new PackageStatement();
+    }
+
     public StateParser.IImportstatement createImportstatement() {
         return new ImportStatement();
     }

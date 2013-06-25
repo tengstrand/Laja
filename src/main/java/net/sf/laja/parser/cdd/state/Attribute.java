@@ -22,21 +22,33 @@ public class Attribute implements StateParser.IAttribute {
         return state;
     }
 
+    public Attribute asImmutable() {
+        Attribute result = new Attribute();
+        result.type = type.asImmutable();
+        copyTypes(result);
+
+        return result;
+    }
+
     public Attribute asMutable() {
         Attribute result = new Attribute();
         result.type = type.asMutable();
-        result.name = name;
-        result.nameAsClass = nameAsClass;
-        result.annotations = annotations;
-        result.state = state;
-
-        if (annotationsContent.contains("\n")) {
-            result.annotationsContent = annotationsContent + "    ";
-        } else {
-            result.annotationsContent = annotationsContent;
-        }
+        copyTypes(result);
 
         return result;
+    }
+
+    private void copyTypes(Attribute attribute) {
+        attribute.name = name;
+        attribute.nameAsClass = nameAsClass;
+        attribute.annotations = annotations;
+        attribute.state = state;
+
+        if (annotationsContent.contains("\n")) {
+            attribute.annotationsContent = annotationsContent + "    ";
+        } else {
+            attribute.annotationsContent = annotationsContent;
+        }
     }
 
     public void setAnnotations(StateParser.IAnnotations iannotations) {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class State implements StateParser.IState {
+    public String packagename;
     public String packageStatement;
     public int version;
     public String name;
@@ -45,8 +46,10 @@ public class State implements StateParser.IState {
         return result;
     }
 
-    public void setPackageStatement(String packageStatement) {
-        this.packageStatement = packageStatement;
+    public void setPackageStatement(StateParser.IPackageStatement ipackageStatement) {
+        PackageStatement statement = (PackageStatement)ipackageStatement;
+        packagename = statement.packagename;
+        packageStatement = statement.content;
     }
 
     public void setImports(StateParser.IImports iimports) {
@@ -103,6 +106,7 @@ public class State implements StateParser.IState {
     public String toString() {
         return "State{" +
                 "filename='" + filename + '\'' +
+                ", packagename='" + packagename + '\'' +
                 ", packageStatement='" + packageStatement + '\'' +
                 ", name='" + name + '\'' +
                 ", classname='" + classname + '\'' +

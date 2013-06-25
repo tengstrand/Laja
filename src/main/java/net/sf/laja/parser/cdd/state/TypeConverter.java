@@ -3,6 +3,9 @@ package net.sf.laja.parser.cdd.state;
 public class TypeConverter {
 
     public String asMutable(String typeName) {
+        if (typeName.endsWith("MutableState")) {
+            return typeName;
+        }
         if (typeName.endsWith("State")) {
             return typeName.substring(0, typeName.length()-"State".length()) + "MutableState";
         }

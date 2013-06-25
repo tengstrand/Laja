@@ -7,12 +7,14 @@ import java.util.List;
 public class Creator implements CreatorParser.ICreator{
     public boolean isMain;
     public String packagename;
+    public String packageStatement;
     public String imports;
     public String maker;
     public String classname;
     public String state;
     public String statevariable;
     public String manualCode;
+    public boolean isGeneratedCode;
     public List<AsMethod> asMethods;
     public Aparameters parameters;
 
@@ -29,6 +31,12 @@ public class Creator implements CreatorParser.ICreator{
 
     public void setPackagename(String packagename) {
         this.packagename = packagename;
+    }
+
+    public void setPackageStatement(CreatorParser.IPackageStatement ipackageStatement) {
+        PackageStatement statement = (PackageStatement)ipackageStatement;
+        packagename = statement.packagename;
+        packageStatement = statement.content;
     }
 
     public void setImports(String imports) {
@@ -54,6 +62,10 @@ public class Creator implements CreatorParser.ICreator{
         this.manualCode = manualCode;
     }
 
+    public void setGeneratedCode() {
+        isGeneratedCode = true;
+    }
+
     @Override
     public String toString() {
         return "Creator{" +
@@ -61,10 +73,15 @@ public class Creator implements CreatorParser.ICreator{
                 ", packagename='" + packagename + '\'' +
                 ", imports='" + imports + '\'' +
                 ", classname='" + classname + '\'' +
+                ", isMain='" + isMain + '\'' +
+                ", isGeneratedCode='" + isGeneratedCode + '\'' +
+                ", isclassname='" + classname + '\'' +
+                ", parameters='" + parameters + '\'' +
                 ", state='" + state + '\'' +
                 ", statevariable='" + statevariable + '\'' +
                 ", manualCode='" + manualCode + '\'' +
                 ", asMethods=" + asMethods +
+                ", maker=" + maker +
                 '}';
     }
 }

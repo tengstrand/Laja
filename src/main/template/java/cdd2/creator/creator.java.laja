@@ -1,11 +1,13 @@
 
 #set (filename = creator.filename)
 #set (packagename = creator.packagename)
+#set (packageStatement = creator.packageStatement)
 #set (imports = creator.imports)
 #set (classname = creator.classname)
 #set (statevariable = creator.statevariable)
 #set (asMethods = creator.asMethods)
 #set (parameters = creator.parameters)
+#set (isGeneratedCode = creator.isGeneratedCode)
 #set (state = creator.state)
 #set (immutableState = "{state}State")
 #set (mutableState = "{state}MutableState")
@@ -37,26 +39,36 @@
 #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
 
 #macro imports()
-  #if (manualCode.trim().isEmpty)
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-    #set (imports = new java.util.HashSet())
-    #foreach (attribute in attributes)
-      #if (attribute.isState)
-        #imports.add("{attribute.type}")
-      #end
+  #if (!isGeneratedCode)
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.validator.Validator;
+import org.joda.time.*;
+import java.util.*;
+
+import {packagename}.{immutableState};
+
+    #set (stateImports = new java.util.HashSet())
+    #foreach (attribute in attributes where attribute.isState)
+      #stateImports.add("{attribute.stateObject.packagename}.{attribute.asImmutable.type}.{attribute.asMutable.type}")
     #end
+    #foreach (import in stateImports)
+import {import};
+    #end
+
   #end
 {imports}##
 #end
 
 #macro fields()
+  #if (!isGeneratedCode)
+
+    // ===== Generated code =====
+  #else
 // ===== Generated code =====
+  #end
 
   #foreach(attribute in attributes)
     private static final String {attribute.name}_ = "{attribute.name}";
@@ -218,7 +230,7 @@ import java.util.Set;
 #write "{filename}.txt"
 package {packagename};
 
-{imports}##
+  #imports()
 @Creator
 public class {classname} implements {maker} {
     private final {mutableState} state;##
