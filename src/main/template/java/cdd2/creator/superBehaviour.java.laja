@@ -1,6 +1,7 @@
+#namespace creator
 
 #macro superBehaviour()
-    // ----- Behaviour -----
+    // --- Behaviour ---
 
     public static class {superBehaviour} {
         public final {immutableState} s;

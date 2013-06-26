@@ -1,7 +1,8 @@
+#namespace creator
 
 #macro maker()
 
-// ----- Maker -----
+// --- Maker ---
 
 interface {maker} {
   #foreach (method in asMethods)

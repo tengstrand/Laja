@@ -1,6 +1,7 @@
+#namespace creator
 
 #macro builder()
-    // ----- Builder -----
+    // --- Builder ---
 
     public static class {builder} implements {maker} {
         private final {mutableState} state;

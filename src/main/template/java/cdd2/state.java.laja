@@ -1,17 +1,19 @@
 
-#set (filename = state.filename)
-#set (packageContent = state.packageContent)
-#set (version = state.version)
-#set (classname = state.classname)
-#set (classvariable = state.classvariable)
-#set (mutableClass = state.mutableClass)
-#set (attributes = state.attributes)
-#set (imports = state.imports)
-#set (manualCode = state.manualCode)
-#set (generatedEnd = state.generatedEnd)
-#set (validateMethod = state.validateMethod)
-#set (isEntity = state.isEntity)
-#set (stateException = "Illegal{classname}Exception")
+#macro initializeState()
+  #set (filename = state.filename)
+  #set (packageContent = state.packageContent)
+  #set (version = state.version)
+  #set (classname = state.classname)
+  #set (classvariable = state.classvariable)
+  #set (mutableClass = state.mutableClass)
+  #set (attributes = state.attributes)
+  #set (imports = state.imports)
+  #set (manualCode = state.manualCode)
+  #set (generatedEnd = state.generatedEnd)
+  #set (validateMethod = state.validateMethod)
+  #set (isEntity = state.isEntity)
+  #set (stateException = "Illegal{classname}Exception")
+#end
 
 #macro imports()
   #foreach (import in imports)
@@ -379,34 +381,38 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #import "{.}/mutableState.java.laja"
 
-#write "{filename}.txt"
+#macro generateState()
+  #initializeState()
+
+  #write "{filename}.txt"
 {packageContent}##
-  #imports()
-  #classHeader()
-  #attributes("    ", "final ")##
-  #if (generatedEnd == null)
+    #imports()
+    #classHeader()
+    #attributes("    ", "final ")##
+    #if (generatedEnd == null)
 {manualCode}
     public void assertIsValid() {
     }
 
     // ===== Generated code =====
-  #else
+    #else
 {manualCode}##
 {generatedEnd}
-  #end
+    #end
 
-  #set (tab = "    ")
-  #constants()
-  #constructor("{classname}", true, tab)
-  #exception()
-  #getters(tab)
-  #withMethods()
-  #asMutable()
-  #hashCode(tab)
-  #equals(classname, tab)
-  #hashCodeValue(tab)
-  #equalsValue(classname, tab)
-  #toString(tab)
-  #$mutable.mutableState()
+    #set (tab = "    ")
+    #constants()
+    #constructor("{classname}", true, tab)
+    #exception()
+    #getters(tab)
+    #withMethods()
+    #asMutable()
+    #hashCode(tab)
+    #equals(classname, tab)
+    #hashCodeValue(tab)
+    #equalsValue(classname, tab)
+    #toString(tab)
+    #$mutable.mutableState()
 }
+  #end
 #end

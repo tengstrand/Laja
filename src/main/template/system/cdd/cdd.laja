@@ -65,11 +65,14 @@
 #end
 
 #macro generateStatesAndCreators()
+  #import "{..}/../java/cdd2/state.java.laja"
+  #import "{..}/../java/cdd2/creator/creator.java.laja"
+
   #foreach (s in states)
     #set (state = s)
-    #import "{..}/../java/cdd2/state.java.laja"
-    #foreach (creator in creators where creator.state == state.name)
-      #import "{..}/../java/cdd2/creator/creator.java.laja"
+    #generateState()
+    #foreach (c in creators where c.state == state.name)
+      #$creator.generateCreator(c)
     #end
   #end
 #end
@@ -95,12 +98,10 @@
   #set (creatorFiles = fileReader.readFiles(srcDir, "Creator.java"))
 
   #foreach (file in creatorFiles)
-    #if (!file.endsWith("xDbPersonCreator.java"))
-      #set (creator = cddParser.parseCreator(file))
-      #if (creator != null)
-        #set (creator.filename = file)
-        #creators.add(creator)
-      #end
+    #set (creator = cddParser.parseCreator(file))
+    #if (creator != null)
+      #set (creator.filename = file)
+      #creators.add(creator)
     #end
   #end
   #return creators

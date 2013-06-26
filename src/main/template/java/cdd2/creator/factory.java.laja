@@ -1,4 +1,4 @@
-#namespace factory
+#namespace creator
 
 #macro factory()
   #if (hasMandatoryAttributes)
@@ -141,7 +141,7 @@
 #end
 
 #macro factoryClass()
-    // ----- Factory ------
+    // --- Factory ----
 
     public class {factory} {
 

@@ -1,6 +1,7 @@
+#namespace creator
 
 #macro mapBuilder()
-    // ----- MapBuilder -----
+    // --- MapBuilder ---
 
     public static class {mapBuilder} {
         private final {mapEntryBuilder}[] entries;

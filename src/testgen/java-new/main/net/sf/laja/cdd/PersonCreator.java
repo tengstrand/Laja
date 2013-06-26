@@ -89,7 +89,7 @@ public class PersonCreator implements PersonMaker {
     private static final String listOfSetOfState_ = "listOfSetOfState";
     private static final String listOfSetOfMapOfIntegers_ = "listOfSetOfMapOfIntegers";
 
-    // ===== Constructors =====
+    // --- Constructors ---
 
     public static PersonFactory createPerson() {
         return new PersonCreator(new PersonMutableState()).new PersonFactory();
@@ -119,7 +119,7 @@ public class PersonCreator implements PersonMaker {
         return new PersonMapEntryBuilder(key, builder);
     }
 
-    // ----- Factory ------
+    // --- Factory ----
 
     public class PersonFactory {
 
@@ -234,7 +234,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- Constructor -----
+    // --- Constructor ---
 
     public PersonCreator(PersonMutableState state) {
         this.state = state;
@@ -248,7 +248,7 @@ public class PersonCreator implements PersonMaker {
         return state;
     }
 
-    // ----- With methods -----
+    // --- With methods ---
 
     public PersonCreator withId(int id) {
         state.id = id;
@@ -290,7 +290,7 @@ public class PersonCreator implements PersonMaker {
         return this;
     }
 
-    // ----- Validate -----
+    // --- Validate ---
 
     public void assertIsValid() {
         state.assertIsValid();
@@ -304,7 +304,7 @@ public class PersonCreator implements PersonMaker {
         return state.validate(validators);
     }
 
-    // ----- Behaviour -----
+    // --- Behaviour ---
 
     public static class PersonBehaviour {
         public final PersonState s;
@@ -329,7 +329,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- MutableBehaviour -----
+    // --- MutableBehaviour ---
 
     public static class PersonMutableBehaviour {
         private PersonMutableState s;
@@ -358,7 +358,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- Builder -----
+    // --- Builder ---
 
     public static class PersonBuilder implements PersonMaker {
         private final PersonMutableState state;
@@ -419,7 +419,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- ListBuilder -----
+    // --- ListBuilder ---
 
     public static class PersonListBuilder {
         private PersonCreator[] creators;
@@ -517,7 +517,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- SetBuilder -----
+    // --- SetBuilder ---
 
     public static class PersonSetBuilder {
         private PersonCreator[] creators;
@@ -615,7 +615,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- MapEntryBuilder -----
+    // --- MapEntryBuilder ---
 
     public static class PersonMapEntryBuilder {
         private final Object key;
@@ -647,7 +647,7 @@ public class PersonCreator implements PersonMaker {
         }
     }
 
-    // ----- MapBuilder -----
+    // --- MapBuilder ---
 
     public static class PersonMapBuilder {
         private final PersonMapEntryBuilder[] entries;
@@ -746,7 +746,7 @@ public class PersonCreator implements PersonMaker {
     }
 }
 
-// ----- Maker -----
+// --- Maker ---
 
 interface PersonMaker {
     Person asPerson();

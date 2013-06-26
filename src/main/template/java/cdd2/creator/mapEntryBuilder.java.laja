@@ -1,6 +1,7 @@
+#namespace creator
 
 #macro mapEntryBuilder()
-    // ----- MapEntryBuilder -----
+    // --- MapEntryBuilder ---
 
     public static class {mapEntryBuilder} {
         private final Object key;

@@ -1,6 +1,7 @@
+#namespace creator
 
 #macro setBuilder()
-    // ----- SetBuilder -----
+    // --- SetBuilder ---
 
     public static class {setBuilder} {
         private {creator}[] creators;
