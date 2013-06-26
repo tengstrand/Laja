@@ -8,7 +8,7 @@ import java.util.List;
 
 public class State implements StateParser.IState {
     public String packagename;
-    public String packageStatement;
+    public String packageContent;
     public int version;
     public String name;
     public String classname;
@@ -46,10 +46,12 @@ public class State implements StateParser.IState {
         return result;
     }
 
-    public void setPackageStatement(StateParser.IPackageStatement ipackageStatement) {
-        PackageStatement statement = (PackageStatement)ipackageStatement;
-        packagename = statement.packagename;
-        packageStatement = statement.content;
+    public void setPackageName(String packagename) {
+        this.packagename = packagename;
+    }
+
+    public void setPackageContent(String packageContent) {
+        this.packageContent = packageContent;
     }
 
     public void setImports(StateParser.IImports iimports) {
@@ -107,7 +109,7 @@ public class State implements StateParser.IState {
         return "State{" +
                 "filename='" + filename + '\'' +
                 ", packagename='" + packagename + '\'' +
-                ", packageStatement='" + packageStatement + '\'' +
+                ", packageContent='" + packageContent + '\'' +
                 ", name='" + name + '\'' +
                 ", classname='" + classname + '\'' +
                 ", classvariable='" + classvariable + '\'' +

@@ -41,7 +41,7 @@
   #if (validateMethod == null)
 
         /**
-         * Put validations here!
+         * Put validations here (this comment can be removed or modified).
          */
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

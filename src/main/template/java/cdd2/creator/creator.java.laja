@@ -77,7 +77,7 @@ import {import};
 #end
 
 #macro create()
-    // ===== Constructors =====
+    // --- Constructors ---
 
   #if (hasMandatoryAttributes)
     public static {factory} create{state}() {
@@ -135,7 +135,7 @@ import {import};
 
 #macro constructor()
 
-    // ----- Constructor -----
+    // --- Constructor ---
 
     public {creator}({mutableState} state) {
         this.state = state;
@@ -159,7 +159,7 @@ import {import};
 
 #macro withMethods()
   #if (!attributes.isEmpty)
-    // ----- With methods -----
+    // --- With methods ---
 
   #end
   #foreach (attribute in attributes where attribute.isOptionalOrId)
@@ -195,7 +195,7 @@ import {import};
 #end
 
 #macro assertIsValid()
-    // ----- Validate -----
+    // --- Validate ---
 
     public void assertIsValid() {
         state.assertIsValid();

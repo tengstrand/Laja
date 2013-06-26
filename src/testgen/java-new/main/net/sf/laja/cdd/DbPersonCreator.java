@@ -6,7 +6,7 @@ import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 
 @Creator
 public class DbPersonCreator {
-    private final PersonMutableState state; // TODO: Add final
+    PersonMutableState state;
 
     public DbPerson asDbPerson() {
         return new DbPerson(state.asImmutable());
