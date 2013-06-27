@@ -1,5 +1,6 @@
 package net.sf.laja.parser.cdd.state;
 
+import net.sf.laja.parser.cdd.creator.Creator;
 import org.apache.commons.lang.StringUtils;
 
 public class Attribute implements StateParser.IAttribute {
@@ -20,6 +21,10 @@ public class Attribute implements StateParser.IAttribute {
 
     public State stateObject() {
         return state;
+    }
+
+    public Creator getCreator() {
+        return state.creator;
     }
 
     public Attribute asImmutable() {

@@ -1,6 +1,7 @@
 
 #macro initializeState()
   #set (filename = state.filename)
+  #set (statePackagename = state.packagename)
   #set (packageContent = state.packageContent)
   #set (version = state.version)
   #set (classname = state.classname)

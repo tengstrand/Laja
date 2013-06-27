@@ -51,14 +51,19 @@ import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.*;
 import java.util.*;
 
-import {packagename}.{immutableState};
-
-    #set (stateImports = new java.util.HashSet())
+    #set (stateImports = new java.util.TreeSet())
+    #set (staticStateImports = new java.util.TreeSet())
+    #stateImports.add("{statePackagename}.{immutableState}")
     #foreach (attribute in attributes where attribute.isState)
       #stateImports.add("{attribute.stateObject.packagename}.{attribute.asImmutable.type}.{attribute.asMutable.type}")
+      #staticStateImports.add("{attribute.creator.packagename}.{attribute.creator.classname}.*")
     #end
     #foreach (import in stateImports)
 import {import};
+    #end
+
+    #foreach (import in staticStateImports)
+import static {import};
     #end
 
   #end
