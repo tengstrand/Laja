@@ -9,9 +9,15 @@ import static net.sf.laja.cdd.PersonCreator.createPerson;
 public class Main {
     public static void main(String[] args) {
 
-        ImmutableList<Address> addresses = createAddressList(createAddress()
+        ImmutableList<Address> addresses1 = createAddressList(createAddress()
             .withStreetName("First street").withCity("Uppsala").withId(1)).asAddressList(AddressType.PROTECTED);
-        System.out.println(addresses);
+        System.out.println(addresses1);
+
+        ImmutableList<Address> addresses2 = ImmutableList.of(
+                createAddress().asAddress(),
+                createAddress().asAddress(AddressType.PROTECTED)
+        );
+        System.out.println(addresses2);
 
         Address address1 = createAddress().withStreetName("Second street").withCity("Stockholm").asAddress(5);
         Address address2 = createAddress().asAddress(10);
