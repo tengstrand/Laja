@@ -58,9 +58,9 @@ public class AddressState implements ImmutableState {
 
     public AddressMutableState asMutable() {
         return new AddressMutableState(
-            id,
-            streetName,
-            city);
+                id,
+                streetName,
+                city);
     }
 
     @Override
@@ -172,9 +172,9 @@ public class AddressState implements ImmutableState {
             assertIsValid(validators);
 
             return new AddressState(
-                id,
-                streetName,
-                city);
+                    id,
+                    streetName,
+                    city);
         }
 
         @Override
