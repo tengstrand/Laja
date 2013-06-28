@@ -1,9 +1,20 @@
 package net.sf.laja.cdd;
 
+import com.google.common.collect.ImmutableList;
+
+import static net.sf.laja.cdd.AddressCreator.createAddress;
+import static net.sf.laja.cdd.AddressCreator.createAddressList;
 import static net.sf.laja.cdd.PersonCreator.createPerson;
 
 public class Main {
     public static void main(String[] args) {
+
+        ImmutableList<Address> addresses = createAddressList(createAddress()
+            .withStreetName("First street").withCity("Uppsala").withId(1)).asAddressList(AddressType.PROTECTED);
+        System.out.println(addresses);
+
+        // -------------
+
         PersonCreator.PersonFactory personFactory = createPerson();
         PersonCreator personCreator = personFactory.name("kalle").hairColor("RED").children().defaults();
 

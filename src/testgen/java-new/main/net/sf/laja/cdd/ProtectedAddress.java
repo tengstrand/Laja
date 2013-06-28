@@ -15,4 +15,8 @@ public class ProtectedAddress extends AddressBehaviour implements Address {
     }
 
     public static class ProtectedAddressException extends RuntimeException { }
+
+    @Override public String toString() {
+        return "ProtectedAddress{id=" + s.id + "}";
+    }
 }
