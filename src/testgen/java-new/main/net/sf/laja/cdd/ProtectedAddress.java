@@ -17,6 +17,6 @@ public class ProtectedAddress extends AddressBehaviour implements Address {
     public static class ProtectedAddressException extends RuntimeException { }
 
     @Override public String toString() {
-        return s.withCity("?").withStreetName("?").toString();
+        return "ProtectedAddress" + s.withCity("?").withStreetName("?");
     }
 }

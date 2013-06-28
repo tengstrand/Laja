@@ -13,6 +13,11 @@ public class Main {
             .withStreetName("First street").withCity("Uppsala").withId(1)).asAddressList(AddressType.PROTECTED);
         System.out.println(addresses);
 
+        Address address1 = createAddress().withStreetName("Second street").withCity("Stockholm").asAddress(5);
+        Address address2 = createAddress().asAddress(10);
+        System.out.println(address1);
+        System.out.println(address2);
+
         // -------------
 
         PersonCreator.PersonFactory personFactory = createPerson();

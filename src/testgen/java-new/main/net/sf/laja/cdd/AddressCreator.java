@@ -24,6 +24,13 @@ public class AddressCreator implements AddressMaker {
         return asAddress(AddressType.REGULAR);
     }
 
+    public Address asAddress(int protectionLevel) {
+        if (protectionLevel < 10) {
+            return asAddress(AddressType.REGULAR);
+        }
+        return asAddress(AddressType.PROTECTED);
+    }
+
     public Address asAddress(AddressType type) {
         if (type == AddressType.REGULAR) {
             return new RegularAddress(state.asImmutable());
@@ -188,6 +195,13 @@ public class AddressCreator implements AddressMaker {
             return asAddress(AddressType.REGULAR);
         }
 
+        public Address asAddress(int protectionLevel) {
+            if (protectionLevel < 10) {
+                return asAddress(AddressType.REGULAR);
+            }
+            return asAddress(AddressType.PROTECTED);
+        }
+
         public Address asAddress(AddressType type) {
             if (type == AddressType.REGULAR) {
                 return new RegularAddress(state.asImmutable());
@@ -243,6 +257,28 @@ public class AddressCreator implements AddressMaker {
 
             for (AddressCreator creator : creators) {
                 result.add(creator.asAddress());
+            }
+            return result;
+        }
+
+        // asAddressList(int protectionLevel) : ImmutableList<Address>
+
+        public ImmutableList<Address> asAddressList(int protectionLevel) {
+            ImmutableList.Builder<Address> builder = ImmutableList.builder();
+
+            for (AddressCreator creator : creators) {
+                builder.add(creator.asAddress(protectionLevel));
+            }
+            return builder.build();
+        }
+
+        // asAddressMutableList(int protectionLevel) : List<Address>
+
+        public List<Address> asAddressMutableList(int protectionLevel) {
+            List<Address> result = new ArrayList<Address>();
+
+            for (AddressCreator creator : creators) {
+                result.add(creator.asAddress(protectionLevel));
             }
             return result;
         }
@@ -323,6 +359,28 @@ public class AddressCreator implements AddressMaker {
             return result;
         }
 
+        // asAddressSet(int protectionLevel) : ImmutableSet<Address>
+
+        public ImmutableSet<Address> asAddressSet(int protectionLevel) {
+            ImmutableSet.Builder<Address> builder = ImmutableSet.builder();
+
+            for (AddressCreator creator : creators) {
+                builder.add(creator.asAddress(protectionLevel));
+            }
+            return builder.build();
+        }
+
+        // asAddressMutableSet(int protectionLevel) : Set<Address>
+
+        public Set<Address> asAddressMutableSet(int protectionLevel) {
+            Set<Address> result = new HashSet<Address>();
+
+            for (AddressCreator creator : creators) {
+                result.add(creator.asAddress(protectionLevel));
+            }
+            return result;
+        }
+
         // asAddressSet(AddressType type) : ImmutableSet<Address>
 
         public ImmutableSet<Address> asAddressSet(AddressType type) {
@@ -383,6 +441,10 @@ public class AddressCreator implements AddressMaker {
             return maker.asAddress();
         }
 
+        public Address asAddress(int protectionLevel) {
+            return maker.asAddress(protectionLevel);
+        }
+
         public Address asAddress(AddressType type) {
             return maker.asAddress(type);
         }
@@ -423,6 +485,28 @@ public class AddressCreator implements AddressMaker {
 
             for (AddressMapEntryBuilder entry : entries) {
                 result.put(entry.key, entry.asAddress());
+            }
+            return result;
+        }
+
+        // asAddressMap(int protectionLevel) : ImmutableMap
+
+        public ImmutableMap asAddressMap(int protectionLevel) {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asAddress(protectionLevel));
+            }
+            return builder.build();
+        }
+
+        // asAddressMutableMap(int protectionLevel) : Map
+
+        public Map asAddressMutableMap(int protectionLevel) {
+            Map result = new HashMap();
+
+            for (AddressMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asAddress(protectionLevel));
             }
             return result;
         }
@@ -477,6 +561,7 @@ public class AddressCreator implements AddressMaker {
 
 interface AddressMaker {
     Address asAddress();
+    Address asAddress(int protectionLevel);
     Address asAddress(AddressType type);
 
     AddressState asState();
