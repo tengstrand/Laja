@@ -24,6 +24,9 @@ public class Main {
         System.out.println(address1);
         System.out.println(address2);
 
+        Address specialAddress = SpecialAddressCreator.createAddress().asSpecialAddress();
+        System.out.println(specialAddress);
+
         // -------------
 
         PersonCreator.PersonFactory personFactory = createPerson();
