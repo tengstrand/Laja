@@ -142,6 +142,10 @@ public class AddressState implements ImmutableState {
         public void setStreetName(String streetName) { this.streetName = streetName; }
         public void setCity(String city) { this.city = city; }
 
+        public AddressMutableState withId(int id) { this.id = id; return this; }
+        public AddressMutableState withStreetName(String streetName) { this.streetName = streetName; return this; }
+        public AddressMutableState withCity(String city) { this.city = city; return this; }
+
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 

@@ -300,6 +300,18 @@ public class PersonState implements ImmutableState {
         public void setListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; }
         public void setListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
 
+        public PersonMutableState withId(int id) { this.id = id; return this; }
+        public PersonMutableState withName(String name) { this.name = name; return this; }
+        public PersonMutableState withBirthday(DateMidnight birthday) { this.birthday = birthday; return this; }
+        public PersonMutableState withHairColor(String hairColor) { this.hairColor = hairColor; return this; }
+        public PersonMutableState withChildren(List<PersonMutableState> children) { this.children = children; return this; }
+        public PersonMutableState withAddress(AddressMutableState address) { this.address = address; return this; }
+        public PersonMutableState withOldAddress(AddressMutableState oldAddress) { this.oldAddress = oldAddress; return this; }
+        public PersonMutableState withOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
+        public PersonMutableState withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; return this; }
+        public PersonMutableState withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
+        public PersonMutableState withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
+
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 

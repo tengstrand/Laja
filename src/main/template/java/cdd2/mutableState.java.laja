@@ -37,6 +37,13 @@
   #end
 #end
 
+#macro withMethods()
+
+  #foreach (attribute in attributes)
+        public {mutableClass} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; return this; }
+  #end
+#end
+
 #macro userValidate()
   #if (validateMethod == null)
 
@@ -185,6 +192,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #userValidate()
   #getters(tab)
   #setters()
+  #withMethods()
   #assertIsValid()
   #isValid()
   #rootValidate()
