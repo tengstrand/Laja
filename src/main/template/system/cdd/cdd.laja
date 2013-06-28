@@ -24,7 +24,7 @@
     #set (creators = parseCreators())
     #findInvalidTypes()
     #if (errors.isEmpty)
-      #updateStateAttributes()
+      #updateStateAndCreatorReferences()
       #generateStatesAndCreators()
     #else
       #println("Errors found:")
@@ -47,11 +47,11 @@
   #end
   #if (unknownTypeFound)
     #set (message = loadClass("net.sf.laja.parser.cdd.Type").typesAsString)
-    #errors.add("Valid types are types ending with 'State' and: {message}.")
+    #errors.add("Valid types are states (types that ends with 'State') and: {message}.")
   #end
 #endo
 
-#macro updateStateAttributes()
+#macro updateStateAndCreatorReferences()
   #foreach (state in states)
     #foreach (creator in creators where creator.state == state.name)
       #set (state.creator = creator)
