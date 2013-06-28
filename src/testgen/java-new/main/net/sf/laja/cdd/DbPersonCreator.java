@@ -225,7 +225,7 @@ public class DbPersonCreator implements DbPersonMaker {
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
-            if (!(that instanceof PersonBehaviour)) return false;
+            if (that == null || !(that instanceof PersonBehaviour)) return false;
 
             return s.equals(((PersonBehaviour)that).s);
         }
@@ -254,7 +254,7 @@ public class DbPersonCreator implements DbPersonMaker {
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
-            if (!(that instanceof PersonMutableBehaviour)) return false;
+            if (that == null || !(that instanceof PersonMutableBehaviour)) return false;
 
             return s.equals(((PersonMutableBehaviour)that).s);
         }
