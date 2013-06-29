@@ -10,6 +10,7 @@
 #macro generateCdd(parameters)
   #lazyDefineCdd()
   #set (errors = new java.util.ArrayList())
+  #set (processedFiles = new net.sf.laja.parser.cdd.OutputDirectoryReader$Result())
 
   #if (parameters.class().simpleName != "LinkedHashMap")
     #errors.add("The argument must be a list of maps, e.g: #generateCdd({srcDir: \"{.}/main\"})")
@@ -105,6 +106,28 @@
     #end
   #end
   #return creators
+#end
+
+#macro oldFileContent(filename)
+  #import "{filename}" as text
+#end
+
+#macro generateFile(filename, content)
+  #if (fileExists(filename))
+    #set (oldContent = oldFileContent(filename))
+    #set (status = "unchanged")
+    #if (oldContent != content)
+      #set (status = "changed")
+    #end
+  #else
+    #set (status = "new")
+  #end
+  #if (status != "unchanged")
+    #write "{filename}"
+{content}##
+    #end
+  #end
+  #processedFiles.add(filename, status)
 #end
 
 #macro validateStates()

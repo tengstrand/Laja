@@ -251,11 +251,7 @@ import static {import};
 #import "{.}/mapEntryBuilder.java.laja"
 #import "{.}/maker.java.laja"
 
-#macro generateCreator(c)
-  #set (creator = c)
-  #initializeCreator()
-
-  #write "{filename}.txt"
+#macro creatorContent()
 package {packagename};
 
     #imports()
@@ -292,5 +288,11 @@ public class {classname} implements {maker} {
     #mapBuilder()
 }
     #maker()
-  #end
+#end
+
+#macro generateCreator(c)
+  #set (creator = c)
+  #initializeCreator()
+
+  #generateFile(filename, creatorContent())
 #end

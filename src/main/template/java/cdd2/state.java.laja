@@ -382,10 +382,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #import "{.}/mutableState.java.laja"
 
-#macro generateState()
-  #initializeState()
-
-  #write "{filename}.txt"
+#macro stateContent()
 {packageContent}##
     #imports()
     #classHeader()
@@ -415,5 +412,9 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #toString(tab)
     #$mutable.mutableState()
 }
-  #end
+#end
+
+#macro generateState()
+  #initializeState()
+  #generateFile(filename, stateContent())
 #end
