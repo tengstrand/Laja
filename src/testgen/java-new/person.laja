@@ -1,4 +1,5 @@
 
 #generateCdd({
-  srcDir: "{.}/main"}
-)
+  srcDir: "{.}/main"
+##  verbose: true
+})

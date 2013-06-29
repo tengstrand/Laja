@@ -27,6 +27,7 @@
     #if (errors.isEmpty)
       #updateStateAndCreatorReferences()
       #generateStatesAndCreators()
+      #printResult()
     #else
       #println("Errors found:")
       #foreach (error in errors)
@@ -78,6 +79,13 @@
   #end
 #end
 
+#macro printResult()
+  #if (verbose == null)
+    #set (verbose = false)
+  #end
+  #processedFiles.printProcessedMessage(verbose)
+#end
+
 #function parseStates()
   #set (states = new java.util.ArrayList())
   #set (stateFiles = fileReader.readFiles(srcDir, "State.java"))
@@ -113,14 +121,10 @@
 #end
 
 #macro generateFile(filename, content)
-  #if (fileExists(filename))
-    #set (oldContent = oldFileContent(filename))
-    #set (status = "unchanged")
-    #if (oldContent != content)
-      #set (status = "changed")
-    #end
-  #else
-    #set (status = "new")
+  #set (oldContent = oldFileContent(filename))
+  #set (status = "unchanged")
+  #if (oldContent != content)
+    #set (status = "changed")
   #end
   #if (status != "unchanged")
     #write "{filename}"
