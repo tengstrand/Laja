@@ -4,12 +4,12 @@ import net.sf.laja.cdd.state.PersonState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.example.HairColor.BROWN;
-import static net.sf.laja.cdd.example.PersonCreator.createPerson;
 import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.asImmutable;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
+import static net.sf.laja.cdd.testgen.HairColor.BROWN;
+import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 

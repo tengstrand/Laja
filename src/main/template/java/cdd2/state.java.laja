@@ -24,10 +24,10 @@
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.example.ImmutableState;
-import net.sf.laja.cdd.example.InvalidStateException;
-import net.sf.laja.cdd.example.MutableState;
-import net.sf.laja.cdd.example.ValidationErrors;
+import net.sf.laja.cdd.testgen.ImmutableState;
+import net.sf.laja.cdd.testgen.InvalidStateException;
+import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
@@ -41,7 +41,7 @@ import java.util.Map;
 import java.util.Set;
 
     #set (staticImports = new java.util.TreeSet())
-    #staticImports.add("net.sf.laja.cdd.example.ValidationErrors.concatenate")
+    #staticImports.add("net.sf.laja.cdd.testgen.ValidationErrors.concatenate")
     #staticImports.add("net.sf.laja.cdd.stateconverter.StateConversion.*")
     #staticImports.add("net.sf.laja.cdd.stateconverter.StateConverters.*")
     #staticImports.add("net.sf.laja.cdd.validator.Validators.collectionValidator")

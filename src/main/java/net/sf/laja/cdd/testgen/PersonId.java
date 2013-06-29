@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 public class PersonId {
     public final int id;

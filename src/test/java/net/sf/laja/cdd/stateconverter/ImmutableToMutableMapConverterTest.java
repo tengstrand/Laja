@@ -1,16 +1,16 @@
 package net.sf.laja.cdd.stateconverter;
 
 import com.google.common.collect.ImmutableMap;
-import net.sf.laja.cdd.example.Address;
+import net.sf.laja.cdd.testgen.Address;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.example.AddressCreator.*;
 import static net.sf.laja.cdd.stateconverter.StateConversion.asMutableMap;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toMutableMap;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 

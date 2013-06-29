@@ -6,10 +6,10 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.example.ImmutableState;
-import net.sf.laja.cdd.example.InvalidStateException;
-import net.sf.laja.cdd.example.MutableState;
-import net.sf.laja.cdd.example.ValidationErrors;
+import net.sf.laja.cdd.testgen.ImmutableState;
+import net.sf.laja.cdd.testgen.InvalidStateException;
+import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.example.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.*;
 import static net.sf.laja.cdd.stateconverter.StateConverters.*;
+import static net.sf.laja.cdd.testgen.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 

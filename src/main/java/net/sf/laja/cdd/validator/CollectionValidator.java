@@ -1,11 +1,11 @@
 package net.sf.laja.cdd.validator;
 
-import net.sf.laja.cdd.example.MutableState;
-import net.sf.laja.cdd.example.ValidationErrors;
+import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.ValidationErrors;
 
 import java.util.Collection;
 
-import static net.sf.laja.cdd.example.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.testgen.ValidationErrors.concatenate;
 
 public class CollectionValidator implements CoreValidator {
 

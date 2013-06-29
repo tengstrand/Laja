@@ -1,8 +1,8 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.state.AddressState;
 
-import static net.sf.laja.cdd.example.AddressCreator.AddressBehaviour;
+import static net.sf.laja.cdd.testgen.AddressCreator.AddressBehaviour;
 
 public class ProtectedAddress extends AddressBehaviour implements Address {
 

@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.example.AddressCreator.*;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.asMutableList;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toMutable;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toMutableList;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 

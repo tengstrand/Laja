@@ -3,10 +3,10 @@ package net.sf.laja.cdd;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
-import static net.sf.laja.cdd.example.AddressCreator.buildAddress;
-import static net.sf.laja.cdd.example.HairColor.BROWN;
-import static net.sf.laja.cdd.example.PersonCreator.*;
 import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
+import static net.sf.laja.cdd.testgen.AddressCreator.buildAddress;
+import static net.sf.laja.cdd.testgen.HairColor.BROWN;
+import static net.sf.laja.cdd.testgen.PersonCreator.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

@@ -1,13 +1,13 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.example.Address;
-import net.sf.laja.cdd.example.AddressType;
-import net.sf.laja.cdd.example.ValidationErrors;
 import net.sf.laja.cdd.state.AddressState;
+import net.sf.laja.cdd.testgen.Address;
+import net.sf.laja.cdd.testgen.AddressType;
+import net.sf.laja.cdd.testgen.ValidationErrors;
 import org.junit.Test;
 
-import static net.sf.laja.cdd.example.AddressCreator.*;
-import static net.sf.laja.cdd.example.ProtectedAddress.ProtectedAddressException;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
+import static net.sf.laja.cdd.testgen.ProtectedAddress.ProtectedAddressException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

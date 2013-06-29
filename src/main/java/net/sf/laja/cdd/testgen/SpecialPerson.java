@@ -1,10 +1,10 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.annotation.Behaviour;
 import org.joda.time.DateMidnight;
 
-import static net.sf.laja.cdd.example.PersonCreator.PersonMutableBehaviour;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.testgen.PersonCreator.PersonMutableBehaviour;
 
 @Behaviour
 public class SpecialPerson extends PersonMutableBehaviour {

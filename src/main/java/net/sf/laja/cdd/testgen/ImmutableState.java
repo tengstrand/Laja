@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import java.io.Serializable;
 

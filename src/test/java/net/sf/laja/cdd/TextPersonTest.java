@@ -1,13 +1,13 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.example.PersonCreator;
-import net.sf.laja.cdd.example.SpecialPerson;
-import net.sf.laja.cdd.example.TextPerson;
+import net.sf.laja.cdd.testgen.PersonCreator;
+import net.sf.laja.cdd.testgen.SpecialPerson;
+import net.sf.laja.cdd.testgen.TextPerson;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static net.sf.laja.cdd.example.HairColor.BROWN;
-import static net.sf.laja.cdd.example.PersonCreator.createPerson;
+import static net.sf.laja.cdd.testgen.HairColor.BROWN;
+import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
 
 public class TextPersonTest {
 

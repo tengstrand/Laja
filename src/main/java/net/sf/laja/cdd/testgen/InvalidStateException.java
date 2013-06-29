@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 public class InvalidStateException extends IllegalStateException {
     public final String message;

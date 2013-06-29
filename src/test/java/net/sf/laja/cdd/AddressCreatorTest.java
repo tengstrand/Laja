@@ -3,9 +3,9 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.example.Address;
-import net.sf.laja.cdd.example.AddressCreator;
 import net.sf.laja.cdd.state.AddressState;
+import net.sf.laja.cdd.testgen.Address;
+import net.sf.laja.cdd.testgen.AddressCreator;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.example.AddressCreator.*;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

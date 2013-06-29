@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.validator.Validator;
 

@@ -1,31 +1,78 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
-import net.sf.laja.cdd.state.AddressState.AddressMutableState;
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.state.PersonState;
+import net.sf.laja.cdd.testgen.PersonCreator.PersonFactory._ListOfSetOfMapOfIntegers;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.example.AddressCreator.AddressMapBuilder;
-import static net.sf.laja.cdd.example.AddressCreator.AddressSetBuilder;
+import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
 
 @Creator
-public class DbPersonCreator implements DbPersonMaker {
+public class PersonCreator implements PersonMaker {
     private final PersonMutableState state;
 
-    public DbPerson asDbPerson() {
-        return new DbPerson(state.asImmutable());
+    /**
+     * This is a comment!
+     */
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+
+    public SpecialPerson asSpecialPerson() {
+        return new SpecialPerson(state);
+    }
+
+    public TextPerson asTextPerson() {
+        return new TextPerson(state.asImmutable());
+    }
+
+    @Parameters({
+            @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
+            @Parameter(name = name_, signature = "int givenName, int surname", value = "givenName + \" \" + surname"),
+            @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
+            @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
+            @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
+            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
+    })
+
+    private AddressMutableState getAddressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
+        listOfSetOfMapOfIntegers.defaultListOfSetOfMapOfIntegers();
+        return getDefaultAddress();
+    }
+
+    private AddressMutableState getDefaultAddress() {
+        return buildAddress().withCity("Stockholm").withStreetName("First street").asMutableState();
+    }
+
+    private List getDefaultListOfSetOfMapOfIntegers() {
+        Map map1 = new HashMap();
+        map1.put("a", 123);
+        map1.put("b", 456);
+        Set set = new HashSet(Arrays.asList(map1));
+        return Arrays.asList(set);
+    }
+
+    private String getDefaultHairColorAndChildren() {
+        state.children = createPersonList().asMutableStateList();
+        return HairColor.RED.name();
     }
 
     // ===== Generated code =====
@@ -44,31 +91,31 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // --- Constructors ---
 
-    public static PersonFactory createDbPerson() {
-        return new DbPersonCreator(new PersonMutableState()).new PersonFactory();
+    public static PersonFactory createPerson() {
+        return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
-    public static PersonBuilder buildDbPerson() {
+    public static PersonBuilder buildPerson() {
         return PersonBuilder.create();
     }
 
-    public static PersonListBuilder createDbPersonList(DbPersonCreator... creators) {
+    public static PersonListBuilder createPersonList(PersonCreator... creators) {
         return new PersonListBuilder(creators);
     }
 
-    public static PersonSetBuilder createDbPersonSet(DbPersonCreator... creators) {
+    public static PersonSetBuilder createPersonSet(PersonCreator... creators) {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createDbPersonMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 
-    public static PersonMapEntryBuilder dbPersonEntry(Object key, DbPersonCreator creator) {
+    public static PersonMapEntryBuilder personEntry(Object key, PersonCreator creator) {
         return new PersonMapEntryBuilder(key, creator);
     }
 
-    public static PersonMapEntryBuilder dbPersonEntry(Object key, PersonBuilder builder) {
+    public static PersonMapEntryBuilder personEntry(Object key, PersonBuilder builder) {
         return new PersonMapEntryBuilder(key, builder);
     }
 
@@ -80,10 +127,19 @@ public class DbPersonCreator implements DbPersonMaker {
             return new _Name().name(name);
         }
 
+        public _HairColor name(int givenName, int surname) {
+            return new _Name().name(givenName, surname);
+        }
+
         // name
         public class _Name {
             public _HairColor name(String name) {
                 state.name = name;
+                return new _HairColor();
+            }
+
+            public _HairColor name(int givenName, int surname) {
+                state.name = givenName + " " + surname;
                 return new _HairColor();
             }
         }
@@ -94,6 +150,16 @@ public class DbPersonCreator implements DbPersonMaker {
                 state.hairColor = hairColor;
                 return new _Children();
             }
+
+            public _Children hairColor(HairColor hairColor) {
+                state.hairColor = hairColor.name();
+                return new _Children();
+            }
+
+            public _Address defaultHairColorAndChildren() {
+                state.hairColor = getDefaultHairColorAndChildren();
+                return new _Address();
+            }
         }
 
         // children
@@ -103,10 +169,10 @@ public class DbPersonCreator implements DbPersonMaker {
                 return new _Address();
             }
 
-            public _Address children(DbPersonCreator... creators) {
+            public _Address children(PersonCreator... creators) {
                 List<PersonMutableState> children = new ArrayList<PersonMutableState>();
 
-                for (DbPersonCreator creator : creators) {
+                for (PersonCreator creator : creators) {
                     children.add(creator.asMutableState());
                 }
                 state.children = children;
@@ -125,6 +191,16 @@ public class DbPersonCreator implements DbPersonMaker {
                 state.address = address.asMutableState();
                 return new _GroupedAddresses();
             }
+
+            public PersonCreator defaults() {
+                state.address = getAddressDefaults(new _ListOfSetOfMapOfIntegers());
+                return new PersonCreator(state);
+            }
+
+            public _GroupedAddresses defaultAddress() {
+                state.address = getDefaultAddress();
+                return new _GroupedAddresses();
+            }
         }
 
         // groupedAddresses
@@ -138,20 +214,29 @@ public class DbPersonCreator implements DbPersonMaker {
                 state.groupedAddresses = mapBuilder.asMutableStateMap();
                 return new _ListOfSetOfMapOfIntegers();
             }
+
+            public _ListOfSetOfMapOfIntegers defaultGroupedAddresses() {
+                return new _ListOfSetOfMapOfIntegers();
+            }
         }
 
         // listOfSetOfMapOfIntegers
         public class _ListOfSetOfMapOfIntegers {
-            public DbPersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
+            public PersonCreator listOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
                 state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
-                return new DbPersonCreator(state);
+                return new PersonCreator(state);
+            }
+
+            public PersonCreator defaultListOfSetOfMapOfIntegers() {
+                state.listOfSetOfMapOfIntegers = getDefaultListOfSetOfMapOfIntegers();
+                return new PersonCreator(state);
             }
         }
     }
 
     // --- Constructor ---
 
-    public DbPersonCreator(PersonMutableState state) {
+    public PersonCreator(PersonMutableState state) {
         this.state = state;
     }
 
@@ -165,37 +250,42 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // --- With methods ---
 
-    public DbPersonCreator withId(int id) {
+    public PersonCreator withId(int id) {
         state.id = id;
         return this;
     }
 
-    public DbPersonCreator withBirthday(DateMidnight birthday) {
+    public PersonCreator withId(PersonId personId) {
+        state.id = personId.id;
+        return this;
+    }
+
+    public PersonCreator withBirthday(DateMidnight birthday) {
         state.birthday = birthday;
         return this;
     }
 
-    public DbPersonCreator withBirthday(int year, int monthOfYear, int dayOfMonth) {
+    public PersonCreator withBirthday(int year, int monthOfYear, int dayOfMonth) {
         state.birthday = new DateMidnight(year, monthOfYear, dayOfMonth);
         return this;
     }
 
-    public DbPersonCreator withOldAddress(AddressMutableState oldAddress) {
+    public PersonCreator withOldAddress(AddressMutableState oldAddress) {
         state.oldAddress = oldAddress;
         return this;
     }
 
-    public DbPersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
+    public PersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
         state.oldAddresses = oldAddresses;
         return this;
     }
 
-    public DbPersonCreator withOldAddresses(AddressSetBuilder oldAddresses) {
+    public PersonCreator withOldAddresses(AddressSetBuilder oldAddresses) {
         state.oldAddresses = oldAddresses.asMutableStateSet();
         return this;
     }
 
-    public DbPersonCreator withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) {
+    public PersonCreator withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) {
         state.listOfSetOfState = listOfSetOfState;
         return this;
     }
@@ -270,7 +360,7 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // --- Builder ---
 
-    public static class PersonBuilder implements DbPersonMaker {
+    public static class PersonBuilder implements PersonMaker {
         private final PersonMutableState state;
 
         private PersonBuilder(PersonMutableState state) {
@@ -296,8 +386,16 @@ public class DbPersonCreator implements DbPersonMaker {
         public PersonBuilder withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { state.listOfSetOfState = listOfSetOfState; return this; }
         public PersonBuilder withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
-        public DbPerson asDbPerson() {
-            return new DbPerson(state.asImmutable());
+        public Person asPerson() {
+            return new Person(state.asImmutable());
+        }
+
+        public SpecialPerson asSpecialPerson() {
+            return new SpecialPerson(state);
+        }
+
+        public TextPerson asTextPerson() {
+            return new TextPerson(state.asImmutable());
         }
 
         public PersonState asState() {
@@ -324,30 +422,74 @@ public class DbPersonCreator implements DbPersonMaker {
     // --- ListBuilder ---
 
     public static class PersonListBuilder {
-        private DbPersonCreator[] creators;
+        private PersonCreator[] creators;
 
-        public PersonListBuilder(DbPersonCreator... creators) {
+        public PersonListBuilder(PersonCreator... creators) {
             this.creators = creators;
         }
 
-        // asDbPersonList() : ImmutableList<DbPerson>
+        // asPersonList() : ImmutableList<Person>
 
-        public ImmutableList<DbPerson> asDbPersonList() {
-            ImmutableList.Builder<DbPerson> builder = ImmutableList.builder();
+        public ImmutableList<Person> asPersonList() {
+            ImmutableList.Builder<Person> builder = ImmutableList.builder();
 
-            for (DbPersonCreator creator : creators) {
-                builder.add(creator.asDbPerson());
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asPerson());
             }
             return builder.build();
         }
 
-        // asDbPersonMutableList() : List<DbPerson>
+        // asPersonMutableList() : List<Person>
 
-        public List<DbPerson> asDbPersonMutableList() {
-            List<DbPerson> result = new ArrayList<DbPerson>();
+        public List<Person> asPersonMutableList() {
+            List<Person> result = new ArrayList<Person>();
 
-            for (DbPersonCreator creator : creators) {
-                result.add(creator.asDbPerson());
+            for (PersonCreator creator : creators) {
+                result.add(creator.asPerson());
+            }
+            return result;
+        }
+
+        // asSpecialPersonList() : ImmutableList<SpecialPerson>
+
+        public ImmutableList<SpecialPerson> asSpecialPersonList() {
+            ImmutableList.Builder<SpecialPerson> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asSpecialPerson());
+            }
+            return builder.build();
+        }
+
+        // asSpecialPersonMutableList() : List<SpecialPerson>
+
+        public List<SpecialPerson> asSpecialPersonMutableList() {
+            List<SpecialPerson> result = new ArrayList<SpecialPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asSpecialPerson());
+            }
+            return result;
+        }
+
+        // asTextPersonList() : ImmutableList<TextPerson>
+
+        public ImmutableList<TextPerson> asTextPersonList() {
+            ImmutableList.Builder<TextPerson> builder = ImmutableList.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asTextPerson());
+            }
+            return builder.build();
+        }
+
+        // asTextPersonMutableList() : List<TextPerson>
+
+        public List<TextPerson> asTextPersonMutableList() {
+            List<TextPerson> result = new ArrayList<TextPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asTextPerson());
             }
             return result;
         }
@@ -357,7 +499,7 @@ public class DbPersonCreator implements DbPersonMaker {
         public ImmutableList<PersonState> asStateList() {
             ImmutableList.Builder<PersonState> builder = ImmutableList.builder();
 
-            for (DbPersonCreator creator : creators) {
+            for (PersonCreator creator : creators) {
                 builder.add(creator.asState());
             }
             return builder.build();
@@ -368,7 +510,7 @@ public class DbPersonCreator implements DbPersonMaker {
         public List<PersonMutableState> asMutableStateList() {
             List<PersonMutableState> result = new ArrayList<PersonMutableState>();
 
-            for (DbPersonCreator creator : creators) {
+            for (PersonCreator creator : creators) {
                 result.add(creator.asMutableState());
             }
             return result;
@@ -378,30 +520,74 @@ public class DbPersonCreator implements DbPersonMaker {
     // --- SetBuilder ---
 
     public static class PersonSetBuilder {
-        private DbPersonCreator[] creators;
+        private PersonCreator[] creators;
 
-        public PersonSetBuilder(DbPersonCreator... creators) {
+        public PersonSetBuilder(PersonCreator... creators) {
             this.creators = creators;
         }
 
-        // asDbPersonSet() : ImmutableSet<DbPerson>
+        // asPersonSet() : ImmutableSet<Person>
 
-        public ImmutableSet<DbPerson> asDbPersonSet() {
-            ImmutableSet.Builder<DbPerson> builder = ImmutableSet.builder();
+        public ImmutableSet<Person> asPersonSet() {
+            ImmutableSet.Builder<Person> builder = ImmutableSet.builder();
 
-            for (DbPersonCreator creator : creators) {
-                builder.add(creator.asDbPerson());
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asPerson());
             }
             return builder.build();
         }
 
-        // asDbPersonMutableSet() : Set<DbPerson>
+        // asPersonMutableSet() : Set<Person>
 
-        public Set<DbPerson> asDbPersonMutableSet() {
-            Set<DbPerson> result = new HashSet<DbPerson>();
+        public Set<Person> asPersonMutableSet() {
+            Set<Person> result = new HashSet<Person>();
 
-            for (DbPersonCreator creator : creators) {
-                result.add(creator.asDbPerson());
+            for (PersonCreator creator : creators) {
+                result.add(creator.asPerson());
+            }
+            return result;
+        }
+
+        // asSpecialPersonSet() : ImmutableSet<SpecialPerson>
+
+        public ImmutableSet<SpecialPerson> asSpecialPersonSet() {
+            ImmutableSet.Builder<SpecialPerson> builder = ImmutableSet.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asSpecialPerson());
+            }
+            return builder.build();
+        }
+
+        // asSpecialPersonMutableSet() : Set<SpecialPerson>
+
+        public Set<SpecialPerson> asSpecialPersonMutableSet() {
+            Set<SpecialPerson> result = new HashSet<SpecialPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asSpecialPerson());
+            }
+            return result;
+        }
+
+        // asTextPersonSet() : ImmutableSet<TextPerson>
+
+        public ImmutableSet<TextPerson> asTextPersonSet() {
+            ImmutableSet.Builder<TextPerson> builder = ImmutableSet.builder();
+
+            for (PersonCreator creator : creators) {
+                builder.add(creator.asTextPerson());
+            }
+            return builder.build();
+        }
+
+        // asTextPersonMutableSet() : Set<TextPerson>
+
+        public Set<TextPerson> asTextPersonMutableSet() {
+            Set<TextPerson> result = new HashSet<TextPerson>();
+
+            for (PersonCreator creator : creators) {
+                result.add(creator.asTextPerson());
             }
             return result;
         }
@@ -411,7 +597,7 @@ public class DbPersonCreator implements DbPersonMaker {
         public ImmutableSet<PersonState> asStateSet() {
             ImmutableSet.Builder<PersonState> builder = ImmutableSet.builder();
 
-            for (DbPersonCreator creator : creators) {
+            for (PersonCreator creator : creators) {
                 builder.add(creator.asState());
             }
             return builder.build();
@@ -422,7 +608,7 @@ public class DbPersonCreator implements DbPersonMaker {
         public Set<PersonMutableState> asMutableStateSet() {
             Set<PersonMutableState> result = new HashSet<PersonMutableState>();
 
-            for (DbPersonCreator creator : creators) {
+            for (PersonCreator creator : creators) {
                 result.add(creator.asMutableState());
             }
             return result;
@@ -433,15 +619,23 @@ public class DbPersonCreator implements DbPersonMaker {
 
     public static class PersonMapEntryBuilder {
         private final Object key;
-        private final DbPersonMaker maker;
+        private final PersonMaker maker;
 
-        public PersonMapEntryBuilder(Object key, DbPersonMaker maker) {
+        public PersonMapEntryBuilder(Object key, PersonMaker maker) {
             this.key = key;
             this.maker = maker;
         }
 
-        public DbPerson asDbPerson() {
-            return maker.asDbPerson();
+        public Person asPerson() {
+            return maker.asPerson();
+        }
+
+        public SpecialPerson asSpecialPerson() {
+            return maker.asSpecialPerson();
+        }
+
+        public TextPerson asTextPerson() {
+            return maker.asTextPerson();
         }
 
         public PersonState asState() {
@@ -462,24 +656,68 @@ public class DbPersonCreator implements DbPersonMaker {
             this.entries = entries;
         }
 
-        // asDbPersonMap() : ImmutableMap
+        // asPersonMap() : ImmutableMap
 
-        public ImmutableMap asDbPersonMap() {
+        public ImmutableMap asPersonMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
             for (PersonMapEntryBuilder entry : entries) {
-                builder.put(entry.key, entry.asDbPerson());
+                builder.put(entry.key, entry.asPerson());
             }
             return builder.build();
         }
 
-        // asDbPersonMutableMap() : Map
+        // asPersonMutableMap() : Map
 
-        public Map asDbPersonMutableMap() {
+        public Map asPersonMutableMap() {
             Map result = new HashMap();
 
             for (PersonMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asDbPerson());
+                result.put(entry.key, entry.asPerson());
+            }
+            return result;
+        }
+
+        // asSpecialPersonMap() : ImmutableMap
+
+        public ImmutableMap asSpecialPersonMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asSpecialPerson());
+            }
+            return builder.build();
+        }
+
+        // asSpecialPersonMutableMap() : Map
+
+        public Map asSpecialPersonMutableMap() {
+            Map result = new HashMap();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asSpecialPerson());
+            }
+            return result;
+        }
+
+        // asTextPersonMap() : ImmutableMap
+
+        public ImmutableMap asTextPersonMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asTextPerson());
+            }
+            return builder.build();
+        }
+
+        // asTextPersonMutableMap() : Map
+
+        public Map asTextPersonMutableMap() {
+            Map result = new HashMap();
+
+            for (PersonMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asTextPerson());
             }
             return result;
         }
@@ -510,8 +748,10 @@ public class DbPersonCreator implements DbPersonMaker {
 
 // --- Maker ---
 
-interface DbPersonMaker {
-    DbPerson asDbPerson();
+interface PersonMaker {
+    Person asPerson();
+    SpecialPerson asSpecialPerson();
+    TextPerson asTextPerson();
 
     PersonState asState();
     PersonMutableState asMutableState();

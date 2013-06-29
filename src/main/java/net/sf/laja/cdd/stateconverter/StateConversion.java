@@ -3,8 +3,8 @@ package net.sf.laja.cdd.stateconverter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.example.ImmutableState;
-import net.sf.laja.cdd.example.MutableState;
+import net.sf.laja.cdd.testgen.ImmutableState;
+import net.sf.laja.cdd.testgen.MutableState;
 import org.joda.time.DateMidnight;
 import org.joda.time.format.DateTimeFormat;
 

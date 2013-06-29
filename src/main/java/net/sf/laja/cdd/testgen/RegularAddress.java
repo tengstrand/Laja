@@ -1,9 +1,9 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.annotation.Behaviour;
 import net.sf.laja.cdd.state.AddressState;
 
-import static net.sf.laja.cdd.example.AddressCreator.AddressBehaviour;
+import static net.sf.laja.cdd.testgen.AddressCreator.AddressBehaviour;
 
 @Behaviour
 public class RegularAddress extends AddressBehaviour implements Address {

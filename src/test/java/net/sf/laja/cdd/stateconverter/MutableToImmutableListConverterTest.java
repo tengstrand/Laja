@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.example.AddressCreator.*;
 import static net.sf.laja.cdd.stateconverter.StateConversion.asImmutableList;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutableList;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 

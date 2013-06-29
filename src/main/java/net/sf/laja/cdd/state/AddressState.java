@@ -3,10 +3,10 @@ package net.sf.laja.cdd.state;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.example.ImmutableState;
-import net.sf.laja.cdd.example.InvalidStateException;
-import net.sf.laja.cdd.example.MutableState;
-import net.sf.laja.cdd.example.ValidationErrors;
+import net.sf.laja.cdd.testgen.ImmutableState;
+import net.sf.laja.cdd.testgen.InvalidStateException;
+import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
 @State

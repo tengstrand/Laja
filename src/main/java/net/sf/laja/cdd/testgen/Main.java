@@ -1,9 +1,9 @@
-package net.sf.laja.cdd.example;
+package net.sf.laja.cdd.testgen;
 
 import com.google.common.collect.ImmutableList;
 
-import static net.sf.laja.cdd.example.AddressCreator.createAddress;
-import static net.sf.laja.cdd.example.AddressCreator.createAddressList;
+import static net.sf.laja.cdd.testgen.AddressCreator.createAddress;
+import static net.sf.laja.cdd.testgen.AddressCreator.createAddressList;
 
 public class Main {
     public static void main(String[] args) {
