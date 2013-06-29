@@ -1,7 +1,0 @@
-#namespace cdd
-
-#generateParser(
-  package: "net.sf.laja.parser.cdd.statetemplate"
-  grammarFile: "{.}/state-template.grammar"
-  outputDir: "{..}/../../../../target"
-)
