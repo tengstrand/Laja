@@ -1,5 +1,0 @@
-
-#generateCdd({
-  srcDir: "{.}/main"
-##  verbose: true
-})
