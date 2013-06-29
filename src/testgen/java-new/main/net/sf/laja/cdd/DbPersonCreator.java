@@ -44,31 +44,31 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // --- Constructors ---
 
-    public static PersonFactory createPerson() {
+    public static PersonFactory createDbPerson() {
         return new DbPersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
-    public static PersonBuilder buildPerson() {
+    public static PersonBuilder buildDbPerson() {
         return PersonBuilder.create();
     }
 
-    public static PersonListBuilder createPersonList(DbPersonCreator... creators) {
+    public static PersonListBuilder createDbPersonList(DbPersonCreator... creators) {
         return new PersonListBuilder(creators);
     }
 
-    public static PersonSetBuilder createPersonSet(DbPersonCreator... creators) {
+    public static PersonSetBuilder createDbPersonSet(DbPersonCreator... creators) {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createDbPersonMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 
-    public static PersonMapEntryBuilder personEntry(Object key, DbPersonCreator creator) {
+    public static PersonMapEntryBuilder dbPersonEntry(Object key, DbPersonCreator creator) {
         return new PersonMapEntryBuilder(key, creator);
     }
 
-    public static PersonMapEntryBuilder personEntry(Object key, PersonBuilder builder) {
+    public static PersonMapEntryBuilder dbPersonEntry(Object key, PersonBuilder builder) {
         return new PersonMapEntryBuilder(key, builder);
     }
 

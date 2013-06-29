@@ -160,7 +160,7 @@ public class AddressCreator implements AddressMaker {
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
-            if (!(that instanceof AddressMutableBehaviour)) return false;
+            if (that == null || !(that instanceof AddressMutableBehaviour)) return false;
 
             return s.equals(((AddressMutableBehaviour)that).s);
         }

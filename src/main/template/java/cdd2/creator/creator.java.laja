@@ -87,12 +87,13 @@ import static {import};
 #macro create()
     // --- Constructors ---
 
+  #set (methodName = constructorMethodName("create"))
   #if (hasMandatoryAttributes)
-    public static {factory} create{state}() {
+    public static {factory} {methodName}() {
         return new {creator}(new {mutableState}()).new {factory}();
     }
   #else
-    public static {creator} create{state}() {
+    public static {creator} {methodName}() {
         return new {creator}(new {mutableState}());
     }
   #end
@@ -100,44 +101,59 @@ import static {import};
 #end
 
 #macro build()
-    public static {builder} build{state}() {
+  #set (methodName = constructorMethodName("build"))
+    public static {builder} {methodName}() {
         return {builder}.create();
     }
 
 #end
 
 #macro createList()
-    public static {listBuilder} create{state}List({creator}... creators) {
+  #set (methodName = constructorMethodName("create"))
+    public static {listBuilder} {methodName}List({creator}... creators) {
         return new {listBuilder}(creators);
     }
 
 #end
 
 #macro createSet()
-    public static {setBuilder} create{state}Set({creator}... creators) {
+  #set (methodName = constructorMethodName("create"))
+    public static {setBuilder} {methodName}Set({creator}... creators) {
         return new {setBuilder}(creators);
     }
 
 #end
 
 #macro createMap()
-    public static {mapBuilder} create{state}Map({mapEntryBuilder}... builders) {
+  #set (methodName = constructorMethodName("create"))
+    public static {mapBuilder} {methodName}Map({mapEntryBuilder}... builders) {
         return new {mapBuilder}(builders);
     }
 
 #end
 
 #macro mapCreatorEntry()
-    public static {mapEntryBuilder} {statevariable}Entry(Object key, {creator} creator) {
+  #set (methodName = constructorMethodName(""))
+    public static {mapEntryBuilder} {methodName}Entry(Object key, {creator} creator) {
         return new {mapEntryBuilder}(key, creator);
     }
 
 #end
 
 #macro mapBuilderEntry()
-    public static {mapEntryBuilder} {statevariable}Entry(Object key, {builder} builder) {
+  #set (methodName = constructorMethodName(""))
+    public static {mapEntryBuilder} {methodName}Entry(Object key, {builder} builder) {
         return new {mapEntryBuilder}(key, builder);
     }
+
+#end
+
+#function constructorMethodName(action)
+  #if (asMethods.size > 0)
+    #return (asMethods.get(0).actionName(action))
+  #else
+    #return "{action}{state}"
+  #end
 
 #end
 

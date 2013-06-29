@@ -32,31 +32,31 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
 
     // --- Constructors ---
 
-    public static SpecialAddressCreator createAddress() {
+    public static SpecialAddressCreator createSpecialAddress() {
         return new SpecialAddressCreator(new AddressMutableState());
     }
 
-    public static AddressBuilder buildAddress() {
+    public static AddressBuilder buildSpecialAddress() {
         return AddressBuilder.create();
     }
 
-    public static AddressListBuilder createAddressList(SpecialAddressCreator... creators) {
+    public static AddressListBuilder createSpecialAddressList(SpecialAddressCreator... creators) {
         return new AddressListBuilder(creators);
     }
 
-    public static AddressSetBuilder createAddressSet(SpecialAddressCreator... creators) {
+    public static AddressSetBuilder createSpecialAddressSet(SpecialAddressCreator... creators) {
         return new AddressSetBuilder(creators);
     }
 
-    public static AddressMapBuilder createAddressMap(AddressMapEntryBuilder... builders) {
+    public static AddressMapBuilder createSpecialAddressMap(AddressMapEntryBuilder... builders) {
         return new AddressMapBuilder(builders);
     }
 
-    public static AddressMapEntryBuilder addressEntry(Object key, SpecialAddressCreator creator) {
+    public static AddressMapEntryBuilder specialAddressEntry(Object key, SpecialAddressCreator creator) {
         return new AddressMapEntryBuilder(key, creator);
     }
 
-    public static AddressMapEntryBuilder addressEntry(Object key, AddressBuilder builder) {
+    public static AddressMapEntryBuilder specialAddressEntry(Object key, AddressBuilder builder) {
         return new AddressMapEntryBuilder(key, builder);
     }
 
