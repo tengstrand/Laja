@@ -2,12 +2,14 @@ package net.sf.laja.example.person.behaviour;
 
 import net.sf.laja.example.person.state.PersonState;
 
-public class Person extends PersonFactory {
+import static net.sf.laja.example.person.behaviour.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
     private final BodyMassIndex bmi;
 
     public Person(PersonState state) {
         super(state);
-        bmi = new BodyMassIndex(state.getSize());
+        bmi = new BodyMassIndex(state.size);
     }
 
     public double calculateBmi() {
@@ -16,10 +18,5 @@ public class Person extends PersonFactory {
 
     public boolean hasNormalWeight() {
         return bmi.hasNormalWeight();
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
     }
 }

@@ -55,20 +55,20 @@
 
 #macro attributeMethod(a, returnClass, returnStatement, isFactory, tab)
   #if (!a.isCollectionOrMap)
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}public {returnClass} {a.name}({a.type.asMutable} {a.name}) {
     #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #if (a.isState)
 
-{tab}public {returnClass} {a.name}({a.nameAsClass}Creator {a.name}) {
+{tab}public {returnClass} {a.name}({a.creator.classname} {a.name}) {
       #setMutableState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else if (a.isCollection)
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}public {returnClass} {a.name}({a.type.asMutable} {a.name}) {
     #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
@@ -90,14 +90,14 @@
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}public {returnClass} {a.name}({a.type} {a.name}) { // 5
     #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
     #if (a.type.mapType.entry.isState)
       #set (stateName = a.type.mapType.entry.state)
 
-{tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
+{tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) { // 6
       #if (isFactory)
 {tab}    return new _{a.nameAsClass}().{a.name}(mapBuilder);
       #else

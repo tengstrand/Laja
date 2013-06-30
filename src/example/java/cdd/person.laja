@@ -2,6 +2,7 @@
 #println("")
 #println("*** Person example ***")
 
-#generateCdd([{
+#generateCdd({
   srcDir: "{.}/main"
-)
+  verbose: true
+})

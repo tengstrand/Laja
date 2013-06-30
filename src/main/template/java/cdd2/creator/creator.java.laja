@@ -16,7 +16,7 @@
   #set (manualCode = creator.manualCode)
   #set (mutableState = "{state}MutableState")
   #set (factory = "{state}Factory")
-  #set (builder = "{state}Builder")
+  #set (builder = creator.builder)
   #set (maker = "{creator.maker}")
   #set (creator = "{creator.classname}")
   #set (listBuilder = "{state}ListBuilder")
@@ -47,6 +47,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.*;
 import java.util.*;

@@ -1,6 +1,6 @@
 package net.sf.laja.cdd.state;
 
-import net.sf.laja.cdd.testgen.ValidationErrors;
+import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.junit.Test;
 

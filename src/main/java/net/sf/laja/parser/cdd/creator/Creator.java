@@ -66,6 +66,10 @@ public class Creator implements CreatorParser.ICreator{
         isGeneratedCode = true;
     }
 
+    public String getBuilder() {
+        return state + "Builder";
+    }
+
     @Override
     public String toString() {
         return "Creator{" +

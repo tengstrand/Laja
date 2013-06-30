@@ -9,7 +9,7 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
-import net.sf.laja.cdd.testgen.ValidationErrors;
+import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
@@ -23,7 +23,7 @@ import java.util.Set;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.*;
 import static net.sf.laja.cdd.stateconverter.StateConverters.*;
-import static net.sf.laja.cdd.testgen.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 

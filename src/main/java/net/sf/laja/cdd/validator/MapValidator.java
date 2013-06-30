@@ -1,11 +1,10 @@
 package net.sf.laja.cdd.validator;
 
 import net.sf.laja.cdd.testgen.MutableState;
-import net.sf.laja.cdd.testgen.ValidationErrors;
 
 import java.util.Map;
 
-import static net.sf.laja.cdd.testgen.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 
 public class MapValidator implements CoreValidator {
 

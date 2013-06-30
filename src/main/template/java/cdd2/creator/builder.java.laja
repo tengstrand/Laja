@@ -15,11 +15,11 @@
         }
 
         #foreach (attribute in attributes)
-        public {builder} {attribute.withMethod}({attribute.type} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; }
+        public {builder} {attribute.withMethod}({attribute.type.asMutable} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; } // 1
           #if (attribute.isState)
-        public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; }
+        public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; } // 2
           #else if (attribute.isDate)
-        public {builder} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) { state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth); return this; }
+        public {builder} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) { state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth); return this; } // 3
           #end
         #end
 

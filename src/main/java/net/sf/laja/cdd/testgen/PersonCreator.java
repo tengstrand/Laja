@@ -8,6 +8,7 @@ import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.testgen.PersonCreator.PersonFactory._ListOfSetOfMapOfIntegers;
+import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 

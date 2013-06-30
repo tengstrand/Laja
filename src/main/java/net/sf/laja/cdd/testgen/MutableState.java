@@ -1,5 +1,6 @@
 package net.sf.laja.cdd.testgen;
 
+import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
 import java.io.Serializable;

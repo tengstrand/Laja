@@ -1,7 +1,6 @@
 package net.sf.laja.cdd.validator;
 
 import net.sf.laja.cdd.testgen.PersonCreator;
-import net.sf.laja.cdd.testgen.ValidationErrors;
 import org.junit.Test;
 
 import java.util.Map;

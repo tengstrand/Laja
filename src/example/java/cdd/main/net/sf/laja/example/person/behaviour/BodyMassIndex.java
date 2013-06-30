@@ -5,22 +5,19 @@ import net.sf.laja.example.person.state.BmiState;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class BodyMassIndex extends BodyMassIndexFactory {
+import static net.sf.laja.example.person.behaviour.BodyMassIndexCreator.BmiBehaviour;
+
+public class BodyMassIndex extends BmiBehaviour{
     public BodyMassIndex(BmiState state) {
         super(state);
-    }
-
-    // (factory)
-    public BodyMassIndex asBodyMassIndex() {
-        return new BodyMassIndex(state);
     }
 
     /**
      * @return BMI with one decimal.
      */
     public double calculateBmi() {
-        double heightInMeter = state.getHeightInCentimeters() / 100.0;
-        double bmi = state.getWeightInKilograms() / (heightInMeter * heightInMeter);
+        double heightInMeter = s.heightInCentimeters / 100.0;
+        double bmi = s.weightInKilograms / (heightInMeter * heightInMeter);
         return new BigDecimal(bmi).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
     }
 

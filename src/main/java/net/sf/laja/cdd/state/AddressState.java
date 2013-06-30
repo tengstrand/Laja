@@ -6,7 +6,7 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
-import net.sf.laja.cdd.testgen.ValidationErrors;
+import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
 @State

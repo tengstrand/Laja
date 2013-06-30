@@ -81,8 +81,8 @@ public class Attribute implements StateParser.IAttribute {
     public String getBuilder() {
         if (state != null && state.creator != null) {
             String creator = state.creator.classname;
-            String builder = creator.endsWith("Creator") ? creator.substring(0, creator.length() - "Creator".length()) + "Builder" : creator + "Builder";
-            return state.creator.classname + "." + builder;
+//            String builder = creator.endsWith("Creator") ? creator.substring(0, creator.length() - "Creator".length()) + "Builder" : creator + "Builder";
+            return state.creator.classname + "." + state.creator.getBuilder();
         }
         String type = this.type.asImmutable().name;
         return state == null ? "[error - could not find state '" + type + "']" : "[error - could not find creator for state '" + type + "']";

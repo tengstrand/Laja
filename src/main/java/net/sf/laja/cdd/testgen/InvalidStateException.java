@@ -1,5 +1,7 @@
 package net.sf.laja.cdd.testgen;
 
+import net.sf.laja.cdd.validator.ValidationErrors;
+
 public class InvalidStateException extends IllegalStateException {
     public final String message;
     public final ValidationErrors errors;
