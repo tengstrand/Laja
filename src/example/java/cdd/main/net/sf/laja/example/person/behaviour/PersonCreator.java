@@ -10,8 +10,11 @@ import net.sf.laja.example.person.state.BmiState.BmiMutableState;
 import net.sf.laja.example.person.state.PersonState;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +42,7 @@ public class PersonCreator implements PersonMaker {
     }
 
     public static PersonBuilder buildPerson() {
-        return PersonBuilder.create();
+        return new PersonBuilder();
     }
 
     public static PersonListBuilder createPersonList(PersonCreator... creators) {
@@ -189,18 +192,18 @@ public class PersonCreator implements PersonMaker {
     public static class PersonBuilder implements PersonMaker {
         private final PersonMutableState state;
 
-        private PersonBuilder(PersonMutableState state) {
+        public PersonBuilder() {
+            this.state = new PersonMutableState();
+        }
+
+        public PersonBuilder(PersonMutableState state) {
             this.state = state;
         }
 
-        public static PersonBuilder create() {
-            return new PersonBuilder(new PersonMutableState());
-        }
-
-        public PersonBuilder withGivenName(String givenName) { state.givenName = givenName; return this; } // 1
-        public PersonBuilder withSurname(String surname) { state.surname = surname; return this; } // 1
-        public PersonBuilder withSize(BmiMutableState size) { state.size = size; return this; } // 1
-        public PersonBuilder withSize(BodyMassIndexCreator.BmiBuilder size) { state.size = size.asMutableState(); return this; } // 2
+        public PersonBuilder withGivenName(String givenName) { state.givenName = givenName; return this; }
+        public PersonBuilder withSurname(String surname) { state.surname = surname; return this; }
+        public PersonBuilder withSize(BmiMutableState size) { state.size = size; return this; }
+        public PersonBuilder withSize(BodyMassIndexCreator.BmiBuilder size) { state.size = size.asMutableState(); return this; }
 
         public Person asPerson() {
             return new Person(state.asImmutable());
@@ -229,11 +232,16 @@ public class PersonCreator implements PersonMaker {
 
     // --- ListBuilder ---
 
-    public static class PersonListBuilder {
-        private PersonCreator[] creators;
+    public static class PersonListBuilder implements Iterable<PersonCreator> {
+        private List<PersonCreator> creators;
 
         public PersonListBuilder(PersonCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public PersonListBuilder(Collection<PersonCreator> creators) {
+            this.creators = new ArrayList<PersonCreator>();
+            this.creators.addAll(creators);
         }
 
         // asPersonList() : ImmutableList<Person>
@@ -279,15 +287,24 @@ public class PersonCreator implements PersonMaker {
             }
             return result;
         }
+
+        public Iterator<PersonCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- SetBuilder ---
 
-    public static class PersonSetBuilder {
-        private PersonCreator[] creators;
+    public static class PersonSetBuilder implements Iterable<PersonCreator> {
+        private List<PersonCreator> creators;
 
         public PersonSetBuilder(PersonCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public PersonSetBuilder(Collection<PersonCreator> creators) {
+            this.creators = new ArrayList<PersonCreator>();
+            this.creators.addAll(creators);
         }
 
         // asPersonSet() : ImmutableSet<Person>
@@ -332,6 +349,10 @@ public class PersonCreator implements PersonMaker {
                 result.add(creator.asMutableState());
             }
             return result;
+        }
+
+        public Iterator<PersonCreator> iterator() {
+            return creators.iterator();
         }
     }
 

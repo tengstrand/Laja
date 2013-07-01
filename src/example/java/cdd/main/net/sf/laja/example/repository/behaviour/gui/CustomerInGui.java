@@ -1,28 +1,29 @@
 package net.sf.laja.example.repository.behaviour.gui;
 
-import net.sf.laja.example.repository.behaviour.domain.AddressBuilder;
-import net.sf.laja.example.repository.behaviour.domain.CustomerBuilder;
-import net.sf.laja.example.repository.behaviour.domain.ZipcodeBuilder;
-import net.sf.laja.example.repository.state.CustomerBehaviour;
-import net.sf.laja.example.repository.state.CustomerState;
+import net.sf.laja.example.repository.behaviour.domain.AddressCreator;
+import net.sf.laja.example.repository.behaviour.domain.CustomerCreator;
+import net.sf.laja.example.repository.behaviour.domain.ZipcodeCreator;
 
-public class CustomerInGui extends CustomerBehaviour {
+import static net.sf.laja.example.repository.behaviour.domain.CustomerCreator.CustomerMutableBehaviour;
+import static net.sf.laja.example.repository.state.CustomerState.CustomerMutableState;
+
+public class CustomerInGui extends CustomerMutableBehaviour {
     private StringToIntConverter age;
     private StringToIntConverter zipcode;
 
-    final CustomerBuilder customerBuilder;
-    final AddressBuilder addressBuilder;
-    final ZipcodeBuilder zipcodeBuilder;
+    final CustomerCreator.CustomerBuilder customerBuilder;
+    final AddressCreator.AddressBuilder addressBuilder;
+    final ZipcodeCreator.ZipcodeBuilder zipcodeBuilder;
 
-    public CustomerInGui(CustomerState state) {
+    public CustomerInGui(CustomerMutableState state) {
         super(state);
 
         age = new StringToIntConverter(state.getAge());
         zipcode = new StringToIntConverter(state.getAddress().getZipcode().getZipcode());
 
-        customerBuilder = new CustomerBuilder(state, this);
-        addressBuilder = new AddressBuilder(state.getAddress(), this);
-        zipcodeBuilder = new ZipcodeBuilder(state.getAddress().getZipcode(), this);
+        customerBuilder = new CustomerCreator.CustomerBuilder(state);
+        addressBuilder = new AddressCreator.AddressBuilder(state.address);
+        zipcodeBuilder = new ZipcodeCreator.ZipcodeBuilder(state.address.zipcode);
     }
 
     public void setGivenName(String givenName) {

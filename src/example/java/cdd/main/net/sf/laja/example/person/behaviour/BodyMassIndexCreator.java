@@ -9,8 +9,11 @@ import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.person.state.BmiState;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +40,7 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
     }
 
     public static BmiBuilder buildBmi() {
-        return BmiBuilder.create();
+        return new BmiBuilder();
     }
 
     public static BmiListBuilder createBmiList(BodyMassIndexCreator... creators) {
@@ -174,16 +177,16 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
     public static class BmiBuilder implements BodyMassIndexMaker {
         private final BmiMutableState state;
 
-        private BmiBuilder(BmiMutableState state) {
+        public BmiBuilder() {
+            this.state = new BmiMutableState();
+        }
+
+        public BmiBuilder(BmiMutableState state) {
             this.state = state;
         }
 
-        public static BmiBuilder create() {
-            return new BmiBuilder(new BmiMutableState());
-        }
-
-        public BmiBuilder withHeightInCentimeters(int heightInCentimeters) { state.heightInCentimeters = heightInCentimeters; return this; } // 1
-        public BmiBuilder withWeightInKilograms(int weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; } // 1
+        public BmiBuilder withHeightInCentimeters(int heightInCentimeters) { state.heightInCentimeters = heightInCentimeters; return this; }
+        public BmiBuilder withWeightInKilograms(int weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; }
 
         public BodyMassIndex asBmi() {
             return new BodyMassIndex(state.asImmutable());
@@ -212,11 +215,16 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
 
     // --- ListBuilder ---
 
-    public static class BmiListBuilder {
-        private BodyMassIndexCreator[] creators;
+    public static class BmiListBuilder implements Iterable<BodyMassIndexCreator> {
+        private List<BodyMassIndexCreator> creators;
 
         public BmiListBuilder(BodyMassIndexCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public BmiListBuilder(Collection<BodyMassIndexCreator> creators) {
+            this.creators = new ArrayList<BodyMassIndexCreator>();
+            this.creators.addAll(creators);
         }
 
         // asBmiList() : ImmutableList<BodyMassIndex>
@@ -262,15 +270,24 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
             }
             return result;
         }
+
+        public Iterator<BodyMassIndexCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- SetBuilder ---
 
-    public static class BmiSetBuilder {
-        private BodyMassIndexCreator[] creators;
+    public static class BmiSetBuilder implements Iterable<BodyMassIndexCreator> {
+        private List<BodyMassIndexCreator> creators;
 
         public BmiSetBuilder(BodyMassIndexCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public BmiSetBuilder(Collection<BodyMassIndexCreator> creators) {
+            this.creators = new ArrayList<BodyMassIndexCreator>();
+            this.creators.addAll(creators);
         }
 
         // asBmiSet() : ImmutableSet<BodyMassIndex>
@@ -315,6 +332,10 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
                 result.add(creator.asMutableState());
             }
             return result;
+        }
+
+        public Iterator<BodyMassIndexCreator> iterator() {
+            return creators.iterator();
         }
     }
 

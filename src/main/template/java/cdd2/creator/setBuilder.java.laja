@@ -3,11 +3,16 @@
 #macro setBuilder()
     // --- SetBuilder ---
 
-    public static class {setBuilder} {
-        private {creator}[] creators;
+    public static class {setBuilder} implements Iterable<{creator}> {
+        private List<{creator}> creators;
 
         public {setBuilder}({creator}... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public {setBuilder}(Collection<{creator}> creators) {
+            this.creators = new ArrayList<{creator}>();
+            this.creators.addAll(creators);
         }
 
   #foreach (method in asMethods)
@@ -54,6 +59,10 @@
                 result.add(creator.asMutableState());
             }
             return result;
+        }
+
+        public Iterator<{creator}> iterator() {
+            return creators.iterator();
         }
     }
 

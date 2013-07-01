@@ -104,7 +104,7 @@ import static {import};
 #macro build()
   #set (methodName = constructorMethodName("build"))
     public static {builder} {methodName}() {
-        return {builder}.create();
+        return new {builder}();
     }
 
 #end
@@ -188,7 +188,7 @@ import static {import};
 
   #end
   #foreach (attribute in attributes where attribute.isOptionalOrId)
-    public {creator} {attribute.withMethod}({attribute.type} {attribute.name}) {
+    public {creator} {attribute.withMethod}({attribute.type.asMutable} {attribute.name}) {
         state.{attribute.name} = {attribute.name};
         return this;
     }

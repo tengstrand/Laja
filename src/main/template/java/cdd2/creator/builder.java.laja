@@ -6,20 +6,20 @@
     public static class {builder} implements {maker} {
         private final {mutableState} state;
 
-        private {builder}({mutableState} state) {
+        public {builder}() {
+            this.state = new {mutableState}();
+        }
+
+        public {builder}({mutableState} state) {
             this.state = state;
         }
 
-        public static {builder} create() {
-            return new {builder}(new {mutableState}());
-        }
-
         #foreach (attribute in attributes)
-        public {builder} {attribute.withMethod}({attribute.type.asMutable} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; } // 1
+        public {builder} {attribute.withMethod}({attribute.type.asMutable} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; }
           #if (attribute.isState)
-        public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; } // 2
+        public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; }
           #else if (attribute.isDate)
-        public {builder} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) { state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth); return this; } // 3
+        public {builder} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) { state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth); return this; }
           #end
         #end
 
