@@ -67,6 +67,10 @@ public class Type implements StateParser.IType {
         return isPrimitive() && name.equals("long");
     }
 
+    public boolean isPrimitiveFloatingPoint() {
+        return isPrimitive() && (name.equals("float") || name.endsWith("double"));
+    }
+
     public boolean isValid() {
         if (!isCollectionOrMap()) {
             return isState() || net.sf.laja.parser.cdd.Type.isValid(name);

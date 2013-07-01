@@ -64,18 +64,24 @@ public class CustomerState implements ImmutableState {
         this.address = address;
         this.oldAddresses = oldAddresses;
 
-        if (givenName == null) throw new IllegalCustomerStateException("'givenName' can not be null");
-        if (address == null) throw new IllegalCustomerStateException("'address' can not be null");
+        if (givenName == null) throw new InvalidCustomerStateException("'givenName' can not be null");
+        if (address == null) throw new InvalidCustomerStateException("'address' can not be null");
 
         assertIsValid();
     }
 
-    public static class IllegalCustomerStateException extends InvalidStateException {
-        public IllegalCustomerStateException(String message) {
+    private void assertThat(boolean condition, String message) {
+        if (!condition) {
+            throw new InvalidCustomerStateException(message);
+        }
+    }
+
+    public static class InvalidCustomerStateException extends InvalidStateException {
+        public InvalidCustomerStateException(String message) {
             super(message);
         }
 
-        public IllegalCustomerStateException(ValidationErrors errors) {
+        public InvalidCustomerStateException(ValidationErrors errors) {
             super(errors);
         }
     }
@@ -232,7 +238,7 @@ public class CustomerState implements ImmutableState {
             ValidationErrors errors = validate(validators);
 
             if (errors.isInvalid()) {
-                throw new IllegalCustomerStateException(errors);
+                throw new InvalidCustomerStateException(errors);
             }
         }
 

@@ -29,12 +29,18 @@ public class BmiState implements ImmutableState {
         assertIsValid();
     }
 
-    public static class IllegalBmiStateException extends InvalidStateException {
-        public IllegalBmiStateException(String message) {
+    private void assertThat(boolean condition, String message) {
+        if (!condition) {
+            throw new InvalidBmiStateException(message);
+        }
+    }
+
+    public static class InvalidBmiStateException extends InvalidStateException {
+        public InvalidBmiStateException(String message) {
             super(message);
         }
 
-        public IllegalBmiStateException(ValidationErrors errors) {
+        public InvalidBmiStateException(ValidationErrors errors) {
             super(errors);
         }
     }
@@ -112,7 +118,7 @@ public class BmiState implements ImmutableState {
             ValidationErrors errors = validate(validators);
 
             if (errors.isInvalid()) {
-                throw new IllegalBmiStateException(errors);
+                throw new InvalidBmiStateException(errors);
             }
         }
 

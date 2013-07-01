@@ -1,5 +1,6 @@
-package net.sf.laja.example.repository.state;
+package net.sf.laja.example.account.state;
 
+import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
@@ -8,49 +9,50 @@ import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
 @State
-public class ZipcodeState implements ImmutableState {
-    public final int zipcode;
+public class AccountState implements ImmutableState {
+    @Key public final double balance;
 
     public void assertIsValid() {
+        assertThat(balance >= 0, "Balance must be >= 0");
     }
 
     // ===== Generated code =====
 
-    public static final String ZIPCODE = "zipcode";
+    public static final String BALANCE = "balance";
 
-    public ZipcodeState(int zipcode) {
-        this.zipcode = zipcode;
+    public AccountState(double balance) {
+        this.balance = balance;
 
         assertIsValid();
     }
 
     private void assertThat(boolean condition, String message) {
         if (!condition) {
-            throw new InvalidZipcodeStateException(message);
+            throw new InvalidAccountStateException(message);
         }
     }
 
-    public static class InvalidZipcodeStateException extends InvalidStateException {
-        public InvalidZipcodeStateException(String message) {
+    public static class InvalidAccountStateException extends InvalidStateException {
+        public InvalidAccountStateException(String message) {
             super(message);
         }
 
-        public InvalidZipcodeStateException(ValidationErrors errors) {
+        public InvalidAccountStateException(ValidationErrors errors) {
             super(errors);
         }
     }
 
-    public int getZipcode() { return zipcode; }
+    public double getBalance() { return balance; }
 
-    public ZipcodeState withZipcode(int zipcode) { return new ZipcodeState(zipcode); }
+    public AccountState withBalance(double balance) { return new AccountState(balance); }
 
-    public ZipcodeMutableState asMutable() {
-        return new ZipcodeMutableState(zipcode);
+    public AccountMutableState asMutable() {
+        return new AccountMutableState(balance);
     }
 
     @Override
     public int hashCode() {
-        int result = zipcode;
+        int result = (int)balance;
 
         return result;
     }
@@ -60,27 +62,44 @@ public class ZipcodeState implements ImmutableState {
         if (this == that) return true;
         if (that == null || getClass() != that.getClass()) return false;
 
-        ZipcodeState state = (ZipcodeState)that;
+        AccountState state = (AccountState)that;
 
-        if (zipcode != state.zipcode) return false;
+        if (balance != state.balance) return false;
+
+        return true;
+    }
+
+    public int hashCodeValue() {
+        int result = (int)balance;
+
+        return result;
+    }
+
+    public boolean equalsValue(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
+
+        AccountState state = (AccountState)that;
+
+        if (balance != state.balance) return false;
 
         return true;
     }
 
     @Override
     public String toString() {
-        return "{zipcode=" + zipcode + "}";
+        return "{balance=" + balance + "}";
     }
 
     @State(type = "mutable")
-    public static class ZipcodeMutableState implements MutableState {
-        public int zipcode;
+    public static class AccountMutableState implements MutableState {
+        @Key public double balance;
 
-        public ZipcodeMutableState() {
+        public AccountMutableState() {
         }
 
-        public ZipcodeMutableState(int zipcode) {
-            this.zipcode = zipcode;
+        public AccountMutableState(double balance) {
+            this.balance = balance;
         }
 
         /**
@@ -89,17 +108,17 @@ public class ZipcodeState implements ImmutableState {
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
-        public int getZipcode() { return zipcode; }
+        public double getBalance() { return balance; }
 
-        public void setZipcode(int zipcode) { this.zipcode = zipcode; }
+        public void setBalance(double balance) { this.balance = balance; }
 
-        public ZipcodeMutableState withZipcode(int zipcode) { this.zipcode = zipcode; return this; }
+        public AccountMutableState withBalance(double balance) { this.balance = balance; return this; }
 
         public void assertIsValid(Validator... validators) {
             ValidationErrors errors = validate(validators);
 
             if (errors.isInvalid()) {
-                throw new InvalidZipcodeStateException(errors);
+                throw new InvalidAccountStateException(errors);
             }
         }
 
@@ -121,15 +140,15 @@ public class ZipcodeState implements ImmutableState {
             }
         }
 
-        public ZipcodeState asImmutable(Validator... validators) {
+        public AccountState asImmutable(Validator... validators) {
             assertIsValid(validators);
 
-            return new ZipcodeState(zipcode);
+            return new AccountState(balance);
         }
 
         @Override
         public int hashCode() {
-            int result = zipcode;
+            int result = (int)balance;
 
             return result;
         }
@@ -139,16 +158,16 @@ public class ZipcodeState implements ImmutableState {
             if (this == that) return true;
             if (that == null || getClass() != that.getClass()) return false;
 
-            ZipcodeMutableState state = (ZipcodeMutableState)that;
+            AccountMutableState state = (AccountMutableState)that;
 
-            if (zipcode != state.zipcode) return false;
+            if (balance != state.balance) return false;
 
             return true;
         }
 
         @Override
         public String toString() {
-            return "{zipcode=" + zipcode + "}";
+            return "{balance=" + balance + "}";
         }
     }
 }

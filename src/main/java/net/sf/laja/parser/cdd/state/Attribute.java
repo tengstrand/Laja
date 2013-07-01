@@ -80,8 +80,6 @@ public class Attribute implements StateParser.IAttribute {
 
     public String getBuilder() {
         if (state != null && state.creator != null) {
-            String creator = state.creator.classname;
-//            String builder = creator.endsWith("Creator") ? creator.substring(0, creator.length() - "Creator".length()) + "Builder" : creator + "Builder";
             return state.creator.classname + "." + state.creator.getBuilder();
         }
         String type = this.type.asImmutable().name;
@@ -106,6 +104,10 @@ public class Attribute implements StateParser.IAttribute {
 
     public boolean isLong() {
         return type.isLong();
+    }
+
+    public boolean isPrimitiveFloatingPoint() {
+        return type.isPrimitiveFloatingPoint();
     }
 
     public boolean isDate() {

@@ -33,19 +33,25 @@ public class PersonState implements ImmutableState {
         this.surname = surname;
         this.size = size;
 
-        if (givenName == null) throw new IllegalPersonStateException("'givenName' can not be null");
-        if (surname == null) throw new IllegalPersonStateException("'surname' can not be null");
-        if (size == null) throw new IllegalPersonStateException("'size' can not be null");
+        if (givenName == null) throw new InvalidPersonStateException("'givenName' can not be null");
+        if (surname == null) throw new InvalidPersonStateException("'surname' can not be null");
+        if (size == null) throw new InvalidPersonStateException("'size' can not be null");
 
         assertIsValid();
     }
 
-    public static class IllegalPersonStateException extends InvalidStateException {
-        public IllegalPersonStateException(String message) {
+    private void assertThat(boolean condition, String message) {
+        if (!condition) {
+            throw new InvalidPersonStateException(message);
+        }
+    }
+
+    public static class InvalidPersonStateException extends InvalidStateException {
+        public InvalidPersonStateException(String message) {
             super(message);
         }
 
-        public IllegalPersonStateException(ValidationErrors errors) {
+        public InvalidPersonStateException(ValidationErrors errors) {
             super(errors);
         }
     }
@@ -136,7 +142,7 @@ public class PersonState implements ImmutableState {
             ValidationErrors errors = validate(validators);
 
             if (errors.isInvalid()) {
-                throw new IllegalPersonStateException(errors);
+                throw new InvalidPersonStateException(errors);
             }
         }
 
