@@ -2,7 +2,7 @@ package net.sf.laja.example.person;
 
 import net.sf.laja.example.person.behaviour.Person;
 
-import static net.sf.laja.example.person.behaviour.BodyMassIndexCreator.createBmi;
+import static net.sf.laja.example.person.behaviour.BodyMassIndexCreator.createBodyMassIndex;
 import static net.sf.laja.example.person.behaviour.PersonCreator.createPerson;
 
 public class PersonExample {
@@ -13,7 +13,7 @@ public class PersonExample {
      */
     public static void main(String... args) {
         Person person = createPerson().givenName("Joakim").surname("Tengstrand").size(
-                createBmi().heightInCentimeters(186).weightInKilograms(82)).asPerson();
+                createBodyMassIndex().heightInCentimeters(186).weightInKilograms(82)).asPerson();
         System.out.println(person);
         System.out.println("Body Mass Index: " + person.calculateBmi());
         System.out.println("Has normal weight?: " + person.hasNormalWeight());

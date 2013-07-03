@@ -21,7 +21,7 @@ import java.util.Set;
 import static net.sf.laja.example.repository.state.ZipcodeState.ZipcodeMutableState;
 
 @Creator
-public class ZipcodeCreator implements ZipcodeMaker {
+public class ZipcodeCreator implements ZipcodeCreatorMaker {
     private final ZipcodeMutableState state;
 
     public Zipcode asZipcode() {
@@ -54,7 +54,7 @@ public class ZipcodeCreator implements ZipcodeMaker {
         return new ZipcodeMapBuilder(builders);
     }
 
-    public static ZipcodeMapEntryBuilder zipcodeEntry(Object key, ZipcodeCreator creator) {
+    public static ZipcodeMapEntryBuilder createZipcodeEntry(Object key, ZipcodeCreator creator) {
         return new ZipcodeMapEntryBuilder(key, creator);
     }
 
@@ -165,7 +165,7 @@ public class ZipcodeCreator implements ZipcodeMaker {
 
     // --- Builder ---
 
-    public static class ZipcodeBuilder implements ZipcodeMaker {
+    public static class ZipcodeBuilder implements ZipcodeCreatorMaker {
         private final ZipcodeMutableState state;
 
         public ZipcodeBuilder() {
@@ -333,9 +333,9 @@ public class ZipcodeCreator implements ZipcodeMaker {
 
     public static class ZipcodeMapEntryBuilder {
         private final Object key;
-        private final ZipcodeMaker maker;
+        private final ZipcodeCreatorMaker maker;
 
-        public ZipcodeMapEntryBuilder(Object key, ZipcodeMaker maker) {
+        public ZipcodeMapEntryBuilder(Object key, ZipcodeCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -410,7 +410,7 @@ public class ZipcodeCreator implements ZipcodeMaker {
 
 // --- Maker ---
 
-interface ZipcodeMaker {
+interface ZipcodeCreatorMaker {
     Zipcode asZipcode();
 
     ZipcodeState asState();

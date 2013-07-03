@@ -1,7 +1,5 @@
 package net.sf.laja.parser.cdd.creator;
 
-import org.apache.commons.lang.StringUtils;
-
 public class AsMethod implements CreatorParser.IAsMethod {
     public String spaces;
     public String returnclass;
@@ -19,16 +17,6 @@ public class AsMethod implements CreatorParser.IAsMethod {
 
     public void setMethodName(String methodName) {
         this.methodName = methodName;
-    }
-
-    public String getActionName(String action) {
-        if (methodName.startsWith("as") && methodName.length() > 2) {
-            if (action.isEmpty()) {
-                return StringUtils.uncapitalize(methodName.substring(2));
-            }
-            return action + methodName.substring(2);
-        }
-        return action + StringUtils.capitalize(methodName);
     }
 
     public void setParameters(CreatorParser.IParameters iparameters) {

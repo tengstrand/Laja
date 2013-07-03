@@ -1,8 +1,9 @@
 package net.sf.laja.example.account;
 
-import net.sf.laja.example.account.behaviour.Account;
 import net.sf.laja.example.account.behaviour.DestinationAccount;
 import net.sf.laja.example.account.behaviour.SourceAccount;
+
+import static net.sf.laja.example.account.behaviour.AccountCreator.createAccount;
 
 public class AccountExample {
 
@@ -13,18 +14,17 @@ public class AccountExample {
      * (Data Context Interaction) created by Trygve Reenskaug.
      *
      * Note that this is CDD (Context Driven Development) created by Joakim Tengstrand.
-     * CDD does not use roles, only state and behaviour.
+     * CDD does not use roles, only state, behaviour and creators.
      *
      * Classes included in this example:
      *   - AcccountExample       (user story)
-     *   - Account               (factory)
      *   - SourceAccount         (behaviour)
      *   - DestinationAccount    (behaviour)
      *   - AccountStateTemplate  (state)
      */
     public static void main(String... args) {
-        SourceAccount sourceAccount = Account.balance(1000).asSourceAccount();
-        DestinationAccount destinationAccount = Account.balance(100).asDestinationAccount();
+        SourceAccount sourceAccount = createAccount().balance(1000).asSourceAccount();
+        DestinationAccount destinationAccount = createAccount().balance(100).asDestinationAccount();
 
         System.out.println("=== before transaction ===");
         System.out.println(sourceAccount);

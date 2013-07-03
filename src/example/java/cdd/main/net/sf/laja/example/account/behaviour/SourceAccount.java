@@ -1,11 +1,14 @@
 package net.sf.laja.example.account.behaviour;
 
-import net.sf.laja.example.account.state.AccountBehaviour;
-import net.sf.laja.example.account.state.AccountState;
+import static net.sf.laja.example.account.behaviour.AccountCreator.AccountMutableBehaviour;
+import static net.sf.laja.example.account.state.AccountState.AccountMutableState;
 
-public class SourceAccount extends AccountBehaviour {
-    public SourceAccount(AccountState state) {
+public class SourceAccount extends AccountMutableBehaviour {
+    private final AccountMutableState state;
+
+    public SourceAccount(AccountMutableState state) {
         super(state);
+        this.state = state;
     }
 
     public void transferTo(DestinationAccount destination, double amount) {
@@ -20,9 +23,9 @@ public class SourceAccount extends AccountBehaviour {
     }
 
     private void withdraw(double amount) {
-        if (state.getBalance() < amount) {
+        if (state.balance < amount) {
             throw new IllegalStateException("Not enough money on the source account");
         }
-        state.setBalance(state.getBalance() - amount, this);
+        state.setBalance(state.balance - amount);
     }
 }

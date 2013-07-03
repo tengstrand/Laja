@@ -22,7 +22,7 @@ import java.util.Set;
 import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
 
 @Creator
-public class AddressCreator implements AddressMaker {
+public class AddressCreator implements AddressCreatorMaker {
     private final AddressMutableState state;
 
     public Address asAddress() {
@@ -58,7 +58,7 @@ public class AddressCreator implements AddressMaker {
         return new AddressMapBuilder(builders);
     }
 
-    public static AddressMapEntryBuilder addressEntry(Object key, AddressCreator creator) {
+    public static AddressMapEntryBuilder createAddressEntry(Object key, AddressCreator creator) {
         return new AddressMapEntryBuilder(key, creator);
     }
 
@@ -195,7 +195,7 @@ public class AddressCreator implements AddressMaker {
 
     // --- Builder ---
 
-    public static class AddressBuilder implements AddressMaker {
+    public static class AddressBuilder implements AddressCreatorMaker {
         private final AddressMutableState state;
 
         public AddressBuilder() {
@@ -367,9 +367,9 @@ public class AddressCreator implements AddressMaker {
 
     public static class AddressMapEntryBuilder {
         private final Object key;
-        private final AddressMaker maker;
+        private final AddressCreatorMaker maker;
 
-        public AddressMapEntryBuilder(Object key, AddressMaker maker) {
+        public AddressMapEntryBuilder(Object key, AddressCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -444,7 +444,7 @@ public class AddressCreator implements AddressMaker {
 
 // --- Maker ---
 
-interface AddressMaker {
+interface AddressCreatorMaker {
     Address asAddress();
 
     AddressState asState();

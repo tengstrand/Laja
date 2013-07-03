@@ -1,15 +1,17 @@
 package net.sf.laja.example.account.behaviour;
 
-import net.sf.laja.example.account.state.AccountBehaviour;
-import net.sf.laja.example.account.state.AccountState;
+import static net.sf.laja.example.account.state.AccountState.AccountMutableState;
 
-public class DestinationAccount extends AccountBehaviour {
-    public DestinationAccount(final AccountState state) {
+public class DestinationAccount extends AccountCreator.AccountMutableBehaviour {
+    private final AccountMutableState state;
+
+    public DestinationAccount(AccountMutableState state) {
         super(state);
+        this.state = state;
     }
 
     public void deposit(double amount) {
-        state.setBalance(state.getBalance() + amount, this);
+        state.setBalance(state.balance + amount);
     }
 
     public void log(String message) {

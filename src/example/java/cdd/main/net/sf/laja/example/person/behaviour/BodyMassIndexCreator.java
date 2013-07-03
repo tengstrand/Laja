@@ -21,7 +21,7 @@ import java.util.Set;
 import static net.sf.laja.example.person.state.BmiState.BmiMutableState;
 
 @Creator
-public class BodyMassIndexCreator implements BodyMassIndexMaker {
+public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
     private final BmiMutableState state;
 
     public BodyMassIndex asBmi() {
@@ -35,31 +35,31 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
 
     // --- Constructors ---
 
-    public static BmiFactory createBmi() {
+    public static BmiFactory createBodyMassIndex() {
         return new BodyMassIndexCreator(new BmiMutableState()).new BmiFactory();
     }
 
-    public static BmiBuilder buildBmi() {
+    public static BmiBuilder buildBodyMassIndex() {
         return new BmiBuilder();
     }
 
-    public static BmiListBuilder createBmiList(BodyMassIndexCreator... creators) {
+    public static BmiListBuilder createBodyMassIndexList(BodyMassIndexCreator... creators) {
         return new BmiListBuilder(creators);
     }
 
-    public static BmiSetBuilder createBmiSet(BodyMassIndexCreator... creators) {
+    public static BmiSetBuilder createBodyMassIndexSet(BodyMassIndexCreator... creators) {
         return new BmiSetBuilder(creators);
     }
 
-    public static BmiMapBuilder createBmiMap(BmiMapEntryBuilder... builders) {
+    public static BmiMapBuilder createBodyMassIndexMap(BmiMapEntryBuilder... builders) {
         return new BmiMapBuilder(builders);
     }
 
-    public static BmiMapEntryBuilder bmiEntry(Object key, BodyMassIndexCreator creator) {
+    public static BmiMapEntryBuilder createBodyMassIndexEntry(Object key, BodyMassIndexCreator creator) {
         return new BmiMapEntryBuilder(key, creator);
     }
 
-    public static BmiMapEntryBuilder bmiEntry(Object key, BmiBuilder builder) {
+    public static BmiMapEntryBuilder bodyMassIndexEntry(Object key, BmiBuilder builder) {
         return new BmiMapEntryBuilder(key, builder);
     }
 
@@ -174,7 +174,7 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
 
     // --- Builder ---
 
-    public static class BmiBuilder implements BodyMassIndexMaker {
+    public static class BmiBuilder implements BodyMassIndexCreatorMaker {
         private final BmiMutableState state;
 
         public BmiBuilder() {
@@ -343,9 +343,9 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
 
     public static class BmiMapEntryBuilder {
         private final Object key;
-        private final BodyMassIndexMaker maker;
+        private final BodyMassIndexCreatorMaker maker;
 
-        public BmiMapEntryBuilder(Object key, BodyMassIndexMaker maker) {
+        public BmiMapEntryBuilder(Object key, BodyMassIndexCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -420,7 +420,7 @@ public class BodyMassIndexCreator implements BodyMassIndexMaker {
 
 // --- Maker ---
 
-interface BodyMassIndexMaker {
+interface BodyMassIndexCreatorMaker {
     BodyMassIndex asBmi();
 
     BmiState asState();

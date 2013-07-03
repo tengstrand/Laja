@@ -6,6 +6,15 @@ import java.util.List;
 
 public class FileReader {
 
+    public List<String> readFiles(List<String> fileOrDirList, String endsWith) {
+        List<String> files = new ArrayList<String>();
+
+        for (String fileOrDir : fileOrDirList) {
+            files.addAll(readFiles(fileOrDir, endsWith));
+        }
+        return files;
+    }
+
     public List<String> readFiles(String fileOrDir, String endsWith) {
         List<String> files = new ArrayList<String>();
         readFiles(new File(fileOrDir), endsWith, files);

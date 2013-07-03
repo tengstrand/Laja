@@ -22,7 +22,7 @@ import java.util.Set;
 import static net.sf.laja.example.person.state.PersonState.PersonMutableState;
 
 @Creator
-public class PersonCreator implements PersonMaker {
+public class PersonCreator implements PersonCreatorMaker {
     private final PersonMutableState state;
 
     public Person asPerson() {
@@ -57,7 +57,7 @@ public class PersonCreator implements PersonMaker {
         return new PersonMapBuilder(builders);
     }
 
-    public static PersonMapEntryBuilder personEntry(Object key, PersonCreator creator) {
+    public static PersonMapEntryBuilder createPersonEntry(Object key, PersonCreator creator) {
         return new PersonMapEntryBuilder(key, creator);
     }
 
@@ -189,7 +189,7 @@ public class PersonCreator implements PersonMaker {
 
     // --- Builder ---
 
-    public static class PersonBuilder implements PersonMaker {
+    public static class PersonBuilder implements PersonCreatorMaker {
         private final PersonMutableState state;
 
         public PersonBuilder() {
@@ -360,9 +360,9 @@ public class PersonCreator implements PersonMaker {
 
     public static class PersonMapEntryBuilder {
         private final Object key;
-        private final PersonMaker maker;
+        private final PersonCreatorMaker maker;
 
-        public PersonMapEntryBuilder(Object key, PersonMaker maker) {
+        public PersonMapEntryBuilder(Object key, PersonCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -437,7 +437,7 @@ public class PersonCreator implements PersonMaker {
 
 // --- Maker ---
 
-interface PersonMaker {
+interface PersonCreatorMaker {
     Person asPerson();
 
     PersonState asState();

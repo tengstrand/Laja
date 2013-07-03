@@ -19,6 +19,9 @@ public class Creator implements CreatorParser.ICreator{
     public Aparameters parameters;
 
     public String filename;
+    public String buildMethod;
+    public String createMethod;
+    public String entryMethod;
 
     // Workaround a bug in Laja.
     public void setFilename(String filename) {
@@ -51,11 +54,11 @@ public class Creator implements CreatorParser.ICreator{
         asMethods = classStatement.asMethods;
         parameters = classStatement.parameters;
 
-        if (classname.endsWith("Creator")) {
-            maker = classname.substring(0, classname.length() - "Creator".length()) + "Maker";
-        } else {
-            maker = classname + "Maker";
-        }
+        String name = classname.endsWith("Creator") ? classname.substring(0, classname.length() - "Creator".length()) : classname;
+        maker = classname + "Maker";
+        buildMethod = "build" + name;
+        createMethod = "create" + name;
+        entryMethod = StringUtils.uncapitalize(name) + "Entry";
     }
 
     public void setManualCode(String manualCode) {

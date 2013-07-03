@@ -26,7 +26,7 @@ import static net.sf.laja.example.repository.behaviour.domain.AddressCreator.Add
 import static net.sf.laja.example.repository.state.CustomerState.CustomerMutableState;
 
 @Creator
-public class CustomerCreator implements CustomerMaker {
+public class CustomerCreator implements CustomerCreatorMaker {
     private final CustomerMutableState state;
 
     public Customer asCustomer() {
@@ -78,7 +78,7 @@ public class CustomerCreator implements CustomerMaker {
         return new CustomerMapBuilder(builders);
     }
 
-    public static CustomerMapEntryBuilder customerEntry(Object key, CustomerCreator creator) {
+    public static CustomerMapEntryBuilder createCustomerEntry(Object key, CustomerCreator creator) {
         return new CustomerMapEntryBuilder(key, creator);
     }
 
@@ -238,7 +238,7 @@ public class CustomerCreator implements CustomerMaker {
 
     // --- Builder ---
 
-    public static class CustomerBuilder implements CustomerMaker {
+    public static class CustomerBuilder implements CustomerCreatorMaker {
         private final CustomerMutableState state;
 
         public CustomerBuilder() {
@@ -557,9 +557,9 @@ public class CustomerCreator implements CustomerMaker {
 
     public static class CustomerMapEntryBuilder {
         private final Object key;
-        private final CustomerMaker maker;
+        private final CustomerCreatorMaker maker;
 
-        public CustomerMapEntryBuilder(Object key, CustomerMaker maker) {
+        public CustomerMapEntryBuilder(Object key, CustomerCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -712,7 +712,7 @@ public class CustomerCreator implements CustomerMaker {
 
 // --- Maker ---
 
-interface CustomerMaker {
+interface CustomerCreatorMaker {
     Customer asCustomer();
     CustomerMatcher asCustomerMatcher();
     CustomerInDb asCustomerInDb();

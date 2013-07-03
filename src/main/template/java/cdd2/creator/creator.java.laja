@@ -6,6 +6,9 @@
   #set (packageStatement = creator.packageStatement)
   #set (imports = creator.imports)
   #set (classname = creator.classname)
+  #set (createMethod = creator.createMethod)
+  #set (buildMethod = creator.buildMethod)
+  #set (entryMethod = creator.entryMethod)
   #set (statevariable = creator.statevariable)
   #set (asMethods = creator.asMethods)
   #set (parameters = creator.parameters)
@@ -88,13 +91,12 @@ import static {import};
 #macro create()
     // --- Constructors ---
 
-  #set (methodName = constructorMethodName("create"))
   #if (hasMandatoryAttributes)
-    public static {factory} {methodName}() {
+    public static {factory} {createMethod}() {
         return new {creator}(new {mutableState}()).new {factory}();
     }
   #else
-    public static {creator} {methodName}() {
+    public static {creator} {createMethod}() {
         return new {creator}(new {mutableState}());
     }
   #end
@@ -102,59 +104,44 @@ import static {import};
 #end
 
 #macro build()
-  #set (methodName = constructorMethodName("build"))
-    public static {builder} {methodName}() {
+    public static {builder} {buildMethod}() {
         return new {builder}();
     }
 
 #end
 
 #macro createList()
-  #set (methodName = constructorMethodName("create"))
-    public static {listBuilder} {methodName}List({creator}... creators) {
+    public static {listBuilder} {createMethod}List({creator}... creators) {
         return new {listBuilder}(creators);
     }
 
 #end
 
 #macro createSet()
-  #set (methodName = constructorMethodName("create"))
-    public static {setBuilder} {methodName}Set({creator}... creators) {
+    public static {setBuilder} {createMethod}Set({creator}... creators) {
         return new {setBuilder}(creators);
     }
 
 #end
 
 #macro createMap()
-  #set (methodName = constructorMethodName("create"))
-    public static {mapBuilder} {methodName}Map({mapEntryBuilder}... builders) {
+    public static {mapBuilder} {createMethod}Map({mapEntryBuilder}... builders) {
         return new {mapBuilder}(builders);
     }
 
 #end
 
 #macro mapCreatorEntry()
-  #set (methodName = constructorMethodName(""))
-    public static {mapEntryBuilder} {methodName}Entry(Object key, {creator} creator) {
+    public static {mapEntryBuilder} {createMethod}Entry(Object key, {creator} creator) {
         return new {mapEntryBuilder}(key, creator);
     }
 
 #end
 
 #macro mapBuilderEntry()
-  #set (methodName = constructorMethodName(""))
-    public static {mapEntryBuilder} {methodName}Entry(Object key, {builder} builder) {
+    public static {mapEntryBuilder} {entryMethod}(Object key, {builder} builder) {
         return new {mapEntryBuilder}(key, builder);
     }
-
-#end
-
-#function constructorMethodName(action)
-  #if (asMethods.size > 0)
-    #return (asMethods.get(0).actionName(action))
-  #else
-    #return "{action}{state}"
-  #end
 
 #end
 

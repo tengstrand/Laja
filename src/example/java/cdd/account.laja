@@ -2,13 +2,7 @@
 #println("")
 #println("*** Account example ***")
 
-#generateCdd([{
-  autoRemove: false
-  srcDir: "{.}/main"
-  outDir: "{..}/../java-gen/cdd/main"
-  statePackage: "net.sf.laja.example.account.state"
-  behaviourPackage: "net.sf.laja.example.account.behaviour" },{
-
-  srcDir: "{.}/test"
-  outDir: "{..}/../java-gen/cdd/test" }]
-)
+#generateCdd({
+  srcDir: [ "{.}/main", "{.}/test" ]
+  verbose: true
+})
