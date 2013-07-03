@@ -2,7 +2,9 @@ package net.sf.laja.example.car.behaviour;
 
 import net.sf.laja.example.car.state.BusState;
 
-public class Bus extends BusFactory {
+import static net.sf.laja.example.car.behaviour.BusCreator.BusBehaviour;
+
+public class Bus extends BusBehaviour {
     private final VehicleSize size;
 
     public Bus(BusState state) {
@@ -12,10 +14,5 @@ public class Bus extends BusFactory {
 
     public boolean isNormalSize() {
         return size.isNormalSize();
-    }
-
-    // (factory)
-    public Bus asBus() {
-        return new Bus(state);
     }
 }

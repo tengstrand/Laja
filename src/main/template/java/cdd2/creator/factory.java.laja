@@ -59,7 +59,7 @@
     #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
-    #if (a.isState)
+    #if (a.isState && a.creator != null)
 
 {tab}public {returnClass} {a.name}({a.creator.classname} {a.name}) {
       #setMutableState(a, isFactory, tab)

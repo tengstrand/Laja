@@ -2,7 +2,9 @@ package net.sf.laja.example.car.behaviour;
 
 import net.sf.laja.example.car.state.CarState;
 
-public class Car extends CarFactory {
+import static net.sf.laja.example.car.behaviour.CarCreator.CarBehaviour;
+
+public class Car extends CarBehaviour {
     private final VehicleSize size;
 
     public Car(CarState state) {
@@ -14,11 +16,6 @@ public class Car extends CarFactory {
     public Car(CarState state, VehicleSize size) {
         super(state);
         this.size = size;
-    }
-
-    // (factory)
-    public Car asCar() {
-        return new Car(state);
     }
 
     public boolean isBig() {
