@@ -1,15 +1,14 @@
 package net.sf.laja.example.account.behaviour;
 
-import net.sf.laja.example.account.state.AccountState;
+import static net.sf.laja.example.account.behaviour.AccountCreator.AccountMutableBehaviour;
+import static net.sf.laja.example.account.state.AccountState.AccountMutableState;
 
-public class TestAccount extends TestAccountFactory {
-    public TestAccount(AccountState state) {
+public class TestAccount extends AccountMutableBehaviour {
+    private final AccountMutableState state;
+
+    public TestAccount(AccountMutableState state) {
         super(state);
-    }
-
-    // (factory)
-    public TestAccount asTestAccount() {
-        return new TestAccount(state);
+        this.state = state;
     }
 
     public SourceAccount asSourceAccount() {
@@ -21,6 +20,6 @@ public class TestAccount extends TestAccountFactory {
     }
 
     public double balance() {
-        return state.getBalance();
+        return state.balance;
     }
 }
