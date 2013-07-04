@@ -2,11 +2,12 @@ package net.sf.laja.example.file;
 
 import net.sf.laja.example.file.behaviour.ClosedFile;
 import net.sf.laja.example.file.behaviour.Directory;
-import net.sf.laja.example.file.behaviour.FileFactory;
-import net.sf.laja.example.file.behaviour.FileTemplate;
 import net.sf.laja.example.file.behaviour.WritableFile;
 
 import java.util.List;
+
+import static net.sf.laja.example.file.behaviour.DirectoryCreator.createDirectory;
+import static net.sf.laja.example.file.behaviour.FileCreator.createFile;
 
 public class FileExample {
 
@@ -43,7 +44,7 @@ public class FileExample {
             System.out.println(baseDir + " is not a directory!");
             return;
         }
-        Directory directory = Directory.directoryPath(baseDir).asDirectory();
+        Directory directory = createDirectory().directoryPath(baseDir).asDirectory();
 
         System.out.println(directory.asTextDirectory().directoryTree());
     }
@@ -61,9 +62,9 @@ public class FileExample {
         final String tempDirPath = "./target";
         final String tempFilename = "temp.txt";
         Directory.createDirectoryIfNotExists(tempDirPath);
-        Directory tempDirectory = Directory.directoryPath(tempDirPath).asDirectory();
+        Directory tempDirectory = createDirectory().directoryPath(tempDirPath).asDirectory();
 
-        WritableFile writableFile = FileFactory.filename(tempFilename).asWritableFile(tempDirectory, true);
+        WritableFile writableFile = createFile().filename(tempFilename).asWritableFile(tempDirectory, true);
         writableFile.writeln("Test writing to file");
         writableFile.writeln("row 2");
         ClosedFile closedFile = writableFile.close();

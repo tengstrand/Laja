@@ -3,7 +3,6 @@ package net.sf.laja.example.file.behaviour.text;
 import net.sf.laja.example.file.behaviour.Directory;
 import net.sf.laja.example.file.behaviour.FileExceptions;
 import net.sf.laja.example.file.behaviour.FileOperations;
-import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
 
 import java.io.BufferedReader;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.sf.laja.example.file.behaviour.FileCreator.FileBehaviour;
 import static net.sf.laja.example.file.behaviour.text.TextDirectory.FILE;
 
 public class TextFile extends FileBehaviour {
@@ -26,7 +26,7 @@ public class TextFile extends FileBehaviour {
     }
 
     public void appendFile(String depth, StringBuilder builder) {
-        builder.append("\n").append(FILE).append(depth).append(state.getFilename());
+        builder.append("\n").append(FILE).append(depth).append(s.getFilename());
     }
 
     public List<String> readContent() {

@@ -1,6 +1,5 @@
 package net.sf.laja.example.file.behaviour;
 
-import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
 
 import java.io.BufferedWriter;
@@ -8,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
+import static net.sf.laja.example.file.behaviour.FileCreator.FileBehaviour;
 
 public class WritableFile extends FileBehaviour {
     private boolean isOpen;
@@ -70,6 +71,6 @@ public class WritableFile extends FileBehaviour {
         outputStream = null;
         isOpen = false;
 
-        return new ClosedFile(state, directory);
+        return new ClosedFile(s, directory);
     }
 }

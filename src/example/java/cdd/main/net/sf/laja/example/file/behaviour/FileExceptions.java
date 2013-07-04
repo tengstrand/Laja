@@ -1,7 +1,8 @@
 package net.sf.laja.example.file.behaviour;
 
-import net.sf.laja.example.file.state.FileBehaviour;
 import net.sf.laja.example.file.state.FileState;
+
+import static net.sf.laja.example.file.behaviour.FileCreator.FileBehaviour;
 
 public class FileExceptions extends FileBehaviour {
     private final Directory directory;
@@ -13,7 +14,7 @@ public class FileExceptions extends FileBehaviour {
     }
 
     private String getErrorMessage(String operation) {
-        return "Could not " + operation + " file '" + state.getFilename() + "' in directory '" + directory.directoryPath + "'";
+        return "Could not " + operation + " file '" + s.filename + "' in directory '" + directory.directoryPath + "'";
     }
 
     public void throwOperationException(String operation, Exception e) {
@@ -21,7 +22,7 @@ public class FileExceptions extends FileBehaviour {
     }
 
     public void throwException(String message) {
-        String errorMessage = "The file '" + state.getFilename() + "' in directory '" + directory.directoryPath + "' " + message;
+        String errorMessage = "The file '" + s.filename + "' in directory '" + directory.directoryPath + "' " + message;
         throw new RuntimeException(errorMessage);
     }
 }

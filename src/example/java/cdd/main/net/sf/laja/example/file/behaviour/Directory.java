@@ -1,14 +1,19 @@
 package net.sf.laja.example.file.behaviour;
 
+import com.google.common.collect.ImmutableList;
 import net.sf.laja.example.file.behaviour.text.TextDirectory;
 import net.sf.laja.example.file.state.DirectoryState;
 
 import java.io.File;
 
-public class Directory extends DirectoryFactory {
+import static net.sf.laja.example.file.behaviour.DirectoryCreator.DirectoryBehaviour;
+import static net.sf.laja.example.file.behaviour.DirectoryCreator.createDirectory;
+import static net.sf.laja.example.file.behaviour.FileCreator.createFile;
+
+public class Directory extends DirectoryBehaviour {
     protected String directoryPath;
-    protected DirectoryList directories;
-    protected ClosedFileList files;
+    protected ImmutableList<Directory> directories;
+    protected ImmutableList<ClosedFile> files;
 
     public Directory(DirectoryState state) {
         super(state);
@@ -24,13 +29,8 @@ public class Directory extends DirectoryFactory {
         init(this, fileOrDir);
     }
 
-    // (factory)
-    public Directory asDirectory() {
-        return new Directory(state);
-    }
-
     public TextDirectory asTextDirectory() {
-        return new TextDirectory(state, directoryPath, directories, files);
+        return new TextDirectory(s, directoryPath, directories, files);
     }
 
     private void init(Directory directory, File fileOrDir) {
@@ -38,25 +38,25 @@ public class Directory extends DirectoryFactory {
             initDirectory(directory, fileOrDir);
         } else {
             directoryPath = fileOrDir.getParent();
-            directories = Directory.createList().asDirectoryList();
-            files = FileFactory.createList().asClosedFileList(directory);
+            directories = ImmutableList.of();
+            files = ImmutableList.of();
         }
     }
 
     private void initDirectory(Directory directory, File dir) {
-        DirectoryListEncapsulator directoryListEncapsulator = Directory.createList();
-        FileListEncapsulator fileListEncapsulator = FileFactory.createList();
+        ImmutableList.Builder<Directory> directoryBuilder = ImmutableList.builder();
+        ImmutableList.Builder<ClosedFile> fileBuilder = ImmutableList.builder();
 
         for (File fileOrDir : dir.listFiles()) {
             if (fileOrDir.isDirectory()) {
-                directoryListEncapsulator.add(Directory.directoryPath(fileOrDir.getPath()));
+                directoryBuilder.add(createDirectory().directoryPath(fileOrDir.getPath()).asDirectory());
             } else {
-                fileListEncapsulator.add(FileFactory.filename(fileOrDir.getName()));
+                fileBuilder.add(createFile().filename(fileOrDir.getName()).asClosedFile(directory));
             }
         }
         directoryPath = dir.getAbsolutePath();
-        directories = directoryListEncapsulator.asDirectoryList();
-        files = fileListEncapsulator.asClosedFileList(directory);
+        directories = directoryBuilder.build();
+        files = fileBuilder.build();
     }
 
     public static boolean isDirectory(String path) {
