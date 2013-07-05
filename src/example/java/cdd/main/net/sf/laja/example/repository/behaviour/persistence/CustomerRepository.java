@@ -15,7 +15,6 @@ public class CustomerRepository {
             createCustomer().ssn(198002036677L).givenName("Kalle").age(15).address(createAddress().streetName("Lillgatan 1").zipcode(createZipcode().zipcode(22233)).city("Stockholm")).withSurname("Karlsson"),
             createCustomer().ssn(19950405067788L).givenName("Sven").age(15).address(createAddress().streetName("Lillgatan 99").zipcode(createZipcode().zipcode(22244)).city("Gothenburg")).withSurname("Karlsson"));
 
-
     public CustomerListBuilder findBySurname(String surname) {
         List<CustomerCreator> result = new ArrayList<CustomerCreator>();
 

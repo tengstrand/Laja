@@ -2,7 +2,6 @@ package net.sf.laja.example;
 
 import net.sf.laja.example.account.AccountExample;
 import net.sf.laja.example.car.CarExample;
-import net.sf.laja.example.computer.ComputerExample;
 import net.sf.laja.example.file.FileExample;
 import net.sf.laja.example.person.PersonExample;
 import net.sf.laja.example.repository.RepositoryExample;
@@ -15,9 +14,6 @@ public class AllExamples {
 
         System.out.println("\n*** Car ***");
         CarExample.main();
-
-        System.out.println("\n*** Computer ***");
-        ComputerExample.main();
 
         System.out.println("\n*** File ***");
         FileExample.main();

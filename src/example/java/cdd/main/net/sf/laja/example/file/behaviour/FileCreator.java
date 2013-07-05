@@ -182,6 +182,14 @@ public class FileCreator implements FileCreatorMaker {
 
         public FileBuilder withFilename(String filename) { state.filename = filename; return this; }
 
+        public ClosedFile asClosedFile(Directory directory) {
+            return new ClosedFile(state.asImmutable(), directory);
+        }
+
+        public WritableFile asWritableFile(Directory directory, boolean createIfNotExists) {
+            return new WritableFile(state.asImmutable(), directory, createIfNotExists);
+        }
+
         public FileState asState() {
             return state.asImmutable();
         }
@@ -215,6 +223,50 @@ public class FileCreator implements FileCreatorMaker {
         public FileListBuilder(Collection<FileCreator> creators) {
             this.creators = new ArrayList<FileCreator>();
             this.creators.addAll(creators);
+        }
+
+        // asClosedFileList(Directory directory) : ImmutableList<ClosedFile>
+
+        public ImmutableList<ClosedFile> asClosedFileList(Directory directory) {
+            ImmutableList.Builder<ClosedFile> builder = ImmutableList.builder();
+
+            for (FileCreator creator : creators) {
+                builder.add(creator.asClosedFile(directory));
+            }
+            return builder.build();
+        }
+
+        // asClosedFileMutableList(Directory directory) : List<ClosedFile>
+
+        public List<ClosedFile> asClosedFileMutableList(Directory directory) {
+            List<ClosedFile> result = new ArrayList<ClosedFile>();
+
+            for (FileCreator creator : creators) {
+                result.add(creator.asClosedFile(directory));
+            }
+            return result;
+        }
+
+        // asWritableFileList(Directory directory, boolean createIfNotExists) : ImmutableList<WritableFile>
+
+        public ImmutableList<WritableFile> asWritableFileList(Directory directory, boolean createIfNotExists) {
+            ImmutableList.Builder<WritableFile> builder = ImmutableList.builder();
+
+            for (FileCreator creator : creators) {
+                builder.add(creator.asWritableFile(directory, createIfNotExists));
+            }
+            return builder.build();
+        }
+
+        // asWritableFileMutableList(Directory directory, boolean createIfNotExists) : List<WritableFile>
+
+        public List<WritableFile> asWritableFileMutableList(Directory directory, boolean createIfNotExists) {
+            List<WritableFile> result = new ArrayList<WritableFile>();
+
+            for (FileCreator creator : creators) {
+                result.add(creator.asWritableFile(directory, createIfNotExists));
+            }
+            return result;
         }
 
         // asStateList() : ImmutableList<FileState>
@@ -258,6 +310,50 @@ public class FileCreator implements FileCreatorMaker {
             this.creators.addAll(creators);
         }
 
+        // asClosedFileSet(Directory directory) : ImmutableSet<ClosedFile>
+
+        public ImmutableSet<ClosedFile> asClosedFileSet(Directory directory) {
+            ImmutableSet.Builder<ClosedFile> builder = ImmutableSet.builder();
+
+            for (FileCreator creator : creators) {
+                builder.add(creator.asClosedFile(directory));
+            }
+            return builder.build();
+        }
+
+        // asClosedFileMutableSet(Directory directory) : Set<ClosedFile>
+
+        public Set<ClosedFile> asClosedFileMutableSet(Directory directory) {
+            Set<ClosedFile> result = new HashSet<ClosedFile>();
+
+            for (FileCreator creator : creators) {
+                result.add(creator.asClosedFile(directory));
+            }
+            return result;
+        }
+
+        // asWritableFileSet(Directory directory, boolean createIfNotExists) : ImmutableSet<WritableFile>
+
+        public ImmutableSet<WritableFile> asWritableFileSet(Directory directory, boolean createIfNotExists) {
+            ImmutableSet.Builder<WritableFile> builder = ImmutableSet.builder();
+
+            for (FileCreator creator : creators) {
+                builder.add(creator.asWritableFile(directory, createIfNotExists));
+            }
+            return builder.build();
+        }
+
+        // asWritableFileMutableSet(Directory directory, boolean createIfNotExists) : Set<WritableFile>
+
+        public Set<WritableFile> asWritableFileMutableSet(Directory directory, boolean createIfNotExists) {
+            Set<WritableFile> result = new HashSet<WritableFile>();
+
+            for (FileCreator creator : creators) {
+                result.add(creator.asWritableFile(directory, createIfNotExists));
+            }
+            return result;
+        }
+
         // asState()
 
         public ImmutableSet<FileState> asStateSet() {
@@ -296,6 +392,14 @@ public class FileCreator implements FileCreatorMaker {
             this.maker = maker;
         }
 
+        public ClosedFile asClosedFile(Directory directory) {
+            return maker.asClosedFile(directory);
+        }
+
+        public WritableFile asWritableFile(Directory directory, boolean createIfNotExists) {
+            return maker.asWritableFile(directory, createIfNotExists);
+        }
+
         public FileState asState() {
             return maker.asState();
         }
@@ -312,6 +416,50 @@ public class FileCreator implements FileCreatorMaker {
 
         public FileMapBuilder(FileMapEntryBuilder... entries) {
             this.entries = entries;
+        }
+
+        // asClosedFileMap(Directory directory) : ImmutableMap
+
+        public ImmutableMap asClosedFileMap(Directory directory) {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (FileMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asClosedFile(directory));
+            }
+            return builder.build();
+        }
+
+        // asClosedFileMutableMap(Directory directory) : Map
+
+        public Map asClosedFileMutableMap(Directory directory) {
+            Map result = new HashMap();
+
+            for (FileMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asClosedFile(directory));
+            }
+            return result;
+        }
+
+        // asWritableFileMap(Directory directory, boolean createIfNotExists) : ImmutableMap
+
+        public ImmutableMap asWritableFileMap(Directory directory, boolean createIfNotExists) {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (FileMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asWritableFile(directory, createIfNotExists));
+            }
+            return builder.build();
+        }
+
+        // asWritableFileMutableMap(Directory directory, boolean createIfNotExists) : Map
+
+        public Map asWritableFileMutableMap(Directory directory, boolean createIfNotExists) {
+            Map result = new HashMap();
+
+            for (FileMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asWritableFile(directory, createIfNotExists));
+            }
+            return result;
         }
 
         // asStateMap() : ImmutableMap
@@ -341,6 +489,8 @@ public class FileCreator implements FileCreatorMaker {
 // --- Maker ---
 
 interface FileCreatorMaker {
+    ClosedFile asClosedFile(Directory directory);
+    WritableFile asWritableFile(Directory directory, boolean createIfNotExists);
 
     FileState asState();
     FileMutableState asMutableState();

@@ -37,8 +37,10 @@ public class FileReader {
         } else {
             String[] children = fileOrDir.list();
 
-            for (int i=0; i<children.length; i++) {
-                readFiles(new File(fileOrDir, children[i]), endsWith, files);
+            if (children != null) {
+                for (int i=0; i<children.length; i++) {
+                    readFiles(new File(fileOrDir, children[i]), endsWith, files);
+                }
             }
         }
     }

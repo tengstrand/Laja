@@ -27,6 +27,10 @@ import static net.sf.laja.example.car.state.TruckState.TruckMutableState;
 public class TruckCreator implements TruckCreatorMaker {
     private final TruckMutableState state;
 
+    public Truck asTruck() {
+        return new Truck(state.asImmutable());
+    }
+
     // ===== Generated code =====
 
     private static final String size_ = "size";
@@ -239,6 +243,10 @@ public class TruckCreator implements TruckCreatorMaker {
         public TruckBuilder withOwner(OwnerMutableState owner) { state.owner = owner; return this; }
         public TruckBuilder withOwner(OwnerCreator.OwnerBuilder owner) { state.owner = owner.asMutableState(); return this; }
 
+        public Truck asTruck() {
+            return new Truck(state.asImmutable());
+        }
+
         public TruckState asState() {
             return state.asImmutable();
         }
@@ -272,6 +280,28 @@ public class TruckCreator implements TruckCreatorMaker {
         public TruckListBuilder(Collection<TruckCreator> creators) {
             this.creators = new ArrayList<TruckCreator>();
             this.creators.addAll(creators);
+        }
+
+        // asTruckList() : ImmutableList<Truck>
+
+        public ImmutableList<Truck> asTruckList() {
+            ImmutableList.Builder<Truck> builder = ImmutableList.builder();
+
+            for (TruckCreator creator : creators) {
+                builder.add(creator.asTruck());
+            }
+            return builder.build();
+        }
+
+        // asTruckMutableList() : List<Truck>
+
+        public List<Truck> asTruckMutableList() {
+            List<Truck> result = new ArrayList<Truck>();
+
+            for (TruckCreator creator : creators) {
+                result.add(creator.asTruck());
+            }
+            return result;
         }
 
         // asStateList() : ImmutableList<TruckState>
@@ -315,6 +345,28 @@ public class TruckCreator implements TruckCreatorMaker {
             this.creators.addAll(creators);
         }
 
+        // asTruckSet() : ImmutableSet<Truck>
+
+        public ImmutableSet<Truck> asTruckSet() {
+            ImmutableSet.Builder<Truck> builder = ImmutableSet.builder();
+
+            for (TruckCreator creator : creators) {
+                builder.add(creator.asTruck());
+            }
+            return builder.build();
+        }
+
+        // asTruckMutableSet() : Set<Truck>
+
+        public Set<Truck> asTruckMutableSet() {
+            Set<Truck> result = new HashSet<Truck>();
+
+            for (TruckCreator creator : creators) {
+                result.add(creator.asTruck());
+            }
+            return result;
+        }
+
         // asState()
 
         public ImmutableSet<TruckState> asStateSet() {
@@ -353,6 +405,10 @@ public class TruckCreator implements TruckCreatorMaker {
             this.maker = maker;
         }
 
+        public Truck asTruck() {
+            return maker.asTruck();
+        }
+
         public TruckState asState() {
             return maker.asState();
         }
@@ -369,6 +425,28 @@ public class TruckCreator implements TruckCreatorMaker {
 
         public TruckMapBuilder(TruckMapEntryBuilder... entries) {
             this.entries = entries;
+        }
+
+        // asTruckMap() : ImmutableMap
+
+        public ImmutableMap asTruckMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (TruckMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asTruck());
+            }
+            return builder.build();
+        }
+
+        // asTruckMutableMap() : Map
+
+        public Map asTruckMutableMap() {
+            Map result = new HashMap();
+
+            for (TruckMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asTruck());
+            }
+            return result;
         }
 
         // asStateMap() : ImmutableMap
@@ -398,6 +476,7 @@ public class TruckCreator implements TruckCreatorMaker {
 // --- Maker ---
 
 interface TruckCreatorMaker {
+    Truck asTruck();
 
     TruckState asState();
     TruckMutableState asMutableState();

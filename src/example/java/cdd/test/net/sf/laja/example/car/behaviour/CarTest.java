@@ -4,6 +4,9 @@ import net.sf.laja.example.car.state.CarState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
+import static net.sf.laja.example.car.behaviour.OwnerCreator.createOwner;
+import static net.sf.laja.example.car.behaviour.TestCarCreator.createTestCar;
+import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +25,7 @@ public class CarTest {
         VehicleSize size = mock(VehicleSize.class);
         when(size.isBig()).thenReturn(true);
 
-        Car car = TestCar.size(VehicleSize.lengthInCentimeters(100)).name("Volvo").owner(Owner.ssn(197007071234L).name("Kalle")).color("Red").asCar(size);
+        Car car = createTestCar().size(createVehicleSize().lengthInCentimeters(100)).name("Volvo").owner(createOwner().ssn(197007071234L).name("Kalle")).color("Red").asCar(size);
 
         assertTrue(car.isBig());
     }

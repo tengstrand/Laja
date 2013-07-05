@@ -4,7 +4,6 @@
 
 #import "{.}/account.laja"
 #import "{.}/car.laja"
-#import "{.}/computer.laja"
 #import "{.}/file.laja"
 #import "{.}/person.laja"
 #import "{.}/repository.laja"

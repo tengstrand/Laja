@@ -2,12 +2,8 @@
 #println("")
 #println("*** Car example ***")
 
-#generateCdd([{
-  autoRemove: false
-  srcDir: "{.}/main"
-  outDir: "{..}/../java-gen/cdd/main"
-  statePackage: "net.sf.laja.example.car.state"
-  behaviourPackage: "net.sf.laja.example.car.behaviour" }, {
-  srcDir: "{.}/test"
-  outDir: "{..}/../java-gen/cdd/test" }]
-)
+#set (package = "net/sf/laja/example/car")
+
+#generateCdd({
+  srcDir: [ "{.}/main/{package}", "{.}/test/{package}" ]
+})

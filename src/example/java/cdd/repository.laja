@@ -2,10 +2,6 @@
 #println("")
 #println("*** Repository example ***")
 
-#generateCdd([{
-  autoRemove: false
-  srcDir: "{.}/main"
-  outDir: "{..}/../java-gen/cdd/main"
-  statePackage: "net.sf.laja.example.repository.state"
-  behaviourPackage: "net.sf.laja.example.repository.behaviour" }]
-)
+#generateCdd({
+  srcDir: "{.}/main/net/sf/laja/example/repository"
+})

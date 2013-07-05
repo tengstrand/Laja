@@ -2,6 +2,8 @@
 #println("")
 #println("*** Account example ***")
 
+#set (package = "net/sf/laja/example/account")
+
 #generateCdd({
-  srcDir: [ "{.}/main", "{.}/test" ]
+  srcDir: [ "{.}/main/{package}", "{.}/test/{package}" ]
 })

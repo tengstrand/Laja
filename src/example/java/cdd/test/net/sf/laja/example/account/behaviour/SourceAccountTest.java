@@ -2,16 +2,17 @@ package net.sf.laja.example.account.behaviour;
 
 import org.junit.Test;
 
+import static net.sf.laja.example.account.behaviour.TestAccountCreator.createTestAccount;
 import static org.junit.Assert.assertEquals;
 
 public class SourceAccountTest {
 
     @Test
     public void shouldBePossibleToTransferMoneyFromSourceAccountToDestinationAccount() {
-        TestAccount destinationTestAccount = TestAccount.balance(400).asTestAccount();
+        TestAccount destinationTestAccount = createTestAccount().balance(400).asTestAccount();
         DestinationAccount destinationAccount = destinationTestAccount.asDestinationAccount();
 
-        TestAccount sourceTestAccount = TestAccount.balance(500).asTestAccount();
+        TestAccount sourceTestAccount = createTestAccount().balance(500).asTestAccount();
         SourceAccount sourceAccount = sourceTestAccount.asSourceAccount();
 
         sourceAccount.transferTo(destinationAccount, 300);
