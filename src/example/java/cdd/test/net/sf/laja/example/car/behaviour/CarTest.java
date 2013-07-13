@@ -4,6 +4,7 @@ import net.sf.laja.example.car.state.CarState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
+import static net.sf.laja.example.car.behaviour.CarColor.RED;
 import static net.sf.laja.example.car.behaviour.OwnerCreator.createOwner;
 import static net.sf.laja.example.car.behaviour.TestCarCreator.createTestCar;
 import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
@@ -25,19 +26,26 @@ public class CarTest {
         VehicleSize size = mock(VehicleSize.class);
         when(size.isBig()).thenReturn(true);
 
-        Car car = createTestCar().size(createVehicleSize().lengthInCentimeters(100)).name("Volvo").owner(createOwner().ssn(197007071234L).name("Kalle")).color("Red").asCar(size);
+        Car car = createTestCar()
+                        .size(createVehicleSize()
+                        .lengthInCentimeters(100))
+                        .name("Volvo")
+                        .owner(createOwner()
+                                .ssn(197007071234L)
+                                .name("Kalle"))
+                        .color(RED).asCar(size);
 
         assertTrue(car.isBig());
     }
 
     @Test
     public void mockingStateAndBehaviourCompositeMember() {
-        CarState state = mock(CarState.class);
+        CarState carState = mock(CarState.class);
 
         VehicleSize size = mock(VehicleSize.class);
         when(size.isBig()).thenReturn(true);
 
-        Car car = new Car(state, size);
+        Car car = new Car(carState, size);
 
         assertTrue(car.isBig());
     }
