@@ -21,7 +21,7 @@ import java.util.Set;
 import static net.sf.laja.example.person.state.BmiState.BmiMutableState;
 
 @Creator
-public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
+public class BmiCreator implements BmiCreatorMaker {
     private final BmiMutableState state;
 
     public BodyMassIndex asBmi() {
@@ -35,31 +35,31 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
 
     // --- Constructors ---
 
-    public static BmiFactory createBodyMassIndex() {
-        return new BodyMassIndexCreator(new BmiMutableState()).new BmiFactory();
+    public static BmiFactory createBmi() {
+        return new BmiCreator(new BmiMutableState()).new BmiFactory();
     }
 
-    public static BmiBuilder buildBodyMassIndex() {
+    public static BmiBuilder buildBmi() {
         return new BmiBuilder();
     }
 
-    public static BmiListBuilder createBodyMassIndexList(BodyMassIndexCreator... creators) {
+    public static BmiListBuilder createBmiList(BmiCreator... creators) {
         return new BmiListBuilder(creators);
     }
 
-    public static BmiSetBuilder createBodyMassIndexSet(BodyMassIndexCreator... creators) {
+    public static BmiSetBuilder createBmiSet(BmiCreator... creators) {
         return new BmiSetBuilder(creators);
     }
 
-    public static BmiMapBuilder createBodyMassIndexMap(BmiMapEntryBuilder... builders) {
+    public static BmiMapBuilder createBmiMap(BmiMapEntryBuilder... builders) {
         return new BmiMapBuilder(builders);
     }
 
-    public static BmiMapEntryBuilder createBodyMassIndexEntry(Object key, BodyMassIndexCreator creator) {
+    public static BmiMapEntryBuilder createBmiEntry(Object key, BmiCreator creator) {
         return new BmiMapEntryBuilder(key, creator);
     }
 
-    public static BmiMapEntryBuilder bodyMassIndexEntry(Object key, BmiBuilder builder) {
+    public static BmiMapEntryBuilder bmiEntry(Object key, BmiBuilder builder) {
         return new BmiMapEntryBuilder(key, builder);
     }
 
@@ -81,16 +81,16 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
 
         // weightInKilograms
         public class _WeightInKilograms {
-            public BodyMassIndexCreator weightInKilograms(int weightInKilograms) {
+            public BmiCreator weightInKilograms(int weightInKilograms) {
                 state.weightInKilograms = weightInKilograms;
-                return new BodyMassIndexCreator(state);
+                return new BmiCreator(state);
             }
         }
     }
 
     // --- Constructor ---
 
-    public BodyMassIndexCreator(BmiMutableState state) {
+    public BmiCreator(BmiMutableState state) {
         this.state = state;
     }
 
@@ -174,7 +174,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
 
     // --- Builder ---
 
-    public static class BmiBuilder implements BodyMassIndexCreatorMaker {
+    public static class BmiBuilder implements BmiCreatorMaker {
         private final BmiMutableState state;
 
         public BmiBuilder() {
@@ -215,15 +215,15 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
 
     // --- ListBuilder ---
 
-    public static class BmiListBuilder implements Iterable<BodyMassIndexCreator> {
-        private List<BodyMassIndexCreator> creators;
+    public static class BmiListBuilder implements Iterable<BmiCreator> {
+        private List<BmiCreator> creators;
 
-        public BmiListBuilder(BodyMassIndexCreator... creators) {
+        public BmiListBuilder(BmiCreator... creators) {
             this.creators = Arrays.asList(creators);
         }
 
-        public BmiListBuilder(Collection<BodyMassIndexCreator> creators) {
-            this.creators = new ArrayList<BodyMassIndexCreator>();
+        public BmiListBuilder(Collection<BmiCreator> creators) {
+            this.creators = new ArrayList<BmiCreator>();
             this.creators.addAll(creators);
         }
 
@@ -232,7 +232,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public ImmutableList<BodyMassIndex> asBmiList() {
             ImmutableList.Builder<BodyMassIndex> builder = ImmutableList.builder();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 builder.add(creator.asBmi());
             }
             return builder.build();
@@ -243,7 +243,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public List<BodyMassIndex> asBmiMutableList() {
             List<BodyMassIndex> result = new ArrayList<BodyMassIndex>();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 result.add(creator.asBmi());
             }
             return result;
@@ -254,7 +254,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public ImmutableList<BmiState> asStateList() {
             ImmutableList.Builder<BmiState> builder = ImmutableList.builder();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 builder.add(creator.asState());
             }
             return builder.build();
@@ -265,28 +265,28 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public List<BmiMutableState> asMutableStateList() {
             List<BmiMutableState> result = new ArrayList<BmiMutableState>();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 result.add(creator.asMutableState());
             }
             return result;
         }
 
-        public Iterator<BodyMassIndexCreator> iterator() {
+        public Iterator<BmiCreator> iterator() {
             return creators.iterator();
         }
     }
 
     // --- SetBuilder ---
 
-    public static class BmiSetBuilder implements Iterable<BodyMassIndexCreator> {
-        private List<BodyMassIndexCreator> creators;
+    public static class BmiSetBuilder implements Iterable<BmiCreator> {
+        private List<BmiCreator> creators;
 
-        public BmiSetBuilder(BodyMassIndexCreator... creators) {
+        public BmiSetBuilder(BmiCreator... creators) {
             this.creators = Arrays.asList(creators);
         }
 
-        public BmiSetBuilder(Collection<BodyMassIndexCreator> creators) {
-            this.creators = new ArrayList<BodyMassIndexCreator>();
+        public BmiSetBuilder(Collection<BmiCreator> creators) {
+            this.creators = new ArrayList<BmiCreator>();
             this.creators.addAll(creators);
         }
 
@@ -295,7 +295,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public ImmutableSet<BodyMassIndex> asBmiSet() {
             ImmutableSet.Builder<BodyMassIndex> builder = ImmutableSet.builder();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 builder.add(creator.asBmi());
             }
             return builder.build();
@@ -306,7 +306,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public Set<BodyMassIndex> asBmiMutableSet() {
             Set<BodyMassIndex> result = new HashSet<BodyMassIndex>();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 result.add(creator.asBmi());
             }
             return result;
@@ -317,7 +317,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public ImmutableSet<BmiState> asStateSet() {
             ImmutableSet.Builder<BmiState> builder = ImmutableSet.builder();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 builder.add(creator.asState());
             }
             return builder.build();
@@ -328,13 +328,13 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
         public Set<BmiMutableState> asMutableStateSet() {
             Set<BmiMutableState> result = new HashSet<BmiMutableState>();
 
-            for (BodyMassIndexCreator creator : creators) {
+            for (BmiCreator creator : creators) {
                 result.add(creator.asMutableState());
             }
             return result;
         }
 
-        public Iterator<BodyMassIndexCreator> iterator() {
+        public Iterator<BmiCreator> iterator() {
             return creators.iterator();
         }
     }
@@ -343,9 +343,9 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
 
     public static class BmiMapEntryBuilder {
         private final Object key;
-        private final BodyMassIndexCreatorMaker maker;
+        private final BmiCreatorMaker maker;
 
-        public BmiMapEntryBuilder(Object key, BodyMassIndexCreatorMaker maker) {
+        public BmiMapEntryBuilder(Object key, BmiCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -420,7 +420,7 @@ public class BodyMassIndexCreator implements BodyMassIndexCreatorMaker {
 
 // --- Maker ---
 
-interface BodyMassIndexCreatorMaker {
+interface BmiCreatorMaker {
     BodyMassIndex asBmi();
 
     BmiState asState();

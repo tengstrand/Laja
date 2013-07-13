@@ -5,7 +5,7 @@ import net.sf.laja.example.person.state.BmiState;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static net.sf.laja.example.person.behaviour.BodyMassIndexCreator.BmiBehaviour;
+import static net.sf.laja.example.person.behaviour.BmiCreator.BmiBehaviour;
 
 public class BodyMassIndex extends BmiBehaviour{
     public BodyMassIndex(BmiState state) {

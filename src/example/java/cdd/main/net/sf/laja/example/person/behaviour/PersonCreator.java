@@ -96,7 +96,7 @@ public class PersonCreator implements PersonCreatorMaker {
                 return new PersonCreator(state);
             }
 
-            public PersonCreator size(BodyMassIndexCreator size) {
+            public PersonCreator size(BmiCreator size) {
                 state.size = size.asMutableState();
                 return new PersonCreator(state);
             }
@@ -203,7 +203,7 @@ public class PersonCreator implements PersonCreatorMaker {
         public PersonBuilder withGivenName(String givenName) { state.givenName = givenName; return this; }
         public PersonBuilder withSurname(String surname) { state.surname = surname; return this; }
         public PersonBuilder withSize(BmiMutableState size) { state.size = size; return this; }
-        public PersonBuilder withSize(BodyMassIndexCreator.BmiBuilder size) { state.size = size.asMutableState(); return this; }
+        public PersonBuilder withSize(BmiCreator.BmiBuilder size) { state.size = size.asMutableState(); return this; }
 
         public Person asPerson() {
             return new Person(state.asImmutable());
