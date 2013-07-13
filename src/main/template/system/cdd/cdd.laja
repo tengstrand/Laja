@@ -12,15 +12,20 @@
   #set (errors = new java.util.ArrayList())
   #set (processedFiles = new net.sf.laja.parser.cdd.OutputDirectoryReader$Result())
 
-  #if (parameters.class().simpleName != "LinkedHashMap")
-    #errors.add("The argument must be a list of maps, e.g: #generateCdd({srcDir: \"{.}/main\"})")
-  #end
-
   #$.putAll(parameters)
 
-  #if (srcDir == null)
-    #println("Missing parameter: 'srcDir'")
+  #set (curlyBrace = "{")
+  #set (dot = "{curlyBrace}.}")
+
+  #if (parameters.class().simpleName != "LinkedHashMap")
+    #println("The argument must be a map, e.g: #generateCdd({ srcDir: \"{dot}/main\"}) or: #generateCdd({srcDirs: [ \"{dot}/main\", {dot}/test\" ] })")
+  #else if (srcDir == null && srcDirs == null)
+    #println("Missing parameter(s): 'srcDir' and 'srcDirs', use the format (e.g): #generateCdd({ srcDir: \"{dot}/main\"}) or: #generateCdd({srcDirs: [ \"{dot}/main\", {dot}/test\" ] })")
   #else
+    #if (srcDirs == null)
+      #set (srcDirs = srcDir)
+    #end
+
     #set (states = parseStates())
     #set (creators = parseCreators())
     #findInvalidTypes()
@@ -88,7 +93,7 @@
 
 #function parseStates()
   #set (states = new java.util.ArrayList())
-  #set (stateFiles = fileReader.readFiles(srcDir, "State.java"))
+  #set (stateFiles = fileReader.readFiles(srcDirs, "State.java"))
 
   #foreach (file in stateFiles)
     #if (!file.endsWith("ImmutableState.java") && !file.endsWith("MutableState.java"))
@@ -104,7 +109,7 @@
 
 #function parseCreators()
   #set (creators = new java.util.ArrayList())
-  #set (creatorFiles = fileReader.readFiles(srcDir, "Creator.java"))
+  #set (creatorFiles = fileReader.readFiles(srcDirs, "Creator.java"))
 
   #foreach (file in creatorFiles)
     #set (creator = cddParser.parseCreator(file))

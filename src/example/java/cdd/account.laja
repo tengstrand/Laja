@@ -5,5 +5,5 @@
 #set (package = "net/sf/laja/example/account")
 
 #generateCdd({
-  srcDir: [ "{.}/main/{package}", "{.}/test/{package}" ]
+  srcDirs: [ "{.}/main/{package}", "{.}/test/{package}" ]
 })
