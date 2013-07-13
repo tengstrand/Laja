@@ -7,6 +7,9 @@ import java.util.List;
 public class FileReader {
 
     public List<String> readFiles(List<String> fileOrDirList, String endsWith) {
+        if (fileOrDirList == null) {
+            return new ArrayList();
+        }
         List<String> files = new ArrayList<String>();
 
         for (String fileOrDir : fileOrDirList) {
@@ -16,6 +19,9 @@ public class FileReader {
     }
 
     public List<String> readFiles(String fileOrDir, String endsWith) {
+        if (fileOrDir == null) {
+            return new ArrayList();
+        }
         List<String> files = new ArrayList<String>();
         readFiles(new File(fileOrDir), endsWith, files);
         return files;
