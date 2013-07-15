@@ -146,7 +146,7 @@ public class PersonCreator implements PersonCreatorMaker {
                 return new _Children();
             }
 
-            public _Address hairColor() {
+            public _Address defaultHairColorAndChildren() {
                 state.hairColor = getDefaultHairColorAndChildren();
                 return new _Address();
             }

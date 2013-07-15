@@ -24,7 +24,7 @@
   #foreach (parameter in parameters where parameter.attribute == a.name)
     #setReturnValues(returnClass, returnStatement)
 
-            public {retClass} {parameter.attribute}({parameter.methodSignature}) {
+            public {retClass} {parameter.method}({parameter.methodSignature}) {
     #if (!parameter.value.isEmpty)
                 state.{a.name} = {parameter.value};
     #end
@@ -90,7 +90,7 @@
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else
-{tab}public {returnClass} {a.name}({a.type} {a.name}) {
+{tab}public {returnClass} {a.name}({a.type.asMutable} {a.name}) {
     #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}

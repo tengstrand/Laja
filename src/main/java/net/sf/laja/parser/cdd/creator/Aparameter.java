@@ -45,7 +45,7 @@ public class Aparameter implements CreatorParser.IAparameter {
     }
 
     public boolean isLastAttribute() {
-        return attribute.equals("*");
+        return nextAttribute.equals("*");
     }
 
     public boolean hasNext() {
