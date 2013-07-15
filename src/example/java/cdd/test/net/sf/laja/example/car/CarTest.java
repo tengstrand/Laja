@@ -1,12 +1,13 @@
-package net.sf.laja.example.car.behaviour;
+package net.sf.laja.example.car;
 
+import net.sf.laja.example.car.behaviour.Car;
+import net.sf.laja.example.car.behaviour.VehicleSize;
 import net.sf.laja.example.car.state.CarState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
 import static net.sf.laja.example.car.behaviour.CarColor.RED;
 import static net.sf.laja.example.car.behaviour.OwnerCreator.createOwner;
-import static net.sf.laja.example.car.behaviour.TestCarCreator.createTestCar;
 import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,9 +27,9 @@ public class CarTest {
         VehicleSize size = mock(VehicleSize.class);
         when(size.isBig()).thenReturn(true);
 
-        Car car = createTestCar()
+        Car car = TestCarCreator.createTestCar()
                         .size(createVehicleSize()
-                        .lengthInCentimeters(100))
+                                .lengthInCentimeters(100))
                         .name("Volvo")
                         .owner(createOwner()
                                 .ssn(197007071234L)

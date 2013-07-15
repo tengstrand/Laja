@@ -1,5 +1,6 @@
-package net.sf.laja.example.person.behaviour;
+package net.sf.laja.example.person;
 
+import net.sf.laja.example.person.behaviour.BodyMassIndex;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

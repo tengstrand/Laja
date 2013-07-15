@@ -1,4 +1,4 @@
-package net.sf.laja.example.car.behaviour;
+package net.sf.laja.example.car;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -8,6 +8,11 @@ import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
+import net.sf.laja.example.car.behaviour.Car;
+import net.sf.laja.example.car.behaviour.CarColor;
+import net.sf.laja.example.car.behaviour.OwnerCreator;
+import net.sf.laja.example.car.behaviour.VehicleSize;
+import net.sf.laja.example.car.behaviour.VehicleSizeCreator;
 import net.sf.laja.example.car.state.CarState;
 import net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
 import net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;

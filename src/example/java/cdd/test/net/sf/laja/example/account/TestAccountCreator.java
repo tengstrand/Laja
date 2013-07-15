@@ -1,4 +1,4 @@
-package net.sf.laja.example.account.behaviour;
+package net.sf.laja.example.account;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

@@ -1,5 +1,6 @@
-package net.sf.laja.example.car.behaviour;
+package net.sf.laja.example.car;
 
+import net.sf.laja.example.car.behaviour.VehicleSize;
 import org.junit.Test;
 
 import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
