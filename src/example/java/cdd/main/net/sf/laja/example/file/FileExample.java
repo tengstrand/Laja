@@ -1,13 +1,9 @@
 package net.sf.laja.example.file;
 
-import net.sf.laja.example.file.behaviour.ClosedFile;
-import net.sf.laja.example.file.behaviour.Directory;
-import net.sf.laja.example.file.behaviour.WritableFile;
-
 import java.util.List;
 
-import static net.sf.laja.example.file.behaviour.DirectoryCreator.createDirectory;
-import static net.sf.laja.example.file.behaviour.FileCreator.createFile;
+import static net.sf.laja.example.file.DirectoryCreator.createDirectory;
+import static net.sf.laja.example.file.FileCreator.createFile;
 
 public class FileExample {
 

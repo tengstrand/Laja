@@ -1,9 +1,8 @@
 package net.sf.laja.example.car;
 
-import net.sf.laja.example.car.behaviour.VehicleSize;
 import org.junit.Test;
 
-import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
+import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

@@ -4,8 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
-import net.sf.laja.cdd.annotation.Parameter;
-import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.car.state.CarState;
@@ -25,48 +23,40 @@ import java.util.Set;
 import static net.sf.laja.example.car.state.CarState.CarMutableState;
 
 @Creator
-public class TestCarCreator implements TestCarCreatorMaker {
+public class CarCreator implements CarCreatorMaker {
     private final CarMutableState state;
 
-    public Car asCar(VehicleSize size) {
-        return new Car(state.asImmutable(), size);
+    public Car asCar() {
+        return new Car(state.asImmutable());
     }
-
-    public TestCar asTestCar() {
-        return new TestCar(state.asImmutable());
-    }
-
-    @Parameters({
-        @Parameter(attribute = "color", methodSignature = "CarColor color", value = "color.name()")
-    })
 
     // ===== Generated code =====
 
-    public static CarFactory createTestCar() {
-        return new TestCarCreator(new CarMutableState()).new CarFactory();
+    public static CarFactory createCar() {
+        return new CarCreator(new CarMutableState()).new CarFactory();
     }
 
-    public static CarBuilder buildTestCar() {
+    public static CarBuilder buildCar() {
         return new CarBuilder();
     }
 
-    public static CarListBuilder createTestCarList(TestCarCreator... creators) {
+    public static CarListBuilder createCarList(CarCreator... creators) {
         return new CarListBuilder(creators);
     }
 
-    public static CarSetBuilder createTestCarSet(TestCarCreator... creators) {
+    public static CarSetBuilder createCarSet(CarCreator... creators) {
         return new CarSetBuilder(creators);
     }
 
-    public static CarMapBuilder createTestCarMap(CarMapEntryBuilder... builders) {
+    public static CarMapBuilder createCarMap(CarMapEntryBuilder... builders) {
         return new CarMapBuilder(builders);
     }
 
-    public static CarMapEntryBuilder createTestCarEntry(Object key, TestCarCreator creator) {
+    public static CarMapEntryBuilder createCarEntry(Object key, CarCreator creator) {
         return new CarMapEntryBuilder(key, creator);
     }
 
-    public static CarMapEntryBuilder createTestCarEntry(Object key, CarBuilder builder) {
+    public static CarMapEntryBuilder createCarEntry(Object key, CarBuilder builder) {
         return new CarMapEntryBuilder(key, builder);
     }
 
@@ -118,21 +108,16 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
         // color
         public class _Color {
-            public TestCarCreator color(String color) {
+            public CarCreator color(String color) {
                 state.color = color;
-                return new TestCarCreator(state);
-            }
-
-            public TestCarCreator color(CarColor color) {
-                state.color = color.name();
-                return new TestCarCreator(state);
+                return new CarCreator(state);
             }
         }
     }
 
     // --- Constructor ---
 
-    public TestCarCreator(CarMutableState state) {
+    public CarCreator(CarMutableState state) {
         this.state = state;
     }
 
@@ -216,7 +201,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
     // --- Builder ---
 
-    public static class CarBuilder implements TestCarCreatorMaker {
+    public static class CarBuilder implements CarCreatorMaker {
         private final CarMutableState state;
 
         public CarBuilder() {
@@ -234,12 +219,8 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public CarBuilder withOwner(OwnerCreator.OwnerBuilder owner) { state.owner = owner.asMutableState(); return this; }
         public CarBuilder withColor(String color) { state.color = color; return this; }
 
-        public Car asCar(VehicleSize size) {
-            return new Car(state.asImmutable(), size);
-        }
-
-        public TestCar asTestCar() {
-            return new TestCar(state.asImmutable());
+        public Car asCar() {
+            return new Car(state.asImmutable());
         }
 
         public CarState asState() {
@@ -265,58 +246,36 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
     // --- ListBuilder ---
 
-    public static class CarListBuilder implements Iterable<TestCarCreator> {
-        private List<TestCarCreator> creators;
+    public static class CarListBuilder implements Iterable<CarCreator> {
+        private List<CarCreator> creators;
 
-        public CarListBuilder(TestCarCreator... creators) {
+        public CarListBuilder(CarCreator... creators) {
             this.creators = Arrays.asList(creators);
         }
 
-        public CarListBuilder(Collection<TestCarCreator> creators) {
-            this.creators = new ArrayList<TestCarCreator>();
+        public CarListBuilder(Collection<CarCreator> creators) {
+            this.creators = new ArrayList<CarCreator>();
             this.creators.addAll(creators);
         }
 
-        // asCarList(VehicleSize size) : ImmutableList<Car>
+        // asCarList() : ImmutableList<Car>
 
-        public ImmutableList<Car> asCarList(VehicleSize size) {
+        public ImmutableList<Car> asCarList() {
             ImmutableList.Builder<Car> builder = ImmutableList.builder();
 
-            for (TestCarCreator creator : creators) {
-                builder.add(creator.asCar(size));
+            for (CarCreator creator : creators) {
+                builder.add(creator.asCar());
             }
             return builder.build();
         }
 
-        // asCarMutableList(VehicleSize size) : List<Car>
+        // asCarMutableList() : List<Car>
 
-        public List<Car> asCarMutableList(VehicleSize size) {
+        public List<Car> asCarMutableList() {
             List<Car> result = new ArrayList<Car>();
 
-            for (TestCarCreator creator : creators) {
-                result.add(creator.asCar(size));
-            }
-            return result;
-        }
-
-        // asTestCarList() : ImmutableList<TestCar>
-
-        public ImmutableList<TestCar> asTestCarList() {
-            ImmutableList.Builder<TestCar> builder = ImmutableList.builder();
-
-            for (TestCarCreator creator : creators) {
-                builder.add(creator.asTestCar());
-            }
-            return builder.build();
-        }
-
-        // asTestCarMutableList() : List<TestCar>
-
-        public List<TestCar> asTestCarMutableList() {
-            List<TestCar> result = new ArrayList<TestCar>();
-
-            for (TestCarCreator creator : creators) {
-                result.add(creator.asTestCar());
+            for (CarCreator creator : creators) {
+                result.add(creator.asCar());
             }
             return result;
         }
@@ -326,7 +285,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public ImmutableList<CarState> asStateList() {
             ImmutableList.Builder<CarState> builder = ImmutableList.builder();
 
-            for (TestCarCreator creator : creators) {
+            for (CarCreator creator : creators) {
                 builder.add(creator.asState());
             }
             return builder.build();
@@ -337,71 +296,49 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public List<CarMutableState> asMutableStateList() {
             List<CarMutableState> result = new ArrayList<CarMutableState>();
 
-            for (TestCarCreator creator : creators) {
+            for (CarCreator creator : creators) {
                 result.add(creator.asMutableState());
             }
             return result;
         }
 
-        public Iterator<TestCarCreator> iterator() {
+        public Iterator<CarCreator> iterator() {
             return creators.iterator();
         }
     }
 
     // --- SetBuilder ---
 
-    public static class CarSetBuilder implements Iterable<TestCarCreator> {
-        private List<TestCarCreator> creators;
+    public static class CarSetBuilder implements Iterable<CarCreator> {
+        private List<CarCreator> creators;
 
-        public CarSetBuilder(TestCarCreator... creators) {
+        public CarSetBuilder(CarCreator... creators) {
             this.creators = Arrays.asList(creators);
         }
 
-        public CarSetBuilder(Collection<TestCarCreator> creators) {
-            this.creators = new ArrayList<TestCarCreator>();
+        public CarSetBuilder(Collection<CarCreator> creators) {
+            this.creators = new ArrayList<CarCreator>();
             this.creators.addAll(creators);
         }
 
-        // asCarSet(VehicleSize size) : ImmutableSet<Car>
+        // asCarSet() : ImmutableSet<Car>
 
-        public ImmutableSet<Car> asCarSet(VehicleSize size) {
+        public ImmutableSet<Car> asCarSet() {
             ImmutableSet.Builder<Car> builder = ImmutableSet.builder();
 
-            for (TestCarCreator creator : creators) {
-                builder.add(creator.asCar(size));
+            for (CarCreator creator : creators) {
+                builder.add(creator.asCar());
             }
             return builder.build();
         }
 
-        // asCarMutableSet(VehicleSize size) : Set<Car>
+        // asCarMutableSet() : Set<Car>
 
-        public Set<Car> asCarMutableSet(VehicleSize size) {
+        public Set<Car> asCarMutableSet() {
             Set<Car> result = new HashSet<Car>();
 
-            for (TestCarCreator creator : creators) {
-                result.add(creator.asCar(size));
-            }
-            return result;
-        }
-
-        // asTestCarSet() : ImmutableSet<TestCar>
-
-        public ImmutableSet<TestCar> asTestCarSet() {
-            ImmutableSet.Builder<TestCar> builder = ImmutableSet.builder();
-
-            for (TestCarCreator creator : creators) {
-                builder.add(creator.asTestCar());
-            }
-            return builder.build();
-        }
-
-        // asTestCarMutableSet() : Set<TestCar>
-
-        public Set<TestCar> asTestCarMutableSet() {
-            Set<TestCar> result = new HashSet<TestCar>();
-
-            for (TestCarCreator creator : creators) {
-                result.add(creator.asTestCar());
+            for (CarCreator creator : creators) {
+                result.add(creator.asCar());
             }
             return result;
         }
@@ -411,7 +348,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public ImmutableSet<CarState> asStateSet() {
             ImmutableSet.Builder<CarState> builder = ImmutableSet.builder();
 
-            for (TestCarCreator creator : creators) {
+            for (CarCreator creator : creators) {
                 builder.add(creator.asState());
             }
             return builder.build();
@@ -422,13 +359,13 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public Set<CarMutableState> asMutableStateSet() {
             Set<CarMutableState> result = new HashSet<CarMutableState>();
 
-            for (TestCarCreator creator : creators) {
+            for (CarCreator creator : creators) {
                 result.add(creator.asMutableState());
             }
             return result;
         }
 
-        public Iterator<TestCarCreator> iterator() {
+        public Iterator<CarCreator> iterator() {
             return creators.iterator();
         }
     }
@@ -437,19 +374,15 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
     public static class CarMapEntryBuilder {
         private final Object key;
-        private final TestCarCreatorMaker maker;
+        private final CarCreatorMaker maker;
 
-        public CarMapEntryBuilder(Object key, TestCarCreatorMaker maker) {
+        public CarMapEntryBuilder(Object key, CarCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
 
-        public Car asCar(VehicleSize size) {
-            return maker.asCar(size);
-        }
-
-        public TestCar asTestCar() {
-            return maker.asTestCar();
+        public Car asCar() {
+            return maker.asCar();
         }
 
         public CarState asState() {
@@ -470,46 +403,24 @@ public class TestCarCreator implements TestCarCreatorMaker {
             this.entries = entries;
         }
 
-        // asCarMap(VehicleSize size) : ImmutableMap
+        // asCarMap() : ImmutableMap
 
-        public ImmutableMap asCarMap(VehicleSize size) {
+        public ImmutableMap asCarMap() {
             ImmutableMap.Builder builder = ImmutableMap.builder();
 
             for (CarMapEntryBuilder entry : entries) {
-                builder.put(entry.key, entry.asCar(size));
+                builder.put(entry.key, entry.asCar());
             }
             return builder.build();
         }
 
-        // asCarMutableMap(VehicleSize size) : Map
+        // asCarMutableMap() : Map
 
-        public Map asCarMutableMap(VehicleSize size) {
+        public Map asCarMutableMap() {
             Map result = new HashMap();
 
             for (CarMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asCar(size));
-            }
-            return result;
-        }
-
-        // asTestCarMap() : ImmutableMap
-
-        public ImmutableMap asTestCarMap() {
-            ImmutableMap.Builder builder = ImmutableMap.builder();
-
-            for (CarMapEntryBuilder entry : entries) {
-                builder.put(entry.key, entry.asTestCar());
-            }
-            return builder.build();
-        }
-
-        // asTestCarMutableMap() : Map
-
-        public Map asTestCarMutableMap() {
-            Map result = new HashMap();
-
-            for (CarMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asTestCar());
+                result.put(entry.key, entry.asCar());
             }
             return result;
         }
@@ -540,9 +451,8 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
 // --- Maker ---
 
-interface TestCarCreatorMaker {
-    Car asCar(VehicleSize size);
-    TestCar asTestCar();
+interface CarCreatorMaker {
+    Car asCar();
 
     CarState asState();
     CarMutableState asMutableState();

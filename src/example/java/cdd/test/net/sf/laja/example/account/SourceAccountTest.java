@@ -1,7 +1,5 @@
 package net.sf.laja.example.account;
 
-import net.sf.laja.example.account.behaviour.DestinationAccount;
-import net.sf.laja.example.account.behaviour.SourceAccount;
 import org.junit.Test;
 
 import static net.sf.laja.example.account.TestAccountCreator.createTestAccount;

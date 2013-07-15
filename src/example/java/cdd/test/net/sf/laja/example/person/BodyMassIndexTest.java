@@ -1,11 +1,10 @@
 package net.sf.laja.example.person;
 
-import net.sf.laja.example.person.behaviour.BodyMassIndex;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static net.sf.laja.example.person.behaviour.BmiCreator.createBmi;
+import static net.sf.laja.example.person.BmiCreator.createBmi;
 import static org.junit.Assert.assertFalse;
 
 public class BodyMassIndexTest {

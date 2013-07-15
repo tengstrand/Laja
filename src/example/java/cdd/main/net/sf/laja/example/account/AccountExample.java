@@ -1,9 +1,6 @@
 package net.sf.laja.example.account;
 
-import net.sf.laja.example.account.behaviour.DestinationAccount;
-import net.sf.laja.example.account.behaviour.SourceAccount;
-
-import static net.sf.laja.example.account.behaviour.AccountCreator.createAccount;
+import static net.sf.laja.example.account.AccountCreator.createAccount;
 
 public class AccountExample {
 

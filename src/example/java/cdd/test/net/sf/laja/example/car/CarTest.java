@@ -1,14 +1,12 @@
 package net.sf.laja.example.car;
 
-import net.sf.laja.example.car.behaviour.Car;
-import net.sf.laja.example.car.behaviour.VehicleSize;
 import net.sf.laja.example.car.state.CarState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
-import static net.sf.laja.example.car.behaviour.CarColor.RED;
-import static net.sf.laja.example.car.behaviour.OwnerCreator.createOwner;
-import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
+import static net.sf.laja.example.car.CarColor.RED;
+import static net.sf.laja.example.car.OwnerCreator.createOwner;
+import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

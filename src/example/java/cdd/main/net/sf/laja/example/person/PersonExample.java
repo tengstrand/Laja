@@ -1,9 +1,7 @@
 package net.sf.laja.example.person;
 
-import net.sf.laja.example.person.behaviour.Person;
-
-import static net.sf.laja.example.person.behaviour.BmiCreator.createBmi;
-import static net.sf.laja.example.person.behaviour.PersonCreator.createPerson;
+import static net.sf.laja.example.person.BmiCreator.createBmi;
+import static net.sf.laja.example.person.PersonCreator.createPerson;
 
 public class PersonExample {
 

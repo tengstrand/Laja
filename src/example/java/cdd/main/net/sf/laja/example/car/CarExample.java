@@ -1,16 +1,13 @@
 package net.sf.laja.example.car;
 
-import net.sf.laja.example.car.behaviour.Bus;
-import net.sf.laja.example.car.behaviour.Car;
-
-import static net.sf.laja.example.car.behaviour.BusCreator.createBus;
-import static net.sf.laja.example.car.behaviour.CarColor.RED;
-import static net.sf.laja.example.car.behaviour.CarCreator.buildCar;
-import static net.sf.laja.example.car.behaviour.CarCreator.createCar;
-import static net.sf.laja.example.car.behaviour.OwnerCreator.buildOwner;
-import static net.sf.laja.example.car.behaviour.OwnerCreator.createOwner;
-import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.buildVehicleSize;
-import static net.sf.laja.example.car.behaviour.VehicleSizeCreator.createVehicleSize;
+import static net.sf.laja.example.car.BusCreator.createBus;
+import static net.sf.laja.example.car.CarColor.RED;
+import static net.sf.laja.example.car.CarCreator.buildCar;
+import static net.sf.laja.example.car.CarCreator.createCar;
+import static net.sf.laja.example.car.OwnerCreator.buildOwner;
+import static net.sf.laja.example.car.OwnerCreator.createOwner;
+import static net.sf.laja.example.car.VehicleSizeCreator.buildVehicleSize;
+import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 
 public class CarExample {
 

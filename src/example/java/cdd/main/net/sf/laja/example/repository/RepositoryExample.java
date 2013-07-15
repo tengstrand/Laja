@@ -1,9 +1,9 @@
 package net.sf.laja.example.repository;
 
 import com.google.common.collect.ImmutableList;
-import net.sf.laja.example.repository.behaviour.domain.Customer;
-import net.sf.laja.example.repository.behaviour.gui.CustomerInGui;
-import net.sf.laja.example.repository.behaviour.persistence.CustomerRepository;
+import net.sf.laja.example.repository.domain.Customer;
+import net.sf.laja.example.repository.gui.CustomerInGui;
+import net.sf.laja.example.repository.persistence.CustomerRepository;
 
 public class RepositoryExample {
 
