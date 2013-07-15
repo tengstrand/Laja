@@ -66,7 +66,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return new CarMapEntryBuilder(key, creator);
     }
 
-    public static CarMapEntryBuilder testCarEntry(Object key, CarBuilder builder) {
+    public static CarMapEntryBuilder createTestCarEntry(Object key, CarBuilder builder) {
         return new CarMapEntryBuilder(key, builder);
     }
 

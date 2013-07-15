@@ -57,7 +57,7 @@ public class PersonMutableStateTest {
     public void invalidStateShouldReturnCustomValidationError() {
         PersonMutableState mutableState = createPerson().name("Carl").hairColor(BROWN).children()
                 .address(createAddress().withStreetName("First street").withCity("Stockholm"))
-                .groupedAddresses(createAddressMap(addressEntry("A", createAddress())))
+                .groupedAddresses(createAddressMap(createAddressEntry("A", createAddress())))
                 .defaultListOfSetOfMapOfIntegers().asMutableState();
 
         ValidationErrors errors = mutableState.validate(new CarlCanNotLiveInStockholmValidator());

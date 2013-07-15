@@ -54,7 +54,7 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerMapEntryBuilder(key, creator);
     }
 
-    public static OwnerMapEntryBuilder ownerEntry(Object key, OwnerBuilder builder) {
+    public static OwnerMapEntryBuilder createOwnerEntry(Object key, OwnerBuilder builder) {
         return new OwnerMapEntryBuilder(key, builder);
     }
 

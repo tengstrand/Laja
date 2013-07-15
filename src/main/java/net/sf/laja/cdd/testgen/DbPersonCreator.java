@@ -59,7 +59,7 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return new PersonMapEntryBuilder(key, creator);
     }
 
-    public static PersonMapEntryBuilder dbPersonEntry(Object key, PersonBuilder builder) {
+    public static PersonMapEntryBuilder createDbPersonEntry(Object key, PersonBuilder builder) {
         return new PersonMapEntryBuilder(key, builder);
     }
 

@@ -54,7 +54,7 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiMapEntryBuilder(key, creator);
     }
 
-    public static BmiMapEntryBuilder bmiEntry(Object key, BmiBuilder builder) {
+    public static BmiMapEntryBuilder createBmiEntry(Object key, BmiBuilder builder) {
         return new BmiMapEntryBuilder(key, builder);
     }
 

@@ -7,8 +7,8 @@
   #set (imports = creator.imports)
   #set (classname = creator.classname)
   #set (createMethod = creator.createMethod)
+  #set (entryMethod = "{createMethod}Entry")
   #set (buildMethod = creator.buildMethod)
-  #set (entryMethod = creator.entryMethod)
   #set (statevariable = creator.statevariable)
   #set (asMethods = creator.asMethods)
   #set (parameters = creator.parameters)
@@ -128,7 +128,7 @@ import static {import};
 #end
 
 #macro mapCreatorEntry()
-    public static {mapEntryBuilder} {createMethod}Entry(Object key, {creator} creator) {
+    public static {mapEntryBuilder} {entryMethod}(Object key, {creator} creator) {
         return new {mapEntryBuilder}(key, creator);
     }
 

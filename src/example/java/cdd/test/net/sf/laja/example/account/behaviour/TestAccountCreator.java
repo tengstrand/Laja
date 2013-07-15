@@ -54,7 +54,7 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new AccountMapEntryBuilder(key, creator);
     }
 
-    public static AccountMapEntryBuilder testAccountEntry(Object key, AccountBuilder builder) {
+    public static AccountMapEntryBuilder createTestAccountEntry(Object key, AccountBuilder builder) {
         return new AccountMapEntryBuilder(key, builder);
     }
 

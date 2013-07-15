@@ -55,7 +55,7 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonMapEntryBuilder(key, creator);
     }
 
-    public static PersonMapEntryBuilder personEntry(Object key, PersonBuilder builder) {
+    public static PersonMapEntryBuilder createPersonEntry(Object key, PersonBuilder builder) {
         return new PersonMapEntryBuilder(key, builder);
     }
 

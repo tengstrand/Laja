@@ -55,7 +55,7 @@ public class BusCreator implements BusCreatorMaker {
         return new BusMapEntryBuilder(key, creator);
     }
 
-    public static BusMapEntryBuilder busEntry(Object key, BusBuilder builder) {
+    public static BusMapEntryBuilder createBusEntry(Object key, BusBuilder builder) {
         return new BusMapEntryBuilder(key, builder);
     }
 

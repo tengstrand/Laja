@@ -57,7 +57,7 @@ public class TruckCreator implements TruckCreatorMaker {
         return new TruckMapEntryBuilder(key, creator);
     }
 
-    public static TruckMapEntryBuilder truckEntry(Object key, TruckBuilder builder) {
+    public static TruckMapEntryBuilder createTruckEntry(Object key, TruckBuilder builder) {
         return new TruckMapEntryBuilder(key, builder);
     }
 

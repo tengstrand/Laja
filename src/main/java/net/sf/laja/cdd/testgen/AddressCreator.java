@@ -64,11 +64,11 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressMapBuilder(builders);
     }
 
-    public static AddressMapEntryBuilder addressEntry(Object key, AddressCreator creator) {
+    public static AddressMapEntryBuilder createAddressEntry(Object key, AddressCreator creator) {
         return new AddressMapEntryBuilder(key, creator);
     }
 
-    public static AddressMapEntryBuilder addressEntry(Object key, AddressBuilder builder) {
+    public static AddressMapEntryBuilder createAddressEntry(Object key, AddressBuilder builder) {
         return new AddressMapEntryBuilder(key, builder);
     }
 

@@ -54,7 +54,7 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return new AddressMapEntryBuilder(key, creator);
     }
 
-    public static AddressMapEntryBuilder specialAddressEntry(Object key, AddressBuilder builder) {
+    public static AddressMapEntryBuilder createSpecialAddressEntry(Object key, AddressBuilder builder) {
         return new AddressMapEntryBuilder(key, builder);
     }
 

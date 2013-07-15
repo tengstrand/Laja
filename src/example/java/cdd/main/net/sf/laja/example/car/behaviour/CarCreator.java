@@ -56,7 +56,7 @@ public class CarCreator implements CarCreatorMaker {
         return new CarMapEntryBuilder(key, creator);
     }
 
-    public static CarMapEntryBuilder carEntry(Object key, CarBuilder builder) {
+    public static CarMapEntryBuilder createCarEntry(Object key, CarBuilder builder) {
         return new CarMapEntryBuilder(key, builder);
     }
 

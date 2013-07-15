@@ -109,8 +109,8 @@ public class AddressCreatorTest {
 
     private AddressMapBuilder addressMapBuilder() {
         return createAddressMap(
-                addressEntry("a", createAddress().withId(1).withStreetName("First street").withCity("Uppsala")),
-                addressEntry("b", createAddress().withId(2).withStreetName("Second street").withCity("Stockholm"))
+                createAddressEntry("a", createAddress().withId(1).withStreetName("First street").withCity("Uppsala")),
+                createAddressEntry("b", createAddress().withId(2).withStreetName("Second street").withCity("Stockholm"))
         );
     }
 }

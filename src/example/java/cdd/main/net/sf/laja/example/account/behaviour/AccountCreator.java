@@ -58,7 +58,7 @@ public class AccountCreator implements AccountCreatorMaker {
         return new AccountMapEntryBuilder(key, creator);
     }
 
-    public static AccountMapEntryBuilder accountEntry(Object key, AccountBuilder builder) {
+    public static AccountMapEntryBuilder createAccountEntry(Object key, AccountBuilder builder) {
         return new AccountMapEntryBuilder(key, builder);
     }
 
