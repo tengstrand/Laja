@@ -11,7 +11,7 @@ public class AparameterTest {
     @Test
     public void signatureArguments_spaceAndCommaSeparated() {
         Aparameter aparameter = new Aparameter();
-        aparameter.signature = "String name , int x";
+        aparameter.methodSignature = "String name , int x";
 
         assertEquals("name, x", aparameter.signatureArguments());
     }
@@ -19,7 +19,7 @@ public class AparameterTest {
     @Test
     public void signatureArguments_commaSeparated() {
         Aparameter aparameter = new Aparameter();
-        aparameter.signature = "int name1, int name2";
+        aparameter.methodSignature = "int name1, int name2";
 
         assertEquals("name1, name2", aparameter.signatureArguments());
     }
