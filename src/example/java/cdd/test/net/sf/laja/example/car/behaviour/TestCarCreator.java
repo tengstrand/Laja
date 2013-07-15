@@ -42,13 +42,6 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String size_ = "size";
-    private static final String name_ = "name";
-    private static final String owner_ = "owner";
-    private static final String color_ = "color";
-
-    // --- Constructors ---
-
     public static CarFactory createTestCar() {
         return new TestCarCreator(new CarMutableState()).new CarFactory();
     }
@@ -127,6 +120,11 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public class _Color {
             public TestCarCreator color(String color) {
                 state.color = color;
+                return new TestCarCreator(state);
+            }
+
+            public TestCarCreator color(CarColor color) {
+                state.color = color.name();
                 return new TestCarCreator(state);
             }
         }

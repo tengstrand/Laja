@@ -38,12 +38,18 @@ public class AddressState implements ImmutableState {
         assertIsValid();
     }
 
-    public static class IllegalAddressStateException extends InvalidStateException {
-        public IllegalAddressStateException(String message) {
+    private void assertThat(boolean condition, String message) {
+        if (!condition) {
+            throw new InvalidAddressStateException(message);
+        }
+    }
+
+    public static class InvalidAddressStateException extends InvalidStateException {
+        public InvalidAddressStateException(String message) {
             super(message);
         }
 
-        public IllegalAddressStateException(ValidationErrors errors) {
+        public InvalidAddressStateException(ValidationErrors errors) {
             super(errors);
         }
     }
@@ -150,7 +156,7 @@ public class AddressState implements ImmutableState {
             ValidationErrors errors = validate(validators);
 
             if (errors.isInvalid()) {
-                throw new IllegalAddressStateException(errors);
+                throw new InvalidAddressStateException(errors);
             }
         }
 

@@ -30,10 +30,6 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String balance_ = "balance";
-
-    // --- Constructors ---
-
     public static AccountFactory createTestAccount() {
         return new TestAccountCreator(new AccountMutableState()).new AccountFactory();
     }

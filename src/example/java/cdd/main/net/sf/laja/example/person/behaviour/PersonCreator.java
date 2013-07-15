@@ -31,12 +31,6 @@ public class PersonCreator implements PersonCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String givenName_ = "givenName";
-    private static final String surname_ = "surname";
-    private static final String size_ = "size";
-
-    // --- Constructors ---
-
     public static PersonFactory createPerson() {
         return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }

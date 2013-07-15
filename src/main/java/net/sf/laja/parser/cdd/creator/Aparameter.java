@@ -34,8 +34,6 @@ public class Aparameter implements CreatorParser.IAparameter {
         }
         if (value.startsWith("\"")) {
             value = value.substring(1, value.length()-1);
-        } else if (value.endsWith("_")) {
-            value = value.substring(0, value.length() - 1);
         }
         value = value.replaceAll("\\\\", "");
 

@@ -86,22 +86,28 @@ public class PersonState implements ImmutableState {
         this.listOfSetOfState = listOfSetOfState;
         this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
 
-        if (name == null) throw new IllegalPersonStateException("'name' can not be null");
-        if (hairColor == null) throw new IllegalPersonStateException("'hairColor' can not be null");
-        if (children == null) throw new IllegalPersonStateException("'children' can not be null");
-        if (address == null) throw new IllegalPersonStateException("'address' can not be null");
-        if (groupedAddresses == null) throw new IllegalPersonStateException("'groupedAddresses' can not be null");
-        if (listOfSetOfMapOfIntegers == null) throw new IllegalPersonStateException("'listOfSetOfMapOfIntegers' can not be null");
+        if (name == null) throw new InvalidPersonStateException("'name' can not be null");
+        if (hairColor == null) throw new InvalidPersonStateException("'hairColor' can not be null");
+        if (children == null) throw new InvalidPersonStateException("'children' can not be null");
+        if (address == null) throw new InvalidPersonStateException("'address' can not be null");
+        if (groupedAddresses == null) throw new InvalidPersonStateException("'groupedAddresses' can not be null");
+        if (listOfSetOfMapOfIntegers == null) throw new InvalidPersonStateException("'listOfSetOfMapOfIntegers' can not be null");
 
         assertIsValid();
     }
 
-    public static class IllegalPersonStateException extends InvalidStateException {
-        public IllegalPersonStateException(String message) {
+    private void assertThat(boolean condition, String message) {
+        if (!condition) {
+            throw new InvalidPersonStateException(message);
+        }
+    }
+
+    public static class InvalidPersonStateException extends InvalidStateException {
+        public InvalidPersonStateException(String message) {
             super(message);
         }
 
-        public IllegalPersonStateException(ValidationErrors errors) {
+        public InvalidPersonStateException(ValidationErrors errors) {
             super(errors);
         }
     }
@@ -316,7 +322,7 @@ public class PersonState implements ImmutableState {
             ValidationErrors errors = validate(validators);
 
             if (errors.isInvalid()) {
-                throw new IllegalPersonStateException(errors);
+                throw new InvalidPersonStateException(errors);
             }
         }
 

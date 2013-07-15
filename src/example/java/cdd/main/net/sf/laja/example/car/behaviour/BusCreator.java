@@ -31,12 +31,6 @@ public class BusCreator implements BusCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String name_ = "name";
-    private static final String size_ = "size";
-    private static final String weightInKilograms_ = "weightInKilograms";
-
-    // --- Constructors ---
-
     public static BusFactory createBus() {
         return new BusCreator(new BusMutableState()).new BusFactory();
     }

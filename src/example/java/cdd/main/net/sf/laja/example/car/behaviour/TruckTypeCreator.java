@@ -30,11 +30,6 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String numberOfWheels_ = "numberOfWheels";
-    private static final String truckName_ = "truckName";
-
-    // --- Constructors ---
-
     public static TruckTypeFactory createTruckType() {
         return new TruckTypeCreator(new TruckTypeMutableState()).new TruckTypeFactory();
     }

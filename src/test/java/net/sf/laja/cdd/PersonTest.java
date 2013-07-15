@@ -3,7 +3,7 @@ package net.sf.laja.cdd;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
-import static net.sf.laja.cdd.state.PersonState.IllegalPersonStateException;
+import static net.sf.laja.cdd.state.PersonState.InvalidPersonStateException;
 import static net.sf.laja.cdd.testgen.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.*;
@@ -17,7 +17,7 @@ public class PersonTest {
         buildPerson().asMutableState();
     }
 
-    @Test(expected = IllegalPersonStateException.class)
+    @Test(expected = InvalidPersonStateException.class)
     public void shouldNotBePossibleToBuildIllegalImmutableState() {
         buildPerson().asState();
     }

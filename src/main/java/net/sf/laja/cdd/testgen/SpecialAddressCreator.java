@@ -9,8 +9,11 @@ import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +21,7 @@ import java.util.Set;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 
 @Creator
-public class SpecialAddressCreator implements SpecialAddressMaker {
+public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
     private final AddressMutableState state;
 
     public Address asSpecialAddress() {
@@ -27,18 +30,12 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
 
     // ===== Generated code =====
 
-    private static final String id_ = "id";
-    private static final String streetName_ = "streetName";
-    private static final String city_ = "city";
-
-    // --- Constructors ---
-
     public static SpecialAddressCreator createSpecialAddress() {
         return new SpecialAddressCreator(new AddressMutableState());
     }
 
     public static AddressBuilder buildSpecialAddress() {
-        return AddressBuilder.create();
+        return new AddressBuilder();
     }
 
     public static AddressListBuilder createSpecialAddressList(SpecialAddressCreator... creators) {
@@ -53,7 +50,7 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
         return new AddressMapBuilder(builders);
     }
 
-    public static AddressMapEntryBuilder specialAddressEntry(Object key, SpecialAddressCreator creator) {
+    public static AddressMapEntryBuilder createSpecialAddressEntry(Object key, SpecialAddressCreator creator) {
         return new AddressMapEntryBuilder(key, creator);
     }
 
@@ -163,15 +160,15 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
 
     // --- Builder ---
 
-    public static class AddressBuilder implements SpecialAddressMaker {
+    public static class AddressBuilder implements SpecialAddressCreatorMaker {
         private final AddressMutableState state;
 
-        private AddressBuilder(AddressMutableState state) {
-            this.state = state;
+        public AddressBuilder() {
+            this.state = new AddressMutableState();
         }
 
-        public static AddressBuilder create() {
-            return new AddressBuilder(new AddressMutableState());
+        public AddressBuilder(AddressMutableState state) {
+            this.state = state;
         }
 
         public AddressBuilder withId(int id) { state.id = id; return this; }
@@ -205,11 +202,16 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
 
     // --- ListBuilder ---
 
-    public static class AddressListBuilder {
-        private SpecialAddressCreator[] creators;
+    public static class AddressListBuilder implements Iterable<SpecialAddressCreator> {
+        private List<SpecialAddressCreator> creators;
 
         public AddressListBuilder(SpecialAddressCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public AddressListBuilder(Collection<SpecialAddressCreator> creators) {
+            this.creators = new ArrayList<SpecialAddressCreator>();
+            this.creators.addAll(creators);
         }
 
         // asSpecialAddressList() : ImmutableList<Address>
@@ -255,15 +257,24 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
             }
             return result;
         }
+
+        public Iterator<SpecialAddressCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- SetBuilder ---
 
-    public static class AddressSetBuilder {
-        private SpecialAddressCreator[] creators;
+    public static class AddressSetBuilder implements Iterable<SpecialAddressCreator> {
+        private List<SpecialAddressCreator> creators;
 
         public AddressSetBuilder(SpecialAddressCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public AddressSetBuilder(Collection<SpecialAddressCreator> creators) {
+            this.creators = new ArrayList<SpecialAddressCreator>();
+            this.creators.addAll(creators);
         }
 
         // asSpecialAddressSet() : ImmutableSet<Address>
@@ -309,15 +320,19 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
             }
             return result;
         }
+
+        public Iterator<SpecialAddressCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- MapEntryBuilder ---
 
     public static class AddressMapEntryBuilder {
         private final Object key;
-        private final SpecialAddressMaker maker;
+        private final SpecialAddressCreatorMaker maker;
 
-        public AddressMapEntryBuilder(Object key, SpecialAddressMaker maker) {
+        public AddressMapEntryBuilder(Object key, SpecialAddressCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -392,7 +407,7 @@ public class SpecialAddressCreator implements SpecialAddressMaker {
 
 // --- Maker ---
 
-interface SpecialAddressMaker {
+interface SpecialAddressCreatorMaker {
     Address asSpecialAddress();
 
     AddressState asState();

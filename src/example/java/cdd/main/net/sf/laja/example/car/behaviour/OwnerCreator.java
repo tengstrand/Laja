@@ -30,11 +30,6 @@ public class OwnerCreator implements OwnerCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String ssn_ = "ssn";
-    private static final String name_ = "name";
-
-    // --- Constructors ---
-
     public static OwnerFactory createOwner() {
         return new OwnerCreator(new OwnerMutableState()).new OwnerFactory();
     }

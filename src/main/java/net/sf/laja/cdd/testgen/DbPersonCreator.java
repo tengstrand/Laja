@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.state.AddressState;
 import net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -11,8 +12,11 @@ import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +26,7 @@ import static net.sf.laja.cdd.testgen.AddressCreator.AddressMapBuilder;
 import static net.sf.laja.cdd.testgen.AddressCreator.AddressSetBuilder;
 
 @Creator
-public class DbPersonCreator implements DbPersonMaker {
+public class DbPersonCreator implements DbPersonCreatorMaker {
     private final PersonMutableState state;
 
     public DbPerson asDbPerson() {
@@ -31,26 +35,12 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // ===== Generated code =====
 
-    private static final String id_ = "id";
-    private static final String name_ = "name";
-    private static final String birthday_ = "birthday";
-    private static final String hairColor_ = "hairColor";
-    private static final String children_ = "children";
-    private static final String address_ = "address";
-    private static final String oldAddress_ = "oldAddress";
-    private static final String oldAddresses_ = "oldAddresses";
-    private static final String groupedAddresses_ = "groupedAddresses";
-    private static final String listOfSetOfState_ = "listOfSetOfState";
-    private static final String listOfSetOfMapOfIntegers_ = "listOfSetOfMapOfIntegers";
-
-    // --- Constructors ---
-
     public static PersonFactory createDbPerson() {
         return new DbPersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
     public static PersonBuilder buildDbPerson() {
-        return PersonBuilder.create();
+        return new PersonBuilder();
     }
 
     public static PersonListBuilder createDbPersonList(DbPersonCreator... creators) {
@@ -65,7 +55,7 @@ public class DbPersonCreator implements DbPersonMaker {
         return new PersonMapBuilder(builders);
     }
 
-    public static PersonMapEntryBuilder dbPersonEntry(Object key, DbPersonCreator creator) {
+    public static PersonMapEntryBuilder createDbPersonEntry(Object key, DbPersonCreator creator) {
         return new PersonMapEntryBuilder(key, creator);
     }
 
@@ -271,15 +261,15 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // --- Builder ---
 
-    public static class PersonBuilder implements DbPersonMaker {
+    public static class PersonBuilder implements DbPersonCreatorMaker {
         private final PersonMutableState state;
 
-        private PersonBuilder(PersonMutableState state) {
-            this.state = state;
+        public PersonBuilder() {
+            this.state = new PersonMutableState();
         }
 
-        public static PersonBuilder create() {
-            return new PersonBuilder(new PersonMutableState());
+        public PersonBuilder(PersonMutableState state) {
+            this.state = state;
         }
 
         public PersonBuilder withId(int id) { state.id = id; return this; }
@@ -324,11 +314,16 @@ public class DbPersonCreator implements DbPersonMaker {
 
     // --- ListBuilder ---
 
-    public static class PersonListBuilder {
-        private DbPersonCreator[] creators;
+    public static class PersonListBuilder implements Iterable<DbPersonCreator> {
+        private List<DbPersonCreator> creators;
 
         public PersonListBuilder(DbPersonCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public PersonListBuilder(Collection<DbPersonCreator> creators) {
+            this.creators = new ArrayList<DbPersonCreator>();
+            this.creators.addAll(creators);
         }
 
         // asDbPersonList() : ImmutableList<DbPerson>
@@ -374,15 +369,24 @@ public class DbPersonCreator implements DbPersonMaker {
             }
             return result;
         }
+
+        public Iterator<DbPersonCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- SetBuilder ---
 
-    public static class PersonSetBuilder {
-        private DbPersonCreator[] creators;
+    public static class PersonSetBuilder implements Iterable<DbPersonCreator> {
+        private List<DbPersonCreator> creators;
 
         public PersonSetBuilder(DbPersonCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public PersonSetBuilder(Collection<DbPersonCreator> creators) {
+            this.creators = new ArrayList<DbPersonCreator>();
+            this.creators.addAll(creators);
         }
 
         // asDbPersonSet() : ImmutableSet<DbPerson>
@@ -428,15 +432,19 @@ public class DbPersonCreator implements DbPersonMaker {
             }
             return result;
         }
+
+        public Iterator<DbPersonCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- MapEntryBuilder ---
 
     public static class PersonMapEntryBuilder {
         private final Object key;
-        private final DbPersonMaker maker;
+        private final DbPersonCreatorMaker maker;
 
-        public PersonMapEntryBuilder(Object key, DbPersonMaker maker) {
+        public PersonMapEntryBuilder(Object key, DbPersonCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -511,7 +519,7 @@ public class DbPersonCreator implements DbPersonMaker {
 
 // --- Maker ---
 
-interface DbPersonMaker {
+interface DbPersonCreatorMaker {
     DbPerson asDbPerson();
 
     PersonState asState();

@@ -33,14 +33,6 @@ public class TruckCreator implements TruckCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String size_ = "size";
-    private static final String weightInKilograms_ = "weightInKilograms";
-    private static final String type_ = "type";
-    private static final String color_ = "color";
-    private static final String owner_ = "owner";
-
-    // --- Constructors ---
-
     public static TruckFactory createTruck() {
         return new TruckCreator(new TruckMutableState()).new TruckFactory();
     }

@@ -30,11 +30,6 @@ public class BmiCreator implements BmiCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String heightInCentimeters_ = "heightInCentimeters";
-    private static final String weightInKilograms_ = "weightInKilograms";
-
-    // --- Constructors ---
-
     public static BmiFactory createBmi() {
         return new BmiCreator(new BmiMutableState()).new BmiFactory();
     }

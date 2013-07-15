@@ -34,10 +34,6 @@ public class AccountCreator implements AccountCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String balance_ = "balance";
-
-    // --- Constructors ---
-
     public static AccountFactory createAccount() {
         return new AccountCreator(new AccountMutableState()).new AccountFactory();
     }

@@ -9,8 +9,11 @@ import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +21,7 @@ import java.util.Set;
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
 
 @Creator
-public class AddressCreator implements AddressMaker {
+public class AddressCreator implements AddressCreatorMaker {
     private final AddressMutableState state;
 
     public Address asAddress() {
@@ -41,18 +44,12 @@ public class AddressCreator implements AddressMaker {
 
     // ===== Generated code =====
 
-    private static final String id_ = "id";
-    private static final String streetName_ = "streetName";
-    private static final String city_ = "city";
-
-    // --- Constructors ---
-
     public static AddressCreator createAddress() {
         return new AddressCreator(new AddressMutableState());
     }
 
     public static AddressBuilder buildAddress() {
-        return AddressBuilder.create();
+        return new AddressBuilder();
     }
 
     public static AddressListBuilder createAddressList(AddressCreator... creators) {
@@ -177,15 +174,15 @@ public class AddressCreator implements AddressMaker {
 
     // --- Builder ---
 
-    public static class AddressBuilder implements AddressMaker {
+    public static class AddressBuilder implements AddressCreatorMaker {
         private final AddressMutableState state;
 
-        private AddressBuilder(AddressMutableState state) {
-            this.state = state;
+        public AddressBuilder() {
+            this.state = new AddressMutableState();
         }
 
-        public static AddressBuilder create() {
-            return new AddressBuilder(new AddressMutableState());
+        public AddressBuilder(AddressMutableState state) {
+            this.state = state;
         }
 
         public AddressBuilder withId(int id) { state.id = id; return this; }
@@ -233,11 +230,16 @@ public class AddressCreator implements AddressMaker {
 
     // --- ListBuilder ---
 
-    public static class AddressListBuilder {
-        private AddressCreator[] creators;
+    public static class AddressListBuilder implements Iterable<AddressCreator> {
+        private List<AddressCreator> creators;
 
         public AddressListBuilder(AddressCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public AddressListBuilder(Collection<AddressCreator> creators) {
+            this.creators = new ArrayList<AddressCreator>();
+            this.creators.addAll(creators);
         }
 
         // asAddressList() : ImmutableList<Address>
@@ -327,15 +329,24 @@ public class AddressCreator implements AddressMaker {
             }
             return result;
         }
+
+        public Iterator<AddressCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- SetBuilder ---
 
-    public static class AddressSetBuilder {
-        private AddressCreator[] creators;
+    public static class AddressSetBuilder implements Iterable<AddressCreator> {
+        private List<AddressCreator> creators;
 
         public AddressSetBuilder(AddressCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public AddressSetBuilder(Collection<AddressCreator> creators) {
+            this.creators = new ArrayList<AddressCreator>();
+            this.creators.addAll(creators);
         }
 
         // asAddressSet() : ImmutableSet<Address>
@@ -425,15 +436,19 @@ public class AddressCreator implements AddressMaker {
             }
             return result;
         }
+
+        public Iterator<AddressCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- MapEntryBuilder ---
 
     public static class AddressMapEntryBuilder {
         private final Object key;
-        private final AddressMaker maker;
+        private final AddressCreatorMaker maker;
 
-        public AddressMapEntryBuilder(Object key, AddressMaker maker) {
+        public AddressMapEntryBuilder(Object key, AddressCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -560,7 +575,7 @@ public class AddressCreator implements AddressMaker {
 
 // --- Maker ---
 
-interface AddressMaker {
+interface AddressCreatorMaker {
     Address asAddress();
     Address asAddress(int protectionLevel);
     Address asAddress(AddressType type);

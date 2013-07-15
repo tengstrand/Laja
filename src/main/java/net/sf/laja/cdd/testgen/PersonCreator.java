@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.annotation.Parameters;
+import net.sf.laja.cdd.state.AddressState;
 import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.testgen.PersonCreator.PersonFactory._ListOfSetOfMapOfIntegers;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,8 +15,10 @@ import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +28,7 @@ import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 
 @Creator
-public class PersonCreator implements PersonMaker {
+public class PersonCreator implements PersonCreatorMaker {
     private final PersonMutableState state;
 
     /**
@@ -44,14 +47,14 @@ public class PersonCreator implements PersonMaker {
     }
 
     @Parameters({
-            @Parameter(attribute = id_, methodSignature = "PersonId personId", value = "personId.id"),
-            @Parameter(attribute = name_, methodSignature = "int givenName, int surname", value = "givenName + \" \" + surname"),
-            @Parameter(attribute = hairColor_, methodSignature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(attribute = hairColor_, nextAttribute = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
-            @Parameter(attribute = address_, nextAttribute = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(attribute = address_, method = "defaultAddress", value = "getDefaultAddress()"),
-            @Parameter(attribute = groupedAddresses_, method = "defaultGroupedAddresses"),
-            @Parameter(attribute = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
+            @Parameter(attribute = "id", methodSignature = "PersonId personId", value = "personId.id"),
+            @Parameter(attribute = "name", methodSignature = "int givenName, int surname", value = "givenName + \" \" + surname"),
+            @Parameter(attribute = "hairColor", methodSignature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(attribute = "hairColor", nextAttribute = "address", method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
+            @Parameter(attribute = "address", nextAttribute = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(attribute = "address", method = "defaultAddress", value = "getDefaultAddress()"),
+            @Parameter(attribute = "groupedAddresses", method = "defaultGroupedAddresses"),
+            @Parameter(attribute = "listOfSetOfMapOfIntegers", method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
     })
 
     private AddressMutableState getAddressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {
@@ -78,26 +81,12 @@ public class PersonCreator implements PersonMaker {
 
     // ===== Generated code =====
 
-    private static final String id_ = "id";
-    private static final String name_ = "name";
-    private static final String birthday_ = "birthday";
-    private static final String hairColor_ = "hairColor";
-    private static final String children_ = "children";
-    private static final String address_ = "address";
-    private static final String oldAddress_ = "oldAddress";
-    private static final String oldAddresses_ = "oldAddresses";
-    private static final String groupedAddresses_ = "groupedAddresses";
-    private static final String listOfSetOfState_ = "listOfSetOfState";
-    private static final String listOfSetOfMapOfIntegers_ = "listOfSetOfMapOfIntegers";
-
-    // --- Constructors ---
-
     public static PersonFactory createPerson() {
         return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
     public static PersonBuilder buildPerson() {
-        return PersonBuilder.create();
+        return new PersonBuilder();
     }
 
     public static PersonListBuilder createPersonList(PersonCreator... creators) {
@@ -157,7 +146,7 @@ public class PersonCreator implements PersonMaker {
                 return new _Children();
             }
 
-            public _Address defaultHairColorAndChildren() {
+            public _Address hairColor() {
                 state.hairColor = getDefaultHairColorAndChildren();
                 return new _Address();
             }
@@ -361,15 +350,15 @@ public class PersonCreator implements PersonMaker {
 
     // --- Builder ---
 
-    public static class PersonBuilder implements PersonMaker {
+    public static class PersonBuilder implements PersonCreatorMaker {
         private final PersonMutableState state;
 
-        private PersonBuilder(PersonMutableState state) {
-            this.state = state;
+        public PersonBuilder() {
+            this.state = new PersonMutableState();
         }
 
-        public static PersonBuilder create() {
-            return new PersonBuilder(new PersonMutableState());
+        public PersonBuilder(PersonMutableState state) {
+            this.state = state;
         }
 
         public PersonBuilder withId(int id) { state.id = id; return this; }
@@ -422,11 +411,16 @@ public class PersonCreator implements PersonMaker {
 
     // --- ListBuilder ---
 
-    public static class PersonListBuilder {
-        private PersonCreator[] creators;
+    public static class PersonListBuilder implements Iterable<PersonCreator> {
+        private List<PersonCreator> creators;
 
         public PersonListBuilder(PersonCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public PersonListBuilder(Collection<PersonCreator> creators) {
+            this.creators = new ArrayList<PersonCreator>();
+            this.creators.addAll(creators);
         }
 
         // asPersonList() : ImmutableList<Person>
@@ -516,15 +510,24 @@ public class PersonCreator implements PersonMaker {
             }
             return result;
         }
+
+        public Iterator<PersonCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- SetBuilder ---
 
-    public static class PersonSetBuilder {
-        private PersonCreator[] creators;
+    public static class PersonSetBuilder implements Iterable<PersonCreator> {
+        private List<PersonCreator> creators;
 
         public PersonSetBuilder(PersonCreator... creators) {
-            this.creators = creators;
+            this.creators = Arrays.asList(creators);
+        }
+
+        public PersonSetBuilder(Collection<PersonCreator> creators) {
+            this.creators = new ArrayList<PersonCreator>();
+            this.creators.addAll(creators);
         }
 
         // asPersonSet() : ImmutableSet<Person>
@@ -614,15 +617,19 @@ public class PersonCreator implements PersonMaker {
             }
             return result;
         }
+
+        public Iterator<PersonCreator> iterator() {
+            return creators.iterator();
+        }
     }
 
     // --- MapEntryBuilder ---
 
     public static class PersonMapEntryBuilder {
         private final Object key;
-        private final PersonMaker maker;
+        private final PersonCreatorMaker maker;
 
-        public PersonMapEntryBuilder(Object key, PersonMaker maker) {
+        public PersonMapEntryBuilder(Object key, PersonCreatorMaker maker) {
             this.key = key;
             this.maker = maker;
         }
@@ -749,7 +756,7 @@ public class PersonCreator implements PersonMaker {
 
 // --- Maker ---
 
-interface PersonMaker {
+interface PersonCreatorMaker {
     Person asPerson();
     SpecialPerson asSpecialPerson();
     TextPerson asTextPerson();

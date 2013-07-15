@@ -32,13 +32,6 @@ public class CarCreator implements CarCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String size_ = "size";
-    private static final String name_ = "name";
-    private static final String owner_ = "owner";
-    private static final String color_ = "color";
-
-    // --- Constructors ---
-
     public static CarFactory createCar() {
         return new CarCreator(new CarMutableState()).new CarFactory();
     }

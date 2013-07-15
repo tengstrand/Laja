@@ -30,10 +30,6 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String lengthInCentimeters_ = "lengthInCentimeters";
-
-    // --- Constructors ---
-
     public static VehicleSizeFactory createVehicleSize() {
         return new VehicleSizeCreator(new VehicleSizeMutableState()).new VehicleSizeFactory();
     }
