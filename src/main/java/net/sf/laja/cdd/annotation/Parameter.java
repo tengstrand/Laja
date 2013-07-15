@@ -5,9 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Parameter {
-    public String name();
-    public String next() default "";
+    public String attribute();
+    public String nextAttribute() default "";
     public String method() default "";
-    public String signature() default "";
+    public String methodSignature() default "";
     public String value() default "";
 }

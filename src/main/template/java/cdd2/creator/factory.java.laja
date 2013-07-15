@@ -10,7 +10,7 @@
     #set (retClass = returnClass)
     #set (retStatement = returnStatement)
     #if (parameter.hasNext)
-      #foreach (attr in attributes where attr.name == parameter.next)
+      #foreach (attr in attributes where attr.name == parameter.nextAttribute)
         #set (retClass = "_{attr.nameAsClass}")
         #set (retStatement = "return new {retClass}();")
       #end
@@ -21,10 +21,10 @@
 #end
 
 #macro parameterMethod(returnClass, returnStatement, a)
-  #foreach (parameter in parameters where parameter.name == a.name)
+  #foreach (parameter in parameters where parameter.attribute == a.name)
     #setReturnValues(returnClass, returnStatement)
 
-            public {retClass} {parameter.method}({parameter.signature}) {
+            public {retClass} {parameter.method}({parameter.methodSignature}) {
     #if (!parameter.value.isEmpty)
                 state.{a.name} = {parameter.value};
     #end
@@ -131,10 +131,10 @@
 #end
 
 #macro factoryParameterMethod(returnClass, a)
-  #foreach (parameter in parameters where parameter.name == a.name)
+  #foreach (parameter in parameters where parameter.attribute == a.name)
     #setReturnValues(returnClass, null)
 
-        public {retClass} {parameter.method}({parameter.signature}) {
+        public {retClass} {parameter.method}({parameter.methodSignature}) {
             return new _{a.nameAsClass}().{a.name}({parameter.signatureArguments});
         }
   #end

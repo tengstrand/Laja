@@ -44,14 +44,14 @@ public class PersonCreator implements PersonMaker {
     }
 
     @Parameters({
-            @Parameter(name = id_, signature = "PersonId personId", value = "personId.id"),
-            @Parameter(name = name_, signature = "int givenName, int surname", value = "givenName + \" \" + surname"),
-            @Parameter(name = hairColor_, signature = "HairColor hairColor", value = "hairColor.name()"),
-            @Parameter(name = hairColor_, next = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
-            @Parameter(name = address_, next = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
-            @Parameter(name = address_, method = "defaultAddress", value = "getDefaultAddress()"),
-            @Parameter(name = groupedAddresses_, method = "defaultGroupedAddresses"),
-            @Parameter(name = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
+            @Parameter(attribute = id_, methodSignature = "PersonId personId", value = "personId.id"),
+            @Parameter(attribute = name_, methodSignature = "int givenName, int surname", value = "givenName + \" \" + surname"),
+            @Parameter(attribute = hairColor_, methodSignature = "HairColor hairColor", value = "hairColor.name()"),
+            @Parameter(attribute = hairColor_, nextAttribute = address_, method = "defaultHairColorAndChildren", value = "getDefaultHairColorAndChildren()"),
+            @Parameter(attribute = address_, nextAttribute = "*", method = "defaults", value = "getAddressDefaults(new _ListOfSetOfMapOfIntegers())"),
+            @Parameter(attribute = address_, method = "defaultAddress", value = "getDefaultAddress()"),
+            @Parameter(attribute = groupedAddresses_, method = "defaultGroupedAddresses"),
+            @Parameter(attribute = listOfSetOfMapOfIntegers_, method = "defaultListOfSetOfMapOfIntegers", value = "getDefaultListOfSetOfMapOfIntegers()")
     })
 
     private AddressMutableState getAddressDefaults(_ListOfSetOfMapOfIntegers listOfSetOfMapOfIntegers) {

@@ -37,7 +37,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
     }
 
     @Parameters({
-        @Parameter(name = "color", signature = "CarColor color", value = "color.name()")
+        @Parameter(attribute = "color", methodSignature = "CarColor color", value = "color.name()")
     })
 
     // ===== Generated code =====
@@ -127,11 +127,6 @@ public class TestCarCreator implements TestCarCreatorMaker {
         public class _Color {
             public TestCarCreator color(String color) {
                 state.color = color;
-                return new TestCarCreator(state);
-            }
-
-            public TestCarCreator color(CarColor color) {
-                state.color = color.name();
                 return new TestCarCreator(state);
             }
         }

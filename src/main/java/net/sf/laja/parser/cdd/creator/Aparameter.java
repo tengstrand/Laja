@@ -1,30 +1,30 @@
 package net.sf.laja.parser.cdd.creator;
 
 public class Aparameter implements CreatorParser.IAparameter {
-    public String name;
-    public String next = "";
+    public String attribute;
+    public String nextAttribute = "";
     public String value = "";
     public String method = "";
-    public String signature = "";
+    public String methodSignature = "";
 
     public void addParameterAttr(CreatorParser.IAparameterAttr iaparameterAttr) {
         AparameterAttr attr = (AparameterAttr)iaparameterAttr;
         String value = convertValue(attr.value);
 
         String variable = attr.variable;
-        if (variable.equals("name")) {
-            name = value;
+        if (variable.equals("attribute")) {
+            attribute = value;
             if (method.isEmpty()) {
-                method = name;
+                method = attribute;
             }
-        } else if (variable.equals("next")) {
-            next = value;
+        } else if (variable.equals("nextAttribute")) {
+            nextAttribute = value;
         } else if (variable.equals("value")) {
             this.value = value;
         } else if (variable.equals("method")) {
             method = value;
-        } else if (variable.equals("signature")) {
-            signature = value;
+        } else if (variable.equals("methodSignature")) {
+            methodSignature = value;
         }
     }
 
@@ -43,23 +43,23 @@ public class Aparameter implements CreatorParser.IAparameter {
     }
 
     public boolean isParameterMethod() {
-        return name.equals(method);
+        return attribute.equals(method);
     }
 
     public boolean isLastAttribute() {
-        return next.equals("*");
+        return attribute.equals("*");
     }
 
     public boolean hasNext() {
-        return !next.isEmpty() && !isLastAttribute();
+        return !nextAttribute.isEmpty() && !isLastAttribute();
     }
 
     public boolean useNext() {
-        return next.isEmpty();
+        return nextAttribute.isEmpty();
     }
 
     public String signatureArguments() {
-        String[] values = signature.split("\\s");
+        String[] values = methodSignature.split("\\s");
 
         String result = "";
         String separator = "";
@@ -84,11 +84,11 @@ public class Aparameter implements CreatorParser.IAparameter {
     @Override
     public String toString() {
         return "Aparameter{" +
-                "name='" + name + '\'' +
-                ", next='" + next + '\'' +
+                "attribute='" + attribute + '\'' +
+                ", nextAttribute='" + nextAttribute + '\'' +
                 ", value='" + value + '\'' +
                 ", method='" + method + '\'' +
-                ", signature='" + signature + '\'' +
+                ", methodSignature='" + methodSignature + '\'' +
                 '}';
     }
 }
