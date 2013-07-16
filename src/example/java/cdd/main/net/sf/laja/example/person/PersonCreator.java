@@ -127,6 +127,21 @@ public class PersonCreator implements PersonCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof PersonCreator)) return false;
+
+        return state.equals(((PersonCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "PersonCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class PersonBehaviour {
@@ -221,6 +236,21 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof PersonBuilder)) return false;
+
+            return state.equals(((PersonBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "PersonBuilder" + state;
         }
     }
 

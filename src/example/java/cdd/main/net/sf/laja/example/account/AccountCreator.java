@@ -108,6 +108,21 @@ public class AccountCreator implements AccountCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof AccountCreator)) return false;
+
+        return state.equals(((AccountCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "AccountCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class AccountBehaviour {
@@ -203,6 +218,21 @@ public class AccountCreator implements AccountCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof AccountBuilder)) return false;
+
+            return state.equals(((AccountBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "AccountBuilder" + state;
         }
     }
 

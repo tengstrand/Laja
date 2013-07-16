@@ -113,6 +113,21 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof OwnerCreator)) return false;
+
+        return state.equals(((OwnerCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "OwnerCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class OwnerBehaviour {
@@ -205,6 +220,21 @@ public class OwnerCreator implements OwnerCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof OwnerBuilder)) return false;
+
+            return state.equals(((OwnerBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "OwnerBuilder" + state;
         }
     }
 

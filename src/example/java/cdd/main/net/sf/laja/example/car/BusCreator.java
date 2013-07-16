@@ -124,6 +124,21 @@ public class BusCreator implements BusCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof BusCreator)) return false;
+
+        return state.equals(((BusCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "BusCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class BusBehaviour {
@@ -218,6 +233,21 @@ public class BusCreator implements BusCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof BusBuilder)) return false;
+
+            return state.equals(((BusBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "BusBuilder" + state;
         }
     }
 

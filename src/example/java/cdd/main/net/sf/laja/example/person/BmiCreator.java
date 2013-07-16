@@ -113,6 +113,21 @@ public class BmiCreator implements BmiCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof BmiCreator)) return false;
+
+        return state.equals(((BmiCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "BmiCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class BmiBehaviour {
@@ -205,6 +220,21 @@ public class BmiCreator implements BmiCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof BmiBuilder)) return false;
+
+            return state.equals(((BmiBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "BmiBuilder" + state;
         }
     }
 

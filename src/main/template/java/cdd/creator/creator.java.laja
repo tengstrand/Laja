@@ -226,6 +226,24 @@ import static {import};
 
 #end
 
+#macro hashCodeEqualsToString()
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof {creator})) return false;
+
+        return state.equals((({creator})that).state);
+    }
+
+    @Override public String toString() {
+        return "{creator}" + state;
+    }
+
+#end
+
 #import "{.}/factory.java.laja"
 #import "{.}/behaviour.java.laja"
 #import "{.}/mutableBehaviour.java.laja"
@@ -264,6 +282,7 @@ public class {classname} implements {maker} {
     #assertIsValid()
     #isValid()
     #validate()
+    #hashCodeEqualsToString()
     #behaviour()
     #mutableBehaviour()
     #builder()

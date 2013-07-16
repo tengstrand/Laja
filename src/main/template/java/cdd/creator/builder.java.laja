@@ -48,6 +48,21 @@
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
         }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof {builder})) return false;
+
+            return state.equals((({builder})that).state);
+        }
+
+        @Override public String toString() {
+            return "{builder}" + state;
+        }
     }
 
 #end

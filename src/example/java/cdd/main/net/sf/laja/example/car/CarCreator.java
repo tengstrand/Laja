@@ -145,6 +145,21 @@ public class CarCreator implements CarCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof CarCreator)) return false;
+
+        return state.equals(((CarCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "CarCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class CarBehaviour {
@@ -241,6 +256,21 @@ public class CarCreator implements CarCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof CarBuilder)) return false;
+
+            return state.equals(((CarBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "CarBuilder" + state;
         }
     }
 

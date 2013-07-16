@@ -113,6 +113,21 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof TruckTypeCreator)) return false;
+
+        return state.equals(((TruckTypeCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "TruckTypeCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class TruckTypeBehaviour {
@@ -205,6 +220,21 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof TruckTypeBuilder)) return false;
+
+            return state.equals(((TruckTypeBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "TruckTypeBuilder" + state;
         }
     }
 

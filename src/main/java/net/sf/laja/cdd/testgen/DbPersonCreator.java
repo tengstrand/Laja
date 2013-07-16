@@ -204,6 +204,21 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof DbPersonCreator)) return false;
+
+        return state.equals(((DbPersonCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "DbPersonCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class PersonBehaviour {
@@ -308,6 +323,21 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof PersonBuilder)) return false;
+
+            return state.equals(((PersonBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "PersonBuilder" + state;
         }
     }
 

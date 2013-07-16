@@ -118,6 +118,21 @@ public class AddressCreator implements AddressCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof AddressCreator)) return false;
+
+        return state.equals(((AddressCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "AddressCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class AddressBehaviour {
@@ -225,6 +240,21 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof AddressBuilder)) return false;
+
+            return state.equals(((AddressBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "AddressBuilder" + state;
         }
     }
 

@@ -105,6 +105,21 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof VehicleSizeCreator)) return false;
+
+        return state.equals(((VehicleSizeCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "VehicleSizeCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class VehicleSizeBehaviour {
@@ -196,6 +211,21 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof VehicleSizeBuilder)) return false;
+
+            return state.equals(((VehicleSizeBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "VehicleSizeBuilder" + state;
         }
     }
 
