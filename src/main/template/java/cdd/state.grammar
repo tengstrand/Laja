@@ -36,7 +36,7 @@ grammar state {
    validateMethod = s "private void validate(Object rootElement, String parent, ValidationErrors.Builder errors)" s body;
 
    version = digit+;
-   classStatement = "@State" [s "(" s "version" s "=" s version s ")"] ws public "class" ws name:classname s ["extends" ws name s]
+   classStatement = ["@State" [s "(" s "version" s "=" s version s ")"]] s public "class" ws name:classname s ["extends" ws name s]
                     ["implements" ws name [s "," s name]+ s] "{" s [attribute]+ [manualCode]
                     manualEnd|generatedEnd [!validateMethod:m+ validateMethod] *;
 
