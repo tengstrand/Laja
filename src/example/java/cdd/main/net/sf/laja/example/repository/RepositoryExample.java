@@ -22,7 +22,7 @@ public class RepositoryExample {
 
         // 2. Take the first customer and edit it in the GUI.
         Customer customer = customers.get(0);
-        CustomerInGui customerInGui = new CustomerInGui(customer.s.asMutable());
+        CustomerInGui customerInGui = new CustomerInGui(customer.state.asMutable());
 
         customerInGui.setAge("-1");
         System.out.println("Edit in GUI, is valid: " + customerInGui.isValid());

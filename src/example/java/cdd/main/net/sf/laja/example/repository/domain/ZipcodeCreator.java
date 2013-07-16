@@ -30,10 +30,6 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String zipcode_ = "zipcode";
-
-    // --- Constructors ---
-
     public static ZipcodeFactory createZipcode() {
         return new ZipcodeCreator(new ZipcodeMutableState()).new ZipcodeFactory();
     }
@@ -58,7 +54,7 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeMapEntryBuilder(key, creator);
     }
 
-    public static ZipcodeMapEntryBuilder zipcodeEntry(Object key, ZipcodeBuilder builder) {
+    public static ZipcodeMapEntryBuilder createZipcodeEntry(Object key, ZipcodeBuilder builder) {
         return new ZipcodeMapEntryBuilder(key, builder);
     }
 
@@ -112,54 +108,54 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
     // --- Behaviour ---
 
     public static class ZipcodeBehaviour {
-        public final ZipcodeState s;
+        public final ZipcodeState state;
 
-        public ZipcodeBehaviour(ZipcodeState s) {
-            this.s = s;
+        public ZipcodeBehaviour(ZipcodeState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof ZipcodeBehaviour)) return false;
 
-            return s.equals(((ZipcodeBehaviour)that).s);
+            return state.equals(((ZipcodeBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class ZipcodeMutableBehaviour {
-        private ZipcodeMutableState s;
+        private ZipcodeMutableState state;
 
-        public ZipcodeMutableBehaviour(ZipcodeMutableState s) {
-            this.s = s;
+        public ZipcodeMutableBehaviour(ZipcodeMutableState state) {
+            this.state = state;
         }
 
         public ZipcodeState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof ZipcodeMutableBehaviour)) return false;
 
-            return s.equals(((ZipcodeMutableBehaviour)that).s);
+            return state.equals(((ZipcodeMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

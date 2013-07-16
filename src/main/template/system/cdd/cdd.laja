@@ -136,6 +136,8 @@
     #if (creator != null)
       #set (creator.filename = file)
       #creators.add(creator)
+    #else
+      #println("Could not parse '{file}'.")
     #end
   #end
   #return creators

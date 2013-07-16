@@ -10,6 +10,6 @@ public class CustomerInDb extends CustomerBehaviour {
     }
 
     public void save() {
-        System.out.println("Saved the customer: " + s);
+        System.out.println("Saved the customer: " + state);
     }
 }

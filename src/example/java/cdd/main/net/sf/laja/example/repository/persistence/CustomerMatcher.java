@@ -10,6 +10,6 @@ public class CustomerMatcher extends CustomerBehaviour {
     }
 
     public boolean hasMatchingSurname(String surname) {
-        return s.surname.equals(surname);
+        return state.surname.equals(surname);
     }
 }

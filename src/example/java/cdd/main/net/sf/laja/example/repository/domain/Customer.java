@@ -23,6 +23,6 @@ public class Customer extends CustomerBehaviour {
      * "new CustomerInDb(customer.state).save()" instead of customer.save().
      */
     public void save() {
-        new CustomerInDb(s);
+        new CustomerInDb(state);
     }
 }

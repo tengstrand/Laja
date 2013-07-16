@@ -31,13 +31,6 @@ public class AddressCreator implements AddressCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String addressId_ = "addressId";
-    private static final String streetName_ = "streetName";
-    private static final String zipcode_ = "zipcode";
-    private static final String city_ = "city";
-
-    // --- Constructors ---
-
     public static AddressFactory createAddress() {
         return new AddressCreator(new AddressMutableState()).new AddressFactory();
     }
@@ -62,7 +55,7 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressMapEntryBuilder(key, creator);
     }
 
-    public static AddressMapEntryBuilder addressEntry(Object key, AddressBuilder builder) {
+    public static AddressMapEntryBuilder createAddressEntry(Object key, AddressBuilder builder) {
         return new AddressMapEntryBuilder(key, builder);
     }
 
@@ -142,54 +135,54 @@ public class AddressCreator implements AddressCreatorMaker {
     // --- Behaviour ---
 
     public static class AddressBehaviour {
-        public final AddressState s;
+        public final AddressState state;
 
-        public AddressBehaviour(AddressState s) {
-            this.s = s;
+        public AddressBehaviour(AddressState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof AddressBehaviour)) return false;
 
-            return s.equals(((AddressBehaviour)that).s);
+            return state.equals(((AddressBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class AddressMutableBehaviour {
-        private AddressMutableState s;
+        private AddressMutableState state;
 
-        public AddressMutableBehaviour(AddressMutableState s) {
-            this.s = s;
+        public AddressMutableBehaviour(AddressMutableState state) {
+            this.state = state;
         }
 
         public AddressState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof AddressMutableBehaviour)) return false;
 
-            return s.equals(((AddressMutableBehaviour)that).s);
+            return state.equals(((AddressMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

@@ -48,16 +48,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String ssn_ = "ssn";
-    private static final String givenName_ = "givenName";
-    private static final String surname_ = "surname";
-    private static final String age_ = "age";
-    private static final String pet_ = "pet";
-    private static final String address_ = "address";
-    private static final String oldAddresses_ = "oldAddresses";
-
-    // --- Constructors ---
-
     public static CustomerFactory createCustomer() {
         return new CustomerCreator(new CustomerMutableState()).new CustomerFactory();
     }
@@ -82,7 +72,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerMapEntryBuilder(key, creator);
     }
 
-    public static CustomerMapEntryBuilder customerEntry(Object key, CustomerBuilder builder) {
+    public static CustomerMapEntryBuilder createCustomerEntry(Object key, CustomerBuilder builder) {
         return new CustomerMapEntryBuilder(key, builder);
     }
 
@@ -185,54 +175,54 @@ public class CustomerCreator implements CustomerCreatorMaker {
     // --- Behaviour ---
 
     public static class CustomerBehaviour {
-        public final CustomerState s;
+        public final CustomerState state;
 
-        public CustomerBehaviour(CustomerState s) {
-            this.s = s;
+        public CustomerBehaviour(CustomerState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof CustomerBehaviour)) return false;
 
-            return s.equals(((CustomerBehaviour)that).s);
+            return state.equals(((CustomerBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class CustomerMutableBehaviour {
-        private CustomerMutableState s;
+        private CustomerMutableState state;
 
-        public CustomerMutableBehaviour(CustomerMutableState s) {
-            this.s = s;
+        public CustomerMutableBehaviour(CustomerMutableState state) {
+            this.state = state;
         }
 
         public CustomerState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof CustomerMutableBehaviour)) return false;
 
-            return s.equals(((CustomerMutableBehaviour)that).s);
+            return state.equals(((CustomerMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
