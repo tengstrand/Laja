@@ -209,7 +209,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
             this.state = state;
         }
 
-        public CarState state() {
+        public CarState asState() {
             return state.asImmutable();
         }
 

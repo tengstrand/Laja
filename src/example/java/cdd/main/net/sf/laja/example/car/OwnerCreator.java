@@ -162,7 +162,7 @@ public class OwnerCreator implements OwnerCreatorMaker {
             this.state = state;
         }
 
-        public OwnerState state() {
+        public OwnerState asState() {
             return state.asImmutable();
         }
 

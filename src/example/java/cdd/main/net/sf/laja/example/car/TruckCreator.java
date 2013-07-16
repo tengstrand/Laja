@@ -208,7 +208,7 @@ public class TruckCreator implements TruckCreatorMaker {
             this.state = state;
         }
 
-        public TruckState state() {
+        public TruckState asState() {
             return state.asImmutable();
         }
 

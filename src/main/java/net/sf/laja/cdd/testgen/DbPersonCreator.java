@@ -253,7 +253,7 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
             this.state = state;
         }
 
-        public PersonState state() {
+        public PersonState asState() {
             return state.asImmutable();
         }
 

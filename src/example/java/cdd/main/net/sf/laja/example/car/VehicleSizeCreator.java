@@ -154,7 +154,7 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             this.state = state;
         }
 
-        public VehicleSizeState state() {
+        public VehicleSizeState asState() {
             return state.asImmutable();
         }
 

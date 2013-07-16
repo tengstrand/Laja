@@ -176,7 +176,7 @@ public class PersonCreator implements PersonCreatorMaker {
             this.state = state;
         }
 
-        public PersonState state() {
+        public PersonState asState() {
             return state.asImmutable();
         }
 

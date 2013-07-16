@@ -210,7 +210,7 @@ public class CarCreator implements CarCreatorMaker {
             this.state = state;
         }
 
-        public CarState state() {
+        public CarState asState() {
             return state.asImmutable();
         }
 

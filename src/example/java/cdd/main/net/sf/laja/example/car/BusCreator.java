@@ -185,7 +185,7 @@ public class BusCreator implements BusCreatorMaker {
             this.state = state;
         }
 
-        public BusState state() {
+        public BusState asState() {
             return state.asImmutable();
         }
 

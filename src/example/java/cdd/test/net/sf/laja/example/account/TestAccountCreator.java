@@ -153,7 +153,7 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
             this.state = state;
         }
 
-        public AccountState state() {
+        public AccountState asState() {
             return state.asImmutable();
         }
 

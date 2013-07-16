@@ -167,7 +167,7 @@ public class AddressCreator implements AddressCreatorMaker {
             this.state = state;
         }
 
-        public AddressState state() {
+        public AddressState asState() {
             return state.asImmutable();
         }
 

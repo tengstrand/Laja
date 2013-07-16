@@ -153,7 +153,7 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
             this.state = state;
         }
 
-        public AddressState state() {
+        public AddressState asState() {
             return state.asImmutable();
         }
 

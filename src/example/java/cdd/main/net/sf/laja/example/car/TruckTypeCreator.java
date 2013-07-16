@@ -162,7 +162,7 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
             this.state = state;
         }
 
-        public TruckTypeState state() {
+        public TruckTypeState asState() {
             return state.asImmutable();
         }
 

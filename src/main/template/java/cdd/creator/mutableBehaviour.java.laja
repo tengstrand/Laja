@@ -10,7 +10,7 @@
             this.state = state;
         }
 
-        public {immutableState} state() {
+        public {immutableState} asState() {
             return state.asImmutable();
         }
 

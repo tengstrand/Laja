@@ -157,7 +157,7 @@ public class AccountCreator implements AccountCreatorMaker {
             this.state = state;
         }
 
-        public AccountState state() {
+        public AccountState asState() {
             return state.asImmutable();
         }
 
