@@ -92,8 +92,8 @@
 #end
 
 #macro generateStatesAndCreators()
-  #import "{..}/../java/cdd2/state.java.laja"
-  #import "{..}/../java/cdd2/creator/creator.java.laja"
+  #import "{..}/../java/cdd/state.java.laja"
+  #import "{..}/../java/cdd/creator/creator.java.laja"
 
   #foreach (s in states)
     #set (state = s)
