@@ -135,7 +135,7 @@
     #setReturnValues(returnClass, null)
 
         public {retClass} {parameter.method}({parameter.methodSignature}) {
-            return new _{a.nameAsClass}().{a.name}({parameter.signatureArguments});
+            return new _{a.nameAsClass}().{parameter.method}({parameter.signatureArguments});
         }
   #end
 #end

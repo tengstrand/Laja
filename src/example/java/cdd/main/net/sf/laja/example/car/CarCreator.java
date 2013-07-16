@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.car.state.CarState;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 import static net.sf.laja.example.car.state.CarState.CarMutableState;
 
 @Creator
@@ -29,6 +32,10 @@ public class CarCreator implements CarCreatorMaker {
     public Car asCar() {
         return new Car(state.asImmutable());
     }
+
+    @Parameters({
+        @Parameter(attribute = "size", method = "lengthInCentimeters", methodSignature = "int lengthInCentimeters", value = "createVehicleSize().lengthInCentimeters(lengthInCentimeters).asMutableState()")
+    })
 
     // ===== Generated code =====
 
@@ -72,6 +79,10 @@ public class CarCreator implements CarCreatorMaker {
             return new _Size().size(size);
         }
 
+        public _Name lengthInCentimeters(int lengthInCentimeters) {
+            return new _Size().lengthInCentimeters(lengthInCentimeters);
+        }
+
         // size
         public class _Size {
             public _Name size(VehicleSizeMutableState size) {
@@ -81,6 +92,11 @@ public class CarCreator implements CarCreatorMaker {
 
             public _Name size(VehicleSizeCreator size) {
                 state.size = size.asMutableState();
+                return new _Name();
+            }
+
+            public _Name lengthInCentimeters(int lengthInCentimeters) {
+                state.size = createVehicleSize().lengthInCentimeters(lengthInCentimeters).asMutableState();
                 return new _Name();
             }
         }

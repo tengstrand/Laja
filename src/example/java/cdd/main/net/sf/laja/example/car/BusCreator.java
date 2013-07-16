@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.car.state.BusState;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 import static net.sf.laja.example.car.state.BusState.BusMutableState;
 
 @Creator
@@ -28,6 +31,10 @@ public class BusCreator implements BusCreatorMaker {
     public Bus asBus() {
         return new Bus(state.asImmutable());
     }
+
+    @Parameters({
+        @Parameter(attribute = "size", method = "lengthInCentimeters", methodSignature = "int lengthInCentimeters", value = "createVehicleSize().lengthInCentimeters(lengthInCentimeters).asMutableState()")
+    })
 
     // ===== Generated code =====
 
@@ -84,6 +91,11 @@ public class BusCreator implements BusCreatorMaker {
 
             public BusCreator size(VehicleSizeCreator size) {
                 state.size = size.asMutableState();
+                return new BusCreator(state);
+            }
+
+            public BusCreator lengthInCentimeters(int lengthInCentimeters) {
+                state.size = createVehicleSize().lengthInCentimeters(lengthInCentimeters).asMutableState();
                 return new BusCreator(state);
             }
         }

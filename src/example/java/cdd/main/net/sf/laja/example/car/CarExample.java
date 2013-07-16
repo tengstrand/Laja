@@ -7,7 +7,6 @@ import static net.sf.laja.example.car.CarCreator.createCar;
 import static net.sf.laja.example.car.OwnerCreator.buildOwner;
 import static net.sf.laja.example.car.OwnerCreator.createOwner;
 import static net.sf.laja.example.car.VehicleSizeCreator.buildVehicleSize;
-import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 
 public class CarExample {
 
@@ -26,14 +25,14 @@ public class CarExample {
      */
     public static void main(String... args) {
         // Use the chained constructor to create the car.
-        Car volvo = createCar().size(createVehicleSize().lengthInCentimeters(479)).name("Volvo").owner(createOwner().ssn(197506071234L).name("Bill")).color(RED.name()).asCar();
+        Car volvo = createCar().lengthInCentimeters(479).name("Volvo").owner(createOwner().ssn(197506071234L).name("Bill")).color(RED.name()).asCar();
 
         // Use the builder to create the car.
         Car saab = buildCar().withSize(buildVehicleSize().withLengthInCentimeters(434)).withName("Saab").withColor("Blue").withOwner(
                 buildOwner().withSsn(197707071122L).withName("Bull")).asCar();
 
         // Name and lengthInCentimeters are mandatory, weightInKilograms is optional.
-        Bus bus = createBus().name("Some").size(createVehicleSize().lengthInCentimeters(5100)).withWeightInKilograms(3200).asBus();
+        Bus bus = createBus().name("Some").lengthInCentimeters(5100).withWeightInKilograms(3200).asBus();
 
         System.out.println(volvo);
         System.out.println(saab);
