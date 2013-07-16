@@ -1,6 +1,6 @@
 package net.sf.laja.example.account;
 
-import static net.sf.laja.example.account.state.AccountState.AccountMutableState;
+import static net.sf.laja.example.account.AccountState.AccountMutableState;
 
 public class DestinationAccount extends AccountCreator.AccountMutableBehaviour {
     private final AccountMutableState state;

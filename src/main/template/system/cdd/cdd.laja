@@ -31,6 +31,10 @@
     #findInvalidTypes()
     #if (errors.isEmpty)
       #updateStateAndCreatorReferences()
+      #findCreatorsWithUndefinedParameters()
+    #end
+    #if (errors.isEmpty)
+      #findCreatorsWithUndefinedParameters()
       #generateStatesAndCreators()
       #printResult()
     #else
@@ -48,15 +52,31 @@
     #foreach (attribute in state.attributes)
       #if (!attribute.isValidType)
         #set (unknownTypeFound = true)
-        #errors.add("Unsupported type '{attribute.type}' for attribute '{attribute.name}' in class '{state.classname}', file '{state.filename}'.")
+        #errors.add("Unsupported type '{attribute.type}' for attribute '{attribute.name}' in class '{state.classname}', error in file '{state.filename}'.")
       #end
     #end
   #end
   #if (unknownTypeFound)
-    #set (message = loadClass("net.sf.laja.parser.cdd.Type").typesAsString)
-    #errors.add("Valid types are states (types that ends with 'State') and: {message}.")
+    #set (types = loadClass("net.sf.laja.parser.cdd.Type").typesAsString)
+    #errors.add("Valid types are states (types that ends with 'State') and: {types}.")
   #end
 #endo
+
+#macro findCreatorsWithUndefinedParameters()
+  #foreach (creator in creators)
+    #foreach (parameter in creator.parameters)
+      #set (found = false)
+      #foreach (state in states where state.name == creator.state)
+        #foreach (attribute in state.attributes where attribute.name == parameter.attribute)
+          #set (found = true)
+        #end
+      #end
+      #if (found == false)
+        #errors.add("Could not find @Parameter attribute '{parameter.attribute}' for state '{creator.state}State' in '{creator.classname}', error in file '{creator.filename}'.")
+      #end
+    #end
+  #end
+#end
 
 #macro updateStateAndCreatorReferences()
   #foreach (state in states)

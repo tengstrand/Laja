@@ -1,4 +1,4 @@
-package net.sf.laja.example.account.state;
+package net.sf.laja.example.account;
 
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.State;
