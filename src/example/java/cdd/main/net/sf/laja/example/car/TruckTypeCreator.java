@@ -116,54 +116,54 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
     // --- Behaviour ---
 
     public static class TruckTypeBehaviour {
-        public final TruckTypeState s;
+        public final TruckTypeState state;
 
-        public TruckTypeBehaviour(TruckTypeState s) {
-            this.s = s;
+        public TruckTypeBehaviour(TruckTypeState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof TruckTypeBehaviour)) return false;
 
-            return s.equals(((TruckTypeBehaviour)that).s);
+            return state.equals(((TruckTypeBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class TruckTypeMutableBehaviour {
-        private TruckTypeMutableState s;
+        private TruckTypeMutableState state;
 
-        public TruckTypeMutableBehaviour(TruckTypeMutableState s) {
-            this.s = s;
+        public TruckTypeMutableBehaviour(TruckTypeMutableState state) {
+            this.state = state;
         }
 
         public TruckTypeState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof TruckTypeMutableBehaviour)) return false;
 
-            return s.equals(((TruckTypeMutableBehaviour)that).s);
+            return state.equals(((TruckTypeMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

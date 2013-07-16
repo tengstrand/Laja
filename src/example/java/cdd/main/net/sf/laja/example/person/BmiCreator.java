@@ -116,54 +116,54 @@ public class BmiCreator implements BmiCreatorMaker {
     // --- Behaviour ---
 
     public static class BmiBehaviour {
-        public final BmiState s;
+        public final BmiState state;
 
-        public BmiBehaviour(BmiState s) {
-            this.s = s;
+        public BmiBehaviour(BmiState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof BmiBehaviour)) return false;
 
-            return s.equals(((BmiBehaviour)that).s);
+            return state.equals(((BmiBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class BmiMutableBehaviour {
-        private BmiMutableState s;
+        private BmiMutableState state;
 
-        public BmiMutableBehaviour(BmiMutableState s) {
-            this.s = s;
+        public BmiMutableBehaviour(BmiMutableState state) {
+            this.state = state;
         }
 
         public BmiState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof BmiMutableBehaviour)) return false;
 
-            return s.equals(((BmiMutableBehaviour)that).s);
+            return state.equals(((BmiMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

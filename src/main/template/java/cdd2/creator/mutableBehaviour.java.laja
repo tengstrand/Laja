@@ -1,0 +1,33 @@
+#namespace creator
+
+#macro mutableBehaviour()
+    // --- MutableBehaviour ---
+
+    public static class {mutableBehaviour} {
+        private {mutableState} state;
+
+        public {mutableBehaviour}({mutableState} state) {
+            this.state = state;
+        }
+
+        public {immutableState} state() {
+            return state.asImmutable();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof {mutableBehaviour})) return false;
+
+            return state.equals((({mutableBehaviour})that).state);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public String toString() {
+            return getClass().getSimpleName() + state;
+        }
+    }
+
+#end

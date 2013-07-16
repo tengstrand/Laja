@@ -163,54 +163,54 @@ public class TestCarCreator implements TestCarCreatorMaker {
     // --- Behaviour ---
 
     public static class CarBehaviour {
-        public final CarState s;
+        public final CarState state;
 
-        public CarBehaviour(CarState s) {
-            this.s = s;
+        public CarBehaviour(CarState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof CarBehaviour)) return false;
 
-            return s.equals(((CarBehaviour)that).s);
+            return state.equals(((CarBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class CarMutableBehaviour {
-        private CarMutableState s;
+        private CarMutableState state;
 
-        public CarMutableBehaviour(CarMutableState s) {
-            this.s = s;
+        public CarMutableBehaviour(CarMutableState state) {
+            this.state = state;
         }
 
         public CarState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof CarMutableBehaviour)) return false;
 
-            return s.equals(((CarMutableBehaviour)that).s);
+            return state.equals(((CarMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

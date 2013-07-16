@@ -9,13 +9,13 @@ import org.joda.time.Period;
 public class Person extends PersonCreator.PersonBehaviour {
     private final HairColor hairColor;
 
-    public Person(PersonState s) {
-        super(s);
-        hairColor = HairColor.valueOf(s.hairColor);
+    public Person(PersonState state) {
+        super(state);
+        hairColor = HairColor.valueOf(state.hairColor);
     }
 
     public Person withName(String name) {
-        return new Person(s.withName(name));
+        return new Person(state.withName(name));
     }
 
     public boolean isRedHaired() {
@@ -23,15 +23,15 @@ public class Person extends PersonCreator.PersonBehaviour {
     }
 
     public boolean hasLongName() {
-        return s.name.length() > 8;
+        return state.name.length() > 8;
     }
 
     public boolean isFromUppsala() {
-        return new RegularAddress(s.address).isFromUppsala();
+        return new RegularAddress(state.address).isFromUppsala();
     }
 
     public boolean isTeenager() {
-        int years = new Period(s.birthday, new DateMidnight()).getYears();
+        int years = new Period(state.birthday, new DateMidnight()).getYears();
         return years >= 13 && years <= 19;
     }
 }

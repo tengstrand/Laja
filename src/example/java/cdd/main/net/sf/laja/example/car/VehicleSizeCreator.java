@@ -108,54 +108,54 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
     // --- Behaviour ---
 
     public static class VehicleSizeBehaviour {
-        public final VehicleSizeState s;
+        public final VehicleSizeState state;
 
-        public VehicleSizeBehaviour(VehicleSizeState s) {
-            this.s = s;
+        public VehicleSizeBehaviour(VehicleSizeState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof VehicleSizeBehaviour)) return false;
 
-            return s.equals(((VehicleSizeBehaviour)that).s);
+            return state.equals(((VehicleSizeBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class VehicleSizeMutableBehaviour {
-        private VehicleSizeMutableState s;
+        private VehicleSizeMutableState state;
 
-        public VehicleSizeMutableBehaviour(VehicleSizeMutableState s) {
-            this.s = s;
+        public VehicleSizeMutableBehaviour(VehicleSizeMutableState state) {
+            this.state = state;
         }
 
         public VehicleSizeState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof VehicleSizeMutableBehaviour)) return false;
 
-            return s.equals(((VehicleSizeMutableBehaviour)that).s);
+            return state.equals(((VehicleSizeMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

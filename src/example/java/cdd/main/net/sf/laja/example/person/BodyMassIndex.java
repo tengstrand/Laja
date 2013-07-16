@@ -16,8 +16,8 @@ public class BodyMassIndex extends BmiBehaviour{
      * @return BMI with one decimal.
      */
     public double calculateBmi() {
-        double heightInMeter = s.heightInCentimeters / 100.0;
-        double bmi = s.weightInKilograms / (heightInMeter * heightInMeter);
+        double heightInMeter = state.heightInCentimeters / 100.0;
+        double bmi = state.weightInKilograms / (heightInMeter * heightInMeter);
         return new BigDecimal(bmi).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
     }
 

@@ -130,54 +130,54 @@ public class PersonCreator implements PersonCreatorMaker {
     // --- Behaviour ---
 
     public static class PersonBehaviour {
-        public final PersonState s;
+        public final PersonState state;
 
-        public PersonBehaviour(PersonState s) {
-            this.s = s;
+        public PersonBehaviour(PersonState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof PersonBehaviour)) return false;
 
-            return s.equals(((PersonBehaviour)that).s);
+            return state.equals(((PersonBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class PersonMutableBehaviour {
-        private PersonMutableState s;
+        private PersonMutableState state;
 
-        public PersonMutableBehaviour(PersonMutableState s) {
-            this.s = s;
+        public PersonMutableBehaviour(PersonMutableState state) {
+            this.state = state;
         }
 
         public PersonState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof PersonMutableBehaviour)) return false;
 
-            return s.equals(((PersonMutableBehaviour)that).s);
+            return state.equals(((PersonMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

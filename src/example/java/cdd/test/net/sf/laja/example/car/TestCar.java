@@ -8,6 +8,6 @@ public class TestCar extends TestCarCreator.CarBehaviour {
     }
 
     public Car asCar(VehicleSize size) {
-        return new Car(s, size);
+        return new Car(state, size);
     }
 }

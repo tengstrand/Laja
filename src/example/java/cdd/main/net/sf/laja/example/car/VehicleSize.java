@@ -8,11 +8,11 @@ public class VehicleSize extends VehicleSizeCreator.VehicleSizeBehaviour {
     }
 
     public boolean isSmall() {
-        return s.getLengthInCentimeters() < 300;
+        return state.getLengthInCentimeters() < 300;
     }
 
     public boolean isBig() {
-        return s.getLengthInCentimeters() >= 400;
+        return state.getLengthInCentimeters() >= 400;
     }
 
     public boolean isNormalSize() {

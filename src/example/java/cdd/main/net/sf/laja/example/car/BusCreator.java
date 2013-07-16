@@ -127,54 +127,54 @@ public class BusCreator implements BusCreatorMaker {
     // --- Behaviour ---
 
     public static class BusBehaviour {
-        public final BusState s;
+        public final BusState state;
 
-        public BusBehaviour(BusState s) {
-            this.s = s;
+        public BusBehaviour(BusState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof BusBehaviour)) return false;
 
-            return s.equals(((BusBehaviour)that).s);
+            return state.equals(((BusBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class BusMutableBehaviour {
-        private BusMutableState s;
+        private BusMutableState state;
 
-        public BusMutableBehaviour(BusMutableState s) {
-            this.s = s;
+        public BusMutableBehaviour(BusMutableState state) {
+            this.state = state;
         }
 
         public BusState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof BusMutableBehaviour)) return false;
 
-            return s.equals(((BusMutableBehaviour)that).s);
+            return state.equals(((BusMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

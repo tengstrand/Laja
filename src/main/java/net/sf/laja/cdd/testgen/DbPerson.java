@@ -6,12 +6,12 @@ import net.sf.laja.cdd.state.PersonState;
 @Behaviour
 public class DbPerson extends PersonCreator.PersonBehaviour {
 
-    public DbPerson(PersonState s) {
-        super(s);
+    public DbPerson(PersonState state) {
+        super(state);
     }
 
     public String getInsertStatement() {
         // Use prepared statements...
-        return "insert into person (name, birthday, address) values('" + s.name + "', ...)";
+        return "insert into person (name, birthday, address) values('" + state.name + "', ...)";
     }
 }

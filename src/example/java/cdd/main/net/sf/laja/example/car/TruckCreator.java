@@ -162,54 +162,54 @@ public class TruckCreator implements TruckCreatorMaker {
     // --- Behaviour ---
 
     public static class TruckBehaviour {
-        public final TruckState s;
+        public final TruckState state;
 
-        public TruckBehaviour(TruckState s) {
-            this.s = s;
+        public TruckBehaviour(TruckState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof TruckBehaviour)) return false;
 
-            return s.equals(((TruckBehaviour)that).s);
+            return state.equals(((TruckBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class TruckMutableBehaviour {
-        private TruckMutableState s;
+        private TruckMutableState state;
 
-        public TruckMutableBehaviour(TruckMutableState s) {
-            this.s = s;
+        public TruckMutableBehaviour(TruckMutableState state) {
+            this.state = state;
         }
 
         public TruckState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof TruckMutableBehaviour)) return false;
 
-            return s.equals(((TruckMutableBehaviour)that).s);
+            return state.equals(((TruckMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 

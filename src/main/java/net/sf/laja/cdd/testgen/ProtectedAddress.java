@@ -6,8 +6,8 @@ import static net.sf.laja.cdd.testgen.AddressCreator.AddressBehaviour;
 
 public class ProtectedAddress extends AddressBehaviour implements Address {
 
-    public ProtectedAddress(AddressState s) {
-        super(s);
+    public ProtectedAddress(AddressState state) {
+        super(state);
     }
 
     public boolean isFromUppsala() {
@@ -17,6 +17,6 @@ public class ProtectedAddress extends AddressBehaviour implements Address {
     public static class ProtectedAddressException extends RuntimeException { }
 
     @Override public String toString() {
-        return "ProtectedAddress" + s.withCity("?").withStreetName("?");
+        return "ProtectedAddress" + state.withCity("?").withStreetName("?");
     }
 }

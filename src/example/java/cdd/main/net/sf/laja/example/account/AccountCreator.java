@@ -111,54 +111,54 @@ public class AccountCreator implements AccountCreatorMaker {
     // --- Behaviour ---
 
     public static class AccountBehaviour {
-        public final AccountState s;
+        public final AccountState state;
 
-        public AccountBehaviour(AccountState s) {
-            this.s = s;
+        public AccountBehaviour(AccountState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof AccountBehaviour)) return false;
 
-            return s.equals(((AccountBehaviour)that).s);
+            return state.equals(((AccountBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class AccountMutableBehaviour {
-        private AccountMutableState s;
+        private AccountMutableState state;
 
-        public AccountMutableBehaviour(AccountMutableState s) {
-            this.s = s;
+        public AccountMutableBehaviour(AccountMutableState state) {
+            this.state = state;
         }
 
         public AccountState state() {
-            return s.asImmutable();
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof AccountMutableBehaviour)) return false;
 
-            return s.equals(((AccountMutableBehaviour)that).s);
+            return state.equals(((AccountMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
