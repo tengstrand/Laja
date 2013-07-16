@@ -415,7 +415,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
         // classStatement =
         //   [annotation ws] public "class" ws name:classname [s "implements" s name [s "," s name]+] s "{" s
-        //   keywords s name:stateClass s "state;" [asMethod|aparameters]+
+        //   keywords s [name s "." s] name:stateClass s "state;" [asMethod|aparameters]+
         Optional classStatement_1 = new Optional(273, "classStatement_1");
         classStatement_1.add(274, annotation);
         classStatement_1.add(275, ws);
@@ -443,42 +443,48 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(301, s);
         classStatement.add(302, keywords);
         classStatement.add(303, s);
-        classStatement.add(304, name, classStatementClassStatementStateClass);
-        classStatement.add(305, s);
-        classStatement.add(307, new Str(306, "state;"));
-        Optional classStatement_3 = new Optional(308, "classStatement_3");
-        Repeat classStatement_3_1 = new Repeat(309, "classStatement_3_1");
-        OrList classStatement_3_1_1 = new OrList(310, "classStatement_3_1_1");
-        classStatement_3_1_1.add(311, asMethod, classStatementClassStatementAsMethod);
-        classStatement_3_1_1.add(312, aparameters, classStatementClassStatementAparameters);
-        classStatement_3_1.add(313, classStatement_3_1_1);
-        classStatement_3.add(314, classStatement_3_1);
-        classStatement.add(315, classStatement_3);
+        Optional classStatement_3 = new Optional(304, "classStatement_3");
+        classStatement_3.add(305, name);
+        classStatement_3.add(306, s);
+        classStatement_3.add(308, new Str(307, "."));
+        classStatement_3.add(309, s);
+        classStatement.add(310, classStatement_3);
+        classStatement.add(311, name, classStatementClassStatementStateClass);
+        classStatement.add(312, s);
+        classStatement.add(314, new Str(313, "state;"));
+        Optional classStatement_4 = new Optional(315, "classStatement_4");
+        Repeat classStatement_4_1 = new Repeat(316, "classStatement_4_1");
+        OrList classStatement_4_1_1 = new OrList(317, "classStatement_4_1_1");
+        classStatement_4_1_1.add(318, asMethod, classStatementClassStatementAsMethod);
+        classStatement_4_1_1.add(319, aparameters, classStatementClassStatementAparameters);
+        classStatement_4_1.add(320, classStatement_4_1_1);
+        classStatement_4.add(321, classStatement_4_1);
+        classStatement.add(322, classStatement_4);
 
         // manualEnd = ("}" s END)
-        manualEnd.add(317, new Str(316, "}"));
-        manualEnd.add(318, s);
-        manualEnd.add(320, new End(319, "manualEnd"));
+        manualEnd.add(324, new Str(323, "}"));
+        manualEnd.add(325, s);
+        manualEnd.add(327, new End(326, "manualEnd"));
 
         // generatedCode = "// ===== Generated code ====="
 
         // manualCode = !(manualEnd | generatedCode)+
-        OrList manualCode_1 = new OrList(321, "manualCode_1");
-        manualCode_1.add(322, manualEnd);
-        manualCode_1.add(323, generatedCode);
-        manualCode.add(324, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(328, "manualCode_1");
+        manualCode_1.add(329, manualEnd);
+        manualCode_1.add(330, generatedCode);
+        manualCode.add(331, manualCode_1, NOT);
 
         // creator = packageStatement s imports s classStatement manualCode [generatedCode] *
-        creator.add(325, packageStatement, creatorCreatorPackageStatement);
-        creator.add(326, s);
-        creator.add(327, imports, creatorCreatorImports);
-        creator.add(328, s);
-        creator.add(329, classStatement, creatorCreatorClassStatement);
-        creator.add(330, manualCode, creatorCreatorManualCode);
-        Optional creator_1 = new Optional(331, "creator_1");
-        creator_1.add(332, generatedCode, creatorCreatorGeneratedCode);
-        creator.add(333, creator_1);
-        creator.add(335, new Complete(334, "creator"));
+        creator.add(332, packageStatement, creatorCreatorPackageStatement);
+        creator.add(333, s);
+        creator.add(334, imports, creatorCreatorImports);
+        creator.add(335, s);
+        creator.add(336, classStatement, creatorCreatorClassStatement);
+        creator.add(337, manualCode, creatorCreatorManualCode);
+        Optional creator_1 = new Optional(338, "creator_1");
+        creator_1.add(339, generatedCode, creatorCreatorGeneratedCode);
+        creator.add(340, creator_1);
+        creator.add(342, new Complete(341, "creator"));
 
         return new TopElement(data2, creator);
     }
@@ -763,7 +769,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
 
         // classStatement =
         //   [annotation ws] public "class" ws name:classname [s "implements" s name [s "," s name]+] s "{" s
-        //   keywords s name:stateClass s "state;" [asMethod|aparameters]+
+        //   keywords s [name s "." s] name:stateClass s "state;" [asMethod|aparameters]+
         Optional classStatement_1 = new Optional(273, "classStatement_1");
         classStatement_1.add(274, annotation);
         classStatement_1.add(275, ws);
@@ -791,42 +797,48 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         classStatement.add(301, s);
         classStatement.add(302, keywords);
         classStatement.add(303, s);
-        classStatement.add(304, name);
-        classStatement.add(305, s);
-        classStatement.add(307, new Str(306, "state;"));
-        Optional classStatement_3 = new Optional(308, "classStatement_3");
-        Repeat classStatement_3_1 = new Repeat(309, "classStatement_3_1");
-        OrList classStatement_3_1_1 = new OrList(310, "classStatement_3_1_1");
-        classStatement_3_1_1.add(311, asMethod);
-        classStatement_3_1_1.add(312, aparameters);
-        classStatement_3_1.add(313, classStatement_3_1_1);
-        classStatement_3.add(314, classStatement_3_1);
-        classStatement.add(315, classStatement_3);
+        Optional classStatement_3 = new Optional(304, "classStatement_3");
+        classStatement_3.add(305, name);
+        classStatement_3.add(306, s);
+        classStatement_3.add(308, new Str(307, "."));
+        classStatement_3.add(309, s);
+        classStatement.add(310, classStatement_3);
+        classStatement.add(311, name);
+        classStatement.add(312, s);
+        classStatement.add(314, new Str(313, "state;"));
+        Optional classStatement_4 = new Optional(315, "classStatement_4");
+        Repeat classStatement_4_1 = new Repeat(316, "classStatement_4_1");
+        OrList classStatement_4_1_1 = new OrList(317, "classStatement_4_1_1");
+        classStatement_4_1_1.add(318, asMethod);
+        classStatement_4_1_1.add(319, aparameters);
+        classStatement_4_1.add(320, classStatement_4_1_1);
+        classStatement_4.add(321, classStatement_4_1);
+        classStatement.add(322, classStatement_4);
 
         // manualEnd = ("}" s END)
-        manualEnd.add(317, new Str(316, "}"));
-        manualEnd.add(318, s);
-        manualEnd.add(320, new End(319, "manualEnd"));
+        manualEnd.add(324, new Str(323, "}"));
+        manualEnd.add(325, s);
+        manualEnd.add(327, new End(326, "manualEnd"));
 
         // generatedCode = "// ===== Generated code ====="
 
         // manualCode = !(manualEnd | generatedCode)+
-        OrList manualCode_1 = new OrList(321, "manualCode_1");
-        manualCode_1.add(322, manualEnd);
-        manualCode_1.add(323, generatedCode);
-        manualCode.add(324, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(328, "manualCode_1");
+        manualCode_1.add(329, manualEnd);
+        manualCode_1.add(330, generatedCode);
+        manualCode.add(331, manualCode_1, NOT);
 
         // creator = packageStatement s imports s classStatement manualCode [generatedCode] *
-        creator.add(325, packageStatement);
-        creator.add(326, s);
-        creator.add(327, imports);
-        creator.add(328, s);
-        creator.add(329, classStatement);
-        creator.add(330, manualCode);
-        Optional creator_1 = new Optional(331, "creator_1");
-        creator_1.add(332, generatedCode);
-        creator.add(333, creator_1);
-        creator.add(335, new Complete(334, "creator"));
+        creator.add(332, packageStatement);
+        creator.add(333, s);
+        creator.add(334, imports);
+        creator.add(335, s);
+        creator.add(336, classStatement);
+        creator.add(337, manualCode);
+        Optional creator_1 = new Optional(338, "creator_1");
+        creator_1.add(339, generatedCode);
+        creator.add(340, creator_1);
+        creator.add(342, new Complete(341, "creator"));
 
         return new TopElement(data1, creator);
     }

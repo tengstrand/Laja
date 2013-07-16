@@ -31,7 +31,7 @@ grammar creator {
    keywords = ["private"|"public"|"static"|"final" s]+;
    annotation = "@Creator" [s "(" ["main":main] s ")"];
    classStatement = [annotation ws] public "class" ws name:classname [s "implements" s name [s "," s name]+] s "{" s
-                    keywords s name:stateClass s "state;" [asMethod|aparameters]+;
+                    keywords s [name s "." s] name:stateClass s "state;" [asMethod|aparameters]+;
 
    manualEnd = ("}" s END);
    generatedCode = "// ===== Generated code =====";
