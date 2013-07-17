@@ -40,6 +40,18 @@ public class CreatorFactory implements CreatorParser.ICreatorFactory {
         return new ClassStatement();
     }
 
+    public CreatorParser.IParameterArgClass createParameterArgClass() {
+        return new ParameterArgClass();
+    }
+
+    public CreatorParser.IParameterClass createParameterClass() {
+        return new ParameterClass();
+    }
+
+    public CreatorParser.IParameterClasses createParameterClasses() {
+        return new ParameterClasses();
+    }
+
     public CreatorParser.ICreator createCreator() {
         return creator = new Creator();
     }

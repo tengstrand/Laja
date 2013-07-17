@@ -37,7 +37,12 @@ grammar creator {
    generatedCode = "// ===== Generated code =====";
    manualCode = !(manualEnd | generatedCode)+;
 
-   creator = packageStatement s imports s classStatement manualCode [generatedCode] *;
+   parameterArgClass = ["// add":add s] "public " name " " name:method "(" s parameters s ")" s "{" s
+                       "state." name " = " (!";"+):value ";" [!"}"+] "}" s;
+
+   parameterClass = "// " name:attribute s "public class " name " {" s parameterArgClass+ "}";
+
+   creator = packageStatement s imports s classStatement manualCode [generatedCode [!parameterClass+ parameterClass:pclass]+] *;
 
    PackageStatement packageStatement.setPackagename(String packagename);
    packageStatement.setContent(String *);
@@ -66,10 +71,21 @@ grammar creator {
    classStatement.addAsMethod(AsMethod asMethod);
    classStatement.setAParameters(Aparameters aparameters);
 
+   ParameterArgClass parameterArgClass.setAdd(void add);
+   parameterArgClass.setMethod(String method);
+   parameterArgClass.setMethodSignature(String parameters);
+   parameterArgClass.setValue(String value);
+
+   ParameterClass parameterClass.setAttribute(String attribute);
+   parameterClass.addArgument(ParameterArgClass parameterArgClass);
+
+   ParameterClasses parameterClasses;
+
    Creator creator.setPackageStatement(PackageStatement packageStatement);
    creator.setImports(String imports);
    creator.setClassStatement(ClassStatement classStatement);
    creator.setManualCode(String manualCode);
    creator.setGeneratedCode(void generatedCode);
    creator.setIsMainCreator(void annotation.main);
+   creator.addParameterClass(ParameterClass pclass);
 }

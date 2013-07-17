@@ -14,6 +14,7 @@
   #set (parameters = creator.parameters)
   #set (isGeneratedCode = creator.isGeneratedCode)
   #set (state = creator.state)
+  #set (parameterClasses = creator.parameterClasses)
   #set (immutableState = "{state}State")
   #set (mutableState = "{state}MutableState")
   #set (manualCode = creator.manualCode)
@@ -42,6 +43,7 @@
     #end
   #end
   #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
+  #println("# parameterClasses = {parameterClasses}")
 #end
 
 #macro imports()

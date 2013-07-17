@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-07-16 by Laja:
+ * Auto generated 2013-07-17 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -132,11 +132,19 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         Data.ClassStatementClassStatementStateClass classStatementClassStatementStateClass = data2.new ClassStatementClassStatementStateClass("classStatementClassStatementStateClass");
         Data.ClassStatementClassStatementAsMethod classStatementClassStatementAsMethod = data2.new ClassStatementClassStatementAsMethod("classStatementClassStatementAsMethod");
         Data.ClassStatementClassStatementAparameters classStatementClassStatementAparameters = data2.new ClassStatementClassStatementAparameters("classStatementClassStatementAparameters");
+        Data.ParameterArgClassParameterArgClassAdd parameterArgClassParameterArgClassAdd = data2.new ParameterArgClassParameterArgClassAdd("parameterArgClassParameterArgClassAdd");
+        Data.ParameterArgClassParameterArgClassMethod parameterArgClassParameterArgClassMethod = data2.new ParameterArgClassParameterArgClassMethod("parameterArgClassParameterArgClassMethod");
+        Data.ParameterArgClassParameterArgClassParameters parameterArgClassParameterArgClassParameters = data2.new ParameterArgClassParameterArgClassParameters("parameterArgClassParameterArgClassParameters");
+        Data.ParameterArgClassParameterArgClassValue parameterArgClassParameterArgClassValue = data2.new ParameterArgClassParameterArgClassValue("parameterArgClassParameterArgClassValue");
+        Data.ParameterClassParameterClassAttribute parameterClassParameterClassAttribute = data2.new ParameterClassParameterClassAttribute("parameterClassParameterClassAttribute");
+        Data.ParameterClassParameterClassParameterArgClass parameterClassParameterClassParameterArgClass = data2.new ParameterClassParameterClassParameterArgClass("parameterClassParameterClassParameterArgClass");
         Data.CreatorCreatorPackageStatement creatorCreatorPackageStatement = data2.new CreatorCreatorPackageStatement("creatorCreatorPackageStatement");
         Data.CreatorCreatorImports creatorCreatorImports = data2.new CreatorCreatorImports("creatorCreatorImports");
         Data.CreatorCreatorClassStatement creatorCreatorClassStatement = data2.new CreatorCreatorClassStatement("creatorCreatorClassStatement");
         Data.CreatorCreatorManualCode creatorCreatorManualCode = data2.new CreatorCreatorManualCode("creatorCreatorManualCode");
         Data.CreatorCreatorGeneratedCode creatorCreatorGeneratedCode = data2.new CreatorCreatorGeneratedCode("creatorCreatorGeneratedCode");
+        Data.CreatorCreatorPclass creatorCreatorPclass = data2.new CreatorCreatorPclass("creatorCreatorPclass");
+        Data.CreatorCreatorParameterClass creatorCreatorParameterClass = data2.new CreatorCreatorParameterClass("creatorCreatorParameterClass");
 
         // *** Declarations ***
         OrList newline = new OrList(1, "newline");
@@ -167,324 +175,381 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList manualEnd = new ElementList(26, "manualEnd");
         Str generatedCode = new Str(27, "// ===== Generated code =====");
         Repeat manualCode = new Repeat(28, "manualCode");
-        ElementList creator = new ElementList(29, "creator");
+        ElementList parameterArgClass = new ElementList(29, "parameterArgClass");
+        ElementList parameterClass = new ElementList(30, "parameterClass");
+        ElementList creator = new ElementList(31, "creator");
 
         // *** Statements ***
 
         // newline = "\r\n" | "\n"
-        newline.add(31, new Str(30, "\r\n"));
-        newline.add(33, new Str(32, "\n"));
+        newline.add(33, new Str(32, "\r\n"));
+        newline.add(35, new Str(34, "\n"));
 
         // comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END)
-        ElementList comment_1 = new ElementList(34, "comment_1");
-        comment_1.add(36, new Str(35, "/*"));
-        Optional comment_1_1 = new Optional(37, "comment_1_1");
-        Repeat comment_1_1_1 = new Repeat(38, "comment_1_1_1");
-        OrList comment_1_1_1_1 = new OrList(39, "comment_1_1_1_1");
-        comment_1_1_1_1.add(40, comment);
-        comment_1_1_1_1.add(42, new Str(41, "*/", NOT));
-        comment_1_1_1.add(43, comment_1_1_1_1);
-        comment_1_1.add(44, comment_1_1_1);
-        comment_1.add(45, comment_1_1);
-        comment_1.add(47, new Str(46, "*/"));
-        comment.add(48, comment_1);
-        ElementList comment_2 = new ElementList(49, "comment_2");
-        comment_2.add(51, new Str(50, "//"));
-        Optional comment_2_1 = new Optional(52, "comment_2_1");
-        Repeat comment_2_1_1 = new Repeat(53, "comment_2_1_1");
-        comment_2_1_1.add(54, newline, NOT);
-        comment_2_1.add(55, comment_2_1_1);
-        comment_2.add(56, comment_2_1);
-        OrList comment_2_2 = new OrList(57, "comment_2_2");
-        comment_2_2.add(58, newline);
-        comment_2_2.add(60, new End(59, "comment_2_2"));
-        comment_2.add(61, comment_2_2);
-        comment.add(62, comment_2);
+        ElementList comment_1 = new ElementList(36, "comment_1");
+        comment_1.add(38, new Str(37, "/*"));
+        Optional comment_1_1 = new Optional(39, "comment_1_1");
+        Repeat comment_1_1_1 = new Repeat(40, "comment_1_1_1");
+        OrList comment_1_1_1_1 = new OrList(41, "comment_1_1_1_1");
+        comment_1_1_1_1.add(42, comment);
+        comment_1_1_1_1.add(44, new Str(43, "*/", NOT));
+        comment_1_1_1.add(45, comment_1_1_1_1);
+        comment_1_1.add(46, comment_1_1_1);
+        comment_1.add(47, comment_1_1);
+        comment_1.add(49, new Str(48, "*/"));
+        comment.add(50, comment_1);
+        ElementList comment_2 = new ElementList(51, "comment_2");
+        comment_2.add(53, new Str(52, "//"));
+        Optional comment_2_1 = new Optional(54, "comment_2_1");
+        Repeat comment_2_1_1 = new Repeat(55, "comment_2_1_1");
+        comment_2_1_1.add(56, newline, NOT);
+        comment_2_1.add(57, comment_2_1_1);
+        comment_2.add(58, comment_2_1);
+        OrList comment_2_2 = new OrList(59, "comment_2_2");
+        comment_2_2.add(60, newline);
+        comment_2_2.add(62, new End(61, "comment_2_2"));
+        comment_2.add(63, comment_2_2);
+        comment.add(64, comment_2);
 
         // ws = (newline | " " | "\t" | comment)+
-        OrList ws_1 = new OrList(63, "ws_1");
-        ws_1.add(64, newline);
-        ws_1.add(66, new Str(65, " "));
-        ws_1.add(68, new Str(67, "\t"));
-        ws_1.add(69, comment);
-        ws.add(70, ws_1);
+        OrList ws_1 = new OrList(65, "ws_1");
+        ws_1.add(66, newline);
+        ws_1.add(68, new Str(67, " "));
+        ws_1.add(70, new Str(69, "\t"));
+        ws_1.add(71, comment);
+        ws.add(72, ws_1);
 
         // s = [ws]
-        s.add(71, ws);
+        s.add(73, ws);
 
         // ff = "\""
 
         // str = ff (("\\\"" | !(ff|newline))+):strval ff
-        str.add(72, ff);
-        Repeat str_1 = new Repeat(73, "str_1");
-        OrList str_1_1 = new OrList(74, "str_1_1");
-        str_1_1.add(76, new Str(75, "\\\""));
-        OrList str_1_1_1 = new OrList(77, "str_1_1_1", NOT);
-        str_1_1_1.add(78, ff);
-        str_1_1_1.add(79, newline);
-        str_1_1.add(80, str_1_1_1);
-        str_1.add(81, str_1_1);
-        str.add(82, str_1);
-        str.add(83, ff);
+        str.add(74, ff);
+        Repeat str_1 = new Repeat(75, "str_1");
+        OrList str_1_1 = new OrList(76, "str_1_1");
+        str_1_1.add(78, new Str(77, "\\\""));
+        OrList str_1_1_1 = new OrList(79, "str_1_1_1", NOT);
+        str_1_1_1.add(80, ff);
+        str_1_1_1.add(81, newline);
+        str_1_1.add(82, str_1_1_1);
+        str_1.add(83, str_1_1);
+        str.add(84, str_1);
+        str.add(85, ff);
 
         // letter = "a".."z" | "A".."Z" | "_" | "$"
-        letter.add(85, new Range(84, "letter", "a", "z"));
-        letter.add(87, new Range(86, "letter", "A", "Z"));
-        letter.add(89, new Str(88, "_"));
-        letter.add(91, new Str(90, "$"));
+        letter.add(87, new Range(86, "letter", "a", "z"));
+        letter.add(89, new Range(88, "letter", "A", "Z"));
+        letter.add(91, new Str(90, "_"));
+        letter.add(93, new Str(92, "$"));
 
         // digit = "0".."9"
 
         // name = letter [letter | digit]+
-        name.add(92, letter);
-        Optional name_1 = new Optional(93, "name_1");
-        Repeat name_1_1 = new Repeat(94, "name_1_1");
-        OrList name_1_1_1 = new OrList(95, "name_1_1_1");
-        name_1_1_1.add(96, letter);
-        name_1_1_1.add(97, digit);
-        name_1_1.add(98, name_1_1_1);
-        name_1.add(99, name_1_1);
-        name.add(100, name_1);
+        name.add(94, letter);
+        Optional name_1 = new Optional(95, "name_1");
+        Repeat name_1_1 = new Repeat(96, "name_1_1");
+        OrList name_1_1_1 = new OrList(97, "name_1_1_1");
+        name_1_1_1.add(98, letter);
+        name_1_1_1.add(99, digit);
+        name_1_1.add(100, name_1_1_1);
+        name_1.add(101, name_1_1);
+        name.add(102, name_1);
 
         // public = ["public" ws]
-        _public.add(102, new Str(101, "public"));
-        _public.add(103, ws);
+        _public.add(104, new Str(103, "public"));
+        _public.add(105, ws);
 
         // packagename = name ["." name|"*"]+
-        packagename.add(104, name);
-        Optional packagename_1 = new Optional(105, "packagename_1");
-        Repeat packagename_1_1 = new Repeat(106, "packagename_1_1");
-        packagename_1_1.add(108, new Str(107, "."));
-        OrList packagename_1_1_1 = new OrList(109, "packagename_1_1_1");
-        packagename_1_1_1.add(110, name);
-        packagename_1_1_1.add(112, new Str(111, "*"));
-        packagename_1_1.add(113, packagename_1_1_1);
-        packagename_1.add(114, packagename_1_1);
-        packagename.add(115, packagename_1);
+        packagename.add(106, name);
+        Optional packagename_1 = new Optional(107, "packagename_1");
+        Repeat packagename_1_1 = new Repeat(108, "packagename_1_1");
+        packagename_1_1.add(110, new Str(109, "."));
+        OrList packagename_1_1_1 = new OrList(111, "packagename_1_1_1");
+        packagename_1_1_1.add(112, name);
+        packagename_1_1_1.add(114, new Str(113, "*"));
+        packagename_1_1.add(115, packagename_1_1_1);
+        packagename_1.add(116, packagename_1_1);
+        packagename.add(117, packagename_1);
 
         // packageStatement = "package" ws packagename s ";"
-        packageStatement.add(117, new Str(116, "package"));
-        packageStatement.add(118, ws);
-        packageStatement.add(119, packagename, packageStatementPackageStatementPackagename);
-        packageStatement.add(120, s);
-        packageStatement.add(122, new Str(121, ";"));
+        packageStatement.add(119, new Str(118, "package"));
+        packageStatement.add(120, ws);
+        packageStatement.add(121, packagename, packageStatementPackageStatementPackagename);
+        packageStatement.add(122, s);
+        packageStatement.add(124, new Str(123, ";"));
 
         // fullclassname = packagename
-        fullclassname.add(123, packagename);
+        fullclassname.add(125, packagename);
 
         // importstatement = "import" ws ["static":static ws] fullclassname s ";" s
-        importstatement.add(125, new Str(124, "import"));
-        importstatement.add(126, ws);
-        Optional importstatement_1 = new Optional(127, "importstatement_1");
-        importstatement_1.add(129, new Str(128, "static"));
-        importstatement_1.add(130, ws);
-        importstatement.add(131, importstatement_1);
-        importstatement.add(132, fullclassname);
-        importstatement.add(133, s);
-        importstatement.add(135, new Str(134, ";"));
-        importstatement.add(136, s);
+        importstatement.add(127, new Str(126, "import"));
+        importstatement.add(128, ws);
+        Optional importstatement_1 = new Optional(129, "importstatement_1");
+        importstatement_1.add(131, new Str(130, "static"));
+        importstatement_1.add(132, ws);
+        importstatement.add(133, importstatement_1);
+        importstatement.add(134, fullclassname);
+        importstatement.add(135, s);
+        importstatement.add(137, new Str(136, ";"));
+        importstatement.add(138, s);
 
         // imports = [importstatement+]
-        Repeat imports_1 = new Repeat(137, "imports_1");
-        imports_1.add(138, importstatement);
-        imports.add(139, imports_1);
+        Repeat imports_1 = new Repeat(139, "imports_1");
+        imports_1.add(140, importstatement);
+        imports.add(141, imports_1);
 
         // body = "{" s [(body | str | !"}")+]:innerStatement "}"
-        body.add(141, new Str(140, "{"));
-        body.add(142, s);
-        Optional body_1 = new Optional(143, "body_1");
-        Repeat body_1_1 = new Repeat(144, "body_1_1");
-        OrList body_1_1_1 = new OrList(145, "body_1_1_1");
-        body_1_1_1.add(146, body);
-        body_1_1_1.add(147, str);
-        body_1_1_1.add(149, new Str(148, "}", NOT));
-        body_1_1.add(150, body_1_1_1);
-        body_1.add(151, body_1_1);
-        body.add(152, body_1);
-        body.add(154, new Str(153, "}"));
+        body.add(143, new Str(142, "{"));
+        body.add(144, s);
+        Optional body_1 = new Optional(145, "body_1");
+        Repeat body_1_1 = new Repeat(146, "body_1_1");
+        OrList body_1_1_1 = new OrList(147, "body_1_1_1");
+        body_1_1_1.add(148, body);
+        body_1_1_1.add(149, str);
+        body_1_1_1.add(151, new Str(150, "}", NOT));
+        body_1_1.add(152, body_1_1_1);
+        body_1.add(153, body_1_1);
+        body.add(154, body_1);
+        body.add(156, new Str(155, "}"));
 
         // parameter = s name:type ws name:variable s
-        parameter.add(155, s);
-        parameter.add(156, name, parameterParameterType);
-        parameter.add(157, ws);
-        parameter.add(158, name, parameterParameterVariable);
-        parameter.add(159, s);
+        parameter.add(157, s);
+        parameter.add(158, name, parameterParameterType);
+        parameter.add(159, ws);
+        parameter.add(160, name, parameterParameterVariable);
+        parameter.add(161, s);
 
         // parameters = [parameter] ["," s parameter]+
-        Optional parameters_1 = new Optional(160, "parameters_1");
-        parameters_1.add(161, parameter, parametersParametersParameter);
-        parameters.add(162, parameters_1);
-        Optional parameters_2 = new Optional(163, "parameters_2");
-        Repeat parameters_2_1 = new Repeat(164, "parameters_2_1");
-        parameters_2_1.add(166, new Str(165, ","));
-        parameters_2_1.add(167, s);
-        parameters_2_1.add(168, parameter, parametersParametersParameter);
-        parameters_2.add(169, parameters_2_1);
-        parameters.add(170, parameters_2);
+        Optional parameters_1 = new Optional(162, "parameters_1");
+        parameters_1.add(163, parameter, parametersParametersParameter);
+        parameters.add(164, parameters_1);
+        Optional parameters_2 = new Optional(165, "parameters_2");
+        Repeat parameters_2_1 = new Repeat(166, "parameters_2_1");
+        parameters_2_1.add(168, new Str(167, ","));
+        parameters_2_1.add(169, s);
+        parameters_2_1.add(170, parameter, parametersParametersParameter);
+        parameters_2.add(171, parameters_2_1);
+        parameters.add(172, parameters_2);
 
         // asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s body
-        asMethod.add(171, s, asMethodAsMethodSpaces);
-        asMethod.add(173, new Str(172, "public"));
-        asMethod.add(174, s);
-        asMethod.add(175, name, asMethodAsMethodReturnclass);
-        asMethod.add(176, ws);
-        ElementList asMethod_1 = new ElementList(177, "asMethod_1", asMethodAsMethodMethodName);
-        asMethod_1.add(179, new Str(178, "as"));
-        asMethod_1.add(180, name);
-        asMethod.add(181, asMethod_1);
-        asMethod.add(182, s);
-        asMethod.add(184, new Str(183, "("));
-        asMethod.add(185, s);
-        asMethod.add(186, parameters, asMethodAsMethodParameters);
+        asMethod.add(173, s, asMethodAsMethodSpaces);
+        asMethod.add(175, new Str(174, "public"));
+        asMethod.add(176, s);
+        asMethod.add(177, name, asMethodAsMethodReturnclass);
+        asMethod.add(178, ws);
+        ElementList asMethod_1 = new ElementList(179, "asMethod_1", asMethodAsMethodMethodName);
+        asMethod_1.add(181, new Str(180, "as"));
+        asMethod_1.add(182, name);
+        asMethod.add(183, asMethod_1);
+        asMethod.add(184, s);
+        asMethod.add(186, new Str(185, "("));
         asMethod.add(187, s);
-        asMethod.add(189, new Str(188, ")"));
-        asMethod.add(190, s);
-        asMethod.add(191, body, asMethodAsMethodBody);
+        asMethod.add(188, parameters, asMethodAsMethodParameters);
+        asMethod.add(189, s);
+        asMethod.add(191, new Str(190, ")"));
+        asMethod.add(192, s);
+        asMethod.add(193, body, asMethodAsMethodBody);
 
         // aparameterAttr = name:variable s "=" s (name|str):value
-        aparameterAttr.add(192, name, aparameterAttrAparameterAttrVariable);
-        aparameterAttr.add(193, s);
-        aparameterAttr.add(195, new Str(194, "="));
-        aparameterAttr.add(196, s);
-        OrList aparameterAttr_1 = new OrList(197, "aparameterAttr_1", aparameterAttrAparameterAttrValue);
-        aparameterAttr_1.add(198, name);
-        aparameterAttr_1.add(199, str);
-        aparameterAttr.add(200, aparameterAttr_1);
+        aparameterAttr.add(194, name, aparameterAttrAparameterAttrVariable);
+        aparameterAttr.add(195, s);
+        aparameterAttr.add(197, new Str(196, "="));
+        aparameterAttr.add(198, s);
+        OrList aparameterAttr_1 = new OrList(199, "aparameterAttr_1", aparameterAttrAparameterAttrValue);
+        aparameterAttr_1.add(200, name);
+        aparameterAttr_1.add(201, str);
+        aparameterAttr.add(202, aparameterAttr_1);
 
         // aparameter = "@Parameter" s "(" s aparameterAttr [s "," s aparameterAttr]+ s ")"
-        aparameter.add(202, new Str(201, "@Parameter"));
-        aparameter.add(203, s);
-        aparameter.add(205, new Str(204, "("));
-        aparameter.add(206, s);
-        aparameter.add(207, aparameterAttr, aparameterAparameterAparameterAttr);
-        Optional aparameter_1 = new Optional(208, "aparameter_1");
-        Repeat aparameter_1_1 = new Repeat(209, "aparameter_1_1");
-        aparameter_1_1.add(210, s);
-        aparameter_1_1.add(212, new Str(211, ","));
-        aparameter_1_1.add(213, s);
-        aparameter_1_1.add(214, aparameterAttr, aparameterAparameterAparameterAttr);
-        aparameter_1.add(215, aparameter_1_1);
-        aparameter.add(216, aparameter_1);
-        aparameter.add(217, s);
-        aparameter.add(219, new Str(218, ")"));
+        aparameter.add(204, new Str(203, "@Parameter"));
+        aparameter.add(205, s);
+        aparameter.add(207, new Str(206, "("));
+        aparameter.add(208, s);
+        aparameter.add(209, aparameterAttr, aparameterAparameterAparameterAttr);
+        Optional aparameter_1 = new Optional(210, "aparameter_1");
+        Repeat aparameter_1_1 = new Repeat(211, "aparameter_1_1");
+        aparameter_1_1.add(212, s);
+        aparameter_1_1.add(214, new Str(213, ","));
+        aparameter_1_1.add(215, s);
+        aparameter_1_1.add(216, aparameterAttr, aparameterAparameterAparameterAttr);
+        aparameter_1.add(217, aparameter_1_1);
+        aparameter.add(218, aparameter_1);
+        aparameter.add(219, s);
+        aparameter.add(221, new Str(220, ")"));
 
         // aparameters = s "@Parameters" s "(" s "{" s aparameter [s "," s aparameter]+ s "}" s ")"
-        aparameters.add(220, s);
-        aparameters.add(222, new Str(221, "@Parameters"));
-        aparameters.add(223, s);
-        aparameters.add(225, new Str(224, "("));
-        aparameters.add(226, s);
-        aparameters.add(228, new Str(227, "{"));
-        aparameters.add(229, s);
-        aparameters.add(230, aparameter, aparametersAparametersAparameter);
-        Optional aparameters_1 = new Optional(231, "aparameters_1");
-        Repeat aparameters_1_1 = new Repeat(232, "aparameters_1_1");
-        aparameters_1_1.add(233, s);
-        aparameters_1_1.add(235, new Str(234, ","));
-        aparameters_1_1.add(236, s);
-        aparameters_1_1.add(237, aparameter, aparametersAparametersAparameter);
-        aparameters_1.add(238, aparameters_1_1);
-        aparameters.add(239, aparameters_1);
-        aparameters.add(240, s);
-        aparameters.add(242, new Str(241, "}"));
-        aparameters.add(243, s);
-        aparameters.add(245, new Str(244, ")"));
+        aparameters.add(222, s);
+        aparameters.add(224, new Str(223, "@Parameters"));
+        aparameters.add(225, s);
+        aparameters.add(227, new Str(226, "("));
+        aparameters.add(228, s);
+        aparameters.add(230, new Str(229, "{"));
+        aparameters.add(231, s);
+        aparameters.add(232, aparameter, aparametersAparametersAparameter);
+        Optional aparameters_1 = new Optional(233, "aparameters_1");
+        Repeat aparameters_1_1 = new Repeat(234, "aparameters_1_1");
+        aparameters_1_1.add(235, s);
+        aparameters_1_1.add(237, new Str(236, ","));
+        aparameters_1_1.add(238, s);
+        aparameters_1_1.add(239, aparameter, aparametersAparametersAparameter);
+        aparameters_1.add(240, aparameters_1_1);
+        aparameters.add(241, aparameters_1);
+        aparameters.add(242, s);
+        aparameters.add(244, new Str(243, "}"));
+        aparameters.add(245, s);
+        aparameters.add(247, new Str(246, ")"));
 
         // keywords = ["private"|"public"|"static"|"final" s]+
-        Repeat keywords_1 = new Repeat(246, "keywords_1");
-        OrList keywords_1_1 = new OrList(247, "keywords_1_1");
-        keywords_1_1.add(249, new Str(248, "private"));
-        keywords_1_1.add(251, new Str(250, "public"));
-        keywords_1_1.add(253, new Str(252, "static"));
-        keywords_1_1.add(255, new Str(254, "final"));
-        keywords_1.add(256, keywords_1_1);
-        keywords_1.add(257, s);
-        keywords.add(258, keywords_1);
+        Repeat keywords_1 = new Repeat(248, "keywords_1");
+        OrList keywords_1_1 = new OrList(249, "keywords_1_1");
+        keywords_1_1.add(251, new Str(250, "private"));
+        keywords_1_1.add(253, new Str(252, "public"));
+        keywords_1_1.add(255, new Str(254, "static"));
+        keywords_1_1.add(257, new Str(256, "final"));
+        keywords_1.add(258, keywords_1_1);
+        keywords_1.add(259, s);
+        keywords.add(260, keywords_1);
 
         // annotation = "@Creator" [s "(" ["main":main] s ")"]
-        annotation.add(260, new Str(259, "@Creator"));
-        Optional annotation_1 = new Optional(261, "annotation_1");
-        annotation_1.add(262, s);
-        annotation_1.add(264, new Str(263, "("));
-        Optional annotation_1_1 = new Optional(265, "annotation_1_1");
-        annotation_1_1.add(267, new Str(266, "main", creatorAnnotationMain));
-        annotation_1.add(268, annotation_1_1);
-        annotation_1.add(269, s);
-        annotation_1.add(271, new Str(270, ")"));
-        annotation.add(272, annotation_1);
+        annotation.add(262, new Str(261, "@Creator"));
+        Optional annotation_1 = new Optional(263, "annotation_1");
+        annotation_1.add(264, s);
+        annotation_1.add(266, new Str(265, "("));
+        Optional annotation_1_1 = new Optional(267, "annotation_1_1");
+        annotation_1_1.add(269, new Str(268, "main", creatorAnnotationMain));
+        annotation_1.add(270, annotation_1_1);
+        annotation_1.add(271, s);
+        annotation_1.add(273, new Str(272, ")"));
+        annotation.add(274, annotation_1);
 
         // classStatement =
         //   [annotation ws] public "class" ws name:classname [s "implements" s name [s "," s name]+] s "{" s
         //   keywords s [name s "." s] name:stateClass s "state;" [asMethod|aparameters]+
-        Optional classStatement_1 = new Optional(273, "classStatement_1");
-        classStatement_1.add(274, annotation);
-        classStatement_1.add(275, ws);
-        classStatement.add(276, classStatement_1);
-        classStatement.add(277, _public);
-        classStatement.add(279, new Str(278, "class"));
-        classStatement.add(280, ws);
-        classStatement.add(281, name, classStatementClassStatementClassname);
-        Optional classStatement_2 = new Optional(282, "classStatement_2");
-        classStatement_2.add(283, s);
-        classStatement_2.add(285, new Str(284, "implements"));
-        classStatement_2.add(286, s);
-        classStatement_2.add(287, name);
-        Optional classStatement_2_1 = new Optional(288, "classStatement_2_1");
-        Repeat classStatement_2_1_1 = new Repeat(289, "classStatement_2_1_1");
-        classStatement_2_1_1.add(290, s);
-        classStatement_2_1_1.add(292, new Str(291, ","));
-        classStatement_2_1_1.add(293, s);
-        classStatement_2_1_1.add(294, name);
-        classStatement_2_1.add(295, classStatement_2_1_1);
-        classStatement_2.add(296, classStatement_2_1);
-        classStatement.add(297, classStatement_2);
-        classStatement.add(298, s);
-        classStatement.add(300, new Str(299, "{"));
-        classStatement.add(301, s);
-        classStatement.add(302, keywords);
+        Optional classStatement_1 = new Optional(275, "classStatement_1");
+        classStatement_1.add(276, annotation);
+        classStatement_1.add(277, ws);
+        classStatement.add(278, classStatement_1);
+        classStatement.add(279, _public);
+        classStatement.add(281, new Str(280, "class"));
+        classStatement.add(282, ws);
+        classStatement.add(283, name, classStatementClassStatementClassname);
+        Optional classStatement_2 = new Optional(284, "classStatement_2");
+        classStatement_2.add(285, s);
+        classStatement_2.add(287, new Str(286, "implements"));
+        classStatement_2.add(288, s);
+        classStatement_2.add(289, name);
+        Optional classStatement_2_1 = new Optional(290, "classStatement_2_1");
+        Repeat classStatement_2_1_1 = new Repeat(291, "classStatement_2_1_1");
+        classStatement_2_1_1.add(292, s);
+        classStatement_2_1_1.add(294, new Str(293, ","));
+        classStatement_2_1_1.add(295, s);
+        classStatement_2_1_1.add(296, name);
+        classStatement_2_1.add(297, classStatement_2_1_1);
+        classStatement_2.add(298, classStatement_2_1);
+        classStatement.add(299, classStatement_2);
+        classStatement.add(300, s);
+        classStatement.add(302, new Str(301, "{"));
         classStatement.add(303, s);
-        Optional classStatement_3 = new Optional(304, "classStatement_3");
-        classStatement_3.add(305, name);
-        classStatement_3.add(306, s);
-        classStatement_3.add(308, new Str(307, "."));
-        classStatement_3.add(309, s);
-        classStatement.add(310, classStatement_3);
-        classStatement.add(311, name, classStatementClassStatementStateClass);
-        classStatement.add(312, s);
-        classStatement.add(314, new Str(313, "state;"));
-        Optional classStatement_4 = new Optional(315, "classStatement_4");
-        Repeat classStatement_4_1 = new Repeat(316, "classStatement_4_1");
-        OrList classStatement_4_1_1 = new OrList(317, "classStatement_4_1_1");
-        classStatement_4_1_1.add(318, asMethod, classStatementClassStatementAsMethod);
-        classStatement_4_1_1.add(319, aparameters, classStatementClassStatementAparameters);
-        classStatement_4_1.add(320, classStatement_4_1_1);
-        classStatement_4.add(321, classStatement_4_1);
-        classStatement.add(322, classStatement_4);
+        classStatement.add(304, keywords);
+        classStatement.add(305, s);
+        Optional classStatement_3 = new Optional(306, "classStatement_3");
+        classStatement_3.add(307, name);
+        classStatement_3.add(308, s);
+        classStatement_3.add(310, new Str(309, "."));
+        classStatement_3.add(311, s);
+        classStatement.add(312, classStatement_3);
+        classStatement.add(313, name, classStatementClassStatementStateClass);
+        classStatement.add(314, s);
+        classStatement.add(316, new Str(315, "state;"));
+        Optional classStatement_4 = new Optional(317, "classStatement_4");
+        Repeat classStatement_4_1 = new Repeat(318, "classStatement_4_1");
+        OrList classStatement_4_1_1 = new OrList(319, "classStatement_4_1_1");
+        classStatement_4_1_1.add(320, asMethod, classStatementClassStatementAsMethod);
+        classStatement_4_1_1.add(321, aparameters, classStatementClassStatementAparameters);
+        classStatement_4_1.add(322, classStatement_4_1_1);
+        classStatement_4.add(323, classStatement_4_1);
+        classStatement.add(324, classStatement_4);
 
         // manualEnd = ("}" s END)
-        manualEnd.add(324, new Str(323, "}"));
-        manualEnd.add(325, s);
-        manualEnd.add(327, new End(326, "manualEnd"));
+        manualEnd.add(326, new Str(325, "}"));
+        manualEnd.add(327, s);
+        manualEnd.add(329, new End(328, "manualEnd"));
 
         // generatedCode = "// ===== Generated code ====="
 
         // manualCode = !(manualEnd | generatedCode)+
-        OrList manualCode_1 = new OrList(328, "manualCode_1");
-        manualCode_1.add(329, manualEnd);
-        manualCode_1.add(330, generatedCode);
-        manualCode.add(331, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(330, "manualCode_1");
+        manualCode_1.add(331, manualEnd);
+        manualCode_1.add(332, generatedCode);
+        manualCode.add(333, manualCode_1, NOT);
 
-        // creator = packageStatement s imports s classStatement manualCode [generatedCode] *
-        creator.add(332, packageStatement, creatorCreatorPackageStatement);
-        creator.add(333, s);
-        creator.add(334, imports, creatorCreatorImports);
-        creator.add(335, s);
-        creator.add(336, classStatement, creatorCreatorClassStatement);
-        creator.add(337, manualCode, creatorCreatorManualCode);
-        Optional creator_1 = new Optional(338, "creator_1");
-        creator_1.add(339, generatedCode, creatorCreatorGeneratedCode);
-        creator.add(340, creator_1);
-        creator.add(342, new Complete(341, "creator"));
+        // parameterArgClass =
+        //   ["// add":add s] "public " name " " name:method "(" s parameters s ")" s "{" s
+        //   "state." name " = " (!";"+):value ";" [!"}"+] "}" s
+        Optional parameterArgClass_1 = new Optional(334, "parameterArgClass_1");
+        parameterArgClass_1.add(336, new Str(335, "// add", parameterArgClassParameterArgClassAdd));
+        parameterArgClass_1.add(337, s);
+        parameterArgClass.add(338, parameterArgClass_1);
+        parameterArgClass.add(340, new Str(339, "public "));
+        parameterArgClass.add(341, name);
+        parameterArgClass.add(343, new Str(342, " "));
+        parameterArgClass.add(344, name, parameterArgClassParameterArgClassMethod);
+        parameterArgClass.add(346, new Str(345, "("));
+        parameterArgClass.add(347, s);
+        parameterArgClass.add(348, parameters, parameterArgClassParameterArgClassParameters);
+        parameterArgClass.add(349, s);
+        parameterArgClass.add(351, new Str(350, ")"));
+        parameterArgClass.add(352, s);
+        parameterArgClass.add(354, new Str(353, "{"));
+        parameterArgClass.add(355, s);
+        parameterArgClass.add(357, new Str(356, "state."));
+        parameterArgClass.add(358, name);
+        parameterArgClass.add(360, new Str(359, " = "));
+        Repeat parameterArgClass_2 = new Repeat(361, "parameterArgClass_2", parameterArgClassParameterArgClassValue);
+        parameterArgClass_2.add(363, new Str(362, ";", NOT));
+        parameterArgClass.add(364, parameterArgClass_2);
+        parameterArgClass.add(366, new Str(365, ";"));
+        Optional parameterArgClass_3 = new Optional(367, "parameterArgClass_3");
+        Repeat parameterArgClass_3_1 = new Repeat(368, "parameterArgClass_3_1");
+        parameterArgClass_3_1.add(370, new Str(369, "}", NOT));
+        parameterArgClass_3.add(371, parameterArgClass_3_1);
+        parameterArgClass.add(372, parameterArgClass_3);
+        parameterArgClass.add(374, new Str(373, "}"));
+        parameterArgClass.add(375, s);
+
+        // parameterClass = "// " name:attribute s "public class " name " {" s parameterArgClass+ "}"
+        parameterClass.add(377, new Str(376, "// "));
+        parameterClass.add(378, name, parameterClassParameterClassAttribute);
+        parameterClass.add(379, s);
+        parameterClass.add(381, new Str(380, "public class "));
+        parameterClass.add(382, name);
+        parameterClass.add(384, new Str(383, " {"));
+        parameterClass.add(385, s);
+        Repeat parameterClass_1 = new Repeat(386, "parameterClass_1");
+        parameterClass_1.add(387, parameterArgClass, parameterClassParameterClassParameterArgClass);
+        parameterClass.add(388, parameterClass_1);
+        parameterClass.add(390, new Str(389, "}"));
+
+        // creator = packageStatement s imports s classStatement manualCode [generatedCode [!parameterClass+ parameterClass:pclass]+] *
+        creator.add(391, packageStatement, creatorCreatorPackageStatement);
+        creator.add(392, s);
+        creator.add(393, imports, creatorCreatorImports);
+        creator.add(394, s);
+        creator.add(395, classStatement, creatorCreatorClassStatement);
+        creator.add(396, manualCode, creatorCreatorManualCode);
+        Optional creator_1 = new Optional(397, "creator_1");
+        creator_1.add(398, generatedCode, creatorCreatorGeneratedCode);
+        Optional creator_1_1 = new Optional(399, "creator_1_1");
+        Repeat creator_1_1_1 = new Repeat(400, "creator_1_1_1");
+        Repeat creator_1_1_1_1 = new Repeat(401, "creator_1_1_1_1");
+        creator_1_1_1_1.add(402, parameterClass, NOT, creatorCreatorParameterClass);
+        creator_1_1_1.add(403, creator_1_1_1_1);
+        creator_1_1_1.add(404, parameterClass, creatorCreatorPclass);
+        creator_1_1.add(405, creator_1_1_1);
+        creator_1.add(406, creator_1_1);
+        creator.add(407, creator_1);
+        creator.add(409, new Complete(408, "creator"));
 
         return new TopElement(data2, creator);
     }
@@ -521,324 +586,381 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         ElementList manualEnd = new ElementList(26, "manualEnd");
         Str generatedCode = new Str(27, "// ===== Generated code =====");
         Repeat manualCode = new Repeat(28, "manualCode");
-        ElementList creator = new ElementList(29, "creator");
+        ElementList parameterArgClass = new ElementList(29, "parameterArgClass");
+        ElementList parameterClass = new ElementList(30, "parameterClass");
+        ElementList creator = new ElementList(31, "creator");
 
         // *** Statements ***
 
         // newline = "\r\n" | "\n"
-        newline.add(31, new Str(30, "\r\n"));
-        newline.add(33, new Str(32, "\n"));
+        newline.add(33, new Str(32, "\r\n"));
+        newline.add(35, new Str(34, "\n"));
 
         // comment = ("/*" [(comment | !"*/")+] "*/") | ("//" [!newline+] newline|END)
-        ElementList comment_1 = new ElementList(34, "comment_1");
-        comment_1.add(36, new Str(35, "/*"));
-        Optional comment_1_1 = new Optional(37, "comment_1_1");
-        Repeat comment_1_1_1 = new Repeat(38, "comment_1_1_1");
-        OrList comment_1_1_1_1 = new OrList(39, "comment_1_1_1_1");
-        comment_1_1_1_1.add(40, comment);
-        comment_1_1_1_1.add(42, new Str(41, "*/", NOT));
-        comment_1_1_1.add(43, comment_1_1_1_1);
-        comment_1_1.add(44, comment_1_1_1);
-        comment_1.add(45, comment_1_1);
-        comment_1.add(47, new Str(46, "*/"));
-        comment.add(48, comment_1);
-        ElementList comment_2 = new ElementList(49, "comment_2");
-        comment_2.add(51, new Str(50, "//"));
-        Optional comment_2_1 = new Optional(52, "comment_2_1");
-        Repeat comment_2_1_1 = new Repeat(53, "comment_2_1_1");
-        comment_2_1_1.add(54, newline, NOT);
-        comment_2_1.add(55, comment_2_1_1);
-        comment_2.add(56, comment_2_1);
-        OrList comment_2_2 = new OrList(57, "comment_2_2");
-        comment_2_2.add(58, newline);
-        comment_2_2.add(60, new End(59, "comment_2_2"));
-        comment_2.add(61, comment_2_2);
-        comment.add(62, comment_2);
+        ElementList comment_1 = new ElementList(36, "comment_1");
+        comment_1.add(38, new Str(37, "/*"));
+        Optional comment_1_1 = new Optional(39, "comment_1_1");
+        Repeat comment_1_1_1 = new Repeat(40, "comment_1_1_1");
+        OrList comment_1_1_1_1 = new OrList(41, "comment_1_1_1_1");
+        comment_1_1_1_1.add(42, comment);
+        comment_1_1_1_1.add(44, new Str(43, "*/", NOT));
+        comment_1_1_1.add(45, comment_1_1_1_1);
+        comment_1_1.add(46, comment_1_1_1);
+        comment_1.add(47, comment_1_1);
+        comment_1.add(49, new Str(48, "*/"));
+        comment.add(50, comment_1);
+        ElementList comment_2 = new ElementList(51, "comment_2");
+        comment_2.add(53, new Str(52, "//"));
+        Optional comment_2_1 = new Optional(54, "comment_2_1");
+        Repeat comment_2_1_1 = new Repeat(55, "comment_2_1_1");
+        comment_2_1_1.add(56, newline, NOT);
+        comment_2_1.add(57, comment_2_1_1);
+        comment_2.add(58, comment_2_1);
+        OrList comment_2_2 = new OrList(59, "comment_2_2");
+        comment_2_2.add(60, newline);
+        comment_2_2.add(62, new End(61, "comment_2_2"));
+        comment_2.add(63, comment_2_2);
+        comment.add(64, comment_2);
 
         // ws = (newline | " " | "\t" | comment)+
-        OrList ws_1 = new OrList(63, "ws_1");
-        ws_1.add(64, newline);
-        ws_1.add(66, new Str(65, " "));
-        ws_1.add(68, new Str(67, "\t"));
-        ws_1.add(69, comment);
-        ws.add(70, ws_1);
+        OrList ws_1 = new OrList(65, "ws_1");
+        ws_1.add(66, newline);
+        ws_1.add(68, new Str(67, " "));
+        ws_1.add(70, new Str(69, "\t"));
+        ws_1.add(71, comment);
+        ws.add(72, ws_1);
 
         // s = [ws]
-        s.add(71, ws);
+        s.add(73, ws);
 
         // ff = "\""
 
         // str = ff (("\\\"" | !(ff|newline))+):strval ff
-        str.add(72, ff);
-        Repeat str_1 = new Repeat(73, "str_1");
-        OrList str_1_1 = new OrList(74, "str_1_1");
-        str_1_1.add(76, new Str(75, "\\\""));
-        OrList str_1_1_1 = new OrList(77, "str_1_1_1", NOT);
-        str_1_1_1.add(78, ff);
-        str_1_1_1.add(79, newline);
-        str_1_1.add(80, str_1_1_1);
-        str_1.add(81, str_1_1);
-        str.add(82, str_1);
-        str.add(83, ff);
+        str.add(74, ff);
+        Repeat str_1 = new Repeat(75, "str_1");
+        OrList str_1_1 = new OrList(76, "str_1_1");
+        str_1_1.add(78, new Str(77, "\\\""));
+        OrList str_1_1_1 = new OrList(79, "str_1_1_1", NOT);
+        str_1_1_1.add(80, ff);
+        str_1_1_1.add(81, newline);
+        str_1_1.add(82, str_1_1_1);
+        str_1.add(83, str_1_1);
+        str.add(84, str_1);
+        str.add(85, ff);
 
         // letter = "a".."z" | "A".."Z" | "_" | "$"
-        letter.add(85, new Range(84, "letter", "a", "z"));
-        letter.add(87, new Range(86, "letter", "A", "Z"));
-        letter.add(89, new Str(88, "_"));
-        letter.add(91, new Str(90, "$"));
+        letter.add(87, new Range(86, "letter", "a", "z"));
+        letter.add(89, new Range(88, "letter", "A", "Z"));
+        letter.add(91, new Str(90, "_"));
+        letter.add(93, new Str(92, "$"));
 
         // digit = "0".."9"
 
         // name = letter [letter | digit]+
-        name.add(92, letter);
-        Optional name_1 = new Optional(93, "name_1");
-        Repeat name_1_1 = new Repeat(94, "name_1_1");
-        OrList name_1_1_1 = new OrList(95, "name_1_1_1");
-        name_1_1_1.add(96, letter);
-        name_1_1_1.add(97, digit);
-        name_1_1.add(98, name_1_1_1);
-        name_1.add(99, name_1_1);
-        name.add(100, name_1);
+        name.add(94, letter);
+        Optional name_1 = new Optional(95, "name_1");
+        Repeat name_1_1 = new Repeat(96, "name_1_1");
+        OrList name_1_1_1 = new OrList(97, "name_1_1_1");
+        name_1_1_1.add(98, letter);
+        name_1_1_1.add(99, digit);
+        name_1_1.add(100, name_1_1_1);
+        name_1.add(101, name_1_1);
+        name.add(102, name_1);
 
         // public = ["public" ws]
-        _public.add(102, new Str(101, "public"));
-        _public.add(103, ws);
+        _public.add(104, new Str(103, "public"));
+        _public.add(105, ws);
 
         // packagename = name ["." name|"*"]+
-        packagename.add(104, name);
-        Optional packagename_1 = new Optional(105, "packagename_1");
-        Repeat packagename_1_1 = new Repeat(106, "packagename_1_1");
-        packagename_1_1.add(108, new Str(107, "."));
-        OrList packagename_1_1_1 = new OrList(109, "packagename_1_1_1");
-        packagename_1_1_1.add(110, name);
-        packagename_1_1_1.add(112, new Str(111, "*"));
-        packagename_1_1.add(113, packagename_1_1_1);
-        packagename_1.add(114, packagename_1_1);
-        packagename.add(115, packagename_1);
+        packagename.add(106, name);
+        Optional packagename_1 = new Optional(107, "packagename_1");
+        Repeat packagename_1_1 = new Repeat(108, "packagename_1_1");
+        packagename_1_1.add(110, new Str(109, "."));
+        OrList packagename_1_1_1 = new OrList(111, "packagename_1_1_1");
+        packagename_1_1_1.add(112, name);
+        packagename_1_1_1.add(114, new Str(113, "*"));
+        packagename_1_1.add(115, packagename_1_1_1);
+        packagename_1.add(116, packagename_1_1);
+        packagename.add(117, packagename_1);
 
         // packageStatement = "package" ws packagename s ";"
-        packageStatement.add(117, new Str(116, "package"));
-        packageStatement.add(118, ws);
-        packageStatement.add(119, packagename);
-        packageStatement.add(120, s);
-        packageStatement.add(122, new Str(121, ";"));
+        packageStatement.add(119, new Str(118, "package"));
+        packageStatement.add(120, ws);
+        packageStatement.add(121, packagename);
+        packageStatement.add(122, s);
+        packageStatement.add(124, new Str(123, ";"));
 
         // fullclassname = packagename
-        fullclassname.add(123, packagename);
+        fullclassname.add(125, packagename);
 
         // importstatement = "import" ws ["static":static ws] fullclassname s ";" s
-        importstatement.add(125, new Str(124, "import"));
-        importstatement.add(126, ws);
-        Optional importstatement_1 = new Optional(127, "importstatement_1");
-        importstatement_1.add(129, new Str(128, "static"));
-        importstatement_1.add(130, ws);
-        importstatement.add(131, importstatement_1);
-        importstatement.add(132, fullclassname);
-        importstatement.add(133, s);
-        importstatement.add(135, new Str(134, ";"));
-        importstatement.add(136, s);
+        importstatement.add(127, new Str(126, "import"));
+        importstatement.add(128, ws);
+        Optional importstatement_1 = new Optional(129, "importstatement_1");
+        importstatement_1.add(131, new Str(130, "static"));
+        importstatement_1.add(132, ws);
+        importstatement.add(133, importstatement_1);
+        importstatement.add(134, fullclassname);
+        importstatement.add(135, s);
+        importstatement.add(137, new Str(136, ";"));
+        importstatement.add(138, s);
 
         // imports = [importstatement+]
-        Repeat imports_1 = new Repeat(137, "imports_1");
-        imports_1.add(138, importstatement);
-        imports.add(139, imports_1);
+        Repeat imports_1 = new Repeat(139, "imports_1");
+        imports_1.add(140, importstatement);
+        imports.add(141, imports_1);
 
         // body = "{" s [(body | str | !"}")+]:innerStatement "}"
-        body.add(141, new Str(140, "{"));
-        body.add(142, s);
-        Optional body_1 = new Optional(143, "body_1");
-        Repeat body_1_1 = new Repeat(144, "body_1_1");
-        OrList body_1_1_1 = new OrList(145, "body_1_1_1");
-        body_1_1_1.add(146, body);
-        body_1_1_1.add(147, str);
-        body_1_1_1.add(149, new Str(148, "}", NOT));
-        body_1_1.add(150, body_1_1_1);
-        body_1.add(151, body_1_1);
-        body.add(152, body_1);
-        body.add(154, new Str(153, "}"));
+        body.add(143, new Str(142, "{"));
+        body.add(144, s);
+        Optional body_1 = new Optional(145, "body_1");
+        Repeat body_1_1 = new Repeat(146, "body_1_1");
+        OrList body_1_1_1 = new OrList(147, "body_1_1_1");
+        body_1_1_1.add(148, body);
+        body_1_1_1.add(149, str);
+        body_1_1_1.add(151, new Str(150, "}", NOT));
+        body_1_1.add(152, body_1_1_1);
+        body_1.add(153, body_1_1);
+        body.add(154, body_1);
+        body.add(156, new Str(155, "}"));
 
         // parameter = s name:type ws name:variable s
-        parameter.add(155, s);
-        parameter.add(156, name);
-        parameter.add(157, ws);
+        parameter.add(157, s);
         parameter.add(158, name);
-        parameter.add(159, s);
+        parameter.add(159, ws);
+        parameter.add(160, name);
+        parameter.add(161, s);
 
         // parameters = [parameter] ["," s parameter]+
-        Optional parameters_1 = new Optional(160, "parameters_1");
-        parameters_1.add(161, parameter);
-        parameters.add(162, parameters_1);
-        Optional parameters_2 = new Optional(163, "parameters_2");
-        Repeat parameters_2_1 = new Repeat(164, "parameters_2_1");
-        parameters_2_1.add(166, new Str(165, ","));
-        parameters_2_1.add(167, s);
-        parameters_2_1.add(168, parameter);
-        parameters_2.add(169, parameters_2_1);
-        parameters.add(170, parameters_2);
+        Optional parameters_1 = new Optional(162, "parameters_1");
+        parameters_1.add(163, parameter);
+        parameters.add(164, parameters_1);
+        Optional parameters_2 = new Optional(165, "parameters_2");
+        Repeat parameters_2_1 = new Repeat(166, "parameters_2_1");
+        parameters_2_1.add(168, new Str(167, ","));
+        parameters_2_1.add(169, s);
+        parameters_2_1.add(170, parameter);
+        parameters_2.add(171, parameters_2_1);
+        parameters.add(172, parameters_2);
 
         // asMethod = s:spaces "public" s name:returnclass ws ("as" name):methodName s "(" s parameters s ")" s body
-        asMethod.add(171, s);
-        asMethod.add(173, new Str(172, "public"));
-        asMethod.add(174, s);
-        asMethod.add(175, name);
-        asMethod.add(176, ws);
-        ElementList asMethod_1 = new ElementList(177, "asMethod_1");
-        asMethod_1.add(179, new Str(178, "as"));
-        asMethod_1.add(180, name);
-        asMethod.add(181, asMethod_1);
-        asMethod.add(182, s);
-        asMethod.add(184, new Str(183, "("));
-        asMethod.add(185, s);
-        asMethod.add(186, parameters);
+        asMethod.add(173, s);
+        asMethod.add(175, new Str(174, "public"));
+        asMethod.add(176, s);
+        asMethod.add(177, name);
+        asMethod.add(178, ws);
+        ElementList asMethod_1 = new ElementList(179, "asMethod_1");
+        asMethod_1.add(181, new Str(180, "as"));
+        asMethod_1.add(182, name);
+        asMethod.add(183, asMethod_1);
+        asMethod.add(184, s);
+        asMethod.add(186, new Str(185, "("));
         asMethod.add(187, s);
-        asMethod.add(189, new Str(188, ")"));
-        asMethod.add(190, s);
-        asMethod.add(191, body);
+        asMethod.add(188, parameters);
+        asMethod.add(189, s);
+        asMethod.add(191, new Str(190, ")"));
+        asMethod.add(192, s);
+        asMethod.add(193, body);
 
         // aparameterAttr = name:variable s "=" s (name|str):value
-        aparameterAttr.add(192, name);
-        aparameterAttr.add(193, s);
-        aparameterAttr.add(195, new Str(194, "="));
-        aparameterAttr.add(196, s);
-        OrList aparameterAttr_1 = new OrList(197, "aparameterAttr_1");
-        aparameterAttr_1.add(198, name);
-        aparameterAttr_1.add(199, str);
-        aparameterAttr.add(200, aparameterAttr_1);
+        aparameterAttr.add(194, name);
+        aparameterAttr.add(195, s);
+        aparameterAttr.add(197, new Str(196, "="));
+        aparameterAttr.add(198, s);
+        OrList aparameterAttr_1 = new OrList(199, "aparameterAttr_1");
+        aparameterAttr_1.add(200, name);
+        aparameterAttr_1.add(201, str);
+        aparameterAttr.add(202, aparameterAttr_1);
 
         // aparameter = "@Parameter" s "(" s aparameterAttr [s "," s aparameterAttr]+ s ")"
-        aparameter.add(202, new Str(201, "@Parameter"));
-        aparameter.add(203, s);
-        aparameter.add(205, new Str(204, "("));
-        aparameter.add(206, s);
-        aparameter.add(207, aparameterAttr);
-        Optional aparameter_1 = new Optional(208, "aparameter_1");
-        Repeat aparameter_1_1 = new Repeat(209, "aparameter_1_1");
-        aparameter_1_1.add(210, s);
-        aparameter_1_1.add(212, new Str(211, ","));
-        aparameter_1_1.add(213, s);
-        aparameter_1_1.add(214, aparameterAttr);
-        aparameter_1.add(215, aparameter_1_1);
-        aparameter.add(216, aparameter_1);
-        aparameter.add(217, s);
-        aparameter.add(219, new Str(218, ")"));
+        aparameter.add(204, new Str(203, "@Parameter"));
+        aparameter.add(205, s);
+        aparameter.add(207, new Str(206, "("));
+        aparameter.add(208, s);
+        aparameter.add(209, aparameterAttr);
+        Optional aparameter_1 = new Optional(210, "aparameter_1");
+        Repeat aparameter_1_1 = new Repeat(211, "aparameter_1_1");
+        aparameter_1_1.add(212, s);
+        aparameter_1_1.add(214, new Str(213, ","));
+        aparameter_1_1.add(215, s);
+        aparameter_1_1.add(216, aparameterAttr);
+        aparameter_1.add(217, aparameter_1_1);
+        aparameter.add(218, aparameter_1);
+        aparameter.add(219, s);
+        aparameter.add(221, new Str(220, ")"));
 
         // aparameters = s "@Parameters" s "(" s "{" s aparameter [s "," s aparameter]+ s "}" s ")"
-        aparameters.add(220, s);
-        aparameters.add(222, new Str(221, "@Parameters"));
-        aparameters.add(223, s);
-        aparameters.add(225, new Str(224, "("));
-        aparameters.add(226, s);
-        aparameters.add(228, new Str(227, "{"));
-        aparameters.add(229, s);
-        aparameters.add(230, aparameter);
-        Optional aparameters_1 = new Optional(231, "aparameters_1");
-        Repeat aparameters_1_1 = new Repeat(232, "aparameters_1_1");
-        aparameters_1_1.add(233, s);
-        aparameters_1_1.add(235, new Str(234, ","));
-        aparameters_1_1.add(236, s);
-        aparameters_1_1.add(237, aparameter);
-        aparameters_1.add(238, aparameters_1_1);
-        aparameters.add(239, aparameters_1);
-        aparameters.add(240, s);
-        aparameters.add(242, new Str(241, "}"));
-        aparameters.add(243, s);
-        aparameters.add(245, new Str(244, ")"));
+        aparameters.add(222, s);
+        aparameters.add(224, new Str(223, "@Parameters"));
+        aparameters.add(225, s);
+        aparameters.add(227, new Str(226, "("));
+        aparameters.add(228, s);
+        aparameters.add(230, new Str(229, "{"));
+        aparameters.add(231, s);
+        aparameters.add(232, aparameter);
+        Optional aparameters_1 = new Optional(233, "aparameters_1");
+        Repeat aparameters_1_1 = new Repeat(234, "aparameters_1_1");
+        aparameters_1_1.add(235, s);
+        aparameters_1_1.add(237, new Str(236, ","));
+        aparameters_1_1.add(238, s);
+        aparameters_1_1.add(239, aparameter);
+        aparameters_1.add(240, aparameters_1_1);
+        aparameters.add(241, aparameters_1);
+        aparameters.add(242, s);
+        aparameters.add(244, new Str(243, "}"));
+        aparameters.add(245, s);
+        aparameters.add(247, new Str(246, ")"));
 
         // keywords = ["private"|"public"|"static"|"final" s]+
-        Repeat keywords_1 = new Repeat(246, "keywords_1");
-        OrList keywords_1_1 = new OrList(247, "keywords_1_1");
-        keywords_1_1.add(249, new Str(248, "private"));
-        keywords_1_1.add(251, new Str(250, "public"));
-        keywords_1_1.add(253, new Str(252, "static"));
-        keywords_1_1.add(255, new Str(254, "final"));
-        keywords_1.add(256, keywords_1_1);
-        keywords_1.add(257, s);
-        keywords.add(258, keywords_1);
+        Repeat keywords_1 = new Repeat(248, "keywords_1");
+        OrList keywords_1_1 = new OrList(249, "keywords_1_1");
+        keywords_1_1.add(251, new Str(250, "private"));
+        keywords_1_1.add(253, new Str(252, "public"));
+        keywords_1_1.add(255, new Str(254, "static"));
+        keywords_1_1.add(257, new Str(256, "final"));
+        keywords_1.add(258, keywords_1_1);
+        keywords_1.add(259, s);
+        keywords.add(260, keywords_1);
 
         // annotation = "@Creator" [s "(" ["main":main] s ")"]
-        annotation.add(260, new Str(259, "@Creator"));
-        Optional annotation_1 = new Optional(261, "annotation_1");
-        annotation_1.add(262, s);
-        annotation_1.add(264, new Str(263, "("));
-        Optional annotation_1_1 = new Optional(265, "annotation_1_1");
-        annotation_1_1.add(267, new Str(266, "main"));
-        annotation_1.add(268, annotation_1_1);
-        annotation_1.add(269, s);
-        annotation_1.add(271, new Str(270, ")"));
-        annotation.add(272, annotation_1);
+        annotation.add(262, new Str(261, "@Creator"));
+        Optional annotation_1 = new Optional(263, "annotation_1");
+        annotation_1.add(264, s);
+        annotation_1.add(266, new Str(265, "("));
+        Optional annotation_1_1 = new Optional(267, "annotation_1_1");
+        annotation_1_1.add(269, new Str(268, "main"));
+        annotation_1.add(270, annotation_1_1);
+        annotation_1.add(271, s);
+        annotation_1.add(273, new Str(272, ")"));
+        annotation.add(274, annotation_1);
 
         // classStatement =
         //   [annotation ws] public "class" ws name:classname [s "implements" s name [s "," s name]+] s "{" s
         //   keywords s [name s "." s] name:stateClass s "state;" [asMethod|aparameters]+
-        Optional classStatement_1 = new Optional(273, "classStatement_1");
-        classStatement_1.add(274, annotation);
-        classStatement_1.add(275, ws);
-        classStatement.add(276, classStatement_1);
-        classStatement.add(277, _public);
-        classStatement.add(279, new Str(278, "class"));
-        classStatement.add(280, ws);
-        classStatement.add(281, name);
-        Optional classStatement_2 = new Optional(282, "classStatement_2");
-        classStatement_2.add(283, s);
-        classStatement_2.add(285, new Str(284, "implements"));
-        classStatement_2.add(286, s);
-        classStatement_2.add(287, name);
-        Optional classStatement_2_1 = new Optional(288, "classStatement_2_1");
-        Repeat classStatement_2_1_1 = new Repeat(289, "classStatement_2_1_1");
-        classStatement_2_1_1.add(290, s);
-        classStatement_2_1_1.add(292, new Str(291, ","));
-        classStatement_2_1_1.add(293, s);
-        classStatement_2_1_1.add(294, name);
-        classStatement_2_1.add(295, classStatement_2_1_1);
-        classStatement_2.add(296, classStatement_2_1);
-        classStatement.add(297, classStatement_2);
-        classStatement.add(298, s);
-        classStatement.add(300, new Str(299, "{"));
-        classStatement.add(301, s);
-        classStatement.add(302, keywords);
+        Optional classStatement_1 = new Optional(275, "classStatement_1");
+        classStatement_1.add(276, annotation);
+        classStatement_1.add(277, ws);
+        classStatement.add(278, classStatement_1);
+        classStatement.add(279, _public);
+        classStatement.add(281, new Str(280, "class"));
+        classStatement.add(282, ws);
+        classStatement.add(283, name);
+        Optional classStatement_2 = new Optional(284, "classStatement_2");
+        classStatement_2.add(285, s);
+        classStatement_2.add(287, new Str(286, "implements"));
+        classStatement_2.add(288, s);
+        classStatement_2.add(289, name);
+        Optional classStatement_2_1 = new Optional(290, "classStatement_2_1");
+        Repeat classStatement_2_1_1 = new Repeat(291, "classStatement_2_1_1");
+        classStatement_2_1_1.add(292, s);
+        classStatement_2_1_1.add(294, new Str(293, ","));
+        classStatement_2_1_1.add(295, s);
+        classStatement_2_1_1.add(296, name);
+        classStatement_2_1.add(297, classStatement_2_1_1);
+        classStatement_2.add(298, classStatement_2_1);
+        classStatement.add(299, classStatement_2);
+        classStatement.add(300, s);
+        classStatement.add(302, new Str(301, "{"));
         classStatement.add(303, s);
-        Optional classStatement_3 = new Optional(304, "classStatement_3");
-        classStatement_3.add(305, name);
-        classStatement_3.add(306, s);
-        classStatement_3.add(308, new Str(307, "."));
-        classStatement_3.add(309, s);
-        classStatement.add(310, classStatement_3);
-        classStatement.add(311, name);
-        classStatement.add(312, s);
-        classStatement.add(314, new Str(313, "state;"));
-        Optional classStatement_4 = new Optional(315, "classStatement_4");
-        Repeat classStatement_4_1 = new Repeat(316, "classStatement_4_1");
-        OrList classStatement_4_1_1 = new OrList(317, "classStatement_4_1_1");
-        classStatement_4_1_1.add(318, asMethod);
-        classStatement_4_1_1.add(319, aparameters);
-        classStatement_4_1.add(320, classStatement_4_1_1);
-        classStatement_4.add(321, classStatement_4_1);
-        classStatement.add(322, classStatement_4);
+        classStatement.add(304, keywords);
+        classStatement.add(305, s);
+        Optional classStatement_3 = new Optional(306, "classStatement_3");
+        classStatement_3.add(307, name);
+        classStatement_3.add(308, s);
+        classStatement_3.add(310, new Str(309, "."));
+        classStatement_3.add(311, s);
+        classStatement.add(312, classStatement_3);
+        classStatement.add(313, name);
+        classStatement.add(314, s);
+        classStatement.add(316, new Str(315, "state;"));
+        Optional classStatement_4 = new Optional(317, "classStatement_4");
+        Repeat classStatement_4_1 = new Repeat(318, "classStatement_4_1");
+        OrList classStatement_4_1_1 = new OrList(319, "classStatement_4_1_1");
+        classStatement_4_1_1.add(320, asMethod);
+        classStatement_4_1_1.add(321, aparameters);
+        classStatement_4_1.add(322, classStatement_4_1_1);
+        classStatement_4.add(323, classStatement_4_1);
+        classStatement.add(324, classStatement_4);
 
         // manualEnd = ("}" s END)
-        manualEnd.add(324, new Str(323, "}"));
-        manualEnd.add(325, s);
-        manualEnd.add(327, new End(326, "manualEnd"));
+        manualEnd.add(326, new Str(325, "}"));
+        manualEnd.add(327, s);
+        manualEnd.add(329, new End(328, "manualEnd"));
 
         // generatedCode = "// ===== Generated code ====="
 
         // manualCode = !(manualEnd | generatedCode)+
-        OrList manualCode_1 = new OrList(328, "manualCode_1");
-        manualCode_1.add(329, manualEnd);
-        manualCode_1.add(330, generatedCode);
-        manualCode.add(331, manualCode_1, NOT);
+        OrList manualCode_1 = new OrList(330, "manualCode_1");
+        manualCode_1.add(331, manualEnd);
+        manualCode_1.add(332, generatedCode);
+        manualCode.add(333, manualCode_1, NOT);
 
-        // creator = packageStatement s imports s classStatement manualCode [generatedCode] *
-        creator.add(332, packageStatement);
-        creator.add(333, s);
-        creator.add(334, imports);
-        creator.add(335, s);
-        creator.add(336, classStatement);
-        creator.add(337, manualCode);
-        Optional creator_1 = new Optional(338, "creator_1");
-        creator_1.add(339, generatedCode);
-        creator.add(340, creator_1);
-        creator.add(342, new Complete(341, "creator"));
+        // parameterArgClass =
+        //   ["// add":add s] "public " name " " name:method "(" s parameters s ")" s "{" s
+        //   "state." name " = " (!";"+):value ";" [!"}"+] "}" s
+        Optional parameterArgClass_1 = new Optional(334, "parameterArgClass_1");
+        parameterArgClass_1.add(336, new Str(335, "// add"));
+        parameterArgClass_1.add(337, s);
+        parameterArgClass.add(338, parameterArgClass_1);
+        parameterArgClass.add(340, new Str(339, "public "));
+        parameterArgClass.add(341, name);
+        parameterArgClass.add(343, new Str(342, " "));
+        parameterArgClass.add(344, name);
+        parameterArgClass.add(346, new Str(345, "("));
+        parameterArgClass.add(347, s);
+        parameterArgClass.add(348, parameters);
+        parameterArgClass.add(349, s);
+        parameterArgClass.add(351, new Str(350, ")"));
+        parameterArgClass.add(352, s);
+        parameterArgClass.add(354, new Str(353, "{"));
+        parameterArgClass.add(355, s);
+        parameterArgClass.add(357, new Str(356, "state."));
+        parameterArgClass.add(358, name);
+        parameterArgClass.add(360, new Str(359, " = "));
+        Repeat parameterArgClass_2 = new Repeat(361, "parameterArgClass_2");
+        parameterArgClass_2.add(363, new Str(362, ";", NOT));
+        parameterArgClass.add(364, parameterArgClass_2);
+        parameterArgClass.add(366, new Str(365, ";"));
+        Optional parameterArgClass_3 = new Optional(367, "parameterArgClass_3");
+        Repeat parameterArgClass_3_1 = new Repeat(368, "parameterArgClass_3_1");
+        parameterArgClass_3_1.add(370, new Str(369, "}", NOT));
+        parameterArgClass_3.add(371, parameterArgClass_3_1);
+        parameterArgClass.add(372, parameterArgClass_3);
+        parameterArgClass.add(374, new Str(373, "}"));
+        parameterArgClass.add(375, s);
+
+        // parameterClass = "// " name:attribute s "public class " name " {" s parameterArgClass+ "}"
+        parameterClass.add(377, new Str(376, "// "));
+        parameterClass.add(378, name);
+        parameterClass.add(379, s);
+        parameterClass.add(381, new Str(380, "public class "));
+        parameterClass.add(382, name);
+        parameterClass.add(384, new Str(383, " {"));
+        parameterClass.add(385, s);
+        Repeat parameterClass_1 = new Repeat(386, "parameterClass_1");
+        parameterClass_1.add(387, parameterArgClass);
+        parameterClass.add(388, parameterClass_1);
+        parameterClass.add(390, new Str(389, "}"));
+
+        // creator = packageStatement s imports s classStatement manualCode [generatedCode [!parameterClass+ parameterClass:pclass]+] *
+        creator.add(391, packageStatement);
+        creator.add(392, s);
+        creator.add(393, imports);
+        creator.add(394, s);
+        creator.add(395, classStatement);
+        creator.add(396, manualCode);
+        Optional creator_1 = new Optional(397, "creator_1");
+        creator_1.add(398, generatedCode);
+        Optional creator_1_1 = new Optional(399, "creator_1_1");
+        Repeat creator_1_1_1 = new Repeat(400, "creator_1_1_1");
+        Repeat creator_1_1_1_1 = new Repeat(401, "creator_1_1_1_1");
+        creator_1_1_1_1.add(402, parameterClass, NOT);
+        creator_1_1_1.add(403, creator_1_1_1_1);
+        creator_1_1_1.add(404, parameterClass);
+        creator_1_1.add(405, creator_1_1_1);
+        creator_1.add(406, creator_1_1);
+        creator.add(407, creator_1);
+        creator.add(409, new Complete(408, "creator"));
 
         return new TopElement(data1, creator);
     }
@@ -881,6 +1003,9 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         CreatorParser.IAparameter createAparameter();
         CreatorParser.IAparameters createAparameters();
         CreatorParser.IClassStatement createClassStatement();
+        CreatorParser.IParameterArgClass createParameterArgClass();
+        CreatorParser.IParameterClass createParameterClass();
+        CreatorParser.IParameterClasses createParameterClasses();
         CreatorParser.ICreator createCreator();
     }
 
@@ -936,6 +1061,24 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         public void setAParameters(IAparameters iaparameters);
     }
 
+    // ParameterArgClass
+    public interface IParameterArgClass {
+        public void setAdd();
+        public void setMethod(String method);
+        public void setMethodSignature(String parameters);
+        public void setValue(String value);
+    }
+
+    // ParameterClass
+    public interface IParameterClass {
+        public void setAttribute(String attribute);
+        public void addArgument(IParameterArgClass iparameterArgClass);
+    }
+
+    // ParameterClasses
+    public interface IParameterClasses {
+    }
+
     // Creator
     public interface ICreator {
         public void setPackageStatement(IPackageStatement ipackageStatement);
@@ -944,6 +1087,7 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         public void setManualCode(String manualCode);
         public void setGeneratedCode();
         public void setIsMainCreator();
+        public void addParameterClass(IParameterClass ipclass);
     }
 
     // *** Data ***
@@ -957,6 +1101,9 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         private Stack<IAparameter> aparameterStack = new Stack<IAparameter>();
         private Stack<IAparameters> aparametersStack = new Stack<IAparameters>();
         private Stack<IClassStatement> classStatementStack = new Stack<IClassStatement>();
+        private Stack<IParameterArgClass> parameterArgClassStack = new Stack<IParameterArgClass>();
+        private Stack<IParameterClass> parameterClassStack = new Stack<IParameterClass>();
+        private Stack<IParameterClasses> parameterClassesStack = new Stack<IParameterClasses>();
         private Stack<ICreator> creatorStack = new Stack<ICreator>();
 
         public Data(CreatorParser.ICreatorFactory factory) {
@@ -1025,6 +1172,30 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         public CreatorParser.IClassStatement peekClassStatement() {
             if (classStatementStack.empty()) { return null; }
             return classStatementStack.peek();
+        }
+
+        // ParameterArgClass
+        public void pushParameterArgClass() { parameterArgClassStack.push(factory.createParameterArgClass()); }
+        public CreatorParser.IParameterArgClass popParameterArgClass() { return (CreatorParser.IParameterArgClass)parameterArgClassStack.pop(); }
+        public CreatorParser.IParameterArgClass peekParameterArgClass() {
+            if (parameterArgClassStack.empty()) { return null; }
+            return parameterArgClassStack.peek();
+        }
+
+        // ParameterClass
+        public void pushParameterClass() { parameterClassStack.push(factory.createParameterClass()); }
+        public CreatorParser.IParameterClass popParameterClass() { return (CreatorParser.IParameterClass)parameterClassStack.pop(); }
+        public CreatorParser.IParameterClass peekParameterClass() {
+            if (parameterClassStack.empty()) { return null; }
+            return parameterClassStack.peek();
+        }
+
+        // ParameterClasses
+        public void pushParameterClasses() { parameterClassesStack.push(factory.createParameterClasses()); }
+        public CreatorParser.IParameterClasses popParameterClasses() { return (CreatorParser.IParameterClasses)parameterClassesStack.pop(); }
+        public CreatorParser.IParameterClasses peekParameterClasses() {
+            if (parameterClassesStack.empty()) { return null; }
+            return parameterClassesStack.peek();
         }
 
         // Creator
@@ -1255,6 +1426,73 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             }
         }
 
+        // ParameterArgClass parameterArgClass.setAdd(void add);
+        public class ParameterArgClassParameterArgClassAdd implements Output {
+            private String name;
+            public ParameterArgClassParameterArgClassAdd(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekParameterArgClass().setAdd();
+            }
+        }
+
+        // parameterArgClass.setMethod(String method);
+        public class ParameterArgClassParameterArgClassMethod implements Output {
+            private String name;
+            public ParameterArgClassParameterArgClassMethod(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekParameterArgClass().setMethod(source.get(bookmark));
+            }
+        }
+
+        // parameterArgClass.setMethodSignature(String parameters);
+        public class ParameterArgClassParameterArgClassParameters implements Output {
+            private String name;
+            public ParameterArgClassParameterArgClassParameters(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushParameters(); }
+            public void set(Source source, int bookmark) {
+                popParameters();
+                peekParameterArgClass().setMethodSignature(source.get(bookmark));
+            }
+        }
+
+        // parameterArgClass.setValue(String value);
+        public class ParameterArgClassParameterArgClassValue implements Output {
+            private String name;
+            public ParameterArgClassParameterArgClassValue(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekParameterArgClass().setValue(source.get(bookmark));
+            }
+        }
+
+        // ParameterClass parameterClass.setAttribute(String attribute);
+        public class ParameterClassParameterClassAttribute implements Output {
+            private String name;
+            public ParameterClassParameterClassAttribute(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { }
+            public void set(Source source, int bookmark) {
+                peekParameterClass().setAttribute(source.get(bookmark));
+            }
+        }
+
+        // parameterClass.addArgument(ParameterArgClass parameterArgClass);
+        public class ParameterClassParameterClassParameterArgClass implements Output {
+            private String name;
+            public ParameterClassParameterClassParameterArgClass(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushParameterArgClass(); }
+            public void set(Source source, int bookmark) {
+                peekParameterClass().addArgument(popParameterArgClass());
+            }
+        }
+
         // Creator creator.setPackageStatement(PackageStatement packageStatement);
         public class CreatorCreatorPackageStatement implements Output {
             private String name;
@@ -1307,6 +1545,27 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
             public void init(Source source) { }
             public void set(Source source, int bookmark) {
                 peekCreator().setGeneratedCode();
+            }
+        }
+
+        // creator.addParameterClass(ParameterClass pclass);
+        public class CreatorCreatorPclass implements Output {
+            private String name;
+            public CreatorCreatorPclass(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushParameterClass(); }
+            public void set(Source source, int bookmark) {
+                peekCreator().addParameterClass(popParameterClass());
+            }
+        }
+
+        public class CreatorCreatorParameterClass implements Output {
+            private String name;
+            public CreatorCreatorParameterClass(String name) { this.name = name; }
+            public boolean receive() { return false; }
+            public void init(Source source) { pushParameterClass(); }
+            public void set(Source source, int bookmark) {
+                popParameterClass();
             }
         }
     }

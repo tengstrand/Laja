@@ -2,6 +2,7 @@ package net.sf.laja.parser.cdd.creator;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Creator implements CreatorParser.ICreator{
@@ -17,6 +18,7 @@ public class Creator implements CreatorParser.ICreator{
     public boolean isGeneratedCode;
     public List<AsMethod> asMethods;
     public Aparameters parameters;
+    public List<ParameterClass> parameterClasses = new ArrayList<ParameterClass>();
 
     public String filename;
     public String buildMethod;
@@ -30,6 +32,11 @@ public class Creator implements CreatorParser.ICreator{
 
     public void setIsMainCreator() {
         isMain = true;
+    }
+
+    public void addParameterClass(CreatorParser.IParameterClass iparameterClass) {
+        ParameterClass parameterClass = (ParameterClass)iparameterClass;
+        parameterClasses.add(parameterClass);
     }
 
     public void setPackagename(String packagename) {
@@ -89,6 +96,7 @@ public class Creator implements CreatorParser.ICreator{
                 ", manualCode='" + manualCode + '\'' +
                 ", asMethods=" + asMethods +
                 ", maker=" + maker +
+                ", parameterClasses=" + parameterClasses +
                 '}';
     }
 }
