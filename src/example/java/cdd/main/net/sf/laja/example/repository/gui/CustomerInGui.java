@@ -2,7 +2,6 @@ package net.sf.laja.example.repository.gui;
 
 import net.sf.laja.example.repository.domain.AddressCreator;
 import net.sf.laja.example.repository.domain.CustomerCreator;
-import net.sf.laja.example.repository.domain.ZipcodeCreator;
 
 import static net.sf.laja.example.repository.domain.CustomerCreator.CustomerMutableBehaviour;
 import static net.sf.laja.example.repository.state.CustomerState.CustomerMutableState;
@@ -13,17 +12,15 @@ public class CustomerInGui extends CustomerMutableBehaviour {
 
     final CustomerCreator.CustomerBuilder customerBuilder;
     final AddressCreator.AddressBuilder addressBuilder;
-    final ZipcodeCreator.ZipcodeBuilder zipcodeBuilder;
 
     public CustomerInGui(CustomerMutableState state) {
         super(state);
 
-        age = new StringToIntConverter(state.getAge());
-        zipcode = new StringToIntConverter(state.getAddress().getZipcode().getZipcode());
+        age = new StringToIntConverter(state.age);
+        zipcode = new StringToIntConverter(state.address.zipcode);
 
         customerBuilder = new CustomerCreator.CustomerBuilder(state);
         addressBuilder = new AddressCreator.AddressBuilder(state.address);
-        zipcodeBuilder = new ZipcodeCreator.ZipcodeBuilder(state.address.zipcode);
     }
 
     public void setGivenName(String givenName) {
@@ -44,7 +41,7 @@ public class CustomerInGui extends CustomerMutableBehaviour {
     public void setZipcode(String newZipcode) {
         zipcode = new StringToIntConverter(newZipcode);
         if (zipcode.isValid()) {
-            zipcodeBuilder.withZipcode(zipcode.value());
+            addressBuilder.withZipcode(zipcode.value());
         }
     }
 

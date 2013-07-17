@@ -4,10 +4,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.repository.state.AddressState;
-import net.sf.laja.example.repository.state.ZipcodeState.ZipcodeMutableState;
+import net.sf.laja.example.repository.state.Zipcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +30,10 @@ public class AddressCreator implements AddressCreatorMaker {
     public Address asAddress() {
         return new Address(state.asImmutable());
     }
+
+    @Parameters({
+        @Parameter(attribute = "zipcode", methodSignature = "Zipcode zipcode", value = "zipcode.code")
+    })
 
     // ===== Generated code =====
 
@@ -77,13 +83,13 @@ public class AddressCreator implements AddressCreatorMaker {
 
         // zipcode
         public class _Zipcode {
-            public _City zipcode(ZipcodeMutableState zipcode) {
+            public _City zipcode(int zipcode) {
                 state.zipcode = zipcode;
                 return new _City();
             }
 
-            public _City zipcode(ZipcodeCreator zipcode) {
-                state.zipcode = zipcode.asMutableState();
+            public _City zipcode(Zipcode zipcode) {
+                state.zipcode = zipcode.code;
                 return new _City();
             }
         }
@@ -132,6 +138,21 @@ public class AddressCreator implements AddressCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof AddressCreator)) return false;
+
+        return state.equals(((AddressCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "AddressCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class AddressBehaviour {
@@ -166,7 +187,7 @@ public class AddressCreator implements AddressCreatorMaker {
             this.state = state;
         }
 
-        public AddressState state() {
+        public AddressState asState() {
             return state.asImmutable();
         }
 
@@ -201,8 +222,7 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressBuilder withAddressId(int addressId) { state.addressId = addressId; return this; }
         public AddressBuilder withStreetName(String streetName) { state.streetName = streetName; return this; }
-        public AddressBuilder withZipcode(ZipcodeMutableState zipcode) { state.zipcode = zipcode; return this; }
-        public AddressBuilder withZipcode(ZipcodeCreator.ZipcodeBuilder zipcode) { state.zipcode = zipcode.asMutableState(); return this; }
+        public AddressBuilder withZipcode(int zipcode) { state.zipcode = zipcode; return this; }
         public AddressBuilder withCity(String city) { state.city = city; return this; }
 
         public Address asAddress() {
@@ -227,6 +247,21 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof AddressBuilder)) return false;
+
+            return state.equals(((AddressBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "AddressBuilder" + state;
         }
     }
 

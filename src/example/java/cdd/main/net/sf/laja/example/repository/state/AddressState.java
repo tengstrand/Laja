@@ -8,14 +8,11 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.example.repository.state.ZipcodeState.ZipcodeMutableState;
-
 @State
 public class AddressState implements ImmutableState {
     @Id public final int addressId;
     public final String streetName;
-    public final ZipcodeState zipcode;
+    public final int zipcode;
     public final String city;
 
     public boolean isValid() {
@@ -35,7 +32,7 @@ public class AddressState implements ImmutableState {
     public AddressState(
             int addressId,
             String streetName,
-            ZipcodeState zipcode,
+            int zipcode,
             String city) {
         this.addressId = addressId;
         this.streetName = streetName;
@@ -43,7 +40,6 @@ public class AddressState implements ImmutableState {
         this.city = city;
 
         if (streetName == null) throw new InvalidAddressStateException("'streetName' can not be null");
-        if (zipcode == null) throw new InvalidAddressStateException("'zipcode' can not be null");
         if (city == null) throw new InvalidAddressStateException("'city' can not be null");
 
         assertIsValid();
@@ -67,19 +63,19 @@ public class AddressState implements ImmutableState {
 
     public int getAddressId() { return addressId; }
     public String getStreetName() { return streetName; }
-    public ZipcodeState getZipcode() { return zipcode; }
+    public int getZipcode() { return zipcode; }
     public String getCity() { return city; }
 
     public AddressState withAddressId(int addressId) { return new AddressState(addressId, streetName, zipcode, city); }
     public AddressState withStreetName(String streetName) { return new AddressState(addressId, streetName, zipcode, city); }
-    public AddressState withZipcode(ZipcodeState zipcode) { return new AddressState(addressId, streetName, zipcode, city); }
+    public AddressState withZipcode(int zipcode) { return new AddressState(addressId, streetName, zipcode, city); }
     public AddressState withCity(String city) { return new AddressState(addressId, streetName, zipcode, city); }
 
     public AddressMutableState asMutable() {
         return new AddressMutableState(
                 addressId,
                 streetName,
-                zipcode.asMutable(),
+                zipcode,
                 city);
     }
 
@@ -105,7 +101,7 @@ public class AddressState implements ImmutableState {
     public int hashCodeValue() {
         int result = addressId;
         result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
-        result = 31 * result + (zipcode != null ? zipcode.hashCode() : 0);
+        result = 31 * result + zipcode;
         result = 31 * result + (city != null ? city.hashCode() : 0);
 
         return result;
@@ -119,7 +115,7 @@ public class AddressState implements ImmutableState {
 
         if (addressId != state.addressId) return false;
         if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
-        if (zipcode != null ? !zipcode.equals(state.zipcode) : state.zipcode != null) return false;
+        if (zipcode != state.zipcode) return false;
         if (city != null ? !city.equals(state.city) : state.city != null) return false;
 
         return true;
@@ -137,17 +133,16 @@ public class AddressState implements ImmutableState {
     public static class AddressMutableState implements MutableState {
         @Id public int addressId;
         public String streetName;
-        public ZipcodeMutableState zipcode;
+        public int zipcode;
         public String city;
 
         public AddressMutableState() {
-            zipcode = new ZipcodeMutableState();
         }
 
         public AddressMutableState(
                 int addressId,
                 String streetName,
-                ZipcodeMutableState zipcode,
+                int zipcode,
                 String city) {
             this.addressId = addressId;
             this.streetName = streetName;
@@ -163,17 +158,17 @@ public class AddressState implements ImmutableState {
 
         public int getAddressId() { return addressId; }
         public String getStreetName() { return streetName; }
-        public ZipcodeMutableState getZipcode() { return zipcode; }
+        public int getZipcode() { return zipcode; }
         public String getCity() { return city; }
 
         public void setAddressId(int addressId) { this.addressId = addressId; }
         public void setStreetName(String streetName) { this.streetName = streetName; }
-        public void setZipcode(ZipcodeMutableState zipcode) { this.zipcode = zipcode; }
+        public void setZipcode(int zipcode) { this.zipcode = zipcode; }
         public void setCity(String city) { this.city = city; }
 
         public AddressMutableState withAddressId(int addressId) { this.addressId = addressId; return this; }
         public AddressMutableState withStreetName(String streetName) { this.streetName = streetName; return this; }
-        public AddressMutableState withZipcode(ZipcodeMutableState zipcode) { this.zipcode = zipcode; return this; }
+        public AddressMutableState withZipcode(int zipcode) { this.zipcode = zipcode; return this; }
         public AddressMutableState withCity(String city) { this.city = city; return this; }
 
         public void assertIsValid(Validator... validators) {
@@ -196,10 +191,7 @@ public class AddressState implements ImmutableState {
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (streetName == null) errors.addIsNullError(rootElement, parent, "streetName");
-            if (zipcode == null) errors.addIsNullError(rootElement, parent, "zipcode");
             if (city == null) errors.addIsNullError(rootElement, parent, "city");
-
-            if (zipcode != null) zipcode.validate(rootElement, concatenate(parent, "zipcode"), errors);
 
             validate(rootElement, parent, errors);
 
@@ -214,7 +206,7 @@ public class AddressState implements ImmutableState {
             return new AddressState(
                     addressId,
                     streetName,
-                    zipcode != null ? zipcode.asImmutable() : null,
+                    zipcode,
                     city);
         }
 

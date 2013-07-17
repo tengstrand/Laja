@@ -7,13 +7,12 @@ import java.util.List;
 
 import static net.sf.laja.example.repository.domain.AddressCreator.createAddress;
 import static net.sf.laja.example.repository.domain.CustomerCreator.*;
-import static net.sf.laja.example.repository.domain.ZipcodeCreator.createZipcode;
 
 public class CustomerRepository {
     CustomerListBuilder customers = createCustomerList(
-            createCustomer().ssn(197501011234L).givenName("Eva").age(10).address(createAddress().streetName("Storgatan 1").zipcode(createZipcode().zipcode(12345)).city("Uppsala")).withSurname("Andersson"),
-            createCustomer().ssn(198002036677L).givenName("Kalle").age(15).address(createAddress().streetName("Lillgatan 1").zipcode(createZipcode().zipcode(22233)).city("Stockholm")).withSurname("Karlsson"),
-            createCustomer().ssn(19950405067788L).givenName("Sven").age(15).address(createAddress().streetName("Lillgatan 99").zipcode(createZipcode().zipcode(22244)).city("Gothenburg")).withSurname("Karlsson"));
+            createCustomer().ssn(197501011234L).givenName("Eva").age(10).address(createAddress().streetName("Storgatan 1").zipcode(12345).city("Uppsala")).withSurname("Andersson"),
+            createCustomer().ssn(198002036677L).givenName("Kalle").age(15).address(createAddress().streetName("Lillgatan 1").zipcode(22233).city("Stockholm")).withSurname("Karlsson"),
+            createCustomer().ssn(19950405067788L).givenName("Sven").age(15).address(createAddress().streetName("Lillgatan 99").zipcode(22244).city("Gothenburg")).withSurname("Karlsson"));
 
     public CustomerListBuilder findBySurname(String surname) {
         List<CustomerCreator> result = new ArrayList<CustomerCreator>();

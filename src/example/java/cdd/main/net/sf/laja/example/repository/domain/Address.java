@@ -1,6 +1,7 @@
 package net.sf.laja.example.repository.domain;
 
 import net.sf.laja.example.repository.state.AddressState;
+import net.sf.laja.example.repository.state.Zipcode;
 
 import static net.sf.laja.example.repository.domain.AddressCreator.AddressBehaviour;
 

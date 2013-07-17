@@ -172,6 +172,21 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof CustomerCreator)) return false;
+
+        return state.equals(((CustomerCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "CustomerCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class CustomerBehaviour {
@@ -206,7 +221,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
             this.state = state;
         }
 
-        public CustomerState state() {
+        public CustomerState asState() {
             return state.asImmutable();
         }
 
@@ -282,6 +297,21 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof CustomerBuilder)) return false;
+
+            return state.equals(((CustomerBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "CustomerBuilder" + state;
         }
     }
 
