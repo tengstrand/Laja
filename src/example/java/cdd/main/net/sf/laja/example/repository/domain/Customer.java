@@ -10,7 +10,7 @@ public class Customer extends CustomerBehaviour {
 
     public Customer(CustomerState state) {
         super(state);
-        address = new Address(state.getAddress());
+        address = new Address(state.address);
     }
 
     /**

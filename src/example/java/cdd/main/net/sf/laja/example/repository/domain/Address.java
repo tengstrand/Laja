@@ -11,6 +11,6 @@ public class Address extends AddressBehaviour {
     public Address(AddressState state) {
         super(state);
 
-        zipcode = new Zipcode(state.getZipcode());
+        zipcode = new Zipcode(state.zipcode);
     }
 }
