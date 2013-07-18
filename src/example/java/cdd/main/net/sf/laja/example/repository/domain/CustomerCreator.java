@@ -45,7 +45,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerInGui(state);
     }
 
-
     // ===== Generated code =====
 
     public static CustomerFactory createCustomer() {
