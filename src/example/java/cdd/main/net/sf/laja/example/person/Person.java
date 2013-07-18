@@ -1,5 +1,6 @@
 package net.sf.laja.example.person;
 
+import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.PersonState;
 
 public class Person extends PersonCreator.PersonBehaviour {
@@ -7,7 +8,7 @@ public class Person extends PersonCreator.PersonBehaviour {
 
     public Person(PersonState state) {
         super(state);
-        bmi = new BodyMassIndex(state.size);
+        bmi = new BodyMassIndex(new BmiState(state.heightInCentimeters, state.weightInKilograms));
     }
 
     public double calculateBmi() {

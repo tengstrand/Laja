@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
-import net.sf.laja.example.person.state.BmiState.BmiMutableState;
 import net.sf.laja.example.person.state.PersonState;
 
 import java.util.ArrayList;
@@ -77,21 +76,24 @@ public class PersonCreator implements PersonCreatorMaker {
 
         // surname
         public class _Surname {
-            public _Size surname(String surname) {
+            public _HeightInCentimeters surname(String surname) {
                 state.surname = surname;
-                return new _Size();
+                return new _HeightInCentimeters();
             }
         }
 
-        // size
-        public class _Size {
-            public PersonCreator size(BmiMutableState size) {
-                state.size = size;
-                return new PersonCreator(state);
+        // heightInCentimeters
+        public class _HeightInCentimeters {
+            public _WeightInKilograms heightInCentimeters(int heightInCentimeters) {
+                state.heightInCentimeters = heightInCentimeters;
+                return new _WeightInKilograms();
             }
+        }
 
-            public PersonCreator size(BmiCreator size) {
-                state.size = size.asMutableState();
+        // weightInKilograms
+        public class _WeightInKilograms {
+            public PersonCreator weightInKilograms(int weightInKilograms) {
+                state.weightInKilograms = weightInKilograms;
                 return new PersonCreator(state);
             }
         }
@@ -211,8 +213,8 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonBuilder withGivenName(String givenName) { state.givenName = givenName; return this; }
         public PersonBuilder withSurname(String surname) { state.surname = surname; return this; }
-        public PersonBuilder withSize(BmiMutableState size) { state.size = size; return this; }
-        public PersonBuilder withSize(BmiCreator.BmiBuilder size) { state.size = size.asMutableState(); return this; }
+        public PersonBuilder withHeightInCentimeters(int heightInCentimeters) { state.heightInCentimeters = heightInCentimeters; return this; }
+        public PersonBuilder withWeightInKilograms(int weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; }
 
         public Person asPerson() {
             return new Person(state.asImmutable());

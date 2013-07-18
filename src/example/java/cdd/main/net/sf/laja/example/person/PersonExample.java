@@ -1,6 +1,5 @@
 package net.sf.laja.example.person;
 
-import static net.sf.laja.example.person.BmiCreator.createBmi;
 import static net.sf.laja.example.person.PersonCreator.createPerson;
 
 public class PersonExample {
@@ -10,8 +9,8 @@ public class PersonExample {
      *  and we let 'Person' delegate to this object in the method calculateBmi().
      */
     public static void main(String... args) {
-        Person person = createPerson().givenName("Joakim").surname("Tengstrand").size(
-                createBmi().heightInCentimeters(186).weightInKilograms(82)).asPerson();
+        Person person = createPerson().givenName("Joakim").surname("Tengstrand")
+                .heightInCentimeters(186).weightInKilograms(82).asPerson();
         System.out.println(person);
         System.out.println("Body Mass Index: " + person.calculateBmi());
         System.out.println("Has normal weight?: " + person.hasNormalWeight());
