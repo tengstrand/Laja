@@ -36,7 +36,9 @@ public class Creator implements CreatorParser.ICreator{
 
     public void addParameterClass(CreatorParser.IParameterClass iparameterClass) {
         ParameterClass parameterClass = (ParameterClass)iparameterClass;
-        parameterClasses.add(parameterClass);
+        if (!parameterClass.isEmpty()) {
+            parameterClasses.add(parameterClass);
+        }
     }
 
     public void setPackagename(String packagename) {
@@ -66,6 +68,15 @@ public class Creator implements CreatorParser.ICreator{
         buildMethod = "build" + name;
         createMethod = "create" + name;
         entryMethod = StringUtils.uncapitalize(name) + "Entry";
+    }
+
+    public Aparameters getNewParameters() {
+        Aparameters result = new Aparameters();
+
+        for (ParameterClass parameterClass : parameterClasses) {
+            result.addParameters(parameterClass.asAParameters());
+        }
+        return result;
     }
 
     public void setManualCode(String manualCode) {

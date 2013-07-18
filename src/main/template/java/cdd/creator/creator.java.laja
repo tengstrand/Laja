@@ -12,6 +12,7 @@
   #set (statevariable = creator.statevariable)
   #set (asMethods = creator.asMethods)
   #set (parameters = creator.parameters)
+  #set (newParameters = creator.newParameters)
   #set (isGeneratedCode = creator.isGeneratedCode)
   #set (state = creator.state)
   #set (parameterClasses = creator.parameterClasses)
@@ -43,7 +44,6 @@
     #end
   #end
   #set (hasMandatoryAttributes = mandatoryAttributes.size > 0)
-  #println("# parameterClasses = {parameterClasses}")
 #end
 
 #macro imports()
@@ -87,6 +87,30 @@ import static {import};
 // ===== Generated code =====
   #end
 
+#end
+
+#macro parameters()
+  #if (!newParameters.isEmpty)
+    /*
+    #if (parameters.isEmpty)
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
+
+    @Parameters({
+    #end
+    #foreach (p in newParameters)
+      #set (method = "")
+      #if (!p.isParameterMethod)
+        #set (method = ", method = \"{p.method}\"")
+      #end
+        @Parameter(attribute = "{p.attribute}"{method}, methodSignature = "{p.methodSignature}", value = "{p.value}")
+    #end
+    #if (parameters.isEmpty)
+    })
+    #end
+    */
+
+  #end
 #end
 
 #macro create()
@@ -269,6 +293,7 @@ public class {classname} implements {maker} {
 {parameters.content}##
 {manualCode}##
     #generatedCode()
+    #parameters()
     #create()
     #build()
     #createList()

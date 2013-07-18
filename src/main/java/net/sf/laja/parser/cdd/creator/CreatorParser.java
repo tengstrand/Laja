@@ -21,7 +21,7 @@ import net.sf.laja.parser.engine2.source.URLSource;
 import java.util.Stack;
 
 /**
- * Auto generated 2013-07-17 by Laja:
+ * Auto generated 2013-07-18 by Laja:
  *    http://laja.sf.net
  *
  * Version: laja2-006-alpha
@@ -485,71 +485,79 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualCode.add(333, manualCode_1, NOT);
 
         // parameterArgClass =
-        //   ["// add":add s] "public " name " " name:method "(" s parameters s ")" s "{" s
-        //   "state." name " = " (!";"+):value ";" [!"}"+] "}" s
+        //   [newline | " " | "\t"]+ ["// add":add] s "public " name " " name:method
+        //   "(" s parameters s ")" s "{" s "state." name " = " (!";"+):value ";" [!"}"+] "}"
         Optional parameterArgClass_1 = new Optional(334, "parameterArgClass_1");
-        parameterArgClass_1.add(336, new Str(335, "// add", parameterArgClassParameterArgClassAdd));
-        parameterArgClass_1.add(337, s);
-        parameterArgClass.add(338, parameterArgClass_1);
-        parameterArgClass.add(340, new Str(339, "public "));
-        parameterArgClass.add(341, name);
-        parameterArgClass.add(343, new Str(342, " "));
-        parameterArgClass.add(344, name, parameterArgClassParameterArgClassMethod);
-        parameterArgClass.add(346, new Str(345, "("));
-        parameterArgClass.add(347, s);
-        parameterArgClass.add(348, parameters, parameterArgClassParameterArgClassParameters);
+        Repeat parameterArgClass_1_1 = new Repeat(335, "parameterArgClass_1_1");
+        OrList parameterArgClass_1_1_1 = new OrList(336, "parameterArgClass_1_1_1");
+        parameterArgClass_1_1_1.add(337, newline);
+        parameterArgClass_1_1_1.add(339, new Str(338, " "));
+        parameterArgClass_1_1_1.add(341, new Str(340, "\t"));
+        parameterArgClass_1_1.add(342, parameterArgClass_1_1_1);
+        parameterArgClass_1.add(343, parameterArgClass_1_1);
+        parameterArgClass.add(344, parameterArgClass_1);
+        Optional parameterArgClass_2 = new Optional(345, "parameterArgClass_2");
+        parameterArgClass_2.add(347, new Str(346, "// add", parameterArgClassParameterArgClassAdd));
+        parameterArgClass.add(348, parameterArgClass_2);
         parameterArgClass.add(349, s);
-        parameterArgClass.add(351, new Str(350, ")"));
-        parameterArgClass.add(352, s);
-        parameterArgClass.add(354, new Str(353, "{"));
-        parameterArgClass.add(355, s);
-        parameterArgClass.add(357, new Str(356, "state."));
-        parameterArgClass.add(358, name);
-        parameterArgClass.add(360, new Str(359, " = "));
-        Repeat parameterArgClass_2 = new Repeat(361, "parameterArgClass_2", parameterArgClassParameterArgClassValue);
-        parameterArgClass_2.add(363, new Str(362, ";", NOT));
-        parameterArgClass.add(364, parameterArgClass_2);
-        parameterArgClass.add(366, new Str(365, ";"));
-        Optional parameterArgClass_3 = new Optional(367, "parameterArgClass_3");
-        Repeat parameterArgClass_3_1 = new Repeat(368, "parameterArgClass_3_1");
-        parameterArgClass_3_1.add(370, new Str(369, "}", NOT));
-        parameterArgClass_3.add(371, parameterArgClass_3_1);
-        parameterArgClass.add(372, parameterArgClass_3);
-        parameterArgClass.add(374, new Str(373, "}"));
-        parameterArgClass.add(375, s);
+        parameterArgClass.add(351, new Str(350, "public "));
+        parameterArgClass.add(352, name);
+        parameterArgClass.add(354, new Str(353, " "));
+        parameterArgClass.add(355, name, parameterArgClassParameterArgClassMethod);
+        parameterArgClass.add(357, new Str(356, "("));
+        parameterArgClass.add(358, s);
+        parameterArgClass.add(359, parameters, parameterArgClassParameterArgClassParameters);
+        parameterArgClass.add(360, s);
+        parameterArgClass.add(362, new Str(361, ")"));
+        parameterArgClass.add(363, s);
+        parameterArgClass.add(365, new Str(364, "{"));
+        parameterArgClass.add(366, s);
+        parameterArgClass.add(368, new Str(367, "state."));
+        parameterArgClass.add(369, name);
+        parameterArgClass.add(371, new Str(370, " = "));
+        Repeat parameterArgClass_3 = new Repeat(372, "parameterArgClass_3", parameterArgClassParameterArgClassValue);
+        parameterArgClass_3.add(374, new Str(373, ";", NOT));
+        parameterArgClass.add(375, parameterArgClass_3);
+        parameterArgClass.add(377, new Str(376, ";"));
+        Optional parameterArgClass_4 = new Optional(378, "parameterArgClass_4");
+        Repeat parameterArgClass_4_1 = new Repeat(379, "parameterArgClass_4_1");
+        parameterArgClass_4_1.add(381, new Str(380, "}", NOT));
+        parameterArgClass_4.add(382, parameterArgClass_4_1);
+        parameterArgClass.add(383, parameterArgClass_4);
+        parameterArgClass.add(385, new Str(384, "}"));
 
-        // parameterClass = "// " name:attribute s "public class " name " {" s parameterArgClass+ "}"
-        parameterClass.add(377, new Str(376, "// "));
-        parameterClass.add(378, name, parameterClassParameterClassAttribute);
-        parameterClass.add(379, s);
-        parameterClass.add(381, new Str(380, "public class "));
-        parameterClass.add(382, name);
-        parameterClass.add(384, new Str(383, " {"));
-        parameterClass.add(385, s);
-        Repeat parameterClass_1 = new Repeat(386, "parameterClass_1");
-        parameterClass_1.add(387, parameterArgClass, parameterClassParameterClassParameterArgClass);
-        parameterClass.add(388, parameterClass_1);
-        parameterClass.add(390, new Str(389, "}"));
+        // parameterClass = "// " name:attribute s "public class " name " {" parameterArgClass+ s "}"
+        parameterClass.add(387, new Str(386, "// "));
+        parameterClass.add(388, name, parameterClassParameterClassAttribute);
+        parameterClass.add(389, s);
+        parameterClass.add(391, new Str(390, "public class "));
+        parameterClass.add(392, name);
+        parameterClass.add(394, new Str(393, " {"));
+        Repeat parameterClass_1 = new Repeat(395, "parameterClass_1");
+        parameterClass_1.add(396, parameterArgClass, parameterClassParameterClassParameterArgClass);
+        parameterClass.add(397, parameterClass_1);
+        parameterClass.add(398, s);
+        parameterClass.add(400, new Str(399, "}"));
 
         // creator = packageStatement s imports s classStatement manualCode [generatedCode [!parameterClass+ parameterClass:pclass]+] *
-        creator.add(391, packageStatement, creatorCreatorPackageStatement);
-        creator.add(392, s);
-        creator.add(393, imports, creatorCreatorImports);
-        creator.add(394, s);
-        creator.add(395, classStatement, creatorCreatorClassStatement);
-        creator.add(396, manualCode, creatorCreatorManualCode);
-        Optional creator_1 = new Optional(397, "creator_1");
-        creator_1.add(398, generatedCode, creatorCreatorGeneratedCode);
-        Optional creator_1_1 = new Optional(399, "creator_1_1");
-        Repeat creator_1_1_1 = new Repeat(400, "creator_1_1_1");
-        Repeat creator_1_1_1_1 = new Repeat(401, "creator_1_1_1_1");
-        creator_1_1_1_1.add(402, parameterClass, NOT, creatorCreatorParameterClass);
-        creator_1_1_1.add(403, creator_1_1_1_1);
-        creator_1_1_1.add(404, parameterClass, creatorCreatorPclass);
-        creator_1_1.add(405, creator_1_1_1);
-        creator_1.add(406, creator_1_1);
-        creator.add(407, creator_1);
-        creator.add(409, new Complete(408, "creator"));
+        creator.add(401, packageStatement, creatorCreatorPackageStatement);
+        creator.add(402, s);
+        creator.add(403, imports, creatorCreatorImports);
+        creator.add(404, s);
+        creator.add(405, classStatement, creatorCreatorClassStatement);
+        creator.add(406, manualCode, creatorCreatorManualCode);
+        Optional creator_1 = new Optional(407, "creator_1");
+        creator_1.add(408, generatedCode, creatorCreatorGeneratedCode);
+        Optional creator_1_1 = new Optional(409, "creator_1_1");
+        Repeat creator_1_1_1 = new Repeat(410, "creator_1_1_1");
+        Repeat creator_1_1_1_1 = new Repeat(411, "creator_1_1_1_1");
+        creator_1_1_1_1.add(412, parameterClass, NOT, creatorCreatorParameterClass);
+        creator_1_1_1.add(413, creator_1_1_1_1);
+        creator_1_1_1.add(414, parameterClass, creatorCreatorPclass);
+        creator_1_1.add(415, creator_1_1_1);
+        creator_1.add(416, creator_1_1);
+        creator.add(417, creator_1);
+        creator.add(419, new Complete(418, "creator"));
 
         return new TopElement(data2, creator);
     }
@@ -896,71 +904,79 @@ public final class CreatorParser implements net.sf.laja.parser.engine2.Parser {
         manualCode.add(333, manualCode_1, NOT);
 
         // parameterArgClass =
-        //   ["// add":add s] "public " name " " name:method "(" s parameters s ")" s "{" s
-        //   "state." name " = " (!";"+):value ";" [!"}"+] "}" s
+        //   [newline | " " | "\t"]+ ["// add":add] s "public " name " " name:method
+        //   "(" s parameters s ")" s "{" s "state." name " = " (!";"+):value ";" [!"}"+] "}"
         Optional parameterArgClass_1 = new Optional(334, "parameterArgClass_1");
-        parameterArgClass_1.add(336, new Str(335, "// add"));
-        parameterArgClass_1.add(337, s);
-        parameterArgClass.add(338, parameterArgClass_1);
-        parameterArgClass.add(340, new Str(339, "public "));
-        parameterArgClass.add(341, name);
-        parameterArgClass.add(343, new Str(342, " "));
-        parameterArgClass.add(344, name);
-        parameterArgClass.add(346, new Str(345, "("));
-        parameterArgClass.add(347, s);
-        parameterArgClass.add(348, parameters);
+        Repeat parameterArgClass_1_1 = new Repeat(335, "parameterArgClass_1_1");
+        OrList parameterArgClass_1_1_1 = new OrList(336, "parameterArgClass_1_1_1");
+        parameterArgClass_1_1_1.add(337, newline);
+        parameterArgClass_1_1_1.add(339, new Str(338, " "));
+        parameterArgClass_1_1_1.add(341, new Str(340, "\t"));
+        parameterArgClass_1_1.add(342, parameterArgClass_1_1_1);
+        parameterArgClass_1.add(343, parameterArgClass_1_1);
+        parameterArgClass.add(344, parameterArgClass_1);
+        Optional parameterArgClass_2 = new Optional(345, "parameterArgClass_2");
+        parameterArgClass_2.add(347, new Str(346, "// add"));
+        parameterArgClass.add(348, parameterArgClass_2);
         parameterArgClass.add(349, s);
-        parameterArgClass.add(351, new Str(350, ")"));
-        parameterArgClass.add(352, s);
-        parameterArgClass.add(354, new Str(353, "{"));
-        parameterArgClass.add(355, s);
-        parameterArgClass.add(357, new Str(356, "state."));
-        parameterArgClass.add(358, name);
-        parameterArgClass.add(360, new Str(359, " = "));
-        Repeat parameterArgClass_2 = new Repeat(361, "parameterArgClass_2");
-        parameterArgClass_2.add(363, new Str(362, ";", NOT));
-        parameterArgClass.add(364, parameterArgClass_2);
-        parameterArgClass.add(366, new Str(365, ";"));
-        Optional parameterArgClass_3 = new Optional(367, "parameterArgClass_3");
-        Repeat parameterArgClass_3_1 = new Repeat(368, "parameterArgClass_3_1");
-        parameterArgClass_3_1.add(370, new Str(369, "}", NOT));
-        parameterArgClass_3.add(371, parameterArgClass_3_1);
-        parameterArgClass.add(372, parameterArgClass_3);
-        parameterArgClass.add(374, new Str(373, "}"));
-        parameterArgClass.add(375, s);
+        parameterArgClass.add(351, new Str(350, "public "));
+        parameterArgClass.add(352, name);
+        parameterArgClass.add(354, new Str(353, " "));
+        parameterArgClass.add(355, name);
+        parameterArgClass.add(357, new Str(356, "("));
+        parameterArgClass.add(358, s);
+        parameterArgClass.add(359, parameters);
+        parameterArgClass.add(360, s);
+        parameterArgClass.add(362, new Str(361, ")"));
+        parameterArgClass.add(363, s);
+        parameterArgClass.add(365, new Str(364, "{"));
+        parameterArgClass.add(366, s);
+        parameterArgClass.add(368, new Str(367, "state."));
+        parameterArgClass.add(369, name);
+        parameterArgClass.add(371, new Str(370, " = "));
+        Repeat parameterArgClass_3 = new Repeat(372, "parameterArgClass_3");
+        parameterArgClass_3.add(374, new Str(373, ";", NOT));
+        parameterArgClass.add(375, parameterArgClass_3);
+        parameterArgClass.add(377, new Str(376, ";"));
+        Optional parameterArgClass_4 = new Optional(378, "parameterArgClass_4");
+        Repeat parameterArgClass_4_1 = new Repeat(379, "parameterArgClass_4_1");
+        parameterArgClass_4_1.add(381, new Str(380, "}", NOT));
+        parameterArgClass_4.add(382, parameterArgClass_4_1);
+        parameterArgClass.add(383, parameterArgClass_4);
+        parameterArgClass.add(385, new Str(384, "}"));
 
-        // parameterClass = "// " name:attribute s "public class " name " {" s parameterArgClass+ "}"
-        parameterClass.add(377, new Str(376, "// "));
-        parameterClass.add(378, name);
-        parameterClass.add(379, s);
-        parameterClass.add(381, new Str(380, "public class "));
-        parameterClass.add(382, name);
-        parameterClass.add(384, new Str(383, " {"));
-        parameterClass.add(385, s);
-        Repeat parameterClass_1 = new Repeat(386, "parameterClass_1");
-        parameterClass_1.add(387, parameterArgClass);
-        parameterClass.add(388, parameterClass_1);
-        parameterClass.add(390, new Str(389, "}"));
+        // parameterClass = "// " name:attribute s "public class " name " {" parameterArgClass+ s "}"
+        parameterClass.add(387, new Str(386, "// "));
+        parameterClass.add(388, name);
+        parameterClass.add(389, s);
+        parameterClass.add(391, new Str(390, "public class "));
+        parameterClass.add(392, name);
+        parameterClass.add(394, new Str(393, " {"));
+        Repeat parameterClass_1 = new Repeat(395, "parameterClass_1");
+        parameterClass_1.add(396, parameterArgClass);
+        parameterClass.add(397, parameterClass_1);
+        parameterClass.add(398, s);
+        parameterClass.add(400, new Str(399, "}"));
 
         // creator = packageStatement s imports s classStatement manualCode [generatedCode [!parameterClass+ parameterClass:pclass]+] *
-        creator.add(391, packageStatement);
-        creator.add(392, s);
-        creator.add(393, imports);
-        creator.add(394, s);
-        creator.add(395, classStatement);
-        creator.add(396, manualCode);
-        Optional creator_1 = new Optional(397, "creator_1");
-        creator_1.add(398, generatedCode);
-        Optional creator_1_1 = new Optional(399, "creator_1_1");
-        Repeat creator_1_1_1 = new Repeat(400, "creator_1_1_1");
-        Repeat creator_1_1_1_1 = new Repeat(401, "creator_1_1_1_1");
-        creator_1_1_1_1.add(402, parameterClass, NOT);
-        creator_1_1_1.add(403, creator_1_1_1_1);
-        creator_1_1_1.add(404, parameterClass);
-        creator_1_1.add(405, creator_1_1_1);
-        creator_1.add(406, creator_1_1);
-        creator.add(407, creator_1);
-        creator.add(409, new Complete(408, "creator"));
+        creator.add(401, packageStatement);
+        creator.add(402, s);
+        creator.add(403, imports);
+        creator.add(404, s);
+        creator.add(405, classStatement);
+        creator.add(406, manualCode);
+        Optional creator_1 = new Optional(407, "creator_1");
+        creator_1.add(408, generatedCode);
+        Optional creator_1_1 = new Optional(409, "creator_1_1");
+        Repeat creator_1_1_1 = new Repeat(410, "creator_1_1_1");
+        Repeat creator_1_1_1_1 = new Repeat(411, "creator_1_1_1_1");
+        creator_1_1_1_1.add(412, parameterClass, NOT);
+        creator_1_1_1.add(413, creator_1_1_1_1);
+        creator_1_1_1.add(414, parameterClass);
+        creator_1_1.add(415, creator_1_1_1);
+        creator_1.add(416, creator_1_1);
+        creator.add(417, creator_1);
+        creator.add(419, new Complete(418, "creator"));
 
         return new TopElement(data1, creator);
     }

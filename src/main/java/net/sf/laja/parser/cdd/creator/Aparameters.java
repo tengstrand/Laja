@@ -8,12 +8,20 @@ public class Aparameters implements CreatorParser.IAparameters, Iterable<Aparame
     public String content = "";
     public List<Aparameter> parameters = new ArrayList<Aparameter>();
 
+    public boolean isEmpty() {
+        return parameters.isEmpty();
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
     public void addParameter(CreatorParser.IAparameter iaparameter) {
         parameters.add((Aparameter)iaparameter);
+    }
+
+    public void addParameters(List<Aparameter> parameters) {
+        this.parameters.addAll(parameters);
     }
 
     public Iterator<Aparameter> iterator() {

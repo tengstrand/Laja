@@ -22,6 +22,17 @@ public class ParameterArgClass implements CreatorParser.IParameterArgClass {
         this.value = value;
     }
 
+    public Aparameter asAParameter(String attribute) {
+        Aparameter aparameter = new Aparameter();
+        aparameter.attribute = attribute;
+        aparameter.method = method == null ? attribute : method;
+        aparameter.nextAttribute = "";
+        aparameter.methodSignature = methodSignature;
+        aparameter.value = value;
+
+        return aparameter;
+    }
+
     @Override
     public String toString() {
         return "ParameterArgClass{" +

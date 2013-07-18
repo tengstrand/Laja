@@ -37,10 +37,10 @@ grammar creator {
    generatedCode = "// ===== Generated code =====";
    manualCode = !(manualEnd | generatedCode)+;
 
-   parameterArgClass = ["// add":add s] "public " name " " name:method "(" s parameters s ")" s "{" s
-                       "state." name " = " (!";"+):value ";" [!"}"+] "}" s;
+   parameterArgClass = [newline | " " | "\t"]+ ["// add":add] s "public " name " " name:method
+                       "(" s parameters s ")" s "{" s "state." name " = " (!";"+):value ";" [!"}"+] "}";
 
-   parameterClass = "// " name:attribute s "public class " name " {" s parameterArgClass+ "}";
+   parameterClass = "// " name:attribute s "public class " name " {" parameterArgClass+ s "}";
 
    creator = packageStatement s imports s classStatement manualCode [generatedCode [!parameterClass+ parameterClass:pclass]+] *;
 
