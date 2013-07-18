@@ -7,7 +7,7 @@ public class Car extends CarCreator.CarBehaviour {
 
     public Car(CarState state) {
         super(state);
-        size = new VehicleSize(state.getSize());
+        size = new VehicleSize(state.size);
     }
 
     // Used by test context to inject mocks.
