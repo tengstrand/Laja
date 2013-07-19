@@ -183,8 +183,8 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
-
   #set (tab = "        ")
+
   #classHeader()
   #attributes(tab, "")
   #emptyConstructor()
