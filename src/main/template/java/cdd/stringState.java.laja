@@ -1,0 +1,25 @@
+#namespace string
+
+#macro classHeader()
+  #if (version < 1)
+    @State(type = "string")
+  #else
+    @State(version = {version}, type = "string")
+  #end
+    public static class {stringClass} {
+#end
+
+#macro attributes()
+  #foreach (attribute in attributes)
+        {attribute.annotationsContent}public String {attribute.name};
+  #end
+
+#end
+
+#macro stringState()
+  #set ($.attributes = state.mutableAttributes)
+
+  #classHeader()
+  #attributes()
+    }
+#end
