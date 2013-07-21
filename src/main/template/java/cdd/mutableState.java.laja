@@ -37,10 +37,10 @@
   #end
 #end
 
-#macro withMethods()
+#macro withMethods(returnClass)
 
   #foreach (attribute in attributes)
-        public {mutableClass} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; return this; }
+        public {returnClass} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; return this; }
   #end
 #end
 
@@ -187,12 +187,12 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 
   #classHeader()
   #attributes(tab, "")
-  #emptyConstructor("{mutableClass}")
-  #constructor("{mutableClass}", false, tab)
+  #emptyConstructor(mutableClass)
+  #constructor(mutableClass, false, tab)
   #userValidate()
   #getters(tab)
   #setters()
-  #withMethods()
+  #withMethods(mutableClass)
   #assertIsValid()
   #isValid()
   #rootValidate()

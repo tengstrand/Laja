@@ -21,8 +21,11 @@
 
   #classHeader()
   #attributes()
-  #$mutable.emptyConstructor("{stringClass}")
-  #constructor("{stringClass}", false, tab)
+  #$mutable.emptyConstructor(stringClass)
+  #constructor(stringClass, false, tab)
+  #$mutable.getters(tab)
+  #$mutable.setters()
+  #$mutable.withMethods(stringClass)
 
     }
 #end
