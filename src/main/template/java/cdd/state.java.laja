@@ -419,7 +419,8 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #equalsValue(classname, tab)
     #toString(tab)
     #$mutable.mutableState()
-##    #$string.stringState()
+    #$string.stringState()
+    #set ($.attributes = state.attributes)
 }
 #end
 

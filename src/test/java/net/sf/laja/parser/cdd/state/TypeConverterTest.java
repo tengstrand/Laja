@@ -35,6 +35,11 @@ public class TypeConverterTest {
     }
 
     @Test
+    public void convertImmutableListToMutableString() {
+        assertThat(converter.asMutableString("ImmutableList"), equalTo("ImmutableList"));
+    }
+
+    @Test
     public void convertImmutableMap() {
         assertThat(converter.asMutable("ImmutableMap"), equalTo("Map"));
     }

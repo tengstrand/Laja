@@ -146,6 +146,26 @@ public class Type implements StateParser.IType {
         return result;
     }
 
+    public Type asMutableString() {
+        Type result = new Type();
+        result.setName(typeConverter.asMutableString(name));
+        CollectionType ctype = null;
+        if (collectionType != null) {
+            ctype = new CollectionType();
+            ctype.setType(collectionType.type.asMutableString());
+        }
+        MapType mtype = null;
+        if (mapType != null) {
+            mtype = new MapType();
+            mtype.setKey(mapType.key.asMutableString());
+            mtype.setEntry(mapType.entry.asMutableString());
+        }
+        result.setCollectionType(ctype);
+        result.setMapType(mtype);
+
+        return result;
+    }
+
     public Type asImmutable() {
         Type result = new Type();
         result.setName(typeConverter.asImmutable(name));

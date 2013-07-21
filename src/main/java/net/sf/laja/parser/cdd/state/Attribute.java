@@ -4,7 +4,7 @@ import net.sf.laja.parser.cdd.creator.Creator;
 import org.apache.commons.lang.StringUtils;
 
 public class Attribute implements StateParser.IAttribute {
-    // When adding new attributes, remember to also add them to the method asMutable()!
+    // When adding new attributes, also remember to add them to the methods asMutable() and asImmutable!
     public Type type;
     public String name;
     public String nameAsClass;
@@ -38,6 +38,14 @@ public class Attribute implements StateParser.IAttribute {
     public Attribute asMutable() {
         Attribute result = new Attribute();
         result.type = type.asMutable();
+        copyTypes(result);
+
+        return result;
+    }
+
+    public Attribute asMutableString() {
+        Attribute result = new Attribute();
+        result.type = type.asMutableString();
         copyTypes(result);
 
         return result;

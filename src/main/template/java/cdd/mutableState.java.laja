@@ -201,6 +201,5 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #hashCode(tab)
   #equals(mutableClass, tab)
   #toString(tab)
-  #set ($.attributes = state.attributes)
     }
 #end

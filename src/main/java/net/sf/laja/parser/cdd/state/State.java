@@ -47,6 +47,14 @@ public class State implements StateParser.IState {
         return result;
     }
 
+    public List<Attribute> mutableStringAttributes() {
+        List<Attribute> result = new ArrayList<Attribute>();
+        for (Attribute attribute : attributes) {
+            result.add(attribute.asMutableString());
+        }
+        return result;
+    }
+
     public void setPackageName(String packagename) {
         this.packagename = packagename;
     }

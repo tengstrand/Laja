@@ -22,6 +22,22 @@ public class TypeConverter {
         return typeName;
     }
 
+    public String asMutableString(String typeName) {
+        if (typeName.endsWith("State")) {
+            return typeName.substring(0, typeName.length()-"State".length()) + "StringState";
+        }
+        if (typeName.equals("ImmutableSet")) {
+            return "Set";
+        }
+        if (typeName.equals("ImmutableList")) {
+            return "List";
+        }
+        if (typeName.equals("ImmutableMap")) {
+            return "Map";
+        }
+        return "String";
+    }
+
     public String asImmutable(String typeName) {
         if (typeName.endsWith("MutableState")) {
             return typeName.substring(0, typeName.length()-"MutableState".length()) + "State";

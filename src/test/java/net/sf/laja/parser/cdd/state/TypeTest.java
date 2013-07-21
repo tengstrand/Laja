@@ -23,6 +23,27 @@ public class TypeTest {
     }
 
     @Test
+    public void immutableList_asMutable() {
+        Type type = type("ImmutableList", collection("Integer", null, null), null);
+
+        assertThat(type.asMutable().toString(), equalTo("List<Integer>"));
+    }
+
+    @Test
+    public void immutableList_asMutableString() {
+        Type type = type("ImmutableList", collection("Integer", null, null), null);
+
+        assertThat(type.asMutableString().toString(), equalTo("List<String>"));
+    }
+
+    @Test
+    public void state_asMutableString() {
+        Type type = type("XState", null, null);
+
+        assertThat(type.asMutableString().toString(), equalTo("XStringState"));
+    }
+
+    @Test
     public void isNotLeafState_Integer() {
         Type type = type("List",
                 collection(

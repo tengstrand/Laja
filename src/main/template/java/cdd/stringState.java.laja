@@ -11,13 +11,13 @@
 
 #macro attributes()
   #foreach (attribute in attributes)
-        {attribute.annotationsContent}public String {attribute.name};
+        {attribute.annotationsContent}public {attribute.type} {attribute.name};
   #end
 
 #end
 
 #macro stringState()
-  #set ($.attributes = state.mutableAttributes)
+  #set ($.attributes = state.mutableStringAttributes)
 
   #classHeader()
   #attributes()
