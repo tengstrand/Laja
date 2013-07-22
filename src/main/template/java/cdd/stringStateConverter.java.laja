@@ -14,7 +14,7 @@
     #else if (attribute.isSet)
         {method} asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
-        {method} {attribute.name}.asMutable(); }
+        {method} {attribute.name} != null ? {attribute.name}.asMutable() : null; }
     #else if (attribute.type == "double")
         {method} asDouble(balance); }
     #else
