@@ -16,9 +16,7 @@
     #if (attribute.isOptional && attribute.optional.valueFor("defaultValue") != null)
             {attribute.name} = {attribute.optional.valueFor("defaultValue")};
     #else
-      #if (attribute.isState)
-            {attribute.name} = new {attribute.type}();
-      #else if (attribute.isSet)
+      #if (attribute.isSet)
             {attribute.name} = new Hash{attribute.type}();
       #else if (attribute.isList)
             {attribute.name} = new Array{attribute.type}();
