@@ -8,6 +8,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asDoublePrimitive;
+
 @State
 public class AccountState implements ImmutableState {
     @Key public final double balance;
@@ -169,5 +171,36 @@ public class AccountState implements ImmutableState {
         public String toString() {
             return "{balance=" + balance + "}";
         }
+    }
+
+    @State(type = "string")
+    public static class AccountStringState {
+        @Key public String balance;
+
+        public AccountStringState() {
+        }
+
+        public AccountStringState(String balance) {
+            this.balance = balance;
+        }
+
+        public String getBalance() { return balance; }
+
+        public void setBalance(String balance) { this.balance = balance; }
+
+        public AccountStringState withBalance(String balance) { this.balance = balance; return this; }
+
+        public AccountMutableState asMutable() {
+            return asMutable(new AccountStringStateConverter());
+        }
+
+        public AccountMutableState asMutable(AccountStringStateConverter converter) {
+            return new AccountMutableState(
+                    converter.toBalance(balance));
+        }
+    }
+
+    public static class AccountStringStateConverter {
+        public double toBalance(String balance) { return asDoublePrimitive(balance); }
     }
 }

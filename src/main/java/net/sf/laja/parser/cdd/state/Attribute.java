@@ -98,6 +98,10 @@ public class Attribute implements StateParser.IAttribute {
         return type.isValid();
     }
 
+    public boolean isObject() {
+        return type.isObject();
+    }
+
     public boolean isPrimitive() {
         return type.isPrimitive();
     }

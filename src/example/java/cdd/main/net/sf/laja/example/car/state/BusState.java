@@ -8,8 +8,10 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @State
 public class BusState implements ImmutableState {
@@ -108,7 +110,6 @@ public class BusState implements ImmutableState {
         @Optional public int weightInKilograms;
 
         public BusMutableState() {
-            size = new VehicleSizeMutableState();
         }
 
         public BusMutableState(
@@ -207,5 +208,53 @@ public class BusState implements ImmutableState {
                     ", size=" + size +
                     ", weightInKilograms=" + weightInKilograms + '}';
         }
+    }
+
+    @State(type = "string")
+    public static class BusStringState {
+        public String name;
+        public VehicleSizeStringState size;
+        @Optional public String weightInKilograms;
+
+        public BusStringState() {
+        }
+
+        public BusStringState(
+                String name,
+                VehicleSizeStringState size,
+                String weightInKilograms) {
+            this.name = name;
+            this.size = size;
+            this.weightInKilograms = weightInKilograms;
+        }
+
+        public String getName() { return name; }
+        public VehicleSizeStringState getSize() { return size; }
+        public String getWeightInKilograms() { return weightInKilograms; }
+
+        public void setName(String name) { this.name = name; }
+        public void setSize(VehicleSizeStringState size) { this.size = size; }
+        public void setWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; }
+
+        public BusStringState withName(String name) { this.name = name; return this; }
+        public BusStringState withSize(VehicleSizeStringState size) { this.size = size; return this; }
+        public BusStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
+
+        public BusMutableState asMutable() {
+            return asMutable(new BusStringStateConverter());
+        }
+
+        public BusMutableState asMutable(BusStringStateConverter converter) {
+            return new BusMutableState(
+                    converter.toName(name),
+                    converter.toSize(size),
+                    converter.toWeightInKilograms(weightInKilograms));
+        }
+    }
+
+    public static class BusStringStateConverter {
+        public String toName(String name) { return name; }
+        public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
+        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
     }
 }

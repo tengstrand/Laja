@@ -7,6 +7,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
+
 @State
 public class PersonState implements ImmutableState {
     public final String givenName;
@@ -220,5 +222,61 @@ public class PersonState implements ImmutableState {
                     ", heightInCentimeters=" + heightInCentimeters +
                     ", weightInKilograms=" + weightInKilograms + '}';
         }
+    }
+
+    @State(type = "string")
+    public static class PersonStringState {
+        public String givenName;
+        public String surname;
+        public String heightInCentimeters;
+        public String weightInKilograms;
+
+        public PersonStringState() {
+        }
+
+        public PersonStringState(
+                String givenName,
+                String surname,
+                String heightInCentimeters,
+                String weightInKilograms) {
+            this.givenName = givenName;
+            this.surname = surname;
+            this.heightInCentimeters = heightInCentimeters;
+            this.weightInKilograms = weightInKilograms;
+        }
+
+        public String getGivenName() { return givenName; }
+        public String getSurname() { return surname; }
+        public String getHeightInCentimeters() { return heightInCentimeters; }
+        public String getWeightInKilograms() { return weightInKilograms; }
+
+        public void setGivenName(String givenName) { this.givenName = givenName; }
+        public void setSurname(String surname) { this.surname = surname; }
+        public void setHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; }
+        public void setWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; }
+
+        public PersonStringState withGivenName(String givenName) { this.givenName = givenName; return this; }
+        public PersonStringState withSurname(String surname) { this.surname = surname; return this; }
+        public PersonStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
+        public PersonStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
+
+        public PersonMutableState asMutable() {
+            return asMutable(new PersonStringStateConverter());
+        }
+
+        public PersonMutableState asMutable(PersonStringStateConverter converter) {
+            return new PersonMutableState(
+                    converter.toGivenName(givenName),
+                    converter.toSurname(surname),
+                    converter.toHeightInCentimeters(heightInCentimeters),
+                    converter.toWeightInKilograms(weightInKilograms));
+        }
+    }
+
+    public static class PersonStringStateConverter {
+        public String toGivenName(String givenName) { return givenName; }
+        public String toSurname(String surname) { return surname; }
+        public int toHeightInCentimeters(String heightInCentimeters) { return asInt(heightInCentimeters); }
+        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
     }
 }

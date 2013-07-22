@@ -7,6 +7,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
+
 @State
 public class VehicleSizeState implements ImmutableState {
     public final int lengthInCentimeters;
@@ -151,5 +153,36 @@ public class VehicleSizeState implements ImmutableState {
         public String toString() {
             return "{lengthInCentimeters=" + lengthInCentimeters + "}";
         }
+    }
+
+    @State(type = "string")
+    public static class VehicleSizeStringState {
+        public String lengthInCentimeters;
+
+        public VehicleSizeStringState() {
+        }
+
+        public VehicleSizeStringState(String lengthInCentimeters) {
+            this.lengthInCentimeters = lengthInCentimeters;
+        }
+
+        public String getLengthInCentimeters() { return lengthInCentimeters; }
+
+        public void setLengthInCentimeters(String lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; }
+
+        public VehicleSizeStringState withLengthInCentimeters(String lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; return this; }
+
+        public VehicleSizeMutableState asMutable() {
+            return asMutable(new VehicleSizeStringStateConverter());
+        }
+
+        public VehicleSizeMutableState asMutable(VehicleSizeStringStateConverter converter) {
+            return new VehicleSizeMutableState(
+                    converter.toLengthInCentimeters(lengthInCentimeters));
+        }
+    }
+
+    public static class VehicleSizeStringStateConverter {
+        public int toLengthInCentimeters(String lengthInCentimeters) { return asInt(lengthInCentimeters); }
     }
 }

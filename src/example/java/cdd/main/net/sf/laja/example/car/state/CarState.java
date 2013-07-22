@@ -9,7 +9,9 @@ import net.sf.laja.cdd.validator.Validator;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
+import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @State
 public class CarState implements ImmutableState {
@@ -121,8 +123,6 @@ public class CarState implements ImmutableState {
         public String color;
 
         public CarMutableState() {
-            size = new VehicleSizeMutableState();
-            owner = new OwnerMutableState();
         }
 
         public CarMutableState(
@@ -233,5 +233,61 @@ public class CarState implements ImmutableState {
                     ", owner=" + owner +
                     ", color='" + color + "'}";
         }
+    }
+
+    @State(type = "string")
+    public static class CarStringState {
+        public VehicleSizeStringState size;
+        public String name;
+        public OwnerStringState owner;
+        public String color;
+
+        public CarStringState() {
+        }
+
+        public CarStringState(
+                VehicleSizeStringState size,
+                String name,
+                OwnerStringState owner,
+                String color) {
+            this.size = size;
+            this.name = name;
+            this.owner = owner;
+            this.color = color;
+        }
+
+        public VehicleSizeStringState getSize() { return size; }
+        public String getName() { return name; }
+        public OwnerStringState getOwner() { return owner; }
+        public String getColor() { return color; }
+
+        public void setSize(VehicleSizeStringState size) { this.size = size; }
+        public void setName(String name) { this.name = name; }
+        public void setOwner(OwnerStringState owner) { this.owner = owner; }
+        public void setColor(String color) { this.color = color; }
+
+        public CarStringState withSize(VehicleSizeStringState size) { this.size = size; return this; }
+        public CarStringState withName(String name) { this.name = name; return this; }
+        public CarStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
+        public CarStringState withColor(String color) { this.color = color; return this; }
+
+        public CarMutableState asMutable() {
+            return asMutable(new CarStringStateConverter());
+        }
+
+        public CarMutableState asMutable(CarStringStateConverter converter) {
+            return new CarMutableState(
+                    converter.toSize(size),
+                    converter.toName(name),
+                    converter.toOwner(owner),
+                    converter.toColor(color));
+        }
+    }
+
+    public static class CarStringStateConverter {
+        public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
+        public String toName(String name) { return name; }
+        public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }
+        public String toColor(String color) { return color; }
     }
 }

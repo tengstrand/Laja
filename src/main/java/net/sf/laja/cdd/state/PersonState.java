@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
+import static net.sf.laja.cdd.state.AddressState.AddressStringState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.*;
 import static net.sf.laja.cdd.stateconverter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
@@ -242,8 +243,6 @@ public class PersonState implements ImmutableState {
 
         public PersonMutableState() {
             children = new ArrayList<PersonMutableState>();
-            address = new AddressMutableState();
-            oldAddress = new AddressMutableState();
             oldAddresses = new LinkedHashSet<AddressMutableState>();
             groupedAddresses = new HashMap<String,AddressMutableState>();
             listOfSetOfState = new ArrayList<Set<AddressMutableState>>();
@@ -408,5 +407,126 @@ public class PersonState implements ImmutableState {
                     ", listOfSetOfState=" + listOfSetOfState +
                     ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
         }
+    }
+
+    @State(type = "string")
+    public static class PersonStringState {
+        @Id public String id;
+        public String name;
+        @Optional
+        public String birthday;
+        public String hairColor;
+        public List<PersonStringState> children;
+        public AddressStringState address;
+        @Optional
+        public AddressStringState oldAddress;
+        @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
+        public Set<AddressStringState> oldAddresses;
+        public Map<String,AddressStringState> groupedAddresses;
+        @Optional
+        public List<Set<AddressStringState>> listOfSetOfState;
+        public List<Set<Map<String,String>>> listOfSetOfMapOfIntegers;
+
+        public PersonStringState() {
+            children = new ArrayList<PersonStringState>();
+            oldAddresses = new LinkedHashSet<AddressStringState>();
+            groupedAddresses = new HashMap<String,AddressStringState>();
+            listOfSetOfState = new ArrayList<Set<AddressStringState>>();
+            listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,String>>>();
+        }
+
+        public PersonStringState(
+                String id,
+                String name,
+                String birthday,
+                String hairColor,
+                List<PersonStringState> children,
+                AddressStringState address,
+                AddressStringState oldAddress,
+                Set<AddressStringState> oldAddresses,
+                Map<String,AddressStringState> groupedAddresses,
+                List<Set<AddressStringState>> listOfSetOfState,
+                List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) {
+            this.id = id;
+            this.name = name;
+            this.birthday = birthday;
+            this.hairColor = hairColor;
+            this.children = children;
+            this.address = address;
+            this.oldAddress = oldAddress;
+            this.oldAddresses = oldAddresses;
+            this.groupedAddresses = groupedAddresses;
+            this.listOfSetOfState = listOfSetOfState;
+            this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
+        }
+
+        public String getId() { return id; }
+        public String getName() { return name; }
+        public String getBirthday() { return birthday; }
+        public String getHairColor() { return hairColor; }
+        public List<PersonStringState> getChildren() { return children; }
+        public AddressStringState getAddress() { return address; }
+        public AddressStringState getOldAddress() { return oldAddress; }
+        public Set<AddressStringState> getOldAddresses() { return oldAddresses; }
+        public Map<String,AddressStringState> getGroupedAddresses() { return groupedAddresses; }
+        public List<Set<AddressStringState>> getListOfSetOfState() { return listOfSetOfState; }
+        public List<Set<Map<String,String>>> getListOfSetOfMapOfIntegers() { return listOfSetOfMapOfIntegers; }
+
+        public void setId(String id) { this.id = id; }
+        public void setName(String name) { this.name = name; }
+        public void setBirthday(String birthday) { this.birthday = birthday; }
+        public void setHairColor(String hairColor) { this.hairColor = hairColor; }
+        public void setChildren(List<PersonStringState> children) { this.children = children; }
+        public void setAddress(AddressStringState address) { this.address = address; }
+        public void setOldAddress(AddressStringState oldAddress) { this.oldAddress = oldAddress; }
+        public void setOldAddresses(Set<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; }
+        public void setGroupedAddresses(Map<String,AddressStringState> groupedAddresses) { this.groupedAddresses = groupedAddresses; }
+        public void setListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; }
+        public void setListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; }
+
+        public PersonStringState withId(String id) { this.id = id; return this; }
+        public PersonStringState withName(String name) { this.name = name; return this; }
+        public PersonStringState withBirthday(String birthday) { this.birthday = birthday; return this; }
+        public PersonStringState withHairColor(String hairColor) { this.hairColor = hairColor; return this; }
+        public PersonStringState withChildren(List<PersonStringState> children) { this.children = children; return this; }
+        public PersonStringState withAddress(AddressStringState address) { this.address = address; return this; }
+        public PersonStringState withOldAddress(AddressStringState oldAddress) { this.oldAddress = oldAddress; return this; }
+        public PersonStringState withOldAddresses(Set<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
+        public PersonStringState withGroupedAddresses(Map<String,AddressStringState> groupedAddresses) { this.groupedAddresses = groupedAddresses; return this; }
+        public PersonStringState withListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
+        public PersonStringState withListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
+
+        public PersonMutableState asMutable() {
+            return asMutable(new PersonStringStateConverter());
+        }
+
+        public PersonMutableState asMutable(PersonStringStateConverter converter) {
+            return new PersonMutableState(
+                    converter.toId(id),
+                    converter.toName(name),
+                    converter.toBirthday(birthday),
+                    converter.toHairColor(hairColor),
+                    converter.toChildren(children),
+                    converter.toAddress(address),
+                    converter.toOldAddress(oldAddress),
+                    converter.toOldAddresses(oldAddresses),
+                    converter.toGroupedAddresses(groupedAddresses),
+                    converter.toListOfSetOfState(listOfSetOfState),
+                    converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers));
+        }
+    }
+
+    public static class PersonStringStateConverter {
+        public int toId(String id) { return asInt(id); }
+        public String toName(String name) { return name; }
+        public DateMidnight toBirthday(String birthday) { return new DateMidnight(birthday); }
+        public String toHairColor(String hairColor) { return hairColor; }
+        public List<PersonMutableState> toChildren(List<PersonStringState> children) { return asMutableList(children, toMutable); }
+        public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }
+        public AddressMutableState toOldAddress(AddressStringState oldAddress) { return oldAddress != null ? oldAddress.asMutable() : null; }
+        public Set<AddressMutableState> toOldAddresses(Set<AddressStringState> oldAddresses) { return asMutableSet(oldAddresses, toMutable); }
+        public Map<String,AddressMutableState> toGroupedAddresses(Map<String,AddressStringState> groupedAddresses) { return asMutableMap(groupedAddresses, toMutable); }
+        public List<Set<AddressMutableState>> toListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { return asMutableList(listOfSetOfState, toMutableSet, toMutable); }
+        public List<Set<Map<String,Integer>>> toListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { return asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap); }
     }
 }

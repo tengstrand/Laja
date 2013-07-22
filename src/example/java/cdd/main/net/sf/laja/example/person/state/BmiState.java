@@ -7,6 +7,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
+
 @State
 public class BmiState implements ImmutableState {
     public final int heightInCentimeters;
@@ -174,5 +176,45 @@ public class BmiState implements ImmutableState {
             return "{heightInCentimeters=" + heightInCentimeters +
                     ", weightInKilograms=" + weightInKilograms + '}';
         }
+    }
+
+    @State(type = "string")
+    public static class BmiStringState {
+        public String heightInCentimeters;
+        public String weightInKilograms;
+
+        public BmiStringState() {
+        }
+
+        public BmiStringState(
+                String heightInCentimeters,
+                String weightInKilograms) {
+            this.heightInCentimeters = heightInCentimeters;
+            this.weightInKilograms = weightInKilograms;
+        }
+
+        public String getHeightInCentimeters() { return heightInCentimeters; }
+        public String getWeightInKilograms() { return weightInKilograms; }
+
+        public void setHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; }
+        public void setWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; }
+
+        public BmiStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
+        public BmiStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
+
+        public BmiMutableState asMutable() {
+            return asMutable(new BmiStringStateConverter());
+        }
+
+        public BmiMutableState asMutable(BmiStringStateConverter converter) {
+            return new BmiMutableState(
+                    converter.toHeightInCentimeters(heightInCentimeters),
+                    converter.toWeightInKilograms(weightInKilograms));
+        }
+    }
+
+    public static class BmiStringStateConverter {
+        public int toHeightInCentimeters(String heightInCentimeters) { return asInt(heightInCentimeters); }
+        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
     }
 }

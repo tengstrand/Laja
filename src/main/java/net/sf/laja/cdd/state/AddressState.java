@@ -9,6 +9,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
+
 @State
 public class AddressState implements ImmutableState {
     @Id
@@ -212,5 +214,56 @@ public class AddressState implements ImmutableState {
                     ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
                     ", city='" + city + "'}";
         }
+    }
+
+    @State(type = "string")
+    public static class AddressStringState {
+        @Id
+        public String id;
+        @Optional
+        public String streetName;
+        @Optional
+        public String city;
+
+        public AddressStringState() {
+        }
+
+        public AddressStringState(
+                String id,
+                String streetName,
+                String city) {
+            this.id = id;
+            this.streetName = streetName;
+            this.city = city;
+        }
+
+        public String getId() { return id; }
+        public String getStreetName() { return streetName; }
+        public String getCity() { return city; }
+
+        public void setId(String id) { this.id = id; }
+        public void setStreetName(String streetName) { this.streetName = streetName; }
+        public void setCity(String city) { this.city = city; }
+
+        public AddressStringState withId(String id) { this.id = id; return this; }
+        public AddressStringState withStreetName(String streetName) { this.streetName = streetName; return this; }
+        public AddressStringState withCity(String city) { this.city = city; return this; }
+
+        public AddressMutableState asMutable() {
+            return asMutable(new AddressStringStateConverter());
+        }
+
+        public AddressMutableState asMutable(AddressStringStateConverter converter) {
+            return new AddressMutableState(
+                    converter.toId(id),
+                    converter.toStreetName(streetName),
+                    converter.toCity(city));
+        }
+    }
+
+    public static class AddressStringStateConverter {
+        public int toId(String id) { return asInt(id); }
+        public String toStreetName(String streetName) { return streetName; }
+        public String toCity(String city) { return city; }
     }
 }

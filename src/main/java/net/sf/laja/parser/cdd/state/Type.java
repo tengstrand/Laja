@@ -51,6 +51,10 @@ public class Type implements StateParser.IType {
         return !isCollectionOrMap() && name.equals("String");
     }
 
+    public boolean isObject() {
+        return !isCollectionOrMap() && net.sf.laja.parser.cdd.Type.isObject(name);
+    }
+
     public boolean isPrimitive() {
         return !isCollectionOrMap() && net.sf.laja.parser.cdd.Type.isPrimitive(name);
     }

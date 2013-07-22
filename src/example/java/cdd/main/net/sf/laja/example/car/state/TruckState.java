@@ -7,10 +7,14 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
+import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
 import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeMutableState;
+import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @State
 public class TruckState implements ImmutableState {
@@ -133,9 +137,6 @@ public class TruckState implements ImmutableState {
         public OwnerMutableState owner;
 
         public TruckMutableState() {
-            size = new VehicleSizeMutableState();
-            type = new TruckTypeMutableState();
-            owner = new OwnerMutableState();
         }
 
         public TruckMutableState(
@@ -256,5 +257,69 @@ public class TruckState implements ImmutableState {
                     ", color=" + (color == null ? null : '\'' + color + '\'' ) +
                     ", owner=" + owner + '}';
         }
+    }
+
+    @State(type = "string")
+    public static class TruckStringState {
+        public VehicleSizeStringState size;
+        public String weightInKilograms;
+        public TruckTypeStringState type;
+        public String color;
+        public OwnerStringState owner;
+
+        public TruckStringState() {
+        }
+
+        public TruckStringState(
+                VehicleSizeStringState size,
+                String weightInKilograms,
+                TruckTypeStringState type,
+                String color,
+                OwnerStringState owner) {
+            this.size = size;
+            this.weightInKilograms = weightInKilograms;
+            this.type = type;
+            this.color = color;
+            this.owner = owner;
+        }
+
+        public VehicleSizeStringState getSize() { return size; }
+        public String getWeightInKilograms() { return weightInKilograms; }
+        public TruckTypeStringState getType() { return type; }
+        public String getColor() { return color; }
+        public OwnerStringState getOwner() { return owner; }
+
+        public void setSize(VehicleSizeStringState size) { this.size = size; }
+        public void setWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; }
+        public void setType(TruckTypeStringState type) { this.type = type; }
+        public void setColor(String color) { this.color = color; }
+        public void setOwner(OwnerStringState owner) { this.owner = owner; }
+
+        public TruckStringState withSize(VehicleSizeStringState size) { this.size = size; return this; }
+        public TruckStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
+        public TruckStringState withType(TruckTypeStringState type) { this.type = type; return this; }
+        public TruckStringState withColor(String color) { this.color = color; return this; }
+        public TruckStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
+
+        public TruckMutableState asMutable() {
+            return asMutable(new TruckStringStateConverter());
+        }
+
+        public TruckMutableState asMutable(TruckStringStateConverter converter) {
+            return new TruckMutableState(
+                    converter.toSize(size),
+                    converter.toWeightInKilograms(weightInKilograms),
+                    converter.toType(type),
+                    converter.toColor(color),
+                    converter.toOwner(owner));
+        }
+    }
+
+    public static class TruckStringStateConverter {
+        public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
+        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+        public TruckTypeMutableState toType(TruckTypeStringState type) { return type != null ? type.asMutable() : null; }
+        public String toColor(String color) { return color; }
+        public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }
     }
 }

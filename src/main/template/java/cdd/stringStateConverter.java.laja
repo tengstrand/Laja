@@ -15,13 +15,67 @@
         {method} asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
         {method} {attribute.name} != null ? {attribute.name}.asMutable() : null; }
+    #else if (attribute.type == "String")
+        {method} {attribute.name}; }
+    #else if (attribute.type == "boolean")
+        {method} asBooleanPrimitive({attribute.name}); }
+    #else if (attribute.type == "byte")
+        {method} asBytePrimitive({attribute.name}); }
+    #else if (attribute.type == "short")
+        {method} asShortPrimitive({attribute.name}); }
+    #else if (attribute.type == "char")
+        {method} asChar({attribute.name}); }
+    #else if (attribute.type == "int")
+        {method} asInt({attribute.name}); }
+    #else if (attribute.type == "long")
+        {method} asLongPrimitive({attribute.name}); }
+    #else if (attribute.type == "float")
+        {method} asFloatPrimitive({attribute.name}); }
     #else if (attribute.type == "double")
-        {method} asDouble(balance); }
+        {method} asDoublePrimitive({attribute.name}); }
+    #else if (attribute.type == "Boolean")
+        {method} asBoolean({attribute.name}); }
+    #else if (attribute.type == "Byte")
+        {method} asByte({attribute.name}); }
+    #else if (attribute.type == "Short")
+        {method} asShort({attribute.name}); }
+    #else if (attribute.type == "Character")
+        {method} asCharacter({attribute.name}); }
+    #else if (attribute.type == "Integer")
+        {method} asInteger({attribute.name}); }
+    #else if (attribute.type == "Long")
+        {method} asLong({attribute.name}); }
+    #else if (attribute.type == "Float")
+        {method} asFloat({attribute.name}); }
+    #else if (attribute.type == "Double")
+        {method} asDouble({attribute.name}); }
+    #else if (attribute.isObject)
+        {method} new {attribute.type}({attribute.name}); }
     #else
-        {method} null; /* not implemented */ }
+        {method} null; /* Type '{attribute.type}' not supported */ }
     #end
   #end
 #end
+
+
+            "",
+            "LocalTime",
+            "LocalDateTime",
+            "YearMonth",
+            "MonthDay",
+            "Partial",
+            "Interval",
+            "Duration",
+            "Period",
+            "Years",
+            "Months",
+            "Weeks",
+            "Days",
+            "Hours",
+            "Minutes",
+            "Seconds"
+
+
 
 #macro stringStateConverter()
   #set ($.attributes = state.mutableAttributes)

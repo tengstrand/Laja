@@ -7,6 +7,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asLongPrimitive;
+
 @State
 public class OwnerState implements ImmutableState {
     public final long ssn;
@@ -179,5 +181,45 @@ public class OwnerState implements ImmutableState {
             return "{ssn=" + ssn +
                     ", name='" + name + "'}";
         }
+    }
+
+    @State(type = "string")
+    public static class OwnerStringState {
+        public String ssn;
+        public String name;
+
+        public OwnerStringState() {
+        }
+
+        public OwnerStringState(
+                String ssn,
+                String name) {
+            this.ssn = ssn;
+            this.name = name;
+        }
+
+        public String getSsn() { return ssn; }
+        public String getName() { return name; }
+
+        public void setSsn(String ssn) { this.ssn = ssn; }
+        public void setName(String name) { this.name = name; }
+
+        public OwnerStringState withSsn(String ssn) { this.ssn = ssn; return this; }
+        public OwnerStringState withName(String name) { this.name = name; return this; }
+
+        public OwnerMutableState asMutable() {
+            return asMutable(new OwnerStringStateConverter());
+        }
+
+        public OwnerMutableState asMutable(OwnerStringStateConverter converter) {
+            return new OwnerMutableState(
+                    converter.toSsn(ssn),
+                    converter.toName(name));
+        }
+    }
+
+    public static class OwnerStringStateConverter {
+        public long toSsn(String ssn) { return asLongPrimitive(ssn); }
+        public String toName(String name) { return name; }
     }
 }

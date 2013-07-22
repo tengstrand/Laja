@@ -7,6 +7,8 @@ import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
+
 @State
 public class TruckTypeState implements ImmutableState {
     public final int numberOfWheels;
@@ -178,5 +180,45 @@ public class TruckTypeState implements ImmutableState {
             return "{numberOfWheels=" + numberOfWheels +
                     ", truckName='" + truckName + "'}";
         }
+    }
+
+    @State(type = "string")
+    public static class TruckTypeStringState {
+        public String numberOfWheels;
+        public String truckName;
+
+        public TruckTypeStringState() {
+        }
+
+        public TruckTypeStringState(
+                String numberOfWheels,
+                String truckName) {
+            this.numberOfWheels = numberOfWheels;
+            this.truckName = truckName;
+        }
+
+        public String getNumberOfWheels() { return numberOfWheels; }
+        public String getTruckName() { return truckName; }
+
+        public void setNumberOfWheels(String numberOfWheels) { this.numberOfWheels = numberOfWheels; }
+        public void setTruckName(String truckName) { this.truckName = truckName; }
+
+        public TruckTypeStringState withNumberOfWheels(String numberOfWheels) { this.numberOfWheels = numberOfWheels; return this; }
+        public TruckTypeStringState withTruckName(String truckName) { this.truckName = truckName; return this; }
+
+        public TruckTypeMutableState asMutable() {
+            return asMutable(new TruckTypeStringStateConverter());
+        }
+
+        public TruckTypeMutableState asMutable(TruckTypeStringStateConverter converter) {
+            return new TruckTypeMutableState(
+                    converter.toNumberOfWheels(numberOfWheels),
+                    converter.toTruckName(truckName));
+        }
+    }
+
+    public static class TruckTypeStringStateConverter {
+        public int toNumberOfWheels(String numberOfWheels) { return asInt(numberOfWheels); }
+        public String toTruckName(String truckName) { return truckName; }
     }
 }
