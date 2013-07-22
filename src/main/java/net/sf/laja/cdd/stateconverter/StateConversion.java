@@ -39,4 +39,6 @@ public class StateConversion {
     public static DateMidnight asDateMidnight(String date) {
         return DateTimeFormat.forPattern(DATE_MIDNIGHT_FORMAT).parseDateTime(date).toDateMidnight();
     }
+
+    public static double asDouble(String value) { return value == null ? null : Double.valueOf(value); }
 }

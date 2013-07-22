@@ -15,6 +15,26 @@
   #end
 #end
 
+#macro asMutable()
+
+        public {mutableClass} asMutable() {
+            return asMutable(new {stringConverterClass}());
+        }
+
+        public {mutableClass} asMutable({stringConverterClass} converter) {
+            return new {mutableClass}(
+  #set (iterator = attributes.iterator)
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+                    converter.to{attribute.nameAsClass}({attribute.name}),
+    #else
+                    converter.to{attribute.nameAsClass}({attribute.name}));
+    #end
+  #end
+        }
+#end
+
 #macro stringState()
   #set ($.attributes = state.mutableStringAttributes)
   #set (tab = "        ")
@@ -26,6 +46,6 @@
   #$mutable.getters(tab)
   #$mutable.setters()
   #$mutable.withMethods(stringClass)
-
+  #asMutable()
     }
 #end

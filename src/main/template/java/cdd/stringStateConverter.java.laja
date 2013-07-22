@@ -1,0 +1,32 @@
+#namespace converter
+
+#macro classHeader()
+    public static class {stringConverterClass} {
+#end
+
+#macro fromString()
+  #foreach (attribute in attributes)
+    #set (method = "public {attribute.type} to{attribute.nameAsClass}({attribute.type.asMutableString} {attribute.name}) { return")
+    #if (attribute.isMap)
+        {method} asMutableMap({attribute.name}{mutableConverters(attribute.type.mapType.entry)}); }
+    #else if (attribute.isList)
+        {method} asMutableList({attribute.name}{mutableConverters(attribute.type.collectionType.type)}); }
+    #else if (attribute.isSet)
+        {method} asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)}); }
+    #else if (attribute.type.isState)
+        {method} {attribute.name}.asMutable(); }
+    #else if (attribute.type == "double")
+        {method} asDouble(balance); }
+    #else
+        {method} null; /* not implemented */ }
+    #end
+  #end
+#end
+
+#macro stringStateConverter()
+  #set ($.attributes = state.mutableAttributes)
+
+  #classHeader()
+  #fromString()
+    }
+#end

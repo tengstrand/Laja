@@ -9,4 +9,6 @@ public class StateConverters {
     public static MutableToImmutableListConverter toImmutableList = new MutableToImmutableListConverter();
     public static MutableToImmutableMapConverter toImmutableMap = new MutableToImmutableMapConverter();
     public static MutableToImmutableSetConverter toImmutableSet = new MutableToImmutableSetConverter();
+
+    public static StringToIntegerConverter toInteger = new StringToIntegerConverter();
 }

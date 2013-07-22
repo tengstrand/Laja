@@ -8,6 +8,7 @@
   #set (classvariable = state.classvariable)
   #set (mutableClass = state.mutableClass)
   #set (stringClass = state.stringClass)
+  #set (stringConverterClass = "{state.stringClass}Converter")
   #set (attributes = state.attributes)
   #set (imports = state.imports)
   #set (manualCode = state.manualCode)
@@ -388,6 +389,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #import "{.}/mutableState.java.laja"
 #import "{.}/stringState.java.laja"
+#import "{.}/stringStateConverter.java.laja"
 
 #macro stateContent()
 {packageContent}##
@@ -420,6 +422,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #toString(tab)
     #$mutable.mutableState()
     #$string.stringState()
+    #$converter.stringStateConverter()
     #set ($.attributes = state.attributes)
 }
 #end
