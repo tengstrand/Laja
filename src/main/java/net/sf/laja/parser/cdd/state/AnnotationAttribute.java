@@ -12,6 +12,15 @@ public class AnnotationAttribute implements StateParser.IAnnotationAttribute {
         this.value = value;
     }
 
+    public AnnotationAttribute asMutableString() {
+        AnnotationAttribute result = new AnnotationAttribute();
+
+        result.setName(name);
+        result.setValue(value.replaceAll("MutableState", "StringState"));
+
+        return result;
+    }
+
     @Override
     public String toString() {
         return "AnnotationAttribute{" +

@@ -420,7 +420,7 @@ public class PersonState implements ImmutableState {
         public AddressStringState address;
         @Optional
         public AddressStringState oldAddress;
-        @Optional(defaultValue = "new LinkedHashSet<AddressMutableState>()")
+        @Optional(defaultValue = "new LinkedHashSet<AddressStringState>()")
         public Set<AddressStringState> oldAddresses;
         public Map<String,AddressStringState> groupedAddresses;
         @Optional

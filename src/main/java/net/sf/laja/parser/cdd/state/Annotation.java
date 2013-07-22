@@ -46,6 +46,16 @@ public class Annotation implements StateParser.IAnnotation{
         return null;
     }
 
+    public Annotation asMutableString() {
+        Annotation result = new Annotation();
+        result.setName(name);
+
+        for (AnnotationAttribute attribute : annotationAttributes) {
+            result.addAnnotationAttribute(attribute.asMutableString());
+        }
+        return result;
+    }
+
     public boolean isValid() {
         return name != null && annotations.contains(name);
     }

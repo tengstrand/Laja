@@ -46,21 +46,29 @@ public class Attribute implements StateParser.IAttribute {
     public Attribute asMutableString() {
         Attribute result = new Attribute();
         result.type = type.asMutableString();
-        copyTypes(result);
+        copyTypes(result, true);
 
         return result;
     }
 
     private void copyTypes(Attribute attribute) {
+        copyTypes(attribute, false);
+    }
+
+    private void copyTypes(Attribute attribute, boolean isMutableString) {
         attribute.name = name;
         attribute.nameAsClass = nameAsClass;
-        attribute.annotations = annotations;
+        attribute.annotations = isMutableString ? annotations.asMutableString() : annotations;
         attribute.state = state;
 
         if (annotationsContent.contains("\n")) {
             attribute.annotationsContent = annotationsContent + "    ";
         } else {
             attribute.annotationsContent = annotationsContent;
+        }
+
+        if (isMutableString) {
+            attribute.annotationsContent = attribute.annotationsContent.replaceAll("MutableState", "StringState");
         }
     }
 
