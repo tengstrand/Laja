@@ -161,7 +161,7 @@ public class Type implements StateParser.IType {
         MapType mtype = null;
         if (mapType != null) {
             mtype = new MapType();
-            mtype.setKey(mapType.key.asMutableString());
+            mtype.setKey(mapType.key.asMutable());
             mtype.setEntry(mapType.entry.asMutableString());
         }
         result.setCollectionType(ctype);
