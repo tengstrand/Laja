@@ -260,6 +260,10 @@ public class PersonState implements ImmutableState {
         public PersonStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public PersonStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
+        public PersonState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public PersonMutableState asMutable() {
             return asMutable(new PersonStringStateConverter());
         }

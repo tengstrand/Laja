@@ -206,6 +206,10 @@ public class TruckTypeState implements ImmutableState {
         public TruckTypeStringState withNumberOfWheels(String numberOfWheels) { this.numberOfWheels = numberOfWheels; return this; }
         public TruckTypeStringState withTruckName(String truckName) { this.truckName = truckName; return this; }
 
+        public TruckTypeState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public TruckTypeMutableState asMutable() {
             return asMutable(new TruckTypeStringStateConverter());
         }

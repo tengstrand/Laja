@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
+import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
 
 @Creator
 public class OwnerCreator implements OwnerCreatorMaker {
@@ -235,6 +236,39 @@ public class OwnerCreator implements OwnerCreatorMaker {
 
         @Override public String toString() {
             return "OwnerBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class OwnerStringBuilder {
+        private final OwnerStringState state;
+
+        public OwnerStringBuilder() {
+            this.state = new OwnerStringState();
+        }
+
+        public OwnerStringBuilder(OwnerStringState state) {
+            this.state = state;
+        }
+
+        public OwnerStringBuilder withSsn(String ssn) { state.ssn = ssn; return this; }
+        public OwnerStringBuilder withName(String name) { state.name = name; return this; }
+
+        public Owner asOwner() {
+            return new OwnerBuilder(state.asMutable()).asOwner();
+        }
+
+        public OwnerState asState() {
+            return state.asImmutable();
+        }
+
+        public OwnerMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public OwnerStringState asStringState() {
+            return state;
         }
     }
 

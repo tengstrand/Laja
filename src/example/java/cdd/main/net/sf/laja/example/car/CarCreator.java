@@ -24,6 +24,9 @@ import java.util.Set;
 
 import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 import static net.sf.laja.example.car.state.CarState.CarMutableState;
+import static net.sf.laja.example.car.state.CarState.CarStringState;
+import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @Creator
 public class CarCreator implements CarCreatorMaker {
@@ -287,6 +290,43 @@ public class CarCreator implements CarCreatorMaker {
 
         @Override public String toString() {
             return "CarBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class CarStringBuilder {
+        private final CarStringState state;
+
+        public CarStringBuilder() {
+            this.state = new CarStringState();
+        }
+
+        public CarStringBuilder(CarStringState state) {
+            this.state = state;
+        }
+
+        public CarStringBuilder withSize(VehicleSizeStringState size) { state.size = size; return this; }
+        public CarStringBuilder withSize(VehicleSizeCreator.VehicleSizeStringBuilder size) { state.size = size.asStringState(); return this; }
+        public CarStringBuilder withName(String name) { state.name = name; return this; }
+        public CarStringBuilder withOwner(OwnerStringState owner) { state.owner = owner; return this; }
+        public CarStringBuilder withOwner(OwnerCreator.OwnerStringBuilder owner) { state.owner = owner.asStringState(); return this; }
+        public CarStringBuilder withColor(String color) { state.color = color; return this; }
+
+        public Car asCar() {
+            return new CarBuilder(state.asMutable()).asCar();
+        }
+
+        public CarState asState() {
+            return state.asImmutable();
+        }
+
+        public CarMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public CarStringState asStringState() {
+            return state;
         }
     }
 

@@ -207,6 +207,10 @@ public class OwnerState implements ImmutableState {
         public OwnerStringState withSsn(String ssn) { this.ssn = ssn; return this; }
         public OwnerStringState withName(String name) { this.name = name; return this; }
 
+        public OwnerState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public OwnerMutableState asMutable() {
             return asMutable(new OwnerStringStateConverter());
         }

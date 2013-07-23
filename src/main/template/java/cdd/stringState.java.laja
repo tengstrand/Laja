@@ -15,7 +15,11 @@
   #end
 #end
 
-#macro asMutable()
+#macro asState()
+
+        public {classname} asImmutable() {
+            return asMutable().asImmutable();
+        }
 
         public {mutableClass} asMutable() {
             return asMutable(new {stringConverterClass}());
@@ -46,6 +50,6 @@
   #$mutable.getters(tab)
   #$mutable.setters()
   #$mutable.withMethods(stringClass)
-  #asMutable()
+  #asState()
     }
 #end

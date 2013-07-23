@@ -18,10 +18,11 @@
   #set (parameterClasses = creator.parameterClasses)
   #set (immutableState = "{state}State")
   #set (mutableState = "{state}MutableState")
-  #set (manualCode = creator.manualCode)
-  #set (mutableState = "{state}MutableState")
+  #set (stringState = "{state}StringState")
   #set (factory = "{state}Factory")
+  #set (manualCode = creator.manualCode)
   #set (builder = creator.builder)
+  #set (stringBuilder = creator.stringBuilder)
   #set (maker = "{creator.maker}")
   #set (creator = "{creator.classname}")
   #set (listBuilder = "{state}ListBuilder")
@@ -274,6 +275,7 @@ import net.sf.laja.cdd.annotation.Parameters;
 #import "{.}/behaviour.java.laja"
 #import "{.}/mutableBehaviour.java.laja"
 #import "{.}/builder.java.laja"
+#import "{.}/stringBuilder.java.laja"
 #import "{.}/listBuilder.java.laja"
 #import "{.}/setBuilder.java.laja"
 #import "{.}/mapBuilder.java.laja"
@@ -313,6 +315,7 @@ public class {classname} implements {maker} {
     #behaviour()
     #mutableBehaviour()
     #builder()
+    #stringBuilder()
     #listBuilder()
     #setBuilder()
     #mapEntryBuilder()

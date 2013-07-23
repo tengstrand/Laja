@@ -249,6 +249,10 @@ public class AddressState implements ImmutableState {
         public AddressStringState withStreetName(String streetName) { this.streetName = streetName; return this; }
         public AddressStringState withCity(String city) { this.city = city; return this; }
 
+        public AddressState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public AddressMutableState asMutable() {
             return asMutable(new AddressStringStateConverter());
         }

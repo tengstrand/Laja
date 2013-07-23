@@ -496,6 +496,10 @@ public class PersonState implements ImmutableState {
         public PersonStringState withListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
         public PersonStringState withListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
+        public PersonState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public PersonMutableState asMutable() {
             return asMutable(new PersonStringStateConverter());
         }

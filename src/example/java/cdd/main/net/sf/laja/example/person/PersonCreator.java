@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.person.state.PersonState.PersonMutableState;
+import static net.sf.laja.example.person.state.PersonState.PersonStringState;
 
 @Creator
 public class PersonCreator implements PersonCreatorMaker {
@@ -253,6 +254,41 @@ public class PersonCreator implements PersonCreatorMaker {
 
         @Override public String toString() {
             return "PersonBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class PersonStringBuilder {
+        private final PersonStringState state;
+
+        public PersonStringBuilder() {
+            this.state = new PersonStringState();
+        }
+
+        public PersonStringBuilder(PersonStringState state) {
+            this.state = state;
+        }
+
+        public PersonStringBuilder withGivenName(String givenName) { state.givenName = givenName; return this; }
+        public PersonStringBuilder withSurname(String surname) { state.surname = surname; return this; }
+        public PersonStringBuilder withHeightInCentimeters(String heightInCentimeters) { state.heightInCentimeters = heightInCentimeters; return this; }
+        public PersonStringBuilder withWeightInKilograms(String weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; }
+
+        public Person asPerson() {
+            return new PersonBuilder(state.asMutable()).asPerson();
+        }
+
+        public PersonState asState() {
+            return state.asImmutable();
+        }
+
+        public PersonMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public PersonStringState asStringState() {
+            return state;
         }
     }
 

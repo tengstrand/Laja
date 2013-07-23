@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeMutableState;
+import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
 
 @Creator
 public class TruckTypeCreator implements TruckTypeCreatorMaker {
@@ -235,6 +236,39 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
         @Override public String toString() {
             return "TruckTypeBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class TruckTypeStringBuilder {
+        private final TruckTypeStringState state;
+
+        public TruckTypeStringBuilder() {
+            this.state = new TruckTypeStringState();
+        }
+
+        public TruckTypeStringBuilder(TruckTypeStringState state) {
+            this.state = state;
+        }
+
+        public TruckTypeStringBuilder withNumberOfWheels(String numberOfWheels) { state.numberOfWheels = numberOfWheels; return this; }
+        public TruckTypeStringBuilder withTruckName(String truckName) { state.truckName = truckName; return this; }
+
+        public TruckType asTruckType() {
+            return new TruckTypeBuilder(state.asMutable()).asTruckType();
+        }
+
+        public TruckTypeState asState() {
+            return state.asImmutable();
+        }
+
+        public TruckTypeMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public TruckTypeStringState asStringState() {
+            return state;
         }
     }
 

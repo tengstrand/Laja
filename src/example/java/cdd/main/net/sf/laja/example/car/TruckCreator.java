@@ -21,7 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
 import static net.sf.laja.example.car.state.TruckState.TruckMutableState;
+import static net.sf.laja.example.car.state.TruckState.TruckStringState;
+import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @Creator
 public class TruckCreator implements TruckCreatorMaker {
@@ -287,6 +291,45 @@ public class TruckCreator implements TruckCreatorMaker {
 
         @Override public String toString() {
             return "TruckBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class TruckStringBuilder {
+        private final TruckStringState state;
+
+        public TruckStringBuilder() {
+            this.state = new TruckStringState();
+        }
+
+        public TruckStringBuilder(TruckStringState state) {
+            this.state = state;
+        }
+
+        public TruckStringBuilder withSize(VehicleSizeStringState size) { state.size = size; return this; }
+        public TruckStringBuilder withSize(VehicleSizeCreator.VehicleSizeStringBuilder size) { state.size = size.asStringState(); return this; }
+        public TruckStringBuilder withWeightInKilograms(String weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; }
+        public TruckStringBuilder withType(TruckTypeStringState type) { state.type = type; return this; }
+        public TruckStringBuilder withType(TruckTypeCreator.TruckTypeStringBuilder type) { state.type = type.asStringState(); return this; }
+        public TruckStringBuilder withColor(String color) { state.color = color; return this; }
+        public TruckStringBuilder withOwner(OwnerStringState owner) { state.owner = owner; return this; }
+        public TruckStringBuilder withOwner(OwnerCreator.OwnerStringBuilder owner) { state.owner = owner.asStringState(); return this; }
+
+        public Truck asTruck() {
+            return new TruckBuilder(state.asMutable()).asTruck();
+        }
+
+        public TruckState asState() {
+            return state.asImmutable();
+        }
+
+        public TruckMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public TruckStringState asStringState() {
+            return state;
         }
     }
 

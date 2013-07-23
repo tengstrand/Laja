@@ -240,6 +240,10 @@ public class BusState implements ImmutableState {
         public BusStringState withSize(VehicleSizeStringState size) { this.size = size; return this; }
         public BusStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
+        public BusState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public BusMutableState asMutable() {
             return asMutable(new BusStringStateConverter());
         }

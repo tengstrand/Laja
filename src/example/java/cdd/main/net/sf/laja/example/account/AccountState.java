@@ -190,6 +190,10 @@ public class AccountState implements ImmutableState {
 
         public AccountStringState withBalance(String balance) { this.balance = balance; return this; }
 
+        public AccountState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public AccountMutableState asMutable() {
             return asMutable(new AccountStringStateConverter());
         }

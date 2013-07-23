@@ -271,6 +271,10 @@ public class CarState implements ImmutableState {
         public CarStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
         public CarStringState withColor(String color) { this.color = color; return this; }
 
+        public CarState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public CarMutableState asMutable() {
             return asMutable(new CarStringStateConverter());
         }

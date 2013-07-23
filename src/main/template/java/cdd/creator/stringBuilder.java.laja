@@ -1,0 +1,43 @@
+#namespace creator
+
+#macro stringBuilder()
+    // --- String builder ---
+
+    public static class {stringBuilder} {
+        private final {stringState} state;
+
+        public {stringBuilder}() {
+            this.state = new {stringState}();
+        }
+
+        public {stringBuilder}({stringState} state) {
+            this.state = state;
+        }
+
+        #foreach (attribute in attributes)
+        public {stringBuilder} {attribute.withMethod}({attribute.type.asMutableString} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; }
+          #if (attribute.isState)
+        public {stringBuilder} {attribute.withMethod}({attribute.stringBuilder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asStringState(); return this; }
+          #end
+        #end
+
+        #foreach (method in asMethods)
+        public {method.returnclass} {method.methodName}({method.parameters}) {
+            return new {builder}(state.asMutable()).{method.methodName}({method.arguments});
+        }
+
+        #end
+        public {immutableState} asState() {
+            return state.asImmutable();
+        }
+
+        public {mutableState} asMutableState() {
+            return state.asMutable();
+        }
+
+        public {stringState} asStringState() {
+            return state;
+        }
+    }
+
+#end

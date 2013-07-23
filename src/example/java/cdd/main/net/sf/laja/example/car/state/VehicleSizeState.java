@@ -172,6 +172,10 @@ public class VehicleSizeState implements ImmutableState {
 
         public VehicleSizeStringState withLengthInCentimeters(String lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; return this; }
 
+        public VehicleSizeState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public VehicleSizeMutableState asMutable() {
             return asMutable(new VehicleSizeStringStateConverter());
         }

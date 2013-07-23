@@ -102,6 +102,14 @@ public class Attribute implements StateParser.IAttribute {
         return state == null ? "[error - could not find state '" + type + "']" : "[error - could not find creator for state '" + type + "']";
     }
 
+    public String getStringBuilder() {
+        if (state != null && state.creator != null) {
+            return state.creator.classname + "." + state.creator.getStringBuilder();
+        }
+        String type = this.type.asImmutable().name;
+        return state == null ? "[error - could not find state '" + type + "']" : "[error - could not find creator for state '" + type + "']";
+    }
+
     public boolean isValidType() {
         return type.isValid();
     }

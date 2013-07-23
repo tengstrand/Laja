@@ -202,6 +202,10 @@ public class BmiState implements ImmutableState {
         public BmiStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public BmiStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
+        public BmiState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public BmiMutableState asMutable() {
             return asMutable(new BmiStringStateConverter());
         }

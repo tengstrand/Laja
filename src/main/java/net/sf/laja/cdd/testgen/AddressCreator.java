@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
+import static net.sf.laja.cdd.state.AddressState.AddressStringState;
 
 @Creator
 public class AddressCreator implements AddressCreatorMaker {
@@ -255,6 +256,48 @@ public class AddressCreator implements AddressCreatorMaker {
 
         @Override public String toString() {
             return "AddressBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class AddressStringBuilder {
+        private final AddressStringState state;
+
+        public AddressStringBuilder() {
+            this.state = new AddressStringState();
+        }
+
+        public AddressStringBuilder(AddressStringState state) {
+            this.state = state;
+        }
+
+        public AddressStringBuilder withId(String id) { state.id = id; return this; }
+        public AddressStringBuilder withStreetName(String streetName) { state.streetName = streetName; return this; }
+        public AddressStringBuilder withCity(String city) { state.city = city; return this; }
+
+        public Address asAddress() {
+            return new AddressBuilder(state.asMutable()).asAddress();
+        }
+
+        public Address asAddress(int protectionLevel) {
+            return new AddressBuilder(state.asMutable()).asAddress(protectionLevel);
+        }
+
+        public Address asAddress(AddressType type) {
+            return new AddressBuilder(state.asMutable()).asAddress(type);
+        }
+
+        public AddressState asState() {
+            return state.asImmutable();
+        }
+
+        public AddressMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public AddressStringState asStringState() {
+            return state;
         }
     }
 

@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @Creator
 public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
@@ -226,6 +227,38 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
         @Override public String toString() {
             return "VehicleSizeBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class VehicleSizeStringBuilder {
+        private final VehicleSizeStringState state;
+
+        public VehicleSizeStringBuilder() {
+            this.state = new VehicleSizeStringState();
+        }
+
+        public VehicleSizeStringBuilder(VehicleSizeStringState state) {
+            this.state = state;
+        }
+
+        public VehicleSizeStringBuilder withLengthInCentimeters(String lengthInCentimeters) { state.lengthInCentimeters = lengthInCentimeters; return this; }
+
+        public VehicleSize asVehicleSize() {
+            return new VehicleSizeBuilder(state.asMutable()).asVehicleSize();
+        }
+
+        public VehicleSizeState asState() {
+            return state.asImmutable();
+        }
+
+        public VehicleSizeMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public VehicleSizeStringState asStringState() {
+            return state;
         }
     }
 

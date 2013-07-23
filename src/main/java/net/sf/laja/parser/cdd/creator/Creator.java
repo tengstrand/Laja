@@ -91,6 +91,10 @@ public class Creator implements CreatorParser.ICreator{
         return state + "Builder";
     }
 
+    public String getStringBuilder() {
+        return state + "StringBuilder";
+    }
+
     @Override
     public String toString() {
         return "Creator{" +

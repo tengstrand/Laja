@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.account.AccountState.AccountMutableState;
+import static net.sf.laja.example.account.AccountState.AccountStringState;
 
 @Creator
 public class TestAccountCreator implements TestAccountCreatorMaker {
@@ -225,6 +226,38 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
 
         @Override public String toString() {
             return "AccountBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class AccountStringBuilder {
+        private final AccountStringState state;
+
+        public AccountStringBuilder() {
+            this.state = new AccountStringState();
+        }
+
+        public AccountStringBuilder(AccountStringState state) {
+            this.state = state;
+        }
+
+        public AccountStringBuilder withBalance(String balance) { state.balance = balance; return this; }
+
+        public TestAccount asTestAccount() {
+            return new AccountBuilder(state.asMutable()).asTestAccount();
+        }
+
+        public AccountState asState() {
+            return state.asImmutable();
+        }
+
+        public AccountMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public AccountStringState asStringState() {
+            return state;
         }
     }
 

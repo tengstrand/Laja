@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.person.state.BmiState.BmiMutableState;
+import static net.sf.laja.example.person.state.BmiState.BmiStringState;
 
 @Creator
 public class BmiCreator implements BmiCreatorMaker {
@@ -235,6 +236,39 @@ public class BmiCreator implements BmiCreatorMaker {
 
         @Override public String toString() {
             return "BmiBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class BmiStringBuilder {
+        private final BmiStringState state;
+
+        public BmiStringBuilder() {
+            this.state = new BmiStringState();
+        }
+
+        public BmiStringBuilder(BmiStringState state) {
+            this.state = state;
+        }
+
+        public BmiStringBuilder withHeightInCentimeters(String heightInCentimeters) { state.heightInCentimeters = heightInCentimeters; return this; }
+        public BmiStringBuilder withWeightInKilograms(String weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; }
+
+        public BodyMassIndex asBmi() {
+            return new BmiBuilder(state.asMutable()).asBmi();
+        }
+
+        public BmiState asState() {
+            return state.asImmutable();
+        }
+
+        public BmiMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public BmiStringState asStringState() {
+            return state;
         }
     }
 

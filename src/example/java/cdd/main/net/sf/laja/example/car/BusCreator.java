@@ -23,6 +23,8 @@ import java.util.Set;
 
 import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
 import static net.sf.laja.example.car.state.BusState.BusMutableState;
+import static net.sf.laja.example.car.state.BusState.BusStringState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @Creator
 public class BusCreator implements BusCreatorMaker {
@@ -260,6 +262,41 @@ public class BusCreator implements BusCreatorMaker {
 
         @Override public String toString() {
             return "BusBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class BusStringBuilder {
+        private final BusStringState state;
+
+        public BusStringBuilder() {
+            this.state = new BusStringState();
+        }
+
+        public BusStringBuilder(BusStringState state) {
+            this.state = state;
+        }
+
+        public BusStringBuilder withName(String name) { state.name = name; return this; }
+        public BusStringBuilder withSize(VehicleSizeStringState size) { state.size = size; return this; }
+        public BusStringBuilder withSize(VehicleSizeCreator.VehicleSizeStringBuilder size) { state.size = size.asStringState(); return this; }
+        public BusStringBuilder withWeightInKilograms(String weightInKilograms) { state.weightInKilograms = weightInKilograms; return this; }
+
+        public Bus asBus() {
+            return new BusBuilder(state.asMutable()).asBus();
+        }
+
+        public BusState asState() {
+            return state.asImmutable();
+        }
+
+        public BusMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public BusStringState asStringState() {
+            return state;
         }
     }
 

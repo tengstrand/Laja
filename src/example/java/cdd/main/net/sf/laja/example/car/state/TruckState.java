@@ -301,6 +301,10 @@ public class TruckState implements ImmutableState {
         public TruckStringState withColor(String color) { this.color = color; return this; }
         public TruckStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
 
+        public TruckState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
         public TruckMutableState asMutable() {
             return asMutable(new TruckStringStateConverter());
         }
