@@ -86,7 +86,7 @@ public class OwnerState implements ImmutableState {
     @Override
     public String toString() {
         return "{ssn=" + ssn +
-                ", name='" + name + "'}";
+                ", name=" + (name == null ? null : '\"' + name + '\"' ) + "}";
     }
 
     @State(type = "mutable")
@@ -179,7 +179,7 @@ public class OwnerState implements ImmutableState {
         @Override
         public String toString() {
             return "{ssn=" + ssn +
-                    ", name='" + name + "'}";
+                    ", name=" + (name == null ? null : '\"' + name + '\"' ) + "}";
         }
     }
 
@@ -244,8 +244,8 @@ public class OwnerState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{ssn=" + (ssn == null ? null : '\'' + ssn + '\'' ) +
-                    ", name='" + name + "'}";
+            return "{ssn=" + (ssn == null ? null : '\"' + ssn + '\"' ) +
+                    ", name=" + (name == null ? null : '\"' + name + '\"' ) + "}";
         }
     }
 

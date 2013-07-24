@@ -124,7 +124,7 @@ public class TruckState implements ImmutableState {
         return "{size=" + size +
                 ", weightInKilograms=" + weightInKilograms +
                 ", type=" + type +
-                ", color=" + (color == null ? null : '\'' + color + '\'' ) +
+                ", color=" + (color == null ? null : '\"' + color + '\"' ) +
                 ", owner=" + owner + '}';
     }
 
@@ -254,7 +254,7 @@ public class TruckState implements ImmutableState {
             return "{size=" + size +
                     ", weightInKilograms=" + weightInKilograms +
                     ", type=" + type +
-                    ", color=" + (color == null ? null : '\'' + color + '\'' ) +
+                    ", color=" + (color == null ? null : '\"' + color + '\"' ) +
                     ", owner=" + owner + '}';
         }
     }
@@ -348,9 +348,9 @@ public class TruckState implements ImmutableState {
         @Override
         public String toString() {
             return "{size=" + size +
-                    ", weightInKilograms=" + (weightInKilograms == null ? null : '\'' + weightInKilograms + '\'' ) +
+                    ", weightInKilograms=" + (weightInKilograms == null ? null : '\"' + weightInKilograms + '\"' ) +
                     ", type=" + type +
-                    ", color=" + (color == null ? null : '\'' + color + '\'' ) +
+                    ", color=" + (color == null ? null : '\"' + color + '\"' ) +
                     ", owner=" + owner + '}';
         }
     }

@@ -239,8 +239,8 @@ public class BmiState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{heightInCentimeters=" + (heightInCentimeters == null ? null : '\'' + heightInCentimeters + '\'' ) +
-                    ", weightInKilograms='" + weightInKilograms + "'}";
+            return "{heightInCentimeters=" + (heightInCentimeters == null ? null : '\"' + heightInCentimeters + '\"' ) +
+                    ", weightInKilograms=" + (weightInKilograms == null ? null : '\"' + weightInKilograms + '\"' ) + "}";
         }
     }
 

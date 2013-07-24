@@ -85,7 +85,7 @@ public class TruckTypeState implements ImmutableState {
     @Override
     public String toString() {
         return "{numberOfWheels=" + numberOfWheels +
-                ", truckName='" + truckName + "'}";
+                ", truckName=" + (truckName == null ? null : '\"' + truckName + '\"' ) + "}";
     }
 
     @State(type = "mutable")
@@ -178,7 +178,7 @@ public class TruckTypeState implements ImmutableState {
         @Override
         public String toString() {
             return "{numberOfWheels=" + numberOfWheels +
-                    ", truckName='" + truckName + "'}";
+                    ", truckName=" + (truckName == null ? null : '\"' + truckName + '\"' ) + "}";
         }
     }
 
@@ -243,8 +243,8 @@ public class TruckTypeState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{numberOfWheels=" + (numberOfWheels == null ? null : '\'' + numberOfWheels + '\'' ) +
-                    ", truckName='" + truckName + "'}";
+            return "{numberOfWheels=" + (numberOfWheels == null ? null : '\"' + numberOfWheels + '\"' ) +
+                    ", truckName=" + (truckName == null ? null : '\"' + truckName + '\"' ) + "}";
         }
     }
 

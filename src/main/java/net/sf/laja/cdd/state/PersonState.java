@@ -211,9 +211,9 @@ public class PersonState implements ImmutableState {
     @Override
     public String toString() {
         return "{id=" + id +
-                ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                ", name=" + (name == null ? null : '\"' + name + '\"' ) +
                 ", birthday=" + birthday +
-                ", hairColor=" + (hairColor == null ? null : '\'' + hairColor + '\'' ) +
+                ", hairColor=" + (hairColor == null ? null : '\"' + hairColor + '\"' ) +
                 ", children=" + children +
                 ", address=" + address +
                 ", oldAddress=" + oldAddress +
@@ -396,9 +396,9 @@ public class PersonState implements ImmutableState {
         @Override
         public String toString() {
             return "{id=" + id +
-                    ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                    ", name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", birthday=" + birthday +
-                    ", hairColor=" + (hairColor == null ? null : '\'' + hairColor + '\'' ) +
+                    ", hairColor=" + (hairColor == null ? null : '\"' + hairColor + '\"' ) +
                     ", children=" + children +
                     ", address=" + address +
                     ", oldAddress=" + oldAddress +
@@ -540,10 +540,10 @@ public class PersonState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{id=" + (id == null ? null : '\'' + id + '\'' ) +
-                    ", name=" + (name == null ? null : '\'' + name + '\'' ) +
-                    ", birthday=" + (birthday == null ? null : '\'' + birthday + '\'' ) +
-                    ", hairColor=" + (hairColor == null ? null : '\'' + hairColor + '\'' ) +
+            return "{id=" + (id == null ? null : '\"' + id + '\"' ) +
+                    ", name=" + (name == null ? null : '\"' + name + '\"' ) +
+                    ", birthday=" + (birthday == null ? null : '\"' + birthday + '\"' ) +
+                    ", hairColor=" + (hairColor == null ? null : '\"' + hairColor + '\"' ) +
                     ", children=" + children +
                     ", address=" + address +
                     ", oldAddress=" + oldAddress +

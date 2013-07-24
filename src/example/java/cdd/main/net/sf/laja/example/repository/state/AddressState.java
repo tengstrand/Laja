@@ -126,9 +126,9 @@ public class AddressState implements ImmutableState {
     @Override
     public String toString() {
         return "{addressId=" + addressId +
-                ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
+                ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
                 ", zipcode=" + zipcode +
-                ", city='" + city + "'}";
+                ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
     }
 
     @State(type = "mutable")
@@ -234,9 +234,9 @@ public class AddressState implements ImmutableState {
         @Override
         public String toString() {
             return "{addressId=" + addressId +
-                    ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
+                    ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
                     ", zipcode=" + zipcode +
-                    ", city='" + city + "'}";
+                    ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
         }
     }
 
@@ -313,10 +313,10 @@ public class AddressState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{addressId=" + (addressId == null ? null : '\'' + addressId + '\'' ) +
-                    ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
-                    ", zipcode=" + (zipcode == null ? null : '\'' + zipcode + '\'' ) +
-                    ", city='" + city + "'}";
+            return "{addressId=" + (addressId == null ? null : '\"' + addressId + '\"' ) +
+                    ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
+                    ", zipcode=" + (zipcode == null ? null : '\"' + zipcode + '\"' ) +
+                    ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
         }
     }
 

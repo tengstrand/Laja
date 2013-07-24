@@ -359,13 +359,13 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #if (hasNext)
       #if (first)
         #if (attribute.isString)
-{tab}    return "{{attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+{tab}    return "{{attribute.name}=" + ({value} == null ? null : '\"' + {value} + '\"' ) +
         #else
 {tab}    return "{{attribute.name}=" + {value} +
         #end
       #else
         #if (attribute.isString)
-{tab}            ", {attribute.name}=" + ({value} == null ? null : '\'' + {value} + '\'' ) +
+{tab}            ", {attribute.name}=" + ({value} == null ? null : '\"' + {value} + '\"' ) +
         #else
 {tab}            ", {attribute.name}=" + {value} +
         #end
@@ -376,7 +376,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 {tab}    return "{{attribute.name}=" + {value} + "}";
       #else
         #if (attribute.isString)
-{tab}            ", {attribute.name}='" + {value} + "'}";
+{tab}            ", {attribute.name}=" + ({value} == null ? null : '\"' + {value} + '\"' ) + "}";
         #else
 {tab}            ", {attribute.name}=" + {value} + '}';
         #end

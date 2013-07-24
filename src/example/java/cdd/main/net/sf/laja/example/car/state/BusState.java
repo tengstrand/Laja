@@ -98,7 +98,7 @@ public class BusState implements ImmutableState {
 
     @Override
     public String toString() {
-        return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
+        return "{name=" + (name == null ? null : '\"' + name + '\"' ) +
                 ", size=" + size +
                 ", weightInKilograms=" + weightInKilograms + '}';
     }
@@ -204,7 +204,7 @@ public class BusState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
+            return "{name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", size=" + size +
                     ", weightInKilograms=" + weightInKilograms + '}';
         }
@@ -280,9 +280,9 @@ public class BusState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
+            return "{name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", size=" + size +
-                    ", weightInKilograms='" + weightInKilograms + "'}";
+                    ", weightInKilograms=" + (weightInKilograms == null ? null : '\"' + weightInKilograms + '\"' ) + "}";
         }
     }
 

@@ -164,10 +164,10 @@ public class CustomerState implements ImmutableState {
     @Override
     public String toString() {
         return "{ssn=" + ssn +
-                ", givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
-                ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
+                ", givenName=" + (givenName == null ? null : '\"' + givenName + '\"' ) +
+                ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
                 ", age=" + age +
-                ", pet=" + (pet == null ? null : '\'' + pet + '\'' ) +
+                ", pet=" + (pet == null ? null : '\"' + pet + '\"' ) +
                 ", address=" + address +
                 ", oldAddresses=" + oldAddresses + '}';
     }
@@ -300,10 +300,10 @@ public class CustomerState implements ImmutableState {
         @Override
         public String toString() {
             return "{ssn=" + ssn +
-                    ", givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
-                    ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
+                    ", givenName=" + (givenName == null ? null : '\"' + givenName + '\"' ) +
+                    ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
                     ", age=" + age +
-                    ", pet=" + (pet == null ? null : '\'' + pet + '\'' ) +
+                    ", pet=" + (pet == null ? null : '\"' + pet + '\"' ) +
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses + '}';
         }
@@ -404,11 +404,11 @@ public class CustomerState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{ssn=" + (ssn == null ? null : '\'' + ssn + '\'' ) +
-                    ", givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
-                    ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
-                    ", age=" + (age == null ? null : '\'' + age + '\'' ) +
-                    ", pet=" + (pet == null ? null : '\'' + pet + '\'' ) +
+            return "{ssn=" + (ssn == null ? null : '\"' + ssn + '\"' ) +
+                    ", givenName=" + (givenName == null ? null : '\"' + givenName + '\"' ) +
+                    ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
+                    ", age=" + (age == null ? null : '\"' + age + '\"' ) +
+                    ", pet=" + (pet == null ? null : '\"' + pet + '\"' ) +
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses + '}';
         }

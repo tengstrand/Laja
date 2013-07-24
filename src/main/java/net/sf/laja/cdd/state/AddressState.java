@@ -114,8 +114,8 @@ public class AddressState implements ImmutableState {
     @Override
     public String toString() {
         return "{id=" + id +
-                ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
-                ", city='" + city + "'}";
+                ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
+                ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
     }
 
     @State(type = "mutable")
@@ -211,8 +211,8 @@ public class AddressState implements ImmutableState {
         @Override
         public String toString() {
             return "{id=" + id +
-                    ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
-                    ", city='" + city + "'}";
+                    ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
+                    ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
         }
     }
 
@@ -285,9 +285,9 @@ public class AddressState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{id=" + (id == null ? null : '\'' + id + '\'' ) +
-                    ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
-                    ", city='" + city + "'}";
+            return "{id=" + (id == null ? null : '\"' + id + '\"' ) +
+                    ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
+                    ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
         }
     }
 

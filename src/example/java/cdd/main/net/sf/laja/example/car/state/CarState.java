@@ -110,9 +110,9 @@ public class CarState implements ImmutableState {
     @Override
     public String toString() {
         return "{size=" + size +
-                ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                ", name=" + (name == null ? null : '\"' + name + '\"' ) +
                 ", owner=" + owner +
-                ", color='" + color + "'}";
+                ", color=" + (color == null ? null : '\"' + color + '\"' ) + "}";
     }
 
     @State(type = "mutable")
@@ -229,9 +229,9 @@ public class CarState implements ImmutableState {
         @Override
         public String toString() {
             return "{size=" + size +
-                    ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                    ", name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", owner=" + owner +
-                    ", color='" + color + "'}";
+                    ", color=" + (color == null ? null : '\"' + color + '\"' ) + "}";
         }
     }
 
@@ -315,9 +315,9 @@ public class CarState implements ImmutableState {
         @Override
         public String toString() {
             return "{size=" + size +
-                    ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                    ", name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", owner=" + owner +
-                    ", color='" + color + "'}";
+                    ", color=" + (color == null ? null : '\"' + color + '\"' ) + "}";
         }
     }
 

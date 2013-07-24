@@ -103,8 +103,8 @@ public class PersonState implements ImmutableState {
 
     @Override
     public String toString() {
-        return "{givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
-                ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
+        return "{givenName=" + (givenName == null ? null : '\"' + givenName + '\"' ) +
+                ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
                 ", heightInCentimeters=" + heightInCentimeters +
                 ", weightInKilograms=" + weightInKilograms + '}';
     }
@@ -217,8 +217,8 @@ public class PersonState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
-                    ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
+            return "{givenName=" + (givenName == null ? null : '\"' + givenName + '\"' ) +
+                    ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
                     ", heightInCentimeters=" + heightInCentimeters +
                     ", weightInKilograms=" + weightInKilograms + '}';
         }
@@ -303,10 +303,10 @@ public class PersonState implements ImmutableState {
 
         @Override
         public String toString() {
-            return "{givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
-                    ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
-                    ", heightInCentimeters=" + (heightInCentimeters == null ? null : '\'' + heightInCentimeters + '\'' ) +
-                    ", weightInKilograms='" + weightInKilograms + "'}";
+            return "{givenName=" + (givenName == null ? null : '\"' + givenName + '\"' ) +
+                    ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
+                    ", heightInCentimeters=" + (heightInCentimeters == null ? null : '\"' + heightInCentimeters + '\"' ) +
+                    ", weightInKilograms=" + (weightInKilograms == null ? null : '\"' + weightInKilograms + '\"' ) + "}";
         }
     }
 
