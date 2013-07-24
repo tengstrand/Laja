@@ -13,13 +13,13 @@ import net.sf.laja.cdd.validator.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.sf.laja.cdd.stateconverter.StateConversion.asImmutableList;
-import static net.sf.laja.cdd.stateconverter.StateConversion.asMutableList;
+import static net.sf.laja.cdd.stateconverter.StateConversion.*;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toMutable;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
+import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
 
 @State
 public class CustomerState implements ImmutableState {
@@ -183,7 +183,6 @@ public class CustomerState implements ImmutableState {
         @Optional public List<AddressMutableState> oldAddresses;
 
         public CustomerMutableState() {
-            address = new AddressMutableState();
             oldAddresses = new ArrayList<AddressMutableState>();
         }
 
@@ -308,5 +307,90 @@ public class CustomerState implements ImmutableState {
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses + '}';
         }
+    }
+
+    @State(type = "string")
+    public static class CustomerStringState {
+        @Key public String ssn;
+        public String givenName;
+        @Optional public String surname;
+        public String age;
+        @Optional public String pet;
+        public AddressStringState address;
+        @Optional public List<AddressStringState> oldAddresses;
+
+        public CustomerStringState() {
+            oldAddresses = new ArrayList<AddressStringState>();
+        }
+
+        public CustomerStringState(
+                String ssn,
+                String givenName,
+                String surname,
+                String age,
+                String pet,
+                AddressStringState address,
+                List<AddressStringState> oldAddresses) {
+            this.ssn = ssn;
+            this.givenName = givenName;
+            this.surname = surname;
+            this.age = age;
+            this.pet = pet;
+            this.address = address;
+            this.oldAddresses = oldAddresses;
+        }
+
+        public String getSsn() { return ssn; }
+        public String getGivenName() { return givenName; }
+        public String getSurname() { return surname; }
+        public String getAge() { return age; }
+        public String getPet() { return pet; }
+        public AddressStringState getAddress() { return address; }
+        public List<AddressStringState> getOldAddresses() { return oldAddresses; }
+
+        public void setSsn(String ssn) { this.ssn = ssn; }
+        public void setGivenName(String givenName) { this.givenName = givenName; }
+        public void setSurname(String surname) { this.surname = surname; }
+        public void setAge(String age) { this.age = age; }
+        public void setPet(String pet) { this.pet = pet; }
+        public void setAddress(AddressStringState address) { this.address = address; }
+        public void setOldAddresses(List<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; }
+
+        public CustomerStringState withSsn(String ssn) { this.ssn = ssn; return this; }
+        public CustomerStringState withGivenName(String givenName) { this.givenName = givenName; return this; }
+        public CustomerStringState withSurname(String surname) { this.surname = surname; return this; }
+        public CustomerStringState withAge(String age) { this.age = age; return this; }
+        public CustomerStringState withPet(String pet) { this.pet = pet; return this; }
+        public CustomerStringState withAddress(AddressStringState address) { this.address = address; return this; }
+        public CustomerStringState withOldAddresses(List<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
+
+        public CustomerState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
+        public CustomerMutableState asMutable() {
+            return asMutable(new CustomerStringStateConverter());
+        }
+
+        public CustomerMutableState asMutable(CustomerStringStateConverter converter) {
+            return new CustomerMutableState(
+                    converter.toSsn(ssn),
+                    converter.toGivenName(givenName),
+                    converter.toSurname(surname),
+                    converter.toAge(age),
+                    converter.toPet(pet),
+                    converter.toAddress(address),
+                    converter.toOldAddresses(oldAddresses));
+        }
+    }
+
+    public static class CustomerStringStateConverter {
+        public long toSsn(String ssn) { return asLongPrimitive(ssn); }
+        public String toGivenName(String givenName) { return givenName; }
+        public String toSurname(String surname) { return surname; }
+        public int toAge(String age) { return asInt(age); }
+        public String toPet(String pet) { return pet; }
+        public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }
+        public List<AddressMutableState> toOldAddresses(List<AddressStringState> oldAddresses) { return asMutableList(oldAddresses, toMutable); }
     }
 }

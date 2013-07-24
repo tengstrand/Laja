@@ -23,7 +23,9 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.repository.domain.AddressCreator.AddressListBuilder;
+import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
 import static net.sf.laja.example.repository.state.CustomerState.CustomerMutableState;
+import static net.sf.laja.example.repository.state.CustomerState.CustomerStringState;
 
 @Creator
 public class CustomerCreator implements CustomerCreatorMaker {
@@ -311,6 +313,57 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         @Override public String toString() {
             return "CustomerBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class CustomerStringBuilder {
+        private final CustomerStringState state;
+
+        public CustomerStringBuilder() {
+            this.state = new CustomerStringState();
+        }
+
+        public CustomerStringBuilder(CustomerStringState state) {
+            this.state = state;
+        }
+
+        public CustomerStringBuilder withSsn(String ssn) { state.ssn = ssn; return this; }
+        public CustomerStringBuilder withGivenName(String givenName) { state.givenName = givenName; return this; }
+        public CustomerStringBuilder withSurname(String surname) { state.surname = surname; return this; }
+        public CustomerStringBuilder withAge(String age) { state.age = age; return this; }
+        public CustomerStringBuilder withPet(String pet) { state.pet = pet; return this; }
+        public CustomerStringBuilder withAddress(AddressStringState address) { state.address = address; return this; }
+        public CustomerStringBuilder withAddress(AddressCreator.AddressStringBuilder address) { state.address = address.asStringState(); return this; }
+        public CustomerStringBuilder withOldAddresses(List<AddressStringState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
+
+        public Customer asCustomer() {
+            return new CustomerBuilder(state.asMutable()).asCustomer();
+        }
+
+        public CustomerMatcher asCustomerMatcher() {
+            return new CustomerBuilder(state.asMutable()).asCustomerMatcher();
+        }
+
+        public CustomerInDb asCustomerInDb() {
+            return new CustomerBuilder(state.asMutable()).asCustomerInDb();
+        }
+
+        public CustomerInGui asCustomerInGui() {
+            return new CustomerBuilder(state.asMutable()).asCustomerInGui();
+        }
+
+        public CustomerState asState() {
+            return state.asImmutable();
+        }
+
+        public CustomerMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public CustomerStringState asStringState() {
+            return state;
         }
     }
 
