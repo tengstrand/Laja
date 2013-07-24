@@ -9,6 +9,8 @@ import net.sf.laja.cdd.annotation.Parameters;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.repository.state.AddressState;
+import net.sf.laja.example.repository.state.AddressState.AddressMutableState;
+import net.sf.laja.example.repository.state.AddressState.AddressStringState;
 import net.sf.laja.example.repository.state.Zipcode;
 
 import java.util.ArrayList;
@@ -20,9 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
-import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
 
 @Creator
 public class AddressCreator implements AddressCreatorMaker {

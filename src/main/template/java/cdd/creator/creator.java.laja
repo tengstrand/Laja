@@ -62,6 +62,7 @@ import java.util.*;
     #set (staticStateImports = new java.util.TreeSet())
     #stateImports.add("{statePackagename}.{immutableState}")
     #stateImports.add("{statePackagename}.{immutableState}.{mutableState}")
+    #stateImports.add("{statePackagename}.{immutableState}.{stringState}")
     #foreach (attribute in attributes where attribute.isState)
       #stateImports.add("{attribute.stateObject.packagename}.{attribute.asImmutable.type}.{attribute.asMutable.type}")
       #if (attribute.creator != null)
