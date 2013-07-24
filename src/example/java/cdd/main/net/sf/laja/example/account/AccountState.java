@@ -202,6 +202,30 @@ public class AccountState implements ImmutableState {
             return new AccountMutableState(
                     converter.toBalance(balance));
         }
+
+        @Override
+        public int hashCode() {
+            int result = balance != null ? balance.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            AccountStringState state = (AccountStringState)that;
+
+            if (balance != null ? !balance.equals(state.balance) : state.balance != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{balance=" + balance + "}";
+        }
     }
 
     public static class AccountStringStateConverter {

@@ -215,6 +215,33 @@ public class BmiState implements ImmutableState {
                     converter.toHeightInCentimeters(heightInCentimeters),
                     converter.toWeightInKilograms(weightInKilograms));
         }
+
+        @Override
+        public int hashCode() {
+            int result = heightInCentimeters != null ? heightInCentimeters.hashCode() : 0;
+            result = 31 * result + (weightInKilograms != null ? weightInKilograms.hashCode() : 0);
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            BmiStringState state = (BmiStringState)that;
+
+            if (heightInCentimeters != null ? !heightInCentimeters.equals(state.heightInCentimeters) : state.heightInCentimeters != null) return false;
+            if (weightInKilograms != null ? !weightInKilograms.equals(state.weightInKilograms) : state.weightInKilograms != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{heightInCentimeters=" + (heightInCentimeters == null ? null : '\'' + heightInCentimeters + '\'' ) +
+                    ", weightInKilograms='" + weightInKilograms + "'}";
+        }
     }
 
     public static class BmiStringStateConverter {

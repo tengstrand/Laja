@@ -39,6 +39,10 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return new AddressBuilder();
     }
 
+    public static AddressStringBuilder buildStringSpecialAddress() {
+        return new AddressStringBuilder();
+    }
+
     public static AddressListBuilder createSpecialAddressList(SpecialAddressCreator... creators) {
         return new AddressListBuilder(creators);
     }
@@ -262,6 +266,21 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
 
         public AddressStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof AddressStringBuilder)) return false;
+
+            return state.equals(((AddressStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "AddressStringBuilder" + state;
         }
     }
 

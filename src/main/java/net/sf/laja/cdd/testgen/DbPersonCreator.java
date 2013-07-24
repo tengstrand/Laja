@@ -44,6 +44,10 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return new PersonBuilder();
     }
 
+    public static PersonStringBuilder buildStringDbPerson() {
+        return new PersonStringBuilder();
+    }
+
     public static PersonListBuilder createDbPersonList(DbPersonCreator... creators) {
         return new PersonListBuilder(creators);
     }
@@ -384,6 +388,21 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
 
         public PersonStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof PersonStringBuilder)) return false;
+
+            return state.equals(((PersonStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "PersonStringBuilder" + state;
         }
     }
 

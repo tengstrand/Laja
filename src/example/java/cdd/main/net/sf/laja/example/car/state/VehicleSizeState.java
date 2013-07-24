@@ -184,6 +184,30 @@ public class VehicleSizeState implements ImmutableState {
             return new VehicleSizeMutableState(
                     converter.toLengthInCentimeters(lengthInCentimeters));
         }
+
+        @Override
+        public int hashCode() {
+            int result = lengthInCentimeters != null ? lengthInCentimeters.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            VehicleSizeStringState state = (VehicleSizeStringState)that;
+
+            if (lengthInCentimeters != null ? !lengthInCentimeters.equals(state.lengthInCentimeters) : state.lengthInCentimeters != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{lengthInCentimeters=" + lengthInCentimeters + "}";
+        }
     }
 
     public static class VehicleSizeStringStateConverter {

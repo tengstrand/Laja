@@ -220,6 +220,33 @@ public class OwnerState implements ImmutableState {
                     converter.toSsn(ssn),
                     converter.toName(name));
         }
+
+        @Override
+        public int hashCode() {
+            int result = ssn != null ? ssn.hashCode() : 0;
+            result = 31 * result + (name != null ? name.hashCode() : 0);
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            OwnerStringState state = (OwnerStringState)that;
+
+            if (ssn != null ? !ssn.equals(state.ssn) : state.ssn != null) return false;
+            if (name != null ? !name.equals(state.name) : state.name != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{ssn=" + (ssn == null ? null : '\'' + ssn + '\'' ) +
+                    ", name='" + name + "'}";
+        }
     }
 
     public static class OwnerStringStateConverter {

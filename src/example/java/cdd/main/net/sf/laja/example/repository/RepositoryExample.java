@@ -5,6 +5,10 @@ import net.sf.laja.example.repository.domain.Customer;
 import net.sf.laja.example.repository.gui.CustomerInGui;
 import net.sf.laja.example.repository.persistence.CustomerRepository;
 
+import static net.sf.laja.example.repository.domain.AddressCreator.buildStringAddress;
+import static net.sf.laja.example.repository.domain.CustomerCreator.CustomerStringBuilder;
+import static net.sf.laja.example.repository.domain.CustomerCreator.buildStringCustomer;
+
 public class RepositoryExample {
 
     /**
@@ -31,5 +35,10 @@ public class RepositoryExample {
 
         // 3. Save to database.
         customer.save();
+
+        CustomerStringBuilder builder = buildStringCustomer().withGivenName("Carl").withAddress(
+                buildStringAddress().withStreetName("Storgatan").withZipcode("12345").withCity("Uppsala"));
+
+        System.out.println(builder);
     }
 }

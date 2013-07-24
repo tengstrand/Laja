@@ -53,6 +53,10 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressBuilder();
     }
 
+    public static AddressStringBuilder buildStringAddress() {
+        return new AddressStringBuilder();
+    }
+
     public static AddressListBuilder createAddressList(AddressCreator... creators) {
         return new AddressListBuilder(creators);
     }
@@ -298,6 +302,21 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof AddressStringBuilder)) return false;
+
+            return state.equals(((AddressStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "AddressStringBuilder" + state;
         }
     }
 

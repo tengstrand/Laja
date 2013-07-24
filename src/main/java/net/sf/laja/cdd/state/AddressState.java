@@ -263,6 +263,32 @@ public class AddressState implements ImmutableState {
                     converter.toStreetName(streetName),
                     converter.toCity(city));
         }
+
+        @Override
+        public int hashCode() {
+            int result = id != null ? id.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            AddressStringState state = (AddressStringState)that;
+
+            if (id != null ? !id.equals(state.id) : state.id != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{id=" + (id == null ? null : '\'' + id + '\'' ) +
+                    ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
+                    ", city='" + city + "'}";
+        }
     }
 
     public static class AddressStringStateConverter {

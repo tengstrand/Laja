@@ -254,6 +254,36 @@ public class BusState implements ImmutableState {
                     converter.toSize(size),
                     converter.toWeightInKilograms(weightInKilograms));
         }
+
+        @Override
+        public int hashCode() {
+            int result = name != null ? name.hashCode() : 0;
+            result = 31 * result + (size != null ? size.hashCode() : 0);
+            result = 31 * result + (weightInKilograms != null ? weightInKilograms.hashCode() : 0);
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            BusStringState state = (BusStringState)that;
+
+            if (name != null ? !name.equals(state.name) : state.name != null) return false;
+            if (size != null ? !size.equals(state.size) : state.size != null) return false;
+            if (weightInKilograms != null ? !weightInKilograms.equals(state.weightInKilograms) : state.weightInKilograms != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{name=" + (name == null ? null : '\'' + name + '\'' ) +
+                    ", size=" + size +
+                    ", weightInKilograms='" + weightInKilograms + "'}";
+        }
     }
 
     public static class BusStringStateConverter {

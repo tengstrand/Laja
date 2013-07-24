@@ -39,6 +39,10 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerBuilder();
     }
 
+    public static OwnerStringBuilder buildStringOwner() {
+        return new OwnerStringBuilder();
+    }
+
     public static OwnerListBuilder createOwnerList(OwnerCreator... creators) {
         return new OwnerListBuilder(creators);
     }
@@ -269,6 +273,21 @@ public class OwnerCreator implements OwnerCreatorMaker {
 
         public OwnerStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof OwnerStringBuilder)) return false;
+
+            return state.equals(((OwnerStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "OwnerStringBuilder" + state;
         }
     }
 

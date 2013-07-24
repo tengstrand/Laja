@@ -39,6 +39,10 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeBuilder();
     }
 
+    public static VehicleSizeStringBuilder buildStringVehicleSize() {
+        return new VehicleSizeStringBuilder();
+    }
+
     public static VehicleSizeListBuilder createVehicleSizeList(VehicleSizeCreator... creators) {
         return new VehicleSizeListBuilder(creators);
     }
@@ -259,6 +263,21 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
         public VehicleSizeStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof VehicleSizeStringBuilder)) return false;
+
+            return state.equals(((VehicleSizeStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "VehicleSizeStringBuilder" + state;
         }
     }
 

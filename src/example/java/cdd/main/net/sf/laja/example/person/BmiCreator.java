@@ -39,6 +39,10 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiBuilder();
     }
 
+    public static BmiStringBuilder buildStringBmi() {
+        return new BmiStringBuilder();
+    }
+
     public static BmiListBuilder createBmiList(BmiCreator... creators) {
         return new BmiListBuilder(creators);
     }
@@ -269,6 +273,21 @@ public class BmiCreator implements BmiCreatorMaker {
 
         public BmiStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof BmiStringBuilder)) return false;
+
+            return state.equals(((BmiStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "BmiStringBuilder" + state;
         }
     }
 

@@ -51,5 +51,8 @@
   #$mutable.setters()
   #$mutable.withMethods(stringClass)
   #asState()
+  #hashCode(tab)
+  #equals(stringClass, tab)
+  #toString(tab)
     }
 #end

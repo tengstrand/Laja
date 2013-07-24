@@ -22,6 +22,7 @@ public class Creator implements CreatorParser.ICreator{
 
     public String filename;
     public String buildMethod;
+    public String buildStringMethod;
     public String createMethod;
     public String entryMethod;
 
@@ -66,6 +67,7 @@ public class Creator implements CreatorParser.ICreator{
         String name = classname.endsWith("Creator") ? classname.substring(0, classname.length() - "Creator".length()) : classname;
         maker = classname + "Maker";
         buildMethod = "build" + name;
+        buildStringMethod = "buildString" + name;
         createMethod = "create" + name;
         entryMethod = StringUtils.uncapitalize(name) + "Entry";
     }

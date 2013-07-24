@@ -48,6 +48,10 @@ public class BusCreator implements BusCreatorMaker {
         return new BusBuilder();
     }
 
+    public static BusStringBuilder buildStringBus() {
+        return new BusStringBuilder();
+    }
+
     public static BusListBuilder createBusList(BusCreator... creators) {
         return new BusListBuilder(creators);
     }
@@ -297,6 +301,21 @@ public class BusCreator implements BusCreatorMaker {
 
         public BusStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof BusStringBuilder)) return false;
+
+            return state.equals(((BusStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "BusStringBuilder" + state;
         }
     }
 

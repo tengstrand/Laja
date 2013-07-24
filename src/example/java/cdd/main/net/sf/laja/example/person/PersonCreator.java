@@ -39,6 +39,10 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonBuilder();
     }
 
+    public static PersonStringBuilder buildStringPerson() {
+        return new PersonStringBuilder();
+    }
+
     public static PersonListBuilder createPersonList(PersonCreator... creators) {
         return new PersonListBuilder(creators);
     }
@@ -289,6 +293,21 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof PersonStringBuilder)) return false;
+
+            return state.equals(((PersonStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "PersonStringBuilder" + state;
         }
     }
 

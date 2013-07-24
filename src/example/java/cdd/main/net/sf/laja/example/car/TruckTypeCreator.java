@@ -39,6 +39,10 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return new TruckTypeBuilder();
     }
 
+    public static TruckTypeStringBuilder buildStringTruckType() {
+        return new TruckTypeStringBuilder();
+    }
+
     public static TruckTypeListBuilder createTruckTypeList(TruckTypeCreator... creators) {
         return new TruckTypeListBuilder(creators);
     }
@@ -269,6 +273,21 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
         public TruckTypeStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof TruckTypeStringBuilder)) return false;
+
+            return state.equals(((TruckTypeStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "TruckTypeStringBuilder" + state;
         }
     }
 

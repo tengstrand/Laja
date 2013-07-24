@@ -317,6 +317,42 @@ public class TruckState implements ImmutableState {
                     converter.toColor(color),
                     converter.toOwner(owner));
         }
+
+        @Override
+        public int hashCode() {
+            int result = size != null ? size.hashCode() : 0;
+            result = 31 * result + (weightInKilograms != null ? weightInKilograms.hashCode() : 0);
+            result = 31 * result + (type != null ? type.hashCode() : 0);
+            result = 31 * result + (color != null ? color.hashCode() : 0);
+            result = 31 * result + (owner != null ? owner.hashCode() : 0);
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            TruckStringState state = (TruckStringState)that;
+
+            if (size != null ? !size.equals(state.size) : state.size != null) return false;
+            if (weightInKilograms != null ? !weightInKilograms.equals(state.weightInKilograms) : state.weightInKilograms != null) return false;
+            if (type != null ? !type.equals(state.type) : state.type != null) return false;
+            if (color != null ? !color.equals(state.color) : state.color != null) return false;
+            if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{size=" + size +
+                    ", weightInKilograms=" + (weightInKilograms == null ? null : '\'' + weightInKilograms + '\'' ) +
+                    ", type=" + type +
+                    ", color=" + (color == null ? null : '\'' + color + '\'' ) +
+                    ", owner=" + owner + '}';
+        }
     }
 
     public static class TruckStringStateConverter {

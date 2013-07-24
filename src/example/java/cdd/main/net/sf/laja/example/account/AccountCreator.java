@@ -42,6 +42,10 @@ public class AccountCreator implements AccountCreatorMaker {
         return new AccountBuilder();
     }
 
+    public static AccountStringBuilder buildStringAccount() {
+        return new AccountStringBuilder();
+    }
+
     public static AccountListBuilder createAccountList(AccountCreator... creators) {
         return new AccountListBuilder(creators);
     }
@@ -270,6 +274,21 @@ public class AccountCreator implements AccountCreatorMaker {
 
         public AccountStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof AccountStringBuilder)) return false;
+
+            return state.equals(((AccountStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "AccountStringBuilder" + state;
         }
     }
 

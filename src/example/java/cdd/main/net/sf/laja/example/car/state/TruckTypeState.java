@@ -219,6 +219,33 @@ public class TruckTypeState implements ImmutableState {
                     converter.toNumberOfWheels(numberOfWheels),
                     converter.toTruckName(truckName));
         }
+
+        @Override
+        public int hashCode() {
+            int result = numberOfWheels != null ? numberOfWheels.hashCode() : 0;
+            result = 31 * result + (truckName != null ? truckName.hashCode() : 0);
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            TruckTypeStringState state = (TruckTypeStringState)that;
+
+            if (numberOfWheels != null ? !numberOfWheels.equals(state.numberOfWheels) : state.numberOfWheels != null) return false;
+            if (truckName != null ? !truckName.equals(state.truckName) : state.truckName != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{numberOfWheels=" + (numberOfWheels == null ? null : '\'' + numberOfWheels + '\'' ) +
+                    ", truckName='" + truckName + "'}";
+        }
     }
 
     public static class TruckTypeStringStateConverter {

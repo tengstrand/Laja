@@ -291,6 +291,33 @@ public class AddressState implements ImmutableState {
                     converter.toZipcode(zipcode),
                     converter.toCity(city));
         }
+
+        @Override
+        public int hashCode() {
+            int result = addressId != null ? addressId.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            AddressStringState state = (AddressStringState)that;
+
+            if (addressId != null ? !addressId.equals(state.addressId) : state.addressId != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{addressId=" + (addressId == null ? null : '\'' + addressId + '\'' ) +
+                    ", streetName=" + (streetName == null ? null : '\'' + streetName + '\'' ) +
+                    ", zipcode=" + (zipcode == null ? null : '\'' + zipcode + '\'' ) +
+                    ", city='" + city + "'}";
+        }
     }
 
     public static class AddressStringStateConverter {

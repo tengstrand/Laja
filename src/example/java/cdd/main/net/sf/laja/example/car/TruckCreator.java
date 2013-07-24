@@ -45,6 +45,10 @@ public class TruckCreator implements TruckCreatorMaker {
         return new TruckBuilder();
     }
 
+    public static TruckStringBuilder buildStringTruck() {
+        return new TruckStringBuilder();
+    }
+
     public static TruckListBuilder createTruckList(TruckCreator... creators) {
         return new TruckListBuilder(creators);
     }
@@ -330,6 +334,21 @@ public class TruckCreator implements TruckCreatorMaker {
 
         public TruckStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof TruckStringBuilder)) return false;
+
+            return state.equals(((TruckStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "TruckStringBuilder" + state;
         }
     }
 

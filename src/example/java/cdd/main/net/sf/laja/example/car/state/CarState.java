@@ -286,6 +286,39 @@ public class CarState implements ImmutableState {
                     converter.toOwner(owner),
                     converter.toColor(color));
         }
+
+        @Override
+        public int hashCode() {
+            int result = size != null ? size.hashCode() : 0;
+            result = 31 * result + (name != null ? name.hashCode() : 0);
+            result = 31 * result + (owner != null ? owner.hashCode() : 0);
+            result = 31 * result + (color != null ? color.hashCode() : 0);
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            CarStringState state = (CarStringState)that;
+
+            if (size != null ? !size.equals(state.size) : state.size != null) return false;
+            if (name != null ? !name.equals(state.name) : state.name != null) return false;
+            if (owner != null ? !owner.equals(state.owner) : state.owner != null) return false;
+            if (color != null ? !color.equals(state.color) : state.color != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{size=" + size +
+                    ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                    ", owner=" + owner +
+                    ", color='" + color + "'}";
+        }
     }
 
     public static class CarStringStateConverter {

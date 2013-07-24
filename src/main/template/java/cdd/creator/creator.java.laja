@@ -9,6 +9,7 @@
   #set (createMethod = creator.createMethod)
   #set (entryMethod = "{createMethod}Entry")
   #set (buildMethod = creator.buildMethod)
+  #set (buildStringMethod = creator.buildStringMethod)
   #set (statevariable = creator.statevariable)
   #set (asMethods = creator.asMethods)
   #set (parameters = creator.parameters)
@@ -131,6 +132,13 @@ import net.sf.laja.cdd.annotation.Parameters;
 #macro build()
     public static {builder} {buildMethod}() {
         return new {builder}();
+    }
+
+#end
+
+#macro buildString()
+    public static {stringBuilder} {buildStringMethod}() {
+        return new {stringBuilder}();
     }
 
 #end
@@ -299,6 +307,7 @@ public class {classname} implements {maker} {
     #parameters()
     #create()
     #build()
+    #buildString()
     #createList()
     #createSet()
     #createMap()

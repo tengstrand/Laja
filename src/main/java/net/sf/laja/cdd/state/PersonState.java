@@ -518,6 +518,40 @@ public class PersonState implements ImmutableState {
                     converter.toListOfSetOfState(listOfSetOfState),
                     converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers));
         }
+
+        @Override
+        public int hashCode() {
+            int result = id != null ? id.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            PersonStringState state = (PersonStringState)that;
+
+            if (id != null ? !id.equals(state.id) : state.id != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{id=" + (id == null ? null : '\'' + id + '\'' ) +
+                    ", name=" + (name == null ? null : '\'' + name + '\'' ) +
+                    ", birthday=" + (birthday == null ? null : '\'' + birthday + '\'' ) +
+                    ", hairColor=" + (hairColor == null ? null : '\'' + hairColor + '\'' ) +
+                    ", children=" + children +
+                    ", address=" + address +
+                    ", oldAddress=" + oldAddress +
+                    ", oldAddresses=" + oldAddresses +
+                    ", groupedAddresses=" + groupedAddresses +
+                    ", listOfSetOfState=" + listOfSetOfState +
+                    ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
+        }
     }
 
     public static class PersonStringStateConverter {

@@ -57,6 +57,10 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerBuilder();
     }
 
+    public static CustomerStringBuilder buildStringCustomer() {
+        return new CustomerStringBuilder();
+    }
+
     public static CustomerListBuilder createCustomerList(CustomerCreator... creators) {
         return new CustomerListBuilder(creators);
     }
@@ -364,6 +368,21 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public CustomerStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof CustomerStringBuilder)) return false;
+
+            return state.equals(((CustomerStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "CustomerStringBuilder" + state;
         }
     }
 

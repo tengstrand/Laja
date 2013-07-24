@@ -382,6 +382,36 @@ public class CustomerState implements ImmutableState {
                     converter.toAddress(address),
                     converter.toOldAddresses(oldAddresses));
         }
+
+        @Override
+        public int hashCode() {
+            int result = ssn != null ? ssn.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            CustomerStringState state = (CustomerStringState)that;
+
+            if (ssn != null ? !ssn.equals(state.ssn) : state.ssn != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{ssn=" + (ssn == null ? null : '\'' + ssn + '\'' ) +
+                    ", givenName=" + (givenName == null ? null : '\'' + givenName + '\'' ) +
+                    ", surname=" + (surname == null ? null : '\'' + surname + '\'' ) +
+                    ", age=" + (age == null ? null : '\'' + age + '\'' ) +
+                    ", pet=" + (pet == null ? null : '\'' + pet + '\'' ) +
+                    ", address=" + address +
+                    ", oldAddresses=" + oldAddresses + '}';
+        }
     }
 
     public static class CustomerStringStateConverter {

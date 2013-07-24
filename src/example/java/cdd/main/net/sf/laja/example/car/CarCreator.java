@@ -50,6 +50,10 @@ public class CarCreator implements CarCreatorMaker {
         return new CarBuilder();
     }
 
+    public static CarStringBuilder buildStringCar() {
+        return new CarStringBuilder();
+    }
+
     public static CarListBuilder createCarList(CarCreator... creators) {
         return new CarListBuilder(creators);
     }
@@ -327,6 +331,21 @@ public class CarCreator implements CarCreatorMaker {
 
         public CarStringState asStringState() {
             return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof CarStringBuilder)) return false;
+
+            return state.equals(((CarStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "CarStringBuilder" + state;
         }
     }
 
