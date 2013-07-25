@@ -207,6 +207,39 @@ public class OwnerState implements ImmutableState {
         public OwnerStringState withSsn(String ssn) { this.ssn = ssn; return this; }
         public OwnerStringState withName(String name) { this.name = name; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new OwnerStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(OwnerStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidOwnerStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new OwnerStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(OwnerStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(OwnerStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateSsn(ssn, rootElement, parent, errors);
+            stateConverter.validateName(name, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public OwnerState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -252,5 +285,16 @@ public class OwnerState implements ImmutableState {
     public static class OwnerStringStateConverter {
         public long toSsn(String ssn) { return asLongPrimitive(ssn); }
         public String toName(String name) { return name; }
+
+        public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toSsn(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "ssn");
+            }
+        }
+
+        public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

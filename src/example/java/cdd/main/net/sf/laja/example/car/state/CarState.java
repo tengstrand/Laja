@@ -271,6 +271,41 @@ public class CarState implements ImmutableState {
         public CarStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
         public CarStringState withColor(String color) { this.color = color; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new CarStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(CarStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidCarStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new CarStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(CarStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(CarStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateSize(size, rootElement, parent, errors);
+            stateConverter.validateName(name, rootElement, parent, errors);
+            stateConverter.validateOwner(owner, rootElement, parent, errors);
+            stateConverter.validateColor(color, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public CarState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -326,5 +361,27 @@ public class CarState implements ImmutableState {
         public String toName(String name) { return name; }
         public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }
         public String toColor(String color) { return color; }
+
+        public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toSize(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "size");
+            }
+        }
+
+        public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public void validateOwner(OwnerStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toOwner(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "owner");
+            }
+        }
+
+        public void validateColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

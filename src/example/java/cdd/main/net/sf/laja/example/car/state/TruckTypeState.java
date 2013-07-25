@@ -206,6 +206,39 @@ public class TruckTypeState implements ImmutableState {
         public TruckTypeStringState withNumberOfWheels(String numberOfWheels) { this.numberOfWheels = numberOfWheels; return this; }
         public TruckTypeStringState withTruckName(String truckName) { this.truckName = truckName; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new TruckTypeStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(TruckTypeStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidTruckTypeStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new TruckTypeStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(TruckTypeStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(TruckTypeStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateNumberOfWheels(numberOfWheels, rootElement, parent, errors);
+            stateConverter.validateTruckName(truckName, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public TruckTypeState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -251,5 +284,16 @@ public class TruckTypeState implements ImmutableState {
     public static class TruckTypeStringStateConverter {
         public int toNumberOfWheels(String numberOfWheels) { return asInt(numberOfWheels); }
         public String toTruckName(String truckName) { return truckName; }
+
+        public void validateNumberOfWheels(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toNumberOfWheels(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "numberOfWheels");
+            }
+        }
+
+        public void validateTruckName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

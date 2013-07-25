@@ -276,6 +276,41 @@ public class AddressState implements ImmutableState {
         public AddressStringState withZipcode(String zipcode) { this.zipcode = zipcode; return this; }
         public AddressStringState withCity(String city) { this.city = city; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new AddressStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(AddressStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidAddressStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new AddressStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(AddressStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(AddressStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateAddressId(addressId, rootElement, parent, errors);
+            stateConverter.validateStreetName(streetName, rootElement, parent, errors);
+            stateConverter.validateZipcode(zipcode, rootElement, parent, errors);
+            stateConverter.validateCity(city, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public AddressState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -325,5 +360,27 @@ public class AddressState implements ImmutableState {
         public String toStreetName(String streetName) { return streetName; }
         public int toZipcode(String zipcode) { return asInt(zipcode); }
         public String toCity(String city) { return city; }
+
+        public void validateAddressId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toAddressId(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "addressId");
+            }
+        }
+
+        public void validateStreetName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public void validateZipcode(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toZipcode(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "zipcode");
+            }
+        }
+
+        public void validateCity(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

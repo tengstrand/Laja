@@ -26,7 +26,7 @@ public class TextFile extends FileBehaviour {
     }
 
     public void appendFile(String depth, StringBuilder builder) {
-        builder.append("\n").append(FILE).append(depth).append(s.getFilename());
+        builder.append("\n").append(FILE).append(depth).append(state.getFilename());
     }
 
     public List<String> readContent() {

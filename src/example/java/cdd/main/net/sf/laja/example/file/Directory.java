@@ -1,8 +1,8 @@
 package net.sf.laja.example.file;
 
 import com.google.common.collect.ImmutableList;
-import net.sf.laja.example.file.text.TextDirectory;
 import net.sf.laja.example.file.state.DirectoryState;
+import net.sf.laja.example.file.text.TextDirectory;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class Directory extends DirectoryCreator.DirectoryBehaviour {
     }
 
     public TextDirectory asTextDirectory() {
-        return new TextDirectory(s, directoryPath, directories, files);
+        return new TextDirectory(state, directoryPath, directories, files);
     }
 
     private void init(Directory directory, File fileOrDir) {

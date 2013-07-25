@@ -173,6 +173,38 @@ public class DirectoryState implements ImmutableState {
 
         public DirectoryStringState withDirectoryPath(String directoryPath) { this.directoryPath = directoryPath; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new DirectoryStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(DirectoryStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidDirectoryStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new DirectoryStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(DirectoryStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(DirectoryStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateDirectoryPath(directoryPath, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public DirectoryState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -213,5 +245,8 @@ public class DirectoryState implements ImmutableState {
 
     public static class DirectoryStringStateConverter {
         public String toDirectoryPath(String directoryPath) { return directoryPath; }
+
+        public void validateDirectoryPath(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

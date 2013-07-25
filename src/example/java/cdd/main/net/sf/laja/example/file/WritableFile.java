@@ -71,6 +71,6 @@ public class WritableFile extends FileBehaviour {
         outputStream = null;
         isOpen = false;
 
-        return new ClosedFile(s, directory);
+        return new ClosedFile(state, directory);
     }
 }

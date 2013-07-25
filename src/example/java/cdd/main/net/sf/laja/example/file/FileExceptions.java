@@ -14,7 +14,7 @@ public class FileExceptions extends FileBehaviour {
     }
 
     private String getErrorMessage(String operation) {
-        return "Could not " + operation + " file '" + s.filename + "' in directory '" + directory.directoryPath + "'";
+        return "Could not " + operation + " file '" + state.filename + "' in directory '" + directory.directoryPath + "'";
     }
 
     public void throwOperationException(String operation, Exception e) {
@@ -22,7 +22,7 @@ public class FileExceptions extends FileBehaviour {
     }
 
     public void throwException(String message) {
-        String errorMessage = "The file '" + s.filename + "' in directory '" + directory.directoryPath + "' " + message;
+        String errorMessage = "The file '" + state.filename + "' in directory '" + directory.directoryPath + "' " + message;
         throw new RuntimeException(errorMessage);
     }
 }

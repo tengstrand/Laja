@@ -190,6 +190,38 @@ public class AccountState implements ImmutableState {
 
         public AccountStringState withBalance(String balance) { this.balance = balance; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new AccountStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(AccountStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidAccountStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new AccountStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(AccountStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(AccountStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateBalance(balance, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public AccountState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -230,5 +262,13 @@ public class AccountState implements ImmutableState {
 
     public static class AccountStringStateConverter {
         public double toBalance(String balance) { return asDoublePrimitive(balance); }
+
+        public void validateBalance(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toBalance(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "balance");
+            }
+        }
     }
 }

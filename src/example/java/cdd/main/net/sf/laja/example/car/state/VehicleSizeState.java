@@ -172,6 +172,38 @@ public class VehicleSizeState implements ImmutableState {
 
         public VehicleSizeStringState withLengthInCentimeters(String lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new VehicleSizeStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(VehicleSizeStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidVehicleSizeStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new VehicleSizeStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(VehicleSizeStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(VehicleSizeStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateLengthInCentimeters(lengthInCentimeters, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public VehicleSizeState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -212,5 +244,13 @@ public class VehicleSizeState implements ImmutableState {
 
     public static class VehicleSizeStringStateConverter {
         public int toLengthInCentimeters(String lengthInCentimeters) { return asInt(lengthInCentimeters); }
+
+        public void validateLengthInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toLengthInCentimeters(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "lengthInCentimeters");
+            }
+        }
     }
 }

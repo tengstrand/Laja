@@ -260,6 +260,41 @@ public class PersonState implements ImmutableState {
         public PersonStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public PersonStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new PersonStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(PersonStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidPersonStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new PersonStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(PersonStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(PersonStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateGivenName(givenName, rootElement, parent, errors);
+            stateConverter.validateSurname(surname, rootElement, parent, errors);
+            stateConverter.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
+            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public PersonState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -315,5 +350,27 @@ public class PersonState implements ImmutableState {
         public String toSurname(String surname) { return surname; }
         public int toHeightInCentimeters(String heightInCentimeters) { return asInt(heightInCentimeters); }
         public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+
+        public void validateGivenName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public void validateSurname(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toHeightInCentimeters(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "heightInCentimeters");
+            }
+        }
+
+        public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toWeightInKilograms(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
+            }
+        }
     }
 }

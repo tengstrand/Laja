@@ -1,7 +1,7 @@
 package net.sf.laja.example.file;
 
-import net.sf.laja.example.file.text.TextFile;
 import net.sf.laja.example.file.state.FileState;
+import net.sf.laja.example.file.text.TextFile;
 
 public class ClosedFile extends FileCreator.FileBehaviour {
     private Directory directory;
@@ -13,10 +13,10 @@ public class ClosedFile extends FileCreator.FileBehaviour {
     }
 
     public WritableFile asWritableFile(Directory directory, boolean createIfNotExists) {
-        return new WritableFile(s, directory, createIfNotExists);
+        return new WritableFile(state, directory, createIfNotExists);
     }
 
     public TextFile asTextFile() {
-        return new TextFile(s, directory);
+        return new TextFile(state, directory);
     }
 }

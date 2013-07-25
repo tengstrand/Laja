@@ -3,7 +3,9 @@ package net.sf.laja.example.person;
 import net.sf.laja.example.person.state.BmiState;
 import net.sf.laja.example.person.state.PersonState;
 
-public class Person extends PersonCreator.PersonBehaviour {
+import static net.sf.laja.example.person.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
     private final BodyMassIndex bmi;
 
     public Person(PersonState state) {

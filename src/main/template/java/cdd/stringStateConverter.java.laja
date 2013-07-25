@@ -15,7 +15,7 @@
         {method} asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
         {method} {attribute.name} != null ? {attribute.name}.asMutable() : null; }
-    #else if (attribute.type == "String")
+    #else if (attribute.isString)
         {method} {attribute.name}; }
     #else if (attribute.type == "boolean")
         {method} asBooleanPrimitive({attribute.name}); }
@@ -57,30 +57,26 @@
   #end
 #end
 
+#macro validateAttribute()
+  #foreach (attribute in attributes)
 
-            "",
-            "LocalTime",
-            "LocalDateTime",
-            "YearMonth",
-            "MonthDay",
-            "Partial",
-            "Interval",
-            "Duration",
-            "Period",
-            "Years",
-            "Months",
-            "Weeks",
-            "Days",
-            "Hours",
-            "Minutes",
-            "Seconds"
-
-
+        public void validate{attribute.nameAsClass}({attribute.type.asMutableString} value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+    #if (!attribute.isString)
+            try {
+                to{attribute.nameAsClass}(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "{attribute.name}");
+            }
+    #end
+        }
+  #end
+#end
 
 #macro stringStateConverter()
   #set ($.attributes = state.mutableAttributes)
 
   #classHeader()
   #fromString()
+  #validateAttribute()
     }
 #end

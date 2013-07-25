@@ -173,6 +173,38 @@ public class FileState implements ImmutableState {
 
         public FileStringState withFilename(String filename) { this.filename = filename; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new FileStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(FileStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidFileStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new FileStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(FileStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(FileStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateFilename(filename, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public FileState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -213,5 +245,8 @@ public class FileState implements ImmutableState {
 
     public static class FileStringStateConverter {
         public String toFilename(String filename) { return filename; }
+
+        public void validateFilename(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

@@ -240,6 +240,40 @@ public class BusState implements ImmutableState {
         public BusStringState withSize(VehicleSizeStringState size) { this.size = size; return this; }
         public BusStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new BusStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(BusStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidBusStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new BusStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(BusStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(BusStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateName(name, rootElement, parent, errors);
+            stateConverter.validateSize(size, rootElement, parent, errors);
+            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public BusState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -290,5 +324,24 @@ public class BusState implements ImmutableState {
         public String toName(String name) { return name; }
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
         public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+
+        public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toSize(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "size");
+            }
+        }
+
+        public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toWeightInKilograms(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@
     private final ImmutableSet<ValidationError> errors;
 
     private static final String NULL_ERROR = "is_null";
+    private static final String TYPE_CONVERSION_ERROR = "type_conversion";
 
     public static String concatenate(String parent, String attribute) {
         return parent == null || parent.isEmpty() ? attribute : parent + "." + attribute;
@@ -80,6 +81,14 @@
 
         public Builder addIsNullError(Object rootElement, String parent, String attribute) {
             return addError(attribute, NULL_ERROR, rootElement, parent);
+        }
+
+        public Builder addTypeConversionError(Object rootElement, String attribute) {
+            return addError(attribute, TYPE_CONVERSION_ERROR, rootElement, "");
+        }
+
+        public Builder addTypeConversionError(Object rootElement, String parent, String attribute) {
+            return addError(attribute, TYPE_CONVERSION_ERROR, rootElement, parent);
         }
 
         public Builder addError(Object rootElement, String attribute, String errorType) {

@@ -39,6 +39,49 @@
         }
 #end
 
+#macro assertIsValid()
+
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new {stringConverterClass}(), validators);
+        }
+
+        public void assertIsValid({stringConverterClass} stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new {stateException}(errors);
+            }
+        }
+#end
+
+#macro isValid()
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+#end
+
+#macro validate()
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new {stringConverterClass}(), validators);
+        }
+
+        public ValidationErrors validate({stringConverterClass} stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate({stringConverterClass} stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+  #foreach (attribute in attributes)
+            stateConverter.validate{attribute.nameAsClass}({attribute.name}, rootElement, parent, errors);
+  #end
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+#end
+
 #macro stringState()
   #set ($.attributes = state.mutableStringAttributes)
   #set (tab = "        ")
@@ -50,6 +93,9 @@
   #$mutable.getters(tab)
   #$mutable.setters()
   #$mutable.withMethods(stringClass)
+  #assertIsValid()
+  #isValid()
+  #validate()
   #asState()
   #hashCode(tab)
   #equals(stringClass, tab)

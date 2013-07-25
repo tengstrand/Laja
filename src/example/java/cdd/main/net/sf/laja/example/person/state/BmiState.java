@@ -202,6 +202,39 @@ public class BmiState implements ImmutableState {
         public BmiStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public BmiStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new BmiStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(BmiStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidBmiStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new BmiStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(BmiStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(BmiStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
+            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public BmiState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -247,5 +280,21 @@ public class BmiState implements ImmutableState {
     public static class BmiStringStateConverter {
         public int toHeightInCentimeters(String heightInCentimeters) { return asInt(heightInCentimeters); }
         public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+
+        public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toHeightInCentimeters(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "heightInCentimeters");
+            }
+        }
+
+        public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toWeightInKilograms(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
+            }
+        }
     }
 }

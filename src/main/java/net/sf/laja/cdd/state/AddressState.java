@@ -249,6 +249,40 @@ public class AddressState implements ImmutableState {
         public AddressStringState withStreetName(String streetName) { this.streetName = streetName; return this; }
         public AddressStringState withCity(String city) { this.city = city; return this; }
 
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new AddressStringStateConverter(), validators);
+        }
+
+        public void assertIsValid(AddressStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
+
+            if (errors.isInvalid()) {
+                throw new InvalidAddressStateException(errors);
+            }
+        }
+
+        public boolean isValid() {
+            return validate().isValid();
+        }
+
+        public ValidationErrors validate(Validator... validators) {
+            return validate(new AddressStringStateConverter(), validators);
+        }
+
+        public ValidationErrors validate(AddressStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            validate(stateConverter, this, "", errors, validators);
+            return errors.build();
+        }
+
+        public void validate(AddressStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateConverter.validateId(id, rootElement, parent, errors);
+            stateConverter.validateStreetName(streetName, rootElement, parent, errors);
+            stateConverter.validateCity(city, rootElement, parent, errors);
+
+            asMutable().validate(rootElement, parent, errors, validators);
+        }
+
         public AddressState asImmutable() {
             return asMutable().asImmutable();
         }
@@ -295,5 +329,19 @@ public class AddressState implements ImmutableState {
         public int toId(String id) { return asInt(id); }
         public String toStreetName(String streetName) { return streetName; }
         public String toCity(String city) { return city; }
+
+        public void validateId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try {
+                toId(value);
+            } catch (Exception e) {
+                errors.addTypeConversionError(rootElement, parent, "id");
+            }
+        }
+
+        public void validateStreetName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public void validateCity(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
     }
 }

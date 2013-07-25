@@ -25,7 +25,7 @@ public class FileOperations extends FileBehaviour {
     }
 
     public String getFilename() {
-        return directory.directoryPath + File.separator + s.getFilename();
+        return directory.directoryPath + File.separator + state.getFilename();
     }
 
     private File getFile() {
