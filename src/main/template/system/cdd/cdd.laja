@@ -12,6 +12,8 @@
   #set (errors = new java.util.ArrayList())
   #set (processedFiles = new net.sf.laja.parser.cdd.OutputDirectoryReader$Result())
 
+  #set (srcDirs = null)
+
   #$.putAll(parameters)
 
   #set (curlyBrace = "{")
