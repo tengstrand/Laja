@@ -3,7 +3,7 @@ package net.sf.laja.cdd.stateconverter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImmutableToMutableListConverter implements StateConverter {
+public class ToMutableListConverter implements StateConverter {
 
     public List convert(Object from, int index, StateConverter... converters) {
         if (from == null) {

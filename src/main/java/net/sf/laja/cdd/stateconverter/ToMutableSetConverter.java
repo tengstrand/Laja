@@ -3,7 +3,7 @@ package net.sf.laja.cdd.stateconverter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ImmutableToMutableSetConverter implements StateConverter {
+public class ToMutableSetConverter implements StateConverter {
 
     public Set convert(Object from, int index, StateConverter... converters) {
         if (from == null) {

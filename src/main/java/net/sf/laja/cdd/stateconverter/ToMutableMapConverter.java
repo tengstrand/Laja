@@ -3,7 +3,7 @@ package net.sf.laja.cdd.stateconverter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImmutableToMutableMapConverter implements StateConverter {
+public class ToMutableMapConverter implements StateConverter {
 
     public Map convert(Object from, int index, StateConverter... converters) {
         if (from == null) {
