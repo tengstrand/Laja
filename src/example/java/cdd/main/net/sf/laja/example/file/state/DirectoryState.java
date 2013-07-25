@@ -155,4 +155,63 @@ public class DirectoryState implements ImmutableState {
             return "{directoryPath=" + directoryPath + "}";
         }
     }
+
+    @State(type = "string")
+    public static class DirectoryStringState {
+        public String directoryPath;
+
+        public DirectoryStringState() {
+        }
+
+        public DirectoryStringState(String directoryPath) {
+            this.directoryPath = directoryPath;
+        }
+
+        public String getDirectoryPath() { return directoryPath; }
+
+        public void setDirectoryPath(String directoryPath) { this.directoryPath = directoryPath; }
+
+        public DirectoryStringState withDirectoryPath(String directoryPath) { this.directoryPath = directoryPath; return this; }
+
+        public DirectoryState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
+        public DirectoryMutableState asMutable() {
+            return asMutable(new DirectoryStringStateConverter());
+        }
+
+        public DirectoryMutableState asMutable(DirectoryStringStateConverter converter) {
+            return new DirectoryMutableState(
+                    converter.toDirectoryPath(directoryPath));
+        }
+
+        @Override
+        public int hashCode() {
+            int result = directoryPath != null ? directoryPath.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            DirectoryStringState state = (DirectoryStringState)that;
+
+            if (directoryPath != null ? !directoryPath.equals(state.directoryPath) : state.directoryPath != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{directoryPath=" + directoryPath + "}";
+        }
+    }
+
+    public static class DirectoryStringStateConverter {
+        public String toDirectoryPath(String directoryPath) { return directoryPath; }
+    }
 }

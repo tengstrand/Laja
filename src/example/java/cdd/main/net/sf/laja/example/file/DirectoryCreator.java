@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.file.state.DirectoryState.DirectoryMutableState;
+import static net.sf.laja.example.file.state.DirectoryState.DirectoryStringState;
 
 @Creator
 public class DirectoryCreator implements DirectoryCreatorMaker {
@@ -30,16 +31,16 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String directoryPath_ = "directoryPath";
-
-    // --- Constructors ---
-
     public static DirectoryFactory createDirectory() {
         return new DirectoryCreator(new DirectoryMutableState()).new DirectoryFactory();
     }
 
     public static DirectoryBuilder buildDirectory() {
         return new DirectoryBuilder();
+    }
+
+    public static DirectoryStringBuilder buildStringDirectory() {
+        return new DirectoryStringBuilder();
     }
 
     public static DirectoryListBuilder createDirectoryList(DirectoryCreator... creators) {
@@ -58,7 +59,7 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectoryMapEntryBuilder(key, creator);
     }
 
-    public static DirectoryMapEntryBuilder directoryEntry(Object key, DirectoryBuilder builder) {
+    public static DirectoryMapEntryBuilder createDirectoryEntry(Object key, DirectoryBuilder builder) {
         return new DirectoryMapEntryBuilder(key, builder);
     }
 
@@ -109,57 +110,72 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof DirectoryCreator)) return false;
+
+        return state.equals(((DirectoryCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "DirectoryCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class DirectoryBehaviour {
-        public final DirectoryState s;
+        public final DirectoryState state;
 
-        public DirectoryBehaviour(DirectoryState s) {
-            this.s = s;
+        public DirectoryBehaviour(DirectoryState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof DirectoryBehaviour)) return false;
 
-            return s.equals(((DirectoryBehaviour)that).s);
+            return state.equals(((DirectoryBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class DirectoryMutableBehaviour {
-        private DirectoryMutableState s;
+        private DirectoryMutableState state;
 
-        public DirectoryMutableBehaviour(DirectoryMutableState s) {
-            this.s = s;
+        public DirectoryMutableBehaviour(DirectoryMutableState state) {
+            this.state = state;
         }
 
-        public DirectoryState state() {
-            return s.asImmutable();
+        public DirectoryState asState() {
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof DirectoryMutableBehaviour)) return false;
 
-            return s.equals(((DirectoryMutableBehaviour)that).s);
+            return state.equals(((DirectoryMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
@@ -200,6 +216,68 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof DirectoryBuilder)) return false;
+
+            return state.equals(((DirectoryBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "DirectoryBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class DirectoryStringBuilder {
+        private final DirectoryStringState state;
+
+        public DirectoryStringBuilder() {
+            this.state = new DirectoryStringState();
+        }
+
+        public DirectoryStringBuilder(DirectoryStringState state) {
+            this.state = state;
+        }
+
+        public DirectoryStringBuilder withDirectoryPath(String directoryPath) { state.directoryPath = directoryPath; return this; }
+
+        public Directory asDirectory() {
+            return new DirectoryBuilder(state.asMutable()).asDirectory();
+        }
+
+        public DirectoryState asState() {
+            return state.asImmutable();
+        }
+
+        public DirectoryMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public DirectoryStringState asStringState() {
+            return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof DirectoryStringBuilder)) return false;
+
+            return state.equals(((DirectoryStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "DirectoryStringBuilder" + state;
         }
     }
 

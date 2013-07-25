@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.file.state.FileState.FileMutableState;
+import static net.sf.laja.example.file.state.FileState.FileStringState;
 
 @Creator
 public class FileCreator implements FileCreatorMaker {
@@ -34,16 +35,16 @@ public class FileCreator implements FileCreatorMaker {
 
     // ===== Generated code =====
 
-    private static final String filename_ = "filename";
-
-    // --- Constructors ---
-
     public static FileFactory createFile() {
         return new FileCreator(new FileMutableState()).new FileFactory();
     }
 
     public static FileBuilder buildFile() {
         return new FileBuilder();
+    }
+
+    public static FileStringBuilder buildStringFile() {
+        return new FileStringBuilder();
     }
 
     public static FileListBuilder createFileList(FileCreator... creators) {
@@ -62,7 +63,7 @@ public class FileCreator implements FileCreatorMaker {
         return new FileMapEntryBuilder(key, creator);
     }
 
-    public static FileMapEntryBuilder fileEntry(Object key, FileBuilder builder) {
+    public static FileMapEntryBuilder createFileEntry(Object key, FileBuilder builder) {
         return new FileMapEntryBuilder(key, builder);
     }
 
@@ -113,57 +114,72 @@ public class FileCreator implements FileCreatorMaker {
         return state.validate(validators);
     }
 
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof FileCreator)) return false;
+
+        return state.equals(((FileCreator)that).state);
+    }
+
+    @Override public String toString() {
+        return "FileCreator" + state;
+    }
+
     // --- Behaviour ---
 
     public static class FileBehaviour {
-        public final FileState s;
+        public final FileState state;
 
-        public FileBehaviour(FileState s) {
-            this.s = s;
+        public FileBehaviour(FileState state) {
+            this.state = state;
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof FileBehaviour)) return false;
 
-            return s.equals(((FileBehaviour)that).s);
+            return state.equals(((FileBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
     // --- MutableBehaviour ---
 
     public static class FileMutableBehaviour {
-        private FileMutableState s;
+        private FileMutableState state;
 
-        public FileMutableBehaviour(FileMutableState s) {
-            this.s = s;
+        public FileMutableBehaviour(FileMutableState state) {
+            this.state = state;
         }
 
-        public FileState state() {
-            return s.asImmutable();
+        public FileState asState() {
+            return state.asImmutable();
         }
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof FileMutableBehaviour)) return false;
 
-            return s.equals(((FileMutableBehaviour)that).s);
+            return state.equals(((FileMutableBehaviour)that).state);
         }
 
         @Override public int hashCode() {
-            return s.hashCode();
+            return state.hashCode();
         }
 
         @Override public String toString() {
-            return getClass().getSimpleName() + s;
+            return getClass().getSimpleName() + state;
         }
     }
 
@@ -208,6 +224,72 @@ public class FileCreator implements FileCreatorMaker {
 
         public ValidationErrors validate(Validator... validators) {
             return state.validate(validators);
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof FileBuilder)) return false;
+
+            return state.equals(((FileBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "FileBuilder" + state;
+        }
+    }
+
+    // --- String builder ---
+
+    public static class FileStringBuilder {
+        private final FileStringState state;
+
+        public FileStringBuilder() {
+            this.state = new FileStringState();
+        }
+
+        public FileStringBuilder(FileStringState state) {
+            this.state = state;
+        }
+
+        public FileStringBuilder withFilename(String filename) { state.filename = filename; return this; }
+
+        public ClosedFile asClosedFile(Directory directory) {
+            return new FileBuilder(state.asMutable()).asClosedFile(directory);
+        }
+
+        public WritableFile asWritableFile(Directory directory, boolean createIfNotExists) {
+            return new FileBuilder(state.asMutable()).asWritableFile(directory, createIfNotExists);
+        }
+
+        public FileState asState() {
+            return state.asImmutable();
+        }
+
+        public FileMutableState asMutableState() {
+            return state.asMutable();
+        }
+
+        public FileStringState asStringState() {
+            return state;
+        }
+
+        @Override public int hashCode() {
+            return state.hashCode();
+        }
+
+        @Override public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || !(that instanceof FileStringBuilder)) return false;
+
+            return state.equals(((FileStringBuilder)that).state);
+        }
+
+        @Override public String toString() {
+            return "FileStringBuilder" + state;
         }
     }
 

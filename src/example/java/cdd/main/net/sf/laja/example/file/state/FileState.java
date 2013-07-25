@@ -155,4 +155,63 @@ public class FileState implements ImmutableState {
             return "{filename=" + filename + "}";
         }
     }
+
+    @State(type = "string")
+    public static class FileStringState {
+        public String filename;
+
+        public FileStringState() {
+        }
+
+        public FileStringState(String filename) {
+            this.filename = filename;
+        }
+
+        public String getFilename() { return filename; }
+
+        public void setFilename(String filename) { this.filename = filename; }
+
+        public FileStringState withFilename(String filename) { this.filename = filename; return this; }
+
+        public FileState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
+        public FileMutableState asMutable() {
+            return asMutable(new FileStringStateConverter());
+        }
+
+        public FileMutableState asMutable(FileStringStateConverter converter) {
+            return new FileMutableState(
+                    converter.toFilename(filename));
+        }
+
+        @Override
+        public int hashCode() {
+            int result = filename != null ? filename.hashCode() : 0;
+
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            FileStringState state = (FileStringState)that;
+
+            if (filename != null ? !filename.equals(state.filename) : state.filename != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "{filename=" + filename + "}";
+        }
+    }
+
+    public static class FileStringStateConverter {
+        public String toFilename(String filename) { return filename; }
+    }
 }
