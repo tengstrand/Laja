@@ -180,7 +180,7 @@ public class {classname} implements ImmutableState {
   #else if (type.isSet)
 , toMutableSet{mutableConverters(type.collectionType.type)}##
   #else if (convertPrimitives && !type.isString)
-, {type.typeConversionMethod}##
+, {type.typeConversionMethod("to")}##
   #end
 #end
 

@@ -193,30 +193,30 @@ public class Type implements StateParser.IType {
         return result;
     }
 
-    public String getTypeConversionMethod() {
+    public String getTypeConversionMethod(String prefix) {
         if (isCollectionOrMap() || isString()) {
             return "";
         }
         Map<String,String> methods = new HashMap<String,String>();
-        methods.put("boolean", "toBooleanPrimitive");
-        methods.put("byte", "toBytePrimitive");
-        methods.put("short", "toShortPrimitive");
-        methods.put("char", "toChar");
-        methods.put("int", "toInt");
-        methods.put("long", "toLongPrimitive");
-        methods.put("float", "toFloatPrimitive");
-        methods.put("double", "toDoublePrimitive");
-        methods.put("Boolean", "toBoolean");
-        methods.put("Byte", "toByte");
-        methods.put("Short", "toShort");
-        methods.put("Character", "toCharacter");
-        methods.put("Integer", "toInteger");
-        methods.put("Long", "toLong");
-        methods.put("Float", "toFloat");
-        methods.put("Double", "toDouble");
+        methods.put("boolean", "BooleanPrimitive");
+        methods.put("byte", "BytePrimitive");
+        methods.put("short", "ShortPrimitive");
+        methods.put("char", "Char");
+        methods.put("int", "Int");
+        methods.put("long", "LongPrimitive");
+        methods.put("float", "FloatPrimitive");
+        methods.put("double", "DoublePrimitive");
+        methods.put("Boolean", "Boolean");
+        methods.put("Byte", "Byte");
+        methods.put("Short", "Short");
+        methods.put("Character", "Character");
+        methods.put("Integer", "Integer");
+        methods.put("Long", "Long");
+        methods.put("Float", "Float");
+        methods.put("Double", "Double");
 
         if (methods.containsKey(name)) {
-            return methods.get(name);
+            return prefix + methods.get(name);
         }
         return "new " + name;
     }
