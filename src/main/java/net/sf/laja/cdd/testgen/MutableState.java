@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public interface MutableState extends Serializable {
     ImmutableState asImmutable(Validator... validators);
-    boolean isValid();
+    boolean isValid(Validator... validators);
     ValidationErrors validate(Validator... validators);
     void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators);
 }

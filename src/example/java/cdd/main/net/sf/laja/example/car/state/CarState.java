@@ -136,12 +136,6 @@ public class CarState implements ImmutableState {
             this.color = color;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public VehicleSizeMutableState getSize() { return size; }
         public String getName() { return name; }
         public OwnerMutableState getOwner() { return owner; }
@@ -157,16 +151,24 @@ public class CarState implements ImmutableState {
         public CarMutableState withOwner(OwnerMutableState owner) { this.owner = owner; return this; }
         public CarMutableState withColor(String color) { this.color = color; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public CarState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidCarStateException(errors);
-            }
+            return new CarState(
+                    size != null ? size.asImmutable() : null,
+                    name,
+                    owner != null ? owner.asImmutable() : null,
+                    color);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -191,14 +193,12 @@ public class CarState implements ImmutableState {
             }
         }
 
-        public CarState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new CarState(
-                    size != null ? size.asImmutable() : null,
-                    name,
-                    owner != null ? owner.asImmutable() : null,
-                    color);
+            if (errors.isInvalid()) {
+                throw new InvalidCarStateException(errors);
+            }
         }
 
         @Override
@@ -271,20 +271,24 @@ public class CarState implements ImmutableState {
         public CarStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
         public CarStringState withColor(String color) { this.color = color; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new CarStringStateConverter(), validators);
+        public CarState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(CarStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidCarStateException(errors);
-            }
+        public CarMutableState asMutable() {
+            return asMutable(new CarStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public CarMutableState asMutable(CarStringStateConverter converter) {
+            return new CarMutableState(
+                    converter.toSize(size),
+                    converter.toName(name),
+                    converter.toOwner(owner),
+                    converter.toColor(color));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -306,20 +310,16 @@ public class CarState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public CarState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new CarStringStateConverter(), validators);
         }
 
-        public CarMutableState asMutable() {
-            return asMutable(new CarStringStateConverter());
-        }
+        public void assertIsValid(CarStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public CarMutableState asMutable(CarStringStateConverter converter) {
-            return new CarMutableState(
-                    converter.toSize(size),
-                    converter.toName(name),
-                    converter.toOwner(owner),
-                    converter.toColor(color));
+            if (errors.isInvalid()) {
+                throw new InvalidCarStateException(errors);
+            }
         }
 
         @Override

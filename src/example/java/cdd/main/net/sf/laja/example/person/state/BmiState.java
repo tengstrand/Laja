@@ -101,12 +101,6 @@ public class BmiState implements ImmutableState {
             this.weightInKilograms = weightInKilograms;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public int getHeightInCentimeters() { return heightInCentimeters; }
         public int getWeightInKilograms() { return weightInKilograms; }
 
@@ -116,16 +110,22 @@ public class BmiState implements ImmutableState {
         public BmiMutableState withHeightInCentimeters(int heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public BmiMutableState withWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public BmiState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidBmiStateException(errors);
-            }
+            return new BmiState(
+                    heightInCentimeters,
+                    weightInKilograms);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -142,12 +142,12 @@ public class BmiState implements ImmutableState {
             }
         }
 
-        public BmiState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new BmiState(
-                    heightInCentimeters,
-                    weightInKilograms);
+            if (errors.isInvalid()) {
+                throw new InvalidBmiStateException(errors);
+            }
         }
 
         @Override
@@ -202,20 +202,22 @@ public class BmiState implements ImmutableState {
         public BmiStringState withHeightInCentimeters(String heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public BmiStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new BmiStringStateConverter(), validators);
+        public BmiState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(BmiStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidBmiStateException(errors);
-            }
+        public BmiMutableState asMutable() {
+            return asMutable(new BmiStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public BmiMutableState asMutable(BmiStringStateConverter converter) {
+            return new BmiMutableState(
+                    converter.toHeightInCentimeters(heightInCentimeters),
+                    converter.toWeightInKilograms(weightInKilograms));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -235,18 +237,16 @@ public class BmiState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public BmiState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new BmiStringStateConverter(), validators);
         }
 
-        public BmiMutableState asMutable() {
-            return asMutable(new BmiStringStateConverter());
-        }
+        public void assertIsValid(BmiStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public BmiMutableState asMutable(BmiStringStateConverter converter) {
-            return new BmiMutableState(
-                    converter.toHeightInCentimeters(heightInCentimeters),
-                    converter.toWeightInKilograms(weightInKilograms));
+            if (errors.isInvalid()) {
+                throw new InvalidBmiStateException(errors);
+            }
         }
 
         @Override

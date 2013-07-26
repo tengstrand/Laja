@@ -86,28 +86,26 @@ public class VehicleSizeState implements ImmutableState {
             this.lengthInCentimeters = lengthInCentimeters;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public int getLengthInCentimeters() { return lengthInCentimeters; }
 
         public void setLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; }
 
         public VehicleSizeMutableState withLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public VehicleSizeState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidVehicleSizeStateException(errors);
-            }
+            return new VehicleSizeState(lengthInCentimeters);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -124,10 +122,12 @@ public class VehicleSizeState implements ImmutableState {
             }
         }
 
-        public VehicleSizeState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new VehicleSizeState(lengthInCentimeters);
+            if (errors.isInvalid()) {
+                throw new InvalidVehicleSizeStateException(errors);
+            }
         }
 
         @Override
@@ -172,20 +172,21 @@ public class VehicleSizeState implements ImmutableState {
 
         public VehicleSizeStringState withLengthInCentimeters(String lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new VehicleSizeStringStateConverter(), validators);
+        public VehicleSizeState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(VehicleSizeStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidVehicleSizeStateException(errors);
-            }
+        public VehicleSizeMutableState asMutable() {
+            return asMutable(new VehicleSizeStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public VehicleSizeMutableState asMutable(VehicleSizeStringStateConverter converter) {
+            return new VehicleSizeMutableState(
+                    converter.toLengthInCentimeters(lengthInCentimeters));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -204,17 +205,16 @@ public class VehicleSizeState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public VehicleSizeState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new VehicleSizeStringStateConverter(), validators);
         }
 
-        public VehicleSizeMutableState asMutable() {
-            return asMutable(new VehicleSizeStringStateConverter());
-        }
+        public void assertIsValid(VehicleSizeStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public VehicleSizeMutableState asMutable(VehicleSizeStringStateConverter converter) {
-            return new VehicleSizeMutableState(
-                    converter.toLengthInCentimeters(lengthInCentimeters));
+            if (errors.isInvalid()) {
+                throw new InvalidVehicleSizeStateException(errors);
+            }
         }
 
         @Override

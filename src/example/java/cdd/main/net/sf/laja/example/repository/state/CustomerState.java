@@ -203,12 +203,6 @@ public class CustomerState implements ImmutableState {
             this.oldAddresses = oldAddresses;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public long getSsn() { return ssn; }
         public String getGivenName() { return givenName; }
         public String getSurname() { return surname; }
@@ -233,16 +227,27 @@ public class CustomerState implements ImmutableState {
         public CustomerMutableState withAddress(AddressMutableState address) { this.address = address; return this; }
         public CustomerMutableState withOldAddresses(List<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public CustomerState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidCustomerStateException(errors);
-            }
+            return new CustomerState(
+                    ssn,
+                    givenName,
+                    surname,
+                    age,
+                    pet,
+                    address != null ? address.asImmutable() : null,
+                    asImmutableList(oldAddresses, toImmutable));
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -265,17 +270,12 @@ public class CustomerState implements ImmutableState {
             }
         }
 
-        public CustomerState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new CustomerState(
-                    ssn,
-                    givenName,
-                    surname,
-                    age,
-                    pet,
-                    address != null ? address.asImmutable() : null,
-                    asImmutableList(oldAddresses, toImmutable));
+            if (errors.isInvalid()) {
+                throw new InvalidCustomerStateException(errors);
+            }
         }
 
         @Override
@@ -364,20 +364,27 @@ public class CustomerState implements ImmutableState {
         public CustomerStringState withAddress(AddressStringState address) { this.address = address; return this; }
         public CustomerStringState withOldAddresses(List<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new CustomerStringStateConverter(), validators);
+        public CustomerState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(CustomerStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidCustomerStateException(errors);
-            }
+        public CustomerMutableState asMutable() {
+            return asMutable(new CustomerStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public CustomerMutableState asMutable(CustomerStringStateConverter converter) {
+            return new CustomerMutableState(
+                    converter.toSsn(ssn),
+                    converter.toGivenName(givenName),
+                    converter.toSurname(surname),
+                    converter.toAge(age),
+                    converter.toPet(pet),
+                    converter.toAddress(address),
+                    converter.toOldAddresses(oldAddresses));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -402,23 +409,16 @@ public class CustomerState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public CustomerState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new CustomerStringStateConverter(), validators);
         }
 
-        public CustomerMutableState asMutable() {
-            return asMutable(new CustomerStringStateConverter());
-        }
+        public void assertIsValid(CustomerStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public CustomerMutableState asMutable(CustomerStringStateConverter converter) {
-            return new CustomerMutableState(
-                    converter.toSsn(ssn),
-                    converter.toGivenName(givenName),
-                    converter.toSurname(surname),
-                    converter.toAge(age),
-                    converter.toPet(pet),
-                    converter.toAddress(address),
-                    converter.toOldAddresses(oldAddresses));
+            if (errors.isInvalid()) {
+                throw new InvalidCustomerStateException(errors);
+            }
         }
 
         @Override

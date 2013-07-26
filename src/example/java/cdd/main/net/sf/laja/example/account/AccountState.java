@@ -104,28 +104,26 @@ public class AccountState implements ImmutableState {
             this.balance = balance;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public double getBalance() { return balance; }
 
         public void setBalance(double balance) { this.balance = balance; }
 
         public AccountMutableState withBalance(double balance) { this.balance = balance; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public AccountState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidAccountStateException(errors);
-            }
+            return new AccountState(balance);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -142,10 +140,12 @@ public class AccountState implements ImmutableState {
             }
         }
 
-        public AccountState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new AccountState(balance);
+            if (errors.isInvalid()) {
+                throw new InvalidAccountStateException(errors);
+            }
         }
 
         @Override
@@ -190,20 +190,21 @@ public class AccountState implements ImmutableState {
 
         public AccountStringState withBalance(String balance) { this.balance = balance; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new AccountStringStateConverter(), validators);
+        public AccountState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(AccountStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidAccountStateException(errors);
-            }
+        public AccountMutableState asMutable() {
+            return asMutable(new AccountStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public AccountMutableState asMutable(AccountStringStateConverter converter) {
+            return new AccountMutableState(
+                    converter.toBalance(balance));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -222,17 +223,16 @@ public class AccountState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public AccountState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new AccountStringStateConverter(), validators);
         }
 
-        public AccountMutableState asMutable() {
-            return asMutable(new AccountStringStateConverter());
-        }
+        public void assertIsValid(AccountStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public AccountMutableState asMutable(AccountStringStateConverter converter) {
-            return new AccountMutableState(
-                    converter.toBalance(balance));
+            if (errors.isInvalid()) {
+                throw new InvalidAccountStateException(errors);
+            }
         }
 
         @Override

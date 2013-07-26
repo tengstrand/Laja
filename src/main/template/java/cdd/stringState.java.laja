@@ -56,8 +56,8 @@
 
 #macro isValid()
 
-        public boolean isValid() {
-            return validate().isValid();
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 #end
 
@@ -94,10 +94,10 @@
   #$mutable.getters(tab)
   #$mutable.setters()
   #$mutable.withMethods(stringClass)
-  #assertIsValid()
+  #asState()
   #isValid()
   #validate()
-  #asState()
+  #assertIsValid()
   #hashCode(tab)
   #equals(stringClass, tab)
   #toString(tab)

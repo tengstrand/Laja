@@ -139,9 +139,6 @@ public class AddressState implements ImmutableState {
             this.city = city;
         }
 
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public int getId() { return id; }
         public String getStreetName() { return streetName; }
         public String getCity() { return city; }
@@ -154,16 +151,20 @@ public class AddressState implements ImmutableState {
         public AddressMutableState withStreetName(String streetName) { this.streetName = streetName; return this; }
         public AddressMutableState withCity(String city) { this.city = city; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public AddressState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidAddressStateException(errors);
-            }
+            return new AddressState(
+                    id,
+                    streetName,
+                    city);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -180,13 +181,12 @@ public class AddressState implements ImmutableState {
             }
         }
 
-        public AddressState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new AddressState(
-                    id,
-                    streetName,
-                    city);
+            if (errors.isInvalid()) {
+                throw new InvalidAddressStateException(errors);
+            }
         }
 
         @Override
@@ -249,20 +249,23 @@ public class AddressState implements ImmutableState {
         public AddressStringState withStreetName(String streetName) { this.streetName = streetName; return this; }
         public AddressStringState withCity(String city) { this.city = city; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new AddressStringStateConverter(), validators);
+        public AddressState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(AddressStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidAddressStateException(errors);
-            }
+        public AddressMutableState asMutable() {
+            return asMutable(new AddressStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public AddressMutableState asMutable(AddressStringStateConverter converter) {
+            return new AddressMutableState(
+                    converter.toId(id),
+                    converter.toStreetName(streetName),
+                    converter.toCity(city));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -283,19 +286,16 @@ public class AddressState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public AddressState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new AddressStringStateConverter(), validators);
         }
 
-        public AddressMutableState asMutable() {
-            return asMutable(new AddressStringStateConverter());
-        }
+        public void assertIsValid(AddressStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public AddressMutableState asMutable(AddressStringStateConverter converter) {
-            return new AddressMutableState(
-                    converter.toId(id),
-                    converter.toStreetName(streetName),
-                    converter.toCity(city));
+            if (errors.isInvalid()) {
+                throw new InvalidAddressStateException(errors);
+            }
         }
 
         @Override

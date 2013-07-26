@@ -104,12 +104,6 @@ public class OwnerState implements ImmutableState {
             this.name = name;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public long getSsn() { return ssn; }
         public String getName() { return name; }
 
@@ -119,16 +113,22 @@ public class OwnerState implements ImmutableState {
         public OwnerMutableState withSsn(long ssn) { this.ssn = ssn; return this; }
         public OwnerMutableState withName(String name) { this.name = name; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public OwnerState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidOwnerStateException(errors);
-            }
+            return new OwnerState(
+                    ssn,
+                    name);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -147,12 +147,12 @@ public class OwnerState implements ImmutableState {
             }
         }
 
-        public OwnerState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new OwnerState(
-                    ssn,
-                    name);
+            if (errors.isInvalid()) {
+                throw new InvalidOwnerStateException(errors);
+            }
         }
 
         @Override
@@ -207,20 +207,22 @@ public class OwnerState implements ImmutableState {
         public OwnerStringState withSsn(String ssn) { this.ssn = ssn; return this; }
         public OwnerStringState withName(String name) { this.name = name; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new OwnerStringStateConverter(), validators);
+        public OwnerState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(OwnerStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidOwnerStateException(errors);
-            }
+        public OwnerMutableState asMutable() {
+            return asMutable(new OwnerStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public OwnerMutableState asMutable(OwnerStringStateConverter converter) {
+            return new OwnerMutableState(
+                    converter.toSsn(ssn),
+                    converter.toName(name));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -240,18 +242,16 @@ public class OwnerState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public OwnerState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new OwnerStringStateConverter(), validators);
         }
 
-        public OwnerMutableState asMutable() {
-            return asMutable(new OwnerStringStateConverter());
-        }
+        public void assertIsValid(OwnerStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public OwnerMutableState asMutable(OwnerStringStateConverter converter) {
-            return new OwnerMutableState(
-                    converter.toSsn(ssn),
-                    converter.toName(name));
+            if (errors.isInvalid()) {
+                throw new InvalidOwnerStateException(errors);
+            }
         }
 
         @Override

@@ -152,12 +152,6 @@ public class TruckState implements ImmutableState {
             this.owner = owner;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public VehicleSizeMutableState getSize() { return size; }
         public int getWeightInKilograms() { return weightInKilograms; }
         public TruckTypeMutableState getType() { return type; }
@@ -176,16 +170,25 @@ public class TruckState implements ImmutableState {
         public TruckMutableState withColor(String color) { this.color = color; return this; }
         public TruckMutableState withOwner(OwnerMutableState owner) { this.owner = owner; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public TruckState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidTruckStateException(errors);
-            }
+            return new TruckState(
+                    size != null ? size.asImmutable() : null,
+                    weightInKilograms,
+                    type != null ? type.asImmutable() : null,
+                    color,
+                    owner != null ? owner.asImmutable() : null);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -211,15 +214,12 @@ public class TruckState implements ImmutableState {
             }
         }
 
-        public TruckState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new TruckState(
-                    size != null ? size.asImmutable() : null,
-                    weightInKilograms,
-                    type != null ? type.asImmutable() : null,
-                    color,
-                    owner != null ? owner.asImmutable() : null);
+            if (errors.isInvalid()) {
+                throw new InvalidTruckStateException(errors);
+            }
         }
 
         @Override
@@ -301,20 +301,25 @@ public class TruckState implements ImmutableState {
         public TruckStringState withColor(String color) { this.color = color; return this; }
         public TruckStringState withOwner(OwnerStringState owner) { this.owner = owner; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new TruckStringStateConverter(), validators);
+        public TruckState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(TruckStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidTruckStateException(errors);
-            }
+        public TruckMutableState asMutable() {
+            return asMutable(new TruckStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public TruckMutableState asMutable(TruckStringStateConverter converter) {
+            return new TruckMutableState(
+                    converter.toSize(size),
+                    converter.toWeightInKilograms(weightInKilograms),
+                    converter.toType(type),
+                    converter.toColor(color),
+                    converter.toOwner(owner));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -337,21 +342,16 @@ public class TruckState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public TruckState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new TruckStringStateConverter(), validators);
         }
 
-        public TruckMutableState asMutable() {
-            return asMutable(new TruckStringStateConverter());
-        }
+        public void assertIsValid(TruckStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public TruckMutableState asMutable(TruckStringStateConverter converter) {
-            return new TruckMutableState(
-                    converter.toSize(size),
-                    converter.toWeightInKilograms(weightInKilograms),
-                    converter.toType(type),
-                    converter.toColor(color),
-                    converter.toOwner(owner));
+            if (errors.isInvalid()) {
+                throw new InvalidTruckStateException(errors);
+            }
         }
 
         @Override

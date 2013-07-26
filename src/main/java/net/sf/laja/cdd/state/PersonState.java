@@ -274,13 +274,6 @@ public class PersonState implements ImmutableState {
             this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
         }
 
-        /**
-         * Put validations here!
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-            // And add something here!
-        }
-
         public int getId() { return id; }
         public String getName() { return name; }
         public DateMidnight getBirthday() { return birthday; }
@@ -317,16 +310,32 @@ public class PersonState implements ImmutableState {
         public PersonMutableState withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
         public PersonMutableState withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public PersonState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidPersonStateException(errors);
-            }
+            return new PersonState(
+                    id,
+                    name,
+                    birthday,
+                    hairColor,
+                    asImmutableList(children, toImmutable),
+                    address != null ? address.asImmutable() : null,
+                    oldAddress != null ? oldAddress.asImmutable() : null,
+                    asImmutableSet(oldAddresses, toImmutable),
+                    asImmutableMap(groupedAddresses, toImmutable),
+                    asImmutableList(listOfSetOfState, toImmutableSet, toImmutable),
+                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here!
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+            // And add something here!
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -357,21 +366,12 @@ public class PersonState implements ImmutableState {
             }
         }
 
-        public PersonState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new PersonState(
-                    id,
-                    name,
-                    birthday,
-                    hairColor,
-                    asImmutableList(children, toImmutable),
-                    address != null ? address.asImmutable() : null,
-                    oldAddress != null ? oldAddress.asImmutable() : null,
-                    asImmutableSet(oldAddresses, toImmutable),
-                    asImmutableMap(groupedAddresses, toImmutable),
-                    asImmutableList(listOfSetOfState, toImmutableSet, toImmutable),
-                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
+            if (errors.isInvalid()) {
+                throw new InvalidPersonStateException(errors);
+            }
         }
 
         @Override
@@ -496,20 +496,31 @@ public class PersonState implements ImmutableState {
         public PersonStringState withListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
         public PersonStringState withListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new PersonStringStateConverter(), validators);
+        public PersonState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(PersonStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidPersonStateException(errors);
-            }
+        public PersonMutableState asMutable() {
+            return asMutable(new PersonStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public PersonMutableState asMutable(PersonStringStateConverter converter) {
+            return new PersonMutableState(
+                    converter.toId(id),
+                    converter.toName(name),
+                    converter.toBirthday(birthday),
+                    converter.toHairColor(hairColor),
+                    converter.toChildren(children),
+                    converter.toAddress(address),
+                    converter.toOldAddress(oldAddress),
+                    converter.toOldAddresses(oldAddresses),
+                    converter.toGroupedAddresses(groupedAddresses),
+                    converter.toListOfSetOfState(listOfSetOfState),
+                    converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -538,27 +549,16 @@ public class PersonState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public PersonState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new PersonStringStateConverter(), validators);
         }
 
-        public PersonMutableState asMutable() {
-            return asMutable(new PersonStringStateConverter());
-        }
+        public void assertIsValid(PersonStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public PersonMutableState asMutable(PersonStringStateConverter converter) {
-            return new PersonMutableState(
-                    converter.toId(id),
-                    converter.toName(name),
-                    converter.toBirthday(birthday),
-                    converter.toHairColor(hairColor),
-                    converter.toChildren(children),
-                    converter.toAddress(address),
-                    converter.toOldAddress(oldAddress),
-                    converter.toOldAddresses(oldAddresses),
-                    converter.toGroupedAddresses(groupedAddresses),
-                    converter.toListOfSetOfState(listOfSetOfState),
-                    converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers));
+            if (errors.isInvalid()) {
+                throw new InvalidPersonStateException(errors);
+            }
         }
 
         @Override

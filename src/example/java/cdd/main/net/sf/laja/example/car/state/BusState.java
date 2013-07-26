@@ -121,12 +121,6 @@ public class BusState implements ImmutableState {
             this.weightInKilograms = weightInKilograms;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public String getName() { return name; }
         public VehicleSizeMutableState getSize() { return size; }
         public int getWeightInKilograms() { return weightInKilograms; }
@@ -139,16 +133,23 @@ public class BusState implements ImmutableState {
         public BusMutableState withSize(VehicleSizeMutableState size) { this.size = size; return this; }
         public BusMutableState withWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public BusState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidBusStateException(errors);
-            }
+            return new BusState(
+                    name,
+                    size != null ? size.asImmutable() : null,
+                    weightInKilograms);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -170,13 +171,12 @@ public class BusState implements ImmutableState {
             }
         }
 
-        public BusState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new BusState(
-                    name,
-                    size != null ? size.asImmutable() : null,
-                    weightInKilograms);
+            if (errors.isInvalid()) {
+                throw new InvalidBusStateException(errors);
+            }
         }
 
         @Override
@@ -240,20 +240,23 @@ public class BusState implements ImmutableState {
         public BusStringState withSize(VehicleSizeStringState size) { this.size = size; return this; }
         public BusStringState withWeightInKilograms(String weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new BusStringStateConverter(), validators);
+        public BusState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(BusStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidBusStateException(errors);
-            }
+        public BusMutableState asMutable() {
+            return asMutable(new BusStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public BusMutableState asMutable(BusStringStateConverter converter) {
+            return new BusMutableState(
+                    converter.toName(name),
+                    converter.toSize(size),
+                    converter.toWeightInKilograms(weightInKilograms));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -274,19 +277,16 @@ public class BusState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public BusState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new BusStringStateConverter(), validators);
         }
 
-        public BusMutableState asMutable() {
-            return asMutable(new BusStringStateConverter());
-        }
+        public void assertIsValid(BusStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public BusMutableState asMutable(BusStringStateConverter converter) {
-            return new BusMutableState(
-                    converter.toName(name),
-                    converter.toSize(size),
-                    converter.toWeightInKilograms(weightInKilograms));
+            if (errors.isInvalid()) {
+                throw new InvalidBusStateException(errors);
+            }
         }
 
         @Override

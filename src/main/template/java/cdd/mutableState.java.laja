@@ -68,8 +68,8 @@
 
 #macro isValid()
 
-        public boolean isValid() {
-            return validate().isValid();
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 #end
 
@@ -187,15 +187,15 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #attributes(tab, "")
   #emptyConstructor(mutableClass)
   #constructor(mutableClass, false, tab)
-  #userValidate()
   #getters(tab)
   #setters()
   #withMethods(mutableClass)
-  #assertIsValid()
+  #asImmutable()
+  #userValidate()
   #isValid()
   #rootValidate()
   #validate()
-  #asImmutable()
+  #assertIsValid()
   #hashCode(tab)
   #equals(mutableClass, tab)
   #toString(tab)

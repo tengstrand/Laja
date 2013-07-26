@@ -85,28 +85,26 @@ public class FileState implements ImmutableState {
             this.filename = filename;
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public String getFilename() { return filename; }
 
         public void setFilename(String filename) { this.filename = filename; }
 
         public FileMutableState withFilename(String filename) { this.filename = filename; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public FileState asImmutable(Validator... validators) {
+            assertIsValid(validators);
 
-            if (errors.isInvalid()) {
-                throw new InvalidFileStateException(errors);
-            }
+            return new FileState(filename);
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        /**
+         * Put validations here (this comment can be removed or modified).
+         */
+        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -125,10 +123,12 @@ public class FileState implements ImmutableState {
             }
         }
 
-        public FileState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public void assertIsValid(Validator... validators) {
+            ValidationErrors errors = validate(validators);
 
-            return new FileState(filename);
+            if (errors.isInvalid()) {
+                throw new InvalidFileStateException(errors);
+            }
         }
 
         @Override
@@ -173,20 +173,21 @@ public class FileState implements ImmutableState {
 
         public FileStringState withFilename(String filename) { this.filename = filename; return this; }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new FileStringStateConverter(), validators);
+        public FileState asImmutable() {
+            return asMutable().asImmutable();
         }
 
-        public void assertIsValid(FileStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
-
-            if (errors.isInvalid()) {
-                throw new InvalidFileStateException(errors);
-            }
+        public FileMutableState asMutable() {
+            return asMutable(new FileStringStateConverter());
         }
 
-        public boolean isValid() {
-            return validate().isValid();
+        public FileMutableState asMutable(FileStringStateConverter converter) {
+            return new FileMutableState(
+                    converter.toFilename(filename));
+        }
+
+        public boolean isValid(Validator... validators) {
+            return validate(validators).isValid();
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -205,17 +206,16 @@ public class FileState implements ImmutableState {
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
-        public FileState asImmutable() {
-            return asMutable().asImmutable();
+        public void assertIsValid(Validator... validators) {
+            assertIsValid(new FileStringStateConverter(), validators);
         }
 
-        public FileMutableState asMutable() {
-            return asMutable(new FileStringStateConverter());
-        }
+        public void assertIsValid(FileStringStateConverter stateConverter, Validator... validators) {
+            ValidationErrors errors = validate(stateConverter, validators);
 
-        public FileMutableState asMutable(FileStringStateConverter converter) {
-            return new FileMutableState(
-                    converter.toFilename(filename));
+            if (errors.isInvalid()) {
+                throw new InvalidFileStateException(errors);
+            }
         }
 
         @Override
