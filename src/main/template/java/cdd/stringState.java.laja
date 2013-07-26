@@ -84,6 +84,7 @@
 
 #macro stringState()
   #set ($.attributes = state.mutableStringAttributes)
+  #set ($.convertPrimitives = true)
   #set (tab = "        ")
 
   #classHeader()

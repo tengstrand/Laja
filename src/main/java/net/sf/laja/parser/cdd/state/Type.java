@@ -1,5 +1,8 @@
 package net.sf.laja.parser.cdd.state;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Type implements StateParser.IType {
     public String name;
     public CollectionType collectionType;
@@ -188,6 +191,34 @@ public class Type implements StateParser.IType {
         result.setMapType(mtype);
 
         return result;
+    }
+
+    public String getTypeConversionMethod() {
+        if (isCollectionOrMap() || isString()) {
+            return "";
+        }
+        Map<String,String> methods = new HashMap<String,String>();
+        methods.put("boolean", "toBooleanPrimitive");
+        methods.put("byte", "toBytePrimitive");
+        methods.put("short", "toShortPrimitive");
+        methods.put("char", "toChar");
+        methods.put("int", "toInt");
+        methods.put("long", "toLongPrimitive");
+        methods.put("float", "toFloatPrimitive");
+        methods.put("double", "toDoublePrimitive");
+        methods.put("Boolean", "toBoolean");
+        methods.put("Byte", "toByte");
+        methods.put("Short", "toShort");
+        methods.put("Character", "toCharacter");
+        methods.put("Integer", "toInteger");
+        methods.put("Long", "toLong");
+        methods.put("Float", "toFloat");
+        methods.put("Double", "toDouble");
+
+        if (methods.containsKey(name)) {
+            return methods.get(name);
+        }
+        return "new " + name;
     }
 
     @Override

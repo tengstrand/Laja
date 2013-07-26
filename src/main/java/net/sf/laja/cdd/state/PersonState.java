@@ -607,7 +607,7 @@ public class PersonState implements ImmutableState {
         public Set<AddressMutableState> toOldAddresses(Set<AddressStringState> oldAddresses) { return asMutableSet(oldAddresses, toMutable); }
         public Map<String,AddressMutableState> toGroupedAddresses(Map<String,AddressStringState> groupedAddresses) { return asMutableMap(groupedAddresses, toMutable); }
         public List<Set<AddressMutableState>> toListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { return asMutableList(listOfSetOfState, toMutableSet, toMutable); }
-        public List<Set<Map<String,Integer>>> toListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { return asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap); }
+        public List<Set<Map<String,Integer>>> toListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { return asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, toInteger); }
 
         public void validateId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try {

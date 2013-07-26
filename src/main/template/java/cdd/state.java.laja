@@ -179,6 +179,8 @@ public class {classname} implements ImmutableState {
 , toMutableList{mutableConverters(type.collectionType.type)}##
   #else if (type.isSet)
 , toMutableSet{mutableConverters(type.collectionType.type)}##
+  #else if (convertPrimitives && !type.isString)
+, {type.typeConversionMethod}##
   #end
 #end
 
@@ -198,6 +200,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
 #macro asMutable()
 
+  #set (convertPrimitives = false)
   #if (attributes.size == 1)
     #singleAsMutable()
   #else
