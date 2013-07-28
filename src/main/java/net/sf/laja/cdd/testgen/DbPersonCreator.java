@@ -159,6 +159,10 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return state;
     }
 
+        public PersonStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     public DbPersonCreator withId(int id) {
@@ -317,6 +321,10 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
 
         public PersonMutableState asMutableState() {
             return state;
+        }
+
+        public PersonStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

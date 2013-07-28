@@ -4,9 +4,11 @@ import com.google.common.collect.ImmutableList;
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -14,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static net.sf.laja.cdd.stateconverter.StateConversion.*;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toMutable;
+import static net.sf.laja.cdd.stateconverter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
@@ -240,6 +241,21 @@ public class CustomerState implements ImmutableState {
                     asImmutableList(oldAddresses, toImmutable));
         }
 
+        public CustomerStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public CustomerStringState asStringState(StringConversion c) {
+            return new CustomerStringState(
+                    c.longToString(ssn),
+                    givenName,
+                    surname,
+                    c.intToString(age),
+                    pet,
+                    address != null ? address.asStringState() : null,
+                    asMutableList(oldAddresses, toMutableString));
+        }
+
         /**
          * Put validations here (this comment can be removed or modified).
          */
@@ -310,7 +326,7 @@ public class CustomerState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class CustomerStringState {
+    public static class CustomerStringState implements MutableStringState {
         @Key public String ssn;
         public String givenName;
         @Optional public String surname;

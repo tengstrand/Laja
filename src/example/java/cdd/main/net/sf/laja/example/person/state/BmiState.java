@@ -1,9 +1,11 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -118,6 +120,16 @@ public class BmiState implements ImmutableState {
                     weightInKilograms);
         }
 
+        public BmiStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public BmiStringState asStringState(StringConversion c) {
+            return new BmiStringState(
+                    c.intToString(heightInCentimeters),
+                    c.intToString(weightInKilograms));
+        }
+
         /**
          * Put validations here (this comment can be removed or modified).
          */
@@ -179,7 +191,7 @@ public class BmiState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class BmiStringState {
+    public static class BmiStringState implements MutableStringState {
         public String heightInCentimeters;
         public String weightInKilograms;
 

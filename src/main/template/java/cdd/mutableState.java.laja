@@ -179,6 +179,74 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
         }
 #end
 
+#macro mutableStringConverters(type)
+  #if (type.isState)
+, toMutableString##
+  #else if (type.isMap)
+, toMutableMap{mutableStringConverters(type.mapType.entry)}##
+  #else if (type.isList)
+, toMutableList{mutableStringConverters(type.collectionType.type)}##
+  #else if (type.isSet)
+, toMutableSet{mutableStringConverters(type.collectionType.type)}##
+  #else if (convertPrimitives && !type.isString)
+, {type.typeConversionMethod("c.", "ToStringConverter()")}##
+  #end
+#end
+
+#macro mutableStringStateAttribute()
+  #if (attribute.type.isMap)
+asMutableMap({attribute.name}{mutableStringConverters(attribute.type.mapType.entry)})##
+  #else if (attribute.type.isList)
+asMutableList({attribute.name}{mutableStringConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isSet)
+asMutableSet({attribute.name}{mutableStringConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isState)
+{attribute.name} != null ? {attribute.name}.asStringState() : null##
+  #else if (attribute.type.isPrimitive)
+c.{attribute.type}ToString({attribute.name})##
+  #else if (attribute.isObject && !attribute.isString)
+c.toString({attribute.name})##
+  #else
+{attribute.name}##
+  #end
+#end
+
+#macro asStringState()
+
+        public {stringClass} asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+  #set (convertPrimitives = true)
+  #if (attributes.size == 1)
+    #singleAsStringState()
+  #else
+    #multipleAsStringState()
+  #end
+#end
+
+#macro singleAsStringState()
+  #set (attribute = attributes.iterator.next)
+        public {stringClass} asStringState(StringConversion c) {
+            return new {stringClass}({mutableStringStateAttribute()});
+        }
+#end
+
+#macro multipleAsStringState()
+        public {stringClass} asStringState(StringConversion c) {
+            return new {stringClass}(
+  #set (iterator = attributes.iterator)
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+                    {mutableStringStateAttribute()},
+    #else
+                    {mutableStringStateAttribute()});
+    #end
+  #end
+        }
+#end
+
 #macro mutableState()
   #set ($.attributes = state.mutableAttributes)
   #set (tab = "        ")
@@ -191,6 +259,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #setters()
   #withMethods(mutableClass)
   #asImmutable()
+  #asStringState()
   #userValidate()
   #isValid()
   #rootValidate()

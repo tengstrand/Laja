@@ -2,9 +2,11 @@ package net.sf.laja.example.car.state;
 
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -142,6 +144,17 @@ public class BusState implements ImmutableState {
                     weightInKilograms);
         }
 
+        public BusStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public BusStringState asStringState(StringConversion c) {
+            return new BusStringState(
+                    name,
+                    size != null ? size.asStringState() : null,
+                    c.intToString(weightInKilograms));
+        }
+
         /**
          * Put validations here (this comment can be removed or modified).
          */
@@ -211,7 +224,7 @@ public class BusState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class BusStringState {
+    public static class BusStringState implements MutableStringState {
         public String name;
         public VehicleSizeStringState size;
         @Optional public String weightInKilograms;

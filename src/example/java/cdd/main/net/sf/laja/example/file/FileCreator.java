@@ -98,6 +98,10 @@ public class FileCreator implements FileCreatorMaker {
         return state;
     }
 
+        public FileStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -212,6 +216,10 @@ public class FileCreator implements FileCreatorMaker {
 
         public FileMutableState asMutableState() {
             return state;
+        }
+
+        public FileStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

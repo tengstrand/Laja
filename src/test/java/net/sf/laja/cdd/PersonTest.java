@@ -1,6 +1,7 @@
 package net.sf.laja.cdd;
 
 import net.sf.laja.cdd.state.PersonState;
+import net.sf.laja.cdd.testgen.Person;
 import net.sf.laja.cdd.testgen.PersonCreator;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
@@ -71,5 +72,12 @@ public class PersonTest {
         Object value = mutableState.listOfSetOfMapOfIntegers.get(0).iterator().next().get("a");
 
         assertThat(value.getClass().getSimpleName(), equalTo("Integer"));
+    }
+
+    @Test
+    public void stringToMutableToBehaviourRepresentation() {
+        PersonState.PersonStringState stringState = defaultPerson().asStringState().withName("Kalle").withBirthday("1999-12-31");
+        PersonState.PersonMutableState mutableState = stringState.asMutable();
+        Person person = new Person(mutableState.asImmutable());
     }
 }

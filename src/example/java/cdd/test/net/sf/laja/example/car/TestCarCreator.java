@@ -151,6 +151,10 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return state;
     }
 
+        public CarStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -270,6 +274,10 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
         public CarMutableState asMutableState() {
             return state;
+        }
+
+        public CarStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

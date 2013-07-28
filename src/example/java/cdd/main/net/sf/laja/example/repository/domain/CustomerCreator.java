@@ -141,6 +141,10 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return state;
     }
 
+        public CustomerStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     public CustomerCreator withSurname(String surname) {
@@ -290,6 +294,10 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public CustomerMutableState asMutableState() {
             return state;
+        }
+
+        public CustomerStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

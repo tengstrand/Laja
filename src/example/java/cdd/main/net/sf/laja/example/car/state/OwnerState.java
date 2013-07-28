@@ -1,9 +1,11 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -121,6 +123,16 @@ public class OwnerState implements ImmutableState {
                     name);
         }
 
+        public OwnerStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public OwnerStringState asStringState(StringConversion c) {
+            return new OwnerStringState(
+                    c.longToString(ssn),
+                    name);
+        }
+
         /**
          * Put validations here (this comment can be removed or modified).
          */
@@ -184,7 +196,7 @@ public class OwnerState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class OwnerStringState {
+    public static class OwnerStringState implements MutableStringState {
         public String ssn;
         public String name;
 

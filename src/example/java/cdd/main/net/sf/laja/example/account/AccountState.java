@@ -2,9 +2,11 @@ package net.sf.laja.example.account;
 
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -116,6 +118,14 @@ public class AccountState implements ImmutableState {
             return new AccountState(balance);
         }
 
+        public AccountStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public AccountStringState asStringState(StringConversion c) {
+            return new AccountStringState(c.doubleToString(balance));
+        }
+
         /**
          * Put validations here (this comment can be removed or modified).
          */
@@ -174,7 +184,7 @@ public class AccountState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class AccountStringState {
+    public static class AccountStringState implements MutableStringState {
         @Key public String balance;
 
         public AccountStringState() {

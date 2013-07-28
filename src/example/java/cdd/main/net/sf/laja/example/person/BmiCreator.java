@@ -102,6 +102,10 @@ public class BmiCreator implements BmiCreatorMaker {
         return state;
     }
 
+        public BmiStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -213,6 +217,10 @@ public class BmiCreator implements BmiCreatorMaker {
 
         public BmiMutableState asMutableState() {
             return state;
+        }
+
+        public BmiStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

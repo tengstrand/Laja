@@ -37,6 +37,10 @@
             return state;
         }
 
+        public {stringState} asStringState() {
+            return state.asStringState();
+        }
+
         public void assertIsValid() {
             state.assertIsValid();
         }

@@ -102,6 +102,10 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return state;
     }
 
+        public TruckTypeStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -213,6 +217,10 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
         public TruckTypeMutableState asMutableState() {
             return state;
+        }
+
+        public TruckTypeStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

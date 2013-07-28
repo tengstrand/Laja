@@ -1,9 +1,11 @@
 package net.sf.laja.example.file.state;
 
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -97,6 +99,14 @@ public class DirectoryState implements ImmutableState {
             return new DirectoryState(directoryPath);
         }
 
+        public DirectoryStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public DirectoryStringState asStringState(StringConversion c) {
+            return new DirectoryStringState(directoryPath);
+        }
+
         /**
          * Put validations here (this comment can be removed or modified).
          */
@@ -157,7 +167,7 @@ public class DirectoryState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class DirectoryStringState {
+    public static class DirectoryStringState implements MutableStringState {
         public String directoryPath;
 
         public DirectoryStringState() {

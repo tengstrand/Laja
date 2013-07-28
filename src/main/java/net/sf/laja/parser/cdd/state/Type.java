@@ -1,5 +1,7 @@
 package net.sf.laja.parser.cdd.state;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -194,6 +196,10 @@ public class Type implements StateParser.IType {
     }
 
     public String getTypeConversionMethod(String prefix) {
+        return getTypeConversionMethod(prefix, null);
+    }
+
+    public String getTypeConversionMethod(String prefix, String suffix) {
         if (isCollectionOrMap() || isString()) {
             return "";
         }
@@ -216,7 +222,10 @@ public class Type implements StateParser.IType {
         methods.put("Double", "Double");
 
         if (methods.containsKey(name)) {
-            return prefix + methods.get(name);
+            if (suffix == null) {
+                return prefix + methods.get(name);
+            }
+            return prefix + StringUtils.uncapitalize(methods.get(name)) + suffix;
         }
         return "new " + name;
     }

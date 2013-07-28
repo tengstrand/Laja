@@ -94,6 +94,10 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return state;
     }
 
+        public VehicleSizeStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -204,6 +208,10 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
         public VehicleSizeMutableState asMutableState() {
             return state;
+        }
+
+        public VehicleSizeStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

@@ -78,6 +78,10 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return state;
     }
 
+        public AddressStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     public SpecialAddressCreator withId(int id) {
@@ -205,6 +209,10 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
 
         public AddressMutableState asMutableState() {
             return state;
+        }
+
+        public AddressStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

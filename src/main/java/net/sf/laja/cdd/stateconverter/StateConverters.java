@@ -2,6 +2,7 @@ package net.sf.laja.cdd.stateconverter;
 
 public class StateConverters {
     public static ToMutableConverter toMutable = new ToMutableConverter();
+    public static ToMutableStringConverter toMutableString = new ToMutableStringConverter();
     public static ToMutableListConverter toMutableList = new ToMutableListConverter();
     public static ToMutableMapConverter toMutableMap = new ToMutableMapConverter();
     public static ToMutableSetConverter toMutableSet = new ToMutableSetConverter();

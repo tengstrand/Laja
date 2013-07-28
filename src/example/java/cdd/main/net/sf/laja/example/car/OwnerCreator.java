@@ -102,6 +102,10 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return state;
     }
 
+        public OwnerStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -213,6 +217,10 @@ public class OwnerCreator implements OwnerCreatorMaker {
 
         public OwnerMutableState asMutableState() {
             return state;
+        }
+
+        public OwnerStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

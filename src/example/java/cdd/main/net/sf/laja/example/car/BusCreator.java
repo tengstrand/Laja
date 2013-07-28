@@ -121,6 +121,10 @@ public class BusCreator implements BusCreatorMaker {
         return state;
     }
 
+        public BusStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     public BusCreator withWeightInKilograms(int weightInKilograms) {
@@ -239,6 +243,10 @@ public class BusCreator implements BusCreatorMaker {
 
         public BusMutableState asMutableState() {
             return state;
+        }
+
+        public BusStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

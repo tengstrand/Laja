@@ -6,9 +6,11 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -327,11 +329,30 @@ public class PersonState implements ImmutableState {
                     asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
         }
 
+        public PersonStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public PersonStringState asStringState(StringConversion c) {
+            return new PersonStringState(
+                    c.intToString(id),
+                    name,
+                    c.toString(birthday),
+                    hairColor,
+                    asMutableList(children, toMutableString),
+                    address != null ? address.asStringState() : null,
+                    oldAddress != null ? oldAddress.asStringState() : null,
+                    asMutableSet(oldAddresses, toMutableString),
+                    asMutableMap(groupedAddresses, toMutableString),
+                    asMutableList(listOfSetOfState, toMutableSet, toMutableString),
+                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, c.integerToStringConverter()));
+        }
+
         /**
          * Put validations here!
          */
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-            // And add something here!
+            // And add something here (if needed)!
         }
 
         public boolean isValid(Validator... validators) {
@@ -410,7 +431,7 @@ public class PersonState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class PersonStringState {
+    public static class PersonStringState implements MutableStringState {
         @Id public String id;
         public String name;
         @Optional

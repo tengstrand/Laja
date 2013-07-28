@@ -94,6 +94,10 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return state;
     }
 
+        public DirectoryStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -204,6 +208,10 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
         public DirectoryMutableState asMutableState() {
             return state;
+        }
+
+        public DirectoryStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

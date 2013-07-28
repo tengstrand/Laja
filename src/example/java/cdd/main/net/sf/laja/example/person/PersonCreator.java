@@ -118,6 +118,10 @@ public class PersonCreator implements PersonCreatorMaker {
         return state;
     }
 
+        public PersonStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -231,6 +235,10 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonMutableState asMutableState() {
             return state;
+        }
+
+        public PersonStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

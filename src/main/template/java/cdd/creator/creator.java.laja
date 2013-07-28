@@ -20,6 +20,7 @@
   #set (immutableState = "{state}State")
   #set (mutableState = "{state}MutableState")
   #set (stringState = "{state}StringState")
+  #set (stringState = "{state}StringState")
   #set (factory = "{state}Factory")
   #set (manualCode = creator.manualCode)
   #set (builder = creator.builder)
@@ -202,6 +203,13 @@ import net.sf.laja.cdd.annotation.Parameters;
 
 #end
 
+#macro asStringState()
+        public {stringState} asStringState() {
+            return state.asStringState();
+        }
+
+#end
+
 #macro withMethods()
   #if (!attributes.isEmpty)
     // --- With methods ---
@@ -317,6 +325,7 @@ public class {classname} implements {maker} {
     #constructor()
     #asState()
     #asMutableState()
+    #asStringState()
     #withMethods()
     #assertIsValid()
     #isValid()

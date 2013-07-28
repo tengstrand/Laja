@@ -93,6 +93,10 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return state;
     }
 
+        public AccountStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -203,6 +207,10 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
 
         public AccountMutableState asMutableState() {
             return state;
+        }
+
+        public AccountStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

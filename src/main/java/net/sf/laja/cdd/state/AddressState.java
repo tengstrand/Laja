@@ -3,9 +3,11 @@ package net.sf.laja.cdd.state;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.testgen.MutableStringState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -160,6 +162,17 @@ public class AddressState implements ImmutableState {
                     city);
         }
 
+        public AddressStringState asStringState() {
+            return asStringState(new StringConversion());
+        }
+
+        public AddressStringState asStringState(StringConversion c) {
+            return new AddressStringState(
+                    c.intToString(id),
+                    streetName,
+                    city);
+        }
+
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
@@ -217,7 +230,7 @@ public class AddressState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class AddressStringState {
+    public static class AddressStringState implements MutableStringState {
         @Id
         public String id;
         @Optional

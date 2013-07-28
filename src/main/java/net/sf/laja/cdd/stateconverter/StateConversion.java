@@ -31,7 +31,10 @@ public class StateConversion {
 
     private static String DATE_MIDNIGHT_FORMAT = "yyyy-MM-dd";
 
-    // TODO: May be moved when introducing StringState.
+    public static String intAsString(int value) {
+        return String.valueOf(value);
+    }
+
     public static String asString(DateMidnight date) {
         return new SimpleDateFormat(DATE_MIDNIGHT_FORMAT).format(date.toDate());
     }

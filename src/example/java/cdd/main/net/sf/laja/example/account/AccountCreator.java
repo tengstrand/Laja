@@ -97,6 +97,10 @@ public class AccountCreator implements AccountCreatorMaker {
         return state;
     }
 
+        public AccountStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     // --- Validate ---
@@ -211,6 +215,10 @@ public class AccountCreator implements AccountCreatorMaker {
 
         public AccountMutableState asMutableState() {
             return state;
+        }
+
+        public AccountStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {

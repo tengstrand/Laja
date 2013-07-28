@@ -92,6 +92,10 @@ public class AddressCreator implements AddressCreatorMaker {
         return state;
     }
 
+        public AddressStringState asStringState() {
+            return state.asStringState();
+        }
+
     // --- With methods ---
 
     public AddressCreator withId(int id) {
@@ -233,6 +237,10 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressMutableState asMutableState() {
             return state;
+        }
+
+        public AddressStringState asStringState() {
+            return state.asStringState();
         }
 
         public void assertIsValid() {
