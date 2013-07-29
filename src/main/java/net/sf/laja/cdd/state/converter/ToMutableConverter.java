@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.stateconverter;
+package net.sf.laja.cdd.state.converter;
 
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.testgen.MutableState;

@@ -30,7 +30,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.stateconverter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
@@ -46,8 +46,8 @@ import java.util.Set;
 
     #set (staticImports = new java.util.TreeSet())
     #staticImports.add("net.sf.laja.cdd.validator.ValidationErrors.concatenate")
-    #staticImports.add("net.sf.laja.cdd.stateconverter.StateConversion.*")
-    #staticImports.add("net.sf.laja.cdd.stateconverter.StateConverters.*")
+    #staticImports.add("net.sf.laja.cdd.state.converter.StateConversion.*")
+    #staticImports.add("net.sf.laja.cdd.state.converter.StateConverters.*")
     #staticImports.add("net.sf.laja.cdd.validator.Validators.collectionValidator")
     #staticImports.add("net.sf.laja.cdd.validator.Validators.mapValidator")
     #foreach (attribute in attributes where attribute.isState)

@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.stateconverter.StateConversion.asMutableMap;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toMutableMap;
+import static net.sf.laja.cdd.state.converter.StateConversion.asMutableMap;
+import static net.sf.laja.cdd.state.converter.StateConverters.toMutableMap;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;

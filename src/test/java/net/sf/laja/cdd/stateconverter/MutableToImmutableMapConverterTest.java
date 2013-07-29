@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.stateconverter.StateConversion.asImmutableMap;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutableMap;
+import static net.sf.laja.cdd.state.converter.StateConversion.asImmutableMap;
+import static net.sf.laja.cdd.state.converter.StateConverters.toImmutable;
+import static net.sf.laja.cdd.state.converter.StateConverters.toImmutableMap;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;

@@ -5,12 +5,12 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.stateconverter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.stateconverter.StateConversion.asInt;
+import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;

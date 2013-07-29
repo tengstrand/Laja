@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.stateconverter.StateConversion.asMutableSet;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toMutable;
-import static net.sf.laja.cdd.stateconverter.StateConverters.toMutableSet;
+import static net.sf.laja.cdd.state.converter.StateConversion.asMutableSet;
+import static net.sf.laja.cdd.state.converter.StateConverters.toMutable;
+import static net.sf.laja.cdd.state.converter.StateConverters.toMutableSet;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
 import static org.hamcrest.MatcherAssert.assertThat;

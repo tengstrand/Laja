@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.stateconverter;
+package net.sf.laja.cdd.state.converter;
 
 import com.google.common.collect.ImmutableList;
 
