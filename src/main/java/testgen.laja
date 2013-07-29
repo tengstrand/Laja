@@ -1,5 +1,5 @@
 
 #generateCdd({
-  srcDir: "{.}"
+  srcDir: "{.}/net/sf/laja/cdd/testgen"
 ##  verbose: true
 })

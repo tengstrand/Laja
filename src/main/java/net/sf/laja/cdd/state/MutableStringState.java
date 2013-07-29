@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.testgen;
+package net.sf.laja.cdd.state;
 
 public interface MutableStringState {
 }
