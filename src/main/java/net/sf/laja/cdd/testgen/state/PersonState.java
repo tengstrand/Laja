@@ -345,14 +345,14 @@ public class PersonState implements ImmutableState {
                     asMutableSet(oldAddresses, toMutableString),
                     asMutableMap(groupedAddresses, toMutableString),
                     asMutableList(listOfSetOfState, toMutableSet, toMutableString),
-                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, c.integerToStringConverter()));
+                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, c.objectToStringConverter()));
         }
 
         /**
          * Put validations here!
          */
         private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-            // And add something here (if needed)!
+            // Add code here (if needed)!
         }
 
         public boolean isValid(Validator... validators) {

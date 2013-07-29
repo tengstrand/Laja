@@ -61,12 +61,11 @@ public class StringConverter {
 
     public String toString(Object value) { return value == null ? null : value.toString(); }
 
-    public StateConverter integerToStringConverter() {
+    public StateConverter objectToStringConverter() {
         return new StateConverter() {
             public Object convert(Object from, int index, StateConverter... converters) {
                 return from == null ? null : from.toString();
             }
         };
     }
-
 }

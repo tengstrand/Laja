@@ -189,7 +189,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #else if (type.isSet)
 , toMutableSet{mutableStringConverters(type.collectionType.type)}##
   #else if (convertPrimitives && !type.isString)
-, {type.typeConversionMethod("c.", "ToStringConverter()")}##
+, c.objectToStringConverter()##
   #end
 #end
 
