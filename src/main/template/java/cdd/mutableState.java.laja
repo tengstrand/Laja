@@ -214,7 +214,7 @@ c.toString({attribute.name})##
 #macro asStringState()
 
         public {stringClass} asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
   #set (convertPrimitives = true)
@@ -227,13 +227,13 @@ c.toString({attribute.name})##
 
 #macro singleAsStringState()
   #set (attribute = attributes.iterator.next)
-        public {stringClass} asStringState(StringConversion c) {
+        public {stringClass} asStringState(StringConverter c) {
             return new {stringClass}({mutableStringStateAttribute()});
         }
 #end
 
 #macro multipleAsStringState()
-        public {stringClass} asStringState(StringConversion c) {
+        public {stringClass} asStringState(StringConverter c) {
             return new {stringClass}(
   #set (iterator = attributes.iterator)
   #while (iterator.hasNext)

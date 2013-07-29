@@ -1,7 +1,7 @@
 package net.sf.laja.example.file.state;
 
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -100,10 +100,10 @@ public class DirectoryState implements ImmutableState {
         }
 
         public DirectoryStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public DirectoryStringState asStringState(StringConversion c) {
+        public DirectoryStringState asStringState(StringConverter c) {
             return new DirectoryStringState(directoryPath);
         }
 

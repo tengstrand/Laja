@@ -1,7 +1,7 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -123,10 +123,10 @@ public class TruckTypeState implements ImmutableState {
         }
 
         public TruckTypeStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public TruckTypeStringState asStringState(StringConversion c) {
+        public TruckTypeStringState asStringState(StringConverter c) {
             return new TruckTypeStringState(
                     c.intToString(numberOfWheels),
                     truckName);

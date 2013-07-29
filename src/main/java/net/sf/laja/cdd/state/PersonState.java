@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -330,10 +330,10 @@ public class PersonState implements ImmutableState {
         }
 
         public PersonStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public PersonStringState asStringState(StringConversion c) {
+        public PersonStringState asStringState(StringConverter c) {
             return new PersonStringState(
                     c.intToString(id),
                     name,

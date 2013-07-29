@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.AddressState.AddressMutableState;
 import net.sf.laja.cdd.state.PersonState;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -164,8 +164,8 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
             return state.asStringState();
         }
 
-        public PersonStringState asStringState(StringConversion stringConversion) {
-            return state.asStringState(stringConversion);
+        public PersonStringState asStringState(StringConverter stringConverter) {
+            return state.asStringState(stringConverter);
         }
 
     // --- With methods ---
@@ -332,8 +332,8 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
             return state.asStringState();
         }
 
-        public PersonStringState asStringState(StringConversion stringConversion) {
-            return state.asStringState(stringConversion);
+        public PersonStringState asStringState(StringConverter stringConverter) {
+            return state.asStringState(stringConverter);
         }
 
         public void assertIsValid() {

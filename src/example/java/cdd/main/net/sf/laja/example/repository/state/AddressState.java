@@ -2,7 +2,7 @@ package net.sf.laja.example.repository.state;
 
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -180,10 +180,10 @@ public class AddressState implements ImmutableState {
         }
 
         public AddressStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public AddressStringState asStringState(StringConversion c) {
+        public AddressStringState asStringState(StringConverter c) {
             return new AddressStringState(
                     c.intToString(addressId),
                     streetName,

@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.annotation.Parameter;
 import net.sf.laja.cdd.annotation.Parameters;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.car.state.CarState;
@@ -157,8 +157,8 @@ public class CarCreator implements CarCreatorMaker {
             return state.asStringState();
         }
 
-        public CarStringState asStringState(StringConversion stringConversion) {
-            return state.asStringState(stringConversion);
+        public CarStringState asStringState(StringConverter stringConverter) {
+            return state.asStringState(stringConverter);
         }
 
     // --- With methods ---
@@ -282,8 +282,8 @@ public class CarCreator implements CarCreatorMaker {
             return state.asStringState();
         }
 
-        public CarStringState asStringState(StringConversion stringConversion) {
-            return state.asStringState(stringConversion);
+        public CarStringState asStringState(StringConverter stringConverter) {
+            return state.asStringState(stringConverter);
         }
 
         public void assertIsValid() {

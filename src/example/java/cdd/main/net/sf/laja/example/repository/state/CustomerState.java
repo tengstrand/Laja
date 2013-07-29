@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -242,10 +242,10 @@ public class CustomerState implements ImmutableState {
         }
 
         public CustomerStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public CustomerStringState asStringState(StringConversion c) {
+        public CustomerStringState asStringState(StringConverter c) {
             return new CustomerStringState(
                     c.longToString(ssn),
                     givenName,

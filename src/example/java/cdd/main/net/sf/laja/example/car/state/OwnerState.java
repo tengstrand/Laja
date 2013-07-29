@@ -1,7 +1,7 @@
 package net.sf.laja.example.car.state;
 
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -124,10 +124,10 @@ public class OwnerState implements ImmutableState {
         }
 
         public OwnerStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public OwnerStringState asStringState(StringConversion c) {
+        public OwnerStringState asStringState(StringConverter c) {
             return new OwnerStringState(
                     c.longToString(ssn),
                     name);

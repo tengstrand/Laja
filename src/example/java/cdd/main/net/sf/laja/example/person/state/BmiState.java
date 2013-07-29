@@ -1,7 +1,7 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
@@ -121,10 +121,10 @@ public class BmiState implements ImmutableState {
         }
 
         public BmiStringState asStringState() {
-            return asStringState(new StringConversion());
+            return asStringState(new StringConverter());
         }
 
-        public BmiStringState asStringState(StringConversion c) {
+        public BmiStringState asStringState(StringConverter c) {
             return new BmiStringState(
                     c.intToString(heightInCentimeters),
                     c.intToString(weightInKilograms));

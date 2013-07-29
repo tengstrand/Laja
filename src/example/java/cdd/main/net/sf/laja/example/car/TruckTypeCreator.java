@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
-import net.sf.laja.cdd.stateconverter.StringConversion;
+import net.sf.laja.cdd.stateconverter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.car.state.TruckTypeState;
@@ -107,8 +107,8 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
             return state.asStringState();
         }
 
-        public TruckTypeStringState asStringState(StringConversion stringConversion) {
-            return state.asStringState(stringConversion);
+        public TruckTypeStringState asStringState(StringConverter stringConverter) {
+            return state.asStringState(stringConverter);
         }
 
     // --- With methods ---
@@ -228,8 +228,8 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
             return state.asStringState();
         }
 
-        public TruckTypeStringState asStringState(StringConversion stringConversion) {
-            return state.asStringState(stringConversion);
+        public TruckTypeStringState asStringState(StringConverter stringConverter) {
+            return state.asStringState(stringConverter);
         }
 
         public void assertIsValid() {
