@@ -1,8 +1,8 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.testgen.Person;
 import net.sf.laja.cdd.testgen.PersonCreator;
+import net.sf.laja.cdd.testgen.state.PersonState;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.state.PersonState.InvalidPersonStateException;
 import static net.sf.laja.cdd.testgen.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.*;
+import static net.sf.laja.cdd.testgen.state.PersonState.InvalidPersonStateException;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

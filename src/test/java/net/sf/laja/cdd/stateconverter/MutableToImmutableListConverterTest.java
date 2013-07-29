@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.stateconverter;
 
 import com.google.common.collect.ImmutableList;
-import net.sf.laja.cdd.state.AddressState;
+import net.sf.laja.cdd.testgen.state.AddressState;
 import org.junit.Test;
 
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.annotation.Behaviour;
-import net.sf.laja.cdd.state.PersonState;
+import net.sf.laja.cdd.testgen.state.PersonState;
 
 @Behaviour
 public class DbPerson extends PersonCreator.PersonBehaviour {

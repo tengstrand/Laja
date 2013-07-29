@@ -1,7 +1,7 @@
-package net.sf.laja.cdd.testgen;
+package net.sf.laja.cdd.state;
 
 import java.io.Serializable;
 
 public interface ImmutableState extends Serializable {
-    MutableState asMutable();
+    net.sf.laja.cdd.testgen.MutableState asMutable();
 }

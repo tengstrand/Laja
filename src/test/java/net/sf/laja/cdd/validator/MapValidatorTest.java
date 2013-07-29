@@ -6,9 +6,9 @@ import org.junit.Test;
 import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.*;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

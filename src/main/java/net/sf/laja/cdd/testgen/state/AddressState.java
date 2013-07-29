@@ -1,10 +1,10 @@
-package net.sf.laja.cdd.state;
+package net.sf.laja.cdd.testgen.state;
 
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.stateconverter.StringConverter;
-import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.testgen.MutableStringState;

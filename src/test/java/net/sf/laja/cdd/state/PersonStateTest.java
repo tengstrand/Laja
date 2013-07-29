@@ -1,11 +1,12 @@
 package net.sf.laja.cdd.state;
 
+import net.sf.laja.cdd.testgen.state.PersonState;
 import org.junit.Test;
 
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 

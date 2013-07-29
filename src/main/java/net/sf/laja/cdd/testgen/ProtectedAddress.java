@@ -1,6 +1,6 @@
 package net.sf.laja.cdd.testgen;
 
-import net.sf.laja.cdd.state.AddressState;
+import net.sf.laja.cdd.testgen.state.AddressState;
 
 import static net.sf.laja.cdd.testgen.AddressCreator.AddressBehaviour;
 

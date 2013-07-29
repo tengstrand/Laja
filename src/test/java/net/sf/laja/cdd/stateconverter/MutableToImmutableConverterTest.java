@@ -1,15 +1,15 @@
 package net.sf.laja.cdd.stateconverter;
 
-import net.sf.laja.cdd.state.PersonState;
+import net.sf.laja.cdd.testgen.state.PersonState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.PersonState.InvalidPersonStateException;
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.asImmutable;
 import static net.sf.laja.cdd.stateconverter.StateConverters.toImmutable;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
+import static net.sf.laja.cdd.testgen.state.PersonState.InvalidPersonStateException;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 

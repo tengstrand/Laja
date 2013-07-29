@@ -1,16 +1,18 @@
 package net.sf.laja.cdd.state;
 
+import net.sf.laja.cdd.testgen.state.AddressState;
+import net.sf.laja.cdd.testgen.state.PersonState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.junit.Test;
 
 import java.util.Iterator;
 
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

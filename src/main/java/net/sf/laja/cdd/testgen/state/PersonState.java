@@ -1,4 +1,4 @@
-package net.sf.laja.cdd.state;
+package net.sf.laja.cdd.testgen.state;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.stateconverter.StringConverter;
-import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.testgen.MutableStringState;
@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.state.AddressState.AddressStringState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.*;
 import static net.sf.laja.cdd.stateconverter.StateConverters.*;
+import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
+import static net.sf.laja.cdd.testgen.state.AddressState.AddressStringState;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;

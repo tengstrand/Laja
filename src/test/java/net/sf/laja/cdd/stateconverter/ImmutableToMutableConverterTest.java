@@ -5,9 +5,9 @@ import net.sf.laja.cdd.testgen.PersonCreator;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
 import static net.sf.laja.cdd.stateconverter.StateConversion.asMutable;
 import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 

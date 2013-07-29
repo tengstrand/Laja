@@ -1,8 +1,8 @@
 package net.sf.laja.example.person.state;
 
 import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.stateconverter.StringConverter;
-import net.sf.laja.cdd.testgen.ImmutableState;
 import net.sf.laja.cdd.testgen.InvalidStateException;
 import net.sf.laja.cdd.testgen.MutableState;
 import net.sf.laja.cdd.testgen.MutableStringState;

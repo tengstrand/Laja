@@ -3,9 +3,9 @@ package net.sf.laja.cdd;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.state.AddressState;
 import net.sf.laja.cdd.testgen.Address;
 import net.sf.laja.cdd.testgen.AddressCreator;
+import net.sf.laja.cdd.testgen.state.AddressState;
 import org.junit.Test;
 
 import java.util.Iterator;

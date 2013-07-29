@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
-import net.sf.laja.cdd.state.AddressState.AddressMutableState;
-import net.sf.laja.cdd.state.PersonState;
 import net.sf.laja.cdd.stateconverter.StringConverter;
+import net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
+import net.sf.laja.cdd.testgen.state.PersonState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -21,11 +21,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.state.AddressState.AddressStringState;
-import static net.sf.laja.cdd.state.PersonState.PersonMutableState;
-import static net.sf.laja.cdd.state.PersonState.PersonStringState;
 import static net.sf.laja.cdd.testgen.AddressCreator.AddressMapBuilder;
 import static net.sf.laja.cdd.testgen.AddressCreator.AddressSetBuilder;
+import static net.sf.laja.cdd.testgen.state.AddressState.AddressStringState;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonStringState;
 
 @Creator
 public class DbPersonCreator implements DbPersonCreatorMaker {

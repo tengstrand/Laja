@@ -1,6 +1,6 @@
 package net.sf.laja.cdd.stateconverter;
 
-import net.sf.laja.cdd.testgen.ImmutableState;
+import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.testgen.MutableState;
 
 public class ToMutableConverter implements StateConverter {
