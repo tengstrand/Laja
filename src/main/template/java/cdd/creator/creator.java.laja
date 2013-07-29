@@ -208,6 +208,10 @@ import net.sf.laja.cdd.annotation.Parameters;
             return state.asStringState();
         }
 
+        public {stringState} asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
+        }
+
 #end
 
 #macro withMethods()

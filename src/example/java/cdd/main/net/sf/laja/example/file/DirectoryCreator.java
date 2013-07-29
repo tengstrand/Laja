@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.file.state.DirectoryState;
@@ -96,6 +97,10 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
         public DirectoryStringState asStringState() {
             return state.asStringState();
+        }
+
+        public DirectoryStringState asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
         }
 
     // --- With methods ---
@@ -212,6 +217,10 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
         public DirectoryStringState asStringState() {
             return state.asStringState();
+        }
+
+        public DirectoryStringState asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
         }
 
         public void assertIsValid() {

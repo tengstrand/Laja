@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.AddressState;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -94,6 +95,10 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressStringState asStringState() {
             return state.asStringState();
+        }
+
+        public AddressStringState asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
         }
 
     // --- With methods ---
@@ -241,6 +246,10 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressStringState asStringState() {
             return state.asStringState();
+        }
+
+        public AddressStringState asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
         }
 
         public void assertIsValid() {

@@ -41,6 +41,10 @@
             return state.asStringState();
         }
 
+        public {stringState} asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
+        }
+
         public void assertIsValid() {
             state.assertIsValid();
         }

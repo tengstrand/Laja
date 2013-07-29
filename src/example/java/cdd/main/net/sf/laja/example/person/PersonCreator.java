@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
+import net.sf.laja.cdd.stateconverter.StringConversion;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.person.state.PersonState;
@@ -120,6 +121,10 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonStringState asStringState() {
             return state.asStringState();
+        }
+
+        public PersonStringState asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
         }
 
     // --- With methods ---
@@ -239,6 +244,10 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonStringState asStringState() {
             return state.asStringState();
+        }
+
+        public PersonStringState asStringState(StringConversion stringConversion) {
+            return state.asStringState(stringConversion);
         }
 
         public void assertIsValid() {
