@@ -1,6 +1,6 @@
 
 #println("")
-#println("*** Car example ***")
+#println("*** Car ***")
 
 #set (package = "net/sf/laja/example/car")
 

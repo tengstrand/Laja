@@ -1,6 +1,6 @@
 
 #println("")
-#println("*** File example ***")
+#println("*** File ***")
 
 #generateCdd({
   srcDir: "{.}/main/net/sf/laja/example/file"

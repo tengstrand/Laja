@@ -1,6 +1,6 @@
 
 #println("")
-#println("*** Repository example ***")
+#println("*** Repository ***")
 
 #generateCdd({
   srcDir: "{.}/main/net/sf/laja/example/repository"
