@@ -1,6 +1,6 @@
 package net.sf.laja.cdd.validator;
 
-import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.state.MutableState;
 
 import java.util.Collection;
 

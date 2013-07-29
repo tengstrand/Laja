@@ -1,6 +1,6 @@
 package net.sf.laja.cdd.state.converter;
 
-import net.sf.laja.cdd.testgen.MutableState;
+import net.sf.laja.cdd.state.MutableState;
 
 public class ToMutableStringConverter implements StateConverter {
     public Object convert(Object from, int index, StateConverter... converters) {
