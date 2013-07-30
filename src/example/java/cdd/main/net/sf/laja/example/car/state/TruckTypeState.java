@@ -304,13 +304,8 @@ public class TruckTypeState implements ImmutableState {
     public static class TruckTypeStringStateValidator {
         private final TruckTypeStringStateConverter c;
 
-        public TruckTypeStringStateValidator() {
-            this.c = new TruckTypeStringStateConverter();
-        }
-
-        public TruckTypeStringStateValidator(TruckTypeStringStateConverter converter) {
-            this.c = converter;
-        }
+        public TruckTypeStringStateValidator() { this.c = new TruckTypeStringStateConverter(); }
+        public TruckTypeStringStateValidator(TruckTypeStringStateConverter converter) { this.c = converter; }
 
         public void validateNumberOfWheels(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toNumberOfWheels(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "numberOfWheels"); }

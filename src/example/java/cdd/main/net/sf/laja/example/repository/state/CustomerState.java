@@ -487,13 +487,8 @@ public class CustomerState implements ImmutableState {
     public static class CustomerStringStateValidator {
         private final CustomerStringStateConverter c;
 
-        public CustomerStringStateValidator() {
-            this.c = new CustomerStringStateConverter();
-        }
-
-        public CustomerStringStateValidator(CustomerStringStateConverter converter) {
-            this.c = converter;
-        }
+        public CustomerStringStateValidator() { this.c = new CustomerStringStateConverter(); }
+        public CustomerStringStateValidator(CustomerStringStateConverter converter) { this.c = converter; }
 
         public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "ssn"); }

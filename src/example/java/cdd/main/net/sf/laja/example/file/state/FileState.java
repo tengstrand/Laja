@@ -265,13 +265,8 @@ public class FileState implements ImmutableState {
     public static class FileStringStateValidator {
         private final FileStringStateConverter c;
 
-        public FileStringStateValidator() {
-            this.c = new FileStringStateConverter();
-        }
-
-        public FileStringStateValidator(FileStringStateConverter converter) {
-            this.c = converter;
-        }
+        public FileStringStateValidator() { this.c = new FileStringStateConverter(); }
+        public FileStringStateValidator(FileStringStateConverter converter) { this.c = converter; }
 
         public void validateFilename(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

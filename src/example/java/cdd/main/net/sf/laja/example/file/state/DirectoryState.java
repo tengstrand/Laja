@@ -265,13 +265,8 @@ public class DirectoryState implements ImmutableState {
     public static class DirectoryStringStateValidator {
         private final DirectoryStringStateConverter c;
 
-        public DirectoryStringStateValidator() {
-            this.c = new DirectoryStringStateConverter();
-        }
-
-        public DirectoryStringStateValidator(DirectoryStringStateConverter converter) {
-            this.c = converter;
-        }
+        public DirectoryStringStateValidator() { this.c = new DirectoryStringStateConverter(); }
+        public DirectoryStringStateValidator(DirectoryStringStateConverter converter) { this.c = converter; }
 
         public void validateDirectoryPath(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

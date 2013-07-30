@@ -641,13 +641,8 @@ public class PersonState implements ImmutableState {
     public static class PersonStringStateValidator {
         private final PersonStringStateConverter c;
 
-        public PersonStringStateValidator() {
-            this.c = new PersonStringStateConverter();
-        }
-
-        public PersonStringStateValidator(PersonStringStateConverter converter) {
-            this.c = converter;
-        }
+        public PersonStringStateValidator() { this.c = new PersonStringStateConverter(); }
+        public PersonStringStateValidator(PersonStringStateConverter converter) { this.c = converter; }
 
         public void validateId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "id"); }

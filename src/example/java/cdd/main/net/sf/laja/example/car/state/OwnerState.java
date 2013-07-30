@@ -305,13 +305,8 @@ public class OwnerState implements ImmutableState {
     public static class OwnerStringStateValidator {
         private final OwnerStringStateConverter c;
 
-        public OwnerStringStateValidator() {
-            this.c = new OwnerStringStateConverter();
-        }
-
-        public OwnerStringStateValidator(OwnerStringStateConverter converter) {
-            this.c = converter;
-        }
+        public OwnerStringStateValidator() { this.c = new OwnerStringStateConverter(); }
+        public OwnerStringStateValidator(OwnerStringStateConverter converter) { this.c = converter; }
 
         public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "ssn"); }

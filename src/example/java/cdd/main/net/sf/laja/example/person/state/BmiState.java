@@ -300,13 +300,8 @@ public class BmiState implements ImmutableState {
     public static class BmiStringStateValidator {
         private final BmiStringStateConverter c;
 
-        public BmiStringStateValidator() {
-            this.c = new BmiStringStateConverter();
-        }
-
-        public BmiStringStateValidator(BmiStringStateConverter converter) {
-            this.c = converter;
-        }
+        public BmiStringStateValidator() { this.c = new BmiStringStateConverter(); }
+        public BmiStringStateValidator(BmiStringStateConverter converter) { this.c = converter; }
 
         public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toHeightInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "heightInCentimeters"); }

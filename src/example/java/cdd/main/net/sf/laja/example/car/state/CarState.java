@@ -385,13 +385,8 @@ public class CarState implements ImmutableState {
     public static class CarStringStateValidator {
         private final CarStringStateConverter c;
 
-        public CarStringStateValidator() {
-            this.c = new CarStringStateConverter();
-        }
-
-        public CarStringStateValidator(CarStringStateConverter converter) {
-            this.c = converter;
-        }
+        public CarStringStateValidator() { this.c = new CarStringStateConverter(); }
+        public CarStringStateValidator(CarStringStateConverter converter) { this.c = converter; }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "size"); }

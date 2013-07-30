@@ -346,13 +346,8 @@ public class BusState implements ImmutableState {
     public static class BusStringStateValidator {
         private final BusStringStateConverter c;
 
-        public BusStringStateValidator() {
-            this.c = new BusStringStateConverter();
-        }
-
-        public BusStringStateValidator(BusStringStateConverter converter) {
-            this.c = converter;
-        }
+        public BusStringStateValidator() { this.c = new BusStringStateConverter(); }
+        public BusStringStateValidator(BusStringStateConverter converter) { this.c = converter; }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

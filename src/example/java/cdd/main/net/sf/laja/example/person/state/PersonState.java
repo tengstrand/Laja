@@ -372,13 +372,8 @@ public class PersonState implements ImmutableState {
     public static class PersonStringStateValidator {
         private final PersonStringStateConverter c;
 
-        public PersonStringStateValidator() {
-            this.c = new PersonStringStateConverter();
-        }
-
-        public PersonStringStateValidator(PersonStringStateConverter converter) {
-            this.c = converter;
-        }
+        public PersonStringStateValidator() { this.c = new PersonStringStateConverter(); }
+        public PersonStringStateValidator(PersonStringStateConverter converter) { this.c = converter; }
 
         public void validateGivenName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

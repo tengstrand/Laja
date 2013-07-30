@@ -262,13 +262,8 @@ public class VehicleSizeState implements ImmutableState {
     public static class VehicleSizeStringStateValidator {
         private final VehicleSizeStringStateConverter c;
 
-        public VehicleSizeStringStateValidator() {
-            this.c = new VehicleSizeStringStateConverter();
-        }
-
-        public VehicleSizeStringStateValidator(VehicleSizeStringStateConverter converter) {
-            this.c = converter;
-        }
+        public VehicleSizeStringStateValidator() { this.c = new VehicleSizeStringStateConverter(); }
+        public VehicleSizeStringStateValidator(VehicleSizeStringStateConverter converter) { this.c = converter; }
 
         public void validateLengthInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toLengthInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "lengthInCentimeters"); }

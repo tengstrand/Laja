@@ -382,13 +382,8 @@ public class AddressState implements ImmutableState {
     public static class AddressStringStateValidator {
         private final AddressStringStateConverter c;
 
-        public AddressStringStateValidator() {
-            this.c = new AddressStringStateConverter();
-        }
-
-        public AddressStringStateValidator(AddressStringStateConverter converter) {
-            this.c = converter;
-        }
+        public AddressStringStateValidator() { this.c = new AddressStringStateConverter(); }
+        public AddressStringStateValidator(AddressStringStateConverter converter) { this.c = converter; }
 
         public void validateAddressId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try { c.toAddressId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "addressId"); }

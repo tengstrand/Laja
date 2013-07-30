@@ -17,13 +17,8 @@
     public static class {stringValidatorClass} {
         private final {stringConverterClass} c;
 
-        public {stringValidatorClass}() {
-            this.c = new {stringConverterClass}();
-        }
-
-        public {stringValidatorClass}({stringConverterClass} converter) {
-            this.c = converter;
-        }
+        public {stringValidatorClass}() { this.c = new {stringConverterClass}(); }
+        public {stringValidatorClass}({stringConverterClass} converter) { this.c = converter; }
   #validateAttribute()
     }
 #end
