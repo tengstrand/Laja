@@ -25,14 +25,4 @@ public class StateConversion {
 
     public static Map asMutableMap(Object from, StateConverter... converters) { return StateConverters.toMutableMap.convert(from, 0, converters); }
     public static ImmutableMap asImmutableMap(Object from, StateConverter... converters) { return StateConverters.toImmutableMap.convert(from, 0, converters); }
-
-    private static String DATE_MIDNIGHT_FORMAT = "yyyy-MM-dd";
-
-    public static String intAsString(int value) {
-        return String.valueOf(value);
-    }
-
-    public static String asString(DateMidnight date) {
-        return new SimpleDateFormat(DATE_MIDNIGHT_FORMAT).format(date.toDate());
-    }
 }
