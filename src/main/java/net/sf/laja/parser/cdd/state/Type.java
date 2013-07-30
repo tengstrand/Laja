@@ -223,8 +223,8 @@ public class Type implements StateParser.IType {
         return "new " + name;
     }
 
-    public String getAsType() {
-        return "as" + StringUtils.capitalize(name);
+    public String getNameAsClass() {
+        return StringUtils.capitalize(name);
     }
 
     @Override

@@ -365,8 +365,8 @@ public class PersonState implements ImmutableState {
 
         public String toGivenName(String givenName) { return givenName; }
         public String toSurname(String surname) { return surname; }
-        public int toHeightInCentimeters(String heightInCentimeters) { return c.asInt(heightInCentimeters); }
-        public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
+        public int toHeightInCentimeters(String heightInCentimeters) { return c.toInt(heightInCentimeters); }
+        public int toWeightInKilograms(String weightInKilograms) { return c.toInt(weightInKilograms); }
     }
 
     public static class PersonStringStateValidator {

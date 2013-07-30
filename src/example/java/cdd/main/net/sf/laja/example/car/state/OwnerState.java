@@ -298,7 +298,7 @@ public class OwnerState implements ImmutableState {
         public OwnerStringStateConverter() { c = new StringStateConverter(); }
         public OwnerStringStateConverter(StringStateConverter converter) { c = converter; }
 
-        public long toSsn(String ssn) { return c.asLong(ssn); }
+        public long toSsn(String ssn) { return c.toLong(ssn); }
         public String toName(String name) { return name; }
     }
 

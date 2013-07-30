@@ -340,7 +340,7 @@ public class BusState implements ImmutableState {
 
         public String toName(String name) { return name; }
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
-        public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
+        public int toWeightInKilograms(String weightInKilograms) { return c.toInt(weightInKilograms); }
     }
 
     public static class BusStringStateValidator {

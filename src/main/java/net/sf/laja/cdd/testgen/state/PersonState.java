@@ -625,9 +625,9 @@ public class PersonState implements ImmutableState {
         public PersonStringStateConverter() { c = new StringStateConverter(); }
         public PersonStringStateConverter(StringStateConverter converter) { c = converter; }
 
-        public int toId(String id) { return c.asInt(id); }
+        public int toId(String id) { return c.toInt(id); }
         public String toName(String name) { return name; }
-        public DateMidnight toBirthday(String birthday) { return c.asDateMidnight(birthday); }
+        public DateMidnight toBirthday(String birthday) { return c.toDateMidnight(birthday); }
         public String toHairColor(String hairColor) { return hairColor; }
         public List<PersonMutableState> toChildren(List<PersonStringState> children) { return asMutableList(children, toMutable); }
         public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }
