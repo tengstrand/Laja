@@ -10,7 +10,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
@@ -332,10 +332,10 @@ public class PersonState implements ImmutableState {
         }
 
         public PersonStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public PersonStringState asStringState(StringConverter c) {
+        public PersonStringState asStringState(StringStateConverter c) {
             return new PersonStringState(
                     c.intToString(id),
                     name,
@@ -620,10 +620,10 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public PersonStringStateConverter() { c = new StringConverter(); }
-        public PersonStringStateConverter(StringConverter converter) { c = converter; }
+        public PersonStringStateConverter() { c = new StringStateConverter(); }
+        public PersonStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public int toId(String id) { return c.asInt(id); }
         public String toName(String name) { return name; }

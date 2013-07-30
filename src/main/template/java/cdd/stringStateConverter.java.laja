@@ -23,10 +23,10 @@
   #set ($.attributes = state.mutableAttributes)
 
     public static class {stringConverterClass} {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public {stringConverterClass}() { c = new StringConverter(); }
-        public {stringConverterClass}(StringConverter converter) { c = converter; }
+        public {stringConverterClass}() { c = new StringStateConverter(); }
+        public {stringConverterClass}(StringStateConverter converter) { c = converter; }
 
   #fromString()
     }

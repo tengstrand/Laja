@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -156,10 +156,10 @@ public class PersonState implements ImmutableState {
         }
 
         public PersonStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public PersonStringState asStringState(StringConverter c) {
+        public PersonStringState asStringState(StringStateConverter c) {
             return new PersonStringState(
                     givenName,
                     surname,
@@ -358,10 +358,10 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public PersonStringStateConverter() { c = new StringConverter(); }
-        public PersonStringStateConverter(StringConverter converter) { c = converter; }
+        public PersonStringStateConverter() { c = new StringStateConverter(); }
+        public PersonStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public String toGivenName(String givenName) { return givenName; }
         public String toSurname(String surname) { return surname; }

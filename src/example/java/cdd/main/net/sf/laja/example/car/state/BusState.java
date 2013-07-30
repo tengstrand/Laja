@@ -6,7 +6,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -144,10 +144,10 @@ public class BusState implements ImmutableState {
         }
 
         public BusStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public BusStringState asStringState(StringConverter c) {
+        public BusStringState asStringState(StringStateConverter c) {
             return new BusStringState(
                     name,
                     size != null ? size.asStringState() : null,
@@ -333,10 +333,10 @@ public class BusState implements ImmutableState {
     }
 
     public static class BusStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public BusStringStateConverter() { c = new StringConverter(); }
-        public BusStringStateConverter(StringConverter converter) { c = converter; }
+        public BusStringStateConverter() { c = new StringStateConverter(); }
+        public BusStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public String toName(String name) { return name; }
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }

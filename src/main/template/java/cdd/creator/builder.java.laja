@@ -41,8 +41,8 @@
             return state.asStringState();
         }
 
-        public {stringState} asStringState(StringConverter stringConverter) {
-            return state.asStringState(stringConverter);
+        public {stringState} asStringState(StringStateConverter stateConverter) {
+            return state.asStringState(stateConverter);
         }
 
         public void assertIsValid() {

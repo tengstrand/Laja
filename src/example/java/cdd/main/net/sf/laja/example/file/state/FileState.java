@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -100,10 +100,10 @@ public class FileState implements ImmutableState {
         }
 
         public FileStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public FileStringState asStringState(StringConverter c) {
+        public FileStringState asStringState(StringStateConverter c) {
             return new FileStringState(filename);
         }
 
@@ -254,10 +254,10 @@ public class FileState implements ImmutableState {
     }
 
     public static class FileStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public FileStringStateConverter() { c = new StringConverter(); }
-        public FileStringStateConverter(StringConverter converter) { c = converter; }
+        public FileStringStateConverter() { c = new StringStateConverter(); }
+        public FileStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public String toFilename(String filename) { return filename; }
     }

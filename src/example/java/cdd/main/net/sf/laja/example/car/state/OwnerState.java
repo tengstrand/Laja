@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -122,10 +122,10 @@ public class OwnerState implements ImmutableState {
         }
 
         public OwnerStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public OwnerStringState asStringState(StringConverter c) {
+        public OwnerStringState asStringState(StringStateConverter c) {
             return new OwnerStringState(
                     c.longToString(ssn),
                     name);
@@ -293,10 +293,10 @@ public class OwnerState implements ImmutableState {
     }
 
     public static class OwnerStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public OwnerStringStateConverter() { c = new StringConverter(); }
-        public OwnerStringStateConverter(StringConverter converter) { c = converter; }
+        public OwnerStringStateConverter() { c = new StringStateConverter(); }
+        public OwnerStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public long toSsn(String ssn) { return c.asLong(ssn); }
         public String toName(String name) { return name; }

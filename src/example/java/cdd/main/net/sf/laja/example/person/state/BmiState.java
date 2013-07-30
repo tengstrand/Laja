@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -119,10 +119,10 @@ public class BmiState implements ImmutableState {
         }
 
         public BmiStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public BmiStringState asStringState(StringConverter c) {
+        public BmiStringState asStringState(StringStateConverter c) {
             return new BmiStringState(
                     c.intToString(heightInCentimeters),
                     c.intToString(weightInKilograms));
@@ -288,10 +288,10 @@ public class BmiState implements ImmutableState {
     }
 
     public static class BmiStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public BmiStringStateConverter() { c = new StringConverter(); }
-        public BmiStringStateConverter(StringConverter converter) { c = converter; }
+        public BmiStringStateConverter() { c = new StringStateConverter(); }
+        public BmiStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public int toHeightInCentimeters(String heightInCentimeters) { return c.asInt(heightInCentimeters); }
         public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }

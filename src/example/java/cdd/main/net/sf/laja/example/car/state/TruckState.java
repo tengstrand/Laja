@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -183,10 +183,10 @@ public class TruckState implements ImmutableState {
         }
 
         public TruckStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public TruckStringState asStringState(StringConverter c) {
+        public TruckStringState asStringState(StringStateConverter c) {
             return new TruckStringState(
                     size != null ? size.asStringState() : null,
                     c.intToString(weightInKilograms),
@@ -406,10 +406,10 @@ public class TruckState implements ImmutableState {
     }
 
     public static class TruckStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public TruckStringStateConverter() { c = new StringConverter(); }
-        public TruckStringStateConverter(StringConverter converter) { c = converter; }
+        public TruckStringStateConverter() { c = new StringStateConverter(); }
+        public TruckStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
         public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }

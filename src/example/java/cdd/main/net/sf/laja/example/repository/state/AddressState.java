@@ -6,7 +6,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -178,10 +178,10 @@ public class AddressState implements ImmutableState {
         }
 
         public AddressStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public AddressStringState asStringState(StringConverter c) {
+        public AddressStringState asStringState(StringStateConverter c) {
             return new AddressStringState(
                     c.intToString(addressId),
                     streetName,
@@ -368,10 +368,10 @@ public class AddressState implements ImmutableState {
     }
 
     public static class AddressStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public AddressStringStateConverter() { c = new StringConverter(); }
-        public AddressStringStateConverter(StringConverter converter) { c = converter; }
+        public AddressStringStateConverter() { c = new StringStateConverter(); }
+        public AddressStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public int toAddressId(String addressId) { return c.asInt(addressId); }
         public String toStreetName(String streetName) { return streetName; }

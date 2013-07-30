@@ -55,7 +55,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.*;
@@ -209,8 +209,8 @@ import net.sf.laja.cdd.annotation.Parameters;
             return state.asStringState();
         }
 
-        public {stringState} asStringState(StringConverter stringConverter) {
-            return state.asStringState(stringConverter);
+        public {stringState} asStringState(StringStateConverter stateConverter) {
+            return state.asStringState(stateConverter);
         }
 
 #end

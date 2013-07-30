@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -99,10 +99,10 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         public VehicleSizeStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public VehicleSizeStringState asStringState(StringConverter c) {
+        public VehicleSizeStringState asStringState(StringStateConverter c) {
             return new VehicleSizeStringState(c.intToString(lengthInCentimeters));
         }
 
@@ -251,10 +251,10 @@ public class VehicleSizeState implements ImmutableState {
     }
 
     public static class VehicleSizeStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public VehicleSizeStringStateConverter() { c = new StringConverter(); }
-        public VehicleSizeStringStateConverter(StringConverter converter) { c = converter; }
+        public VehicleSizeStringStateConverter() { c = new StringStateConverter(); }
+        public VehicleSizeStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public int toLengthInCentimeters(String lengthInCentimeters) { return c.asInt(lengthInCentimeters); }
     }

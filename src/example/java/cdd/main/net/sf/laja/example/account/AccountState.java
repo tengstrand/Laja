@@ -6,7 +6,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -117,10 +117,10 @@ public class AccountState implements ImmutableState {
         }
 
         public AccountStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public AccountStringState asStringState(StringConverter c) {
+        public AccountStringState asStringState(StringStateConverter c) {
             return new AccountStringState(c.doubleToString(balance));
         }
 
@@ -269,10 +269,10 @@ public class AccountState implements ImmutableState {
     }
 
     public static class AccountStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public AccountStringStateConverter() { c = new StringConverter(); }
-        public AccountStringStateConverter(StringConverter converter) { c = converter; }
+        public AccountStringStateConverter() { c = new StringStateConverter(); }
+        public AccountStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public double toBalance(String balance) { return c.asDouble(balance); }
     }

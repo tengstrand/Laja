@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -121,10 +121,10 @@ public class TruckTypeState implements ImmutableState {
         }
 
         public TruckTypeStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public TruckTypeStringState asStringState(StringConverter c) {
+        public TruckTypeStringState asStringState(StringStateConverter c) {
             return new TruckTypeStringState(
                     c.intToString(numberOfWheels),
                     truckName);
@@ -292,10 +292,10 @@ public class TruckTypeState implements ImmutableState {
     }
 
     public static class TruckTypeStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public TruckTypeStringStateConverter() { c = new StringConverter(); }
-        public TruckTypeStringStateConverter(StringConverter converter) { c = converter; }
+        public TruckTypeStringStateConverter() { c = new StringStateConverter(); }
+        public TruckTypeStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public int toNumberOfWheels(String numberOfWheels) { return c.asInt(numberOfWheels); }
         public String toTruckName(String truckName) { return truckName; }

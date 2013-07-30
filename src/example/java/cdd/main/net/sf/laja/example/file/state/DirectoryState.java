@@ -5,7 +5,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -100,10 +100,10 @@ public class DirectoryState implements ImmutableState {
         }
 
         public DirectoryStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public DirectoryStringState asStringState(StringConverter c) {
+        public DirectoryStringState asStringState(StringStateConverter c) {
             return new DirectoryStringState(directoryPath);
         }
 
@@ -254,10 +254,10 @@ public class DirectoryState implements ImmutableState {
     }
 
     public static class DirectoryStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public DirectoryStringStateConverter() { c = new StringConverter(); }
-        public DirectoryStringStateConverter(StringConverter converter) { c = converter; }
+        public DirectoryStringStateConverter() { c = new StringStateConverter(); }
+        public DirectoryStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public String toDirectoryPath(String directoryPath) { return directoryPath; }
     }

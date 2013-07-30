@@ -8,7 +8,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringConverter;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
@@ -243,10 +243,10 @@ public class CustomerState implements ImmutableState {
         }
 
         public CustomerStringState asStringState() {
-            return asStringState(new StringConverter());
+            return asStringState(new StringStateConverter());
         }
 
-        public CustomerStringState asStringState(StringConverter c) {
+        public CustomerStringState asStringState(StringStateConverter c) {
             return new CustomerStringState(
                     c.longToString(ssn),
                     givenName,
@@ -470,10 +470,10 @@ public class CustomerState implements ImmutableState {
     }
 
     public static class CustomerStringStateConverter {
-        private final StringConverter c;
+        private final StringStateConverter c;
 
-        public CustomerStringStateConverter() { c = new StringConverter(); }
-        public CustomerStringStateConverter(StringConverter converter) { c = converter; }
+        public CustomerStringStateConverter() { c = new StringStateConverter(); }
+        public CustomerStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public long toSsn(String ssn) { return c.asLong(ssn); }
         public String toGivenName(String givenName) { return givenName; }

@@ -20,7 +20,7 @@ import org.joda.time.Weeks;
 import org.joda.time.YearMonth;
 import org.joda.time.Years;
 
-public class StringConverter {
+public class StringStateConverter {
     public String booleanToString(boolean value) { return String.valueOf(value); }
     public String byteToString(byte value) { return String.valueOf(value); }
     public String shortToString(short value) { return String.valueOf(value); }
