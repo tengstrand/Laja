@@ -254,6 +254,11 @@ public class FileState implements ImmutableState {
     }
 
     public static class FileStringStateConverter {
+        private final StringConverter c;
+
+        public FileStringStateConverter() { c = new StringConverter(); }
+        public FileStringStateConverter(StringConverter converter) { c = converter; }
+
         public String toFilename(String filename) { return filename; }
 
         public void validateFilename(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

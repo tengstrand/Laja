@@ -9,8 +9,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
-
 @State
 public class BmiState implements ImmutableState {
     public final int heightInCentimeters;
@@ -290,8 +288,13 @@ public class BmiState implements ImmutableState {
     }
 
     public static class BmiStringStateConverter {
-        public int toHeightInCentimeters(String heightInCentimeters) { return asInt(heightInCentimeters); }
-        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+        private final StringConverter c;
+
+        public BmiStringStateConverter() { c = new StringConverter(); }
+        public BmiStringStateConverter(StringConverter converter) { c = converter; }
+
+        public int toHeightInCentimeters(String heightInCentimeters) { return c.asInt(heightInCentimeters); }
+        public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
 
         public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try {

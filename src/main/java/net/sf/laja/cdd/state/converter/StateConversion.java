@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.MutableState;
 import org.joda.time.DateMidnight;
-import org.joda.time.format.DateTimeFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -35,74 +34,5 @@ public class StateConversion {
 
     public static String asString(DateMidnight date) {
         return new SimpleDateFormat(DATE_MIDNIGHT_FORMAT).format(date.toDate());
-    }
-
-    public static DateMidnight asDateMidnight(String date) {
-        return DateTimeFormat.forPattern(DATE_MIDNIGHT_FORMAT).parseDateTime(date).toDateMidnight();
-    }
-
-
-    public static Boolean asBoolean(String value) {
-        return value == null || value.trim().isEmpty() ? null : Boolean.valueOf(value);
-    }
-
-    public static boolean asBooleanPrimitive(String value) {
-        return value == null || value.trim().isEmpty() ? false : Boolean.valueOf(value);
-    }
-
-    public static Byte asByte(String value) {
-        return value == null || value.trim().isEmpty() ? null : Byte.valueOf(value);
-    }
-
-    public static byte asBytePrimitive(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Byte.valueOf(value);
-    }
-
-    public static Short asShort(String value) {
-        return value == null || value.trim().isEmpty() ? null : Short.valueOf(value);
-    }
-
-    public static short asShortPrimitive(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Short.valueOf(value);
-    }
-
-    public static Character asCharacter(String value) {
-        return value == null || value.trim().isEmpty() ? null : Character.valueOf(value.charAt(0));
-    }
-
-    public static char asChar(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Character.valueOf(value.charAt(0));
-    }
-
-    public static Integer asInteger(String value) {
-        return value == null || value.trim().isEmpty() ? null : Integer.valueOf(value);
-    }
-
-    public static int asInt(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Integer.valueOf(value);
-    }
-
-    public static Long asLong(String value) {
-        return value == null || value.trim().isEmpty() ? null : Long.valueOf(value);
-    }
-
-    public static long asLongPrimitive(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Long.valueOf(value);
-    }
-
-    public static Float asFloat(String value) {
-        return value == null || value.trim().isEmpty() ? null : Float.valueOf(value);
-    }
-
-    public static float asFloatPrimitive(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Float.valueOf(value);
-    }
-
-    public static Double asDouble(String value) {
-        return value == null || value.trim().isEmpty() ? null : Double.valueOf(value);
-    }
-
-    public static double asDoublePrimitive(String value) {
-        return value == null || value.trim().isEmpty() ? 0 : Double.valueOf(value);
     }
 }

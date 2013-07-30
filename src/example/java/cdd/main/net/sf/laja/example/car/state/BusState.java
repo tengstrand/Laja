@@ -10,7 +10,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
@@ -334,9 +333,14 @@ public class BusState implements ImmutableState {
     }
 
     public static class BusStringStateConverter {
+        private final StringConverter c;
+
+        public BusStringStateConverter() { c = new StringConverter(); }
+        public BusStringStateConverter(StringConverter converter) { c = converter; }
+
         public String toName(String name) { return name; }
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
-        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+        public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

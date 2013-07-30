@@ -30,6 +30,8 @@ import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
+//import static net.sf.laja.cdd.state.converter.StringConverter.asDateMidnight;
+
 @State
 public class PersonState implements ImmutableState {
     @Id public final int id;
@@ -618,9 +620,14 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonStringStateConverter {
-        public int toId(String id) { return asInt(id); }
+        private final StringConverter c;
+
+        public PersonStringStateConverter() { c = new StringConverter(); }
+        public PersonStringStateConverter(StringConverter converter) { c = converter; }
+
+        public int toId(String id) { return c.asInt(id); }
         public String toName(String name) { return name; }
-        public DateMidnight toBirthday(String birthday) { return new DateMidnight(birthday); }
+        public DateMidnight toBirthday(String birthday) { return c.asDateMidnight(birthday); }
         public String toHairColor(String hairColor) { return hairColor; }
         public List<PersonMutableState> toChildren(List<PersonStringState> children) { return asMutableList(children, toMutable); }
         public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }

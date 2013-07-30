@@ -2,6 +2,11 @@
 
 #macro classHeader()
     public static class {stringConverterClass} {
+        private final StringConverter c;
+
+        public {stringConverterClass}() { c = new StringConverter(); }
+        public {stringConverterClass}(StringConverter converter) { c = converter; }
+
 #end
 
 #macro fromString()
@@ -15,10 +20,10 @@
         {method} asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
         {method} {attribute.name} != null ? {attribute.name}.asMutable() : null; }
-    #else if (attribute.isString)
-        {method} {attribute.name}; }
+    #else if (!attribute.isString)
+        {method} c.{attribute.asType}({attribute.name}); }
     #else
-        {method} {attribute.type.typeConversionMethod("as")}({attribute.name}); }
+        {method} {attribute.name}; }
     #end
   #end
 #end

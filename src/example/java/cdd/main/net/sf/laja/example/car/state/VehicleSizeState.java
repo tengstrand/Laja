@@ -9,8 +9,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
-
 @State
 public class VehicleSizeState implements ImmutableState {
     public final int lengthInCentimeters;
@@ -253,7 +251,12 @@ public class VehicleSizeState implements ImmutableState {
     }
 
     public static class VehicleSizeStringStateConverter {
-        public int toLengthInCentimeters(String lengthInCentimeters) { return asInt(lengthInCentimeters); }
+        private final StringConverter c;
+
+        public VehicleSizeStringStateConverter() { c = new StringConverter(); }
+        public VehicleSizeStringStateConverter(StringConverter converter) { c = converter; }
+
+        public int toLengthInCentimeters(String lengthInCentimeters) { return c.asInt(lengthInCentimeters); }
 
         public void validateLengthInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try {

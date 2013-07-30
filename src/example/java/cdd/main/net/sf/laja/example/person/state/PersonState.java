@@ -9,8 +9,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
-
 @State
 public class PersonState implements ImmutableState {
     public final String givenName;
@@ -360,10 +358,15 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonStringStateConverter {
+        private final StringConverter c;
+
+        public PersonStringStateConverter() { c = new StringConverter(); }
+        public PersonStringStateConverter(StringConverter converter) { c = converter; }
+
         public String toGivenName(String givenName) { return givenName; }
         public String toSurname(String surname) { return surname; }
-        public int toHeightInCentimeters(String heightInCentimeters) { return asInt(heightInCentimeters); }
-        public int toWeightInKilograms(String weightInKilograms) { return asInt(weightInKilograms); }
+        public int toHeightInCentimeters(String heightInCentimeters) { return c.asInt(heightInCentimeters); }
+        public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
 
         public void validateGivenName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

@@ -10,8 +10,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
-
 @State
 public class AddressState implements ImmutableState {
     @Id public final int addressId;
@@ -370,9 +368,14 @@ public class AddressState implements ImmutableState {
     }
 
     public static class AddressStringStateConverter {
-        public int toAddressId(String addressId) { return asInt(addressId); }
+        private final StringConverter c;
+
+        public AddressStringStateConverter() { c = new StringConverter(); }
+        public AddressStringStateConverter(StringConverter converter) { c = converter; }
+
+        public int toAddressId(String addressId) { return c.asInt(addressId); }
         public String toStreetName(String streetName) { return streetName; }
-        public int toZipcode(String zipcode) { return asInt(zipcode); }
+        public int toZipcode(String zipcode) { return c.asInt(zipcode); }
         public String toCity(String city) { return city; }
 
         public void validateAddressId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

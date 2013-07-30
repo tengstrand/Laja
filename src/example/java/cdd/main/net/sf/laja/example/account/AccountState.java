@@ -10,8 +10,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asDoublePrimitive;
-
 @State
 public class AccountState implements ImmutableState {
     @Key public final double balance;
@@ -271,7 +269,12 @@ public class AccountState implements ImmutableState {
     }
 
     public static class AccountStringStateConverter {
-        public double toBalance(String balance) { return asDoublePrimitive(balance); }
+        private final StringConverter c;
+
+        public AccountStringStateConverter() { c = new StringConverter(); }
+        public AccountStringStateConverter(StringConverter converter) { c = converter; }
+
+        public double toBalance(String balance) { return c.asInt(balance); }
 
         public void validateBalance(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
             try {

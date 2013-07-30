@@ -9,8 +9,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
-
 @State
 public class TruckTypeState implements ImmutableState {
     public final int numberOfWheels;
@@ -294,7 +292,12 @@ public class TruckTypeState implements ImmutableState {
     }
 
     public static class TruckTypeStringStateConverter {
-        public int toNumberOfWheels(String numberOfWheels) { return asInt(numberOfWheels); }
+        private final StringConverter c;
+
+        public TruckTypeStringStateConverter() { c = new StringConverter(); }
+        public TruckTypeStringStateConverter(StringConverter converter) { c = converter; }
+
+        public int toNumberOfWheels(String numberOfWheels) { return c.asInt(numberOfWheels); }
         public String toTruckName(String truckName) { return truckName; }
 
         public void validateNumberOfWheels(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

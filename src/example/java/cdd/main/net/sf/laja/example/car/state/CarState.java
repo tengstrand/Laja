@@ -371,6 +371,11 @@ public class CarState implements ImmutableState {
     }
 
     public static class CarStringStateConverter {
+        private final StringConverter c;
+
+        public CarStringStateConverter() { c = new StringConverter(); }
+        public CarStringStateConverter(StringConverter converter) { c = converter; }
+
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
         public String toName(String name) { return name; }
         public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }

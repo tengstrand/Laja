@@ -1,5 +1,7 @@
 package net.sf.laja.parser.cdd.state;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -219,6 +221,10 @@ public class Type implements StateParser.IType {
             return prefix + methods.get(name);
         }
         return "new " + name;
+    }
+
+    public String getAsType() {
+        return "as" + StringUtils.capitalize(name);
     }
 
     @Override

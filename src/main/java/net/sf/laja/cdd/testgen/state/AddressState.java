@@ -11,8 +11,6 @@ import net.sf.laja.cdd.state.converter.StringConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asInt;
-
 @State
 public class AddressState implements ImmutableState {
     @Id
@@ -339,7 +337,12 @@ public class AddressState implements ImmutableState {
     }
 
     public static class AddressStringStateConverter {
-        public int toId(String id) { return asInt(id); }
+        private final StringConverter c;
+
+        public AddressStringStateConverter() { c = new StringConverter(); }
+        public AddressStringStateConverter(StringConverter converter) { c = converter; }
+
+        public int toId(String id) { return c.asInt(id); }
         public String toStreetName(String streetName) { return streetName; }
         public String toCity(String city) { return city; }
 
