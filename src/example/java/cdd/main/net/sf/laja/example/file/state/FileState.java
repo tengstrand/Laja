@@ -201,27 +201,27 @@ public class FileState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new FileStringStateConverter(), validators);
+            return validate(new FileStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(FileStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(FileStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(FileStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateFilename(filename, rootElement, parent, errors);
+        public void validate(FileStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateFilename(filename, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new FileStringStateConverter(), validators);
+            assertIsValid(new FileStringStateValidator(), validators);
         }
 
-        public void assertIsValid(FileStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(FileStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidFileStateException(errors);
@@ -260,6 +260,18 @@ public class FileState implements ImmutableState {
         public FileStringStateConverter(StringConverter converter) { c = converter; }
 
         public String toFilename(String filename) { return filename; }
+    }
+
+    public static class FileStringStateValidator {
+        private final FileStringStateConverter c;
+
+        public FileStringStateValidator() {
+            this.c = new FileStringStateConverter();
+        }
+
+        public FileStringStateValidator(FileStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateFilename(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

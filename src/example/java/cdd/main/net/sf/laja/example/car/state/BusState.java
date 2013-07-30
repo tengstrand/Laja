@@ -272,29 +272,29 @@ public class BusState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new BusStringStateConverter(), validators);
+            return validate(new BusStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(BusStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(BusStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(BusStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateName(name, rootElement, parent, errors);
-            stateConverter.validateSize(size, rootElement, parent, errors);
-            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+        public void validate(BusStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateName(name, rootElement, parent, errors);
+            stateValidator.validateSize(size, rootElement, parent, errors);
+            stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new BusStringStateConverter(), validators);
+            assertIsValid(new BusStringStateValidator(), validators);
         }
 
-        public void assertIsValid(BusStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(BusStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidBusStateException(errors);
@@ -341,24 +341,28 @@ public class BusState implements ImmutableState {
         public String toName(String name) { return name; }
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
         public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
+    }
+
+    public static class BusStringStateValidator {
+        private final BusStringStateConverter c;
+
+        public BusStringStateValidator() {
+            this.c = new BusStringStateConverter();
+        }
+
+        public BusStringStateValidator(BusStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toSize(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "size");
-            }
+            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "size"); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toWeightInKilograms(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
-            }
+            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "weightInKilograms"); }
         }
     }
 }

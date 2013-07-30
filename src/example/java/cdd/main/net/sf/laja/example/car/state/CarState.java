@@ -306,30 +306,30 @@ public class CarState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new CarStringStateConverter(), validators);
+            return validate(new CarStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(CarStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(CarStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(CarStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateSize(size, rootElement, parent, errors);
-            stateConverter.validateName(name, rootElement, parent, errors);
-            stateConverter.validateOwner(owner, rootElement, parent, errors);
-            stateConverter.validateColor(color, rootElement, parent, errors);
+        public void validate(CarStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateSize(size, rootElement, parent, errors);
+            stateValidator.validateName(name, rootElement, parent, errors);
+            stateValidator.validateOwner(owner, rootElement, parent, errors);
+            stateValidator.validateColor(color, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new CarStringStateConverter(), validators);
+            assertIsValid(new CarStringStateValidator(), validators);
         }
 
-        public void assertIsValid(CarStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(CarStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidCarStateException(errors);
@@ -380,24 +380,28 @@ public class CarState implements ImmutableState {
         public String toName(String name) { return name; }
         public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }
         public String toColor(String color) { return color; }
+    }
+
+    public static class CarStringStateValidator {
+        private final CarStringStateConverter c;
+
+        public CarStringStateValidator() {
+            this.c = new CarStringStateConverter();
+        }
+
+        public CarStringStateValidator(CarStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toSize(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "size");
-            }
+            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "size"); }
         }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateOwner(OwnerStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toOwner(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "owner");
-            }
+            try { c.toOwner(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "owner"); }
         }
 
         public void validateColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

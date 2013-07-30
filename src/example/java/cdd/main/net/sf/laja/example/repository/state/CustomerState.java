@@ -405,33 +405,33 @@ public class CustomerState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new CustomerStringStateConverter(), validators);
+            return validate(new CustomerStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(CustomerStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(CustomerStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(CustomerStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateSsn(ssn, rootElement, parent, errors);
-            stateConverter.validateGivenName(givenName, rootElement, parent, errors);
-            stateConverter.validateSurname(surname, rootElement, parent, errors);
-            stateConverter.validateAge(age, rootElement, parent, errors);
-            stateConverter.validatePet(pet, rootElement, parent, errors);
-            stateConverter.validateAddress(address, rootElement, parent, errors);
-            stateConverter.validateOldAddresses(oldAddresses, rootElement, parent, errors);
+        public void validate(CustomerStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateSsn(ssn, rootElement, parent, errors);
+            stateValidator.validateGivenName(givenName, rootElement, parent, errors);
+            stateValidator.validateSurname(surname, rootElement, parent, errors);
+            stateValidator.validateAge(age, rootElement, parent, errors);
+            stateValidator.validatePet(pet, rootElement, parent, errors);
+            stateValidator.validateAddress(address, rootElement, parent, errors);
+            stateValidator.validateOldAddresses(oldAddresses, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new CustomerStringStateConverter(), validators);
+            assertIsValid(new CustomerStringStateValidator(), validators);
         }
 
-        public void assertIsValid(CustomerStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(CustomerStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidCustomerStateException(errors);
@@ -482,13 +482,21 @@ public class CustomerState implements ImmutableState {
         public String toPet(String pet) { return pet; }
         public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }
         public List<AddressMutableState> toOldAddresses(List<AddressStringState> oldAddresses) { return asMutableList(oldAddresses, toMutable); }
+    }
+
+    public static class CustomerStringStateValidator {
+        private final CustomerStringStateConverter c;
+
+        public CustomerStringStateValidator() {
+            this.c = new CustomerStringStateConverter();
+        }
+
+        public CustomerStringStateValidator(CustomerStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toSsn(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "ssn");
-            }
+            try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "ssn"); }
         }
 
         public void validateGivenName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
@@ -498,30 +506,18 @@ public class CustomerState implements ImmutableState {
         }
 
         public void validateAge(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toAge(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "age");
-            }
+            try { c.toAge(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "age"); }
         }
 
         public void validatePet(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateAddress(AddressStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toAddress(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "address");
-            }
+            try { c.toAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "address"); }
         }
 
         public void validateOldAddresses(List<AddressStringState> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toOldAddresses(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "oldAddresses");
-            }
+            try { c.toOldAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "oldAddresses"); }
         }
     }
 }

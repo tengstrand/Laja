@@ -293,30 +293,30 @@ public class PersonState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new PersonStringStateConverter(), validators);
+            return validate(new PersonStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(PersonStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(PersonStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(PersonStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateGivenName(givenName, rootElement, parent, errors);
-            stateConverter.validateSurname(surname, rootElement, parent, errors);
-            stateConverter.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
-            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+        public void validate(PersonStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateGivenName(givenName, rootElement, parent, errors);
+            stateValidator.validateSurname(surname, rootElement, parent, errors);
+            stateValidator.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
+            stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new PersonStringStateConverter(), validators);
+            assertIsValid(new PersonStringStateValidator(), validators);
         }
 
-        public void assertIsValid(PersonStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(PersonStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidPersonStateException(errors);
@@ -367,6 +367,18 @@ public class PersonState implements ImmutableState {
         public String toSurname(String surname) { return surname; }
         public int toHeightInCentimeters(String heightInCentimeters) { return c.asInt(heightInCentimeters); }
         public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
+    }
+
+    public static class PersonStringStateValidator {
+        private final PersonStringStateConverter c;
+
+        public PersonStringStateValidator() {
+            this.c = new PersonStringStateConverter();
+        }
+
+        public PersonStringStateValidator(PersonStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateGivenName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
@@ -375,19 +387,11 @@ public class PersonState implements ImmutableState {
         }
 
         public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toHeightInCentimeters(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "heightInCentimeters");
-            }
+            try { c.toHeightInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "heightInCentimeters"); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toWeightInKilograms(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
-            }
+            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "weightInKilograms"); }
         }
     }
 }

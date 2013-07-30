@@ -1,0 +1,29 @@
+#namespace converter
+
+#macro validateAttribute()
+  #foreach (attribute in attributes)
+
+        public void validate{attribute.nameAsClass}({attribute.type.asMutableString} value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+    #if (!attribute.isString)
+            try { c.to{attribute.nameAsClass}(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "{attribute.name}"); }
+    #end
+        }
+  #end
+#end
+
+#macro stringStateValidator()
+  #set ($.attributes = state.mutableAttributes)
+
+    public static class {stringValidatorClass} {
+        private final {stringConverterClass} c;
+
+        public {stringValidatorClass}() {
+            this.c = new {stringConverterClass}();
+        }
+
+        public {stringValidatorClass}({stringConverterClass} converter) {
+            this.c = converter;
+        }
+  #validateAttribute()
+    }
+#end

@@ -42,11 +42,11 @@
 #macro assertIsValid()
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new {stringConverterClass}(), validators);
+            assertIsValid(new {stringValidatorClass}(), validators);
         }
 
-        public void assertIsValid({stringConverterClass} stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid({stringValidatorClass} stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new {stateException}(errors);
@@ -64,18 +64,18 @@
 #macro validate()
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new {stringConverterClass}(), validators);
+            return validate(new {stringValidatorClass}(), validators);
         }
 
-        public ValidationErrors validate({stringConverterClass} stateConverter, Validator... validators) {
+        public ValidationErrors validate({stringValidatorClass} stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate({stringConverterClass} stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate({stringValidatorClass} stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
   #foreach (attribute in attributes)
-            stateConverter.validate{attribute.nameAsClass}({attribute.name}, rootElement, parent, errors);
+            stateValidator.validate{attribute.nameAsClass}({attribute.name}, rootElement, parent, errors);
   #end
 
             asMutable().validate(rootElement, parent, errors, validators);

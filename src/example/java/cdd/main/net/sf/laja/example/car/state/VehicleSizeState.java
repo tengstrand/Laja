@@ -198,27 +198,27 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new VehicleSizeStringStateConverter(), validators);
+            return validate(new VehicleSizeStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(VehicleSizeStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(VehicleSizeStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(VehicleSizeStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateLengthInCentimeters(lengthInCentimeters, rootElement, parent, errors);
+        public void validate(VehicleSizeStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateLengthInCentimeters(lengthInCentimeters, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new VehicleSizeStringStateConverter(), validators);
+            assertIsValid(new VehicleSizeStringStateValidator(), validators);
         }
 
-        public void assertIsValid(VehicleSizeStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(VehicleSizeStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidVehicleSizeStateException(errors);
@@ -257,13 +257,21 @@ public class VehicleSizeState implements ImmutableState {
         public VehicleSizeStringStateConverter(StringConverter converter) { c = converter; }
 
         public int toLengthInCentimeters(String lengthInCentimeters) { return c.asInt(lengthInCentimeters); }
+    }
+
+    public static class VehicleSizeStringStateValidator {
+        private final VehicleSizeStringStateConverter c;
+
+        public VehicleSizeStringStateValidator() {
+            this.c = new VehicleSizeStringStateConverter();
+        }
+
+        public VehicleSizeStringStateValidator(VehicleSizeStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateLengthInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toLengthInCentimeters(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "lengthInCentimeters");
-            }
+            try { c.toLengthInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "lengthInCentimeters"); }
         }
     }
 }

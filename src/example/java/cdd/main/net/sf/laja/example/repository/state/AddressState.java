@@ -309,30 +309,30 @@ public class AddressState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new AddressStringStateConverter(), validators);
+            return validate(new AddressStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(AddressStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(AddressStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(AddressStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateAddressId(addressId, rootElement, parent, errors);
-            stateConverter.validateStreetName(streetName, rootElement, parent, errors);
-            stateConverter.validateZipcode(zipcode, rootElement, parent, errors);
-            stateConverter.validateCity(city, rootElement, parent, errors);
+        public void validate(AddressStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateAddressId(addressId, rootElement, parent, errors);
+            stateValidator.validateStreetName(streetName, rootElement, parent, errors);
+            stateValidator.validateZipcode(zipcode, rootElement, parent, errors);
+            stateValidator.validateCity(city, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new AddressStringStateConverter(), validators);
+            assertIsValid(new AddressStringStateValidator(), validators);
         }
 
-        public void assertIsValid(AddressStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(AddressStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidAddressStateException(errors);
@@ -377,24 +377,28 @@ public class AddressState implements ImmutableState {
         public String toStreetName(String streetName) { return streetName; }
         public int toZipcode(String zipcode) { return c.asInt(zipcode); }
         public String toCity(String city) { return city; }
+    }
+
+    public static class AddressStringStateValidator {
+        private final AddressStringStateConverter c;
+
+        public AddressStringStateValidator() {
+            this.c = new AddressStringStateConverter();
+        }
+
+        public AddressStringStateValidator(AddressStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateAddressId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toAddressId(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "addressId");
-            }
+            try { c.toAddressId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "addressId"); }
         }
 
         public void validateStreetName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateZipcode(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toZipcode(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "zipcode");
-            }
+            try { c.toZipcode(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "zipcode"); }
         }
 
         public void validateCity(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

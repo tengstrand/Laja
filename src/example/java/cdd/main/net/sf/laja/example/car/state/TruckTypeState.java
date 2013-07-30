@@ -235,28 +235,28 @@ public class TruckTypeState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new TruckTypeStringStateConverter(), validators);
+            return validate(new TruckTypeStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(TruckTypeStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(TruckTypeStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(TruckTypeStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateNumberOfWheels(numberOfWheels, rootElement, parent, errors);
-            stateConverter.validateTruckName(truckName, rootElement, parent, errors);
+        public void validate(TruckTypeStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateNumberOfWheels(numberOfWheels, rootElement, parent, errors);
+            stateValidator.validateTruckName(truckName, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new TruckTypeStringStateConverter(), validators);
+            assertIsValid(new TruckTypeStringStateValidator(), validators);
         }
 
-        public void assertIsValid(TruckTypeStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(TruckTypeStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidTruckTypeStateException(errors);
@@ -299,13 +299,21 @@ public class TruckTypeState implements ImmutableState {
 
         public int toNumberOfWheels(String numberOfWheels) { return c.asInt(numberOfWheels); }
         public String toTruckName(String truckName) { return truckName; }
+    }
+
+    public static class TruckTypeStringStateValidator {
+        private final TruckTypeStringStateConverter c;
+
+        public TruckTypeStringStateValidator() {
+            this.c = new TruckTypeStringStateConverter();
+        }
+
+        public TruckTypeStringStateValidator(TruckTypeStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateNumberOfWheels(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toNumberOfWheels(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "numberOfWheels");
-            }
+            try { c.toNumberOfWheels(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "numberOfWheels"); }
         }
 
         public void validateTruckName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

@@ -201,27 +201,27 @@ public class DirectoryState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new DirectoryStringStateConverter(), validators);
+            return validate(new DirectoryStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(DirectoryStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(DirectoryStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(DirectoryStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateDirectoryPath(directoryPath, rootElement, parent, errors);
+        public void validate(DirectoryStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateDirectoryPath(directoryPath, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new DirectoryStringStateConverter(), validators);
+            assertIsValid(new DirectoryStringStateValidator(), validators);
         }
 
-        public void assertIsValid(DirectoryStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(DirectoryStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidDirectoryStateException(errors);
@@ -260,6 +260,18 @@ public class DirectoryState implements ImmutableState {
         public DirectoryStringStateConverter(StringConverter converter) { c = converter; }
 
         public String toDirectoryPath(String directoryPath) { return directoryPath; }
+    }
+
+    public static class DirectoryStringStateValidator {
+        private final DirectoryStringStateConverter c;
+
+        public DirectoryStringStateValidator() {
+            this.c = new DirectoryStringStateConverter();
+        }
+
+        public DirectoryStringStateValidator(DirectoryStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateDirectoryPath(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

@@ -337,31 +337,31 @@ public class TruckState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new TruckStringStateConverter(), validators);
+            return validate(new TruckStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(TruckStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(TruckStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(TruckStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateSize(size, rootElement, parent, errors);
-            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
-            stateConverter.validateType(type, rootElement, parent, errors);
-            stateConverter.validateColor(color, rootElement, parent, errors);
-            stateConverter.validateOwner(owner, rootElement, parent, errors);
+        public void validate(TruckStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateSize(size, rootElement, parent, errors);
+            stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+            stateValidator.validateType(type, rootElement, parent, errors);
+            stateValidator.validateColor(color, rootElement, parent, errors);
+            stateValidator.validateOwner(owner, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new TruckStringStateConverter(), validators);
+            assertIsValid(new TruckStringStateValidator(), validators);
         }
 
-        public void assertIsValid(TruckStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(TruckStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidTruckStateException(errors);
@@ -416,40 +416,36 @@ public class TruckState implements ImmutableState {
         public TruckTypeMutableState toType(TruckTypeStringState type) { return type != null ? type.asMutable() : null; }
         public String toColor(String color) { return color; }
         public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }
+    }
+
+    public static class TruckStringStateValidator {
+        private final TruckStringStateConverter c;
+
+        public TruckStringStateValidator() {
+            this.c = new TruckStringStateConverter();
+        }
+
+        public TruckStringStateValidator(TruckStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toSize(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "size");
-            }
+            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "size"); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toWeightInKilograms(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
-            }
+            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "weightInKilograms"); }
         }
 
         public void validateType(TruckTypeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toType(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "type");
-            }
+            try { c.toType(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "type"); }
         }
 
         public void validateColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateOwner(OwnerStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toOwner(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "owner");
-            }
+            try { c.toOwner(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "owner"); }
         }
     }
 }

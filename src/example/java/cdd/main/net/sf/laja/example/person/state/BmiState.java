@@ -231,28 +231,28 @@ public class BmiState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new BmiStringStateConverter(), validators);
+            return validate(new BmiStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(BmiStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(BmiStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(BmiStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
-            stateConverter.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
+        public void validate(BmiStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
+            stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new BmiStringStateConverter(), validators);
+            assertIsValid(new BmiStringStateValidator(), validators);
         }
 
-        public void assertIsValid(BmiStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(BmiStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidBmiStateException(errors);
@@ -295,21 +295,25 @@ public class BmiState implements ImmutableState {
 
         public int toHeightInCentimeters(String heightInCentimeters) { return c.asInt(heightInCentimeters); }
         public int toWeightInKilograms(String weightInKilograms) { return c.asInt(weightInKilograms); }
+    }
+
+    public static class BmiStringStateValidator {
+        private final BmiStringStateConverter c;
+
+        public BmiStringStateValidator() {
+            this.c = new BmiStringStateConverter();
+        }
+
+        public BmiStringStateValidator(BmiStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toHeightInCentimeters(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "heightInCentimeters");
-            }
+            try { c.toHeightInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "heightInCentimeters"); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toWeightInKilograms(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "weightInKilograms");
-            }
+            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "weightInKilograms"); }
         }
     }
 }

@@ -216,27 +216,27 @@ public class AccountState implements ImmutableState {
         }
 
         public ValidationErrors validate(Validator... validators) {
-            return validate(new AccountStringStateConverter(), validators);
+            return validate(new AccountStringStateValidator(), validators);
         }
 
-        public ValidationErrors validate(AccountStringStateConverter stateConverter, Validator... validators) {
+        public ValidationErrors validate(AccountStringStateValidator stateValidator, Validator... validators) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateConverter, this, "", errors, validators);
+            validate(stateValidator, this, "", errors, validators);
             return errors.build();
         }
 
-        public void validate(AccountStringStateConverter stateConverter, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            stateConverter.validateBalance(balance, rootElement, parent, errors);
+        public void validate(AccountStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+            stateValidator.validateBalance(balance, rootElement, parent, errors);
 
             asMutable().validate(rootElement, parent, errors, validators);
         }
 
         public void assertIsValid(Validator... validators) {
-            assertIsValid(new AccountStringStateConverter(), validators);
+            assertIsValid(new AccountStringStateValidator(), validators);
         }
 
-        public void assertIsValid(AccountStringStateConverter stateConverter, Validator... validators) {
-            ValidationErrors errors = validate(stateConverter, validators);
+        public void assertIsValid(AccountStringStateValidator stateValidator, Validator... validators) {
+            ValidationErrors errors = validate(stateValidator, validators);
 
             if (errors.isInvalid()) {
                 throw new InvalidAccountStateException(errors);
@@ -275,13 +275,21 @@ public class AccountState implements ImmutableState {
         public AccountStringStateConverter(StringConverter converter) { c = converter; }
 
         public double toBalance(String balance) { return c.asDouble(balance); }
+    }
+
+    public static class AccountStringStateValidator {
+        private final AccountStringStateConverter c;
+
+        public AccountStringStateValidator() {
+            this.c = new AccountStringStateConverter();
+        }
+
+        public AccountStringStateValidator(AccountStringStateConverter converter) {
+            this.c = converter;
+        }
 
         public void validateBalance(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try {
-                toBalance(value);
-            } catch (Exception e) {
-                errors.addTypeConversionError(rootElement, parent, "balance");
-            }
+            try { c.toBalance(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "balance"); }
         }
     }
 }
