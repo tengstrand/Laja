@@ -21,7 +21,7 @@
     #else if (attribute.type.isState)
         {method} {attribute.name} != null ? {attribute.name}.asMutable() : null; }
     #else if (!attribute.isString)
-        {method} c.{attribute.asType}({attribute.name}); }
+        {method} c.{attribute.type.asType}({attribute.name}); }
     #else
         {method} {attribute.name}; }
     #end
