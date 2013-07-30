@@ -373,6 +373,11 @@ public class AddressState implements ImmutableState {
         public AddressStringStateConverter() { c = new StringStateConverter(); }
         public AddressStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String addressIdToString(int addressId) { return c.intToString(addressId); }
+        public String streetNameToString(String streetName) { return streetName; }
+        public String zipcodeToString(int zipcode) { return c.intToString(zipcode); }
+        public String cityToString(String city) { return city; }
+
         public int toAddressId(String addressId) { return c.toInt(addressId); }
         public String toStreetName(String streetName) { return streetName; }
         public int toZipcode(String zipcode) { return c.toInt(zipcode); }

@@ -274,6 +274,8 @@ public class AccountState implements ImmutableState {
         public AccountStringStateConverter() { c = new StringStateConverter(); }
         public AccountStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String balanceToString(double balance) { return c.doubleToString(balance); }
+
         public double toBalance(String balance) { return c.toDouble(balance); }
     }
 

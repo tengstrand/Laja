@@ -342,6 +342,10 @@ public class AddressState implements ImmutableState {
         public AddressStringStateConverter() { c = new StringStateConverter(); }
         public AddressStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String idToString(int id) { return c.intToString(id); }
+        public String streetNameToString(String streetName) { return streetName; }
+        public String cityToString(String city) { return city; }
+
         public int toId(String id) { return c.toInt(id); }
         public String toStreetName(String streetName) { return streetName; }
         public String toCity(String city) { return city; }

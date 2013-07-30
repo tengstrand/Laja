@@ -259,6 +259,8 @@ public class FileState implements ImmutableState {
         public FileStringStateConverter() { c = new StringStateConverter(); }
         public FileStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String filenameToString(String filename) { return filename; }
+
         public String toFilename(String filename) { return filename; }
     }
 

@@ -256,6 +256,8 @@ public class VehicleSizeState implements ImmutableState {
         public VehicleSizeStringStateConverter() { c = new StringStateConverter(); }
         public VehicleSizeStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String lengthInCentimetersToString(int lengthInCentimeters) { return c.intToString(lengthInCentimeters); }
+
         public int toLengthInCentimeters(String lengthInCentimeters) { return c.toInt(lengthInCentimeters); }
     }
 

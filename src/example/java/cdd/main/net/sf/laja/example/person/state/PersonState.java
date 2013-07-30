@@ -363,6 +363,11 @@ public class PersonState implements ImmutableState {
         public PersonStringStateConverter() { c = new StringStateConverter(); }
         public PersonStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String givenNameToString(String givenName) { return givenName; }
+        public String surnameToString(String surname) { return surname; }
+        public String heightInCentimetersToString(int heightInCentimeters) { return c.intToString(heightInCentimeters); }
+        public String weightInKilogramsToString(int weightInKilograms) { return c.intToString(weightInKilograms); }
+
         public String toGivenName(String givenName) { return givenName; }
         public String toSurname(String surname) { return surname; }
         public int toHeightInCentimeters(String heightInCentimeters) { return c.toInt(heightInCentimeters); }

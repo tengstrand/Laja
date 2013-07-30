@@ -259,6 +259,8 @@ public class DirectoryState implements ImmutableState {
         public DirectoryStringStateConverter() { c = new StringStateConverter(); }
         public DirectoryStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String directoryPathToString(String directoryPath) { return directoryPath; }
+
         public String toDirectoryPath(String directoryPath) { return directoryPath; }
     }
 

@@ -475,6 +475,14 @@ public class CustomerState implements ImmutableState {
         public CustomerStringStateConverter() { c = new StringStateConverter(); }
         public CustomerStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String ssnToString(long ssn) { return c.longToString(ssn); }
+        public String givenNameToString(String givenName) { return givenName; }
+        public String surnameToString(String surname) { return surname; }
+        public String ageToString(int age) { return c.intToString(age); }
+        public String petToString(String pet) { return pet; }
+        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState() : null; }
+        public List<AddressStringState> oldAddressesToString(List<AddressMutableState> oldAddresses) { return asMutableList(oldAddresses, toMutableString); }
+
         public long toSsn(String ssn) { return c.toLong(ssn); }
         public String toGivenName(String givenName) { return givenName; }
         public String toSurname(String surname) { return surname; }

@@ -625,6 +625,18 @@ public class PersonState implements ImmutableState {
         public PersonStringStateConverter() { c = new StringStateConverter(); }
         public PersonStringStateConverter(StringStateConverter converter) { c = converter; }
 
+        public String idToString(int id) { return c.intToString(id); }
+        public String nameToString(String name) { return name; }
+        public String birthdayToString(DateMidnight birthday) { return c.toString(birthday); }
+        public String hairColorToString(String hairColor) { return hairColor; }
+        public List<PersonStringState> childrenToString(List<PersonMutableState> children) { return asMutableList(children, toMutableString); }
+        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState() : null; }
+        public AddressStringState oldAddressToString(AddressMutableState oldAddress) { return oldAddress != null ? oldAddress.asStringState() : null; }
+        public Set<AddressStringState> oldAddressesToString(Set<AddressMutableState> oldAddresses) { return asMutableSet(oldAddresses, toMutableString); }
+        public Map<String,AddressStringState> groupedAddressesToString(Map<String,AddressMutableState> groupedAddresses) { return asMutableMap(groupedAddresses, toMutableString); }
+        public List<Set<AddressStringState>> listOfSetOfStateToString(List<Set<AddressMutableState>> listOfSetOfState) { return asMutableList(listOfSetOfState, toMutableSet, toMutableString); }
+        public List<Set<Map<String,String>>> listOfSetOfMapOfIntegersToString(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { return asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, c.objectToStringConverter()); }
+
         public int toId(String id) { return c.toInt(id); }
         public String toName(String name) { return name; }
         public DateMidnight toBirthday(String birthday) { return c.toDateMidnight(birthday); }
