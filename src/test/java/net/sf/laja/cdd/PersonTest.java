@@ -1,9 +1,7 @@
 package net.sf.laja.cdd;
 
-import net.sf.laja.cdd.testgen.AddressCreator;
 import net.sf.laja.cdd.testgen.Person;
 import net.sf.laja.cdd.testgen.PersonCreator;
-import net.sf.laja.cdd.testgen.state.PersonState;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
@@ -18,9 +16,7 @@ import static net.sf.laja.cdd.testgen.AddressCreator.buildAddress;
 import static net.sf.laja.cdd.testgen.AddressCreator.buildStringAddress;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.*;
-import static net.sf.laja.cdd.testgen.state.PersonState.InvalidPersonStateException;
-import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
-import static net.sf.laja.cdd.testgen.state.PersonState.PersonStringState;
+import static net.sf.laja.cdd.testgen.state.PersonState.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
