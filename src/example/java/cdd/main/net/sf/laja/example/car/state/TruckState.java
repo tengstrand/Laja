@@ -411,11 +411,11 @@ public class TruckState implements ImmutableState {
         public TruckStringStateConverter() { c = new StringStateConverter(); }
         public TruckStringStateConverter(StringStateConverter converter) { c = converter; }
 
-        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState() : null; }
+        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(c) : null; }
         public String weightInKilogramsToString(int weightInKilograms) { return c.intToString(weightInKilograms); }
-        public TruckTypeStringState typeToString(TruckTypeMutableState type) { return type != null ? type.asStringState() : null; }
+        public TruckTypeStringState typeToString(TruckTypeMutableState type) { return type != null ? type.asStringState(c) : null; }
         public String colorToString(String color) { return color; }
-        public OwnerStringState ownerToString(OwnerMutableState owner) { return owner != null ? owner.asStringState() : null; }
+        public OwnerStringState ownerToString(OwnerMutableState owner) { return owner != null ? owner.asStringState(c) : null; }
 
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
         public int toWeightInKilograms(String weightInKilograms) { return c.toInt(weightInKilograms); }

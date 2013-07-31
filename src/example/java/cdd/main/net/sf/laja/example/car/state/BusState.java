@@ -339,7 +339,7 @@ public class BusState implements ImmutableState {
         public BusStringStateConverter(StringStateConverter converter) { c = converter; }
 
         public String nameToString(String name) { return name; }
-        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState() : null; }
+        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(c) : null; }
         public String weightInKilogramsToString(int weightInKilograms) { return c.intToString(weightInKilograms); }
 
         public String toName(String name) { return name; }

@@ -480,7 +480,7 @@ public class CustomerState implements ImmutableState {
         public String surnameToString(String surname) { return surname; }
         public String ageToString(int age) { return c.intToString(age); }
         public String petToString(String pet) { return pet; }
-        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState() : null; }
+        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState(c) : null; }
         public List<AddressStringState> oldAddressesToString(List<AddressMutableState> oldAddresses) { return asMutableList(oldAddresses, toMutableString); }
 
         public long toSsn(String ssn) { return c.toLong(ssn); }

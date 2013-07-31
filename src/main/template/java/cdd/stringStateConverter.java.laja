@@ -9,7 +9,7 @@
     #else if (attribute.isSet)
         public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableSet({attribute.name}{$mutable.mutableStringConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return {attribute.name} != null ? {attribute.name}.asStringState() : null; }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return {attribute.name} != null ? {attribute.name}.asStringState(c) : null; }
     #else if (attribute.isPrimitive)
         public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return c.{attribute.type}ToString({attribute.name}); }
     #else if (!attribute.isString)

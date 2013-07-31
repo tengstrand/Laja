@@ -630,8 +630,8 @@ public class PersonState implements ImmutableState {
         public String birthdayToString(DateMidnight birthday) { return c.toString(birthday); }
         public String hairColorToString(String hairColor) { return hairColor; }
         public List<PersonStringState> childrenToString(List<PersonMutableState> children) { return asMutableList(children, toMutableString); }
-        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState() : null; }
-        public AddressStringState oldAddressToString(AddressMutableState oldAddress) { return oldAddress != null ? oldAddress.asStringState() : null; }
+        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState(c) : null; }
+        public AddressStringState oldAddressToString(AddressMutableState oldAddress) { return oldAddress != null ? oldAddress.asStringState(c) : null; }
         public Set<AddressStringState> oldAddressesToString(Set<AddressMutableState> oldAddresses) { return asMutableSet(oldAddresses, toMutableString); }
         public Map<String,AddressStringState> groupedAddressesToString(Map<String,AddressMutableState> groupedAddresses) { return asMutableMap(groupedAddresses, toMutableString); }
         public List<Set<AddressStringState>> listOfSetOfStateToString(List<Set<AddressMutableState>> listOfSetOfState) { return asMutableList(listOfSetOfState, toMutableSet, toMutableString); }
