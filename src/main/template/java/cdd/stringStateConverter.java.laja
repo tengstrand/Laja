@@ -1,13 +1,27 @@
 #namespace converter
 
+#macro mutableStringConverters(type)
+  #if (type.isState)
+, toMutableString##
+  #else if (type.isMap)
+, toMutableMap{mutableStringConverters(type.mapType.entry)}##
+  #else if (type.isList)
+, toMutableList{mutableStringConverters(type.collectionType.type)}##
+  #else if (type.isSet)
+, toMutableSet{mutableStringConverters(type.collectionType.type)}##
+  #else if (convertPrimitives && !type.isString)
+, c.objectToStringConverter()##
+  #end
+#end
+
 #macro toString()
   #foreach (attribute in attributes)
     #if (attribute.isMap)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableMap({attribute.name}{$mutable.mutableStringConverters(attribute.type.mapType.entry)}); }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableMap({attribute.name}{mutableStringConverters(attribute.type.mapType.entry)}); }
     #else if (attribute.isList)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableList({attribute.name}{$mutable.mutableStringConverters(attribute.type.collectionType.type)}); }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableList({attribute.name}{mutableStringConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.isSet)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableSet({attribute.name}{$mutable.mutableStringConverters(attribute.type.collectionType.type)}); }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableSet({attribute.name}{mutableStringConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
         public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return {attribute.name} != null ? {attribute.name}.asStringState(c) : null; }
     #else if (attribute.isPrimitive)
