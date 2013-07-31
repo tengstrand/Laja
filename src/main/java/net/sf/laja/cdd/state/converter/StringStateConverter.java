@@ -13,12 +13,14 @@ import org.joda.time.LocalTime;
 import org.joda.time.Minutes;
 import org.joda.time.MonthDay;
 import org.joda.time.Months;
-import org.joda.time.Partial;
 import org.joda.time.Period;
 import org.joda.time.Seconds;
 import org.joda.time.Weeks;
 import org.joda.time.YearMonth;
 import org.joda.time.Years;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class StringStateConverter {
     public String booleanToString(boolean value) { return String.valueOf(value); }
@@ -49,7 +51,6 @@ public class StringStateConverter {
     public String toString(LocalDateTime value) { return value == null ? null : value.toString(); }
     public String toString(YearMonth value) { return value == null ? null : value.toString(); }
     public String toString(MonthDay value) { return value == null ? null : value.toString(); }
-    public String toString(Partial value) { return value == null ? null : value.toString(); }
     public String toString(Interval value) { return value == null ? null : value.toString(); }
     public String toString(Duration value) { return value == null ? null : value.toString(); }
     public String toString(Period value) { return value == null ? null : value.toString(); }
@@ -61,7 +62,6 @@ public class StringStateConverter {
     public String toString(Minutes value) { return value == null ? null : value.toString(); }
     public String toString(Seconds value) { return value == null ? null : value.toString(); }
 
-    public DateMidnight toDateMidnight(String date) { return new DateMidnight(date); }
     public Boolean toBoolean(String value) { return value == null || value.trim().isEmpty() ? null : Boolean.valueOf(value); }
     public boolean toBooleanPrimitive(String value) { return value == null || value.trim().isEmpty() ? false : Boolean.valueOf(value); }
     public Byte toByte(String value) { return value == null || value.trim().isEmpty() ? null : Byte.valueOf(value); }
@@ -78,6 +78,28 @@ public class StringStateConverter {
     public float toFloatPrimitive(String value) { return value == null || value.trim().isEmpty() ? 0 : Float.valueOf(value); }
     public Double toDouble(String value) { return value == null || value.trim().isEmpty() ? null : Double.valueOf(value); }
     public double toDoublePrimitive(String value) { return value == null || value.trim().isEmpty() ? 0 : Double.valueOf(value); }
+
+    public BigInteger toBigInteger(String value) { return value == null || value.trim().isEmpty() ? null : new BigInteger(value); }
+    public BigDecimal toBigDecimal(String value) { return value == null || value.trim().isEmpty() ? null : new BigDecimal(value); }
+
+    public Instant toInstant(String value) { return value == null || value.trim().isEmpty() ? null : new Instant(value); }
+    public DateTime toDateTime(String value) { return value == null || value.trim().isEmpty() ? null : new DateTime(value); }
+    public DateMidnight toDateMidnight(String value) { return value == null || value.trim().isEmpty() ? null : new DateMidnight(value); }
+    public LocalDate toLocalDate(String value) { return value == null || value.trim().isEmpty() ? null : new LocalDate(value); }
+    public LocalTime toLocalTime(String value) { return value == null || value.trim().isEmpty() ? null : new LocalTime(value); }
+    public LocalDateTime toLocalDateTime(String value) { return value == null || value.trim().isEmpty() ? null : new LocalDateTime(value); }
+    public YearMonth toYearMonth(String value) { return value == null || value.trim().isEmpty() ? null : new YearMonth(value); }
+    public MonthDay toMonthDay(String value) { return value == null || value.trim().isEmpty() ? null : new MonthDay(value); }
+    public Interval toInterval(String value) { return value == null || value.trim().isEmpty() ? null : new Interval(value); }
+    public Duration toDuration(String value) { return value == null || value.trim().isEmpty() ? null : new Duration(value); }
+    public Period toPeriod(String value) { return value == null || value.trim().isEmpty() ? null : new Period(value); }
+    public Years toYears(String value) { return value == null || value.trim().isEmpty() ? null : Years.parseYears(value); }
+    public Months toMonths(String value) { return value == null || value.trim().isEmpty() ? null : Months.parseMonths(value); }
+    public Weeks toWeeks(String value) { return value == null || value.trim().isEmpty() ? null : Weeks.parseWeeks(value); }
+    public Days toDays(String value) { return value == null || value.trim().isEmpty() ? null : Days.parseDays(value); }
+    public Hours toHours(String value) { return value == null || value.trim().isEmpty() ? null : Hours.parseHours(value); }
+    public Minutes toMinutes(String value) { return value == null || value.trim().isEmpty() ? null : Minutes.parseMinutes(value); }
+    public Seconds toSeconds(String value) { return value == null || value.trim().isEmpty() ? null : Seconds.parseSeconds(value); }
 
     public StateConverter objectToStringConverter() {
         return new StateConverter() {

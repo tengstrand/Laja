@@ -27,7 +27,6 @@ public class Type {
             "LocalDateTime",
             "YearMonth",
             "MonthDay",
-            "Partial",
             "Interval",
             "Duration",
             "Period",
