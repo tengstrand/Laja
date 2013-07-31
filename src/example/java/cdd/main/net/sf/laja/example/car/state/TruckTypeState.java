@@ -121,13 +121,17 @@ public class TruckTypeState implements ImmutableState {
         }
 
         public TruckTypeStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new TruckTypeStringStateConverter());
         }
 
-        public TruckTypeStringState asStringState(StringStateConverter c) {
+        public TruckTypeStringState asStringState(StringStateConverter converter) {
+            return asStringState(new TruckTypeStringStateConverter(converter));
+        }
+
+        public TruckTypeStringState asStringState(TruckTypeStringStateConverter converter) {
             return new TruckTypeStringState(
-                    c.intToString(numberOfWheels),
-                    truckName);
+                    converter.numberOfWheelsToString(numberOfWheels),
+                    converter.truckNameToString(truckName));
         }
 
         /**

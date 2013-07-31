@@ -164,15 +164,19 @@ public class CarState implements ImmutableState {
         }
 
         public CarStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new CarStringStateConverter());
         }
 
-        public CarStringState asStringState(StringStateConverter c) {
+        public CarStringState asStringState(StringStateConverter converter) {
+            return asStringState(new CarStringStateConverter(converter));
+        }
+
+        public CarStringState asStringState(CarStringStateConverter converter) {
             return new CarStringState(
-                    size != null ? size.asStringState() : null,
-                    name,
-                    owner != null ? owner.asStringState() : null,
-                    color);
+                    converter.sizeToString(size),
+                    converter.nameToString(name),
+                    converter.ownerToString(owner),
+                    converter.colorToString(color));
         }
 
         /**

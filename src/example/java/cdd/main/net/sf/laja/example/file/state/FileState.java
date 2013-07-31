@@ -100,11 +100,15 @@ public class FileState implements ImmutableState {
         }
 
         public FileStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new FileStringStateConverter());
         }
 
-        public FileStringState asStringState(StringStateConverter c) {
-            return new FileStringState(filename);
+        public FileStringState asStringState(StringStateConverter converter) {
+            return asStringState(new FileStringStateConverter(converter));
+        }
+
+        public FileStringState asStringState(FileStringStateConverter converter) {
+            return new FileStringState(converter.filenameToString(filename));
         }
 
         /**

@@ -122,13 +122,17 @@ public class OwnerState implements ImmutableState {
         }
 
         public OwnerStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new OwnerStringStateConverter());
         }
 
-        public OwnerStringState asStringState(StringStateConverter c) {
+        public OwnerStringState asStringState(StringStateConverter converter) {
+            return asStringState(new OwnerStringStateConverter(converter));
+        }
+
+        public OwnerStringState asStringState(OwnerStringStateConverter converter) {
             return new OwnerStringState(
-                    c.longToString(ssn),
-                    name);
+                    converter.ssnToString(ssn),
+                    converter.nameToString(name));
         }
 
         /**

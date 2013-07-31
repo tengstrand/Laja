@@ -100,11 +100,15 @@ public class DirectoryState implements ImmutableState {
         }
 
         public DirectoryStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new DirectoryStringStateConverter());
         }
 
-        public DirectoryStringState asStringState(StringStateConverter c) {
-            return new DirectoryStringState(directoryPath);
+        public DirectoryStringState asStringState(StringStateConverter converter) {
+            return asStringState(new DirectoryStringStateConverter(converter));
+        }
+
+        public DirectoryStringState asStringState(DirectoryStringStateConverter converter) {
+            return new DirectoryStringState(converter.directoryPathToString(directoryPath));
         }
 
         /**

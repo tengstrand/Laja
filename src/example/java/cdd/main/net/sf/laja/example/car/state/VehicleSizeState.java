@@ -99,11 +99,15 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         public VehicleSizeStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new VehicleSizeStringStateConverter());
         }
 
-        public VehicleSizeStringState asStringState(StringStateConverter c) {
-            return new VehicleSizeStringState(c.intToString(lengthInCentimeters));
+        public VehicleSizeStringState asStringState(StringStateConverter converter) {
+            return asStringState(new VehicleSizeStringStateConverter(converter));
+        }
+
+        public VehicleSizeStringState asStringState(VehicleSizeStringStateConverter converter) {
+            return new VehicleSizeStringState(converter.lengthInCentimetersToString(lengthInCentimeters));
         }
 
         /**

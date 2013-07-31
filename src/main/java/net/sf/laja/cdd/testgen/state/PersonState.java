@@ -332,22 +332,26 @@ public class PersonState implements ImmutableState {
         }
 
         public PersonStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new PersonStringStateConverter());
         }
 
-        public PersonStringState asStringState(StringStateConverter c) {
+        public PersonStringState asStringState(StringStateConverter converter) {
+            return asStringState(new PersonStringStateConverter(converter));
+        }
+
+        public PersonStringState asStringState(PersonStringStateConverter converter) {
             return new PersonStringState(
-                    c.intToString(id),
-                    name,
-                    c.toString(birthday),
-                    hairColor,
-                    asMutableList(children, toMutableString),
-                    address != null ? address.asStringState() : null,
-                    oldAddress != null ? oldAddress.asStringState() : null,
-                    asMutableSet(oldAddresses, toMutableString),
-                    asMutableMap(groupedAddresses, toMutableString),
-                    asMutableList(listOfSetOfState, toMutableSet, toMutableString),
-                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, c.objectToStringConverter()));
+                    converter.idToString(id),
+                    converter.nameToString(name),
+                    converter.birthdayToString(birthday),
+                    converter.hairColorToString(hairColor),
+                    converter.childrenToString(children),
+                    converter.addressToString(address),
+                    converter.oldAddressToString(oldAddress),
+                    converter.oldAddressesToString(oldAddresses),
+                    converter.groupedAddressesToString(groupedAddresses),
+                    converter.listOfSetOfStateToString(listOfSetOfState),
+                    converter.listOfSetOfMapOfIntegersToString(listOfSetOfMapOfIntegers));
         }
 
         /**

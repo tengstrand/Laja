@@ -156,15 +156,19 @@ public class PersonState implements ImmutableState {
         }
 
         public PersonStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new PersonStringStateConverter());
         }
 
-        public PersonStringState asStringState(StringStateConverter c) {
+        public PersonStringState asStringState(StringStateConverter converter) {
+            return asStringState(new PersonStringStateConverter(converter));
+        }
+
+        public PersonStringState asStringState(PersonStringStateConverter converter) {
             return new PersonStringState(
-                    givenName,
-                    surname,
-                    c.intToString(heightInCentimeters),
-                    c.intToString(weightInKilograms));
+                    converter.givenNameToString(givenName),
+                    converter.surnameToString(surname),
+                    converter.heightInCentimetersToString(heightInCentimeters),
+                    converter.weightInKilogramsToString(weightInKilograms));
         }
 
         /**

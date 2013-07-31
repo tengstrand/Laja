@@ -119,13 +119,17 @@ public class BmiState implements ImmutableState {
         }
 
         public BmiStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new BmiStringStateConverter());
         }
 
-        public BmiStringState asStringState(StringStateConverter c) {
+        public BmiStringState asStringState(StringStateConverter converter) {
+            return asStringState(new BmiStringStateConverter(converter));
+        }
+
+        public BmiStringState asStringState(BmiStringStateConverter converter) {
             return new BmiStringState(
-                    c.intToString(heightInCentimeters),
-                    c.intToString(weightInKilograms));
+                    converter.heightInCentimetersToString(heightInCentimeters),
+                    converter.weightInKilogramsToString(weightInKilograms));
         }
 
         /**

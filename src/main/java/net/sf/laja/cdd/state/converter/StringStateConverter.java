@@ -39,6 +39,8 @@ public class StringStateConverter {
     public String toString(Float value) { return value == null ? null : value.toString(); }
     public String toString(Double value) { return value == null ? null : value.toString(); }
 
+    public String toString(Object value) { return value == null ? null : value.toString(); }
+
     public String toString(Instant value) { return value == null ? null : value.toString(); }
     public String toString(DateTime value) { return value == null ? null : value.toString(); }
     public String toString(DateMidnight value) { return value == null ? null : value.toString(); }
@@ -58,8 +60,6 @@ public class StringStateConverter {
     public String toString(Hours value) { return value == null ? null : value.toString(); }
     public String toString(Minutes value) { return value == null ? null : value.toString(); }
     public String toString(Seconds value) { return value == null ? null : value.toString(); }
-
-    public String toString(Object value) { return value == null ? null : value.toString(); }
 
     public DateMidnight toDateMidnight(String date) { return new DateMidnight(date); }
     public Boolean toBoolean(String value) { return value == null || value.trim().isEmpty() ? null : Boolean.valueOf(value); }

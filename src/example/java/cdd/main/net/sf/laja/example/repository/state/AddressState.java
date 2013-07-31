@@ -178,15 +178,19 @@ public class AddressState implements ImmutableState {
         }
 
         public AddressStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new AddressStringStateConverter());
         }
 
-        public AddressStringState asStringState(StringStateConverter c) {
+        public AddressStringState asStringState(StringStateConverter converter) {
+            return asStringState(new AddressStringStateConverter(converter));
+        }
+
+        public AddressStringState asStringState(AddressStringStateConverter converter) {
             return new AddressStringState(
-                    c.intToString(addressId),
-                    streetName,
-                    c.intToString(zipcode),
-                    city);
+                    converter.addressIdToString(addressId),
+                    converter.streetNameToString(streetName),
+                    converter.zipcodeToString(zipcode),
+                    converter.cityToString(city));
         }
 
         /**

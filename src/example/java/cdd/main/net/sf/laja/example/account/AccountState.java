@@ -117,11 +117,15 @@ public class AccountState implements ImmutableState {
         }
 
         public AccountStringState asStringState() {
-            return asStringState(new StringStateConverter());
+            return asStringState(new AccountStringStateConverter());
         }
 
-        public AccountStringState asStringState(StringStateConverter c) {
-            return new AccountStringState(c.doubleToString(balance));
+        public AccountStringState asStringState(StringStateConverter converter) {
+            return asStringState(new AccountStringStateConverter(converter));
+        }
+
+        public AccountStringState asStringState(AccountStringStateConverter converter) {
+            return new AccountStringState(converter.balanceToString(balance));
         }
 
         /**
