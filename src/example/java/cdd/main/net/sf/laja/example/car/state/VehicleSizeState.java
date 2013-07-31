@@ -172,6 +172,7 @@ public class VehicleSizeState implements ImmutableState {
         public String lengthInCentimeters;
 
         public VehicleSizeStringState() {
+            lengthInCentimeters = "";
         }
 
         public VehicleSizeStringState(String lengthInCentimeters) {

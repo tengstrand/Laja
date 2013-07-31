@@ -190,6 +190,7 @@ public class AccountState implements ImmutableState {
         @Key public String balance;
 
         public AccountStringState() {
+            balance = "";
         }
 
         public AccountStringState(String balance) {

@@ -1,5 +1,6 @@
 package net.sf.laja.cdd;
 
+import net.sf.laja.cdd.testgen.AddressCreator;
 import net.sf.laja.cdd.testgen.Person;
 import net.sf.laja.cdd.testgen.PersonCreator;
 import net.sf.laja.cdd.testgen.state.PersonState;
@@ -14,9 +15,12 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.cdd.testgen.AddressCreator.buildAddress;
+import static net.sf.laja.cdd.testgen.AddressCreator.buildStringAddress;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.*;
 import static net.sf.laja.cdd.testgen.state.PersonState.InvalidPersonStateException;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.testgen.state.PersonState.PersonStringState;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -64,7 +68,7 @@ public class PersonTest {
         set.add(map);
         list.add(set);
 
-        PersonState.PersonMutableState mutableState = PersonCreator.buildStringPerson()
+        PersonMutableState mutableState = PersonCreator.buildStringPerson()
                 .withName("Carl")
                 .withBirthday("1977-07-07")
                 .withListOfSetOfMapOfIntegers(list).asMutableState();
@@ -76,8 +80,8 @@ public class PersonTest {
 
     @Test
     public void stringToMutableToBehaviourRepresentation() {
-        PersonState.PersonStringState stringState = defaultPerson().asStringState().withName("Kalle").withBirthday("1999-12-31");
-        PersonState.PersonMutableState mutableState = stringState.asMutable();
-        Person person = new Person(mutableState.asImmutable());
+        PersonStringState stringState = buildStringPerson().withName("Kalle").withHairColor("RED")
+                .withAddress(buildStringAddress().withCity("Stockholm").withStreetName("First street")).asStringState();
+        Person person = new Person(stringState.asImmutable());
     }
 }

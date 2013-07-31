@@ -198,6 +198,8 @@ public class BmiState implements ImmutableState {
         public String weightInKilograms;
 
         public BmiStringState() {
+            heightInCentimeters = "";
+            weightInKilograms = "";
         }
 
         public BmiStringState(

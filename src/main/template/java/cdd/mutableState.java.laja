@@ -9,14 +9,16 @@
     public static class {mutableClass} implements MutableState {
 #end
 
-#macro emptyConstructor(emptyConstructoryClass)
+#macro emptyConstructor(emptyConstructoryClass, initializeStrings)
 
         public {emptyConstructoryClass}() {
   #foreach (attribute in attributes)
     #if (attribute.isOptional && attribute.optional.valueFor("defaultValue") != null)
             {attribute.name} = {attribute.optional.valueFor("defaultValue")};
     #else
-      #if (attribute.isSet)
+      #if (initializeStrings && attribute.isString)
+            {attribute.name} = "";
+      #else if (attribute.isSet)
             {attribute.name} = new Hash{attribute.type}();
       #else if (attribute.isList)
             {attribute.name} = new Array{attribute.type}();
@@ -225,7 +227,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 
   #classHeader()
   #attributes(tab, "")
-  #emptyConstructor(mutableClass)
+  #emptyConstructor(mutableClass, false)
   #constructor(mutableClass, false, tab)
   #getters(tab)
   #setters()

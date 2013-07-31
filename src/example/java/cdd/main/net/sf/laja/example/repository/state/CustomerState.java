@@ -339,6 +339,11 @@ public class CustomerState implements ImmutableState {
         @Optional public List<AddressStringState> oldAddresses;
 
         public CustomerStringState() {
+            ssn = "";
+            givenName = "";
+            surname = "";
+            age = "";
+            pet = "";
             oldAddresses = new ArrayList<AddressStringState>();
         }
 

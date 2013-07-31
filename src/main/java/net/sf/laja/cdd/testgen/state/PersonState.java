@@ -454,6 +454,10 @@ public class PersonState implements ImmutableState {
         public List<Set<Map<String,String>>> listOfSetOfMapOfIntegers;
 
         public PersonStringState() {
+            id = "";
+            name = "";
+            birthday = "";
+            hairColor = "";
             children = new ArrayList<PersonStringState>();
             oldAddresses = new LinkedHashSet<AddressStringState>();
             groupedAddresses = new HashMap<String,AddressStringState>();

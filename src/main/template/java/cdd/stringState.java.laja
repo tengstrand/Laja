@@ -89,7 +89,7 @@
 
   #classHeader()
   #attributes()
-  #$mutable.emptyConstructor(stringClass)
+  #$mutable.emptyConstructor(stringClass, true)
   #constructor(stringClass, false, tab)
   #$mutable.getters(tab)
   #$mutable.setters()

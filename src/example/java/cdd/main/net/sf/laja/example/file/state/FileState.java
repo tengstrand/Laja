@@ -175,6 +175,7 @@ public class FileState implements ImmutableState {
         public String filename;
 
         public FileStringState() {
+            filename = "";
         }
 
         public FileStringState(String filename) {

@@ -241,6 +241,9 @@ public class AddressState implements ImmutableState {
         public String city;
 
         public AddressStringState() {
+            id = "";
+            streetName = "";
+            city = "";
         }
 
         public AddressStringState(

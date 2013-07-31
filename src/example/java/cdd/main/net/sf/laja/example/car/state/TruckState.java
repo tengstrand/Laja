@@ -286,6 +286,8 @@ public class TruckState implements ImmutableState {
         public OwnerStringState owner;
 
         public TruckStringState() {
+            weightInKilograms = "";
+            color = "";
         }
 
         public TruckStringState(
