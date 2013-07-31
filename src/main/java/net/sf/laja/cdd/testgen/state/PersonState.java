@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.*;
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.testgen.state.AddressState.AddressStringState;

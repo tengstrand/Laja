@@ -47,7 +47,6 @@ import java.util.Set;
 
     #set (staticImports = new java.util.TreeSet())
     #staticImports.add("net.sf.laja.cdd.validator.ValidationErrors.concatenate")
-    #staticImports.add("net.sf.laja.cdd.state.converter.StateConversion.*")
     #staticImports.add("net.sf.laja.cdd.state.converter.StateConverters.*")
     #staticImports.add("net.sf.laja.cdd.validator.Validators.collectionValidator")
     #staticImports.add("net.sf.laja.cdd.validator.Validators.mapValidator")

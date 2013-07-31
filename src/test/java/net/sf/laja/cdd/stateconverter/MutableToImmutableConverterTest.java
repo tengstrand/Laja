@@ -4,7 +4,7 @@ import net.sf.laja.cdd.testgen.state.PersonState;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.converter.StateConversion.asImmutable;
+import static net.sf.laja.cdd.state.converter.StateConverters.asImmutable;
 import static net.sf.laja.cdd.state.converter.StateConverters.toImmutable;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;

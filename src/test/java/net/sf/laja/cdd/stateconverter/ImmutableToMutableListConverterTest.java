@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.converter.StateConversion.asMutableList;
+import static net.sf.laja.cdd.state.converter.StateConverters.asMutableList;
 import static net.sf.laja.cdd.state.converter.StateConverters.toMutable;
 import static net.sf.laja.cdd.state.converter.StateConverters.toMutableList;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;

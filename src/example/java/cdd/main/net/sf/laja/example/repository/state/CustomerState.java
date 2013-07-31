@@ -15,8 +15,6 @@ import net.sf.laja.cdd.validator.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.sf.laja.cdd.state.converter.StateConversion.asImmutableList;
-import static net.sf.laja.cdd.state.converter.StateConversion.asMutableList;
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;

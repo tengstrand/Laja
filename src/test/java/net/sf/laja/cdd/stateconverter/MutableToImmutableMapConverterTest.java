@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.converter.StateConversion.asImmutableMap;
+import static net.sf.laja.cdd.state.converter.StateConverters.asImmutableMap;
 import static net.sf.laja.cdd.state.converter.StateConverters.toImmutable;
 import static net.sf.laja.cdd.state.converter.StateConverters.toImmutableMap;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;

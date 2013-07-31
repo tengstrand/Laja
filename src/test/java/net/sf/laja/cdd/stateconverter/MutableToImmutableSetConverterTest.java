@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.converter.StateConversion.asImmutableSet;
+import static net.sf.laja.cdd.state.converter.StateConverters.asImmutableSet;
 import static net.sf.laja.cdd.state.converter.StateConverters.toImmutable;
 import static net.sf.laja.cdd.state.converter.StateConverters.toMutableSet;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;

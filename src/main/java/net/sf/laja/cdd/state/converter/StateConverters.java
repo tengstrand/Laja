@@ -1,5 +1,15 @@
 package net.sf.laja.cdd.state.converter;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.MutableState;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class StateConverters {
     public static ToMutableConverter toMutable = new ToMutableConverter();
     public static ToMutableStringConverter toMutableString = new ToMutableStringConverter();
@@ -27,4 +37,17 @@ public class StateConverters {
     public static StringToLongConverter toLong = new StringToLongConverter();
     public static StringToFloatConverter toFloat = new StringToFloatConverter();
     public static StringToDoubleConverter toDouble = new StringToDoubleConverter();
+
+    public static ImmutableState asImmutable(MutableState from) { return toImmutable.convert(from, 0); }
+    public static MutableState asMutable(ImmutableState from) { return toMutable.convert(from, 0); }
+
+    public static Set asMutableSet(Object from, StateConverter... converters) { return toMutableSet.convert(from, 0, converters); }
+    public static ImmutableSet asImmutableSet(Object from, StateConverter... converters) { return toImmutableSet.convert(from, 0, converters); }
+
+    public static List asMutableList(Object from, StateConverter... converters) { return toMutableList.convert(from, 0, converters); }
+    public static ImmutableList asImmutableList(Object from, StateConverter... converters) { return toImmutableList.convert(from, 0, converters); }
+
+    public static Map asMutableMap(Object from, StateConverter... converters) { return toMutableMap.convert(from, 0, converters); }
+    public static ImmutableMap asImmutableMap(Object from, StateConverter... converters) { return toImmutableMap.convert(from, 0, converters); }
+
 }

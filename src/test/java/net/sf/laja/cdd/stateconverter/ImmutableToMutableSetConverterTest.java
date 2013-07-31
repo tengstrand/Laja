@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.converter.StateConversion.asMutableSet;
+import static net.sf.laja.cdd.state.converter.StateConverters.asMutableSet;
 import static net.sf.laja.cdd.state.converter.StateConverters.toMutable;
 import static net.sf.laja.cdd.state.converter.StateConverters.toMutableSet;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
