@@ -29,8 +29,6 @@ import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
-//import static net.sf.laja.cdd.state.converter.StringConverter.asDateMidnight;
-
 @State
 public class PersonState implements ImmutableState {
     @Id public final int id;
