@@ -202,8 +202,6 @@ public class TruckTypeState implements ImmutableState {
         public String truckName;
 
         public TruckTypeStringState() {
-            numberOfWheels = "";
-            truckName = "";
         }
 
         public TruckTypeStringState(

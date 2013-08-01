@@ -233,8 +233,6 @@ public class BusState implements ImmutableState {
         @Optional public String weightInKilograms;
 
         public BusStringState() {
-            name = "";
-            weightInKilograms = "";
         }
 
         public BusStringState(

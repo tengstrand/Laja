@@ -248,10 +248,6 @@ public class PersonState implements ImmutableState {
         public String weightInKilograms;
 
         public PersonStringState() {
-            givenName = "";
-            surname = "";
-            heightInCentimeters = "";
-            weightInKilograms = "";
         }
 
         public PersonStringState(

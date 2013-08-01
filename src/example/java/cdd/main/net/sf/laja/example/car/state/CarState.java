@@ -261,8 +261,6 @@ public class CarState implements ImmutableState {
         public String color;
 
         public CarStringState() {
-            name = "";
-            color = "";
         }
 
         public CarStringState(

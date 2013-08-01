@@ -203,8 +203,6 @@ public class OwnerState implements ImmutableState {
         public String name;
 
         public OwnerStringState() {
-            ssn = "";
-            name = "";
         }
 
         public OwnerStringState(

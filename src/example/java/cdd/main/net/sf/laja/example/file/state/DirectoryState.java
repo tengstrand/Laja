@@ -175,7 +175,6 @@ public class DirectoryState implements ImmutableState {
         public String directoryPath;
 
         public DirectoryStringState() {
-            directoryPath = "";
         }
 
         public DirectoryStringState(String directoryPath) {
