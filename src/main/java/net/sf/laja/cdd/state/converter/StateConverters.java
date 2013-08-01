@@ -49,5 +49,4 @@ public class StateConverters {
 
     public static Map asMutableMap(Object from, StateConverter... converters) { return toMutableMap.convert(from, 0, converters); }
     public static ImmutableMap asImmutableMap(Object from, StateConverter... converters) { return toImmutableMap.convert(from, 0, converters); }
-
 }
