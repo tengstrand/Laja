@@ -1,4 +1,4 @@
-package net.sf.laja.cdd;
+package net.sf.laja.cdd.testgen;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

@@ -1,7 +1,5 @@
-package net.sf.laja.cdd;
+package net.sf.laja.cdd.testgen;
 
-import net.sf.laja.cdd.testgen.Address;
-import net.sf.laja.cdd.testgen.AddressType;
 import net.sf.laja.cdd.testgen.state.AddressState;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import org.junit.Test;

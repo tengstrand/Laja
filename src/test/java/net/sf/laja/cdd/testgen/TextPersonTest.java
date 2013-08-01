@@ -1,4 +1,4 @@
-package net.sf.laja.cdd;
+package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.testgen.PersonCreator;
 import net.sf.laja.cdd.testgen.SpecialPerson;

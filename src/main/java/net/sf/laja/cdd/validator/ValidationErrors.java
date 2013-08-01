@@ -1,10 +1,10 @@
- package net.sf.laja.cdd.validator;
+package net.sf.laja.cdd.validator;
 
- import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSet;
 
- import java.util.Iterator;
+import java.util.Iterator;
 
- public class ValidationErrors implements Iterable<ValidationErrors.ValidationError> {
+public class ValidationErrors implements Iterable<ValidationErrors.ValidationError> {
     private final ImmutableSet<ValidationError> errors;
 
     private static final String NULL_ERROR = "is_null";
@@ -26,9 +26,9 @@
         return errors.iterator();
     }
 
-     public boolean isValid() {
-         return errors.isEmpty();
-     }
+    public boolean isValid() {
+        return errors.isEmpty();
+    }
 
     public boolean isInvalid() {
         return !isValid();
@@ -40,6 +40,10 @@
 
     public ValidationError first() {
         return iterator().next();
+    }
+
+    public String getErrorMessage() {
+        return errors.toString();
     }
 
     @Override

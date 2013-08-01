@@ -1,7 +1,5 @@
-package net.sf.laja.cdd;
+package net.sf.laja.cdd.testgen;
 
-import net.sf.laja.cdd.testgen.Person;
-import net.sf.laja.cdd.testgen.PersonCreator;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
@@ -20,6 +18,7 @@ import static net.sf.laja.cdd.testgen.state.PersonState.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class PersonTest {
 
@@ -76,8 +75,13 @@ public class PersonTest {
 
     @Test
     public void stringToMutableToBehaviourRepresentation() {
-        PersonStringState stringState = buildStringPerson().withName("Kalle").withHairColor("RED")
-                .withAddress(buildStringAddress().withCity("Stockholm").withStreetName("First street")).asStringState();
-        Person person = new Person(stringState.asImmutable());
+        PersonStringState stringState = buildStringPerson()
+                .withAddress(buildStringAddress().withCity("Stockholm")/*.withStreetName("First street")*/).asStringState();
+        try {
+            new Person(stringState.asImmutable());
+            fail();
+        } catch (InvalidPersonStateException e) {
+            assertThat(e.getMessage(), equalTo("[ValidationError{attribute='name', errorType='is_null'}, ValidationError{attribute='hairColor', errorType='is_null'}]"));
+        }
     }
 }
