@@ -16,6 +16,7 @@
 #end
 
 #macro asState()
+  #set (converter = suffix("converter"))
 
         public {classname} asImmutable() {
             return asMutable().asImmutable();
@@ -25,15 +26,15 @@
             return asMutable(new {stringConverterClass}());
         }
 
-        public {mutableClass} asMutable({stringConverterClass} converter) {
+        public {mutableClass} asMutable({stringConverterClass} {converter}) {
             return new {mutableClass}(
   #set (iterator = attributes.iterator)
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-                    converter.to{attribute.nameAsClass}({attribute.name}),
+                    {converter}.to{attribute.nameAsClass}({attribute.name}),
     #else
-                    converter.to{attribute.nameAsClass}({attribute.name}));
+                    {converter}.to{attribute.nameAsClass}({attribute.name}));
     #end
   #end
         }
@@ -62,6 +63,11 @@
 #end
 
 #macro validate()
+  #set (parent = suffix("parent"))
+  #set (errors = suffix("errors"))
+  #set (validators = suffix("validators"))
+  #set (rootElement = suffix("rootElement"))
+  #set (stateValidator = suffix("stateValidator"))
 
         public ValidationErrors validate(Validator... validators) {
             return validate(new {stringValidatorClass}(), validators);
@@ -73,12 +79,12 @@
             return errors.build();
         }
 
-        public void validate({stringValidatorClass} stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate({stringValidatorClass} {stateValidator}, Object {rootElement}, String {parent}, ValidationErrors.Builder {errors}, Validator... {validators}) {
   #foreach (attribute in attributes)
-            stateValidator.validate{attribute.nameAsClass}({attribute.name}, rootElement, parent, errors);
+            {stateValidator}.validate{attribute.nameAsClass}({attribute.name}, {rootElement}, {parent}, {errors});
   #end
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate({rootElement}, {parent}, {errors}, {validators});
         }
 #end
 

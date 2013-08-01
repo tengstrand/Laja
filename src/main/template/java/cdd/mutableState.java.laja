@@ -90,8 +90,9 @@
 #end
 
 #macro validate()
+  #set (validators = suffix("validators"))
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... {validators}) {
   #if (state.hasMandatoryObjectAttribute)
     #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
             if ({attribute.name} == null) errors.addIsNullError(rootElement, parent, "{attribute.name}");
@@ -112,7 +113,7 @@
   #end
             validate(rootElement, parent, errors);
 
-            for (Validator validator : validators) {
+            for (Validator validator : {validators}) {
                 validator.validate(rootElement, this, parent, "", errors);
             }
         }
@@ -154,17 +155,19 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 #end
 
 #macro singleAsImmutable()
+  #set (validators = suffix("validators"))
   #set (attribute = attributes.iterator.next)
-        public {classname} asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public {classname} asImmutable(Validator... {validators}) {
+            assertIsValid({validators});
 
             return new {classname}({immutableStateAttribute()});
         }
 #end
 
 #macro multipleAsImmutable()
-        public {classname} asImmutable(Validator... validators) {
-            assertIsValid(validators);
+  #set (validators = suffix("validators"))
+        public {classname} asImmutable(Validator... {validators}) {
+            assertIsValid({validators});
 
             return new {classname}(
   #set (iterator = attributes.iterator)
@@ -180,13 +183,14 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 #end
 
 #macro asStringState()
+  #set (converter = suffix("converter"))
 
         public {stringClass} asStringState() {
             return asStringState(new {stringConverterClass}());
         }
 
-        public {stringClass} asStringState(StringStateConverter converter) {
-            return asStringState(new {stringConverterClass}(converter));
+        public {stringClass} asStringState(StringStateConverter {converter}) {
+            return asStringState(new {stringConverterClass}({converter}));
         }
 
   #set (convertPrimitives = true)
@@ -199,21 +203,21 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 
 #macro singleAsStringState()
   #set (attribute = attributes.iterator.next)
-        public {stringClass} asStringState({stringConverterClass} converter) {
-            return new {stringClass}(converter.{attribute.name}ToString({attribute.name}));
+        public {stringClass} asStringState({stringConverterClass} {converter}) {
+            return new {stringClass}({converter}.{attribute.name}ToString({attribute.name}));
         }
 #end
 
 #macro multipleAsStringState()
-        public {stringClass} asStringState({stringConverterClass} converter) {
+        public {stringClass} asStringState({stringConverterClass} {converter}) {
             return new {stringClass}(
   #set (iterator = attributes.iterator)
   #while (iterator.hasNext)
     #set (attribute = iterator.next)
     #if (iterator.hasNext)
-                    converter.{attribute.name}ToString({attribute.name}),
+                    {converter}.{attribute.name}ToString({attribute.name}),
     #else
-                    converter.{attribute.name}ToString({attribute.name}));
+                    {converter}.{attribute.name}ToString({attribute.name}));
     #end
   #end
         }

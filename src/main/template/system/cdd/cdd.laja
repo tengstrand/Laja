@@ -160,3 +160,10 @@
   #end
   #processedFiles.add(filename, status)
 #end
+
+#function suffix(variable)
+  #foreach (attribute in attributes where attribute.name == variable)
+    #return "{variable}_"
+  #end
+  #return variable
+#end
