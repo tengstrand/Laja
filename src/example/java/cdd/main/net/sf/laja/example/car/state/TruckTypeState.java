@@ -61,6 +61,18 @@ public class TruckTypeState implements ImmutableState {
                 truckName);
     }
 
+    public TruckTypeStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public TruckTypeStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public TruckTypeStringState asStringState(TruckTypeStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = numberOfWheels;

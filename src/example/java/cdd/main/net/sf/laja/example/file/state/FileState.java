@@ -52,6 +52,18 @@ public class FileState implements ImmutableState {
         return new FileMutableState(filename);
     }
 
+    public FileStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public FileStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public FileStringState asStringState(FileStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = filename != null ? filename.hashCode() : 0;

@@ -113,6 +113,18 @@ public class CustomerState implements ImmutableState {
                 asMutableList(oldAddresses, toMutable));
     }
 
+    public CustomerStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public CustomerStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public CustomerStringState asStringState(CustomerStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = (int)(ssn ^ (ssn >>> 32));

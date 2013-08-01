@@ -52,6 +52,18 @@ public class AccountState implements ImmutableState {
         return new AccountMutableState(balance);
     }
 
+    public AccountStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public AccountStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public AccountStringState asStringState(AccountStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = (int)balance;

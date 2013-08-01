@@ -52,6 +52,18 @@ public class DirectoryState implements ImmutableState {
         return new DirectoryMutableState(directoryPath);
     }
 
+    public DirectoryStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public DirectoryStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public DirectoryStringState asStringState(DirectoryStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = directoryPath != null ? directoryPath.hashCode() : 0;

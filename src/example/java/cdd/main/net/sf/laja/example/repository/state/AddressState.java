@@ -81,6 +81,18 @@ public class AddressState implements ImmutableState {
                 city);
     }
 
+    public AddressStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public AddressStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public AddressStringState asStringState(AddressStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = addressId;

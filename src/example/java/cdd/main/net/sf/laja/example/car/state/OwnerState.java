@@ -62,6 +62,18 @@ public class OwnerState implements ImmutableState {
                 name);
     }
 
+    public OwnerStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public OwnerStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public OwnerStringState asStringState(OwnerStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = (int)(ssn ^ (ssn >>> 32));

@@ -210,6 +210,21 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #end
 #end
 
+#macro asStringState()
+
+    public {stringClass} asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public {stringClass} asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public {stringClass} asStringState({stringConverterClass} converter) {
+        return asMutable().asStringState(converter);
+    }
+#end
+
 #macro singleAsMutable()
   #set (attribute = attributes.iterator.next)
     public {mutableClass} asMutable() {
@@ -421,6 +436,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #getters(tab)
     #withMethods()
     #asMutable()
+    #asStringState()
     #hashCode(tab)
     #equals(classname, tab)
     #hashCodeValue(tab)

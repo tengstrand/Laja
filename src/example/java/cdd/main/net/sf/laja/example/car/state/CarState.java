@@ -84,6 +84,18 @@ public class CarState implements ImmutableState {
                 color);
     }
 
+    public CarStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public CarStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public CarStringState asStringState(CarStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = size != null ? size.hashCode() : 0;

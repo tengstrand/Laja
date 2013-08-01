@@ -74,6 +74,18 @@ public class BusState implements ImmutableState {
                 weightInKilograms);
     }
 
+    public BusStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public BusStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public BusStringState asStringState(BusStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;

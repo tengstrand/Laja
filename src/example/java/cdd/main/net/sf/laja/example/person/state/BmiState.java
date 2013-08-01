@@ -59,6 +59,18 @@ public class BmiState implements ImmutableState {
                 weightInKilograms);
     }
 
+    public BmiStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public BmiStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public BmiStringState asStringState(BmiStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = heightInCentimeters;

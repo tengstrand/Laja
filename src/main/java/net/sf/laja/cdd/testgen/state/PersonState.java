@@ -155,6 +155,18 @@ public class PersonState implements ImmutableState {
                 asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
     }
 
+    public PersonStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public PersonStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public PersonStringState asStringState(PersonStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = id;

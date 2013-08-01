@@ -93,6 +93,18 @@ public class TruckState implements ImmutableState {
                 owner.asMutable());
     }
 
+    public TruckStringState asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public TruckStringState asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public TruckStringState asStringState(TruckStringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
     @Override
     public int hashCode() {
         int result = size != null ? size.hashCode() : 0;
