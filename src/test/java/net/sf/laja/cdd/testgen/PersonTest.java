@@ -76,7 +76,7 @@ public class PersonTest {
     @Test
     public void stringToMutableToBehaviourRepresentation() {
         PersonStringState stringState = buildStringPerson()
-                .withAddress(buildStringAddress().withCity("Stockholm")/*.withStreetName("First street")*/).asStringState();
+                .withAddress(buildStringAddress().withCity("Stockholm").withStreetName("First street")).asStringState();
         try {
             new Person(stringState.asImmutable());
             fail();
