@@ -139,6 +139,10 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
             return isSameAs(attribute, NULL_ERROR);
         }
 
+        public boolean isTypeConversionError(String attribute) {
+            return isSameAs(attribute, TYPE_CONVERSION_ERROR);
+        }
+
         public int compareTo(ValidationError error) {
             return (attribute + ":" + errorType).compareTo(error.attribute + ":" + error.errorType);
         }

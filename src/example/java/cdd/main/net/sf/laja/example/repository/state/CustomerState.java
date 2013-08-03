@@ -8,6 +8,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
@@ -31,11 +32,44 @@ public class CustomerState implements ImmutableState {
     public final AddressState address;
     @Optional public final ImmutableList<AddressState> oldAddresses;
 
-    public boolean isValid() {
-        return age >= 0 && ssn >= 190000000000L;
-    }
+    public static class CustomerValidator extends StateValidator {
+        public CustomerValidator(Object rootElement) {
+            super(rootElement);
+        }
 
-    public void assertIsValid() {
+        public CustomerValidator(Object rootElement, String parent, ValidationErrors.Builder errors) {
+            super(rootElement, parent, errors);
+        }
+
+        public void validate(CustomerState state) {
+            validateAge(state.age);
+            validateSsn(state.ssn);
+        }
+
+        public void validate(CustomerMutableState state) {
+            validateAge(state.age);
+            validateSsn(state.ssn);
+        }
+
+        private void validateAge(int age) {
+            if (age < 0) {
+                addError(AGE, "age-negative");
+            }
+        }
+
+        private void validateSsn(long ssn) {
+            if (ssn < 190000000000L) {
+                addError(SSN, "ssn-before-1900");
+            }
+        }
+
+        public void assertIsValid(CustomerState state) {
+            validate(state);
+
+            if (!isValid()) {
+                throw new InvalidCustomerStateException(errors());
+            }
+        }
     }
 
     // ===== Generated code =====
@@ -67,7 +101,7 @@ public class CustomerState implements ImmutableState {
         if (givenName == null) throw new InvalidCustomerStateException("'givenName' can not be null");
         if (address == null) throw new InvalidCustomerStateException("'address' can not be null");
 
-        assertIsValid();
+        new CustomerValidator(this).assertIsValid(this);
     }
 
     private void assertThat(boolean condition, String message) {
@@ -294,7 +328,7 @@ public class CustomerState implements ImmutableState {
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
 
-            validate(rootElement, parent, errors);
+            new CustomerValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

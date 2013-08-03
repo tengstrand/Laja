@@ -2,12 +2,9 @@ package net.sf.laja.example.repository;
 
 import com.google.common.collect.ImmutableList;
 import net.sf.laja.example.repository.domain.Customer;
-import net.sf.laja.example.repository.gui.CustomerInGui;
 import net.sf.laja.example.repository.persistence.CustomerRepository;
 
-import static net.sf.laja.example.repository.domain.AddressCreator.buildStringAddress;
-import static net.sf.laja.example.repository.domain.CustomerCreator.CustomerStringBuilder;
-import static net.sf.laja.example.repository.domain.CustomerCreator.buildStringCustomer;
+import static net.sf.laja.example.repository.state.CustomerState.CustomerStringState;
 
 public class RepositoryExample {
 
@@ -26,7 +23,7 @@ public class RepositoryExample {
 
         // 2. Take the first customer and edit it in the GUI.
         Customer customer = customers.get(0);
-        CustomerInGui customerInGui = new CustomerInGui(customer.state.asMutable());
+        CustomerStringState customerInGui = customer.state.asStringState();
 
         customerInGui.setAge("-1");
         System.out.println("Edit in GUI, is valid: " + customerInGui.isValid());
@@ -35,10 +32,5 @@ public class RepositoryExample {
 
         // 3. Save to database.
         customer.save();
-
-        CustomerStringBuilder builder = buildStringCustomer().withGivenName("Carl").withAddress(
-                buildStringAddress().withStreetName("Storgatan").withZipcode("12345").withCity("Uppsala"));
-
-        System.out.println(builder);
     }
 }
