@@ -7,7 +7,6 @@ import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
-import net.sf.laja.example.repository.gui.CustomerInGui;
 import net.sf.laja.example.repository.persistence.CustomerInDb;
 import net.sf.laja.example.repository.persistence.CustomerMatcher;
 import net.sf.laja.example.repository.state.AddressState.AddressMutableState;
@@ -42,10 +41,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
     public CustomerInDb asCustomerInDb() {
         return new CustomerInDb(state.asImmutable());
-    }
-
-    public CustomerInGui asCustomerInGui() {
-        return new CustomerInGui(state);
     }
 
     // ===== Generated code =====
@@ -289,10 +284,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
             return new CustomerInDb(state.asImmutable());
         }
 
-        public CustomerInGui asCustomerInGui() {
-            return new CustomerInGui(state);
-        }
-
         public CustomerState asState() {
             return state.asImmutable();
         }
@@ -369,10 +360,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public CustomerInDb asCustomerInDb() {
             return new CustomerBuilder(state.asMutable()).asCustomerInDb();
-        }
-
-        public CustomerInGui asCustomerInGui() {
-            return new CustomerBuilder(state.asMutable()).asCustomerInGui();
         }
 
         public CustomerState asState() {
@@ -479,28 +466,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
             for (CustomerCreator creator : creators) {
                 result.add(creator.asCustomerInDb());
-            }
-            return result;
-        }
-
-        // asCustomerInGuiList() : ImmutableList<CustomerInGui>
-
-        public ImmutableList<CustomerInGui> asCustomerInGuiList() {
-            ImmutableList.Builder<CustomerInGui> builder = ImmutableList.builder();
-
-            for (CustomerCreator creator : creators) {
-                builder.add(creator.asCustomerInGui());
-            }
-            return builder.build();
-        }
-
-        // asCustomerInGuiMutableList() : List<CustomerInGui>
-
-        public List<CustomerInGui> asCustomerInGuiMutableList() {
-            List<CustomerInGui> result = new ArrayList<CustomerInGui>();
-
-            for (CustomerCreator creator : creators) {
-                result.add(creator.asCustomerInGui());
             }
             return result;
         }
@@ -612,28 +577,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
             return result;
         }
 
-        // asCustomerInGuiSet() : ImmutableSet<CustomerInGui>
-
-        public ImmutableSet<CustomerInGui> asCustomerInGuiSet() {
-            ImmutableSet.Builder<CustomerInGui> builder = ImmutableSet.builder();
-
-            for (CustomerCreator creator : creators) {
-                builder.add(creator.asCustomerInGui());
-            }
-            return builder.build();
-        }
-
-        // asCustomerInGuiMutableSet() : Set<CustomerInGui>
-
-        public Set<CustomerInGui> asCustomerInGuiMutableSet() {
-            Set<CustomerInGui> result = new HashSet<CustomerInGui>();
-
-            for (CustomerCreator creator : creators) {
-                result.add(creator.asCustomerInGui());
-            }
-            return result;
-        }
-
         // asState()
 
         public ImmutableSet<CustomerState> asStateSet() {
@@ -682,10 +625,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public CustomerInDb asCustomerInDb() {
             return maker.asCustomerInDb();
-        }
-
-        public CustomerInGui asCustomerInGui() {
-            return maker.asCustomerInGui();
         }
 
         public CustomerState asState() {
@@ -772,28 +711,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
             return result;
         }
 
-        // asCustomerInGuiMap() : ImmutableMap
-
-        public ImmutableMap asCustomerInGuiMap() {
-            ImmutableMap.Builder builder = ImmutableMap.builder();
-
-            for (CustomerMapEntryBuilder entry : entries) {
-                builder.put(entry.key, entry.asCustomerInGui());
-            }
-            return builder.build();
-        }
-
-        // asCustomerInGuiMutableMap() : Map
-
-        public Map asCustomerInGuiMutableMap() {
-            Map result = new HashMap();
-
-            for (CustomerMapEntryBuilder entry : entries) {
-                result.put(entry.key, entry.asCustomerInGui());
-            }
-            return result;
-        }
-
         // asStateMap() : ImmutableMap
 
         public ImmutableMap asStateMap() {
@@ -824,7 +741,6 @@ interface CustomerCreatorMaker {
     Customer asCustomer();
     CustomerMatcher asCustomerMatcher();
     CustomerInDb asCustomerInDb();
-    CustomerInGui asCustomerInGui();
 
     CustomerState asState();
     CustomerMutableState asMutableState();
