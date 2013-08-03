@@ -305,12 +305,6 @@ public class CustomerState implements ImmutableState {
                     converter.oldAddressesToString(oldAddresses));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
