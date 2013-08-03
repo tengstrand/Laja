@@ -7,6 +7,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
@@ -20,7 +21,15 @@ public class AddressState implements ImmutableState {
     @Optional
     public final String city;
 
-    public void assertIsValid() {
+    public static class AddressValidator extends StateValidator {
+        public AddressValidator(Object rootElement) { super(rootElement); }
+        public AddressValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(AddressState state) {
+        }
+
+        public void validate(AddressMutableState state) {
+        }
     }
 
     // ===== Generated code =====
@@ -37,7 +46,11 @@ public class AddressState implements ImmutableState {
         this.streetName = streetName;
         this.city = city;
 
-        assertIsValid();
+        AddressValidator validator = new AddressValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidAddressStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -187,9 +200,6 @@ public class AddressState implements ImmutableState {
                     converter.cityToString(city));
         }
 
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -201,7 +211,7 @@ public class AddressState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            validate(rootElement, parent, errors);
+            new AddressValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

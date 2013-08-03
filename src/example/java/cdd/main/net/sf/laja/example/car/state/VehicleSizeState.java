@@ -9,12 +9,54 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+
 @State
 public class VehicleSizeState implements ImmutableState {
     public final int lengthInCentimeters;
 
-    public void assertIsValid() {
-        assertThat(lengthInCentimeters >= 0, "Length must be a value >= 0");
+    public static class VehicleSizeValidator extends StateValidator {
+        public VehicleSizeValidator(Object rootElement) { super(rootElement); }
+        public VehicleSizeValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(VehicleSizeState state) {
+            validateLength(state.lengthInCentimeters);
+        }
+
+        public void validate(VehicleSizeMutableState state) {
+            validateLength(state.lengthInCentimeters);
+        }
+
+        private void validateLength(int lengthInCentimeters) {
+            if (lengthInCentimeters < 0) {
+                addError(LENGTH_IN_CENTIMETERS, "negative-length");
+            }
+        }
     }
 
     // ===== Generated code =====
@@ -24,7 +66,11 @@ public class VehicleSizeState implements ImmutableState {
     public VehicleSizeState(int lengthInCentimeters) {
         this.lengthInCentimeters = lengthInCentimeters;
 
-        assertIsValid();
+        VehicleSizeValidator validator = new VehicleSizeValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidVehicleSizeStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -122,12 +168,6 @@ public class VehicleSizeState implements ImmutableState {
             return new VehicleSizeStringState(converter.lengthInCentimetersToString(lengthInCentimeters));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -139,7 +179,7 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            validate(rootElement, parent, errors);
+            new VehicleSizeValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

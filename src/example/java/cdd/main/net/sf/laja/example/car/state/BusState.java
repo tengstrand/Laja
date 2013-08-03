@@ -14,13 +14,49 @@ import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+
 @State
 public class BusState implements ImmutableState {
     public final String name;
     public final VehicleSizeState size;
     @Optional public final int weightInKilograms;
 
-    public void assertIsValid() {
+    public static class BusValidator extends StateValidator {
+        public BusValidator(Object rootElement) { super(rootElement); }
+        public BusValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(BusState state) {
+        }
+
+        public void validate(BusMutableState state) {
+        }
     }
 
     // ===== Generated code =====
@@ -40,7 +76,11 @@ public class BusState implements ImmutableState {
         if (name == null) throw new InvalidBusStateException("'name' can not be null");
         if (size == null) throw new InvalidBusStateException("'size' can not be null");
 
-        assertIsValid();
+        BusValidator validator = new BusValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidBusStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -170,12 +210,6 @@ public class BusState implements ImmutableState {
                     converter.weightInKilogramsToString(weightInKilograms));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -192,7 +226,7 @@ public class BusState implements ImmutableState {
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
 
-            validate(rootElement, parent, errors);
+            new BusValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

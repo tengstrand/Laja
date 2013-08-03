@@ -10,6 +10,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
@@ -25,6 +26,33 @@ import java.util.Set;
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.testgen.state.AddressState.AddressStringState;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
@@ -47,7 +75,15 @@ public class PersonState implements ImmutableState {
     public final ImmutableList<ImmutableSet<AddressState>> listOfSetOfState;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
 
-    public void assertIsValid() {
+    public static class PersonValidator extends StateValidator {
+        public PersonValidator(Object rootElement) { super(rootElement); }
+        public PersonValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(PersonState state) {
+        }
+
+        public void validate(PersonMutableState state) {
+        }
     }
 
     // ===== Generated code =====
@@ -95,7 +131,11 @@ public class PersonState implements ImmutableState {
         if (groupedAddresses == null) throw new InvalidPersonStateException("'groupedAddresses' can not be null");
         if (listOfSetOfMapOfIntegers == null) throw new InvalidPersonStateException("'listOfSetOfMapOfIntegers' can not be null");
 
-        assertIsValid();
+        PersonValidator validator = new PersonValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidPersonStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -363,13 +403,6 @@ public class PersonState implements ImmutableState {
                     converter.listOfSetOfMapOfIntegersToString(listOfSetOfMapOfIntegers));
         }
 
-        /**
-         * Put validations here!
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-            // Add code here (if needed)!
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -395,7 +428,7 @@ public class PersonState implements ImmutableState {
             if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
             if (listOfSetOfState != null) collectionValidator().validate(rootElement, listOfSetOfState, parent, "listOfSetOfState", errors, 0);
 
-            validate(rootElement, parent, errors);
+            new PersonValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

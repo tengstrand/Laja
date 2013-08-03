@@ -10,6 +10,60 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+
 @State
 public class AddressState implements ImmutableState {
     @Id public final int addressId;
@@ -17,11 +71,23 @@ public class AddressState implements ImmutableState {
     public final int zipcode;
     public final String city;
 
-    public boolean isValid() {
-        return city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0));
-    }
+    public static class AddressValidator extends StateValidator {
+        public AddressValidator(Object rootElement) { super(rootElement); }
+        public AddressValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
 
-    public void assertIsValid() {
+        public void validate(AddressState state) {
+            validateCity(state.city);
+        }
+
+        public void validate(AddressMutableState state) {
+            validateCity(state.city);
+        }
+
+        private void validateCity(String city) {
+            if (city.length() == 0 || !Character.isLetter(city.subSequence(0, 1).charAt(0))) {
+                addError(CITY, "illegal-city");
+            }
+        }
     }
 
     // ===== Generated code =====
@@ -44,7 +110,11 @@ public class AddressState implements ImmutableState {
         if (streetName == null) throw new InvalidAddressStateException("'streetName' can not be null");
         if (city == null) throw new InvalidAddressStateException("'city' can not be null");
 
-        assertIsValid();
+        AddressValidator validator = new AddressValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidAddressStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -205,12 +275,6 @@ public class AddressState implements ImmutableState {
                     converter.cityToString(city));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -225,7 +289,7 @@ public class AddressState implements ImmutableState {
             if (streetName == null) errors.addIsNullError(rootElement, parent, "streetName");
             if (city == null) errors.addIsNullError(rootElement, parent, "city");
 
-            validate(rootElement, parent, errors);
+            new AddressValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

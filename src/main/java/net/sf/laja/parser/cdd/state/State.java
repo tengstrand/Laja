@@ -13,13 +13,13 @@ public class State implements StateParser.IState {
     public String name;
     public String classname;
     public String classvariable;
+    public String validator;
     public String mutableClass;
     public String stringClass;
     public List<Attribute> attributes;
     public Imports imports;
     public String manualCode;
     public String generatedEnd;
-    public String validateMethod;
 
     public boolean isEntity;
     public String filename;
@@ -73,6 +73,7 @@ public class State implements StateParser.IState {
         classname = classStatement.classname;
         classvariable = StringUtils.uncapitalize(classname);
         name = StringUtils.left(classname, classname.length() - "State".length());
+        validator = name + "Validator";
         mutableClass = name + "MutableState";
         stringClass = name + "StringState";
         attributes = classStatement.attributes;
@@ -84,16 +85,6 @@ public class State implements StateParser.IState {
                 isEntity = true;
             }
         }
-    }
-
-    public void setValidateMethod(String method) {
-        if (method.startsWith("\r")) {
-            method = method.substring(1);
-        }
-        if (method.startsWith("\n")) {
-            method = method.substring(1);
-        }
-        validateMethod = method;
     }
 
     public boolean hasObjectAttribute() {

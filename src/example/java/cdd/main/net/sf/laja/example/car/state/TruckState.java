@@ -17,6 +17,36 @@ import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
+import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeMutableState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+
 @State
 public class TruckState implements ImmutableState {
     public final VehicleSizeState size;
@@ -25,7 +55,15 @@ public class TruckState implements ImmutableState {
     public final String color;
     public final OwnerState owner;
 
-    public void assertIsValid() {
+    public static class TruckValidator extends StateValidator {
+        public TruckValidator(Object rootElement) { super(rootElement); }
+        public TruckValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(TruckState state) {
+        }
+
+        public void validate(TruckMutableState state) {
+        }
     }
 
     // ===== Generated code =====
@@ -53,7 +91,11 @@ public class TruckState implements ImmutableState {
         if (color == null) throw new InvalidTruckStateException("'color' can not be null");
         if (owner == null) throw new InvalidTruckStateException("'owner' can not be null");
 
-        assertIsValid();
+        TruckValidator validator = new TruckValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidTruckStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -211,12 +253,6 @@ public class TruckState implements ImmutableState {
                     converter.ownerToString(owner));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -237,7 +273,7 @@ public class TruckState implements ImmutableState {
             if (type != null) type.validate(rootElement, concatenate(parent, "type"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
 
-            validate(rootElement, parent, errors);
+            new TruckValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

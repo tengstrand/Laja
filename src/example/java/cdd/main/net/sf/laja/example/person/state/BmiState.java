@@ -9,12 +9,47 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+
 @State
 public class BmiState implements ImmutableState {
     public final int heightInCentimeters;
     public final int weightInKilograms;
 
-    public void assertIsValid() {
+    public static class BmiValidator extends StateValidator {
+        public BmiValidator(Object rootElement) { super(rootElement); }
+        public BmiValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(BmiState state) {
+        }
+
+        public void validate(BmiMutableState state) {
+        }
     }
 
     // ===== Generated code =====
@@ -28,7 +63,11 @@ public class BmiState implements ImmutableState {
         this.heightInCentimeters = heightInCentimeters;
         this.weightInKilograms = weightInKilograms;
 
-        assertIsValid();
+        BmiValidator validator = new BmiValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidBmiStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -144,12 +183,6 @@ public class BmiState implements ImmutableState {
                     converter.weightInKilogramsToString(weightInKilograms));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -161,7 +194,7 @@ public class BmiState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            validate(rootElement, parent, errors);
+            new BmiValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

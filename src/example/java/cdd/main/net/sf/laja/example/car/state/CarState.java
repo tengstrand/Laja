@@ -15,6 +15,35 @@ import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import net.sf.laja.cdd.state.ImmutableState;
+import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MutableState;
+import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StringStateConverter;
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.annotation.Id;
+import net.sf.laja.cdd.annotation.Optional;
+import net.sf.laja.cdd.annotation.State;
+import net.sf.laja.cdd.validator.Validator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
+import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
+import static net.sf.laja.cdd.validator.Validators.collectionValidator;
+import static net.sf.laja.cdd.validator.Validators.mapValidator;
+import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
+import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
+
 @State
 public class CarState implements ImmutableState {
     public final VehicleSizeState size;
@@ -22,7 +51,15 @@ public class CarState implements ImmutableState {
     public final OwnerState owner;
     public final String color;
 
-    public void assertIsValid() {
+    public static class CarValidator extends StateValidator {
+        public CarValidator(Object rootElement) { super(rootElement); }
+        public CarValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+
+        public void validate(CarState state) {
+        }
+
+        public void validate(CarMutableState state) {
+        }
     }
 
     // ===== Generated code =====
@@ -47,7 +84,11 @@ public class CarState implements ImmutableState {
         if (owner == null) throw new InvalidCarStateException("'owner' can not be null");
         if (color == null) throw new InvalidCarStateException("'color' can not be null");
 
-        assertIsValid();
+        CarValidator validator = new CarValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidCarStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
@@ -191,12 +232,6 @@ public class CarState implements ImmutableState {
                     converter.colorToString(color));
         }
 
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-
         public boolean isValid(Validator... validators) {
             return validate(validators).isValid();
         }
@@ -216,7 +251,7 @@ public class CarState implements ImmutableState {
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
 
-            validate(rootElement, parent, errors);
+            new CarValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

@@ -42,19 +42,6 @@
   #end
 #end
 
-#macro userValidate()
-  #if (validateMethod == null)
-
-        /**
-         * Put validations here (this comment can be removed or modified).
-         */
-        private void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
-        }
-  #else
-{validateMethod}
-  #end
-#end
-
 #macro assertIsValid()
 
         public void assertIsValid(Validator... validators) {
@@ -111,7 +98,7 @@
     #end
 
   #end
-            validate(rootElement, parent, errors);
+            new {validator}(rootElement, parent, errors).validate(this);
 
             for (Validator validator : {validators}) {
                 validator.validate(rootElement, this, parent, "", errors);
@@ -236,7 +223,6 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #withMethods(mutableClass)
   #asImmutable()
   #asStringState()
-  #userValidate()
   #isValid()
   #rootValidate()
   #validate()

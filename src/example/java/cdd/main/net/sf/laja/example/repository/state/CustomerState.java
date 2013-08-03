@@ -33,13 +33,8 @@ public class CustomerState implements ImmutableState {
     @Optional public final ImmutableList<AddressState> oldAddresses;
 
     public static class CustomerValidator extends StateValidator {
-        public CustomerValidator(Object rootElement) {
-            super(rootElement);
-        }
-
-        public CustomerValidator(Object rootElement, String parent, ValidationErrors.Builder errors) {
-            super(rootElement, parent, errors);
-        }
+        public CustomerValidator(Object rootElement) { super(rootElement); }
+        public CustomerValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
 
         public void validate(CustomerState state) {
             validateAge(state.age);
@@ -101,7 +96,11 @@ public class CustomerState implements ImmutableState {
         if (givenName == null) throw new InvalidCustomerStateException("'givenName' can not be null");
         if (address == null) throw new InvalidCustomerStateException("'address' can not be null");
 
-        new CustomerValidator(this).assertIsValid(this);
+        CustomerValidator validator = new CustomerValidator(this);
+
+        if (!validator.isValid()) {
+            throw new InvalidCustomerStateException(validator.errors());
+        }
     }
 
     private void assertThat(boolean condition, String message) {
