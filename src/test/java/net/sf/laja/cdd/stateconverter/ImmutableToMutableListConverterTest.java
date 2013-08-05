@@ -24,8 +24,8 @@ public class ImmutableToMutableListConverterTest {
 
     @Test
     public void shouldConvertFromImmutableListOfIntegersToMutableList() {
-        ImmutableList<Integer> immutableList = ImmutableList.<Integer>builder().add(4, 1, 2, 3).build();
-        List mutableList = asMutableList(immutableList);
+        ImmutableList<Integer> immutableList = ImmutableList.of(4, 1, 2, 3);
+        List<Integer> mutableList = asMutableList(immutableList);
 
         assertThat(mutableList, equalTo(Arrays.asList(4, 1, 2, 3)));
     }
@@ -43,12 +43,12 @@ public class ImmutableToMutableListConverterTest {
 
     @Test
     public void shouldConvertFromImmutableListOfImmutableListOfIntegerToMutableList() {
-        ImmutableList<Integer> integers1 = ImmutableList.<Integer>builder().add(1, 2, 3).build();
-        ImmutableList<Integer> integers2 = ImmutableList.<Integer>builder().add(4, 5, 6).build();
+        ImmutableList<Integer> integers1 = ImmutableList.of(1, 2, 3);
+        ImmutableList<Integer> integers2 = ImmutableList.of(4, 5, 6);
 
-        ImmutableList<ImmutableList<Integer>> immutableList = ImmutableList.<ImmutableList<Integer>>builder().add(integers1, integers2).build();
+        ImmutableList<ImmutableList<Integer>> immutableList = ImmutableList.of(integers1, integers2);
 
-        List mutableList = asMutableList(immutableList, toMutableList);
+        List<List<Integer>> mutableList = asMutableList(immutableList, toMutableList);
 
         List<Integer> expected1 = Arrays.asList(1, 2, 3);
         List<Integer> expected2 = Arrays.asList(4, 5, 6);
