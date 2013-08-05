@@ -1,8 +1,5 @@
 package net.sf.laja.cdd.testgen;
 
-import net.sf.laja.cdd.testgen.PersonCreator;
-import net.sf.laja.cdd.testgen.SpecialPerson;
-import net.sf.laja.cdd.testgen.TextPerson;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -15,9 +12,9 @@ public class TextPersonTest {
     public void ensureTwoInstancesFromDifferentContextIsEqual() {
         PersonCreator creator = createPerson().name("Carl").hairColor(BROWN).children().defaults();
 
+        Person person = creator.asPerson();
         TextPerson textPerson = creator.asTextPerson();
-        SpecialPerson specialPerson = creator.asSpecialPerson();
 
-        assertEquals(textPerson, specialPerson);
+        assertEquals(textPerson, person);
     }
 }
