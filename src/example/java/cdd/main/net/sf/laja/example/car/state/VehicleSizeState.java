@@ -3,6 +3,7 @@ package net.sf.laja.example.car.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -182,6 +183,32 @@ public class VehicleSizeState implements ImmutableState {
         @Override
         public String toString() {
             return "{lengthInCentimeters=" + lengthInCentimeters + "}";
+        }
+    }
+
+    @State(type = "map")
+    public static class VehicleSizeMapState extends MapState {
+
+        public VehicleSizeMapState() {
+        }
+
+        public VehicleSizeMapState(int lengthInCentimeters) {
+            put("lengthInCentimeters", lengthInCentimeters);
+        }
+
+        public int getLengthInCentimeters() { return (int) get("lengthInCentimeters"); }
+
+        public void setLengthInCentimeters(int lengthInCentimeters) { put("lengthInCentimeters", lengthInCentimeters); }
+
+        public VehicleSizeMapState withLengthInCentimeters(int lengthInCentimeters) { put("lengthInCentimeters", lengthInCentimeters); return this; }
+
+        public VehicleSizeState asImmutable(Validator... validators) {
+            return asMutable().asImmutable(validators);
+        }
+
+        public VehicleSizeMutableState asMutable() {
+            return new VehicleSizeMutableState(
+                    getLengthInCentimeters());
         }
     }
 

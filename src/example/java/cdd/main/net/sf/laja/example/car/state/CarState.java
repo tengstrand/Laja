@@ -3,6 +3,7 @@ package net.sf.laja.example.car.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -263,6 +264,51 @@ public class CarState implements ImmutableState {
                     ", name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", owner=" + owner +
                     ", color=" + (color == null ? null : '\"' + color + '\"' ) + "}";
+        }
+    }
+
+    @State(type = "map")
+    public static class CarMapState extends MapState {
+
+        public CarMapState() {
+        }
+
+        public CarMapState(
+                VehicleSizeMutableState size,
+                String name,
+                OwnerMutableState owner,
+                String color) {
+            put("size", size);
+            put("name", name);
+            put("owner", owner);
+            put("color", color);
+        }
+
+        public VehicleSizeMutableState getSize() { return (VehicleSizeMutableState) get("size"); }
+        public String getName() { return (String) get("name"); }
+        public OwnerMutableState getOwner() { return (OwnerMutableState) get("owner"); }
+        public String getColor() { return (String) get("color"); }
+
+        public void setSize(VehicleSizeMutableState size) { put("size", size); }
+        public void setName(String name) { put("name", name); }
+        public void setOwner(OwnerMutableState owner) { put("owner", owner); }
+        public void setColor(String color) { put("color", color); }
+
+        public CarMapState withSize(VehicleSizeMutableState size) { put("size", size); return this; }
+        public CarMapState withName(String name) { put("name", name); return this; }
+        public CarMapState withOwner(OwnerMutableState owner) { put("owner", owner); return this; }
+        public CarMapState withColor(String color) { put("color", color); return this; }
+
+        public CarState asImmutable(Validator... validators) {
+            return asMutable().asImmutable(validators);
+        }
+
+        public CarMutableState asMutable() {
+            return new CarMutableState(
+                    getSize(),
+                    getName(),
+                    getOwner(),
+                    getColor());
         }
     }
 

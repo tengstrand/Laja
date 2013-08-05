@@ -3,6 +3,7 @@ package net.sf.laja.example.car.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -212,6 +213,39 @@ public class OwnerState implements ImmutableState {
         public String toString() {
             return "{ssn=" + ssn +
                     ", name=" + (name == null ? null : '\"' + name + '\"' ) + "}";
+        }
+    }
+
+    @State(type = "map")
+    public static class OwnerMapState extends MapState {
+
+        public OwnerMapState() {
+        }
+
+        public OwnerMapState(
+                long ssn,
+                String name) {
+            put("ssn", ssn);
+            put("name", name);
+        }
+
+        public long getSsn() { return (long) get("ssn"); }
+        public String getName() { return (String) get("name"); }
+
+        public void setSsn(long ssn) { put("ssn", ssn); }
+        public void setName(String name) { put("name", name); }
+
+        public OwnerMapState withSsn(long ssn) { put("ssn", ssn); return this; }
+        public OwnerMapState withName(String name) { put("name", name); return this; }
+
+        public OwnerState asImmutable(Validator... validators) {
+            return asMutable().asImmutable(validators);
+        }
+
+        public OwnerMutableState asMutable() {
+            return new OwnerMutableState(
+                    getSsn(),
+                    getName());
         }
     }
 

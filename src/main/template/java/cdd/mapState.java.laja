@@ -49,6 +49,28 @@
   #end
 #end
 
+#macro asMutable()
+
+        public {mutableClass} asMutable() {
+            return new {mutableClass}(
+  #set (iterator = attributes.iterator)
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+                    get{attribute.nameAsClass}(),
+    #else
+                    get{attribute.nameAsClass}());
+    #end
+  #end
+        }
+#end
+
+#macro asImmutable()
+
+        public {classname} asImmutable(Validator... validators) {
+            return asMutable().asImmutable(validators);
+        }
+#end
 
 #macro mapState()
   #set ($.attributes = state.mutableAttributes)
@@ -60,5 +82,7 @@
   #getters(tab)
   #setters()
   #withMethods()
+  #asImmutable()
+  #asMutable()
     }
 #end
