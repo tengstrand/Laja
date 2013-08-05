@@ -106,12 +106,12 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
 
     // --- Validate ---
 
-    public void assertIsValid() {
-        state.assertIsValid();
+    public void assertIsValid(Validator... validators) {
+        state.assertIsValid(validators);
     }
 
-    public boolean isValid() {
-        return state.isValid();
+    public boolean isValid(Validator... validators) {
+        return state.isValid(validators);
     }
 
     public ValidationErrors validate(Validator... validators) {
@@ -222,12 +222,12 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
             return state.asStringState(stateConverter);
         }
 
-        public void assertIsValid() {
-            state.assertIsValid();
+        public void assertIsValid(Validator... validators) {
+            state.assertIsValid(validators);
         }
 
-        public boolean isValid() {
-            return state.isValid();
+        public boolean isValid(Validator... validators) {
+            return state.isValid(validators);
         }
 
         public ValidationErrors validate(Validator... validators) {
@@ -509,7 +509,7 @@ interface TestAccountCreatorMaker {
 
     AccountState asState();
     AccountMutableState asMutableState();
-    void assertIsValid();
-    boolean isValid();
+    void assertIsValid(Validator... validators);
+    boolean isValid(Validator... validators);
     ValidationErrors validate(Validator... validators);
 }

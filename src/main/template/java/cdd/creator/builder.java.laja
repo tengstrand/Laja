@@ -45,12 +45,12 @@
             return state.asStringState(stateConverter);
         }
 
-        public void assertIsValid() {
-            state.assertIsValid();
+        public void assertIsValid(Validator... validators) {
+            state.assertIsValid(validators);
         }
 
-        public boolean isValid() {
-            return state.isValid();
+        public boolean isValid(Validator... validators) {
+            return state.isValid(validators);
         }
 
         public ValidationErrors validate(Validator... validators) {

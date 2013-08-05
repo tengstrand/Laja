@@ -255,15 +255,15 @@ import net.sf.laja.cdd.annotation.Parameters;
 #macro assertIsValid()
     // --- Validate ---
 
-    public void assertIsValid() {
-        state.assertIsValid();
+    public void assertIsValid(Validator... validators) {
+        state.assertIsValid(validators);
     }
 
 #end
 
 #macro isValid()
-    public boolean isValid() {
-        return state.isValid();
+    public boolean isValid(Validator... validators) {
+        return state.isValid(validators);
     }
 
 #end
