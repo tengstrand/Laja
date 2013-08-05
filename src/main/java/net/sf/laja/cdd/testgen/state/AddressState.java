@@ -53,12 +53,6 @@ public class AddressState implements ImmutableState {
         }
     }
 
-    private void assertThat(boolean condition, String message) {
-        if (!condition) {
-            throw new InvalidAddressStateException(message);
-        }
-    }
-
     public static class InvalidAddressStateException extends InvalidStateException {
         public InvalidAddressStateException(String message) {
             super(message);

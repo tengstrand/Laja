@@ -103,12 +103,6 @@ public class CustomerState implements ImmutableState {
         }
     }
 
-    private void assertThat(boolean condition, String message) {
-        if (!condition) {
-            throw new InvalidCustomerStateException(message);
-        }
-    }
-
     public static class InvalidCustomerStateException extends InvalidStateException {
         public InvalidCustomerStateException(String message) {
             super(message);

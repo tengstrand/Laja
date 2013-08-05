@@ -149,15 +149,6 @@ public class {classname} implements ImmutableState {
     }
 #end
 
-#macro assertThat()
-
-    private void assertThat(boolean condition, String message) {
-        if (!condition) {
-            throw new {stateException}(message);
-        }
-    }
-#end
-
 #macro getters(tab)
 
   #foreach (attribute in attributes)
@@ -437,7 +428,6 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #set (tab = "    ")
   #constants()
   #constructor("{classname}", true, tab)
-  #assertThat()
   #exception()
   #getters(tab)
   #withMethods()

@@ -63,12 +63,6 @@ public class CarState implements ImmutableState {
         }
     }
 
-    private void assertThat(boolean condition, String message) {
-        if (!condition) {
-            throw new InvalidCarStateException(message);
-        }
-    }
-
     public static class InvalidCarStateException extends InvalidStateException {
         public InvalidCarStateException(String message) {
             super(message);

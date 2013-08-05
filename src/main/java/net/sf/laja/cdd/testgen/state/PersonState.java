@@ -111,12 +111,6 @@ public class PersonState implements ImmutableState {
         }
     }
 
-    private void assertThat(boolean condition, String message) {
-        if (!condition) {
-            throw new InvalidPersonStateException(message);
-        }
-    }
-
     public static class InvalidPersonStateException extends InvalidStateException {
         public InvalidPersonStateException(String message) {
             super(message);

@@ -5,36 +5,10 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.converter.StringStateConverter;
-import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.state.ImmutableState;
-import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.MutableStringState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.annotation.Id;
-import net.sf.laja.cdd.annotation.Optional;
-import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.validator.Validator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static net.sf.laja.cdd.state.converter.StateConverters.*;
-import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.cdd.validator.Validators.collectionValidator;
-import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
 @State
 public class PersonState implements ImmutableState {
@@ -78,12 +52,6 @@ public class PersonState implements ImmutableState {
 
         if (!validator.isValid()) {
             throw new InvalidPersonStateException(validator.errors());
-        }
-    }
-
-    private void assertThat(boolean condition, String message) {
-        if (!condition) {
-            throw new InvalidPersonStateException(message);
         }
     }
 
