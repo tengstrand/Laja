@@ -44,7 +44,7 @@ public class CollectionValidatorTest {
         collectionValidator().validate(null, states, "", "persons", errors, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(person1.asMutableState(), "persons", "name").build();
+                .addIsNullError(person1.asMutableState(), "name", "persons").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }
@@ -64,7 +64,7 @@ public class CollectionValidatorTest {
         collectionValidator().validate(null, listOfStates, "", "persons", errors, 0, Validators.collectionValidator());
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(person1.asMutableState(), "persons", "name").build();
+                .addIsNullError(person1.asMutableState(), "name", "persons").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }

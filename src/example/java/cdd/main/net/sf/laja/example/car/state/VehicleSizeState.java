@@ -292,7 +292,7 @@ public class VehicleSizeState implements ImmutableState {
         public VehicleSizeStringStateValidator(VehicleSizeStringStateConverter converter) { this.c = converter; }
 
         public void validateLengthInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toLengthInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "lengthInCentimeters"); }
+            try { c.toLengthInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "lengthInCentimeters", parent); }
         }
     }
 }

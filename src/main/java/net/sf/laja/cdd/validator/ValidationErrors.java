@@ -80,26 +80,26 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
         }
 
         public Builder addIsNullError(Object rootElement, String attribute) {
-            return addError(attribute, NULL_ERROR, rootElement, "");
+            return addError(rootElement, attribute, NULL_ERROR, "");
         }
 
-        public Builder addIsNullError(Object rootElement, String parent, String attribute) {
-            return addError(attribute, NULL_ERROR, rootElement, parent);
+        public Builder addIsNullError(Object rootElement, String attribute, String parent) {
+            return addError(rootElement, attribute, NULL_ERROR, parent);
         }
 
         public Builder addTypeConversionError(Object rootElement, String attribute) {
-            return addError(attribute, TYPE_CONVERSION_ERROR, rootElement, "");
+            return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, "");
         }
 
-        public Builder addTypeConversionError(Object rootElement, String parent, String attribute) {
-            return addError(attribute, TYPE_CONVERSION_ERROR, rootElement, parent);
+        public Builder addTypeConversionError(Object rootElement, String attribute, String parent) {
+            return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, parent);
         }
 
         public Builder addError(Object rootElement, String attribute, String errorType) {
-            return addError(attribute, errorType, rootElement, "");
+            return addError(rootElement, attribute, errorType, "");
         }
 
-        public Builder addError(String attribute, String errorType, Object rootElement, String parent) {
+        public Builder addError(Object rootElement, String attribute, String errorType, String parent) {
             size++;
             errors.add(new ValidationError(parent, attribute, errorType, rootElement));
             return this;

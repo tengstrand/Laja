@@ -172,7 +172,7 @@ public class OwnerState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (name == null) errors.addIsNullError(rootElement, parent, "name");
+            if (name == null) errors.addIsNullError(rootElement, "name", parent);
 
             new OwnerValidator(rootElement, parent, errors).validate(this);
 
@@ -336,7 +336,7 @@ public class OwnerState implements ImmutableState {
         public OwnerStringStateValidator(OwnerStringStateConverter converter) { this.c = converter; }
 
         public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "ssn"); }
+            try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "ssn", parent); }
         }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

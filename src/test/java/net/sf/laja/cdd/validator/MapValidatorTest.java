@@ -42,7 +42,7 @@ public class MapValidatorTest {
         mapValidator().validate(null, states, "", "persons", errors, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(person2.asMutableState(), "persons", "name").build();
+                .addIsNullError(person2.asMutableState(), "name", "persons").build();
 
         assertThat(errors.build(), equalTo(expectedErrors));
     }

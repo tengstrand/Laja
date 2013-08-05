@@ -141,7 +141,7 @@ public class FileState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (filename == null) errors.addIsNullError(rootElement, parent, "filename");
+            if (filename == null) errors.addIsNullError(rootElement, "filename", parent);
 
             new FileValidator(rootElement, parent, errors).validate(this);
 

@@ -309,8 +309,8 @@ public class CustomerState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (givenName == null) errors.addIsNullError(rootElement, parent, "givenName");
-            if (address == null) errors.addIsNullError(rootElement, parent, "address");
+            if (givenName == null) errors.addIsNullError(rootElement, "givenName", parent);
+            if (address == null) errors.addIsNullError(rootElement, "address", parent);
 
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
@@ -534,7 +534,7 @@ public class CustomerState implements ImmutableState {
         public CustomerStringStateValidator(CustomerStringStateConverter converter) { this.c = converter; }
 
         public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "ssn"); }
+            try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "ssn", parent); }
         }
 
         public void validateGivenName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
@@ -544,18 +544,18 @@ public class CustomerState implements ImmutableState {
         }
 
         public void validateAge(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toAge(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "age"); }
+            try { c.toAge(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "age", parent); }
         }
 
         public void validatePet(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateAddress(AddressStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "address"); }
+            try { c.toAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "address", parent); }
         }
 
         public void validateOldAddresses(List<AddressStringState> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toOldAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "oldAddresses"); }
+            try { c.toOldAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "oldAddresses", parent); }
         }
     }
 }

@@ -18,7 +18,7 @@ public class StateValidator {
     }
 
     public void addError(String attribute, String errorType) {
-        errors.addError(attribute, errorType, rootElement, parent);
+        errors.addError(rootElement, attribute, errorType, parent);
     }
 
     public ValidationErrors errors() {

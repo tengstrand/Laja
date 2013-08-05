@@ -141,7 +141,7 @@ public class DirectoryState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (directoryPath == null) errors.addIsNullError(rootElement, parent, "directoryPath");
+            if (directoryPath == null) errors.addIsNullError(rootElement, "directoryPath", parent);
 
             new DirectoryValidator(rootElement, parent, errors).validate(this);
 

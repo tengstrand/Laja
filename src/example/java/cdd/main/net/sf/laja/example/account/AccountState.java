@@ -310,7 +310,7 @@ public class AccountState implements ImmutableState {
         public AccountStringStateValidator(AccountStringStateConverter converter) { this.c = converter; }
 
         public void validateBalance(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toBalance(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "balance"); }
+            try { c.toBalance(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "balance", parent); }
         }
     }
 }

@@ -201,8 +201,8 @@ public class PersonState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (givenName == null) errors.addIsNullError(rootElement, parent, "givenName");
-            if (surname == null) errors.addIsNullError(rootElement, parent, "surname");
+            if (givenName == null) errors.addIsNullError(rootElement, "givenName", parent);
+            if (surname == null) errors.addIsNullError(rootElement, "surname", parent);
 
             new PersonValidator(rootElement, parent, errors).validate(this);
 
@@ -404,11 +404,11 @@ public class PersonState implements ImmutableState {
         }
 
         public void validateHeightInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toHeightInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "heightInCentimeters"); }
+            try { c.toHeightInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "heightInCentimeters", parent); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "weightInKilograms"); }
+            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "weightInKilograms", parent); }
         }
     }
 }

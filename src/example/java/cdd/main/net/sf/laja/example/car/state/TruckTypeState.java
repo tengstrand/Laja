@@ -164,7 +164,7 @@ public class TruckTypeState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (truckName == null) errors.addIsNullError(rootElement, parent, "truckName");
+            if (truckName == null) errors.addIsNullError(rootElement, "truckName", parent);
 
             new TruckTypeValidator(rootElement, parent, errors).validate(this);
 
@@ -328,7 +328,7 @@ public class TruckTypeState implements ImmutableState {
         public TruckTypeStringStateValidator(TruckTypeStringStateConverter converter) { this.c = converter; }
 
         public void validateNumberOfWheels(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toNumberOfWheels(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "numberOfWheels"); }
+            try { c.toNumberOfWheels(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "numberOfWheels", parent); }
         }
 
         public void validateTruckName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

@@ -188,8 +188,8 @@ public class BusState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            if (name == null) errors.addIsNullError(rootElement, parent, "name");
-            if (size == null) errors.addIsNullError(rootElement, parent, "size");
+            if (name == null) errors.addIsNullError(rootElement, "name", parent);
+            if (size == null) errors.addIsNullError(rootElement, "size", parent);
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
 
@@ -374,11 +374,11 @@ public class BusState implements ImmutableState {
         }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "size"); }
+            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, parent, "weightInKilograms"); }
+            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "weightInKilograms", parent); }
         }
     }
 }
