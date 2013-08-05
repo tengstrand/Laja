@@ -142,7 +142,7 @@ public class CustomerState implements ImmutableState {
                 surname,
                 age,
                 pet,
-                address.asMutable(),
+                address != null ? address.asMutable() : null,
                 asMutableList(oldAddresses, toMutable));
     }
 

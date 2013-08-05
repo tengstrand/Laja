@@ -200,7 +200,7 @@ asMutableList({attribute.name}{mutableConverters(attribute.type.collectionType.t
   #else if (attribute.type.isSet)
 asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isState)
-{attribute.name}.asMutable()##
+{attribute.name} != null ? {attribute.name}.asMutable() : null##
   #else
 {attribute.name}##
   #end
@@ -214,21 +214,6 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #else
     #multipleAsMutable()
   #end
-#end
-
-#macro asStringState()
-
-    public {stringClass} asStringState() {
-        return asMutable().asStringState();
-    }
-
-    public {stringClass} asStringState(StringStateConverter converter) {
-        return asMutable().asStringState(converter);
-    }
-
-    public {stringClass} asStringState({stringConverterClass} converter) {
-        return asMutable().asStringState(converter);
-    }
 #end
 
 #macro singleAsMutable()
@@ -250,6 +235,21 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
                 {mutableStateAttribute()});
     #end
   #end
+    }
+#end
+
+#macro asStringState()
+
+    public {stringClass} asStringState() {
+        return asMutable().asStringState();
+    }
+
+    public {stringClass} asStringState(StringStateConverter converter) {
+        return asMutable().asStringState(converter);
+    }
+
+    public {stringClass} asStringState({stringConverterClass} converter) {
+        return asMutable().asStringState(converter);
     }
 #end
 

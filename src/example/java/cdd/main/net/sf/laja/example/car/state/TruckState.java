@@ -128,11 +128,11 @@ public class TruckState implements ImmutableState {
 
     public TruckMutableState asMutable() {
         return new TruckMutableState(
-                size.asMutable(),
+                size != null ? size.asMutable() : null,
                 weightInKilograms,
-                type.asMutable(),
+                type != null ? type.asMutable() : null,
                 color,
-                owner.asMutable());
+                owner != null ? owner.asMutable() : null);
     }
 
     public TruckStringState asStringState() {

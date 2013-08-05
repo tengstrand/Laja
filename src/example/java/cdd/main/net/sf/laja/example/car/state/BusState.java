@@ -110,7 +110,7 @@ public class BusState implements ImmutableState {
     public BusMutableState asMutable() {
         return new BusMutableState(
                 name,
-                size.asMutable(),
+                size != null ? size.asMutable() : null,
                 weightInKilograms);
     }
 

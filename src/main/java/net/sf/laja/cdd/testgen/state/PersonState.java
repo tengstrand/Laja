@@ -30,33 +30,6 @@ import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.state.ImmutableState;
-import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.MutableStringState;
-import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.converter.StringStateConverter;
-import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.annotation.Id;
-import net.sf.laja.cdd.annotation.Optional;
-import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.validator.Validator;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static net.sf.laja.cdd.state.converter.StateConverters.*;
-import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.cdd.validator.Validators.collectionValidator;
-import static net.sf.laja.cdd.validator.Validators.mapValidator;
-
 @State
 public class PersonState implements ImmutableState {
     @Id public final int id;
@@ -185,8 +158,8 @@ public class PersonState implements ImmutableState {
                 birthday,
                 hairColor,
                 asMutableList(children, toMutable),
-                address.asMutable(),
-                oldAddress.asMutable(),
+                address != null ? address.asMutable() : null,
+                oldAddress != null ? oldAddress.asMutable() : null,
                 asMutableSet(oldAddresses, toMutable),
                 asMutableMap(groupedAddresses, toMutable),
                 asMutableList(listOfSetOfState, toMutableSet, toMutable),
