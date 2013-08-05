@@ -53,8 +53,14 @@
   #foreach (state in states)
     #foreach (attribute in state.attributes)
       #if (!attribute.isValidType)
-        #set (unknownTypeFound = true)
-        #errors.add("Unsupported type '{attribute.type}' for attribute '{attribute.name}' in class '{state.classname}', error in file '{state.filename}'.")
+        #if (attribute.type.name == "ImmutableSet" || attribute.type.name == "ImmutableList")
+          #errors.add("You have to give the type for attribute '{attribute.name}' in class '{state.classname}', e.g.: {attribute.type}<Integer>. Error in file '{state.filename}'.")
+        #else if (attribute.type.name == "ImmutableMap")
+          #errors.add("You have to give the type for attribute '{attribute.name}' in class '{state.classname}', e.g.: ImmutableMap<String,Integer>. Error in file '{state.filename}'.")
+        #else
+          #set (unknownTypeFound = true)
+          #errors.add("Unsupported type '{attribute.type}' for attribute '{attribute.name}' in class '{state.classname}'. Error in file '{state.filename}'.")
+        #end
       #end
     #end
   #end
