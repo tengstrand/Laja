@@ -1,5 +1,7 @@
 package net.sf.laja.cdd.testgen;
 
+import net.sf.laja.cdd.validator.ValidationErrors;
+import net.sf.laja.cdd.validator.Validator;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
@@ -52,6 +54,24 @@ public class PersonTest {
                 .withHairColor("RED")
                 .withBirthday(new DateMidnight(1999, 9, 9))
                 .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
+    }
+
+    @Test
+    public void verifyStateWithCustomValidator() {
+        Validator validator = new Validator() {
+            public void validate(Object rootElement, Object state, String parent, String attribute, ValidationErrors.Builder errors) {
+                PersonMutableState personState = (PersonMutableState)state;
+                if (!personState.address.city.equals("Uppsala")) {
+                    errors.addError(rootElement, "address", "does-not-live-in-uppsala");
+                }
+            }
+        };
+        PersonBuilder person = defaultPerson().withName("Carl");
+        ValidationErrors expectedErrors = ValidationErrors.builder()
+                .addError(person.asMutableState(), "address", "does-not-live-in-uppsala").build();
+
+        assertThat(person.isValid(validator), is(false));
+        assertThat(person.validate(validator), equalTo(expectedErrors));
     }
 
     @Test
