@@ -8,6 +8,7 @@
   #set (validator = state.validator)
   #set (classvariable = state.classvariable)
   #set (mutableClass = state.mutableClass)
+  #set (mapClass = state.mapClass)
   #set (stringClass = state.stringClass)
   #set (stringConverterClass = "{state.stringClass}Converter")
   #set (stringValidatorClass = "{state.stringClass}Validator")
@@ -82,24 +83,28 @@ public class {classname} implements ImmutableState {
   #end
 #end
 
-#macro constructor(constructorClass, validateState, tab)
+#macro constructor(isMap, constructorClass, validateState, tab)
 
   #if (attributes.size == 1)
-    #singleConstructor(constructorClass, validateState, tab)
+    #singleConstructor(isMap, constructorClass, validateState, tab)
   #else
-    #multiConstructor(constructorClass, validateState, tab)
+    #multiConstructor(isMap, constructorClass, validateState, tab)
   #end
 #end
 
-#macro singleConstructor(constructorClass, validateState, tab)
+#macro singleConstructor(isMap, constructorClass, validateState, tab)
   #set (attribute = attributes.iterator.next)
 {tab}public {constructorClass}({attribute.type} {attribute.name}) {
+  #if (isMap)
+{tab}    put("{attribute.name}", {attribute.name});
+  #else
 {tab}    this.{attribute.name} = {attribute.name};
+  #end
   #assertMandatoryAttributes(validateState)
 {tab}}
 #end
 
-#macro multiConstructor(constructorClass, validateState, tab)
+#macro multiConstructor(isMap, constructorClass, validateState, tab)
 {tab}public {constructorClass}(
   #set (iterator = attributes.iterator)
   #set (space = " ")
@@ -112,7 +117,11 @@ public class {classname} implements ImmutableState {
     #end
   #end
   #foreach (attribute in attributes)
+    #if (isMap)
+{tab}    put("{attribute.name}", {attribute.name});
+    #else
 {tab}    this.{attribute.name} = {attribute.name};
+    #end
   #end
   #assertMandatoryAttributes(validateState)
 {tab}}
@@ -405,6 +414,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 #end
 
 #import "{.}/validator.java.laja"
+#import "{.}/mapState.java.laja"
 #import "{.}/mutableState.java.laja"
 #import "{.}/stringState.java.laja"
 #import "{.}/stringStateConverter.java.laja"
@@ -427,7 +437,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 
   #set (tab = "    ")
   #constants()
-  #constructor("{classname}", true, tab)
+  #constructor(false, classname, true, tab)
   #exception()
   #getters(tab)
   #withMethods()
@@ -438,6 +448,7 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #hashCodeValue(tab)
   #equalsValue(classname, tab)
   #toString(tab)
+  #$map.mapState()
   #$mutable.mutableState()
   #$string.stringState()
   #$converter.stringStateConverter()

@@ -9,9 +9,9 @@
     public static class {mutableClass} implements MutableState {
 #end
 
-#macro emptyConstructor(emptyConstructoryClass)
+#macro emptyConstructor(emptyConstructorClass)
 
-        public {emptyConstructoryClass}() {
+        public {emptyConstructorClass}() {
   #foreach (attribute in attributes)
     #if (attribute.isOptional && attribute.optional.valueFor("defaultValue") != null)
             {attribute.name} = {attribute.optional.valueFor("defaultValue")};
@@ -217,7 +217,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #classHeader()
   #attributes(tab, "")
   #emptyConstructor(mutableClass)
-  #constructor(mutableClass, false, tab)
+  #constructor(false, mutableClass, false, tab)
   #getters(tab)
   #setters()
   #withMethods(mutableClass)

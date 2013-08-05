@@ -14,6 +14,7 @@ public class State implements StateParser.IState {
     public String classname;
     public String classvariable;
     public String validator;
+    public String mapClass;
     public String mutableClass;
     public String stringClass;
     public List<Attribute> attributes;
@@ -74,6 +75,7 @@ public class State implements StateParser.IState {
         classvariable = StringUtils.uncapitalize(classname);
         name = StringUtils.left(classname, classname.length() - "State".length());
         validator = name + "Validator";
+        mapClass = name + "MapState";
         mutableClass = name + "MutableState";
         stringClass = name + "StringState";
         attributes = classStatement.attributes;
