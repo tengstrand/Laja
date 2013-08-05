@@ -27,9 +27,7 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         private void validateLength(int lengthInCentimeters) {
-            if (lengthInCentimeters < 0) {
-                addError(LENGTH_IN_CENTIMETERS, "negative-length");
-            }
+            verifyThat(lengthInCentimeters >= 0, LENGTH_IN_CENTIMETERS, "negative-length");
         }
     }
 

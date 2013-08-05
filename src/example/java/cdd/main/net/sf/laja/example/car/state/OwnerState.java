@@ -28,9 +28,7 @@ public class OwnerState implements ImmutableState {
         }
 
         private void validateSsn(long ssn) {
-            if (ssn < 190000000000L) {
-                addError(SSN, "ssn-before-1900");
-            }
+            verifyThat(ssn >= 190000000000L, SSN, "ssn-before-1900");
         }
     }
 

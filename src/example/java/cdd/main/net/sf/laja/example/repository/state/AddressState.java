@@ -31,9 +31,7 @@ public class AddressState implements ImmutableState {
         }
 
         private void validateCity(String city) {
-            if (city.length() == 0 || !Character.isLetter(city.subSequence(0, 1).charAt(0))) {
-                addError(CITY, "illegal-city");
-            }
+            verifyThat(city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0)), CITY, "illegal-city");
         }
     }
 

@@ -28,9 +28,7 @@ public class AccountState implements ImmutableState {
         }
 
         public void validateBalance(double balance) {
-            if (balance < 0) {
-                addError(BALANCE, "negative-balance");
-            }
+            verifyThat(balance >= 0, BALANCE, "negative-balance");
         }
     }
 

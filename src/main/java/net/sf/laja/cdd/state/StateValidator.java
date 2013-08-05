@@ -17,8 +17,10 @@ public class StateValidator {
         this.errors = errors;
     }
 
-    public void addError(String attribute, String errorType) {
-        errors.addError(rootElement, attribute, errorType, parent);
+    public void verifyThat(boolean criteria, String attribute, String errorType) {
+        if (!criteria) {
+            errors.addError(rootElement, attribute, errorType, parent);
+        }
     }
 
     public ValidationErrors errors() {

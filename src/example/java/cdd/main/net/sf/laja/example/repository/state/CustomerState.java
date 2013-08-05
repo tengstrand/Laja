@@ -37,33 +37,16 @@ public class CustomerState implements ImmutableState {
         public CustomerValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
 
         public void validate(CustomerState state) {
-            validateAge(state.age);
-            validateSsn(state.ssn);
+            validate(state.age, state.ssn);
         }
 
         public void validate(CustomerMutableState state) {
-            validateAge(state.age);
-            validateSsn(state.ssn);
+            validate(state.age, state.ssn);
         }
 
-        private void validateAge(int age) {
-            if (age < 0) {
-                addError(AGE, "age-negative");
-            }
-        }
-
-        private void validateSsn(long ssn) {
-            if (ssn < 190000000000L) {
-                addError(SSN, "ssn-before-1900");
-            }
-        }
-
-        public void assertIsValid(CustomerState state) {
-            validate(state);
-
-            if (!isValid()) {
-                throw new InvalidCustomerStateException(errors());
-            }
+        private void validate(int age, long ssn) {
+            verifyThat(age >= 0, AGE, "age-negative");
+            verifyThat(ssn >= 190000000000L, SSN, "ssn-before-1900");
         }
     }
 
