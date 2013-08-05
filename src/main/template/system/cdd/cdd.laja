@@ -60,7 +60,7 @@
   #end
   #if (unknownTypeFound)
     #set (types = loadClass("net.sf.laja.parser.cdd.Type").typesAsString)
-    #errors.add("Valid types are states (types that ends with 'State') and: {types}.")
+    #errors.add("Valid types are state objects and: {types}.")
   #end
 #endo
 
