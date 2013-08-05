@@ -82,7 +82,7 @@
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... {validators}) {
   #if (state.hasMandatoryObjectAttribute)
     #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
-            if ({attribute.name} == null) errors.addIsNullError(rootElement, parent, "{attribute.name}");
+            if ({attribute.name} == null) errors.addIsNullError(rootElement, "{attribute.name}", parent);
     #end
 
   #end
