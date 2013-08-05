@@ -271,10 +271,10 @@ public class FileState implements ImmutableState {
     }
 
     public static class FileStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public FileStringStateConverter() { c = new StringStateConverter(); }
-        public FileStringStateConverter(StringStateConverter converter) { c = converter; }
+        public FileStringStateConverter() { converter = new StringStateConverter(); }
+        public FileStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
         public String filenameToString(String filename) { return filename; }
 
@@ -282,10 +282,10 @@ public class FileState implements ImmutableState {
     }
 
     public static class FileStringStateValidator {
-        private final FileStringStateConverter c;
+        private final FileStringStateConverter converter;
 
-        public FileStringStateValidator() { this.c = new FileStringStateConverter(); }
-        public FileStringStateValidator(FileStringStateConverter converter) { this.c = converter; }
+        public FileStringStateValidator() { converter = new FileStringStateConverter(); }
+        public FileStringStateValidator(FileStringStateConverter converter) { this.converter = converter; }
 
         public void validateFilename(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

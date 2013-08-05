@@ -293,24 +293,24 @@ public class AccountState implements ImmutableState {
     }
 
     public static class AccountStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public AccountStringStateConverter() { c = new StringStateConverter(); }
-        public AccountStringStateConverter(StringStateConverter converter) { c = converter; }
+        public AccountStringStateConverter() { converter = new StringStateConverter(); }
+        public AccountStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String balanceToString(double balance) { return c.doubleToString(balance); }
+        public String balanceToString(double balance) { return converter.doubleToString(balance); }
 
-        public double toBalance(String balance) { return c.toDouble(balance); }
+        public double toBalance(String balance) { return converter.toDouble(balance); }
     }
 
     public static class AccountStringStateValidator {
-        private final AccountStringStateConverter c;
+        private final AccountStringStateConverter converter;
 
-        public AccountStringStateValidator() { this.c = new AccountStringStateConverter(); }
-        public AccountStringStateValidator(AccountStringStateConverter converter) { this.c = converter; }
+        public AccountStringStateValidator() { converter = new AccountStringStateConverter(); }
+        public AccountStringStateValidator(AccountStringStateConverter converter) { this.converter = converter; }
 
         public void validateBalance(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toBalance(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "balance", parent); }
+            try { converter.toBalance(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "balance", parent); }
         }
     }
 }

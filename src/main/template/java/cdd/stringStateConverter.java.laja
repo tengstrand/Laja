@@ -10,7 +10,7 @@
   #else if (type.isSet)
 , toMutableSet{mutableStringConverters(type.collectionType.type)}##
   #else if (convertPrimitives && !type.isString)
-, c.objectToStringConverter()##
+, converter.objectToStringConverter()##
   #end
 #end
 
@@ -23,11 +23,11 @@
     #else if (attribute.isSet)
         public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return asMutableSet({attribute.name}{mutableStringConverters(attribute.type.collectionType.type)}); }
     #else if (attribute.type.isState)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return {attribute.name} != null ? {attribute.name}.asStringState(c) : null; }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return {attribute.name} != null ? {attribute.name}.asStringState(converter) : null; }
     #else if (attribute.isPrimitive)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return c.{attribute.type}ToString({attribute.name}); }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return converter.{attribute.type}ToString({attribute.name}); }
     #else if (!attribute.isString)
-        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return c.toString({attribute.name}); }
+        public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return converter.toString({attribute.name}); }
     #else
         public {attribute.type.asMutableString} {attribute.name}ToString({attribute.type} {attribute.name}) { return {attribute.name}; }
     #end
@@ -47,7 +47,7 @@
     #else if (attribute.type.isState)
         {method} {attribute.name} != null ? {attribute.name}.asMutable() : null; }
     #else if (!attribute.isString)
-        {method} c.to{attribute.type.nameAsClass}({attribute.name}); }
+        {method} converter.to{attribute.type.nameAsClass}({attribute.name}); }
     #else
         {method} {attribute.name}; }
     #end
@@ -58,10 +58,10 @@
   #set ($.attributes = state.mutableAttributes)
 
     public static class {stringConverterClass} {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public {stringConverterClass}() { c = new StringStateConverter(); }
-        public {stringConverterClass}(StringStateConverter converter) { c = converter; }
+        public {stringConverterClass}() { converter = new StringStateConverter(); }
+        public {stringConverterClass}(StringStateConverter converter) { this.converter = converter; }
 
   #toString()
   #fromString()

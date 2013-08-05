@@ -357,28 +357,28 @@ public class AddressState implements ImmutableState {
     }
 
     public static class AddressStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public AddressStringStateConverter() { c = new StringStateConverter(); }
-        public AddressStringStateConverter(StringStateConverter converter) { c = converter; }
+        public AddressStringStateConverter() { converter = new StringStateConverter(); }
+        public AddressStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String idToString(int id) { return c.intToString(id); }
+        public String idToString(int id) { return converter.intToString(id); }
         public String streetNameToString(String streetName) { return streetName; }
         public String cityToString(String city) { return city; }
 
-        public int toId(String id) { return c.toInt(id); }
+        public int toId(String id) { return converter.toInt(id); }
         public String toStreetName(String streetName) { return streetName; }
         public String toCity(String city) { return city; }
     }
 
     public static class AddressStringStateValidator {
-        private final AddressStringStateConverter c;
+        private final AddressStringStateConverter converter;
 
-        public AddressStringStateValidator() { this.c = new AddressStringStateConverter(); }
-        public AddressStringStateValidator(AddressStringStateConverter converter) { this.c = converter; }
+        public AddressStringStateValidator() { converter = new AddressStringStateConverter(); }
+        public AddressStringStateValidator(AddressStringStateConverter converter) { this.converter = converter; }
 
         public void validateId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "id", parent); }
+            try { converter.toId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "id", parent); }
         }
 
         public void validateStreetName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

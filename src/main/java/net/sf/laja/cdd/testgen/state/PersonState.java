@@ -633,26 +633,26 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public PersonStringStateConverter() { c = new StringStateConverter(); }
-        public PersonStringStateConverter(StringStateConverter converter) { c = converter; }
+        public PersonStringStateConverter() { converter = new StringStateConverter(); }
+        public PersonStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String idToString(int id) { return c.intToString(id); }
+        public String idToString(int id) { return converter.intToString(id); }
         public String nameToString(String name) { return name; }
-        public String birthdayToString(DateMidnight birthday) { return c.toString(birthday); }
+        public String birthdayToString(DateMidnight birthday) { return converter.toString(birthday); }
         public String hairColorToString(String hairColor) { return hairColor; }
         public List<PersonStringState> childrenToString(List<PersonMutableState> children) { return asMutableList(children, toMutableString); }
-        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState(c) : null; }
-        public AddressStringState oldAddressToString(AddressMutableState oldAddress) { return oldAddress != null ? oldAddress.asStringState(c) : null; }
+        public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState(converter) : null; }
+        public AddressStringState oldAddressToString(AddressMutableState oldAddress) { return oldAddress != null ? oldAddress.asStringState(converter) : null; }
         public Set<AddressStringState> oldAddressesToString(Set<AddressMutableState> oldAddresses) { return asMutableSet(oldAddresses, toMutableString); }
         public Map<String,AddressStringState> groupedAddressesToString(Map<String,AddressMutableState> groupedAddresses) { return asMutableMap(groupedAddresses, toMutableString); }
         public List<Set<AddressStringState>> listOfSetOfStateToString(List<Set<AddressMutableState>> listOfSetOfState) { return asMutableList(listOfSetOfState, toMutableSet, toMutableString); }
-        public List<Set<Map<String,String>>> listOfSetOfMapOfIntegersToString(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { return asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, c.objectToStringConverter()); }
+        public List<Set<Map<String,String>>> listOfSetOfMapOfIntegersToString(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { return asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap, converter.objectToStringConverter()); }
 
-        public int toId(String id) { return c.toInt(id); }
+        public int toId(String id) { return converter.toInt(id); }
         public String toName(String name) { return name; }
-        public DateMidnight toBirthday(String birthday) { return c.toDateMidnight(birthday); }
+        public DateMidnight toBirthday(String birthday) { return converter.toDateMidnight(birthday); }
         public String toHairColor(String hairColor) { return hairColor; }
         public List<PersonMutableState> toChildren(List<PersonStringState> children) { return asMutableList(children, toMutable); }
         public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }
@@ -664,51 +664,51 @@ public class PersonState implements ImmutableState {
     }
 
     public static class PersonStringStateValidator {
-        private final PersonStringStateConverter c;
+        private final PersonStringStateConverter converter;
 
-        public PersonStringStateValidator() { this.c = new PersonStringStateConverter(); }
-        public PersonStringStateValidator(PersonStringStateConverter converter) { this.c = converter; }
+        public PersonStringStateValidator() { converter = new PersonStringStateConverter(); }
+        public PersonStringStateValidator(PersonStringStateConverter converter) { this.converter = converter; }
 
         public void validateId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "id", parent); }
+            try { converter.toId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "id", parent); }
         }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateBirthday(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toBirthday(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "birthday", parent); }
+            try { converter.toBirthday(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "birthday", parent); }
         }
 
         public void validateHairColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateChildren(List<PersonStringState> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toChildren(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "children", parent); }
+            try { converter.toChildren(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "children", parent); }
         }
 
         public void validateAddress(AddressStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "address", parent); }
+            try { converter.toAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "address", parent); }
         }
 
         public void validateOldAddress(AddressStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toOldAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "oldAddress", parent); }
+            try { converter.toOldAddress(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "oldAddress", parent); }
         }
 
         public void validateOldAddresses(Set<AddressStringState> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toOldAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "oldAddresses", parent); }
+            try { converter.toOldAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "oldAddresses", parent); }
         }
 
         public void validateGroupedAddresses(Map<String,AddressStringState> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toGroupedAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "groupedAddresses", parent); }
+            try { converter.toGroupedAddresses(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "groupedAddresses", parent); }
         }
 
         public void validateListOfSetOfState(List<Set<AddressStringState>> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toListOfSetOfState(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "listOfSetOfState", parent); }
+            try { converter.toListOfSetOfState(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "listOfSetOfState", parent); }
         }
 
         public void validateListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toListOfSetOfMapOfIntegers(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "listOfSetOfMapOfIntegers", parent); }
+            try { converter.toListOfSetOfMapOfIntegers(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "listOfSetOfMapOfIntegers", parent); }
         }
     }
 }

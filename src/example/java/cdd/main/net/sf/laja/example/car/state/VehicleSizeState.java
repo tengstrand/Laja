@@ -275,24 +275,24 @@ public class VehicleSizeState implements ImmutableState {
     }
 
     public static class VehicleSizeStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public VehicleSizeStringStateConverter() { c = new StringStateConverter(); }
-        public VehicleSizeStringStateConverter(StringStateConverter converter) { c = converter; }
+        public VehicleSizeStringStateConverter() { converter = new StringStateConverter(); }
+        public VehicleSizeStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String lengthInCentimetersToString(int lengthInCentimeters) { return c.intToString(lengthInCentimeters); }
+        public String lengthInCentimetersToString(int lengthInCentimeters) { return converter.intToString(lengthInCentimeters); }
 
-        public int toLengthInCentimeters(String lengthInCentimeters) { return c.toInt(lengthInCentimeters); }
+        public int toLengthInCentimeters(String lengthInCentimeters) { return converter.toInt(lengthInCentimeters); }
     }
 
     public static class VehicleSizeStringStateValidator {
-        private final VehicleSizeStringStateConverter c;
+        private final VehicleSizeStringStateConverter converter;
 
-        public VehicleSizeStringStateValidator() { this.c = new VehicleSizeStringStateConverter(); }
-        public VehicleSizeStringStateValidator(VehicleSizeStringStateConverter converter) { this.c = converter; }
+        public VehicleSizeStringStateValidator() { converter = new VehicleSizeStringStateConverter(); }
+        public VehicleSizeStringStateValidator(VehicleSizeStringStateConverter converter) { this.converter = converter; }
 
         public void validateLengthInCentimeters(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toLengthInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "lengthInCentimeters", parent); }
+            try { converter.toLengthInCentimeters(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "lengthInCentimeters", parent); }
         }
     }
 }

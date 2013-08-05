@@ -388,14 +388,14 @@ public class CarState implements ImmutableState {
     }
 
     public static class CarStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public CarStringStateConverter() { c = new StringStateConverter(); }
-        public CarStringStateConverter(StringStateConverter converter) { c = converter; }
+        public CarStringStateConverter() { converter = new StringStateConverter(); }
+        public CarStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(c) : null; }
+        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(converter) : null; }
         public String nameToString(String name) { return name; }
-        public OwnerStringState ownerToString(OwnerMutableState owner) { return owner != null ? owner.asStringState(c) : null; }
+        public OwnerStringState ownerToString(OwnerMutableState owner) { return owner != null ? owner.asStringState(converter) : null; }
         public String colorToString(String color) { return color; }
 
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
@@ -405,20 +405,20 @@ public class CarState implements ImmutableState {
     }
 
     public static class CarStringStateValidator {
-        private final CarStringStateConverter c;
+        private final CarStringStateConverter converter;
 
-        public CarStringStateValidator() { this.c = new CarStringStateConverter(); }
-        public CarStringStateValidator(CarStringStateConverter converter) { this.c = converter; }
+        public CarStringStateValidator() { converter = new CarStringStateConverter(); }
+        public CarStringStateValidator(CarStringStateConverter converter) { this.converter = converter; }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
+            try { converter.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
         }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateOwner(OwnerStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toOwner(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "owner", parent); }
+            try { converter.toOwner(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "owner", parent); }
         }
 
         public void validateColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

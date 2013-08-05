@@ -309,26 +309,26 @@ public class TruckTypeState implements ImmutableState {
     }
 
     public static class TruckTypeStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public TruckTypeStringStateConverter() { c = new StringStateConverter(); }
-        public TruckTypeStringStateConverter(StringStateConverter converter) { c = converter; }
+        public TruckTypeStringStateConverter() { converter = new StringStateConverter(); }
+        public TruckTypeStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String numberOfWheelsToString(int numberOfWheels) { return c.intToString(numberOfWheels); }
+        public String numberOfWheelsToString(int numberOfWheels) { return converter.intToString(numberOfWheels); }
         public String truckNameToString(String truckName) { return truckName; }
 
-        public int toNumberOfWheels(String numberOfWheels) { return c.toInt(numberOfWheels); }
+        public int toNumberOfWheels(String numberOfWheels) { return converter.toInt(numberOfWheels); }
         public String toTruckName(String truckName) { return truckName; }
     }
 
     public static class TruckTypeStringStateValidator {
-        private final TruckTypeStringStateConverter c;
+        private final TruckTypeStringStateConverter converter;
 
-        public TruckTypeStringStateValidator() { this.c = new TruckTypeStringStateConverter(); }
-        public TruckTypeStringStateValidator(TruckTypeStringStateConverter converter) { this.c = converter; }
+        public TruckTypeStringStateValidator() { converter = new TruckTypeStringStateConverter(); }
+        public TruckTypeStringStateValidator(TruckTypeStringStateConverter converter) { this.converter = converter; }
 
         public void validateNumberOfWheels(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toNumberOfWheels(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "numberOfWheels", parent); }
+            try { converter.toNumberOfWheels(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "numberOfWheels", parent); }
         }
 
         public void validateTruckName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

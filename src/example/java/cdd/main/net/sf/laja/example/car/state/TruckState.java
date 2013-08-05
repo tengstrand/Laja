@@ -423,47 +423,47 @@ public class TruckState implements ImmutableState {
     }
 
     public static class TruckStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public TruckStringStateConverter() { c = new StringStateConverter(); }
-        public TruckStringStateConverter(StringStateConverter converter) { c = converter; }
+        public TruckStringStateConverter() { converter = new StringStateConverter(); }
+        public TruckStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(c) : null; }
-        public String weightInKilogramsToString(int weightInKilograms) { return c.intToString(weightInKilograms); }
-        public TruckTypeStringState typeToString(TruckTypeMutableState type) { return type != null ? type.asStringState(c) : null; }
+        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(converter) : null; }
+        public String weightInKilogramsToString(int weightInKilograms) { return converter.intToString(weightInKilograms); }
+        public TruckTypeStringState typeToString(TruckTypeMutableState type) { return type != null ? type.asStringState(converter) : null; }
         public String colorToString(String color) { return color; }
-        public OwnerStringState ownerToString(OwnerMutableState owner) { return owner != null ? owner.asStringState(c) : null; }
+        public OwnerStringState ownerToString(OwnerMutableState owner) { return owner != null ? owner.asStringState(converter) : null; }
 
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
-        public int toWeightInKilograms(String weightInKilograms) { return c.toInt(weightInKilograms); }
+        public int toWeightInKilograms(String weightInKilograms) { return converter.toInt(weightInKilograms); }
         public TruckTypeMutableState toType(TruckTypeStringState type) { return type != null ? type.asMutable() : null; }
         public String toColor(String color) { return color; }
         public OwnerMutableState toOwner(OwnerStringState owner) { return owner != null ? owner.asMutable() : null; }
     }
 
     public static class TruckStringStateValidator {
-        private final TruckStringStateConverter c;
+        private final TruckStringStateConverter converter;
 
-        public TruckStringStateValidator() { this.c = new TruckStringStateConverter(); }
-        public TruckStringStateValidator(TruckStringStateConverter converter) { this.c = converter; }
+        public TruckStringStateValidator() { converter = new TruckStringStateConverter(); }
+        public TruckStringStateValidator(TruckStringStateConverter converter) { this.converter = converter; }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
+            try { converter.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "weightInKilograms", parent); }
+            try { converter.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "weightInKilograms", parent); }
         }
 
         public void validateType(TruckTypeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toType(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "type", parent); }
+            try { converter.toType(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "type", parent); }
         }
 
         public void validateColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateOwner(OwnerStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toOwner(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "owner", parent); }
+            try { converter.toOwner(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "owner", parent); }
         }
     }
 }

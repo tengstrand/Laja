@@ -350,35 +350,35 @@ public class BusState implements ImmutableState {
     }
 
     public static class BusStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public BusStringStateConverter() { c = new StringStateConverter(); }
-        public BusStringStateConverter(StringStateConverter converter) { c = converter; }
+        public BusStringStateConverter() { converter = new StringStateConverter(); }
+        public BusStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
         public String nameToString(String name) { return name; }
-        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(c) : null; }
-        public String weightInKilogramsToString(int weightInKilograms) { return c.intToString(weightInKilograms); }
+        public VehicleSizeStringState sizeToString(VehicleSizeMutableState size) { return size != null ? size.asStringState(converter) : null; }
+        public String weightInKilogramsToString(int weightInKilograms) { return converter.intToString(weightInKilograms); }
 
         public String toName(String name) { return name; }
         public VehicleSizeMutableState toSize(VehicleSizeStringState size) { return size != null ? size.asMutable() : null; }
-        public int toWeightInKilograms(String weightInKilograms) { return c.toInt(weightInKilograms); }
+        public int toWeightInKilograms(String weightInKilograms) { return converter.toInt(weightInKilograms); }
     }
 
     public static class BusStringStateValidator {
-        private final BusStringStateConverter c;
+        private final BusStringStateConverter converter;
 
-        public BusStringStateValidator() { this.c = new BusStringStateConverter(); }
-        public BusStringStateValidator(BusStringStateConverter converter) { this.c = converter; }
+        public BusStringStateValidator() { converter = new BusStringStateConverter(); }
+        public BusStringStateValidator(BusStringStateConverter converter) { this.converter = converter; }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateSize(VehicleSizeStringState value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
+            try { converter.toSize(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "size", parent); }
         }
 
         public void validateWeightInKilograms(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "weightInKilograms", parent); }
+            try { converter.toWeightInKilograms(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "weightInKilograms", parent); }
         }
     }
 }

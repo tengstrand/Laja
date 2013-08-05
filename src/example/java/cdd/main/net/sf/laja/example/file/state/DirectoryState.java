@@ -271,10 +271,10 @@ public class DirectoryState implements ImmutableState {
     }
 
     public static class DirectoryStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public DirectoryStringStateConverter() { c = new StringStateConverter(); }
-        public DirectoryStringStateConverter(StringStateConverter converter) { c = converter; }
+        public DirectoryStringStateConverter() { converter = new StringStateConverter(); }
+        public DirectoryStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
         public String directoryPathToString(String directoryPath) { return directoryPath; }
 
@@ -282,10 +282,10 @@ public class DirectoryState implements ImmutableState {
     }
 
     public static class DirectoryStringStateValidator {
-        private final DirectoryStringStateConverter c;
+        private final DirectoryStringStateConverter converter;
 
-        public DirectoryStringStateValidator() { this.c = new DirectoryStringStateConverter(); }
-        public DirectoryStringStateValidator(DirectoryStringStateConverter converter) { this.c = converter; }
+        public DirectoryStringStateValidator() { converter = new DirectoryStringStateConverter(); }
+        public DirectoryStringStateValidator(DirectoryStringStateConverter converter) { this.converter = converter; }
 
         public void validateDirectoryPath(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }

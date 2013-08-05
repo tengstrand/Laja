@@ -5,7 +5,7 @@
 
         public void validate{attribute.nameAsClass}({attribute.type.asMutableString} value, Object rootElement, String parent, ValidationErrors.Builder errors) {
     #if (!attribute.isString)
-            try { c.to{attribute.nameAsClass}(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "{attribute.name}", parent); }
+            try { converter.to{attribute.nameAsClass}(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "{attribute.name}", parent); }
     #end
         }
   #end
@@ -15,10 +15,10 @@
   #set ($.attributes = state.mutableAttributes)
 
     public static class {stringValidatorClass} {
-        private final {stringConverterClass} c;
+        private final {stringConverterClass} converter;
 
-        public {stringValidatorClass}() { this.c = new {stringConverterClass}(); }
-        public {stringValidatorClass}({stringConverterClass} converter) { this.c = converter; }
+        public {stringValidatorClass}() { converter = new {stringConverterClass}(); }
+        public {stringValidatorClass}({stringConverterClass} converter) { this.converter = converter; }
   #validateAttribute()
     }
 #end

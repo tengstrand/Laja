@@ -389,37 +389,37 @@ public class AddressState implements ImmutableState {
     }
 
     public static class AddressStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public AddressStringStateConverter() { c = new StringStateConverter(); }
-        public AddressStringStateConverter(StringStateConverter converter) { c = converter; }
+        public AddressStringStateConverter() { converter = new StringStateConverter(); }
+        public AddressStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String addressIdToString(int addressId) { return c.intToString(addressId); }
+        public String addressIdToString(int addressId) { return converter.intToString(addressId); }
         public String streetNameToString(String streetName) { return streetName; }
-        public String zipcodeToString(int zipcode) { return c.intToString(zipcode); }
+        public String zipcodeToString(int zipcode) { return converter.intToString(zipcode); }
         public String cityToString(String city) { return city; }
 
-        public int toAddressId(String addressId) { return c.toInt(addressId); }
+        public int toAddressId(String addressId) { return converter.toInt(addressId); }
         public String toStreetName(String streetName) { return streetName; }
-        public int toZipcode(String zipcode) { return c.toInt(zipcode); }
+        public int toZipcode(String zipcode) { return converter.toInt(zipcode); }
         public String toCity(String city) { return city; }
     }
 
     public static class AddressStringStateValidator {
-        private final AddressStringStateConverter c;
+        private final AddressStringStateConverter converter;
 
-        public AddressStringStateValidator() { this.c = new AddressStringStateConverter(); }
-        public AddressStringStateValidator(AddressStringStateConverter converter) { this.c = converter; }
+        public AddressStringStateValidator() { converter = new AddressStringStateConverter(); }
+        public AddressStringStateValidator(AddressStringStateConverter converter) { this.converter = converter; }
 
         public void validateAddressId(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toAddressId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "addressId", parent); }
+            try { converter.toAddressId(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "addressId", parent); }
         }
 
         public void validateStreetName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
         public void validateZipcode(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toZipcode(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "zipcode", parent); }
+            try { converter.toZipcode(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "zipcode", parent); }
         }
 
         public void validateCity(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

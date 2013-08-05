@@ -317,26 +317,26 @@ public class OwnerState implements ImmutableState {
     }
 
     public static class OwnerStringStateConverter {
-        private final StringStateConverter c;
+        private final StringStateConverter converter;
 
-        public OwnerStringStateConverter() { c = new StringStateConverter(); }
-        public OwnerStringStateConverter(StringStateConverter converter) { c = converter; }
+        public OwnerStringStateConverter() { converter = new StringStateConverter(); }
+        public OwnerStringStateConverter(StringStateConverter converter) { this.converter = converter; }
 
-        public String ssnToString(long ssn) { return c.longToString(ssn); }
+        public String ssnToString(long ssn) { return converter.longToString(ssn); }
         public String nameToString(String name) { return name; }
 
-        public long toSsn(String ssn) { return c.toLong(ssn); }
+        public long toSsn(String ssn) { return converter.toLong(ssn); }
         public String toName(String name) { return name; }
     }
 
     public static class OwnerStringStateValidator {
-        private final OwnerStringStateConverter c;
+        private final OwnerStringStateConverter converter;
 
-        public OwnerStringStateValidator() { this.c = new OwnerStringStateConverter(); }
-        public OwnerStringStateValidator(OwnerStringStateConverter converter) { this.c = converter; }
+        public OwnerStringStateValidator() { converter = new OwnerStringStateConverter(); }
+        public OwnerStringStateValidator(OwnerStringStateConverter converter) { this.converter = converter; }
 
         public void validateSsn(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { c.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "ssn", parent); }
+            try { converter.toSsn(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "ssn", parent); }
         }
 
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
