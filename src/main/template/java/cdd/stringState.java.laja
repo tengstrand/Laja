@@ -6,7 +6,7 @@
   #else
     @State(version = {version}, type = "string")
   #end
-    public static class {stringClass} implements MutableStringState {
+    public static class {stringClass} implements StringState {
 #end
 
 #macro attributes()

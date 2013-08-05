@@ -5,8 +5,8 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.MutableStringState;
 import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.validator.Validator;
@@ -240,7 +240,7 @@ public class BusState implements ImmutableState {
     }
 
     @State(type = "string")
-    public static class BusStringState implements MutableStringState {
+    public static class BusStringState implements StringState {
         public String name;
         public VehicleSizeStringState size;
         @Optional public String weightInKilograms;

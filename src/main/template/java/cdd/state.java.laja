@@ -30,7 +30,7 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.MutableStringState;
+import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
