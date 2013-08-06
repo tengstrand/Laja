@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -25,17 +24,6 @@ public class TruckState implements ImmutableState {
     public final TruckTypeState type;
     public final String color;
     public final OwnerState owner;
-
-    public static class TruckValidator extends StateValidator {
-        public TruckValidator(Object rootElement) { super(rootElement); }
-        public TruckValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(TruckState state) {
-        }
-
-        public void validate(TruckMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -61,12 +49,6 @@ public class TruckState implements ImmutableState {
         if (type == null) throw new InvalidTruckStateException("'type' can not be null");
         if (color == null) throw new InvalidTruckStateException("'color' can not be null");
         if (owner == null) throw new InvalidTruckStateException("'owner' can not be null");
-
-        TruckValidator validator = new TruckValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidTruckStateException(validator.errors());
-        }
     }
 
     public static class InvalidTruckStateException extends InvalidStateException {
@@ -237,8 +219,6 @@ public class TruckState implements ImmutableState {
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
             if (type != null) type.validate(rootElement, concatenate(parent, "type"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
-
-            new TruckValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

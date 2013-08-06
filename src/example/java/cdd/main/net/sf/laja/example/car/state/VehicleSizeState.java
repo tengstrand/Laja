@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,35 +13,12 @@ import net.sf.laja.cdd.validator.Validator;
 public class VehicleSizeState implements ImmutableState {
     public final int lengthInCentimeters;
 
-    public static class VehicleSizeValidator extends StateValidator {
-        public VehicleSizeValidator(Object rootElement) { super(rootElement); }
-        public VehicleSizeValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(VehicleSizeState state) {
-            validateLength(state.lengthInCentimeters);
-        }
-
-        public void validate(VehicleSizeMutableState state) {
-            validateLength(state.lengthInCentimeters);
-        }
-
-        private void validateLength(int lengthInCentimeters) {
-            verifyThat(lengthInCentimeters >= 0, LENGTH_IN_CENTIMETERS, "negative-length");
-        }
-    }
-
     // ===== Generated code =====
 
     public static final String LENGTH_IN_CENTIMETERS = "lengthInCentimeters";
 
     public VehicleSizeState(int lengthInCentimeters) {
         this.lengthInCentimeters = lengthInCentimeters;
-
-        VehicleSizeValidator validator = new VehicleSizeValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidVehicleSizeStateException(validator.errors());
-        }
     }
 
     public static class InvalidVehicleSizeStateException extends InvalidStateException {
@@ -145,8 +121,6 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            new VehicleSizeValidator(rootElement, parent, errors).validate(this);
-
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
             }

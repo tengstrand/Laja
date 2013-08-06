@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -22,17 +21,6 @@ public class CarState implements ImmutableState {
     public final String name;
     public final OwnerState owner;
     public final String color;
-
-    public static class CarValidator extends StateValidator {
-        public CarValidator(Object rootElement) { super(rootElement); }
-        public CarValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(CarState state) {
-        }
-
-        public void validate(CarMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -55,12 +43,6 @@ public class CarState implements ImmutableState {
         if (name == null) throw new InvalidCarStateException("'name' can not be null");
         if (owner == null) throw new InvalidCarStateException("'owner' can not be null");
         if (color == null) throw new InvalidCarStateException("'color' can not be null");
-
-        CarValidator validator = new CarValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidCarStateException(validator.errors());
-        }
     }
 
     public static class InvalidCarStateException extends InvalidStateException {
@@ -216,8 +198,6 @@ public class CarState implements ImmutableState {
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
-
-            new CarValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

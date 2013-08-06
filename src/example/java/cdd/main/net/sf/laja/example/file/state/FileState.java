@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,17 +13,6 @@ import net.sf.laja.cdd.validator.Validator;
 public class FileState implements ImmutableState {
     public final String filename;
 
-    public static class FileValidator extends StateValidator {
-        public FileValidator(Object rootElement) { super(rootElement); }
-        public FileValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(FileState state) {
-        }
-
-        public void validate(FileMutableState state) {
-        }
-    }
-
     // ===== Generated code =====
 
     public static final String FILENAME = "filename";
@@ -33,12 +21,6 @@ public class FileState implements ImmutableState {
         this.filename = filename;
 
         if (filename == null) throw new InvalidFileStateException("'filename' can not be null");
-
-        FileValidator validator = new FileValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidFileStateException(validator.errors());
-        }
     }
 
     public static class InvalidFileStateException extends InvalidStateException {
@@ -142,8 +124,6 @@ public class FileState implements ImmutableState {
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (filename == null) errors.addIsNullError(rootElement, "filename", parent);
-
-            new FileValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

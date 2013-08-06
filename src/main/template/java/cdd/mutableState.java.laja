@@ -98,8 +98,6 @@
     #end
 
   #end
-            new {validator}(rootElement, parent, errors).validate(this);
-
             for (Validator validator : {validators}) {
                 validator.validate(rootElement, this, parent, "", errors);
             }

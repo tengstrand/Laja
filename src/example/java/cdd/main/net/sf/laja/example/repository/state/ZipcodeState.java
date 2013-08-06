@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,29 +13,12 @@ import net.sf.laja.cdd.validator.Validator;
 public class ZipcodeState implements ImmutableState {
     public final int code;
 
-    public static class ZipcodeValidator extends StateValidator {
-        public ZipcodeValidator(Object rootElement) { super(rootElement); }
-        public ZipcodeValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(ZipcodeState state) {
-        }
-
-        public void validate(ZipcodeMutableState state) {
-        }
-    }
-
     // ===== Generated code =====
 
     public static final String CODE = "code";
 
     public ZipcodeState(int code) {
         this.code = code;
-
-        ZipcodeValidator validator = new ZipcodeValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidZipcodeStateException(validator.errors());
-        }
     }
 
     public static class InvalidZipcodeStateException extends InvalidStateException {
@@ -139,8 +121,6 @@ public class ZipcodeState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            new ZipcodeValidator(rootElement, parent, errors).validate(this);
-
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
             }

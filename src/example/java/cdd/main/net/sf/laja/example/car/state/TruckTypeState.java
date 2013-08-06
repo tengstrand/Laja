@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,17 +13,6 @@ import net.sf.laja.cdd.validator.Validator;
 public class TruckTypeState implements ImmutableState {
     public final int numberOfWheels;
     public final String truckName;
-
-    public static class TruckTypeValidator extends StateValidator {
-        public TruckTypeValidator(Object rootElement) { super(rootElement); }
-        public TruckTypeValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(TruckTypeState state) {
-        }
-
-        public void validate(TruckTypeMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -38,12 +26,6 @@ public class TruckTypeState implements ImmutableState {
         this.truckName = truckName;
 
         if (truckName == null) throw new InvalidTruckTypeStateException("'truckName' can not be null");
-
-        TruckTypeValidator validator = new TruckTypeValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidTruckTypeStateException(validator.errors());
-        }
     }
 
     public static class InvalidTruckTypeStateException extends InvalidStateException {
@@ -165,8 +147,6 @@ public class TruckTypeState implements ImmutableState {
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (truckName == null) errors.addIsNullError(rootElement, "truckName", parent);
-
-            new TruckTypeValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

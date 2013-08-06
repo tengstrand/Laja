@@ -5,7 +5,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -20,17 +19,6 @@ public class BusState implements ImmutableState {
     public final String name;
     public final VehicleSizeState size;
     @Optional public final int weightInKilograms;
-
-    public static class BusValidator extends StateValidator {
-        public BusValidator(Object rootElement) { super(rootElement); }
-        public BusValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(BusState state) {
-        }
-
-        public void validate(BusMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -48,12 +36,6 @@ public class BusState implements ImmutableState {
 
         if (name == null) throw new InvalidBusStateException("'name' can not be null");
         if (size == null) throw new InvalidBusStateException("'size' can not be null");
-
-        BusValidator validator = new BusValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidBusStateException(validator.errors());
-        }
     }
 
     public static class InvalidBusStateException extends InvalidStateException {
@@ -192,8 +174,6 @@ public class BusState implements ImmutableState {
             if (size == null) errors.addIsNullError(rootElement, "size", parent);
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
-
-            new BusValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

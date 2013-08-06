@@ -5,7 +5,6 @@
   #set (packageContent = state.packageContent)
   #set (version = state.version)
   #set (classname = state.classname)
-  #set (validator = state.validator)
   #set (classvariable = state.classvariable)
   #set (mutableClass = state.mutableClass)
   #set (mapClass = state.mapClass)
@@ -136,13 +135,6 @@ public class {classname} implements ImmutableState {
         if ({attribute.name} == null) throw new {stateException}("'{attribute.name}' can not be null");
       #end
     #end
-
-  #set (validatorVar = suffix("validator"))
-        {validator} {validatorVar} = new {validator}(this);
-
-        if (!{validatorVar}.isValid()) {
-            throw new {stateException}({validatorVar}.errors());
-        }
   #end
 #end
 
@@ -414,7 +406,6 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
 {tab}}
 #end
 
-#import "{.}/validator.java.laja"
 #import "{.}/mapState.java.laja"
 #import "{.}/mutableState.java.laja"
 #import "{.}/stringState.java.laja"

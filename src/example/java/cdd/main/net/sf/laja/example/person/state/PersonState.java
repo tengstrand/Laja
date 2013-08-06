@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -16,17 +15,6 @@ public class PersonState implements ImmutableState {
     public final String surname;
     public final int heightInCentimeters;
     public final int weightInKilograms;
-
-    public static class PersonValidator extends StateValidator {
-        public PersonValidator(Object rootElement) { super(rootElement); }
-        public PersonValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(PersonState state) {
-        }
-
-        public void validate(PersonMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -47,12 +35,6 @@ public class PersonState implements ImmutableState {
 
         if (givenName == null) throw new InvalidPersonStateException("'givenName' can not be null");
         if (surname == null) throw new InvalidPersonStateException("'surname' can not be null");
-
-        PersonValidator validator = new PersonValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidPersonStateException(validator.errors());
-        }
     }
 
     public static class InvalidPersonStateException extends InvalidStateException {
@@ -203,8 +185,6 @@ public class PersonState implements ImmutableState {
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (givenName == null) errors.addIsNullError(rootElement, "givenName", parent);
             if (surname == null) errors.addIsNullError(rootElement, "surname", parent);
-
-            new PersonValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

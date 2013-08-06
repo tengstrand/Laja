@@ -9,7 +9,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -47,17 +46,6 @@ public class PersonState implements ImmutableState {
     @Optional
     public final ImmutableList<ImmutableSet<AddressState>> listOfSetOfState;
     public final ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers;
-
-    public static class PersonValidator extends StateValidator {
-        public PersonValidator(Object rootElement) { super(rootElement); }
-        public PersonValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(PersonState state) {
-        }
-
-        public void validate(PersonMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -103,12 +91,6 @@ public class PersonState implements ImmutableState {
         if (address == null) throw new InvalidPersonStateException("'address' can not be null");
         if (groupedAddresses == null) throw new InvalidPersonStateException("'groupedAddresses' can not be null");
         if (listOfSetOfMapOfIntegers == null) throw new InvalidPersonStateException("'listOfSetOfMapOfIntegers' can not be null");
-
-        PersonValidator validator = new PersonValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidPersonStateException(validator.errors());
-        }
     }
 
     public static class InvalidPersonStateException extends InvalidStateException {
@@ -394,8 +376,6 @@ public class PersonState implements ImmutableState {
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
             if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
             if (listOfSetOfState != null) collectionValidator().validate(rootElement, listOfSetOfState, parent, "listOfSetOfState", errors, 0);
-
-            new PersonValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

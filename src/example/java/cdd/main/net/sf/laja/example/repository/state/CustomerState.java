@@ -7,7 +7,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -31,24 +30,6 @@ public class CustomerState implements ImmutableState {
     @Optional public final String pet;
     public final AddressState address;
     @Optional public final ImmutableList<AddressState> oldAddresses;
-
-    public static class CustomerValidator extends StateValidator {
-        public CustomerValidator(Object rootElement) { super(rootElement); }
-        public CustomerValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(CustomerState state) {
-            validate(state.age, state.ssn);
-        }
-
-        public void validate(CustomerMutableState state) {
-            validate(state.age, state.ssn);
-        }
-
-        private void validate(int age, long ssn) {
-            verifyThat(age >= 0, AGE, "age-negative");
-            verifyThat(ssn >= 190000000000L, SSN, "ssn-before-1900");
-        }
-    }
 
     // ===== Generated code =====
 
@@ -78,12 +59,6 @@ public class CustomerState implements ImmutableState {
 
         if (givenName == null) throw new InvalidCustomerStateException("'givenName' can not be null");
         if (address == null) throw new InvalidCustomerStateException("'address' can not be null");
-
-        CustomerValidator validator = new CustomerValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidCustomerStateException(validator.errors());
-        }
     }
 
     public static class InvalidCustomerStateException extends InvalidStateException {
@@ -297,8 +272,6 @@ public class CustomerState implements ImmutableState {
 
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
-
-            new CustomerValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

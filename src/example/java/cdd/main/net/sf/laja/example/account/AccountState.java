@@ -5,7 +5,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -15,35 +14,12 @@ import net.sf.laja.cdd.validator.Validator;
 public class AccountState implements ImmutableState {
     @Key public final double balance;
 
-    public static class AccountValidator extends StateValidator {
-        public AccountValidator(Object rootElement) { super(rootElement); }
-        public AccountValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(AccountState state) {
-            validateBalance(state.balance);
-        }
-
-        public void validate(AccountMutableState state) {
-            validateBalance(state.balance);
-        }
-
-        public void validateBalance(double balance) {
-            verifyThat(balance >= 0, BALANCE, "negative-balance");
-        }
-    }
-
     // ===== Generated code =====
 
     public static final String BALANCE = "balance";
 
     public AccountState(double balance) {
         this.balance = balance;
-
-        AccountValidator validator = new AccountValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidAccountStateException(validator.errors());
-        }
     }
 
     public static class InvalidAccountStateException extends InvalidStateException {
@@ -163,8 +139,6 @@ public class AccountState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            new AccountValidator(rootElement, parent, errors).validate(this);
-
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
             }

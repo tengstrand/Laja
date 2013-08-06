@@ -6,7 +6,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -21,17 +20,6 @@ public class AddressState implements ImmutableState {
     @Optional
     public final String city;
 
-    public static class AddressValidator extends StateValidator {
-        public AddressValidator(Object rootElement) { super(rootElement); }
-        public AddressValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(AddressState state) {
-        }
-
-        public void validate(AddressMutableState state) {
-        }
-    }
-
     // ===== Generated code =====
 
     public static final String ID = "id";
@@ -45,12 +33,6 @@ public class AddressState implements ImmutableState {
         this.id = id;
         this.streetName = streetName;
         this.city = city;
-
-        AddressValidator validator = new AddressValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidAddressStateException(validator.errors());
-        }
     }
 
     public static class InvalidAddressStateException extends InvalidStateException {
@@ -205,8 +187,6 @@ public class AddressState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            new AddressValidator(rootElement, parent, errors).validate(this);
-
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
             }

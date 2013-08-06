@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,17 +13,6 @@ import net.sf.laja.cdd.validator.Validator;
 public class BmiState implements ImmutableState {
     public final int heightInCentimeters;
     public final int weightInKilograms;
-
-    public static class BmiValidator extends StateValidator {
-        public BmiValidator(Object rootElement) { super(rootElement); }
-        public BmiValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(BmiState state) {
-        }
-
-        public void validate(BmiMutableState state) {
-        }
-    }
 
     // ===== Generated code =====
 
@@ -36,12 +24,6 @@ public class BmiState implements ImmutableState {
             int weightInKilograms) {
         this.heightInCentimeters = heightInCentimeters;
         this.weightInKilograms = weightInKilograms;
-
-        BmiValidator validator = new BmiValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidBmiStateException(validator.errors());
-        }
     }
 
     public static class InvalidBmiStateException extends InvalidStateException {
@@ -162,8 +144,6 @@ public class BmiState implements ImmutableState {
         }
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            new BmiValidator(rootElement, parent, errors).validate(this);
-
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
             }

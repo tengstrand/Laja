@@ -5,7 +5,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -17,23 +16,6 @@ public class AddressState implements ImmutableState {
     public final String streetName;
     public final int zipcode;
     public final String city;
-
-    public static class AddressValidator extends StateValidator {
-        public AddressValidator(Object rootElement) { super(rootElement); }
-        public AddressValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(AddressState state) {
-            validateCity(state.city);
-        }
-
-        public void validate(AddressMutableState state) {
-            validateCity(state.city);
-        }
-
-        private void validateCity(String city) {
-            verifyThat(city.length() > 0 && Character.isLetter(city.subSequence(0, 1).charAt(0)), CITY, "illegal-city");
-        }
-    }
 
     // ===== Generated code =====
 
@@ -54,12 +36,6 @@ public class AddressState implements ImmutableState {
 
         if (streetName == null) throw new InvalidAddressStateException("'streetName' can not be null");
         if (city == null) throw new InvalidAddressStateException("'city' can not be null");
-
-        AddressValidator validator = new AddressValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidAddressStateException(validator.errors());
-        }
     }
 
     public static class InvalidAddressStateException extends InvalidStateException {
@@ -227,8 +203,6 @@ public class AddressState implements ImmutableState {
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (streetName == null) errors.addIsNullError(rootElement, "streetName", parent);
             if (city == null) errors.addIsNullError(rootElement, "city", parent);
-
-            new AddressValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);

@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
@@ -14,17 +13,6 @@ import net.sf.laja.cdd.validator.Validator;
 public class DirectoryState implements ImmutableState {
     public final String directoryPath;
 
-    public static class DirectoryValidator extends StateValidator {
-        public DirectoryValidator(Object rootElement) { super(rootElement); }
-        public DirectoryValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
-
-        public void validate(DirectoryState state) {
-        }
-
-        public void validate(DirectoryMutableState state) {
-        }
-    }
-
     // ===== Generated code =====
 
     public static final String DIRECTORY_PATH = "directoryPath";
@@ -33,12 +21,6 @@ public class DirectoryState implements ImmutableState {
         this.directoryPath = directoryPath;
 
         if (directoryPath == null) throw new InvalidDirectoryStateException("'directoryPath' can not be null");
-
-        DirectoryValidator validator = new DirectoryValidator(this);
-
-        if (!validator.isValid()) {
-            throw new InvalidDirectoryStateException(validator.errors());
-        }
     }
 
     public static class InvalidDirectoryStateException extends InvalidStateException {
@@ -142,8 +124,6 @@ public class DirectoryState implements ImmutableState {
 
         public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
             if (directoryPath == null) errors.addIsNullError(rootElement, "directoryPath", parent);
-
-            new DirectoryValidator(rootElement, parent, errors).validate(this);
 
             for (Validator validator : validators) {
                 validator.validate(rootElement, this, parent, "", errors);
