@@ -1,8 +1,8 @@
 
 #macro validator()
     public static class {validator} extends StateValidator {
-        public AccountValidator(Object rootElement) { super(rootElement); }
-        public AccountValidator(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
+        public {validator}(Object rootElement) { super(rootElement); }
+        public {validator}(Object rootElement, String parent, ValidationErrors.Builder errors) { super(rootElement, parent, errors); }
 
         public void validate({classname} state) {
         }
