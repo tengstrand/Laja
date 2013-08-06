@@ -79,10 +79,6 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
             return new ValidationErrors(errors.build());
         }
 
-        public Builder addIsNullError(Object rootElement, String attribute) {
-            return addError(rootElement, attribute, NULL_ERROR, "");
-        }
-
         public Builder addIsNullError(Object rootElement, String attribute, String parent) {
             return addError(rootElement, attribute, NULL_ERROR, parent);
         }

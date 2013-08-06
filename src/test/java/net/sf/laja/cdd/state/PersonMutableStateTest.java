@@ -30,9 +30,9 @@ public class PersonMutableStateTest {
         ValidationErrors errors = mutableState.validate();
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
-                .addIsNullError(mutableState, "name")
-                .addIsNullError(mutableState, "hairColor")
-                .addIsNullError(mutableState, "address")
+                .addIsNullError(mutableState, "name", "")
+                .addIsNullError(mutableState, "hairColor", "")
+                .addIsNullError(mutableState, "address", "")
                 .build();
 
         assertThat(errors, equalTo(expectedErrors));
