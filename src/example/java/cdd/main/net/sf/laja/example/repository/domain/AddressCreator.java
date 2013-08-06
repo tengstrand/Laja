@@ -12,7 +12,6 @@ import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.repository.state.AddressState;
 import net.sf.laja.example.repository.state.AddressState.AddressMutableState;
 import net.sf.laja.example.repository.state.AddressState.AddressStringState;
-import net.sf.laja.example.repository.state.Zipcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
