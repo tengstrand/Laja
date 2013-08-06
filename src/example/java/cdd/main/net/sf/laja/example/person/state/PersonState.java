@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class PersonState implements ImmutableState {
@@ -146,8 +145,8 @@ public class PersonState implements ImmutableState {
         public PersonMutableState withHeightInCentimeters(int heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public PersonMutableState withWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public PersonState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public PersonState asImmutable() {
+            assertIsValid();
 
             return new PersonState(
                     givenName,
@@ -172,27 +171,24 @@ public class PersonState implements ImmutableState {
                     converter.weightInKilogramsToString(weightInKilograms));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (givenName == null) errors.addIsNullError(rootElement, "givenName", parent);
             if (surname == null) errors.addIsNullError(rootElement, "surname", parent);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidPersonStateException(errors);
@@ -285,35 +281,35 @@ public class PersonState implements ImmutableState {
                     converter.toWeightInKilograms(weightInKilograms));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new PersonStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new PersonStringStateValidator());
         }
 
-        public ValidationErrors validate(PersonStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(PersonStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(PersonStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(PersonStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateGivenName(givenName, rootElement, parent, errors);
             stateValidator.validateSurname(surname, rootElement, parent, errors);
             stateValidator.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
             stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new PersonStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new PersonStringStateValidator());
         }
 
-        public void assertIsValid(PersonStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(PersonStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidPersonStateException(errors);

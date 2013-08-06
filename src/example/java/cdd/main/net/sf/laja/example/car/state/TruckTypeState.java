@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class TruckTypeState implements ImmutableState {
@@ -113,8 +112,8 @@ public class TruckTypeState implements ImmutableState {
         public TruckTypeMutableState withNumberOfWheels(int numberOfWheels) { this.numberOfWheels = numberOfWheels; return this; }
         public TruckTypeMutableState withTruckName(String truckName) { this.truckName = truckName; return this; }
 
-        public TruckTypeState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public TruckTypeState asImmutable() {
+            assertIsValid();
 
             return new TruckTypeState(
                     numberOfWheels,
@@ -135,26 +134,23 @@ public class TruckTypeState implements ImmutableState {
                     converter.truckNameToString(truckName));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (truckName == null) errors.addIsNullError(rootElement, "truckName", parent);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidTruckTypeStateException(errors);
@@ -227,33 +223,33 @@ public class TruckTypeState implements ImmutableState {
                     converter.toTruckName(truckName));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new TruckTypeStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new TruckTypeStringStateValidator());
         }
 
-        public ValidationErrors validate(TruckTypeStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(TruckTypeStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(TruckTypeStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(TruckTypeStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateNumberOfWheels(numberOfWheels, rootElement, parent, errors);
             stateValidator.validateTruckName(truckName, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new TruckTypeStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new TruckTypeStringStateValidator());
         }
 
-        public void assertIsValid(TruckTypeStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(TruckTypeStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidTruckTypeStateException(errors);

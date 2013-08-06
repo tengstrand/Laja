@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class BmiState implements ImmutableState {
@@ -111,8 +110,8 @@ public class BmiState implements ImmutableState {
         public BmiMutableState withHeightInCentimeters(int heightInCentimeters) { this.heightInCentimeters = heightInCentimeters; return this; }
         public BmiMutableState withWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public BmiState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public BmiState asImmutable() {
+            assertIsValid();
 
             return new BmiState(
                     heightInCentimeters,
@@ -133,24 +132,21 @@ public class BmiState implements ImmutableState {
                     converter.weightInKilogramsToString(weightInKilograms));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidBmiStateException(errors);
@@ -223,33 +219,33 @@ public class BmiState implements ImmutableState {
                     converter.toWeightInKilograms(weightInKilograms));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new BmiStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new BmiStringStateValidator());
         }
 
-        public ValidationErrors validate(BmiStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(BmiStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(BmiStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(BmiStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateHeightInCentimeters(heightInCentimeters, rootElement, parent, errors);
             stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new BmiStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new BmiStringStateValidator());
         }
 
-        public void assertIsValid(BmiStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(BmiStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidBmiStateException(errors);

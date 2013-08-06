@@ -8,7 +8,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class AccountState implements ImmutableState {
@@ -110,8 +109,8 @@ public class AccountState implements ImmutableState {
 
         public AccountMutableState withBalance(double balance) { this.balance = balance; return this; }
 
-        public AccountState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public AccountState asImmutable() {
+            assertIsValid();
 
             return new AccountState(balance);
         }
@@ -128,24 +127,21 @@ public class AccountState implements ImmutableState {
             return new AccountStringState(converter.balanceToString(balance));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidAccountStateException(errors);
@@ -207,32 +203,32 @@ public class AccountState implements ImmutableState {
                     converter.toBalance(balance));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new AccountStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new AccountStringStateValidator());
         }
 
-        public ValidationErrors validate(AccountStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(AccountStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(AccountStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(AccountStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateBalance(balance, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new AccountStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new AccountStringStateValidator());
         }
 
-        public void assertIsValid(AccountStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(AccountStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidAccountStateException(errors);

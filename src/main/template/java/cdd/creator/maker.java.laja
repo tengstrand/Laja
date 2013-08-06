@@ -11,8 +11,8 @@ interface {maker} {
 
     {immutableState} asState();
     {mutableState} asMutableState();
-    void assertIsValid(Validator... validators);
-    boolean isValid(Validator... validators);
-    ValidationErrors validate(Validator... validators);
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate();
 }
 #end

@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class DirectoryState implements ImmutableState {
@@ -94,8 +93,8 @@ public class DirectoryState implements ImmutableState {
 
         public DirectoryMutableState withDirectoryPath(String directoryPath) { this.directoryPath = directoryPath; return this; }
 
-        public DirectoryState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public DirectoryState asImmutable() {
+            assertIsValid();
 
             return new DirectoryState(directoryPath);
         }
@@ -112,26 +111,23 @@ public class DirectoryState implements ImmutableState {
             return new DirectoryStringState(converter.directoryPathToString(directoryPath));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (directoryPath == null) errors.addIsNullError(rootElement, "directoryPath", parent);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidDirectoryStateException(errors);
@@ -193,32 +189,32 @@ public class DirectoryState implements ImmutableState {
                     converter.toDirectoryPath(directoryPath));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new DirectoryStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new DirectoryStringStateValidator());
         }
 
-        public ValidationErrors validate(DirectoryStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(DirectoryStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(DirectoryStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(DirectoryStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateDirectoryPath(directoryPath, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new DirectoryStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new DirectoryStringStateValidator());
         }
 
-        public void assertIsValid(DirectoryStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(DirectoryStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidDirectoryStateException(errors);

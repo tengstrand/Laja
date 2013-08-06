@@ -10,7 +10,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,8 +223,8 @@ public class CustomerState implements ImmutableState {
         public CustomerMutableState withAddress(AddressMutableState address) { this.address = address; return this; }
         public CustomerMutableState withOldAddresses(List<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
 
-        public CustomerState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public CustomerState asImmutable() {
+            assertIsValid();
 
             return new CustomerState(
                     ssn,
@@ -256,30 +255,27 @@ public class CustomerState implements ImmutableState {
                     converter.oldAddressesToString(oldAddresses));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (givenName == null) errors.addIsNullError(rootElement, "givenName", parent);
             if (address == null) errors.addIsNullError(rootElement, "address", parent);
 
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidCustomerStateException(errors);
@@ -391,21 +387,21 @@ public class CustomerState implements ImmutableState {
                     converter.toOldAddresses(oldAddresses));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new CustomerStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new CustomerStringStateValidator());
         }
 
-        public ValidationErrors validate(CustomerStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(CustomerStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(CustomerStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(CustomerStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateSsn(ssn, rootElement, parent, errors);
             stateValidator.validateGivenName(givenName, rootElement, parent, errors);
             stateValidator.validateSurname(surname, rootElement, parent, errors);
@@ -414,15 +410,15 @@ public class CustomerState implements ImmutableState {
             stateValidator.validateAddress(address, rootElement, parent, errors);
             stateValidator.validateOldAddresses(oldAddresses, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new CustomerStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new CustomerStringStateValidator());
         }
 
-        public void assertIsValid(CustomerStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(CustomerStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidCustomerStateException(errors);

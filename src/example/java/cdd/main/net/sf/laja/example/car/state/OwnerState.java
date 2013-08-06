@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class OwnerState implements ImmutableState {
@@ -113,8 +112,8 @@ public class OwnerState implements ImmutableState {
         public OwnerMutableState withSsn(long ssn) { this.ssn = ssn; return this; }
         public OwnerMutableState withName(String name) { this.name = name; return this; }
 
-        public OwnerState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public OwnerState asImmutable() {
+            assertIsValid();
 
             return new OwnerState(
                     ssn,
@@ -135,26 +134,23 @@ public class OwnerState implements ImmutableState {
                     converter.nameToString(name));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (name == null) errors.addIsNullError(rootElement, "name", parent);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidOwnerStateException(errors);
@@ -227,33 +223,33 @@ public class OwnerState implements ImmutableState {
                     converter.toName(name));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new OwnerStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new OwnerStringStateValidator());
         }
 
-        public ValidationErrors validate(OwnerStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(OwnerStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(OwnerStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(OwnerStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateSsn(ssn, rootElement, parent, errors);
             stateValidator.validateName(name, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new OwnerStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new OwnerStringStateValidator());
         }
 
-        public void assertIsValid(OwnerStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(OwnerStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidOwnerStateException(errors);

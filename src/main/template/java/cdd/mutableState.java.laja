@@ -44,8 +44,8 @@
 
 #macro assertIsValid()
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new {stateException}(errors);
@@ -55,16 +55,16 @@
 
 #macro isValid()
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 #end
 
 #macro rootValidate()
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 #end
@@ -77,9 +77,8 @@
 #end
 
 #macro validate()
-  #set (validators = suffix("validators"))
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... {validators}) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
   #if (state.hasMandatoryObjectAttribute)
     #foreach (attribute in attributes where attribute.isMandatory && !attribute.isPrimitive)
             if ({attribute.name} == null) errors.addIsNullError(rootElement, "{attribute.name}", parent);
@@ -98,9 +97,6 @@
     #end
 
   #end
-            for (Validator validator : {validators}) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 #end
 
@@ -140,19 +136,17 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
 #end
 
 #macro singleAsImmutable()
-  #set (validators = suffix("validators"))
   #set (attribute = attributes.iterator.next)
-        public {classname} asImmutable(Validator... {validators}) {
-            assertIsValid({validators});
+        public {classname} asImmutable() {
+            assertIsValid();
 
             return new {classname}({immutableStateAttribute()});
         }
 #end
 
 #macro multipleAsImmutable()
-  #set (validators = suffix("validators"))
-        public {classname} asImmutable(Validator... {validators}) {
-            assertIsValid({validators});
+        public {classname} asImmutable() {
+            assertIsValid();
 
             return new {classname}(
   #set (iterator = attributes.iterator)

@@ -8,7 +8,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
@@ -135,8 +134,8 @@ public class BusState implements ImmutableState {
         public BusMutableState withSize(VehicleSizeMutableState size) { this.size = size; return this; }
         public BusMutableState withWeightInKilograms(int weightInKilograms) { this.weightInKilograms = weightInKilograms; return this; }
 
-        public BusState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public BusState asImmutable() {
+            assertIsValid();
 
             return new BusState(
                     name,
@@ -159,29 +158,26 @@ public class BusState implements ImmutableState {
                     converter.weightInKilogramsToString(weightInKilograms));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (name == null) errors.addIsNullError(rootElement, "name", parent);
             if (size == null) errors.addIsNullError(rootElement, "size", parent);
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidBusStateException(errors);
@@ -264,34 +260,34 @@ public class BusState implements ImmutableState {
                     converter.toWeightInKilograms(weightInKilograms));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new BusStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new BusStringStateValidator());
         }
 
-        public ValidationErrors validate(BusStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(BusStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(BusStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(BusStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateName(name, rootElement, parent, errors);
             stateValidator.validateSize(size, rootElement, parent, errors);
             stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new BusStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new BusStringStateValidator());
         }
 
-        public void assertIsValid(BusStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(BusStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidBusStateException(errors);

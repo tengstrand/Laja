@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class FileState implements ImmutableState {
@@ -94,8 +93,8 @@ public class FileState implements ImmutableState {
 
         public FileMutableState withFilename(String filename) { this.filename = filename; return this; }
 
-        public FileState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public FileState asImmutable() {
+            assertIsValid();
 
             return new FileState(filename);
         }
@@ -112,26 +111,23 @@ public class FileState implements ImmutableState {
             return new FileStringState(converter.filenameToString(filename));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (filename == null) errors.addIsNullError(rootElement, "filename", parent);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidFileStateException(errors);
@@ -193,32 +189,32 @@ public class FileState implements ImmutableState {
                     converter.toFilename(filename));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new FileStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new FileStringStateValidator());
         }
 
-        public ValidationErrors validate(FileStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(FileStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(FileStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(FileStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateFilename(filename, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new FileStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new FileStringStateValidator());
         }
 
-        public void assertIsValid(FileStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(FileStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidFileStateException(errors);

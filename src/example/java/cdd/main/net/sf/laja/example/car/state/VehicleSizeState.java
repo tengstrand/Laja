@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class VehicleSizeState implements ImmutableState {
@@ -92,8 +91,8 @@ public class VehicleSizeState implements ImmutableState {
 
         public VehicleSizeMutableState withLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; return this; }
 
-        public VehicleSizeState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public VehicleSizeState asImmutable() {
+            assertIsValid();
 
             return new VehicleSizeState(lengthInCentimeters);
         }
@@ -110,24 +109,21 @@ public class VehicleSizeState implements ImmutableState {
             return new VehicleSizeStringState(converter.lengthInCentimetersToString(lengthInCentimeters));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidVehicleSizeStateException(errors);
@@ -189,32 +185,32 @@ public class VehicleSizeState implements ImmutableState {
                     converter.toLengthInCentimeters(lengthInCentimeters));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new VehicleSizeStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new VehicleSizeStringStateValidator());
         }
 
-        public ValidationErrors validate(VehicleSizeStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(VehicleSizeStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(VehicleSizeStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(VehicleSizeStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateLengthInCentimeters(lengthInCentimeters, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new VehicleSizeStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new VehicleSizeStringStateValidator());
         }
 
-        public void assertIsValid(VehicleSizeStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(VehicleSizeStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidVehicleSizeStateException(errors);

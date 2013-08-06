@@ -8,7 +8,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 @State
 public class AddressState implements ImmutableState {
@@ -164,8 +163,8 @@ public class AddressState implements ImmutableState {
         public AddressMutableState withZipcode(int zipcode) { this.zipcode = zipcode; return this; }
         public AddressMutableState withCity(String city) { this.city = city; return this; }
 
-        public AddressState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public AddressState asImmutable() {
+            assertIsValid();
 
             return new AddressState(
                     addressId,
@@ -190,27 +189,24 @@ public class AddressState implements ImmutableState {
                     converter.cityToString(city));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (streetName == null) errors.addIsNullError(rootElement, "streetName", parent);
             if (city == null) errors.addIsNullError(rootElement, "city", parent);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidAddressStateException(errors);
@@ -297,35 +293,35 @@ public class AddressState implements ImmutableState {
                     converter.toCity(city));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new AddressStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new AddressStringStateValidator());
         }
 
-        public ValidationErrors validate(AddressStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(AddressStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(AddressStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(AddressStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateAddressId(addressId, rootElement, parent, errors);
             stateValidator.validateStreetName(streetName, rootElement, parent, errors);
             stateValidator.validateZipcode(zipcode, rootElement, parent, errors);
             stateValidator.validateCity(city, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new AddressStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new AddressStringStateValidator());
         }
 
-        public void assertIsValid(AddressStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(AddressStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidAddressStateException(errors);

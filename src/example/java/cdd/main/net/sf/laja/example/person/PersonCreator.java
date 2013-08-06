@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableSet;
 import net.sf.laja.cdd.annotation.Creator;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 import net.sf.laja.example.person.state.PersonState;
 
 import java.util.ArrayList;
@@ -130,16 +129,16 @@ public class PersonCreator implements PersonCreatorMaker {
 
     // --- Validate ---
 
-    public void assertIsValid(Validator... validators) {
-        state.assertIsValid(validators);
+    public void assertIsValid() {
+        state.assertIsValid();
     }
 
-    public boolean isValid(Validator... validators) {
-        return state.isValid(validators);
+    public boolean isValid() {
+        return state.isValid();
     }
 
-    public ValidationErrors validate(Validator... validators) {
-        return state.validate(validators);
+    public ValidationErrors validate() {
+        return state.validate();
     }
 
     @Override public int hashCode() {
@@ -273,16 +272,16 @@ public class PersonCreator implements PersonCreatorMaker {
             return state.asStringState(stateConverter);
         }
 
-        public void assertIsValid(Validator... validators) {
-            state.assertIsValid(validators);
+        public void assertIsValid() {
+            state.assertIsValid();
         }
 
-        public boolean isValid(Validator... validators) {
-            return state.isValid(validators);
+        public boolean isValid() {
+            return state.isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return state.validate(validators);
+        public ValidationErrors validate() {
+            return state.validate();
         }
 
         @Override public int hashCode() {
@@ -563,7 +562,7 @@ interface PersonCreatorMaker {
 
     PersonState asState();
     PersonMutableState asMutableState();
-    void assertIsValid(Validator... validators);
-    boolean isValid(Validator... validators);
-    ValidationErrors validate(Validator... validators);
+    void assertIsValid();
+    boolean isValid();
+    ValidationErrors validate();
 }

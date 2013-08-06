@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
@@ -154,8 +153,8 @@ public class CarState implements ImmutableState {
         public CarMutableState withOwner(OwnerMutableState owner) { this.owner = owner; return this; }
         public CarMutableState withColor(String color) { this.color = color; return this; }
 
-        public CarState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public CarState asImmutable() {
+            assertIsValid();
 
             return new CarState(
                     size != null ? size.asImmutable() : null,
@@ -180,17 +179,17 @@ public class CarState implements ImmutableState {
                     converter.colorToString(color));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (size == null) errors.addIsNullError(rootElement, "size", parent);
             if (name == null) errors.addIsNullError(rootElement, "name", parent);
             if (owner == null) errors.addIsNullError(rootElement, "owner", parent);
@@ -199,13 +198,10 @@ public class CarState implements ImmutableState {
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidCarStateException(errors);
@@ -298,35 +294,35 @@ public class CarState implements ImmutableState {
                     converter.toColor(color));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new CarStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new CarStringStateValidator());
         }
 
-        public ValidationErrors validate(CarStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(CarStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(CarStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(CarStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateSize(size, rootElement, parent, errors);
             stateValidator.validateName(name, rootElement, parent, errors);
             stateValidator.validateOwner(owner, rootElement, parent, errors);
             stateValidator.validateColor(color, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new CarStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new CarStringStateValidator());
         }
 
-        public void assertIsValid(CarStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(CarStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidCarStateException(errors);

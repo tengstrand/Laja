@@ -7,7 +7,6 @@ import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import net.sf.laja.cdd.validator.Validator;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
@@ -172,8 +171,8 @@ public class TruckState implements ImmutableState {
         public TruckMutableState withColor(String color) { this.color = color; return this; }
         public TruckMutableState withOwner(OwnerMutableState owner) { this.owner = owner; return this; }
 
-        public TruckState asImmutable(Validator... validators) {
-            assertIsValid(validators);
+        public TruckState asImmutable() {
+            assertIsValid();
 
             return new TruckState(
                     size != null ? size.asImmutable() : null,
@@ -200,17 +199,17 @@ public class TruckState implements ImmutableState {
                     converter.ownerToString(owner));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
+        public ValidationErrors validate() {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(this, "", errors, validators);
+            validate(this, "", errors);
             return errors.build();
         }
 
-        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(Object rootElement, String parent, ValidationErrors.Builder errors) {
             if (size == null) errors.addIsNullError(rootElement, "size", parent);
             if (type == null) errors.addIsNullError(rootElement, "type", parent);
             if (color == null) errors.addIsNullError(rootElement, "color", parent);
@@ -220,13 +219,10 @@ public class TruckState implements ImmutableState {
             if (type != null) type.validate(rootElement, concatenate(parent, "type"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
 
-            for (Validator validator : validators) {
-                validator.validate(rootElement, this, parent, "", errors);
-            }
         }
 
-        public void assertIsValid(Validator... validators) {
-            ValidationErrors errors = validate(validators);
+        public void assertIsValid() {
+            ValidationErrors errors = validate();
 
             if (errors.isInvalid()) {
                 throw new InvalidTruckStateException(errors);
@@ -329,36 +325,36 @@ public class TruckState implements ImmutableState {
                     converter.toOwner(owner));
         }
 
-        public boolean isValid(Validator... validators) {
-            return validate(validators).isValid();
+        public boolean isValid() {
+            return validate().isValid();
         }
 
-        public ValidationErrors validate(Validator... validators) {
-            return validate(new TruckStringStateValidator(), validators);
+        public ValidationErrors validate() {
+            return validate(new TruckStringStateValidator());
         }
 
-        public ValidationErrors validate(TruckStringStateValidator stateValidator, Validator... validators) {
+        public ValidationErrors validate(TruckStringStateValidator stateValidator) {
             ValidationErrors.Builder errors = ValidationErrors.builder();
-            validate(stateValidator, this, "", errors, validators);
+            validate(stateValidator, this, "", errors);
             return errors.build();
         }
 
-        public void validate(TruckStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors, Validator... validators) {
+        public void validate(TruckStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateSize(size, rootElement, parent, errors);
             stateValidator.validateWeightInKilograms(weightInKilograms, rootElement, parent, errors);
             stateValidator.validateType(type, rootElement, parent, errors);
             stateValidator.validateColor(color, rootElement, parent, errors);
             stateValidator.validateOwner(owner, rootElement, parent, errors);
 
-            asMutable().validate(rootElement, parent, errors, validators);
+            asMutable().validate(rootElement, parent, errors);
         }
 
-        public void assertIsValid(Validator... validators) {
-            assertIsValid(new TruckStringStateValidator(), validators);
+        public void assertIsValid() {
+            assertIsValid(new TruckStringStateValidator());
         }
 
-        public void assertIsValid(TruckStringStateValidator stateValidator, Validator... validators) {
-            ValidationErrors errors = validate(stateValidator, validators);
+        public void assertIsValid(TruckStringStateValidator stateValidator) {
+            ValidationErrors errors = validate(stateValidator);
 
             if (errors.isInvalid()) {
                 throw new InvalidTruckStateException(errors);
