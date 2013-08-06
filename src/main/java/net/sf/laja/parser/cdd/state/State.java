@@ -48,6 +48,14 @@ public class State implements StateParser.IState {
         return result;
     }
 
+    public List<Attribute> mapAttributes() {
+        List<Attribute> result = new ArrayList<Attribute>();
+        for (Attribute attribute : attributes) {
+            result.add(attribute.asMap());
+        }
+        return result;
+    }
+
     public List<Attribute> mutableStringAttributes() {
         List<Attribute> result = new ArrayList<Attribute>();
         for (Attribute attribute : attributes) {

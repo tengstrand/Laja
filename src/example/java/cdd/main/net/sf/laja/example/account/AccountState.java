@@ -4,7 +4,6 @@ import net.sf.laja.cdd.annotation.Key;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -201,32 +200,6 @@ public class AccountState implements ImmutableState {
         @Override
         public String toString() {
             return "{balance=" + balance + "}";
-        }
-    }
-
-    @State(type = "map")
-    public static class AccountMapState extends MapState {
-
-        public AccountMapState() {
-        }
-
-        public AccountMapState(double balance) {
-            put("balance", balance);
-        }
-
-        public double getBalance() { return (double) get("balance"); }
-
-        public void setBalance(double balance) { put("balance", balance); }
-
-        public AccountMapState withBalance(double balance) { put("balance", balance); return this; }
-
-        public AccountState asImmutable(Validator... validators) {
-            return asMutable().asImmutable(validators);
-        }
-
-        public AccountMutableState asMutable() {
-            return new AccountMutableState(
-                    getBalance());
         }
     }
 

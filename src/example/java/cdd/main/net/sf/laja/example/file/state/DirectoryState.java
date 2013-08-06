@@ -3,7 +3,6 @@ package net.sf.laja.example.file.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -181,32 +180,6 @@ public class DirectoryState implements ImmutableState {
         @Override
         public String toString() {
             return "{directoryPath=" + directoryPath + "}";
-        }
-    }
-
-    @State(type = "map")
-    public static class DirectoryMapState extends MapState {
-
-        public DirectoryMapState() {
-        }
-
-        public DirectoryMapState(String directoryPath) {
-            put("directoryPath", directoryPath);
-        }
-
-        public String getDirectoryPath() { return (String) get("directoryPath"); }
-
-        public void setDirectoryPath(String directoryPath) { put("directoryPath", directoryPath); }
-
-        public DirectoryMapState withDirectoryPath(String directoryPath) { put("directoryPath", directoryPath); return this; }
-
-        public DirectoryState asImmutable(Validator... validators) {
-            return asMutable().asImmutable(validators);
-        }
-
-        public DirectoryMutableState asMutable() {
-            return new DirectoryMutableState(
-                    getDirectoryPath());
         }
     }
 

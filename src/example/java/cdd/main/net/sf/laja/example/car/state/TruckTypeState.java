@@ -3,7 +3,6 @@ package net.sf.laja.example.car.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -207,39 +206,6 @@ public class TruckTypeState implements ImmutableState {
         public String toString() {
             return "{numberOfWheels=" + numberOfWheels +
                     ", truckName=" + (truckName == null ? null : '\"' + truckName + '\"' ) + "}";
-        }
-    }
-
-    @State(type = "map")
-    public static class TruckTypeMapState extends MapState {
-
-        public TruckTypeMapState() {
-        }
-
-        public TruckTypeMapState(
-                int numberOfWheels,
-                String truckName) {
-            put("numberOfWheels", numberOfWheels);
-            put("truckName", truckName);
-        }
-
-        public int getNumberOfWheels() { return (int) get("numberOfWheels"); }
-        public String getTruckName() { return (String) get("truckName"); }
-
-        public void setNumberOfWheels(int numberOfWheels) { put("numberOfWheels", numberOfWheels); }
-        public void setTruckName(String truckName) { put("truckName", truckName); }
-
-        public TruckTypeMapState withNumberOfWheels(int numberOfWheels) { put("numberOfWheels", numberOfWheels); return this; }
-        public TruckTypeMapState withTruckName(String truckName) { put("truckName", truckName); return this; }
-
-        public TruckTypeState asImmutable(Validator... validators) {
-            return asMutable().asImmutable(validators);
-        }
-
-        public TruckTypeMutableState asMutable() {
-            return new TruckTypeMutableState(
-                    getNumberOfWheels(),
-                    getTruckName());
         }
     }
 

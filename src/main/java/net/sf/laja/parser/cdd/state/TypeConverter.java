@@ -6,6 +6,25 @@ public class TypeConverter {
         if (typeName.endsWith("MutableState")) {
             return typeName;
         }
+        if (typeName.endsWith("ImmutableState")) {
+            return typeName.substring(0, typeName.length()-"ImmutableState".length()) + "MapState";
+        }
+        if (typeName.equals("ImmutableSet")) {
+            return "Set";
+        }
+        if (typeName.equals("ImmutableList")) {
+            return "List";
+        }
+        if (typeName.equals("ImmutableMap")) {
+            return "Map";
+        }
+        return typeName;
+    }
+
+    public String asMap(String typeName) {
+        if (typeName.endsWith("MapState")) {
+            return typeName;
+        }
         if (typeName.endsWith("State")) {
             return typeName.substring(0, typeName.length()-"State".length()) + "MutableState";
         }
@@ -18,7 +37,6 @@ public class TypeConverter {
         if (typeName.equals("ImmutableMap")) {
             return "Map";
         }
-
         return typeName;
     }
 

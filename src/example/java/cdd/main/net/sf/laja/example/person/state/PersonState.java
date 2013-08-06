@@ -3,7 +3,6 @@ package net.sf.laja.example.person.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -251,51 +250,6 @@ public class PersonState implements ImmutableState {
                     ", surname=" + (surname == null ? null : '\"' + surname + '\"' ) +
                     ", heightInCentimeters=" + heightInCentimeters +
                     ", weightInKilograms=" + weightInKilograms + '}';
-        }
-    }
-
-    @State(type = "map")
-    public static class PersonMapState extends MapState {
-
-        public PersonMapState() {
-        }
-
-        public PersonMapState(
-                String givenName,
-                String surname,
-                int heightInCentimeters,
-                int weightInKilograms) {
-            put("givenName", givenName);
-            put("surname", surname);
-            put("heightInCentimeters", heightInCentimeters);
-            put("weightInKilograms", weightInKilograms);
-        }
-
-        public String getGivenName() { return (String) get("givenName"); }
-        public String getSurname() { return (String) get("surname"); }
-        public int getHeightInCentimeters() { return (int) get("heightInCentimeters"); }
-        public int getWeightInKilograms() { return (int) get("weightInKilograms"); }
-
-        public void setGivenName(String givenName) { put("givenName", givenName); }
-        public void setSurname(String surname) { put("surname", surname); }
-        public void setHeightInCentimeters(int heightInCentimeters) { put("heightInCentimeters", heightInCentimeters); }
-        public void setWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); }
-
-        public PersonMapState withGivenName(String givenName) { put("givenName", givenName); return this; }
-        public PersonMapState withSurname(String surname) { put("surname", surname); return this; }
-        public PersonMapState withHeightInCentimeters(int heightInCentimeters) { put("heightInCentimeters", heightInCentimeters); return this; }
-        public PersonMapState withWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); return this; }
-
-        public PersonState asImmutable(Validator... validators) {
-            return asMutable().asImmutable(validators);
-        }
-
-        public PersonMutableState asMutable() {
-            return new PersonMutableState(
-                    getGivenName(),
-                    getSurname(),
-                    getHeightInCentimeters(),
-                    getWeightInKilograms());
         }
     }
 

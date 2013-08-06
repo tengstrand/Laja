@@ -6,7 +6,6 @@ import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.StringState;
@@ -342,70 +341,6 @@ public class CustomerState implements ImmutableState {
                     ", pet=" + (pet == null ? null : '\"' + pet + '\"' ) +
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses + '}';
-        }
-    }
-
-    @State(type = "map")
-    public static class CustomerMapState extends MapState {
-
-        public CustomerMapState() {
-            put("oldAddresses", new ArrayList<AddressMutableState>());
-        }
-
-        public CustomerMapState(
-                long ssn,
-                String givenName,
-                String surname,
-                int age,
-                String pet,
-                AddressMutableState address,
-                List<AddressMutableState> oldAddresses) {
-            put("ssn", ssn);
-            put("givenName", givenName);
-            put("surname", surname);
-            put("age", age);
-            put("pet", pet);
-            put("address", address);
-            put("oldAddresses", oldAddresses);
-        }
-
-        public long getSsn() { return (long) get("ssn"); }
-        public String getGivenName() { return (String) get("givenName"); }
-        public String getSurname() { return (String) get("surname"); }
-        public int getAge() { return (int) get("age"); }
-        public String getPet() { return (String) get("pet"); }
-        public AddressMutableState getAddress() { return (AddressMutableState) get("address"); }
-        public List<AddressMutableState> getOldAddresses() { return (List<AddressMutableState>) get("oldAddresses"); }
-
-        public void setSsn(long ssn) { put("ssn", ssn); }
-        public void setGivenName(String givenName) { put("givenName", givenName); }
-        public void setSurname(String surname) { put("surname", surname); }
-        public void setAge(int age) { put("age", age); }
-        public void setPet(String pet) { put("pet", pet); }
-        public void setAddress(AddressMutableState address) { put("address", address); }
-        public void setOldAddresses(List<AddressMutableState> oldAddresses) { put("oldAddresses", oldAddresses); }
-
-        public CustomerMapState withSsn(long ssn) { put("ssn", ssn); return this; }
-        public CustomerMapState withGivenName(String givenName) { put("givenName", givenName); return this; }
-        public CustomerMapState withSurname(String surname) { put("surname", surname); return this; }
-        public CustomerMapState withAge(int age) { put("age", age); return this; }
-        public CustomerMapState withPet(String pet) { put("pet", pet); return this; }
-        public CustomerMapState withAddress(AddressMutableState address) { put("address", address); return this; }
-        public CustomerMapState withOldAddresses(List<AddressMutableState> oldAddresses) { put("oldAddresses", oldAddresses); return this; }
-
-        public CustomerState asImmutable(Validator... validators) {
-            return asMutable().asImmutable(validators);
-        }
-
-        public CustomerMutableState asMutable() {
-            return new CustomerMutableState(
-                    getSsn(),
-                    getGivenName(),
-                    getSurname(),
-                    getAge(),
-                    getPet(),
-                    getAddress(),
-                    getOldAddresses());
         }
     }
 

@@ -43,6 +43,14 @@ public class Attribute implements StateParser.IAttribute {
         return result;
     }
 
+    public Attribute asMap() {
+        Attribute result = new Attribute();
+        result.type = type.asMap();
+        copyTypes(result);
+
+        return result;
+    }
+
     public Attribute asMutableString() {
         Attribute result = new Attribute();
         result.type = type.asMutableString();
