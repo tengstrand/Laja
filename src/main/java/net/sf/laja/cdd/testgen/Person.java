@@ -16,7 +16,7 @@ public class Person extends PersonBehaviour {
         super(state);
         hairColor = HairColor.valueOf(state.hairColor);
 
-        assertThat("Stockholm".equals(state.address.city), ADDRESS);
+        assertThat("Stockholm".equals(state.address.city), ADDRESS, "The person must live in Stockholm!");
     }
 
     public Person withName(String name) {

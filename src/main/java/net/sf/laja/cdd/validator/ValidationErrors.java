@@ -70,7 +70,7 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
 
     public static class Builder {
         private int size;
-        private final ImmutableSet.Builder<ValidationError> errors = ImmutableSet.<ValidationError>builder();
+        private final ImmutableSet.Builder<ValidationError> errors = ImmutableSet.builder();
 
         private Builder() {
         }
@@ -80,16 +80,18 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
         }
 
         public Builder addIsNullError(Object rootElement, String attribute, String parent) {
-            return addError(rootElement, attribute, NULL_ERROR, parent);
+            String errorMessage = "Attribute '" + concatenate(parent, attribute) + "' can not be NULL";
+            return addError(rootElement, attribute, NULL_ERROR, errorMessage, parent);
         }
 
         public Builder addTypeConversionError(Object rootElement, String attribute, String parent) {
-            return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, parent);
+            String errorMessage = "Type conversion error for attribute '" + attribute + "'.";
+            return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, errorMessage, parent);
         }
 
-        public Builder addError(Object rootElement, String attribute, String errorType, String parent) {
+        public Builder addError(Object rootElement, String attribute, String errorType, String errorMessage, String parent) {
             size++;
-            errors.add(new ValidationError(concatenate(parent, attribute), errorType, rootElement));
+            errors.add(new ValidationError(concatenate(parent, attribute), errorType, errorMessage, rootElement));
             return this;
         }
 
@@ -105,11 +107,13 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
     public static class ValidationError implements Comparable<ValidationError> {
         public final String attribute;
         public final String errorType;
+        public final String errorMessage;
         public final Object element;
 
-        public ValidationError(String attribute, String errorType, Object element) {
+        public ValidationError(String attribute, String errorType, String errorMessage, Object element) {
             this.attribute = attribute;
             this.errorType = errorType;
+            this.errorMessage = errorMessage;
             this.element = element;
         }
 
@@ -133,6 +137,7 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
         public int hashCode() {
             int result = attribute != null ? attribute.hashCode() : 0;
             result = 31 * result + (errorType != null ? errorType.hashCode() : 0);
+            result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
             return result;
         }
 
@@ -145,6 +150,7 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
 
             if (attribute != null ? !attribute.equals(that.attribute) : that.attribute != null) return false;
             if (errorType != null ? !errorType.equals(that.errorType) : that.errorType != null) return false;
+            if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
 
             return true;
         }
@@ -154,6 +160,7 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
             return "ValidationError{" +
                     "attribute='" + attribute + '\'' +
                     ", errorType='" + errorType + '\'' +
+                    ", errorMessage='" + errorMessage + '\'' +
                     '}';
         }
     }

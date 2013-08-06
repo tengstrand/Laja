@@ -11,7 +11,7 @@ public class SourceAccount extends AccountMutableBehaviour {
         super(state);
         this.state = state;
 
-        assertThat(state.balance >= 0, BALANCE);
+        assertThat(state.balance >= 0, BALANCE, "Balance must be greater or equal to zero");
     }
 
     public void transferTo(DestinationAccount destination, double amount) {

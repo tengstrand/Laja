@@ -39,7 +39,7 @@ public class PersonMutableStateTest {
     }
 
     @Test
-    public void invalidCollectionShouldReturnIsNullValidationErrors() {
+    public void invalidCollectionShouldReturnNullValidationErrors() {
         PersonMutableState mutableState = createPerson().name(null).hairColor(BROWN).children(
                 createPerson().name(null).hairColor(BROWN).children().defaults(),
                 createPerson().name(null).hairColor(BROWN).children().defaults()
@@ -49,7 +49,7 @@ public class PersonMutableStateTest {
         Iterator<ValidationErrors.ValidationError> iterator = errors.iterator();
 
         assertThat(errors.size(), is(2));
-        assertThat(iterator.next(), equalTo(new ValidationErrors.ValidationError("name", "is_null", mutableState)));
-        assertThat(iterator.next(), equalTo(new ValidationErrors.ValidationError("children.name", "is_null", mutableState)));
+        assertThat(iterator.next(), equalTo(new ValidationErrors.ValidationError("name", "is_null", "Attribute 'name' can not be NULL", mutableState)));
+        assertThat(iterator.next(), equalTo(new ValidationErrors.ValidationError("children.name", "is_null", "Attribute 'children.name' can not be NULL", mutableState)));
     }
 }

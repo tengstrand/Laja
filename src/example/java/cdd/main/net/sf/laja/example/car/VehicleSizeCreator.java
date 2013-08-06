@@ -141,14 +141,14 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             this.state = state;
         }
 
-        public void assertThat(boolean condition, String attribute) {
-            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        public void assertThat(boolean condition, String attribute, String errorMessage) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()), errorMessage);
         }
 
-        public void assertThat(boolean condition, String attribute, String errorType) {
+        public void assertThat(boolean condition, String attribute, String errorType, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorType, "");
+                errors.addError(state, attribute, errorType, errorMessage, "");
                 throw new InvalidVehicleSizeStateException(errors.build());
             }
         }
@@ -182,14 +182,14 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             return state.asImmutable();
         }
 
-        public void assertThat(boolean condition, String attribute) {
-            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        public void assertThat(boolean condition, String attribute, String errorMessage) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()), errorMessage);
         }
 
-        public void assertThat(boolean condition, String attribute, String errorType) {
+        public void assertThat(boolean condition, String attribute, String errorType, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorType, "");
+                errors.addError(state, attribute, errorType, errorMessage, "");
                 throw new InvalidVehicleSizeStateException(errors.build());
             }
         }
