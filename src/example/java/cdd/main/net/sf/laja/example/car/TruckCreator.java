@@ -23,8 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
-import static net.sf.laja.example.car.state.TruckState.TruckMutableState;
-import static net.sf.laja.example.car.state.TruckState.TruckStringState;
+import static net.sf.laja.example.car.state.TruckState.*;
 import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
@@ -200,6 +199,18 @@ public class TruckCreator implements TruckCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidTruckStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof TruckBehaviour)) return false;
@@ -227,6 +238,18 @@ public class TruckCreator implements TruckCreatorMaker {
 
         public TruckState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidTruckStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

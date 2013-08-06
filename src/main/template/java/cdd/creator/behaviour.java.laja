@@ -1,5 +1,19 @@
 #namespace creator
 
+#macro assertThat()
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new {stateException}(errors.build());
+            }
+        }
+#end
+
 #macro behaviour()
     // --- Behaviour ---
 
@@ -9,6 +23,8 @@
         public {behaviour}({immutableState} state) {
             this.state = state;
         }
+
+ #assertThat()
 
         @Override public boolean equals(Object that) {
             if (this == that) return true;

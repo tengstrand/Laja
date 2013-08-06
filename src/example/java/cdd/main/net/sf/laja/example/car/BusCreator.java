@@ -23,8 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.car.VehicleSizeCreator.createVehicleSize;
-import static net.sf.laja.example.car.state.BusState.BusMutableState;
-import static net.sf.laja.example.car.state.BusState.BusStringState;
+import static net.sf.laja.example.car.state.BusState.*;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
 
 @Creator
@@ -175,6 +174,18 @@ public class BusCreator implements BusCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidBusStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof BusBehaviour)) return false;
@@ -202,6 +213,18 @@ public class BusCreator implements BusCreatorMaker {
 
         public BusState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidBusStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

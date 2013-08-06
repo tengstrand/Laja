@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.example.file.state.DirectoryState.DirectoryMutableState;
-import static net.sf.laja.example.file.state.DirectoryState.DirectoryStringState;
+import static net.sf.laja.example.file.state.DirectoryState.*;
 
 @Creator
 public class DirectoryCreator implements DirectoryCreatorMaker {
@@ -143,6 +142,18 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidDirectoryStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof DirectoryBehaviour)) return false;
@@ -170,6 +181,18 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
         public DirectoryState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidDirectoryStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeMutableState;
-import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
+import static net.sf.laja.example.car.state.TruckTypeState.*;
 
 @Creator
 public class TruckTypeCreator implements TruckTypeCreatorMaker {
@@ -151,6 +150,18 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidTruckTypeStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof TruckTypeBehaviour)) return false;
@@ -178,6 +189,18 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
         public TruckTypeState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidTruckTypeStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

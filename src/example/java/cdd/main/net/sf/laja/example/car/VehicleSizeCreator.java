@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
+import static net.sf.laja.example.car.state.VehicleSizeState.*;
 
 @Creator
 public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
@@ -143,6 +142,18 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidVehicleSizeStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof VehicleSizeBehaviour)) return false;
@@ -170,6 +181,18 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
         public VehicleSizeState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidVehicleSizeStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

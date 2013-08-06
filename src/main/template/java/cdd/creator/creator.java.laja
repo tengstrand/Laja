@@ -66,6 +66,7 @@ import java.util.*;
     #stateImports.add("{statePackagename}.{immutableState}")
     #stateImports.add("{statePackagename}.{immutableState}.{mutableState}")
     #stateImports.add("{statePackagename}.{immutableState}.{stringState}")
+    #stateImports.add("{statePackagename}.{immutableState}.{stateException}")
     #foreach (attribute in attributes where attribute.isState)
       #stateImports.add("{attribute.stateObject.packagename}.{attribute.asImmutable.type}.{attribute.asMutable.type}")
       #if (attribute.creator != null)

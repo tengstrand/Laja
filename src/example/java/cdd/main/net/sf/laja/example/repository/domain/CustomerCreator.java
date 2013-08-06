@@ -24,8 +24,7 @@ import java.util.Set;
 
 import static net.sf.laja.example.repository.domain.AddressCreator.AddressListBuilder;
 import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
-import static net.sf.laja.example.repository.state.CustomerState.CustomerMutableState;
-import static net.sf.laja.example.repository.state.CustomerState.CustomerStringState;
+import static net.sf.laja.example.repository.state.CustomerState.*;
 
 @Creator
 public class CustomerCreator implements CustomerCreatorMaker {
@@ -205,6 +204,18 @@ public class CustomerCreator implements CustomerCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidCustomerStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof CustomerBehaviour)) return false;
@@ -232,6 +243,18 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public CustomerState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidCustomerStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

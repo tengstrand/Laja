@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.example.person.state.PersonState.PersonMutableState;
-import static net.sf.laja.example.person.state.PersonState.PersonStringState;
+import static net.sf.laja.example.person.state.PersonState.*;
 
 @Creator
 public class PersonCreator implements PersonCreatorMaker {
@@ -167,6 +166,18 @@ public class PersonCreator implements PersonCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidPersonStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof PersonBehaviour)) return false;
@@ -194,6 +205,18 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidPersonStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

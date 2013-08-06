@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.example.file.state.FileState.FileMutableState;
-import static net.sf.laja.example.file.state.FileState.FileStringState;
+import static net.sf.laja.example.file.state.FileState.*;
 
 @Creator
 public class FileCreator implements FileCreatorMaker {
@@ -147,6 +146,18 @@ public class FileCreator implements FileCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidFileStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof FileBehaviour)) return false;
@@ -174,6 +185,18 @@ public class FileCreator implements FileCreatorMaker {
 
         public FileState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidFileStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {

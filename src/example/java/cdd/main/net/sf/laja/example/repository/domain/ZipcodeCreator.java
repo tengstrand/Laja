@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static net.sf.laja.example.repository.state.ZipcodeState.InvalidZipcodeStateException;
+
 @Creator
 public class ZipcodeCreator implements ZipcodeCreatorMaker {
     private final ZipcodeMutableState state;
@@ -142,6 +144,18 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidZipcodeStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof ZipcodeBehaviour)) return false;
@@ -169,6 +183,18 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
 
         public ZipcodeState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidZipcodeStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {
@@ -201,6 +227,10 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         }
 
         public ZipcodeBuilder withCode(int code) { state.code = code; return this; }
+
+        public Zipcode asZipcode() {
+            return new Zipcode(state.code);
+        }
 
         public ZipcodeState asState() {
             return state.asImmutable();
@@ -261,6 +291,10 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
 
         public ZipcodeStringBuilder withCode(String code) { state.code = code; return this; }
 
+        public Zipcode asZipcode() {
+            return new ZipcodeBuilder(state.asMutable()).asZipcode();
+        }
+
         public ZipcodeState asState() {
             return state.asImmutable();
         }
@@ -301,6 +335,28 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         public ZipcodeListBuilder(Collection<ZipcodeCreator> creators) {
             this.creators = new ArrayList<ZipcodeCreator>();
             this.creators.addAll(creators);
+        }
+
+        // asZipcodeList() : ImmutableList<Zipcode>
+
+        public ImmutableList<Zipcode> asZipcodeList() {
+            ImmutableList.Builder<Zipcode> builder = ImmutableList.builder();
+
+            for (ZipcodeCreator creator : creators) {
+                builder.add(creator.asZipcode());
+            }
+            return builder.build();
+        }
+
+        // asZipcodeMutableList() : List<Zipcode>
+
+        public List<Zipcode> asZipcodeMutableList() {
+            List<Zipcode> result = new ArrayList<Zipcode>();
+
+            for (ZipcodeCreator creator : creators) {
+                result.add(creator.asZipcode());
+            }
+            return result;
         }
 
         // asStateList() : ImmutableList<ZipcodeState>
@@ -344,6 +400,28 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
             this.creators.addAll(creators);
         }
 
+        // asZipcodeSet() : ImmutableSet<Zipcode>
+
+        public ImmutableSet<Zipcode> asZipcodeSet() {
+            ImmutableSet.Builder<Zipcode> builder = ImmutableSet.builder();
+
+            for (ZipcodeCreator creator : creators) {
+                builder.add(creator.asZipcode());
+            }
+            return builder.build();
+        }
+
+        // asZipcodeMutableSet() : Set<Zipcode>
+
+        public Set<Zipcode> asZipcodeMutableSet() {
+            Set<Zipcode> result = new HashSet<Zipcode>();
+
+            for (ZipcodeCreator creator : creators) {
+                result.add(creator.asZipcode());
+            }
+            return result;
+        }
+
         // asState()
 
         public ImmutableSet<ZipcodeState> asStateSet() {
@@ -382,6 +460,10 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
             this.maker = maker;
         }
 
+        public Zipcode asZipcode() {
+            return maker.asZipcode();
+        }
+
         public ZipcodeState asState() {
             return maker.asState();
         }
@@ -398,6 +480,28 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
 
         public ZipcodeMapBuilder(ZipcodeMapEntryBuilder... entries) {
             this.entries = entries;
+        }
+
+        // asZipcodeMap() : ImmutableMap
+
+        public ImmutableMap asZipcodeMap() {
+            ImmutableMap.Builder builder = ImmutableMap.builder();
+
+            for (ZipcodeMapEntryBuilder entry : entries) {
+                builder.put(entry.key, entry.asZipcode());
+            }
+            return builder.build();
+        }
+
+        // asZipcodeMutableMap() : Map
+
+        public Map asZipcodeMutableMap() {
+            Map result = new HashMap();
+
+            for (ZipcodeMapEntryBuilder entry : entries) {
+                result.put(entry.key, entry.asZipcode());
+            }
+            return result;
         }
 
         // asStateMap() : ImmutableMap
@@ -427,6 +531,7 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
 // --- Maker ---
 
 interface ZipcodeCreatorMaker {
+    Zipcode asZipcode();
 
     ZipcodeState asState();
     ZipcodeMutableState asMutableState();

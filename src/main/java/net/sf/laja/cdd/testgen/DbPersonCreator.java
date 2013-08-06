@@ -24,8 +24,7 @@ import java.util.Set;
 import static net.sf.laja.cdd.testgen.AddressCreator.AddressMapBuilder;
 import static net.sf.laja.cdd.testgen.AddressCreator.AddressSetBuilder;
 import static net.sf.laja.cdd.testgen.state.AddressState.AddressStringState;
-import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
-import static net.sf.laja.cdd.testgen.state.PersonState.PersonStringState;
+import static net.sf.laja.cdd.testgen.state.PersonState.*;
 
 @Creator
 public class DbPersonCreator implements DbPersonCreatorMaker {
@@ -243,6 +242,18 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
             this.state = state;
         }
 
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidPersonStateException(errors.build());
+            }
+        }
+
         @Override public boolean equals(Object that) {
             if (this == that) return true;
             if (that == null || !(that instanceof PersonBehaviour)) return false;
@@ -270,6 +281,18 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
 
         public PersonState asState() {
             return state.asImmutable();
+        }
+
+        public void assertThat(boolean condition, String attribute) {
+            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()));
+        }
+
+        public void assertThat(boolean condition, String attribute, String errorType) {
+            if (!condition) {
+                ValidationErrors.Builder errors = ValidationErrors.builder();
+                errors.addError(state, attribute, errorType, "");
+                throw new InvalidPersonStateException(errors.build());
+            }
         }
 
         @Override public boolean equals(Object that) {
