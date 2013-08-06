@@ -6,8 +6,8 @@ public class TypeConverter {
         if (typeName.endsWith("MutableState")) {
             return typeName;
         }
-        if (typeName.endsWith("ImmutableState")) {
-            return typeName.substring(0, typeName.length()-"ImmutableState".length()) + "MapState";
+        if (typeName.endsWith("State")) {
+            return typeName.substring(0, typeName.length()-"State".length()) + "MutableState";
         }
         if (typeName.equals("ImmutableSet")) {
             return "Set";
@@ -26,7 +26,7 @@ public class TypeConverter {
             return typeName;
         }
         if (typeName.endsWith("State")) {
-            return typeName.substring(0, typeName.length()-"State".length()) + "MutableState";
+            return typeName.substring(0, typeName.length()-"State".length()) + "MapState";
         }
         if (typeName.equals("ImmutableSet")) {
             return "Set";
