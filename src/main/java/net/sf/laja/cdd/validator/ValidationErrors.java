@@ -101,7 +101,7 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
 
         public Builder addError(Object rootElement, String attribute, String errorType, String parent) {
             size++;
-            errors.add(new ValidationError(parent, attribute, errorType, rootElement));
+            errors.add(new ValidationError(concatenate(parent, attribute), errorType, rootElement));
             return this;
         }
 
@@ -121,12 +121,6 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
 
         public ValidationError(String attribute, String errorType, Object element) {
             this.attribute = attribute;
-            this.errorType = errorType;
-            this.element = element;
-        }
-
-        public ValidationError(String parent, String attribute, String errorType, Object element) {
-            this.attribute = concatenate(parent, attribute);
             this.errorType = errorType;
             this.element = element;
         }
