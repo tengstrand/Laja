@@ -83,16 +83,8 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
             return addError(rootElement, attribute, NULL_ERROR, parent);
         }
 
-        public Builder addTypeConversionError(Object rootElement, String attribute) {
-            return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, "");
-        }
-
         public Builder addTypeConversionError(Object rootElement, String attribute, String parent) {
             return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, parent);
-        }
-
-        public Builder addError(Object rootElement, String attribute, String errorType) {
-            return addError(rootElement, attribute, errorType, "");
         }
 
         public Builder addError(Object rootElement, String attribute, String errorType, String parent) {
