@@ -146,13 +146,9 @@ public class FileCreator implements FileCreatorMaker {
         }
 
         public void assertThat(boolean condition, String attribute, String errorMessage) {
-            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()), errorMessage);
-        }
-
-        public void assertThat(boolean condition, String attribute, String errorType, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorType, errorMessage, "");
+                errors.addError(state, attribute, errorMessage, "");
                 throw new InvalidFileStateException(errors.build());
             }
         }
@@ -187,13 +183,9 @@ public class FileCreator implements FileCreatorMaker {
         }
 
         public void assertThat(boolean condition, String attribute, String errorMessage) {
-            assertThat(condition, attribute, (attribute == null ? "" : "invalid-" + attribute.toLowerCase()), errorMessage);
-        }
-
-        public void assertThat(boolean condition, String attribute, String errorType, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorType, errorMessage, "");
+                errors.addError(state, attribute, errorMessage, "");
                 throw new InvalidFileStateException(errors.build());
             }
         }

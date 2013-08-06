@@ -79,17 +79,21 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
             return new ValidationErrors(errors.build());
         }
 
+        public Builder addError(Object rootElement, String attribute, String errorMessage, String parent) {
+            return addError(rootElement, attribute, ErrorType.CUSTOM, errorMessage, parent);
+        }
+
         public Builder addIsNullError(Object rootElement, String attribute, String parent) {
             String errorMessage = "Attribute '" + concatenate(parent, attribute) + "' can not be NULL";
-            return addError(rootElement, attribute, NULL_ERROR, errorMessage, parent);
+            return addError(rootElement, attribute, ErrorType.NULL, errorMessage, parent);
         }
 
         public Builder addTypeConversionError(Object rootElement, String attribute, String parent) {
             String errorMessage = "Type conversion error for attribute '" + attribute + "'.";
-            return addError(rootElement, attribute, TYPE_CONVERSION_ERROR, errorMessage, parent);
+            return addError(rootElement, attribute, ErrorType.TYPE_CONVERSION, errorMessage, parent);
         }
 
-        public Builder addError(Object rootElement, String attribute, String errorType, String errorMessage, String parent) {
+        private Builder addError(Object rootElement, String attribute, ErrorType errorType, String errorMessage, String parent) {
             size++;
             errors.add(new ValidationError(concatenate(parent, attribute), errorType, errorMessage, rootElement));
             return this;
@@ -104,13 +108,17 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
         }
     }
 
+    public static enum ErrorType {
+        NULL, TYPE_CONVERSION, CUSTOM
+    }
+
     public static class ValidationError implements Comparable<ValidationError> {
         public final String attribute;
-        public final String errorType;
+        public final ErrorType errorType;
         public final String errorMessage;
         public final Object element;
 
-        public ValidationError(String attribute, String errorType, String errorMessage, Object element) {
+        public ValidationError(String attribute, ErrorType errorType, String errorMessage, Object element) {
             this.attribute = attribute;
             this.errorType = errorType;
             this.errorMessage = errorMessage;

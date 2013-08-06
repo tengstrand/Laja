@@ -10,6 +10,8 @@ import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.buildPerson;
 import static net.sf.laja.cdd.testgen.PersonCreator.createPerson;
 import static net.sf.laja.cdd.testgen.state.PersonState.PersonMutableState;
+import static net.sf.laja.cdd.validator.ValidationErrors.ErrorType.NULL;
+import static net.sf.laja.cdd.validator.ValidationErrors.ValidationError;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,10 +48,10 @@ public class PersonMutableStateTest {
         ).defaults().asMutableState();
 
         ValidationErrors errors = mutableState.validate();
-        Iterator<ValidationErrors.ValidationError> iterator = errors.iterator();
+        Iterator<ValidationError> iterator = errors.iterator();
 
         assertThat(errors.size(), is(2));
-        assertThat(iterator.next(), equalTo(new ValidationErrors.ValidationError("name", "is_null", "Attribute 'name' can not be NULL", mutableState)));
-        assertThat(iterator.next(), equalTo(new ValidationErrors.ValidationError("children.name", "is_null", "Attribute 'children.name' can not be NULL", mutableState)));
+        assertThat(iterator.next(), equalTo(new ValidationError("name", NULL, "Attribute 'name' can not be NULL", mutableState)));
+        assertThat(iterator.next(), equalTo(new ValidationError("children.name", NULL, "Attribute 'children.name' can not be NULL", mutableState)));
     }
 }
