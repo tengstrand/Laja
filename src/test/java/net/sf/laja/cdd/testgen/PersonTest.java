@@ -34,7 +34,7 @@ public class PersonTest {
 
     @Test
     public void hasShortName() {
-        assertThat(defaultPerson().withName("Carl").asPerson().hasLongName(), is(false));
+        assertThat(defaultPerson().asPerson().hasLongName(), is(false));
     }
 
     @Test
@@ -45,13 +45,6 @@ public class PersonTest {
     @Test
     public void preserveHandWrittenChainedAttributes() {
         createPerson().name("Carl").hairColor(BROWN).children().defaultAddress();
-    }
-
-    private PersonBuilder defaultPerson() {
-        return buildPerson()
-                .withHairColor("RED")
-                .withBirthday(new DateMidnight(1999, 9, 9))
-                .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
     }
 
     @Test
@@ -73,6 +66,11 @@ public class PersonTest {
         assertThat(value.getClass().getSimpleName(), equalTo("Integer"));
     }
 
+    @Test(expected = InvalidPersonStateException.class)
+    public void invalidStateShouldThrowException() {
+        defaultPerson().withAddress(buildAddress().withCity("Uppsala")).asPerson();
+    }
+
     @Test
     public void stringToMutableToBehaviourRepresentation() {
         PersonStringState stringState = buildStringPerson()
@@ -83,5 +81,13 @@ public class PersonTest {
         } catch (InvalidPersonStateException e) {
             assertThat(e.getMessage(), equalTo("[ValidationError{attribute='name', errorType='is_null'}, ValidationError{attribute='hairColor', errorType='is_null'}]"));
         }
+    }
+
+    private PersonBuilder defaultPerson() {
+        return buildPerson()
+                .withName("Carl")
+                .withHairColor("RED")
+                .withBirthday(new DateMidnight(1999, 9, 9))
+                .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
     }
 }

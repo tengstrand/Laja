@@ -5,13 +5,18 @@ import net.sf.laja.cdd.testgen.state.PersonState;
 import org.joda.time.DateMidnight;
 import org.joda.time.Period;
 
+import static net.sf.laja.cdd.testgen.PersonCreator.PersonBehaviour;
+import static net.sf.laja.cdd.testgen.state.PersonState.ADDRESS;
+
 @Behaviour
-public class Person extends PersonCreator.PersonBehaviour {
+public class Person extends PersonBehaviour {
     private final HairColor hairColor;
 
     public Person(PersonState state) {
         super(state);
         hairColor = HairColor.valueOf(state.hairColor);
+
+        assertThat("Stockholm".equals(state.address.city), ADDRESS);
     }
 
     public Person withName(String name) {
