@@ -12,6 +12,6 @@ public class Zipcode extends ZipcodeBehaviour {
         super(new ZipcodeState(code));
         this.code = code;
 
-        assertThat(code >= 0, CODE, "Zipcode must be a possitive value");
+        assertThat(code >= 10000 && code <= 99999, CODE, "Zipcode must be a value between 10000 and 99999");
     }
 }
