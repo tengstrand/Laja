@@ -79,6 +79,10 @@ public class ValidationErrors implements Iterable<ValidationErrors.ValidationErr
             return new ValidationErrors(errors.build());
         }
 
+        public Builder addError(Object rootElement, String attribute, String errorMessage) {
+            return addError(rootElement, attribute, ErrorType.CUSTOM, errorMessage, "");
+        }
+
         public Builder addError(Object rootElement, String attribute, String errorMessage, String parent) {
             return addError(rootElement, attribute, ErrorType.CUSTOM, errorMessage, parent);
         }
