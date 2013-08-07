@@ -271,6 +271,7 @@ public class TruckState implements ImmutableState {
     public static class TruckMapState extends MapState {
 
         public TruckMapState() {
+            put("weightInKilograms", 0);
         }
 
         public TruckMapState(

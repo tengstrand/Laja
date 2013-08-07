@@ -220,6 +220,7 @@ public class BusState implements ImmutableState {
     public static class BusMapState extends MapState {
 
         public BusMapState() {
+            put("weightInKilograms", 0);
         }
 
         public BusMapState(

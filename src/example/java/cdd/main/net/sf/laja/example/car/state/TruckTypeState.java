@@ -190,6 +190,7 @@ public class TruckTypeState implements ImmutableState {
     public static class TruckTypeMapState extends MapState {
 
         public TruckTypeMapState() {
+            put("numberOfWheels", 0);
         }
 
         public TruckTypeMapState(

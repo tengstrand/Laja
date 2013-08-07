@@ -228,6 +228,7 @@ public class AddressState implements ImmutableState {
     public static class AddressMapState extends MapState {
 
         public AddressMapState() {
+            put("id", 0);
         }
 
         public AddressMapState(

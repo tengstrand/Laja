@@ -186,6 +186,8 @@ public class BmiState implements ImmutableState {
     public static class BmiMapState extends MapState {
 
         public BmiMapState() {
+            put("heightInCentimeters", 0);
+            put("weightInKilograms", 0);
         }
 
         public BmiMapState(

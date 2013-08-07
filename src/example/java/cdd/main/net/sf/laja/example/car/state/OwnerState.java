@@ -190,6 +190,7 @@ public class OwnerState implements ImmutableState {
     public static class OwnerMapState extends MapState {
 
         public OwnerMapState() {
+            put("ssn", 0);
         }
 
         public OwnerMapState(

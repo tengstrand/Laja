@@ -318,6 +318,8 @@ public class CustomerState implements ImmutableState {
     public static class CustomerMapState extends MapState {
 
         public CustomerMapState() {
+            put("ssn", 0);
+            put("age", 0);
             put("oldAddresses", new ArrayList<AddressMutableState>());
         }
 

@@ -246,6 +246,8 @@ public class AddressState implements ImmutableState {
     public static class AddressMapState extends MapState {
 
         public AddressMapState() {
+            put("addressId", 0);
+            put("zipcode", 0);
         }
 
         public AddressMapState(

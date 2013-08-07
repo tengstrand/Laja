@@ -160,6 +160,7 @@ public class ZipcodeState implements ImmutableState {
     public static class ZipcodeMapState extends MapState {
 
         public ZipcodeMapState() {
+            put("code", 0);
         }
 
         public ZipcodeMapState(int code) {

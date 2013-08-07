@@ -16,7 +16,15 @@
     #if (attribute.isOptional && attribute.optional.valueFor("defaultValue") != null)
             put("{attribute.name}", {attribute.optional.valueFor("defaultValue")});
     #else
-      #if (attribute.isSet)
+      #if (attribute.isPrimitive)
+        #if (attribute.isBoolean)
+            put("{attribute.name}", false);
+        #else if (attribute.isDouble)
+            put("{attribute.name}", 0.0);
+        #else
+            put("{attribute.name}", 0);
+        #end
+      #else if (attribute.isSet)
             put("{attribute.name}", new Hash{attribute.type}());
       #else if (attribute.isList)
             put("{attribute.name}", new Array{attribute.type}());

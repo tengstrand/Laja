@@ -426,6 +426,7 @@ public class PersonState implements ImmutableState {
     public static class PersonMapState extends MapState {
 
         public PersonMapState() {
+            put("id", 0);
             put("children", new ArrayList<PersonMutableState>());
             put("oldAddresses", new LinkedHashSet<AddressMutableState>());
             put("groupedAddresses", new HashMap<String,AddressMutableState>());

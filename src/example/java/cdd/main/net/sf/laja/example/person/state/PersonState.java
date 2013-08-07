@@ -234,6 +234,8 @@ public class PersonState implements ImmutableState {
     public static class PersonMapState extends MapState {
 
         public PersonMapState() {
+            put("heightInCentimeters", 0);
+            put("weightInKilograms", 0);
         }
 
         public PersonMapState(

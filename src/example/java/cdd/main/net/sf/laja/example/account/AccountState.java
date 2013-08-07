@@ -178,6 +178,7 @@ public class AccountState implements ImmutableState {
     public static class AccountMapState extends MapState {
 
         public AccountMapState() {
+            put("balance", 0.0);
         }
 
         public AccountMapState(double balance) {

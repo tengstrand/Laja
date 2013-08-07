@@ -150,6 +150,10 @@ public class Attribute implements StateParser.IAttribute {
         return type.isLong();
     }
 
+    public boolean isDouble() {
+        return type.isDouble();
+    }
+
     public boolean isPrimitiveFloatingPoint() {
         return type.isPrimitiveFloatingPoint();
     }

@@ -76,6 +76,10 @@ public class Type implements StateParser.IType {
         return isPrimitive() && name.equals("long");
     }
 
+    public boolean isDouble() {
+        return isPrimitive() && name.equals("double");
+    }
+
     public boolean isPrimitiveFloatingPoint() {
         return isPrimitive() && (name.equals("float") || name.endsWith("double"));
     }

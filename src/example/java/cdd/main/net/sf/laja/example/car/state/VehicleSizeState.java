@@ -160,6 +160,7 @@ public class VehicleSizeState implements ImmutableState {
     public static class VehicleSizeMapState extends MapState {
 
         public VehicleSizeMapState() {
+            put("lengthInCentimeters", 0);
         }
 
         public VehicleSizeMapState(int lengthInCentimeters) {
