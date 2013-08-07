@@ -1,27 +1,17 @@
 package net.sf.laja.example.repository.domain;
 
-public class Zipcode {
+import net.sf.laja.example.repository.state.ZipcodeState;
+
+import static net.sf.laja.example.repository.domain.ZipcodeCreator.ZipcodeBehaviour;
+import static net.sf.laja.example.repository.state.ZipcodeState.CODE;
+
+public class Zipcode extends ZipcodeBehaviour {
     public final int code;
 
     public Zipcode(int code) {
+        super(new ZipcodeState(code));
         this.code = code;
-    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        return code == ((Zipcode)o).code;
-    }
-
-    @Override
-    public int hashCode() {
-        return code;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(code);
+        assertThat(code >= 0, CODE, "Zipcode must be a possitive value");
     }
 }
