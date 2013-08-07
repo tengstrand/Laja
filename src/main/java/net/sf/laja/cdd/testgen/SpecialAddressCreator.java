@@ -143,7 +143,7 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidAddressStateException(errors.build());
             }
         }
@@ -180,7 +180,7 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidAddressStateException(errors.build());
             }
         }

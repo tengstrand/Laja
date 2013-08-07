@@ -178,7 +178,7 @@ public class AddressCreator implements AddressCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidAddressStateException(errors.build());
             }
         }
@@ -215,7 +215,7 @@ public class AddressCreator implements AddressCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidAddressStateException(errors.build());
             }
         }

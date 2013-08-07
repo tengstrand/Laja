@@ -244,7 +244,7 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidPersonStateException(errors.build());
             }
         }
@@ -281,7 +281,7 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidPersonStateException(errors.build());
             }
         }

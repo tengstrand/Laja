@@ -176,7 +176,7 @@ public class BusCreator implements BusCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidBusStateException(errors.build());
             }
         }
@@ -213,7 +213,7 @@ public class BusCreator implements BusCreatorMaker {
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
-                errors.addError(state, attribute, errorMessage, "");
+                errors.addError(state, attribute, errorMessage);
                 throw new InvalidBusStateException(errors.build());
             }
         }
