@@ -7,6 +7,8 @@ import java.util.List;
 public class Type {
     private static final List<String> primitiveIntegers = Arrays.asList("byte", "char", "short", "int");
     private static final List<String> primitives = Arrays.asList("boolean", "byte", "short", "char", "int", "long", "float", "double");
+
+    // Note, the list of types must match the order of primitives: boolean, byte, short...!
     private static final List<String> immutableTypes = Arrays.asList(
             "Boolean",
             "Byte",

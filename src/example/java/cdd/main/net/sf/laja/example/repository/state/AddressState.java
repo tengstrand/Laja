@@ -4,6 +4,7 @@ import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -238,6 +239,51 @@ public class AddressState implements ImmutableState {
                     ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
                     ", zipcode=" + zipcode +
                     ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
+        }
+    }
+
+    @State(type = "map")
+    public static class AddressMapState extends MapState {
+
+        public AddressMapState() {
+        }
+
+        public AddressMapState(
+                int addressId,
+                String streetName,
+                int zipcode,
+                String city) {
+            put("addressId", addressId);
+            put("streetName", streetName);
+            put("zipcode", zipcode);
+            put("city", city);
+        }
+
+        public int getAddressId() { return (Integer) get("addressId"); }
+        public String getStreetName() { return (String) get("streetName"); }
+        public int getZipcode() { return (Integer) get("zipcode"); }
+        public String getCity() { return (String) get("city"); }
+
+        public void setAddressId(int addressId) { put("addressId", addressId); }
+        public void setStreetName(String streetName) { put("streetName", streetName); }
+        public void setZipcode(int zipcode) { put("zipcode", zipcode); }
+        public void setCity(String city) { put("city", city); }
+
+        public AddressMapState withAddressId(int addressId) { put("addressId", addressId); return this; }
+        public AddressMapState withStreetName(String streetName) { put("streetName", streetName); return this; }
+        public AddressMapState withZipcode(int zipcode) { put("zipcode", zipcode); return this; }
+        public AddressMapState withCity(String city) { put("city", city); return this; }
+
+        public AddressState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
+        public AddressMutableState asMutable() {
+            return new AddressMutableState(
+                    getAddressId(),
+                    getStreetName(),
+                    getZipcode(),
+                    getCity());
         }
     }
 

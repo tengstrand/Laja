@@ -215,6 +215,18 @@ public class Type implements StateParser.IType {
         return result;
     }
 
+    public Type asObject() {
+        if (!isPrimitive()) {
+            return this;
+        }
+        Type result = new Type();
+        result.setName(net.sf.laja.parser.cdd.Type.typeAsObject(name));
+        result.setCollectionType(collectionType);
+        result.setMapType(mapType);
+
+        return result;
+    }
+
     public String getTypeConversionMethod(String prefix) {
         if (isCollectionOrMap() || isString()) {
             return "";

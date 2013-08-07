@@ -31,7 +31,7 @@
 #macro getters(tab)
 
   #foreach (attribute in attributes)
-{tab}public {attribute.type} get{attribute.nameAsClass}() { return ({attribute.type}) get("{attribute.name}"); }
+{tab}public {attribute.type} get{attribute.nameAsClass}() { return ({attribute.type.asObject}) get("{attribute.name}"); }
   #end
 #end
 
@@ -67,8 +67,8 @@
 
 #macro asImmutable()
 
-        public {classname} asImmutable(Validator... validators) {
-            return asMutable().asImmutable(validators);
+        public {classname} asImmutable() {
+            return asMutable().asImmutable();
         }
 #end
 

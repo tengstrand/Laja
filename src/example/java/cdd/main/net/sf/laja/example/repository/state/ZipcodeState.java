@@ -3,6 +3,7 @@ package net.sf.laja.example.repository.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -152,6 +153,32 @@ public class ZipcodeState implements ImmutableState {
         @Override
         public String toString() {
             return "{code=" + code + "}";
+        }
+    }
+
+    @State(type = "map")
+    public static class ZipcodeMapState extends MapState {
+
+        public ZipcodeMapState() {
+        }
+
+        public ZipcodeMapState(int code) {
+            put("code", code);
+        }
+
+        public int getCode() { return (Integer) get("code"); }
+
+        public void setCode(int code) { put("code", code); }
+
+        public ZipcodeMapState withCode(int code) { put("code", code); return this; }
+
+        public ZipcodeState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
+        public ZipcodeMutableState asMutable() {
+            return new ZipcodeMutableState(
+                    getCode());
         }
     }
 

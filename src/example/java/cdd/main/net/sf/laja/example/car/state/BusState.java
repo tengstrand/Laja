@@ -4,6 +4,7 @@ import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
+import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -212,6 +213,45 @@ public class BusState implements ImmutableState {
             return "{name=" + (name == null ? null : '\"' + name + '\"' ) +
                     ", size=" + size +
                     ", weightInKilograms=" + weightInKilograms + '}';
+        }
+    }
+
+    @State(type = "map")
+    public static class BusMapState extends MapState {
+
+        public BusMapState() {
+        }
+
+        public BusMapState(
+                String name,
+                VehicleSizeMutableState size,
+                int weightInKilograms) {
+            put("name", name);
+            put("size", size);
+            put("weightInKilograms", weightInKilograms);
+        }
+
+        public String getName() { return (String) get("name"); }
+        public VehicleSizeMutableState getSize() { return (VehicleSizeMutableState) get("size"); }
+        public int getWeightInKilograms() { return (Integer) get("weightInKilograms"); }
+
+        public void setName(String name) { put("name", name); }
+        public void setSize(VehicleSizeMutableState size) { put("size", size); }
+        public void setWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); }
+
+        public BusMapState withName(String name) { put("name", name); return this; }
+        public BusMapState withSize(VehicleSizeMutableState size) { put("size", size); return this; }
+        public BusMapState withWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); return this; }
+
+        public BusState asImmutable() {
+            return asMutable().asImmutable();
+        }
+
+        public BusMutableState asMutable() {
+            return new BusMutableState(
+                    getName(),
+                    getSize(),
+                    getWeightInKilograms());
         }
     }
 

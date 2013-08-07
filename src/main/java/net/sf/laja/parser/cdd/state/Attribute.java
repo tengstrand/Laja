@@ -59,6 +59,14 @@ public class Attribute implements StateParser.IAttribute {
         return result;
     }
 
+    public Attribute asObject() {
+        Attribute result = new Attribute();
+        result.type = type.asObject();
+        copyTypes(result);
+
+        return result;
+    }
+
     private void copyTypes(Attribute attribute) {
         copyTypes(attribute, false);
     }
