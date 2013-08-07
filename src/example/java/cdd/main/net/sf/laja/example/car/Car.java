@@ -2,7 +2,9 @@ package net.sf.laja.example.car;
 
 import net.sf.laja.example.car.state.CarState;
 
-public class Car extends CarCreator.CarBehaviour {
+import static net.sf.laja.example.car.CarCreator.CarBehaviour;
+
+public class Car extends CarBehaviour {
     private final VehicleSize size;
 
     public Car(CarState state) {
