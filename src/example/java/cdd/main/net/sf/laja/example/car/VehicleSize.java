@@ -7,10 +7,10 @@ import static net.sf.laja.example.car.state.VehicleSizeState.LENGTH_IN_CENTIMETE
 
 public class VehicleSize extends VehicleSizeBehaviour {
 
-    public VehicleSize(int lengthInCentimeters) {
-        super(new VehicleSizeState(lengthInCentimeters));
+    public VehicleSize(VehicleSizeState state) {
+        super(state);
 
-        assertThat(lengthInCentimeters >= 0, LENGTH_IN_CENTIMETERS, "Length must be a positive value");
+        assertThat(state.lengthInCentimeters >= 0, LENGTH_IN_CENTIMETERS, "Length must be a positive value");
     }
 
     public boolean isSmall() {

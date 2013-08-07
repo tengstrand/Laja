@@ -9,7 +9,7 @@ public class Bus extends BusBehaviour {
 
     public Bus(BusState state) {
         super(state);
-        size = new VehicleSize(state.getSize());
+        size = new VehicleSize(state.size);
     }
 
     public boolean isNormalSize() {
