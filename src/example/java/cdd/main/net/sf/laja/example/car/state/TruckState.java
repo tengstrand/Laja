@@ -10,12 +10,9 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
-import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
-import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeMutableState;
-import static net.sf.laja.example.car.state.TruckTypeState.TruckTypeStringState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
+import static net.sf.laja.example.car.state.OwnerState.*;
+import static net.sf.laja.example.car.state.TruckTypeState.*;
+import static net.sf.laja.example.car.state.VehicleSizeState.*;
 
 @State
 public class TruckState implements ImmutableState {
@@ -275,11 +272,11 @@ public class TruckState implements ImmutableState {
         }
 
         public TruckMapState(
-                VehicleSizeMutableState size,
+                VehicleSizeMapState size,
                 int weightInKilograms,
-                TruckTypeMutableState type,
+                TruckTypeMapState type,
                 String color,
-                OwnerMutableState owner) {
+                OwnerMapState owner) {
             put("size", size);
             put("weightInKilograms", weightInKilograms);
             put("type", type);
@@ -287,23 +284,23 @@ public class TruckState implements ImmutableState {
             put("owner", owner);
         }
 
-        public VehicleSizeMutableState getSize() { return (VehicleSizeMutableState) get("size"); }
+        public VehicleSizeMapState getSize() { return (VehicleSizeMapState) get("size"); }
         public int getWeightInKilograms() { return (Integer) get("weightInKilograms"); }
-        public TruckTypeMutableState getType() { return (TruckTypeMutableState) get("type"); }
+        public TruckTypeMapState getType() { return (TruckTypeMapState) get("type"); }
         public String getColor() { return (String) get("color"); }
-        public OwnerMutableState getOwner() { return (OwnerMutableState) get("owner"); }
+        public OwnerMapState getOwner() { return (OwnerMapState) get("owner"); }
 
-        public void setSize(VehicleSizeMutableState size) { put("size", size); }
+        public void setSize(VehicleSizeMapState size) { put("size", size); }
         public void setWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); }
-        public void setType(TruckTypeMutableState type) { put("type", type); }
+        public void setType(TruckTypeMapState type) { put("type", type); }
         public void setColor(String color) { put("color", color); }
-        public void setOwner(OwnerMutableState owner) { put("owner", owner); }
+        public void setOwner(OwnerMapState owner) { put("owner", owner); }
 
-        public TruckMapState withSize(VehicleSizeMutableState size) { put("size", size); return this; }
+        public TruckMapState withSize(VehicleSizeMapState size) { put("size", size); return this; }
         public TruckMapState withWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); return this; }
-        public TruckMapState withType(TruckTypeMutableState type) { put("type", type); return this; }
+        public TruckMapState withType(TruckTypeMapState type) { put("type", type); return this; }
         public TruckMapState withColor(String color) { put("color", color); return this; }
-        public TruckMapState withOwner(OwnerMutableState owner) { put("owner", owner); return this; }
+        public TruckMapState withOwner(OwnerMapState owner) { put("owner", owner); return this; }
 
         public TruckState asImmutable() {
             return asMutable().asImmutable();
@@ -311,11 +308,11 @@ public class TruckState implements ImmutableState {
 
         public TruckMutableState asMutable() {
             return new TruckMutableState(
-                    getSize(),
+                    getSize() != null ? getSize().asMutable() : null,
                     getWeightInKilograms(),
-                    getType(),
+                    getType() != null ? getType().asMutable() : null,
                     getColor(),
-                    getOwner());
+                    getOwner() != null ? getOwner().asMutable() : null);
         }
     }
 

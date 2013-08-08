@@ -11,8 +11,7 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
+import static net.sf.laja.example.car.state.VehicleSizeState.*;
 
 @State
 public class BusState implements ImmutableState {
@@ -225,7 +224,7 @@ public class BusState implements ImmutableState {
 
         public BusMapState(
                 String name,
-                VehicleSizeMutableState size,
+                VehicleSizeMapState size,
                 int weightInKilograms) {
             put("name", name);
             put("size", size);
@@ -233,15 +232,15 @@ public class BusState implements ImmutableState {
         }
 
         public String getName() { return (String) get("name"); }
-        public VehicleSizeMutableState getSize() { return (VehicleSizeMutableState) get("size"); }
+        public VehicleSizeMapState getSize() { return (VehicleSizeMapState) get("size"); }
         public int getWeightInKilograms() { return (Integer) get("weightInKilograms"); }
 
         public void setName(String name) { put("name", name); }
-        public void setSize(VehicleSizeMutableState size) { put("size", size); }
+        public void setSize(VehicleSizeMapState size) { put("size", size); }
         public void setWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); }
 
         public BusMapState withName(String name) { put("name", name); return this; }
-        public BusMapState withSize(VehicleSizeMutableState size) { put("size", size); return this; }
+        public BusMapState withSize(VehicleSizeMapState size) { put("size", size); return this; }
         public BusMapState withWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); return this; }
 
         public BusState asImmutable() {
@@ -251,7 +250,7 @@ public class BusState implements ImmutableState {
         public BusMutableState asMutable() {
             return new BusMutableState(
                     getName(),
-                    getSize(),
+                    getSize() != null ? getSize().asMutable() : null,
                     getWeightInKilograms());
         }
     }

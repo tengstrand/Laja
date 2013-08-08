@@ -63,11 +63,11 @@
             return new {mutableClass}(
   #set (iterator = attributes.iterator)
   #while (iterator.hasNext)
-    #set (attribute = iterator.next)
+    #set ($.attribute = iterator.next)
     #if (iterator.hasNext)
-                    get{attribute.nameAsClass}(),
+                    {mutableStateAttribute()},
     #else
-                    get{attribute.nameAsClass}());
+                    {mutableStateAttribute()});
     #end
   #end
         }
@@ -81,7 +81,7 @@
 #end
 
 #macro mapState()
-  #set ($.attributes = state.mutableAttributes)
+  #set ($.attributes = state.mapAttributes)
   #set (tab = "        ")
 
   #classHeader()

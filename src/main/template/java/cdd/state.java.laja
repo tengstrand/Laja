@@ -54,6 +54,7 @@ import java.util.Set;
     #staticImports.add("net.sf.laja.cdd.validator.Validators.mapValidator")
     #foreach (attribute in attributes where attribute.isState)
       #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMutable.type}")
+      #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMap.type}")
     #end
     #foreach (staticImport in staticImports)
 import static {staticImport};
@@ -187,15 +188,15 @@ public class {classname} implements ImmutableState {
 
 #macro mutableStateAttribute()
   #if (attribute.type.isMap)
-asMutableMap({attribute.name}{mutableConverters(attribute.type.mapType.entry)})##
+asMutableMap({attribute.nameorgetter}{mutableConverters(attribute.type.mapType.entry)})##
   #else if (attribute.type.isList)
-asMutableList({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
+asMutableList({attribute.nameorgetter}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isSet)
-asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
+asMutableSet({attribute.nameorgetter}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isState)
-{attribute.name} != null ? {attribute.name}.asMutable() : null##
+{attribute.nameorgetter} != null ? {attribute.nameorgetter}.asMutable() : null##
   #else
-{attribute.name}##
+{attribute.nameorgetter}##
   #end
 #end
 

@@ -25,6 +25,9 @@ public class TypeConverter {
         if (typeName.endsWith("MapState")) {
             return typeName;
         }
+        if (typeName.endsWith("MutableState")) {
+            return typeName.substring(0, typeName.length()-"MutableState".length()) + "MapState";
+        }
         if (typeName.endsWith("State")) {
             return typeName.substring(0, typeName.length()-"State".length()) + "MapState";
         }

@@ -7,6 +7,7 @@ public class Attribute implements StateParser.IAttribute {
     // When adding new attributes, also remember to add them to the methods asMutable() and asImmutable!
     public Type type;
     public String name;
+    public String nameorgetter;
     public String nameAsClass;
     public Annotations annotations;
     public String annotationsContent;
@@ -46,7 +47,7 @@ public class Attribute implements StateParser.IAttribute {
     public Attribute asMap() {
         Attribute result = new Attribute();
         result.type = type.asMap();
-        copyTypes(result);
+        copyTypes(result, false, true);
 
         return result;
     }
@@ -54,7 +55,7 @@ public class Attribute implements StateParser.IAttribute {
     public Attribute asMutableString() {
         Attribute result = new Attribute();
         result.type = type.asMutableString();
-        copyTypes(result, true);
+        copyTypes(result, true, false);
 
         return result;
     }
@@ -68,11 +69,16 @@ public class Attribute implements StateParser.IAttribute {
     }
 
     private void copyTypes(Attribute attribute) {
-        copyTypes(attribute, false);
+        copyTypes(attribute, false, false);
     }
 
-    private void copyTypes(Attribute attribute, boolean isMutableString) {
+    private String getGetter() {
+        return "get" + nameAsClass + "()";
+    }
+
+    private void copyTypes(Attribute attribute, boolean isMutableString, boolean isStringState) {
         attribute.name = name;
+        attribute.nameorgetter = isStringState ? getGetter() : name;
         attribute.nameAsClass = nameAsClass;
         attribute.annotations = isMutableString ? annotations.asMutableString() : annotations;
         attribute.state = state;
@@ -99,6 +105,7 @@ public class Attribute implements StateParser.IAttribute {
 
     public void setVariable(String variable) {
         name = variable;
+        nameorgetter = variable;
         nameAsClass = StringUtils.capitalize(variable);
     }
 

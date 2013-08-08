@@ -18,8 +18,7 @@ import java.util.List;
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
-import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
-import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
+import static net.sf.laja.example.repository.state.AddressState.*;
 
 @State
 public class CustomerState implements ImmutableState {
@@ -320,7 +319,7 @@ public class CustomerState implements ImmutableState {
         public CustomerMapState() {
             put("ssn", 0);
             put("age", 0);
-            put("oldAddresses", new ArrayList<AddressMutableState>());
+            put("oldAddresses", new ArrayList<AddressMapState>());
         }
 
         public CustomerMapState(
@@ -329,8 +328,8 @@ public class CustomerState implements ImmutableState {
                 String surname,
                 int age,
                 String pet,
-                AddressMutableState address,
-                List<AddressMutableState> oldAddresses) {
+                AddressMapState address,
+                List<AddressMapState> oldAddresses) {
             put("ssn", ssn);
             put("givenName", givenName);
             put("surname", surname);
@@ -345,24 +344,24 @@ public class CustomerState implements ImmutableState {
         public String getSurname() { return (String) get("surname"); }
         public int getAge() { return (Integer) get("age"); }
         public String getPet() { return (String) get("pet"); }
-        public AddressMutableState getAddress() { return (AddressMutableState) get("address"); }
-        public List<AddressMutableState> getOldAddresses() { return (List<AddressMutableState>) get("oldAddresses"); }
+        public AddressMapState getAddress() { return (AddressMapState) get("address"); }
+        public List<AddressMapState> getOldAddresses() { return (List<AddressMapState>) get("oldAddresses"); }
 
         public void setSsn(long ssn) { put("ssn", ssn); }
         public void setGivenName(String givenName) { put("givenName", givenName); }
         public void setSurname(String surname) { put("surname", surname); }
         public void setAge(int age) { put("age", age); }
         public void setPet(String pet) { put("pet", pet); }
-        public void setAddress(AddressMutableState address) { put("address", address); }
-        public void setOldAddresses(List<AddressMutableState> oldAddresses) { put("oldAddresses", oldAddresses); }
+        public void setAddress(AddressMapState address) { put("address", address); }
+        public void setOldAddresses(List<AddressMapState> oldAddresses) { put("oldAddresses", oldAddresses); }
 
         public CustomerMapState withSsn(long ssn) { put("ssn", ssn); return this; }
         public CustomerMapState withGivenName(String givenName) { put("givenName", givenName); return this; }
         public CustomerMapState withSurname(String surname) { put("surname", surname); return this; }
         public CustomerMapState withAge(int age) { put("age", age); return this; }
         public CustomerMapState withPet(String pet) { put("pet", pet); return this; }
-        public CustomerMapState withAddress(AddressMutableState address) { put("address", address); return this; }
-        public CustomerMapState withOldAddresses(List<AddressMutableState> oldAddresses) { put("oldAddresses", oldAddresses); return this; }
+        public CustomerMapState withAddress(AddressMapState address) { put("address", address); return this; }
+        public CustomerMapState withOldAddresses(List<AddressMapState> oldAddresses) { put("oldAddresses", oldAddresses); return this; }
 
         public CustomerState asImmutable() {
             return asMutable().asImmutable();
@@ -375,8 +374,8 @@ public class CustomerState implements ImmutableState {
                     getSurname(),
                     getAge(),
                     getPet(),
-                    getAddress(),
-                    getOldAddresses());
+                    getAddress() != null ? getAddress().asMutable() : null,
+                    asMutableList(getOldAddresses(), toMutable));
         }
     }
 

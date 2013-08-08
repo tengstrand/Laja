@@ -10,10 +10,8 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
-import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
+import static net.sf.laja.example.car.state.OwnerState.*;
+import static net.sf.laja.example.car.state.VehicleSizeState.*;
 
 @State
 public class CarState implements ImmutableState {
@@ -250,9 +248,9 @@ public class CarState implements ImmutableState {
         }
 
         public CarMapState(
-                VehicleSizeMutableState size,
+                VehicleSizeMapState size,
                 String name,
-                OwnerMutableState owner,
+                OwnerMapState owner,
                 String color) {
             put("size", size);
             put("name", name);
@@ -260,19 +258,19 @@ public class CarState implements ImmutableState {
             put("color", color);
         }
 
-        public VehicleSizeMutableState getSize() { return (VehicleSizeMutableState) get("size"); }
+        public VehicleSizeMapState getSize() { return (VehicleSizeMapState) get("size"); }
         public String getName() { return (String) get("name"); }
-        public OwnerMutableState getOwner() { return (OwnerMutableState) get("owner"); }
+        public OwnerMapState getOwner() { return (OwnerMapState) get("owner"); }
         public String getColor() { return (String) get("color"); }
 
-        public void setSize(VehicleSizeMutableState size) { put("size", size); }
+        public void setSize(VehicleSizeMapState size) { put("size", size); }
         public void setName(String name) { put("name", name); }
-        public void setOwner(OwnerMutableState owner) { put("owner", owner); }
+        public void setOwner(OwnerMapState owner) { put("owner", owner); }
         public void setColor(String color) { put("color", color); }
 
-        public CarMapState withSize(VehicleSizeMutableState size) { put("size", size); return this; }
+        public CarMapState withSize(VehicleSizeMapState size) { put("size", size); return this; }
         public CarMapState withName(String name) { put("name", name); return this; }
-        public CarMapState withOwner(OwnerMutableState owner) { put("owner", owner); return this; }
+        public CarMapState withOwner(OwnerMapState owner) { put("owner", owner); return this; }
         public CarMapState withColor(String color) { put("color", color); return this; }
 
         public CarState asImmutable() {
@@ -281,9 +279,9 @@ public class CarState implements ImmutableState {
 
         public CarMutableState asMutable() {
             return new CarMutableState(
-                    getSize(),
+                    getSize() != null ? getSize().asMutable() : null,
                     getName(),
-                    getOwner(),
+                    getOwner() != null ? getOwner().asMutable() : null,
                     getColor());
         }
     }
