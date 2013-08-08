@@ -46,6 +46,16 @@ public class Annotation implements StateParser.IAnnotation{
         return null;
     }
 
+    public Annotation asMapState() {
+        Annotation result = new Annotation();
+        result.setName(name);
+
+        for (AnnotationAttribute attribute : annotationAttributes) {
+            result.addAnnotationAttribute(attribute.asMapState());
+        }
+        return result;
+    }
+
     public Annotation asMutableString() {
         Annotation result = new Annotation();
         result.setName(name);

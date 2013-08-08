@@ -76,11 +76,11 @@ public class Attribute implements StateParser.IAttribute {
         return "get" + nameAsClass + "()";
     }
 
-    private void copyTypes(Attribute attribute, boolean isMutableString, boolean isStringState) {
+    private void copyTypes(Attribute attribute, boolean isMutableString, boolean isMapState) {
         attribute.name = name;
-        attribute.nameorgetter = isStringState ? getGetter() : name;
+        attribute.nameorgetter = isMapState ? getGetter() : name;
         attribute.nameAsClass = nameAsClass;
-        attribute.annotations = isMutableString ? annotations.asMutableString() : annotations;
+        attribute.annotations = isMutableString ? annotations.asMutableString() : isMapState ? annotations.asMapState() : annotations;
         attribute.state = state;
 
         if (annotationsContent.contains("\n")) {
