@@ -6,7 +6,6 @@ import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -18,7 +17,8 @@ import java.util.List;
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
-import static net.sf.laja.example.repository.state.AddressState.*;
+import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
+import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
 
 @State
 public class CustomerState implements ImmutableState {
@@ -310,72 +310,6 @@ public class CustomerState implements ImmutableState {
                     ", pet=" + (pet == null ? null : '\"' + pet + '\"' ) +
                     ", address=" + address +
                     ", oldAddresses=" + oldAddresses + '}';
-        }
-    }
-
-    @State(type = "map")
-    public static class CustomerMapState extends MapState {
-
-        public CustomerMapState() {
-            put("ssn", 0);
-            put("age", 0);
-            put("oldAddresses", new ArrayList<AddressMapState>());
-        }
-
-        public CustomerMapState(
-                long ssn,
-                String givenName,
-                String surname,
-                int age,
-                String pet,
-                AddressMapState address,
-                List<AddressMapState> oldAddresses) {
-            put("ssn", ssn);
-            put("givenName", givenName);
-            put("surname", surname);
-            put("age", age);
-            put("pet", pet);
-            put("address", address);
-            put("oldAddresses", oldAddresses);
-        }
-
-        public long getSsn() { return (Long) get("ssn"); }
-        public String getGivenName() { return (String) get("givenName"); }
-        public String getSurname() { return (String) get("surname"); }
-        public int getAge() { return (Integer) get("age"); }
-        public String getPet() { return (String) get("pet"); }
-        public AddressMapState getAddress() { return (AddressMapState) get("address"); }
-        public List<AddressMapState> getOldAddresses() { return (List<AddressMapState>) get("oldAddresses"); }
-
-        public void setSsn(long ssn) { put("ssn", ssn); }
-        public void setGivenName(String givenName) { put("givenName", givenName); }
-        public void setSurname(String surname) { put("surname", surname); }
-        public void setAge(int age) { put("age", age); }
-        public void setPet(String pet) { put("pet", pet); }
-        public void setAddress(AddressMapState address) { put("address", address); }
-        public void setOldAddresses(List<AddressMapState> oldAddresses) { put("oldAddresses", oldAddresses); }
-
-        public CustomerMapState withSsn(long ssn) { put("ssn", ssn); return this; }
-        public CustomerMapState withGivenName(String givenName) { put("givenName", givenName); return this; }
-        public CustomerMapState withSurname(String surname) { put("surname", surname); return this; }
-        public CustomerMapState withAge(int age) { put("age", age); return this; }
-        public CustomerMapState withPet(String pet) { put("pet", pet); return this; }
-        public CustomerMapState withAddress(AddressMapState address) { put("address", address); return this; }
-        public CustomerMapState withOldAddresses(List<AddressMapState> oldAddresses) { put("oldAddresses", oldAddresses); return this; }
-
-        public CustomerState asImmutable() {
-            return asMutable().asImmutable();
-        }
-
-        public CustomerMutableState asMutable() {
-            return new CustomerMutableState(
-                    getSsn(),
-                    getGivenName(),
-                    getSurname(),
-                    getAge(),
-                    getPet(),
-                    getAddress() != null ? getAddress().asMutable() : null,
-                    asMutableList(getOldAddresses(), toMutable));
         }
     }
 

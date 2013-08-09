@@ -5,7 +5,6 @@ import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -221,46 +220,6 @@ public class AddressState implements ImmutableState {
             return "{id=" + id +
                     ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
                     ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
-        }
-    }
-
-    @State(type = "map")
-    public static class AddressMapState extends MapState {
-
-        public AddressMapState() {
-            put("id", 0);
-        }
-
-        public AddressMapState(
-                int id,
-                String streetName,
-                String city) {
-            put("id", id);
-            put("streetName", streetName);
-            put("city", city);
-        }
-
-        public int getId() { return (Integer) get("id"); }
-        public String getStreetName() { return (String) get("streetName"); }
-        public String getCity() { return (String) get("city"); }
-
-        public void setId(int id) { put("id", id); }
-        public void setStreetName(String streetName) { put("streetName", streetName); }
-        public void setCity(String city) { put("city", city); }
-
-        public AddressMapState withId(int id) { put("id", id); return this; }
-        public AddressMapState withStreetName(String streetName) { put("streetName", streetName); return this; }
-        public AddressMapState withCity(String city) { put("city", city); return this; }
-
-        public AddressState asImmutable() {
-            return asMutable().asImmutable();
-        }
-
-        public AddressMutableState asMutable() {
-            return new AddressMutableState(
-                    getId(),
-                    getStreetName(),
-                    getCity());
         }
     }
 

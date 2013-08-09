@@ -8,16 +8,6 @@ public class Annotations implements StateParser.IAnnotations, Iterable<Annotatio
     public String content;
     public List<Annotation> annotations = new ArrayList<Annotation>();
 
-    public Annotations asMapState() {
-        Annotations result = new Annotations();
-        result.setContent(content.replaceAll("MutableState", "MapState"));
-
-        for (Annotation annotation : annotations) {
-            result.annotations.add(annotation.asMapState());
-        }
-        return result;
-    }
-
     public Annotations asMutableString() {
         Annotations result = new Annotations();
         result.setContent(content.replaceAll("MutableState", "StringState"));

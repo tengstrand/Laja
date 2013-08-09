@@ -12,15 +12,6 @@ public class AnnotationAttribute implements StateParser.IAnnotationAttribute {
         this.value = value;
     }
 
-    public AnnotationAttribute asMapState() {
-        AnnotationAttribute result = new AnnotationAttribute();
-
-        result.setName(name);
-        result.setValue(value.replaceAll("MutableState", "MapState"));
-
-        return result;
-    }
-
     public AnnotationAttribute asMutableString() {
         AnnotationAttribute result = new AnnotationAttribute();
 

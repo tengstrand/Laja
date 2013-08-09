@@ -13,7 +13,6 @@ public class State implements StateParser.IState {
     public String name;
     public String classname;
     public String classvariable;
-    public String mapClass;
     public String mutableClass;
     public String stringClass;
     public List<Attribute> attributes;
@@ -47,14 +46,6 @@ public class State implements StateParser.IState {
         return result;
     }
 
-    public List<Attribute> mapAttributes() {
-        List<Attribute> result = new ArrayList<Attribute>();
-        for (Attribute attribute : attributes) {
-            result.add(attribute.asMap());
-        }
-        return result;
-    }
-
     public List<Attribute> mutableStringAttributes() {
         List<Attribute> result = new ArrayList<Attribute>();
         for (Attribute attribute : attributes) {
@@ -81,7 +72,6 @@ public class State implements StateParser.IState {
         classname = classStatement.classname;
         classvariable = StringUtils.uncapitalize(classname);
         name = StringUtils.left(classname, classname.length() - "State".length());
-        mapClass = name + "MapState";
         mutableClass = name + "MutableState";
         stringClass = name + "StringState";
         attributes = classStatement.attributes;

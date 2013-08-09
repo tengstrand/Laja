@@ -3,7 +3,6 @@ package net.sf.laja.example.person.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -179,41 +178,6 @@ public class BmiState implements ImmutableState {
         public String toString() {
             return "{heightInCentimeters=" + heightInCentimeters +
                     ", weightInKilograms=" + weightInKilograms + '}';
-        }
-    }
-
-    @State(type = "map")
-    public static class BmiMapState extends MapState {
-
-        public BmiMapState() {
-            put("heightInCentimeters", 0);
-            put("weightInKilograms", 0);
-        }
-
-        public BmiMapState(
-                int heightInCentimeters,
-                int weightInKilograms) {
-            put("heightInCentimeters", heightInCentimeters);
-            put("weightInKilograms", weightInKilograms);
-        }
-
-        public int getHeightInCentimeters() { return (Integer) get("heightInCentimeters"); }
-        public int getWeightInKilograms() { return (Integer) get("weightInKilograms"); }
-
-        public void setHeightInCentimeters(int heightInCentimeters) { put("heightInCentimeters", heightInCentimeters); }
-        public void setWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); }
-
-        public BmiMapState withHeightInCentimeters(int heightInCentimeters) { put("heightInCentimeters", heightInCentimeters); return this; }
-        public BmiMapState withWeightInKilograms(int weightInKilograms) { put("weightInKilograms", weightInKilograms); return this; }
-
-        public BmiState asImmutable() {
-            return asMutable().asImmutable();
-        }
-
-        public BmiMutableState asMutable() {
-            return new BmiMutableState(
-                    getHeightInCentimeters(),
-                    getWeightInKilograms());
         }
     }
 

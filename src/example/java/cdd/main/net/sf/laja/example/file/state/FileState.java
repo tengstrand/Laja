@@ -3,7 +3,6 @@ package net.sf.laja.example.file.state;
 import net.sf.laja.cdd.annotation.State;
 import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
-import net.sf.laja.cdd.state.MapState;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
@@ -157,32 +156,6 @@ public class FileState implements ImmutableState {
         @Override
         public String toString() {
             return "{filename=" + filename + "}";
-        }
-    }
-
-    @State(type = "map")
-    public static class FileMapState extends MapState {
-
-        public FileMapState() {
-        }
-
-        public FileMapState(String filename) {
-            put("filename", filename);
-        }
-
-        public String getFilename() { return (String) get("filename"); }
-
-        public void setFilename(String filename) { put("filename", filename); }
-
-        public FileMapState withFilename(String filename) { put("filename", filename); return this; }
-
-        public FileState asImmutable() {
-            return asMutable().asImmutable();
-        }
-
-        public FileMutableState asMutable() {
-            return new FileMutableState(
-                    getFilename());
         }
     }
 
