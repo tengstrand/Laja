@@ -10,6 +10,7 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import org.joda.time.DateMidnight;
@@ -22,8 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
-import static net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
-import static net.sf.laja.cdd.testgen.state.AddressState.AddressStringState;
+import static net.sf.laja.cdd.testgen.state.AddressState.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
@@ -250,6 +250,23 @@ public class PersonState implements ImmutableState {
             listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
         }
 
+        public PersonMutableState(Map map) {
+            this(mapToPersonConverter.convert(map, 0));
+        }
+
+        private PersonMutableState(PersonMutableState state) {
+            id = state.id;
+            name = state.name;
+            birthday = state.birthday;
+            hairColor = state.hairColor;
+            children = state.children;
+            address = state.address;
+            oldAddress = state.oldAddress;
+            groupedAddresses = state.groupedAddresses;
+            listOfSetOfState = state.listOfSetOfState;
+            listOfSetOfMapOfIntegers = state.listOfSetOfMapOfIntegers;
+        }
+
         public PersonMutableState(
                 int id,
                 String name,
@@ -418,6 +435,44 @@ public class PersonState implements ImmutableState {
                     ", groupedAddresses=" + groupedAddresses +
                     ", listOfSetOfState=" + listOfSetOfState +
                     ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
+        }
+    }
+
+    public static MapToPersonConverter mapToPersonConverter = new MapToPersonConverter();
+
+    public static PersonMutableState toPersonMutableState(Map map) {
+        return mapToPersonConverter.convert(map, 0);
+    }
+
+    public static class MapToPersonConverter implements StateConverter {
+
+        public PersonMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int id = (Integer) map.get("id");
+            String name = (String) map.get("name");
+            DateMidnight birthday = (DateMidnight) map.get("birthday");
+            String hairColor = (String) map.get("hairColor");
+            List children = (List) map.get("children");
+            Map address = (Map) map.get("address");
+            Map oldAddress = (Map) map.get("oldAddress");
+            Set oldAddresses = (Set) map.get("oldAddresses");
+            Map groupedAddresses = (Map) map.get("groupedAddresses");
+            List listOfSetOfState = (List) map.get("listOfSetOfState");
+            List listOfSetOfMapOfIntegers = (List) map.get("listOfSetOfMapOfIntegers");
+
+            return new PersonMutableState(
+                    id,
+                    name,
+                    birthday,
+                    hairColor,
+                    asMutableList(children, mapToPersonConverter),
+                    address != null ? toAddressMutableState(address) : null,
+                    oldAddress != null ? toAddressMutableState(oldAddress) : null,
+                    asMutableSet(oldAddresses, mapToAddressConverter),
+                    asMutableMap(groupedAddresses, mapToAddressConverter),
+                    asMutableList(listOfSetOfState, toMutableSet, mapToAddressConverter),
+                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
         }
     }
 

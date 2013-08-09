@@ -7,8 +7,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
+
+import java.util.Map;
 
 @State
 public class AddressState implements ImmutableState {
@@ -130,6 +133,16 @@ public class AddressState implements ImmutableState {
         public AddressMutableState() {
         }
 
+        public AddressMutableState(Map map) {
+            this(mapToAddressConverter.convert(map, 0));
+        }
+
+        private AddressMutableState(AddressMutableState state) {
+            id = state.id;
+            streetName = state.streetName;
+            city = state.city;
+        }
+
         public AddressMutableState(
                 int id,
                 String streetName,
@@ -220,6 +233,29 @@ public class AddressState implements ImmutableState {
             return "{id=" + id +
                     ", streetName=" + (streetName == null ? null : '\"' + streetName + '\"' ) +
                     ", city=" + (city == null ? null : '\"' + city + '\"' ) + "}";
+        }
+    }
+
+    public static MapToAddressConverter mapToAddressConverter = new MapToAddressConverter();
+
+    public static AddressMutableState toAddressMutableState(Map map) {
+        return mapToAddressConverter.convert(map, 0);
+    }
+
+    public static class MapToAddressConverter implements StateConverter {
+
+        public AddressMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int id = (Integer) map.get("id");
+            String streetName = (String) map.get("StreetName");
+            String city = (String) map.get("city");
+
+            return new AddressMutableState(
+                    id,
+                    streetName,
+                    city
+            );
         }
     }
 
