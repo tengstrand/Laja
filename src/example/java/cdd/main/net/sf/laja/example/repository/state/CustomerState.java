@@ -13,6 +13,7 @@ import net.sf.laja.cdd.validator.ValidationErrors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
@@ -234,6 +235,10 @@ public class CustomerState implements ImmutableState {
                     pet,
                     address != null ? address.asImmutable() : null,
                     asImmutableList(oldAddresses, toImmutable));
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public CustomerStringState asStringState() {

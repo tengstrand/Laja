@@ -4,14 +4,15 @@ import org.joda.time.DateMidnight;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.laja.cdd.testgen.AddressCreator.buildAddress;
-import static net.sf.laja.cdd.testgen.AddressCreator.buildStringAddress;
+import static net.sf.laja.cdd.testgen.AddressCreator.*;
+import static net.sf.laja.cdd.testgen.HairColor.BLACK;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
 import static net.sf.laja.cdd.testgen.PersonCreator.*;
 import static net.sf.laja.cdd.testgen.state.PersonState.*;
@@ -71,6 +72,49 @@ public class PersonTest {
         defaultPerson().withAddress(buildAddress().withCity("Uppsala")).asPerson();
     }
 
+/*
+        public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
+
+     */
+
+    private static List createList(Object... elements) {
+        return Arrays.asList(elements);
+    }
+
+    private static Set createSet(Object... elements) {
+        return new HashSet(Arrays.asList(elements));
+    }
+
+    private static Map mapOfIntegers() {
+        Map result = new HashMap();
+
+        result.put("key1", 123);
+        result.put("key2", 456);
+
+        return result;
+    }
+
+    @Test
+    public void test() {
+        PersonBuilder person = defaultPerson()
+                .withChildren(createPersonList(createPerson().name("Anders").hairColor(BLACK).children().defaults()))
+                .withAddress(buildAddress().withId(1))
+                .withOldAddress(buildAddress().withId(2))
+                .withOldAddresses(createAddressSet(createAddress().withId(1).withStreetName("Storgatan").withCity("Uppsala")))
+                .withGroupedAddresses(createPersonMap(createPersonEntry("abc", defaultPerson().withName("Nils"))))
+                .withListOfSetOfState(createList(createSet(createAddress().withId(3).withStreetName("Lillgatan").withCity("Boden").asMutableState())))
+                .withListOfSetOfMapOfIntegers(createList(createSet(mapOfIntegers())));
+
+        Map map = person.asMap();
+
+        PersonMutableState convertedPerson = createPersonFromMap(map).asMutableState();
+
+        assertThat(convertedPerson, equalTo(person.asMutableState()));
+        System.out.println(map);
+        System.out.println(convertedPerson);
+        System.out.println(person.asMutableState());
+    }
+
     @Test
     public void stringToMutableToBehaviourRepresentation() {
         PersonStringState stringState = buildStringPerson()
@@ -79,15 +123,16 @@ public class PersonTest {
             new Person(stringState.asImmutable());
             fail();
         } catch (InvalidPersonStateException e) {
-            assertThat(e.getMessage(), equalTo("[ValidationError{attribute='name', errorType='is_null'}, ValidationError{attribute='hairColor', errorType='is_null'}]"));
+            assertThat(e.getMessage(), equalTo("[ValidationError{attribute='name', errorType='NULL', errorMessage='Attribute 'name' can not be NULL'}, ValidationError{attribute='hairColor', errorType='NULL', errorMessage='Attribute 'hairColor' can not be NULL'}]"));
         }
     }
 
     private PersonBuilder defaultPerson() {
         return buildPerson()
+                .withId(99)
                 .withName("Carl")
                 .withHairColor("RED")
-                .withBirthday(new DateMidnight(1999, 9, 9))
+                .withBirthday(new DateMidnight(1999, 10, 11))
                 .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
     }
 }

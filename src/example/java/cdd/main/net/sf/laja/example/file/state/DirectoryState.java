@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class DirectoryState implements ImmutableState {
     public final String directoryPath;
@@ -97,6 +99,10 @@ public class DirectoryState implements ImmutableState {
             assertIsValid();
 
             return new DirectoryState(directoryPath);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public DirectoryStringState asStringState() {

@@ -17,6 +17,7 @@ import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -343,6 +344,24 @@ public class PersonState implements ImmutableState {
                     asImmutableMap(groupedAddresses, toImmutable),
                     asImmutableList(listOfSetOfState, toImmutableSet, toImmutable),
                     asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
+        }
+
+        public Map asMap() {
+            Map result = new LinkedHashMap();
+
+            result.put("id", id);
+            result.put("name", name);
+            result.put("birthday", birthday);
+            result.put("hairColor", hairColor);
+            result.put("children", asMutableList(children, toMap));
+            result.put("address", address != null ? address.asMap() : null);
+            result.put("oldAddress", oldAddress != null ? oldAddress.asMap() : null);
+            result.put("oldAddresses", asMutableSet(oldAddresses, toMap));
+            result.put("groupedAddresses", asMutableMap(groupedAddresses, toMap));
+            result.put("listOfSetOfState", asMutableList(listOfSetOfState, toMutableSet, toMap));
+            result.put("listOfSetOfMapOfIntegers", asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
+
+            return result;
         }
 
         public PersonStringState asStringState() {

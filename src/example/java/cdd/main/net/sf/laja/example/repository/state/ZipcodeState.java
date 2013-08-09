@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class ZipcodeState implements ImmutableState {
     public final int code;
@@ -95,6 +97,10 @@ public class ZipcodeState implements ImmutableState {
             assertIsValid();
 
             return new ZipcodeState(code);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public ZipcodeStringState asStringState() {

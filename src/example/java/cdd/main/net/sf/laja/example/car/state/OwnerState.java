@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class OwnerState implements ImmutableState {
     public final long ssn;
@@ -118,6 +120,10 @@ public class OwnerState implements ImmutableState {
             return new OwnerState(
                     ssn,
                     name);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public OwnerStringState asStringState() {

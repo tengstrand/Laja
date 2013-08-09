@@ -9,6 +9,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class AccountState implements ImmutableState {
     @Key public final double balance;
@@ -113,6 +115,10 @@ public class AccountState implements ImmutableState {
             assertIsValid();
 
             return new AccountState(balance);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public AccountStringState asStringState() {

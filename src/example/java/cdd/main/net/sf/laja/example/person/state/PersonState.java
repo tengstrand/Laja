@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class PersonState implements ImmutableState {
     public final String givenName;
@@ -153,6 +155,10 @@ public class PersonState implements ImmutableState {
                     surname,
                     heightInCentimeters,
                     weightInKilograms);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public PersonStringState asStringState() {

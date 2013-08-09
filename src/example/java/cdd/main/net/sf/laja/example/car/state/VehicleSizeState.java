@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class VehicleSizeState implements ImmutableState {
     public final int lengthInCentimeters;
@@ -95,6 +97,10 @@ public class VehicleSizeState implements ImmutableState {
             assertIsValid();
 
             return new VehicleSizeState(lengthInCentimeters);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public VehicleSizeStringState asStringState() {

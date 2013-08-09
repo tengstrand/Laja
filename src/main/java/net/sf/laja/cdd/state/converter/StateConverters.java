@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class StateConverters {
+    public static ToMapConverter toMap = new ToMapConverter();
     public static ToMutableConverter toMutable = new ToMutableConverter();
     public static ToMutableStringConverter toMutableString = new ToMutableStringConverter();
     public static ToMutableListConverter toMutableList = new ToMutableListConverter();

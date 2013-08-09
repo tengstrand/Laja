@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class FileState implements ImmutableState {
     public final String filename;
@@ -97,6 +99,10 @@ public class FileState implements ImmutableState {
             assertIsValid();
 
             return new FileState(filename);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public FileStringState asStringState() {

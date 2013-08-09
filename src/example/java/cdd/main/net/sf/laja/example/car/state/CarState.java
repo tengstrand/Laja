@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
 import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
@@ -161,6 +163,10 @@ public class CarState implements ImmutableState {
                     name,
                     owner != null ? owner.asImmutable() : null,
                     color);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public CarStringState asStringState() {

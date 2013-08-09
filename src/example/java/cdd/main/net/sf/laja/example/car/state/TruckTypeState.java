@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class TruckTypeState implements ImmutableState {
     public final int numberOfWheels;
@@ -118,6 +120,10 @@ public class TruckTypeState implements ImmutableState {
             return new TruckTypeState(
                     numberOfWheels,
                     truckName);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public TruckTypeStringState asStringState() {

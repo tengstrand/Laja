@@ -9,6 +9,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class AddressState implements ImmutableState {
     @Id public final int addressId;
@@ -171,6 +173,10 @@ public class AddressState implements ImmutableState {
                     streetName,
                     zipcode,
                     city);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public AddressStringState asStringState() {

@@ -9,6 +9,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
 import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
@@ -141,6 +143,10 @@ public class BusState implements ImmutableState {
                     name,
                     size != null ? size.asImmutable() : null,
                     weightInKilograms);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public BusStringState asStringState() {

@@ -11,6 +11,7 @@ import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -171,6 +172,16 @@ public class AddressState implements ImmutableState {
                     id,
                     streetName,
                     city);
+        }
+
+        public Map asMap() {
+            Map result = new LinkedHashMap();
+
+            result.put("id", id);
+            result.put("streetName", streetName);
+            result.put("city", city);
+
+            return result;
         }
 
         public AddressStringState asStringState() {

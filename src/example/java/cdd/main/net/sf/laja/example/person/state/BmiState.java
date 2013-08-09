@@ -8,6 +8,8 @@ import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.Map;
+
 @State
 public class BmiState implements ImmutableState {
     public final int heightInCentimeters;
@@ -116,6 +118,10 @@ public class BmiState implements ImmutableState {
             return new BmiState(
                     heightInCentimeters,
                     weightInKilograms);
+        }
+
+        public Map asMap() {
+            return null;
         }
 
         public BmiStringState asStringState() {
