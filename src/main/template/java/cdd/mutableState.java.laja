@@ -9,6 +9,15 @@
     public static class {mutableClass} implements MutableState {
 #end
 
+#macro copyConstructor()
+
+        public {mutableClass}({mutableClass} state) {
+  #foreach (attribute in attributes)
+            {attribute.name} = state.{attribute.name};
+  #end
+        }
+#end
+
 #macro emptyConstructor(emptyConstructorClass)
 
         public {emptyConstructorClass}() {
@@ -210,6 +219,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #attributes(tab, "")
   #emptyConstructor(mutableClass)
   #constructor(false, mutableClass, false, tab)
+  #copyConstructor()
   #getters(tab)
   #setters()
   #withMethods(mutableClass)
