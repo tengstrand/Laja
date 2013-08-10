@@ -170,6 +170,47 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
         }
 #end
 
+
+#macro mapConverters(type)
+  #if (type.isState)
+, toMap##
+  #else if (type.isMap)
+, toMutableMap{mapConverters(type.mapType.entry)}##
+  #else if (type.isList)
+, toMutableList{mapConverters(type.collectionType.type)}##
+  #else if (type.isSet)
+, toMutableSet{mapConverters(type.collectionType.type)}##
+  #end
+#end
+
+#macro mapStateAttribute()
+  #if (attribute.type.isMap)
+asMutableMap({attribute.name}{mapConverters(attribute.type.mapType.entry)})##
+  #else if (attribute.type.isList)
+asMutableList({attribute.name}{mapConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isSet)
+asMutableSet({attribute.name}{mapConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isState)
+{attribute.name} != null ? {attribute.name}.asMap() : null##
+  #else
+{attribute.name}##
+  #end
+#end
+
+#macro asMap()
+
+  #set (convertPrimitives = false)
+        public Map asMap() {
+            Map result = new LinkedHashMap();
+
+  #foreach (attribute in attributes)
+            result.put("{attribute.name}", {mapStateAttribute()});
+  #end
+
+            return result;
+        }
+#end
+
 #macro asStringState()
   #set (converter = suffix("converter"))
 
@@ -224,6 +265,7 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
   #setters()
   #withMethods(mutableClass)
   #asImmutable()
+  #asMap()
   #asStringState()
   #isValid()
   #rootValidate()
