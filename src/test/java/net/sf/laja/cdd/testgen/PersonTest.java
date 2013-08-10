@@ -95,24 +95,31 @@ public class PersonTest {
     }
 
     @Test
-    public void test() {
+    public void convertToMapAndBackAgain() {
         PersonBuilder person = defaultPerson()
                 .withChildren(createPersonList(createPerson().name("Anders").hairColor(BLACK).children().defaults()))
-                .withAddress(buildAddress().withId(1))
-                .withOldAddress(buildAddress().withId(2))
-                .withOldAddresses(createAddressSet(createAddress().withId(1).withStreetName("Storgatan").withCity("Uppsala")))
-                .withGroupedAddresses(createPersonMap(createPersonEntry("abc", defaultPerson().withName("Nils"))))
-                .withListOfSetOfState(createList(createSet(createAddress().withId(3).withStreetName("Lillgatan").withCity("Boden").asMutableState())))
+                .withAddress(buildAddress().withId(2).withStreetName("Third street").withCity("Stockholm"))
+                .withOldAddress(buildAddress().withId(3))
+                .withOldAddresses(createAddressSet(defaultAddress(4)))
+                .withGroupedAddresses(createAddressMap(createAddressEntry("abc", defaultAddress(5))))
+                .withListOfSetOfState(createList(createSet(defaultAddress(6).asMutableState())))
                 .withListOfSetOfMapOfIntegers(createList(createSet(mapOfIntegers())));
 
         Map map = person.asMap();
+        PersonMutableState mutableState = person.asMutableState();
+        PersonMutableState converted = createPersonFromMap(map).asMutableState();
 
-        PersonMutableState convertedPerson = createPersonFromMap(map).asMutableState();
-
-        assertThat(convertedPerson, equalTo(person.asMutableState()));
-        System.out.println(map);
-        System.out.println(convertedPerson);
-        System.out.println(person.asMutableState());
+        assertThat(converted.id, equalTo(mutableState.id));
+        assertThat(converted.name, equalTo(mutableState.name));
+        assertThat(converted.birthday, equalTo(mutableState.birthday));
+        assertThat(converted.hairColor, equalTo(mutableState.hairColor));
+        assertThat(converted.children, equalTo(mutableState.children));
+        assertThat(converted.address, equalTo(mutableState.address));
+        assertThat(converted.oldAddress, equalTo(mutableState.oldAddress));
+        assertThat(converted.oldAddresses, equalTo(mutableState.oldAddresses));
+        assertThat(converted.groupedAddresses, equalTo(mutableState.groupedAddresses));
+        assertThat(converted.listOfSetOfState, equalTo(mutableState.listOfSetOfState));
+        assertThat(converted.listOfSetOfMapOfIntegers, equalTo(mutableState.listOfSetOfMapOfIntegers));
     }
 
     @Test
@@ -127,12 +134,16 @@ public class PersonTest {
         }
     }
 
+    private AddressCreator defaultAddress(int id) {
+        return createAddress().withId(id).withStreetName("Second street").withCity("Uppsala");
+    }
+
     private PersonBuilder defaultPerson() {
         return buildPerson()
                 .withId(99)
                 .withName("Carl")
                 .withHairColor("RED")
                 .withBirthday(new DateMidnight(1999, 10, 11))
-                .withAddress(buildAddress().withCity("Stockholm").withStreetName("First street"));
+                .withAddress(buildAddress().withId(1).withStreetName("First street").withCity("Stockholm"));
     }
 }

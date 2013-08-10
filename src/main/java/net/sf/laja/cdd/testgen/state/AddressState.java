@@ -259,7 +259,7 @@ public class AddressState implements ImmutableState {
             Map map = (Map)from;
 
             int id = (Integer) map.get("id");
-            String streetName = (String) map.get("StreetName");
+            String streetName = (String) map.get("streetName");
             String city = (String) map.get("city");
 
             return new AddressMutableState(

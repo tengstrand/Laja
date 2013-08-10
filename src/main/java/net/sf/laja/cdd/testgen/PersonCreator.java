@@ -430,7 +430,7 @@ public class PersonCreator implements PersonCreatorMaker {
         public PersonBuilder withOldAddresses(Set<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
         public PersonBuilder withOldAddresses(AddressSetBuilder oldAddresses) { state.oldAddresses = oldAddresses.asMutableStateSet(); return this; }
         public PersonBuilder withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { state.groupedAddresses = groupedAddresses; return this; }
-        public PersonBuilder withGroupedAddresses(PersonMapBuilder groupedAddresses) { state.groupedAddresses = groupedAddresses.asMutableStateMap(); return this; }
+        public PersonBuilder withGroupedAddresses(AddressMapBuilder groupedAddresses) { state.groupedAddresses = groupedAddresses.asMutableStateMap(); return this; }
         public PersonBuilder withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { state.listOfSetOfState = listOfSetOfState; return this; }
         public PersonBuilder withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 

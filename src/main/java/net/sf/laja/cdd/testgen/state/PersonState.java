@@ -263,6 +263,7 @@ public class PersonState implements ImmutableState {
             children = state.children;
             address = state.address;
             oldAddress = state.oldAddress;
+            oldAddresses = state.oldAddresses;
             groupedAddresses = state.groupedAddresses;
             listOfSetOfState = state.listOfSetOfState;
             listOfSetOfMapOfIntegers = state.listOfSetOfMapOfIntegers;
