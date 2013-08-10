@@ -8,6 +8,8 @@
   #set (classvariable = state.classvariable)
   #set (mutableClass = state.mutableClass)
   #set (stringClass = state.stringClass)
+  #set (mapConverterClass = "MapTo{state.name}Converter")
+  #set (mapConverterVariable = "mapTo{state.name}Converter")
   #set (stringConverterClass = "{state.stringClass}Converter")
   #set (stringValidatorClass = "{state.stringClass}Validator")
   #set (attributes = state.attributes)
@@ -31,6 +33,7 @@ import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
 import net.sf.laja.cdd.state.StateValidator;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
@@ -406,6 +409,7 @@ asMutableSet({attribute.nameorgetter}{mutableConverters(attribute.type.collectio
 #end
 
 #import "{.}/mutableState.java.laja"
+#import "{.}/mapStateConverter.java.laja"
 #import "{.}/stringState.java.laja"
 #import "{.}/stringStateConverter.java.laja"
 #import "{.}/stringStateValidator.java.laja"
@@ -439,6 +443,7 @@ asMutableSet({attribute.nameorgetter}{mutableConverters(attribute.type.collectio
   #equalsValue(classname, tab)
   #toString(tab)
   #$mutable.mutableState()
+  #$mapState.mapStateConverter()
   #$string.stringState()
   #$converter.stringStateConverter()
   #$converter.stringStateValidator()

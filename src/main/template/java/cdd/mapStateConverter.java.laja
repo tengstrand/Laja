@@ -1,0 +1,23 @@
+#namespace mapState
+
+#macro mapStateConverter()
+
+    public static {mapConverterClass} {mapConverterVariable} = new {mapConverterClass}();
+
+    public static {mutableClass} to{mutableClass}(Map map) {
+        return {mapConverterVariable}.convert(map, 0);
+    }
+
+    public static class {mapConverterClass} implements StateConverter {
+
+        public {mutableClass} convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+  #foreach (attribute in attributes)
+            {attribute.type} {attribute.name} = ({attribute.type.asObject}) map.get("{attribute.name}");
+  #end
+
+            return null;
+        }
+    }
+#end
