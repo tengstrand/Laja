@@ -48,8 +48,16 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressCreator(new AddressMutableState());
     }
 
+    public static AddressCreator createAddress(Map address) {
+        return new AddressCreator(new AddressMutableState(toAddressMutableState(address)));
+    }
+
     public static AddressBuilder buildAddress() {
         return new AddressBuilder();
+    }
+
+    public static AddressBuilder buildAddress(Map address) {
+        return new AddressBuilder(new AddressMutableState(toAddressMutableState(address)));
     }
 
     public static AddressStringBuilder buildStringAddress() {

@@ -134,16 +134,6 @@ public class AddressState implements ImmutableState {
         public AddressMutableState() {
         }
 
-        public AddressMutableState(Map map) {
-            this(mapToAddressConverter.convert(map, 0));
-        }
-
-        private AddressMutableState(AddressMutableState state) {
-            id = state.id;
-            streetName = state.streetName;
-            city = state.city;
-        }
-
         public AddressMutableState(
                 int id,
                 String streetName,
@@ -151,6 +141,12 @@ public class AddressState implements ImmutableState {
             this.id = id;
             this.streetName = streetName;
             this.city = city;
+        }
+
+        public AddressMutableState(AddressMutableState state) {
+            id = state.id;
+            streetName = state.streetName;
+            city = state.city;
         }
 
         public int getId() { return id; }

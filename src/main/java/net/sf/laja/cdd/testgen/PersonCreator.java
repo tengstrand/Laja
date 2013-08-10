@@ -85,16 +85,16 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
-    public static PersonCreator createPersonFromMap(Map person) {
-        return new PersonCreator(new PersonMutableState(person));
+    public static PersonCreator createPerson(Map person) {
+        return new PersonCreator(new PersonMutableState(toPersonMutableState(person)));
     }
 
     public static PersonBuilder buildPerson() {
         return new PersonBuilder();
     }
 
-    public static PersonBuilder buildPersonFromMap(Map person) {
-        return new PersonBuilder(new PersonMutableState(person));
+    public static PersonBuilder buildPerson(Map person) {
+        return new PersonBuilder(new PersonMutableState(toPersonMutableState(person)));
     }
 
     public static PersonStringBuilder buildStringPerson() {

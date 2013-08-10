@@ -107,7 +107,7 @@ public class PersonTest {
 
         Map map = person.asMap();
         PersonMutableState mutableState = person.asMutableState();
-        PersonMutableState converted = createPersonFromMap(map).asMutableState();
+        PersonMutableState converted = createPerson(map).asMutableState();
 
         assertThat(converted.id, equalTo(mutableState.id));
         assertThat(converted.name, equalTo(mutableState.name));

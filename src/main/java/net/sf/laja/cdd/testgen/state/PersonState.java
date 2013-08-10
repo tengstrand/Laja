@@ -251,24 +251,6 @@ public class PersonState implements ImmutableState {
             listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
         }
 
-        public PersonMutableState(Map map) {
-            this(mapToPersonConverter.convert(map, 0));
-        }
-
-        private PersonMutableState(PersonMutableState state) {
-            id = state.id;
-            name = state.name;
-            birthday = state.birthday;
-            hairColor = state.hairColor;
-            children = state.children;
-            address = state.address;
-            oldAddress = state.oldAddress;
-            oldAddresses = state.oldAddresses;
-            groupedAddresses = state.groupedAddresses;
-            listOfSetOfState = state.listOfSetOfState;
-            listOfSetOfMapOfIntegers = state.listOfSetOfMapOfIntegers;
-        }
-
         public PersonMutableState(
                 int id,
                 String name,
@@ -292,6 +274,20 @@ public class PersonState implements ImmutableState {
             this.groupedAddresses = groupedAddresses;
             this.listOfSetOfState = listOfSetOfState;
             this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers;
+        }
+
+        public PersonMutableState(PersonMutableState state) {
+            id = state.id;
+            name = state.name;
+            birthday = state.birthday;
+            hairColor = state.hairColor;
+            children = state.children;
+            address = state.address;
+            oldAddress = state.oldAddress;
+            oldAddresses = state.oldAddresses;
+            groupedAddresses = state.groupedAddresses;
+            listOfSetOfState = state.listOfSetOfState;
+            listOfSetOfMapOfIntegers = state.listOfSetOfMapOfIntegers;
         }
 
         public int getId() { return id; }
