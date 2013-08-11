@@ -10,12 +10,12 @@
   #set (entryMethod = "{createMethod}Entry")
   #set (buildMethod = creator.buildMethod)
   #set (buildStringMethod = creator.buildStringMethod)
-  #set (statevariable = creator.statevariable)
   #set (asMethods = creator.asMethods)
   #set (parameters = creator.parameters)
   #set (newParameters = creator.newParameters)
   #set (isGeneratedCode = creator.isGeneratedCode)
   #set (state = creator.state)
+  #set (statevariable = creator.statevariable)
   #set (parameterClasses = creator.parameterClasses)
   #set (immutableState = "{state}State")
   #set (mutableState = "{state}MutableState")
@@ -129,11 +129,19 @@ import net.sf.laja.cdd.annotation.Parameters;
     }
   #end
 
+    public static {creator} {createMethod}(Map {statevariable}) {
+        return new {creator}(new {mutableState}(to{mutableState}({statevariable})));
+    }
+
 #end
 
 #macro build()
     public static {builder} {buildMethod}() {
         return new {builder}();
+    }
+
+    public static {builder} {buildMethod}(Map {statevariable}) {
+        return new {builder}(new {mutableState}(to{mutableState}({statevariable})));
     }
 
 #end
