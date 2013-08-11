@@ -1,5 +1,31 @@
 #namespace mapState
 
+#macro mapStateConverters(type)
+  #if (type.isState)
+, mapTo{type.state}Converter##
+  #else if (type.isMap)
+, toMutableMap{mapStateConverters(type.mapType.entry)}##
+  #else if (type.isList)
+, toMutableList{mapStateConverters(type.collectionType.type)}##
+  #else if (type.isSet)
+, toMutableSet{mapStateConverters(type.collectionType.type)}##
+  #end
+#end
+
+#macro mapStateAttribute()
+  #if (attribute.type.isMap)
+asMutableMap({attribute.name}{mapStateConverters(attribute.type.mapType.entry)})##
+  #else if (attribute.type.isList)
+asMutableList({attribute.name}{mapStateConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.type.isSet)
+asMutableSet({attribute.name}{mapStateConverters(attribute.type.collectionType.type)})##
+  #else if (attribute.isLeafState)
+{attribute.name} != null ? to{attribute.leafState}MutableState({attribute.name}) : null##
+  #else
+{attribute.name}##
+  #end
+#end
+
 #macro mapStateConverter()
 
     public static {mapConverterClass} {mapConverterVariable} = new {mapConverterClass}();
@@ -14,10 +40,20 @@
             Map map = (Map)from;
 
   #foreach (attribute in attributes)
-            {attribute.type} {attribute.name} = ({attribute.type.asObject}) map.get("{attribute.name}");
+            {attribute.type.mapName} {attribute.name} = ({attribute.type.mapObjectName}) map.get("{attribute.name}");
   #end
 
-            return null;
+            return new {mutableClass}(
+  #set (iterator = attributes.iterator)
+  #while (iterator.hasNext)
+    #set (attribute = iterator.next)
+    #if (iterator.hasNext)
+                    {mapStateAttribute()},
+    #else
+                    {mapStateAttribute()}
+            );
+    #end
+  #end
         }
     }
 #end

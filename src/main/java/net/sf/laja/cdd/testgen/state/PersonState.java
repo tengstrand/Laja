@@ -488,7 +488,8 @@ public class PersonState implements ImmutableState {
                     asMutableSet(oldAddresses, mapToAddressConverter),
                     asMutableMap(groupedAddresses, mapToAddressConverter),
                     asMutableList(listOfSetOfState, toMutableSet, mapToAddressConverter),
-                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
+                    asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap)
+            );
         }
     }
 

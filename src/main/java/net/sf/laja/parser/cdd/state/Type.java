@@ -231,6 +231,26 @@ public class Type implements StateParser.IType {
         return result;
     }
 
+    public String getMapName() {
+        if (isSet()) {
+            return "Set";
+        }
+        if (isList()) {
+            return "List";
+        }
+        if (isMap() || isState()) {
+            return "Map";
+        }
+        return name;
+    }
+
+    public String getMapObjectName() {
+        if (isState() || isCollectionOrMap()) {
+            return getMapName();
+        }
+        return net.sf.laja.parser.cdd.Type.typeAsObject(name);
+    }
+
     public String getTypeConversionMethod(String prefix) {
         if (isCollectionOrMap() || isString()) {
             return "";
