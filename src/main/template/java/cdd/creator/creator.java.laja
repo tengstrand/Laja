@@ -212,6 +212,13 @@ import net.sf.laja.cdd.annotation.Parameters;
 
 #end
 
+#macro asMap()
+    public Map asMap() {
+        return state.asMap();
+    }
+
+#end
+
 #macro asStringState()
         public {stringState} asStringState() {
             return state.asStringState();
@@ -338,6 +345,7 @@ public class {classname} implements {maker} {
     #constructor()
     #asState()
     #asMutableState()
+    #asMap()
     #asStringState()
     #withMethods()
     #assertIsValid()
