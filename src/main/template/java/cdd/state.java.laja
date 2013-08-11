@@ -189,15 +189,15 @@ public class {classname} implements ImmutableState {
 
 #macro mutableStateAttribute()
   #if (attribute.type.isMap)
-asMutableMap({attribute.nameorgetter}{mutableConverters(attribute.type.mapType.entry)})##
+asMutableMap({attribute.name}{mutableConverters(attribute.type.mapType.entry)})##
   #else if (attribute.type.isList)
-asMutableList({attribute.nameorgetter}{mutableConverters(attribute.type.collectionType.type)})##
+asMutableList({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isSet)
-asMutableSet({attribute.nameorgetter}{mutableConverters(attribute.type.collectionType.type)})##
+asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.type)})##
   #else if (attribute.type.isState)
-{attribute.nameorgetter} != null ? {attribute.nameorgetter}.asMutable() : null##
+{attribute.name} != null ? {attribute.name}.asMutable() : null##
   #else
-{attribute.nameorgetter}##
+{attribute.name}##
   #end
 #end
 
