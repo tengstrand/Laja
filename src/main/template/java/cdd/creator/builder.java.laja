@@ -41,6 +41,10 @@
             return state;
         }
 
+        public Map asMap() {
+            return state.asMap();
+        }
+
         public {stringState} asStringState() {
             return state.asStringState();
         }
