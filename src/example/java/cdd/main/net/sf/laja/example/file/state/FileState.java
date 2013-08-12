@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -89,6 +91,10 @@ public class FileState implements ImmutableState {
             this.filename = filename;
         }
 
+        public FileMutableState(FileMutableState state) {
+            filename = state.filename;
+        }
+
         public String getFilename() { return filename; }
 
         public void setFilename(String filename) { this.filename = filename; }
@@ -102,7 +108,11 @@ public class FileState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("filename", filename);
+
+            return result;
         }
 
         public FileStringState asStringState() {
@@ -165,6 +175,25 @@ public class FileState implements ImmutableState {
         }
     }
 
+    public static MapToFileConverter mapToFileConverter = new MapToFileConverter();
+
+    public static FileMutableState toFileMutableState(Map map) {
+        return mapToFileConverter.convert(map, 0);
+    }
+
+    public static class MapToFileConverter implements StateConverter {
+
+        public FileMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            String filename = (String) map.get("filename");
+
+            return new FileMutableState(
+                    filename
+            );
+        }
+    }
+
     @State(type = "string")
     public static class FileStringState implements StringState {
         public String filename;
@@ -193,6 +222,10 @@ public class FileState implements ImmutableState {
         public FileMutableState asMutable(FileStringStateConverter converter) {
             return new FileMutableState(
                     converter.toFilename(filename));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

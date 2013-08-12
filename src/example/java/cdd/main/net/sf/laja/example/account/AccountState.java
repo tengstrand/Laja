@@ -6,9 +6,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -105,6 +107,10 @@ public class AccountState implements ImmutableState {
             this.balance = balance;
         }
 
+        public AccountMutableState(AccountMutableState state) {
+            balance = state.balance;
+        }
+
         public double getBalance() { return balance; }
 
         public void setBalance(double balance) { this.balance = balance; }
@@ -118,7 +124,11 @@ public class AccountState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("balance", balance);
+
+            return result;
         }
 
         public AccountStringState asStringState() {
@@ -179,6 +189,25 @@ public class AccountState implements ImmutableState {
         }
     }
 
+    public static MapToAccountConverter mapToAccountConverter = new MapToAccountConverter();
+
+    public static AccountMutableState toAccountMutableState(Map map) {
+        return mapToAccountConverter.convert(map, 0);
+    }
+
+    public static class MapToAccountConverter implements StateConverter {
+
+        public AccountMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            double balance = (Double) map.get("balance");
+
+            return new AccountMutableState(
+                    balance
+            );
+        }
+    }
+
     @State(type = "string")
     public static class AccountStringState implements StringState {
         @Key public String balance;
@@ -207,6 +236,10 @@ public class AccountState implements ImmutableState {
         public AccountMutableState asMutable(AccountStringStateConverter converter) {
             return new AccountMutableState(
                     converter.toBalance(balance));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

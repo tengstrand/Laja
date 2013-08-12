@@ -8,18 +8,19 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
-import static net.sf.laja.example.repository.state.AddressState.AddressMutableState;
-import static net.sf.laja.example.repository.state.AddressState.AddressStringState;
+import static net.sf.laja.example.repository.state.AddressState.*;
 
 @State
 public class CustomerState implements ImmutableState {
@@ -200,6 +201,16 @@ public class CustomerState implements ImmutableState {
             this.oldAddresses = oldAddresses;
         }
 
+        public CustomerMutableState(CustomerMutableState state) {
+            ssn = state.ssn;
+            givenName = state.givenName;
+            surname = state.surname;
+            age = state.age;
+            pet = state.pet;
+            address = state.address;
+            oldAddresses = state.oldAddresses;
+        }
+
         public long getSsn() { return ssn; }
         public String getGivenName() { return givenName; }
         public String getSurname() { return surname; }
@@ -238,7 +249,17 @@ public class CustomerState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("ssn", ssn);
+            result.put("givenName", givenName);
+            result.put("surname", surname);
+            result.put("age", age);
+            result.put("pet", pet);
+            result.put("address", address != null ? address.asMap() : null);
+            result.put("oldAddresses", asMutableList(oldAddresses, toMap));
+
+            return result;
         }
 
         public CustomerStringState asStringState() {
@@ -318,6 +339,37 @@ public class CustomerState implements ImmutableState {
         }
     }
 
+    public static MapToCustomerConverter mapToCustomerConverter = new MapToCustomerConverter();
+
+    public static CustomerMutableState toCustomerMutableState(Map map) {
+        return mapToCustomerConverter.convert(map, 0);
+    }
+
+    public static class MapToCustomerConverter implements StateConverter {
+
+        public CustomerMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            long ssn = (Long) map.get("ssn");
+            String givenName = (String) map.get("givenName");
+            String surname = (String) map.get("surname");
+            int age = (Integer) map.get("age");
+            String pet = (String) map.get("pet");
+            Map address = (Map) map.get("address");
+            List oldAddresses = (List) map.get("oldAddresses");
+
+            return new CustomerMutableState(
+                    ssn,
+                    givenName,
+                    surname,
+                    age,
+                    pet,
+                    address != null ? toAddressMutableState(address) : null,
+                    asMutableList(oldAddresses, mapToAddressConverter)
+            );
+        }
+    }
+
     @State(type = "string")
     public static class CustomerStringState implements StringState {
         @Key public String ssn;
@@ -390,6 +442,10 @@ public class CustomerState implements ImmutableState {
                     converter.toPet(pet),
                     converter.toAddress(address),
                     converter.toOldAddresses(oldAddresses));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

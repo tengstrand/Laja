@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -105,6 +107,11 @@ public class TruckTypeState implements ImmutableState {
             this.truckName = truckName;
         }
 
+        public TruckTypeMutableState(TruckTypeMutableState state) {
+            numberOfWheels = state.numberOfWheels;
+            truckName = state.truckName;
+        }
+
         public int getNumberOfWheels() { return numberOfWheels; }
         public String getTruckName() { return truckName; }
 
@@ -123,7 +130,12 @@ public class TruckTypeState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("numberOfWheels", numberOfWheels);
+            result.put("truckName", truckName);
+
+            return result;
         }
 
         public TruckTypeStringState asStringState() {
@@ -191,6 +203,27 @@ public class TruckTypeState implements ImmutableState {
         }
     }
 
+    public static MapToTruckTypeConverter mapToTruckTypeConverter = new MapToTruckTypeConverter();
+
+    public static TruckTypeMutableState toTruckTypeMutableState(Map map) {
+        return mapToTruckTypeConverter.convert(map, 0);
+    }
+
+    public static class MapToTruckTypeConverter implements StateConverter {
+
+        public TruckTypeMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int numberOfWheels = (Integer) map.get("numberOfWheels");
+            String truckName = (String) map.get("truckName");
+
+            return new TruckTypeMutableState(
+                    numberOfWheels,
+                    truckName
+            );
+        }
+    }
+
     @State(type = "string")
     public static class TruckTypeStringState implements StringState {
         public String numberOfWheels;
@@ -227,6 +260,10 @@ public class TruckTypeState implements ImmutableState {
             return new TruckTypeMutableState(
                     converter.toNumberOfWheels(numberOfWheels),
                     converter.toTruckName(truckName));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

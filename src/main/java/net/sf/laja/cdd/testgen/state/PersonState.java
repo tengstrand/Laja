@@ -603,6 +603,10 @@ public class PersonState implements ImmutableState {
                     converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers));
         }
 
+        public Map asMap() {
+            return asMutable().asMap();
+        }
+
         public boolean isValid() {
             return validate().isValid();
         }

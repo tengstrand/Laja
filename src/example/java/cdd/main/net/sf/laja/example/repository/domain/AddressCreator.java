@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.repository.state.AddressState.InvalidAddressStateException;
+import static net.sf.laja.example.repository.state.AddressState.toAddressMutableState;
 
 @Creator
 public class AddressCreator implements AddressCreatorMaker {
@@ -42,8 +43,16 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressCreator(new AddressMutableState()).new AddressFactory();
     }
 
+    public static AddressCreator createAddress(Map address) {
+        return new AddressCreator(new AddressMutableState(toAddressMutableState(address)));
+    }
+
     public static AddressBuilder buildAddress() {
         return new AddressBuilder();
+    }
+
+    public static AddressBuilder buildAddress(Map address) {
+        return new AddressBuilder(new AddressMutableState(toAddressMutableState(address)));
     }
 
     public static AddressStringBuilder buildStringAddress() {
@@ -122,13 +131,17 @@ public class AddressCreator implements AddressCreatorMaker {
         return state;
     }
 
-        public AddressStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public AddressStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public AddressStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public AddressStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -264,6 +277,10 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public AddressStringState asStringState() {

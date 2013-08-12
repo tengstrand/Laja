@@ -314,6 +314,10 @@ public class AddressState implements ImmutableState {
                     converter.toCity(city));
         }
 
+        public Map asMap() {
+            return asMutable().asMap();
+        }
+
         public boolean isValid() {
             return validate().isValid();
         }

@@ -34,8 +34,16 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerCreator(new OwnerMutableState()).new OwnerFactory();
     }
 
+    public static OwnerCreator createOwner(Map owner) {
+        return new OwnerCreator(new OwnerMutableState(toOwnerMutableState(owner)));
+    }
+
     public static OwnerBuilder buildOwner() {
         return new OwnerBuilder();
+    }
+
+    public static OwnerBuilder buildOwner(Map owner) {
+        return new OwnerBuilder(new OwnerMutableState(toOwnerMutableState(owner)));
     }
 
     public static OwnerStringBuilder buildStringOwner() {
@@ -101,13 +109,17 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return state;
     }
 
-        public OwnerStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public OwnerStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public OwnerStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public OwnerStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -236,6 +248,10 @@ public class OwnerCreator implements OwnerCreatorMaker {
 
         public OwnerMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public OwnerStringState asStringState() {

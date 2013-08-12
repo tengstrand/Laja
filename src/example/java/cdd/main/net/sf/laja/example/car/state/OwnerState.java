@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -105,6 +107,11 @@ public class OwnerState implements ImmutableState {
             this.name = name;
         }
 
+        public OwnerMutableState(OwnerMutableState state) {
+            ssn = state.ssn;
+            name = state.name;
+        }
+
         public long getSsn() { return ssn; }
         public String getName() { return name; }
 
@@ -123,7 +130,12 @@ public class OwnerState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("ssn", ssn);
+            result.put("name", name);
+
+            return result;
         }
 
         public OwnerStringState asStringState() {
@@ -191,6 +203,27 @@ public class OwnerState implements ImmutableState {
         }
     }
 
+    public static MapToOwnerConverter mapToOwnerConverter = new MapToOwnerConverter();
+
+    public static OwnerMutableState toOwnerMutableState(Map map) {
+        return mapToOwnerConverter.convert(map, 0);
+    }
+
+    public static class MapToOwnerConverter implements StateConverter {
+
+        public OwnerMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            long ssn = (Long) map.get("ssn");
+            String name = (String) map.get("name");
+
+            return new OwnerMutableState(
+                    ssn,
+                    name
+            );
+        }
+    }
+
     @State(type = "string")
     public static class OwnerStringState implements StringState {
         public String ssn;
@@ -227,6 +260,10 @@ public class OwnerState implements ImmutableState {
             return new OwnerMutableState(
                     converter.toSsn(ssn),
                     converter.toName(name));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

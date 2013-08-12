@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -132,6 +134,13 @@ public class PersonState implements ImmutableState {
             this.weightInKilograms = weightInKilograms;
         }
 
+        public PersonMutableState(PersonMutableState state) {
+            givenName = state.givenName;
+            surname = state.surname;
+            heightInCentimeters = state.heightInCentimeters;
+            weightInKilograms = state.weightInKilograms;
+        }
+
         public String getGivenName() { return givenName; }
         public String getSurname() { return surname; }
         public int getHeightInCentimeters() { return heightInCentimeters; }
@@ -158,7 +167,14 @@ public class PersonState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("givenName", givenName);
+            result.put("surname", surname);
+            result.put("heightInCentimeters", heightInCentimeters);
+            result.put("weightInKilograms", weightInKilograms);
+
+            return result;
         }
 
         public PersonStringState asStringState() {
@@ -235,6 +251,31 @@ public class PersonState implements ImmutableState {
         }
     }
 
+    public static MapToPersonConverter mapToPersonConverter = new MapToPersonConverter();
+
+    public static PersonMutableState toPersonMutableState(Map map) {
+        return mapToPersonConverter.convert(map, 0);
+    }
+
+    public static class MapToPersonConverter implements StateConverter {
+
+        public PersonMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            String givenName = (String) map.get("givenName");
+            String surname = (String) map.get("surname");
+            int heightInCentimeters = (Integer) map.get("heightInCentimeters");
+            int weightInKilograms = (Integer) map.get("weightInKilograms");
+
+            return new PersonMutableState(
+                    givenName,
+                    surname,
+                    heightInCentimeters,
+                    weightInKilograms
+            );
+        }
+    }
+
     @State(type = "string")
     public static class PersonStringState implements StringState {
         public String givenName;
@@ -285,6 +326,10 @@ public class PersonState implements ImmutableState {
                     converter.toSurname(surname),
                     converter.toHeightInCentimeters(heightInCentimeters),
                     converter.toWeightInKilograms(weightInKilograms));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

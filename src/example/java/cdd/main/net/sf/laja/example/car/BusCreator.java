@@ -43,8 +43,16 @@ public class BusCreator implements BusCreatorMaker {
         return new BusCreator(new BusMutableState()).new BusFactory();
     }
 
+    public static BusCreator createBus(Map bus) {
+        return new BusCreator(new BusMutableState(toBusMutableState(bus)));
+    }
+
     public static BusBuilder buildBus() {
         return new BusBuilder();
+    }
+
+    public static BusBuilder buildBus(Map bus) {
+        return new BusBuilder(new BusMutableState(toBusMutableState(bus)));
     }
 
     public static BusStringBuilder buildStringBus() {
@@ -120,13 +128,17 @@ public class BusCreator implements BusCreatorMaker {
         return state;
     }
 
-        public BusStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public BusStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public BusStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public BusStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -262,6 +274,10 @@ public class BusCreator implements BusCreatorMaker {
 
         public BusMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public BusStringState asStringState() {

@@ -24,6 +24,8 @@
         public {builder} {attribute.withMethod}({attribute.type.leafState}ListBuilder {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableStateList(); return this; }
           #else if (attribute.type.isStateSet)
         public {builder} {attribute.withMethod}({attribute.type.leafState}SetBuilder {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableStateSet(); return this; }
+          #else if (attribute.type.isStateMap)
+        public {builder} {attribute.withMethod}({attribute.type.leafState}MapBuilder {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableStateMap(); return this; }
           #end
         #end
 

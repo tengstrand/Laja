@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -103,6 +105,11 @@ public class BmiState implements ImmutableState {
             this.weightInKilograms = weightInKilograms;
         }
 
+        public BmiMutableState(BmiMutableState state) {
+            heightInCentimeters = state.heightInCentimeters;
+            weightInKilograms = state.weightInKilograms;
+        }
+
         public int getHeightInCentimeters() { return heightInCentimeters; }
         public int getWeightInKilograms() { return weightInKilograms; }
 
@@ -121,7 +128,12 @@ public class BmiState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("heightInCentimeters", heightInCentimeters);
+            result.put("weightInKilograms", weightInKilograms);
+
+            return result;
         }
 
         public BmiStringState asStringState() {
@@ -187,6 +199,27 @@ public class BmiState implements ImmutableState {
         }
     }
 
+    public static MapToBmiConverter mapToBmiConverter = new MapToBmiConverter();
+
+    public static BmiMutableState toBmiMutableState(Map map) {
+        return mapToBmiConverter.convert(map, 0);
+    }
+
+    public static class MapToBmiConverter implements StateConverter {
+
+        public BmiMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int heightInCentimeters = (Integer) map.get("heightInCentimeters");
+            int weightInKilograms = (Integer) map.get("weightInKilograms");
+
+            return new BmiMutableState(
+                    heightInCentimeters,
+                    weightInKilograms
+            );
+        }
+    }
+
     @State(type = "string")
     public static class BmiStringState implements StringState {
         public String heightInCentimeters;
@@ -223,6 +256,10 @@ public class BmiState implements ImmutableState {
             return new BmiMutableState(
                     converter.toHeightInCentimeters(heightInCentimeters),
                     converter.toWeightInKilograms(weightInKilograms));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

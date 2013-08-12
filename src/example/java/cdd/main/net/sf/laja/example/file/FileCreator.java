@@ -38,8 +38,16 @@ public class FileCreator implements FileCreatorMaker {
         return new FileCreator(new FileMutableState()).new FileFactory();
     }
 
+    public static FileCreator createFile(Map file) {
+        return new FileCreator(new FileMutableState(toFileMutableState(file)));
+    }
+
     public static FileBuilder buildFile() {
         return new FileBuilder();
+    }
+
+    public static FileBuilder buildFile(Map file) {
+        return new FileBuilder(new FileMutableState(toFileMutableState(file)));
     }
 
     public static FileStringBuilder buildStringFile() {
@@ -97,13 +105,17 @@ public class FileCreator implements FileCreatorMaker {
         return state;
     }
 
-        public FileStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public FileStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public FileStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public FileStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -235,6 +247,10 @@ public class FileCreator implements FileCreatorMaker {
 
         public FileMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public FileStringState asStringState() {

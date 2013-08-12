@@ -47,8 +47,16 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerCreator(new CustomerMutableState()).new CustomerFactory();
     }
 
+    public static CustomerCreator createCustomer(Map customer) {
+        return new CustomerCreator(new CustomerMutableState(toCustomerMutableState(customer)));
+    }
+
     public static CustomerBuilder buildCustomer() {
         return new CustomerBuilder();
+    }
+
+    public static CustomerBuilder buildCustomer(Map customer) {
+        return new CustomerBuilder(new CustomerMutableState(toCustomerMutableState(customer)));
     }
 
     public static CustomerStringBuilder buildStringCustomer() {
@@ -135,13 +143,17 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return state;
     }
 
-        public CustomerStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public CustomerStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public CustomerStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public CustomerStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -285,6 +297,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         public CustomerBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
         public CustomerBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
         public CustomerBuilder withOldAddresses(List<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
+        public CustomerBuilder withOldAddresses(AddressListBuilder oldAddresses) { state.oldAddresses = oldAddresses.asMutableStateList(); return this; }
 
         public Customer asCustomer() {
             return new Customer(state.asImmutable());
@@ -304,6 +317,10 @@ public class CustomerCreator implements CustomerCreatorMaker {
 
         public CustomerMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public CustomerStringState asStringState() {

@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -87,6 +89,10 @@ public class ZipcodeState implements ImmutableState {
             this.code = code;
         }
 
+        public ZipcodeMutableState(ZipcodeMutableState state) {
+            code = state.code;
+        }
+
         public int getCode() { return code; }
 
         public void setCode(int code) { this.code = code; }
@@ -100,7 +106,11 @@ public class ZipcodeState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("code", code);
+
+            return result;
         }
 
         public ZipcodeStringState asStringState() {
@@ -161,6 +171,25 @@ public class ZipcodeState implements ImmutableState {
         }
     }
 
+    public static MapToZipcodeConverter mapToZipcodeConverter = new MapToZipcodeConverter();
+
+    public static ZipcodeMutableState toZipcodeMutableState(Map map) {
+        return mapToZipcodeConverter.convert(map, 0);
+    }
+
+    public static class MapToZipcodeConverter implements StateConverter {
+
+        public ZipcodeMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int code = (Integer) map.get("code");
+
+            return new ZipcodeMutableState(
+                    code
+            );
+        }
+    }
+
     @State(type = "string")
     public static class ZipcodeStringState implements StringState {
         public String code;
@@ -189,6 +218,10 @@ public class ZipcodeState implements ImmutableState {
         public ZipcodeMutableState asMutable(ZipcodeStringStateConverter converter) {
             return new ZipcodeMutableState(
                     converter.toCode(code));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

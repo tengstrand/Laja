@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -89,6 +91,10 @@ public class DirectoryState implements ImmutableState {
             this.directoryPath = directoryPath;
         }
 
+        public DirectoryMutableState(DirectoryMutableState state) {
+            directoryPath = state.directoryPath;
+        }
+
         public String getDirectoryPath() { return directoryPath; }
 
         public void setDirectoryPath(String directoryPath) { this.directoryPath = directoryPath; }
@@ -102,7 +108,11 @@ public class DirectoryState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("directoryPath", directoryPath);
+
+            return result;
         }
 
         public DirectoryStringState asStringState() {
@@ -165,6 +175,25 @@ public class DirectoryState implements ImmutableState {
         }
     }
 
+    public static MapToDirectoryConverter mapToDirectoryConverter = new MapToDirectoryConverter();
+
+    public static DirectoryMutableState toDirectoryMutableState(Map map) {
+        return mapToDirectoryConverter.convert(map, 0);
+    }
+
+    public static class MapToDirectoryConverter implements StateConverter {
+
+        public DirectoryMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            String directoryPath = (String) map.get("directoryPath");
+
+            return new DirectoryMutableState(
+                    directoryPath
+            );
+        }
+    }
+
     @State(type = "string")
     public static class DirectoryStringState implements StringState {
         public String directoryPath;
@@ -193,6 +222,10 @@ public class DirectoryState implements ImmutableState {
         public DirectoryMutableState asMutable(DirectoryStringStateConverter converter) {
             return new DirectoryMutableState(
                     converter.toDirectoryPath(directoryPath));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

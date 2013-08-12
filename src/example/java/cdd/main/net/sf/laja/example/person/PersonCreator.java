@@ -34,8 +34,16 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
+    public static PersonCreator createPerson(Map person) {
+        return new PersonCreator(new PersonMutableState(toPersonMutableState(person)));
+    }
+
     public static PersonBuilder buildPerson() {
         return new PersonBuilder();
+    }
+
+    public static PersonBuilder buildPerson(Map person) {
+        return new PersonBuilder(new PersonMutableState(toPersonMutableState(person)));
     }
 
     public static PersonStringBuilder buildStringPerson() {
@@ -117,13 +125,17 @@ public class PersonCreator implements PersonCreatorMaker {
         return state;
     }
 
-        public PersonStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public PersonStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public PersonStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public PersonStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -254,6 +266,10 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public PersonStringState asStringState() {

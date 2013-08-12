@@ -34,8 +34,16 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return new TruckTypeCreator(new TruckTypeMutableState()).new TruckTypeFactory();
     }
 
+    public static TruckTypeCreator createTruckType(Map truckType) {
+        return new TruckTypeCreator(new TruckTypeMutableState(toTruckTypeMutableState(truckType)));
+    }
+
     public static TruckTypeBuilder buildTruckType() {
         return new TruckTypeBuilder();
+    }
+
+    public static TruckTypeBuilder buildTruckType(Map truckType) {
+        return new TruckTypeBuilder(new TruckTypeMutableState(toTruckTypeMutableState(truckType)));
     }
 
     public static TruckTypeStringBuilder buildStringTruckType() {
@@ -101,13 +109,17 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return state;
     }
 
-        public TruckTypeStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public TruckTypeStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public TruckTypeStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public TruckTypeStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -236,6 +248,10 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
 
         public TruckTypeMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public TruckTypeStringState asStringState() {

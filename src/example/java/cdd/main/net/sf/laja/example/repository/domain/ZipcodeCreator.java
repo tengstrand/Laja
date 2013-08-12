@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static net.sf.laja.example.repository.state.ZipcodeState.InvalidZipcodeStateException;
+import static net.sf.laja.example.repository.state.ZipcodeState.toZipcodeMutableState;
 
 @Creator
 public class ZipcodeCreator implements ZipcodeCreatorMaker {
@@ -36,8 +37,16 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeCreator(new ZipcodeMutableState()).new ZipcodeFactory();
     }
 
+    public static ZipcodeCreator createZipcode(Map zipcode) {
+        return new ZipcodeCreator(new ZipcodeMutableState(toZipcodeMutableState(zipcode)));
+    }
+
     public static ZipcodeBuilder buildZipcode() {
         return new ZipcodeBuilder();
+    }
+
+    public static ZipcodeBuilder buildZipcode(Map zipcode) {
+        return new ZipcodeBuilder(new ZipcodeMutableState(toZipcodeMutableState(zipcode)));
     }
 
     public static ZipcodeStringBuilder buildStringZipcode() {
@@ -95,13 +104,17 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return state;
     }
 
-        public ZipcodeStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public ZipcodeStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public ZipcodeStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public ZipcodeStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -229,6 +242,10 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
 
         public ZipcodeMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public ZipcodeStringState asStringState() {

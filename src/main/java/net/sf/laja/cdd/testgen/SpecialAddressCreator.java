@@ -34,8 +34,16 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return new SpecialAddressCreator(new AddressMutableState());
     }
 
+    public static SpecialAddressCreator createSpecialAddress(Map address) {
+        return new SpecialAddressCreator(new AddressMutableState(toAddressMutableState(address)));
+    }
+
     public static AddressBuilder buildSpecialAddress() {
         return new AddressBuilder();
+    }
+
+    public static AddressBuilder buildSpecialAddress(Map address) {
+        return new AddressBuilder(new AddressMutableState(toAddressMutableState(address)));
     }
 
     public static AddressStringBuilder buildStringSpecialAddress() {
@@ -77,13 +85,17 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return state;
     }
 
-        public AddressStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public AddressStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public AddressStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public AddressStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -228,6 +240,10 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
 
         public AddressMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public AddressStringState asStringState() {

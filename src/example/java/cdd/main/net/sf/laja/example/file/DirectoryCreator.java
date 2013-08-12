@@ -34,8 +34,16 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectoryCreator(new DirectoryMutableState()).new DirectoryFactory();
     }
 
+    public static DirectoryCreator createDirectory(Map directory) {
+        return new DirectoryCreator(new DirectoryMutableState(toDirectoryMutableState(directory)));
+    }
+
     public static DirectoryBuilder buildDirectory() {
         return new DirectoryBuilder();
+    }
+
+    public static DirectoryBuilder buildDirectory(Map directory) {
+        return new DirectoryBuilder(new DirectoryMutableState(toDirectoryMutableState(directory)));
     }
 
     public static DirectoryStringBuilder buildStringDirectory() {
@@ -93,13 +101,17 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return state;
     }
 
-        public DirectoryStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public DirectoryStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public DirectoryStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public DirectoryStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -227,6 +239,10 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
 
         public DirectoryMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public DirectoryStringState asStringState() {

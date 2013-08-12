@@ -5,16 +5,16 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.example.car.state.OwnerState.OwnerMutableState;
-import static net.sf.laja.example.car.state.OwnerState.OwnerStringState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
+import static net.sf.laja.example.car.state.OwnerState.*;
+import static net.sf.laja.example.car.state.VehicleSizeState.*;
 
 @State
 public class CarState implements ImmutableState {
@@ -140,6 +140,13 @@ public class CarState implements ImmutableState {
             this.color = color;
         }
 
+        public CarMutableState(CarMutableState state) {
+            size = state.size;
+            name = state.name;
+            owner = state.owner;
+            color = state.color;
+        }
+
         public VehicleSizeMutableState getSize() { return size; }
         public String getName() { return name; }
         public OwnerMutableState getOwner() { return owner; }
@@ -166,7 +173,14 @@ public class CarState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("size", size != null ? size.asMap() : null);
+            result.put("name", name);
+            result.put("owner", owner != null ? owner.asMap() : null);
+            result.put("color", color);
+
+            return result;
         }
 
         public CarStringState asStringState() {
@@ -248,6 +262,31 @@ public class CarState implements ImmutableState {
         }
     }
 
+    public static MapToCarConverter mapToCarConverter = new MapToCarConverter();
+
+    public static CarMutableState toCarMutableState(Map map) {
+        return mapToCarConverter.convert(map, 0);
+    }
+
+    public static class MapToCarConverter implements StateConverter {
+
+        public CarMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            Map size = (Map) map.get("size");
+            String name = (String) map.get("name");
+            Map owner = (Map) map.get("owner");
+            String color = (String) map.get("color");
+
+            return new CarMutableState(
+                    size != null ? toVehicleSizeMutableState(size) : null,
+                    name,
+                    owner != null ? toOwnerMutableState(owner) : null,
+                    color
+            );
+        }
+    }
+
     @State(type = "string")
     public static class CarStringState implements StringState {
         public VehicleSizeStringState size;
@@ -298,6 +337,10 @@ public class CarState implements ImmutableState {
                     converter.toName(name),
                     converter.toOwner(owner),
                     converter.toColor(color));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

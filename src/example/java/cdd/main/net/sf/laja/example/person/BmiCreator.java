@@ -34,8 +34,16 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiCreator(new BmiMutableState()).new BmiFactory();
     }
 
+    public static BmiCreator createBmi(Map bmi) {
+        return new BmiCreator(new BmiMutableState(toBmiMutableState(bmi)));
+    }
+
     public static BmiBuilder buildBmi() {
         return new BmiBuilder();
+    }
+
+    public static BmiBuilder buildBmi(Map bmi) {
+        return new BmiBuilder(new BmiMutableState(toBmiMutableState(bmi)));
     }
 
     public static BmiStringBuilder buildStringBmi() {
@@ -101,13 +109,17 @@ public class BmiCreator implements BmiCreatorMaker {
         return state;
     }
 
-        public BmiStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public BmiStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public BmiStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public BmiStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -236,6 +248,10 @@ public class BmiCreator implements BmiCreatorMaker {
 
         public BmiMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public BmiStringState asStringState() {

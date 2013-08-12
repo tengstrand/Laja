@@ -5,9 +5,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -87,6 +89,10 @@ public class VehicleSizeState implements ImmutableState {
             this.lengthInCentimeters = lengthInCentimeters;
         }
 
+        public VehicleSizeMutableState(VehicleSizeMutableState state) {
+            lengthInCentimeters = state.lengthInCentimeters;
+        }
+
         public int getLengthInCentimeters() { return lengthInCentimeters; }
 
         public void setLengthInCentimeters(int lengthInCentimeters) { this.lengthInCentimeters = lengthInCentimeters; }
@@ -100,7 +106,11 @@ public class VehicleSizeState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("lengthInCentimeters", lengthInCentimeters);
+
+            return result;
         }
 
         public VehicleSizeStringState asStringState() {
@@ -161,6 +171,25 @@ public class VehicleSizeState implements ImmutableState {
         }
     }
 
+    public static MapToVehicleSizeConverter mapToVehicleSizeConverter = new MapToVehicleSizeConverter();
+
+    public static VehicleSizeMutableState toVehicleSizeMutableState(Map map) {
+        return mapToVehicleSizeConverter.convert(map, 0);
+    }
+
+    public static class MapToVehicleSizeConverter implements StateConverter {
+
+        public VehicleSizeMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int lengthInCentimeters = (Integer) map.get("lengthInCentimeters");
+
+            return new VehicleSizeMutableState(
+                    lengthInCentimeters
+            );
+        }
+    }
+
     @State(type = "string")
     public static class VehicleSizeStringState implements StringState {
         public String lengthInCentimeters;
@@ -189,6 +218,10 @@ public class VehicleSizeState implements ImmutableState {
         public VehicleSizeMutableState asMutable(VehicleSizeStringStateConverter converter) {
             return new VehicleSizeMutableState(
                     converter.toLengthInCentimeters(lengthInCentimeters));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

@@ -34,8 +34,16 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeCreator(new VehicleSizeMutableState()).new VehicleSizeFactory();
     }
 
+    public static VehicleSizeCreator createVehicleSize(Map vehicleSize) {
+        return new VehicleSizeCreator(new VehicleSizeMutableState(toVehicleSizeMutableState(vehicleSize)));
+    }
+
     public static VehicleSizeBuilder buildVehicleSize() {
         return new VehicleSizeBuilder();
+    }
+
+    public static VehicleSizeBuilder buildVehicleSize(Map vehicleSize) {
+        return new VehicleSizeBuilder(new VehicleSizeMutableState(toVehicleSizeMutableState(vehicleSize)));
     }
 
     public static VehicleSizeStringBuilder buildStringVehicleSize() {
@@ -93,13 +101,17 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return state;
     }
 
-        public VehicleSizeStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public VehicleSizeStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public VehicleSizeStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public VehicleSizeStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -227,6 +239,10 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
 
         public VehicleSizeMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public VehicleSizeStringState asStringState() {

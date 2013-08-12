@@ -254,13 +254,13 @@ public class PersonCreator implements PersonCreatorMaker {
         return state.asMap();
     }
 
-        public PersonStringState asStringState() {
-            return state.asStringState();
-        }
+    public PersonStringState asStringState() {
+        return state.asStringState();
+    }
 
-        public PersonStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public PersonStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 

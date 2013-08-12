@@ -99,13 +99,17 @@ public class AddressCreator implements AddressCreatorMaker {
         return state;
     }
 
-        public AddressStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public AddressStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public AddressStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public AddressStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -264,6 +268,10 @@ public class AddressCreator implements AddressCreatorMaker {
 
         public AddressMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public AddressStringState asStringState() {

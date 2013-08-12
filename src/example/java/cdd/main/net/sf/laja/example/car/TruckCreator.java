@@ -40,8 +40,16 @@ public class TruckCreator implements TruckCreatorMaker {
         return new TruckCreator(new TruckMutableState()).new TruckFactory();
     }
 
+    public static TruckCreator createTruck(Map truck) {
+        return new TruckCreator(new TruckMutableState(toTruckMutableState(truck)));
+    }
+
     public static TruckBuilder buildTruck() {
         return new TruckBuilder();
+    }
+
+    public static TruckBuilder buildTruck(Map truck) {
+        return new TruckBuilder(new TruckMutableState(toTruckMutableState(truck)));
     }
 
     public static TruckStringBuilder buildStringTruck() {
@@ -150,13 +158,17 @@ public class TruckCreator implements TruckCreatorMaker {
         return state;
     }
 
-        public TruckStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public TruckStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public TruckStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public TruckStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -291,6 +303,10 @@ public class TruckCreator implements TruckCreatorMaker {
 
         public TruckMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public TruckStringState asStringState() {

@@ -6,9 +6,11 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @State
@@ -150,6 +152,13 @@ public class AddressState implements ImmutableState {
             this.city = city;
         }
 
+        public AddressMutableState(AddressMutableState state) {
+            addressId = state.addressId;
+            streetName = state.streetName;
+            zipcode = state.zipcode;
+            city = state.city;
+        }
+
         public int getAddressId() { return addressId; }
         public String getStreetName() { return streetName; }
         public int getZipcode() { return zipcode; }
@@ -176,7 +185,14 @@ public class AddressState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("addressId", addressId);
+            result.put("streetName", streetName);
+            result.put("zipcode", zipcode);
+            result.put("city", city);
+
+            return result;
         }
 
         public AddressStringState asStringState() {
@@ -247,6 +263,31 @@ public class AddressState implements ImmutableState {
         }
     }
 
+    public static MapToAddressConverter mapToAddressConverter = new MapToAddressConverter();
+
+    public static AddressMutableState toAddressMutableState(Map map) {
+        return mapToAddressConverter.convert(map, 0);
+    }
+
+    public static class MapToAddressConverter implements StateConverter {
+
+        public AddressMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            int addressId = (Integer) map.get("addressId");
+            String streetName = (String) map.get("streetName");
+            int zipcode = (Integer) map.get("zipcode");
+            String city = (String) map.get("city");
+
+            return new AddressMutableState(
+                    addressId,
+                    streetName,
+                    zipcode,
+                    city
+            );
+        }
+    }
+
     @State(type = "string")
     public static class AddressStringState implements StringState {
         @Id public String addressId;
@@ -297,6 +338,10 @@ public class AddressState implements ImmutableState {
                     converter.toStreetName(streetName),
                     converter.toZipcode(zipcode),
                     converter.toCity(city));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

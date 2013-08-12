@@ -6,14 +6,15 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
+import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeMutableState;
-import static net.sf.laja.example.car.state.VehicleSizeState.VehicleSizeStringState;
+import static net.sf.laja.example.car.state.VehicleSizeState.*;
 
 @State
 public class BusState implements ImmutableState {
@@ -124,6 +125,12 @@ public class BusState implements ImmutableState {
             this.weightInKilograms = weightInKilograms;
         }
 
+        public BusMutableState(BusMutableState state) {
+            name = state.name;
+            size = state.size;
+            weightInKilograms = state.weightInKilograms;
+        }
+
         public String getName() { return name; }
         public VehicleSizeMutableState getSize() { return size; }
         public int getWeightInKilograms() { return weightInKilograms; }
@@ -146,7 +153,13 @@ public class BusState implements ImmutableState {
         }
 
         public Map asMap() {
-            return null;
+            Map result = new LinkedHashMap();
+
+            result.put("name", name);
+            result.put("size", size != null ? size.asMap() : null);
+            result.put("weightInKilograms", weightInKilograms);
+
+            return result;
         }
 
         public BusStringState asStringState() {
@@ -221,6 +234,29 @@ public class BusState implements ImmutableState {
         }
     }
 
+    public static MapToBusConverter mapToBusConverter = new MapToBusConverter();
+
+    public static BusMutableState toBusMutableState(Map map) {
+        return mapToBusConverter.convert(map, 0);
+    }
+
+    public static class MapToBusConverter implements StateConverter {
+
+        public BusMutableState convert(Object from, int index, StateConverter... converters) {
+            Map map = (Map)from;
+
+            String name = (String) map.get("name");
+            Map size = (Map) map.get("size");
+            int weightInKilograms = (Integer) map.get("weightInKilograms");
+
+            return new BusMutableState(
+                    name,
+                    size != null ? toVehicleSizeMutableState(size) : null,
+                    weightInKilograms
+            );
+        }
+    }
+
     @State(type = "string")
     public static class BusStringState implements StringState {
         public String name;
@@ -264,6 +300,10 @@ public class BusState implements ImmutableState {
                     converter.toName(name),
                     converter.toSize(size),
                     converter.toWeightInKilograms(weightInKilograms));
+        }
+
+        public Map asMap() {
+            return asMutable().asMap();
         }
 
         public boolean isValid() {

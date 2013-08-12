@@ -117,6 +117,10 @@ public class Type implements StateParser.IType {
         return  isSet() && isCollectionState();
     }
 
+    public boolean isStateMap() {
+        return  isMap() && mapType.entry.isState();
+    }
+
     public boolean isCollectionState() {
         return collectionType.type.isState();
     }

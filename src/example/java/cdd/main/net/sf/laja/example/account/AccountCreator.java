@@ -37,8 +37,16 @@ public class AccountCreator implements AccountCreatorMaker {
         return new AccountCreator(new AccountMutableState()).new AccountFactory();
     }
 
+    public static AccountCreator createAccount(Map account) {
+        return new AccountCreator(new AccountMutableState(toAccountMutableState(account)));
+    }
+
     public static AccountBuilder buildAccount() {
         return new AccountBuilder();
+    }
+
+    public static AccountBuilder buildAccount(Map account) {
+        return new AccountBuilder(new AccountMutableState(toAccountMutableState(account)));
     }
 
     public static AccountStringBuilder buildStringAccount() {
@@ -96,13 +104,17 @@ public class AccountCreator implements AccountCreatorMaker {
         return state;
     }
 
-        public AccountStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public AccountStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public AccountStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public AccountStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -234,6 +246,10 @@ public class AccountCreator implements AccountCreatorMaker {
 
         public AccountMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public AccountStringState asStringState() {

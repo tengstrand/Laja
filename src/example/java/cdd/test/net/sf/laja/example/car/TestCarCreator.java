@@ -48,8 +48,16 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return new TestCarCreator(new CarMutableState()).new CarFactory();
     }
 
+    public static TestCarCreator createTestCar(Map car) {
+        return new TestCarCreator(new CarMutableState(toCarMutableState(car)));
+    }
+
     public static CarBuilder buildTestCar() {
         return new CarBuilder();
+    }
+
+    public static CarBuilder buildTestCar(Map car) {
+        return new CarBuilder(new CarMutableState(toCarMutableState(car)));
     }
 
     public static CarStringBuilder buildStringTestCar() {
@@ -150,13 +158,17 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return state;
     }
 
-        public CarStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public CarStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public CarStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public CarStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -293,6 +305,10 @@ public class TestCarCreator implements TestCarCreatorMaker {
 
         public CarMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public CarStringState asStringState() {

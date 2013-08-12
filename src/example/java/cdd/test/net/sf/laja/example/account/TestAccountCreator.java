@@ -33,8 +33,16 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new TestAccountCreator(new AccountMutableState()).new AccountFactory();
     }
 
+    public static TestAccountCreator createTestAccount(Map account) {
+        return new TestAccountCreator(new AccountMutableState(toAccountMutableState(account)));
+    }
+
     public static AccountBuilder buildTestAccount() {
         return new AccountBuilder();
+    }
+
+    public static AccountBuilder buildTestAccount(Map account) {
+        return new AccountBuilder(new AccountMutableState(toAccountMutableState(account)));
     }
 
     public static AccountStringBuilder buildStringTestAccount() {
@@ -92,13 +100,17 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return state;
     }
 
-        public AccountStringState asStringState() {
-            return state.asStringState();
-        }
+    public Map asMap() {
+        return state.asMap();
+    }
 
-        public AccountStringState asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public AccountStringState asStringState() {
+        return state.asStringState();
+    }
+
+    public AccountStringState asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
     // --- With methods ---
 
@@ -226,6 +238,10 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
 
         public AccountMutableState asMutableState() {
             return state;
+        }
+
+        public Map asMap() {
+            return state.asMap();
         }
 
         public AccountStringState asStringState() {
