@@ -38,6 +38,10 @@
     #end
   #end
         }
+
+        public Map asMap() {
+            return asMutable().asMap();
+        }
 #end
 
 #macro assertIsValid()
