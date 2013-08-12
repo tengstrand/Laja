@@ -217,7 +217,8 @@ public class VehicleSizeState implements ImmutableState {
 
         public VehicleSizeMutableState asMutable(VehicleSizeStringStateConverter converter) {
             return new VehicleSizeMutableState(
-                    converter.toLengthInCentimeters(lengthInCentimeters));
+                    converter.toLengthInCentimeters(lengthInCentimeters)
+            );
         }
 
         public Map asMap() {

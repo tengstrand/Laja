@@ -221,7 +221,8 @@ public class FileState implements ImmutableState {
 
         public FileMutableState asMutable(FileStringStateConverter converter) {
             return new FileMutableState(
-                    converter.toFilename(filename));
+                    converter.toFilename(filename)
+            );
         }
 
         public Map asMap() {

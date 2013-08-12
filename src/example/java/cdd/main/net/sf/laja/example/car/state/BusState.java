@@ -62,7 +62,8 @@ public class BusState implements ImmutableState {
         return new BusMutableState(
                 name,
                 size != null ? size.asMutable() : null,
-                weightInKilograms);
+                weightInKilograms
+        );
     }
 
     public BusStringState asStringState() {
@@ -149,7 +150,8 @@ public class BusState implements ImmutableState {
             return new BusState(
                     name,
                     size != null ? size.asImmutable() : null,
-                    weightInKilograms);
+                    weightInKilograms
+            );
         }
 
         public Map asMap() {
@@ -174,7 +176,8 @@ public class BusState implements ImmutableState {
             return new BusStringState(
                     converter.nameToString(name),
                     converter.sizeToString(size),
-                    converter.weightInKilogramsToString(weightInKilograms));
+                    converter.weightInKilogramsToString(weightInKilograms)
+            );
         }
 
         public boolean isValid() {
@@ -192,7 +195,6 @@ public class BusState implements ImmutableState {
             if (size == null) errors.addIsNullError(rootElement, "size", parent);
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
-
         }
 
         public void assertIsValid() {
@@ -299,7 +301,8 @@ public class BusState implements ImmutableState {
             return new BusMutableState(
                     converter.toName(name),
                     converter.toSize(size),
-                    converter.toWeightInKilograms(weightInKilograms));
+                    converter.toWeightInKilograms(weightInKilograms)
+            );
         }
 
         public Map asMap() {

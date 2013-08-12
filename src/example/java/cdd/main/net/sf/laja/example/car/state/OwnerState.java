@@ -50,7 +50,8 @@ public class OwnerState implements ImmutableState {
     public OwnerMutableState asMutable() {
         return new OwnerMutableState(
                 ssn,
-                name);
+                name
+        );
     }
 
     public OwnerStringState asStringState() {
@@ -126,7 +127,8 @@ public class OwnerState implements ImmutableState {
 
             return new OwnerState(
                     ssn,
-                    name);
+                    name
+            );
         }
 
         public Map asMap() {
@@ -149,7 +151,8 @@ public class OwnerState implements ImmutableState {
         public OwnerStringState asStringState(OwnerStringStateConverter converter) {
             return new OwnerStringState(
                     converter.ssnToString(ssn),
-                    converter.nameToString(name));
+                    converter.nameToString(name)
+            );
         }
 
         public boolean isValid() {
@@ -259,7 +262,8 @@ public class OwnerState implements ImmutableState {
         public OwnerMutableState asMutable(OwnerStringStateConverter converter) {
             return new OwnerMutableState(
                     converter.toSsn(ssn),
-                    converter.toName(name));
+                    converter.toName(name)
+            );
         }
 
         public Map asMap() {

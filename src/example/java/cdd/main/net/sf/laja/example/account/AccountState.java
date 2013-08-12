@@ -235,7 +235,8 @@ public class AccountState implements ImmutableState {
 
         public AccountMutableState asMutable(AccountStringStateConverter converter) {
             return new AccountMutableState(
-                    converter.toBalance(balance));
+                    converter.toBalance(balance)
+            );
         }
 
         public Map asMap() {

@@ -71,7 +71,8 @@ public class CarState implements ImmutableState {
                 size != null ? size.asMutable() : null,
                 name,
                 owner != null ? owner.asMutable() : null,
-                color);
+                color
+        );
     }
 
     public CarStringState asStringState() {
@@ -169,7 +170,8 @@ public class CarState implements ImmutableState {
                     size != null ? size.asImmutable() : null,
                     name,
                     owner != null ? owner.asImmutable() : null,
-                    color);
+                    color
+            );
         }
 
         public Map asMap() {
@@ -196,7 +198,8 @@ public class CarState implements ImmutableState {
                     converter.sizeToString(size),
                     converter.nameToString(name),
                     converter.ownerToString(owner),
-                    converter.colorToString(color));
+                    converter.colorToString(color)
+            );
         }
 
         public boolean isValid() {
@@ -217,7 +220,6 @@ public class CarState implements ImmutableState {
 
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
-
         }
 
         public void assertIsValid() {
@@ -336,7 +338,8 @@ public class CarState implements ImmutableState {
                     converter.toSize(size),
                     converter.toName(name),
                     converter.toOwner(owner),
-                    converter.toColor(color));
+                    converter.toColor(color)
+            );
         }
 
         public Map asMap() {

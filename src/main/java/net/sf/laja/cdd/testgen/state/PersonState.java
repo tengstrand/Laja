@@ -139,7 +139,8 @@ public class PersonState implements ImmutableState {
                 asMutableSet(oldAddresses, toMutable),
                 asMutableMap(groupedAddresses, toMutable),
                 asMutableList(listOfSetOfState, toMutableSet, toMutable),
-                asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap));
+                asMutableList(listOfSetOfMapOfIntegers, toMutableSet, toMutableMap)
+        );
     }
 
     public PersonStringState asStringState() {
@@ -340,7 +341,8 @@ public class PersonState implements ImmutableState {
                     asImmutableSet(oldAddresses, toImmutable),
                     asImmutableMap(groupedAddresses, toImmutable),
                     asImmutableList(listOfSetOfState, toImmutableSet, toImmutable),
-                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap));
+                    asImmutableList(listOfSetOfMapOfIntegers, toImmutableSet, toImmutableMap)
+            );
         }
 
         public Map asMap() {
@@ -381,7 +383,8 @@ public class PersonState implements ImmutableState {
                     converter.oldAddressesToString(oldAddresses),
                     converter.groupedAddressesToString(groupedAddresses),
                     converter.listOfSetOfStateToString(listOfSetOfState),
-                    converter.listOfSetOfMapOfIntegersToString(listOfSetOfMapOfIntegers));
+                    converter.listOfSetOfMapOfIntegersToString(listOfSetOfMapOfIntegers)
+            );
         }
 
         public boolean isValid() {
@@ -408,7 +411,6 @@ public class PersonState implements ImmutableState {
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
             if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
             if (listOfSetOfState != null) collectionValidator().validate(rootElement, listOfSetOfState, parent, "listOfSetOfState", errors, 0);
-
         }
 
         public void assertIsValid() {
@@ -600,7 +602,8 @@ public class PersonState implements ImmutableState {
                     converter.toOldAddresses(oldAddresses),
                     converter.toGroupedAddresses(groupedAddresses),
                     converter.toListOfSetOfState(listOfSetOfState),
-                    converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers));
+                    converter.toListOfSetOfMapOfIntegers(listOfSetOfMapOfIntegers)
+            );
         }
 
         public Map asMap() {

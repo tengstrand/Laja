@@ -34,7 +34,8 @@
     #if (iterator.hasNext)
                     {converter}.to{attribute.nameAsClass}({attribute.name}),
     #else
-                    {converter}.to{attribute.nameAsClass}({attribute.name}));
+                    {converter}.to{attribute.nameAsClass}({attribute.name})
+            );
     #end
   #end
         }

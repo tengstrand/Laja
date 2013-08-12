@@ -221,7 +221,8 @@ public class DirectoryState implements ImmutableState {
 
         public DirectoryMutableState asMutable(DirectoryStringStateConverter converter) {
             return new DirectoryMutableState(
-                    converter.toDirectoryPath(directoryPath));
+                    converter.toDirectoryPath(directoryPath)
+            );
         }
 
         public Map asMap() {

@@ -66,7 +66,8 @@ public class AddressState implements ImmutableState {
                 addressId,
                 streetName,
                 zipcode,
-                city);
+                city
+        );
     }
 
     public AddressStringState asStringState() {
@@ -181,7 +182,8 @@ public class AddressState implements ImmutableState {
                     addressId,
                     streetName,
                     zipcode,
-                    city);
+                    city
+            );
         }
 
         public Map asMap() {
@@ -208,7 +210,8 @@ public class AddressState implements ImmutableState {
                     converter.addressIdToString(addressId),
                     converter.streetNameToString(streetName),
                     converter.zipcodeToString(zipcode),
-                    converter.cityToString(city));
+                    converter.cityToString(city)
+            );
         }
 
         public boolean isValid() {
@@ -337,7 +340,8 @@ public class AddressState implements ImmutableState {
                     converter.toAddressId(addressId),
                     converter.toStreetName(streetName),
                     converter.toZipcode(zipcode),
-                    converter.toCity(city));
+                    converter.toCity(city)
+            );
         }
 
         public Map asMap() {

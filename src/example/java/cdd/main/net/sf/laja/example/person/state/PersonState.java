@@ -65,7 +65,8 @@ public class PersonState implements ImmutableState {
                 givenName,
                 surname,
                 heightInCentimeters,
-                weightInKilograms);
+                weightInKilograms
+        );
     }
 
     public PersonStringState asStringState() {
@@ -163,7 +164,8 @@ public class PersonState implements ImmutableState {
                     givenName,
                     surname,
                     heightInCentimeters,
-                    weightInKilograms);
+                    weightInKilograms
+            );
         }
 
         public Map asMap() {
@@ -190,7 +192,8 @@ public class PersonState implements ImmutableState {
                     converter.givenNameToString(givenName),
                     converter.surnameToString(surname),
                     converter.heightInCentimetersToString(heightInCentimeters),
-                    converter.weightInKilogramsToString(weightInKilograms));
+                    converter.weightInKilogramsToString(weightInKilograms)
+            );
         }
 
         public boolean isValid() {
@@ -325,7 +328,8 @@ public class PersonState implements ImmutableState {
                     converter.toGivenName(givenName),
                     converter.toSurname(surname),
                     converter.toHeightInCentimeters(heightInCentimeters),
-                    converter.toWeightInKilograms(weightInKilograms));
+                    converter.toWeightInKilograms(weightInKilograms)
+            );
         }
 
         public Map asMap() {

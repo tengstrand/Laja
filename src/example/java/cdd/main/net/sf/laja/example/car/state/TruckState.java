@@ -79,7 +79,8 @@ public class TruckState implements ImmutableState {
                 weightInKilograms,
                 type != null ? type.asMutable() : null,
                 color,
-                owner != null ? owner.asMutable() : null);
+                owner != null ? owner.asMutable() : null
+        );
     }
 
     public TruckStringState asStringState() {
@@ -188,7 +189,8 @@ public class TruckState implements ImmutableState {
                     weightInKilograms,
                     type != null ? type.asImmutable() : null,
                     color,
-                    owner != null ? owner.asImmutable() : null);
+                    owner != null ? owner.asImmutable() : null
+            );
         }
 
         public Map asMap() {
@@ -217,7 +219,8 @@ public class TruckState implements ImmutableState {
                     converter.weightInKilogramsToString(weightInKilograms),
                     converter.typeToString(type),
                     converter.colorToString(color),
-                    converter.ownerToString(owner));
+                    converter.ownerToString(owner)
+            );
         }
 
         public boolean isValid() {
@@ -239,7 +242,6 @@ public class TruckState implements ImmutableState {
             if (size != null) size.validate(rootElement, concatenate(parent, "size"), errors);
             if (type != null) type.validate(rootElement, concatenate(parent, "type"), errors);
             if (owner != null) owner.validate(rootElement, concatenate(parent, "owner"), errors);
-
         }
 
         public void assertIsValid() {
@@ -370,7 +372,8 @@ public class TruckState implements ImmutableState {
                     converter.toWeightInKilograms(weightInKilograms),
                     converter.toType(type),
                     converter.toColor(color),
-                    converter.toOwner(owner));
+                    converter.toOwner(owner)
+            );
         }
 
         public Map asMap() {

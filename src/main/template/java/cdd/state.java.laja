@@ -227,7 +227,8 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
     #if (iterator.hasNext)
                 {mutableStateAttribute()},
     #else
-                {mutableStateAttribute()});
+                {mutableStateAttribute()}
+        );
     #end
   #end
     }

@@ -48,7 +48,8 @@ public class BmiState implements ImmutableState {
     public BmiMutableState asMutable() {
         return new BmiMutableState(
                 heightInCentimeters,
-                weightInKilograms);
+                weightInKilograms
+        );
     }
 
     public BmiStringState asStringState() {
@@ -124,7 +125,8 @@ public class BmiState implements ImmutableState {
 
             return new BmiState(
                     heightInCentimeters,
-                    weightInKilograms);
+                    weightInKilograms
+            );
         }
 
         public Map asMap() {
@@ -147,7 +149,8 @@ public class BmiState implements ImmutableState {
         public BmiStringState asStringState(BmiStringStateConverter converter) {
             return new BmiStringState(
                     converter.heightInCentimetersToString(heightInCentimeters),
-                    converter.weightInKilogramsToString(weightInKilograms));
+                    converter.weightInKilogramsToString(weightInKilograms)
+            );
         }
 
         public boolean isValid() {
@@ -255,7 +258,8 @@ public class BmiState implements ImmutableState {
         public BmiMutableState asMutable(BmiStringStateConverter converter) {
             return new BmiMutableState(
                     converter.toHeightInCentimeters(heightInCentimeters),
-                    converter.toWeightInKilograms(weightInKilograms));
+                    converter.toWeightInKilograms(weightInKilograms)
+            );
         }
 
         public Map asMap() {

@@ -50,7 +50,8 @@ public class TruckTypeState implements ImmutableState {
     public TruckTypeMutableState asMutable() {
         return new TruckTypeMutableState(
                 numberOfWheels,
-                truckName);
+                truckName
+        );
     }
 
     public TruckTypeStringState asStringState() {
@@ -126,7 +127,8 @@ public class TruckTypeState implements ImmutableState {
 
             return new TruckTypeState(
                     numberOfWheels,
-                    truckName);
+                    truckName
+            );
         }
 
         public Map asMap() {
@@ -149,7 +151,8 @@ public class TruckTypeState implements ImmutableState {
         public TruckTypeStringState asStringState(TruckTypeStringStateConverter converter) {
             return new TruckTypeStringState(
                     converter.numberOfWheelsToString(numberOfWheels),
-                    converter.truckNameToString(truckName));
+                    converter.truckNameToString(truckName)
+            );
         }
 
         public boolean isValid() {
@@ -259,7 +262,8 @@ public class TruckTypeState implements ImmutableState {
         public TruckTypeMutableState asMutable(TruckTypeStringStateConverter converter) {
             return new TruckTypeMutableState(
                     converter.toNumberOfWheels(numberOfWheels),
-                    converter.toTruckName(truckName));
+                    converter.toTruckName(truckName)
+            );
         }
 
         public Map asMap() {

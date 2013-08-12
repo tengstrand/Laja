@@ -96,7 +96,8 @@ public class CustomerState implements ImmutableState {
                 age,
                 pet,
                 address != null ? address.asMutable() : null,
-                asMutableList(oldAddresses, toMutable));
+                asMutableList(oldAddresses, toMutable)
+        );
     }
 
     public CustomerStringState asStringState() {
@@ -245,7 +246,8 @@ public class CustomerState implements ImmutableState {
                     age,
                     pet,
                     address != null ? address.asImmutable() : null,
-                    asImmutableList(oldAddresses, toImmutable));
+                    asImmutableList(oldAddresses, toImmutable)
+            );
         }
 
         public Map asMap() {
@@ -278,7 +280,8 @@ public class CustomerState implements ImmutableState {
                     converter.ageToString(age),
                     converter.petToString(pet),
                     converter.addressToString(address),
-                    converter.oldAddressesToString(oldAddresses));
+                    converter.oldAddressesToString(oldAddresses)
+            );
         }
 
         public boolean isValid() {
@@ -297,7 +300,6 @@ public class CustomerState implements ImmutableState {
 
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
-
         }
 
         public void assertIsValid() {
@@ -441,7 +443,8 @@ public class CustomerState implements ImmutableState {
                     converter.toAge(age),
                     converter.toPet(pet),
                     converter.toAddress(address),
-                    converter.toOldAddresses(oldAddresses));
+                    converter.toOldAddresses(oldAddresses)
+            );
         }
 
         public Map asMap() {

@@ -217,7 +217,8 @@ public class ZipcodeState implements ImmutableState {
 
         public ZipcodeMutableState asMutable(ZipcodeStringStateConverter converter) {
             return new ZipcodeMutableState(
-                    converter.toCode(code));
+                    converter.toCode(code)
+            );
         }
 
         public Map asMap() {

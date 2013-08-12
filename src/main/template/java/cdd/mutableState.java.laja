@@ -104,7 +104,6 @@
             if ({attribute.name} != null) mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
       #end
     #end
-
   #end
         }
 #end
@@ -164,7 +163,8 @@ asImmutableSet({attribute.name}{immutableConverters(attribute.type.collectionTyp
     #if (iterator.hasNext)
                     {immutableStateAttribute()},
     #else
-                    {immutableStateAttribute()});
+                    {immutableStateAttribute()}
+            );
     #end
   #end
         }
@@ -246,7 +246,8 @@ asMutableSet({attribute.name}{mapConverters(attribute.type.collectionType.type)}
     #if (iterator.hasNext)
                     {converter}.{attribute.name}ToString({attribute.name}),
     #else
-                    {converter}.{attribute.name}ToString({attribute.name}));
+                    {converter}.{attribute.name}ToString({attribute.name})
+            );
     #end
   #end
         }
