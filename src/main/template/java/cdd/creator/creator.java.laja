@@ -249,9 +249,8 @@ import net.sf.laja.cdd.annotation.Parameters;
 
     #end
     #if (attribute.isCollectionOrMapWithState)
-      #set (leafState = attribute.leafState)
       #set (type = attribute.collectionOrMapType)
-    public {creator} {attribute.withMethod}({leafState}{type}Builder {attribute.name}) {
+    public {creator} {attribute.withMethod}({attribute.leafState}{type}Builder {attribute.name}) {
         state.{attribute.name} = {attribute.name}.asMutableState{type}();
         return this;
     }
