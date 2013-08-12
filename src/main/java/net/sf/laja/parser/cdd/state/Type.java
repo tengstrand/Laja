@@ -109,6 +109,18 @@ public class Type implements StateParser.IType {
         return mapType.entry.isLeafState();
     }
 
+    public boolean isStateList() {
+        return  isList() && isCollectionState();
+    }
+
+    public boolean isStateSet() {
+        return  isSet() && isCollectionState();
+    }
+
+    public boolean isCollectionState() {
+        return collectionType.type.isState();
+    }
+
     public String getLeafState() {
         if (!isCollectionOrMap()) {
             return getState();
