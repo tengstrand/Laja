@@ -220,13 +220,13 @@ import net.sf.laja.cdd.annotation.Parameters;
 #end
 
 #macro asStringState()
-        public {stringState} asStringState() {
-            return state.asStringState();
-        }
+    public {stringState} asStringState() {
+        return state.asStringState();
+    }
 
-        public {stringState} asStringState(StringStateConverter stateConverter) {
-            return state.asStringState(stateConverter);
-        }
+    public {stringState} asStringState(StringStateConverter stateConverter) {
+        return state.asStringState(stateConverter);
+    }
 
 #end
 
