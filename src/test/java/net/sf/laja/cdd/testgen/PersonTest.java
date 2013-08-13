@@ -72,11 +72,6 @@ public class PersonTest {
         defaultPerson().withAddress(buildAddress().withCity("Uppsala")).asPerson();
     }
 
-/*
-        public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
-
-     */
-
     private static List createList(Object... elements) {
         return Arrays.asList(elements);
     }
