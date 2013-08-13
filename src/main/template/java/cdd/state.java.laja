@@ -32,17 +32,16 @@ import net.sf.laja.cdd.state.ImmutableState;
 import net.sf.laja.cdd.state.InvalidStateException;
 import net.sf.laja.cdd.state.MutableState;
 import net.sf.laja.cdd.state.StringState;
-import net.sf.laja.cdd.state.StateValidator;
 import net.sf.laja.cdd.state.converter.StateConverter;
 import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.validator.ValidationErrors;
 import net.sf.laja.cdd.annotation.Id;
 import net.sf.laja.cdd.annotation.Optional;
 import net.sf.laja.cdd.annotation.State;
-import net.sf.laja.cdd.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +53,12 @@ import java.util.Set;
     #staticImports.add("net.sf.laja.cdd.validator.Validators.collectionValidator")
     #staticImports.add("net.sf.laja.cdd.validator.Validators.mapValidator")
     #foreach (attribute in attributes where attribute.isState)
-      #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMutable.type}")
-      #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMap.type}")
+      #if (attribute.stateObject != null)
+        #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMutable.type}")
+        #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.{attribute.asMutableString.type}")
+        #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.to{attribute.asMutable.type}")
+        #staticImports.add("{attribute.stateObject.packagename}.{attribute.type}.mapTo{attribute.type.state}Converter")
+      #end
     #end
     #foreach (staticImport in staticImports)
 import static {staticImport};
@@ -422,7 +425,6 @@ asMutableSet({attribute.name}{mutableConverters(attribute.type.collectionType.ty
   #attributes("    ", "final ")##
   #if (generatedEnd == null)
 {manualCode}
-    #validator()
 
     // ===== Generated code =====
   #else
