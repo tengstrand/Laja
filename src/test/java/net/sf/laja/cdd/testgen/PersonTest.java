@@ -3,14 +3,12 @@ package net.sf.laja.cdd.testgen;
 import org.joda.time.DateMidnight;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import static net.sf.laja.cdd.state.converter.CollectionCreator.Entry.createEntry;
+import static net.sf.laja.cdd.state.converter.CollectionCreator.*;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static net.sf.laja.cdd.testgen.HairColor.BLACK;
 import static net.sf.laja.cdd.testgen.HairColor.BROWN;
@@ -50,12 +48,7 @@ public class PersonTest {
 
     @Test
     public void stringAsMutableState() {
-        List<Set<Map<String,String>>> list = new ArrayList<Set<Map<String,String>>>();
-        Map<String,String> map = new HashMap<String,String>();
-        map.put("a", "123");
-        Set<Map<String,String>> set = new HashSet<Map<String,String>>();
-        set.add(map);
-        list.add(set);
+        List list = createList(createSet(createMap(createEntry("a", "123"))));
 
         PersonMutableState mutableState = PersonCreator.buildStringPerson()
                 .withName("Carl")
@@ -70,14 +63,6 @@ public class PersonTest {
     @Test(expected = InvalidPersonStateException.class)
     public void invalidStateShouldThrowException() {
         defaultPerson().withAddress(buildAddress().withCity("Uppsala")).asPerson();
-    }
-
-    private static List createList(Object... elements) {
-        return Arrays.asList(elements);
-    }
-
-    private static Set createSet(Object... elements) {
-        return new HashSet(Arrays.asList(elements));
     }
 
     private static Map mapOfIntegers() {
