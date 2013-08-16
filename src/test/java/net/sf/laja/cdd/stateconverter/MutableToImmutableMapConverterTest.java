@@ -39,7 +39,7 @@ public class MutableToImmutableMapConverterTest {
 
     @Test
     public void shouldConvertFromMutableMapOfStateToImmutableStateMap() {
-        AddressMapBuilder builder = createAddressMap(
+        AddressMapBuilder builder = createAddressFromMap(
                 createAddressEntry("first", createAddress().withStreetName("First street")),
                 createAddressEntry("second", buildAddress().withStreetName("Second street")));
 

@@ -251,6 +251,10 @@ public class BmiState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public BmiState asImmutable(BmiStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public BmiMutableState asMutable() {
             return asMutable(new BmiStringStateConverter());
         }

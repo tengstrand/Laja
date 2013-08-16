@@ -362,6 +362,10 @@ public class TruckState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public TruckState asImmutable(TruckStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public TruckMutableState asMutable() {
             return asMutable(new TruckStringStateConverter());
         }

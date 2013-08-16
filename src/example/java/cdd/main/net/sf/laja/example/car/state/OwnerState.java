@@ -255,6 +255,10 @@ public class OwnerState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public OwnerState asImmutable(OwnerStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public OwnerMutableState asMutable() {
             return asMutable(new OwnerStringStateConverter());
         }

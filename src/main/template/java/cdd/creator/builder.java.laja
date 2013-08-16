@@ -15,6 +15,13 @@
         }
 
         #foreach (attribute in attributes)
+          #if (attribute.type.isStateList)
+        public {builder} {attribute.withMethod}() { state.{attribute.name} = new ArrayList<{attribute.type.collectionType.type.asMutable}>(); return this; }
+          #else if (attribute.type.isStateSet)
+        public {builder} {attribute.withMethod}() { state.{attribute.name} = new HashSet<{attribute.type.collectionType.type.asMutable}>(); return this; }
+          #else if (attribute.type.isStateMap)
+        public {builder} {attribute.withMethod}() { state.{attribute.name} = new HashMap<{attribute.type.mapType.key},{attribute.type.mapType.entry.asMutable}>(); return this; }
+          #end
         public {builder} {attribute.withMethod}({attribute.type.asMutable} {attribute.name}) { state.{attribute.name} = {attribute.name}; return this; }
           #if (attribute.isState)
         public {builder} {attribute.withMethod}({attribute.builder} {attribute.name}) { state.{attribute.name} = {attribute.name}.asMutableState(); return this; }

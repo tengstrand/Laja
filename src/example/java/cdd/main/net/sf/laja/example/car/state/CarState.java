@@ -329,6 +329,10 @@ public class CarState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public CarState asImmutable(CarStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public CarMutableState asMutable() {
             return asMutable(new CarStringStateConverter());
         }

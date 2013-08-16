@@ -211,6 +211,10 @@ public class ZipcodeState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public ZipcodeState asImmutable(ZipcodeStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public ZipcodeMutableState asMutable() {
             return asMutable(new ZipcodeStringStateConverter());
         }

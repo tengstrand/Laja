@@ -293,6 +293,10 @@ public class BusState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public BusState asImmutable(BusStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public BusMutableState asMutable() {
             return asMutable(new BusStringStateConverter());
         }

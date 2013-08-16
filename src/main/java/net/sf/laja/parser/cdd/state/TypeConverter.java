@@ -44,6 +44,9 @@ public class TypeConverter {
     }
 
     public String asMutableString(String typeName) {
+        if (typeName.endsWith("StringState")) {
+            return typeName;
+        }
         if (typeName.endsWith("MutableState")) {
             return typeName.substring(0, typeName.length()-"MutableState".length()) + "StringState";
         }

@@ -42,11 +42,11 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return new AddressBuilder();
     }
 
-    public static AddressBuilder buildSpecialAddress(Map address) {
+    public static AddressBuilder buildSpecialAddressFromMap(Map address) {
         return new AddressBuilder(new AddressMutableState(toAddressMutableState(address)));
     }
 
-    public static AddressStringBuilder buildStringSpecialAddress() {
+    public static AddressStringBuilder buildSpecialAddressFromStrings() {
         return new AddressStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return new AddressSetBuilder(creators);
     }
 
-    public static AddressMapBuilder createSpecialAddressMap(AddressMapEntryBuilder... builders) {
+    public static AddressMapBuilder createSpecialAddressFromMap(AddressMapEntryBuilder... builders) {
         return new AddressMapBuilder(builders);
     }
 

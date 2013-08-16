@@ -238,6 +238,27 @@ public class AddressState implements ImmutableState {
             return true;
         }
 
+    public int hashCodeValue() {
+            int result = id;
+            result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
+            result = 31 * result + (city != null ? city.hashCode() : 0);
+
+            return result;
+    }
+
+    public boolean equalsValue(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            AddressMutableState state = (AddressMutableState)that;
+
+            if (id != state.id) return false;
+            if (streetName != null ? !streetName.equals(state.streetName) : state.streetName != null) return false;
+            if (city != null ? !city.equals(state.city) : state.city != null) return false;
+
+            return true;
+    }
+
         @Override
         public String toString() {
             return "{id=" + id +
@@ -304,6 +325,10 @@ public class AddressState implements ImmutableState {
 
         public AddressState asImmutable() {
             return asMutable().asImmutable();
+        }
+
+        public AddressState asImmutable(AddressStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
         }
 
         public AddressMutableState asMutable() {

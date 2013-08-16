@@ -56,11 +56,11 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return new CarBuilder();
     }
 
-    public static CarBuilder buildTestCar(Map car) {
+    public static CarBuilder buildTestCarFromMap(Map car) {
         return new CarBuilder(new CarMutableState(toCarMutableState(car)));
     }
 
-    public static CarStringBuilder buildStringTestCar() {
+    public static CarStringBuilder buildTestCarFromStrings() {
         return new CarStringBuilder();
     }
 
@@ -72,7 +72,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return new CarSetBuilder(creators);
     }
 
-    public static CarMapBuilder createTestCarMap(CarMapEntryBuilder... builders) {
+    public static CarMapBuilder createTestCarFromMap(CarMapEntryBuilder... builders) {
         return new CarMapBuilder(builders);
     }
 

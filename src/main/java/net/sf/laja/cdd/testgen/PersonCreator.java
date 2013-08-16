@@ -93,11 +93,11 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonBuilder();
     }
 
-    public static PersonBuilder buildPerson(Map person) {
+    public static PersonBuilder buildPersonFromMap(Map person) {
         return new PersonBuilder(new PersonMutableState(toPersonMutableState(person)));
     }
 
-    public static PersonStringBuilder buildStringPerson() {
+    public static PersonStringBuilder buildPersonFromStrings() {
         return new PersonStringBuilder();
     }
 
@@ -109,7 +109,7 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createPersonFromMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 
@@ -421,14 +421,17 @@ public class PersonCreator implements PersonCreatorMaker {
         public PersonBuilder withBirthday(DateMidnight birthday) { state.birthday = birthday; return this; }
         public PersonBuilder withBirthday(int year, int monthOfYear, int dayOfMonth) { state.birthday = new DateMidnight(year, monthOfYear, dayOfMonth); return this; }
         public PersonBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
+        public PersonBuilder withChildren() { state.children = new ArrayList<PersonMutableState>(); return this; }
         public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
         public PersonBuilder withChildren(PersonListBuilder children) { state.children = children.asMutableStateList(); return this; }
         public PersonBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
         public PersonBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
         public PersonBuilder withOldAddress(AddressMutableState oldAddress) { state.oldAddress = oldAddress; return this; }
         public PersonBuilder withOldAddress(AddressCreator.AddressBuilder oldAddress) { state.oldAddress = oldAddress.asMutableState(); return this; }
+        public PersonBuilder withOldAddresses() { state.oldAddresses = new HashSet<AddressMutableState>(); return this; }
         public PersonBuilder withOldAddresses(Set<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
         public PersonBuilder withOldAddresses(AddressSetBuilder oldAddresses) { state.oldAddresses = oldAddresses.asMutableStateSet(); return this; }
+        public PersonBuilder withGroupedAddresses() { state.groupedAddresses = new HashMap<String,AddressMutableState>(); return this; }
         public PersonBuilder withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { state.groupedAddresses = groupedAddresses; return this; }
         public PersonBuilder withGroupedAddresses(AddressMapBuilder groupedAddresses) { state.groupedAddresses = groupedAddresses.asMutableStateMap(); return this; }
         public PersonBuilder withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { state.listOfSetOfState = listOfSetOfState; return this; }
@@ -511,12 +514,15 @@ public class PersonCreator implements PersonCreatorMaker {
         public PersonStringBuilder withName(String name) { state.name = name; return this; }
         public PersonStringBuilder withBirthday(String birthday) { state.birthday = birthday; return this; }
         public PersonStringBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
+        public PersonStringBuilder withChildren() { state.children = new ArrayList<PersonStringState>(); return this; }
         public PersonStringBuilder withChildren(List<PersonStringState> children) { state.children = children; return this; }
         public PersonStringBuilder withAddress(AddressStringState address) { state.address = address; return this; }
         public PersonStringBuilder withAddress(AddressCreator.AddressStringBuilder address) { state.address = address.asStringState(); return this; }
         public PersonStringBuilder withOldAddress(AddressStringState oldAddress) { state.oldAddress = oldAddress; return this; }
         public PersonStringBuilder withOldAddress(AddressCreator.AddressStringBuilder oldAddress) { state.oldAddress = oldAddress.asStringState(); return this; }
+        public PersonStringBuilder withOldAddresses() { state.oldAddresses = new HashSet<AddressStringState>(); return this; }
         public PersonStringBuilder withOldAddresses(Set<AddressStringState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
+        public PersonStringBuilder withGroupedAddresses() { state.groupedAddresses = new HashMap<String,AddressStringState>(); return this; }
         public PersonStringBuilder withGroupedAddresses(Map<String,AddressStringState> groupedAddresses) { state.groupedAddresses = groupedAddresses; return this; }
         public PersonStringBuilder withListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { state.listOfSetOfState = listOfSetOfState; return this; }
         public PersonStringBuilder withListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { state.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }

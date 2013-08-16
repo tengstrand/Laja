@@ -42,11 +42,11 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectoryBuilder();
     }
 
-    public static DirectoryBuilder buildDirectory(Map directory) {
+    public static DirectoryBuilder buildDirectoryFromMap(Map directory) {
         return new DirectoryBuilder(new DirectoryMutableState(toDirectoryMutableState(directory)));
     }
 
-    public static DirectoryStringBuilder buildStringDirectory() {
+    public static DirectoryStringBuilder buildDirectoryFromStrings() {
         return new DirectoryStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectorySetBuilder(creators);
     }
 
-    public static DirectoryMapBuilder createDirectoryMap(DirectoryMapEntryBuilder... builders) {
+    public static DirectoryMapBuilder createDirectoryFromMap(DirectoryMapEntryBuilder... builders) {
         return new DirectoryMapBuilder(builders);
     }
 

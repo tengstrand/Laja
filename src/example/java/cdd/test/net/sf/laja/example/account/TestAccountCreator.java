@@ -41,11 +41,11 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new AccountBuilder();
     }
 
-    public static AccountBuilder buildTestAccount(Map account) {
+    public static AccountBuilder buildTestAccountFromMap(Map account) {
         return new AccountBuilder(new AccountMutableState(toAccountMutableState(account)));
     }
 
-    public static AccountStringBuilder buildStringTestAccount() {
+    public static AccountStringBuilder buildTestAccountFromStrings() {
         return new AccountStringBuilder();
     }
 
@@ -57,7 +57,7 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new AccountSetBuilder(creators);
     }
 
-    public static AccountMapBuilder createTestAccountMap(AccountMapEntryBuilder... builders) {
+    public static AccountMapBuilder createTestAccountFromMap(AccountMapEntryBuilder... builders) {
         return new AccountMapBuilder(builders);
     }
 

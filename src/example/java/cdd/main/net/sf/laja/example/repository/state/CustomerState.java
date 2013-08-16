@@ -182,7 +182,6 @@ public class CustomerState implements ImmutableState {
         @Optional public List<AddressMutableState> oldAddresses;
 
         public CustomerMutableState() {
-            oldAddresses = new ArrayList<AddressMutableState>();
         }
 
         public CustomerMutableState(
@@ -234,6 +233,7 @@ public class CustomerState implements ImmutableState {
         public CustomerMutableState withAge(int age) { this.age = age; return this; }
         public CustomerMutableState withPet(String pet) { this.pet = pet; return this; }
         public CustomerMutableState withAddress(AddressMutableState address) { this.address = address; return this; }
+        public CustomerMutableState withOldAddresses() { this.oldAddresses = new ArrayList<AddressMutableState>(); return this; }
         public CustomerMutableState withOldAddresses(List<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
 
         public CustomerState asImmutable() {
@@ -329,6 +329,35 @@ public class CustomerState implements ImmutableState {
             return true;
         }
 
+    public int hashCodeValue() {
+            int result = (int)(ssn ^ (ssn >>> 32));
+            result = 31 * result + (givenName != null ? givenName.hashCode() : 0);
+            result = 31 * result + (surname != null ? surname.hashCode() : 0);
+            result = 31 * result + age;
+            result = 31 * result + (pet != null ? pet.hashCode() : 0);
+            result = 31 * result + (address != null ? address.hashCode() : 0);
+            result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
+
+            return result;
+    }
+
+    public boolean equalsValue(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            CustomerMutableState state = (CustomerMutableState)that;
+
+            if (ssn != state.ssn) return false;
+            if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
+            if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
+            if (age != state.age) return false;
+            if (pet != null ? !pet.equals(state.pet) : state.pet != null) return false;
+            if (address != null ? !address.equals(state.address) : state.address != null) return false;
+            if (oldAddresses != null ? !oldAddresses.equals(state.oldAddresses) : state.oldAddresses != null) return false;
+
+            return true;
+    }
+
         @Override
         public String toString() {
             return "{ssn=" + ssn +
@@ -383,7 +412,6 @@ public class CustomerState implements ImmutableState {
         @Optional public List<AddressStringState> oldAddresses;
 
         public CustomerStringState() {
-            oldAddresses = new ArrayList<AddressStringState>();
         }
 
         public CustomerStringState(
@@ -425,10 +453,15 @@ public class CustomerState implements ImmutableState {
         public CustomerStringState withAge(String age) { this.age = age; return this; }
         public CustomerStringState withPet(String pet) { this.pet = pet; return this; }
         public CustomerStringState withAddress(AddressStringState address) { this.address = address; return this; }
+        public CustomerStringState withOldAddresses() { this.oldAddresses = new ArrayList<AddressStringState>(); return this; } // 1
         public CustomerStringState withOldAddresses(List<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
 
         public CustomerState asImmutable() {
             return asMutable().asImmutable();
+        }
+
+        public CustomerState asImmutable(CustomerStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
         }
 
         public CustomerMutableState asMutable() {

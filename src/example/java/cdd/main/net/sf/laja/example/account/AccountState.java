@@ -183,6 +183,23 @@ public class AccountState implements ImmutableState {
             return true;
         }
 
+    public int hashCodeValue() {
+            int result = (int)balance;
+
+            return result;
+    }
+
+    public boolean equalsValue(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            AccountMutableState state = (AccountMutableState)that;
+
+            if (balance != state.balance) return false;
+
+            return true;
+    }
+
         @Override
         public String toString() {
             return "{balance=" + balance + "}";
@@ -227,6 +244,10 @@ public class AccountState implements ImmutableState {
 
         public AccountState asImmutable() {
             return asMutable().asImmutable();
+        }
+
+        public AccountState asImmutable(AccountStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
         }
 
         public AccountMutableState asMutable() {

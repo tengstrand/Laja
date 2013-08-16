@@ -67,7 +67,7 @@ public class Creator implements CreatorParser.ICreator{
         String name = classname.endsWith("Creator") ? classname.substring(0, classname.length() - "Creator".length()) : classname;
         maker = classname + "Maker";
         buildMethod = "build" + name;
-        buildStringMethod = "buildString" + name;
+        buildStringMethod = "build" + name + "FromStrings";
         createMethod = "create" + name;
         entryMethod = StringUtils.uncapitalize(name) + "Entry";
     }

@@ -45,11 +45,11 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeBuilder();
     }
 
-    public static ZipcodeBuilder buildZipcode(Map zipcode) {
+    public static ZipcodeBuilder buildZipcodeFromMap(Map zipcode) {
         return new ZipcodeBuilder(new ZipcodeMutableState(toZipcodeMutableState(zipcode)));
     }
 
-    public static ZipcodeStringBuilder buildStringZipcode() {
+    public static ZipcodeStringBuilder buildZipcodeFromStrings() {
         return new ZipcodeStringBuilder();
     }
 
@@ -61,7 +61,7 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeSetBuilder(creators);
     }
 
-    public static ZipcodeMapBuilder createZipcodeMap(ZipcodeMapEntryBuilder... builders) {
+    public static ZipcodeMapBuilder createZipcodeFromMap(ZipcodeMapEntryBuilder... builders) {
         return new ZipcodeMapBuilder(builders);
     }
 

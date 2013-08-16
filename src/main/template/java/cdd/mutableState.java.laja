@@ -24,14 +24,6 @@
   #foreach (attribute in attributes)
     #if (attribute.isOptional && attribute.optional.valueFor("defaultValue") != null)
             {attribute.name} = {attribute.optional.valueFor("defaultValue")};
-    #else
-      #if (attribute.isSet)
-            {attribute.name} = new Hash{attribute.type}();
-      #else if (attribute.isList)
-            {attribute.name} = new Array{attribute.type}();
-      #else if (attribute.isMap)
-            {attribute.name} = new HashMap<{attribute.type.mapType.key},{attribute.type.mapType.entry}>();
-      #end
     #end
   #end
         }
@@ -44,10 +36,17 @@
   #end
 #end
 
-#macro withMethods(returnClass)
+#macro withMethods()
 
   #foreach (attribute in attributes)
-        public {returnClass} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; return this; }
+          #if (attribute.type.isStateList)
+        public {mutableClass} {attribute.withMethod}() { this.{attribute.name} = new ArrayList<{attribute.type.collectionType.type.asMutable}>(); return this; }
+          #else if (attribute.type.isStateSet)
+        public {mutableClass} {attribute.withMethod}() { this.{attribute.name} = new HashSet<{attribute.type.collectionType.type.asMutable}>(); return this; }
+          #else if (attribute.type.isStateMap)
+        public {mutableClass} {attribute.withMethod}() { this.{attribute.name} = new HashMap<{attribute.type.mapType.key},{attribute.type.mapType.entry.asMutable}>(); return this; }
+          #end
+        public {mutableClass} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; return this; }
   #end
 #end
 
@@ -264,7 +263,7 @@ asMutableSet({attribute.name}{mapConverters(attribute.type.collectionType.type)}
   #copyConstructor()
   #getters(tab)
   #setters()
-  #withMethods(mutableClass)
+  #withMethods()
   #asImmutable()
   #asMap()
   #asStringState()
@@ -274,6 +273,8 @@ asMutableSet({attribute.name}{mapConverters(attribute.type.collectionType.type)}
   #assertIsValid()
   #hashCode(tab)
   #equals(mutableClass, tab)
+  #hashCodeValue(tab)
+  #equalsValue(mutableClass, tab)
   #toString(tab)
     }
 #end

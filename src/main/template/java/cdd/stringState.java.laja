@@ -22,6 +22,10 @@
             return asMutable().asImmutable();
         }
 
+        public {classname} asImmutable({stringConverterClass} {converter}) {
+            return asMutable(converter).asImmutable();
+        }
+
         public {mutableClass} asMutable() {
             return asMutable(new {stringConverterClass}());
         }
@@ -92,6 +96,20 @@
         }
 #end
 
+#macro withMethods()
+
+  #foreach (attribute in attributes)
+          #if (attribute.type.isStateList)
+        public {stringClass} {attribute.withMethod}() { this.{attribute.name} = new ArrayList<{attribute.type.collectionType.type.asMutableString}>(); return this; } // 1
+          #else if (attribute.type.isStateSet)
+        public {stringClass} {attribute.withMethod}() { this.{attribute.name} = new HashSet<{attribute.type.collectionType.type.asMutableString}>(); return this; }
+          #else if (attribute.type.isStateMap)
+        public {stringClass} {attribute.withMethod}() { this.{attribute.name} = new HashMap<{attribute.type.mapType.key},{attribute.type.mapType.entry.asMutableString}>(); return this; }
+          #end
+        public {stringClass} with{attribute.nameAsClass}({attribute.type} {attribute.name}) { this.{attribute.name} = {attribute.name}; return this; }
+  #end
+#end
+
 #macro stringState()
   #set ($.attributes = state.mutableStringAttributes)
   #set ($.convertPrimitives = true)
@@ -103,7 +121,7 @@
   #constructor(false, stringClass, false, tab)
   #$mutable.getters(tab)
   #$mutable.setters()
-  #$mutable.withMethods(stringClass)
+  #withMethods()
   #asState()
   #isValid()
   #validate()

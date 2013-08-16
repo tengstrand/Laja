@@ -42,11 +42,11 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiBuilder();
     }
 
-    public static BmiBuilder buildBmi(Map bmi) {
+    public static BmiBuilder buildBmiFromMap(Map bmi) {
         return new BmiBuilder(new BmiMutableState(toBmiMutableState(bmi)));
     }
 
-    public static BmiStringBuilder buildStringBmi() {
+    public static BmiStringBuilder buildBmiFromStrings() {
         return new BmiStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiSetBuilder(creators);
     }
 
-    public static BmiMapBuilder createBmiMap(BmiMapEntryBuilder... builders) {
+    public static BmiMapBuilder createBmiFromMap(BmiMapEntryBuilder... builders) {
         return new BmiMapBuilder(builders);
     }
 

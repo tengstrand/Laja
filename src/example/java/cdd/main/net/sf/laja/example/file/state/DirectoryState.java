@@ -215,6 +215,10 @@ public class DirectoryState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public DirectoryState asImmutable(DirectoryStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public DirectoryMutableState asMutable() {
             return asMutable(new DirectoryStringStateConverter());
         }

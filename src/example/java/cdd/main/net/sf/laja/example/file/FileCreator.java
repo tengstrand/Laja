@@ -46,11 +46,11 @@ public class FileCreator implements FileCreatorMaker {
         return new FileBuilder();
     }
 
-    public static FileBuilder buildFile(Map file) {
+    public static FileBuilder buildFileFromMap(Map file) {
         return new FileBuilder(new FileMutableState(toFileMutableState(file)));
     }
 
-    public static FileStringBuilder buildStringFile() {
+    public static FileStringBuilder buildFileFromStrings() {
         return new FileStringBuilder();
     }
 
@@ -62,7 +62,7 @@ public class FileCreator implements FileCreatorMaker {
         return new FileSetBuilder(creators);
     }
 
-    public static FileMapBuilder createFileMap(FileMapEntryBuilder... builders) {
+    public static FileMapBuilder createFileFromMap(FileMapEntryBuilder... builders) {
         return new FileMapBuilder(builders);
     }
 

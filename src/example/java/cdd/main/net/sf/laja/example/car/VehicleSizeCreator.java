@@ -42,11 +42,11 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeBuilder();
     }
 
-    public static VehicleSizeBuilder buildVehicleSize(Map vehicleSize) {
+    public static VehicleSizeBuilder buildVehicleSizeFromMap(Map vehicleSize) {
         return new VehicleSizeBuilder(new VehicleSizeMutableState(toVehicleSizeMutableState(vehicleSize)));
     }
 
-    public static VehicleSizeStringBuilder buildStringVehicleSize() {
+    public static VehicleSizeStringBuilder buildVehicleSizeFromStrings() {
         return new VehicleSizeStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeSetBuilder(creators);
     }
 
-    public static VehicleSizeMapBuilder createVehicleSizeMap(VehicleSizeMapEntryBuilder... builders) {
+    public static VehicleSizeMapBuilder createVehicleSizeFromMap(VehicleSizeMapEntryBuilder... builders) {
         return new VehicleSizeMapBuilder(builders);
     }
 

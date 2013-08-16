@@ -51,11 +51,11 @@ public class BusCreator implements BusCreatorMaker {
         return new BusBuilder();
     }
 
-    public static BusBuilder buildBus(Map bus) {
+    public static BusBuilder buildBusFromMap(Map bus) {
         return new BusBuilder(new BusMutableState(toBusMutableState(bus)));
     }
 
-    public static BusStringBuilder buildStringBus() {
+    public static BusStringBuilder buildBusFromStrings() {
         return new BusStringBuilder();
     }
 
@@ -67,7 +67,7 @@ public class BusCreator implements BusCreatorMaker {
         return new BusSetBuilder(creators);
     }
 
-    public static BusMapBuilder createBusMap(BusMapEntryBuilder... builders) {
+    public static BusMapBuilder createBusFromMap(BusMapEntryBuilder... builders) {
         return new BusMapBuilder(builders);
     }
 

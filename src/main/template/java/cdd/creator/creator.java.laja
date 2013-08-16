@@ -140,7 +140,10 @@ import net.sf.laja.cdd.annotation.Parameters;
         return new {builder}();
     }
 
-    public static {builder} {buildMethod}(Map {statevariable}) {
+#end
+
+#macro buildMap()
+    public static {builder} {buildMethod}FromMap(Map {statevariable}) {
         return new {builder}(new {mutableState}(to{mutableState}({statevariable})));
     }
 
@@ -168,7 +171,7 @@ import net.sf.laja.cdd.annotation.Parameters;
 #end
 
 #macro createMap()
-    public static {mapBuilder} {createMethod}Map({mapEntryBuilder}... builders) {
+    public static {mapBuilder} {createMethod}FromMap({mapEntryBuilder}... builders) {
         return new {mapBuilder}(builders);
     }
 
@@ -334,6 +337,7 @@ public class {classname} implements {maker} {
     #parameters()
     #create()
     #build()
+    #buildMap()
     #buildString()
     #createList()
     #createSet()

@@ -34,7 +34,7 @@ public class ImmutableToMutableMapConverterTest {
 
     @Test
     public void shouldConvertFromImmutableMapOfStateToMutableStateMap() {
-        Map<String, Address> immutableMap = createAddressMap(
+        Map<String, Address> immutableMap = createAddressFromMap(
                 createAddressEntry("first", createAddress().withStreetName("First street")),
                 createAddressEntry("second", buildAddress().withStreetName("Second street"))).asAddressMap();
 

@@ -319,6 +319,10 @@ public class PersonState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public PersonState asImmutable(PersonStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public PersonMutableState asMutable() {
             return asMutable(new PersonStringStateConverter());
         }

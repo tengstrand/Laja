@@ -50,7 +50,7 @@ public class PersonTest {
     public void stringAsMutableState() {
         List list = createList(createSet(createMap(createEntry("a", "123"))));
 
-        PersonMutableState mutableState = PersonCreator.buildStringPerson()
+        PersonMutableState mutableState = PersonCreator.buildPersonFromStrings()
                 .withName("Carl")
                 .withBirthday("1977-07-07")
                 .withListOfSetOfMapOfIntegers(list).asMutableState();
@@ -81,7 +81,7 @@ public class PersonTest {
                 .withAddress(buildAddress().withId(2).withStreetName("Third street").withCity("Stockholm"))
                 .withOldAddress(buildAddress().withId(3))
                 .withOldAddresses(createAddressSet(defaultAddress(4)))
-                .withGroupedAddresses(createAddressMap(createAddressEntry("abc", defaultAddress(5))))
+                .withGroupedAddresses(createAddressFromMap(createAddressEntry("abc", defaultAddress(5))))
                 .withListOfSetOfState(createList(createSet(defaultAddress(6).asMutableState())))
                 .withListOfSetOfMapOfIntegers(createList(createSet(mapOfIntegers())));
 
@@ -104,8 +104,13 @@ public class PersonTest {
 
     @Test
     public void stringToMutableToBehaviourRepresentation() {
-        PersonStringState stringState = buildStringPerson()
-                .withAddress(buildStringAddress().withCity("Stockholm").withStreetName("First street")).asStringState();
+        PersonStringState stringState = buildPersonFromStrings()
+                        .withAddress(buildAddressFromStrings()
+                        .withCity("Stockholm")
+                        .withStreetName("First street"))
+                        .withChildren()
+                        .withGroupedAddresses()
+                        .withListOfSetOfMapOfIntegers(createList()).asStringState();
         try {
             new Person(stringState.asImmutable());
             fail();
@@ -124,6 +129,9 @@ public class PersonTest {
                 .withName("Carl")
                 .withHairColor("RED")
                 .withBirthday(new DateMidnight(1999, 10, 11))
-                .withAddress(buildAddress().withId(1).withStreetName("First street").withCity("Stockholm"));
+                .withAddress(buildAddress().withId(1).withStreetName("First street").withCity("Stockholm"))
+                .withChildren()
+                .withGroupedAddresses()
+                .withListOfSetOfMapOfIntegers(createList());
     }
 }

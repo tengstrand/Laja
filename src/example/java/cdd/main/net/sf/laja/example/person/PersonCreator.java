@@ -42,11 +42,11 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonBuilder();
     }
 
-    public static PersonBuilder buildPerson(Map person) {
+    public static PersonBuilder buildPersonFromMap(Map person) {
         return new PersonBuilder(new PersonMutableState(toPersonMutableState(person)));
     }
 
-    public static PersonStringBuilder buildStringPerson() {
+    public static PersonStringBuilder buildPersonFromStrings() {
         return new PersonStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createPersonFromMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 

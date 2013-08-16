@@ -17,6 +17,7 @@ import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -245,11 +246,7 @@ public class PersonState implements ImmutableState {
         public List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers;
 
         public PersonMutableState() {
-            children = new ArrayList<PersonMutableState>();
             oldAddresses = new LinkedHashSet<AddressMutableState>();
-            groupedAddresses = new HashMap<String,AddressMutableState>();
-            listOfSetOfState = new ArrayList<Set<AddressMutableState>>();
-            listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,Integer>>>();
         }
 
         public PersonMutableState(
@@ -319,10 +316,13 @@ public class PersonState implements ImmutableState {
         public PersonMutableState withName(String name) { this.name = name; return this; }
         public PersonMutableState withBirthday(DateMidnight birthday) { this.birthday = birthday; return this; }
         public PersonMutableState withHairColor(String hairColor) { this.hairColor = hairColor; return this; }
+        public PersonMutableState withChildren() { this.children = new ArrayList<PersonMutableState>(); return this; }
         public PersonMutableState withChildren(List<PersonMutableState> children) { this.children = children; return this; }
         public PersonMutableState withAddress(AddressMutableState address) { this.address = address; return this; }
         public PersonMutableState withOldAddress(AddressMutableState oldAddress) { this.oldAddress = oldAddress; return this; }
+        public PersonMutableState withOldAddresses() { this.oldAddresses = new HashSet<AddressMutableState>(); return this; }
         public PersonMutableState withOldAddresses(Set<AddressMutableState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
+        public PersonMutableState withGroupedAddresses() { this.groupedAddresses = new HashMap<String,AddressMutableState>(); return this; }
         public PersonMutableState withGroupedAddresses(Map<String,AddressMutableState> groupedAddresses) { this.groupedAddresses = groupedAddresses; return this; }
         public PersonMutableState withListOfSetOfState(List<Set<AddressMutableState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
         public PersonMutableState withListOfSetOfMapOfIntegers(List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
@@ -440,6 +440,43 @@ public class PersonState implements ImmutableState {
             return true;
         }
 
+    public int hashCodeValue() {
+            int result = id;
+            result = 31 * result + (name != null ? name.hashCode() : 0);
+            result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+            result = 31 * result + (hairColor != null ? hairColor.hashCode() : 0);
+            result = 31 * result + (children != null ? children.hashCode() : 0);
+            result = 31 * result + (address != null ? address.hashCode() : 0);
+            result = 31 * result + (oldAddress != null ? oldAddress.hashCode() : 0);
+            result = 31 * result + (oldAddresses != null ? oldAddresses.hashCode() : 0);
+            result = 31 * result + (groupedAddresses != null ? groupedAddresses.hashCode() : 0);
+            result = 31 * result + (listOfSetOfState != null ? listOfSetOfState.hashCode() : 0);
+            result = 31 * result + (listOfSetOfMapOfIntegers != null ? listOfSetOfMapOfIntegers.hashCode() : 0);
+
+            return result;
+    }
+
+    public boolean equalsValue(Object that) {
+            if (this == that) return true;
+            if (that == null || getClass() != that.getClass()) return false;
+
+            PersonMutableState state = (PersonMutableState)that;
+
+            if (id != state.id) return false;
+            if (name != null ? !name.equals(state.name) : state.name != null) return false;
+            if (birthday != null ? !birthday.equals(state.birthday) : state.birthday != null) return false;
+            if (hairColor != null ? !hairColor.equals(state.hairColor) : state.hairColor != null) return false;
+            if (children != null ? !children.equals(state.children) : state.children != null) return false;
+            if (address != null ? !address.equals(state.address) : state.address != null) return false;
+            if (oldAddress != null ? !oldAddress.equals(state.oldAddress) : state.oldAddress != null) return false;
+            if (oldAddresses != null ? !oldAddresses.equals(state.oldAddresses) : state.oldAddresses != null) return false;
+            if (groupedAddresses != null ? !groupedAddresses.equals(state.groupedAddresses) : state.groupedAddresses != null) return false;
+            if (listOfSetOfState != null ? !listOfSetOfState.equals(state.listOfSetOfState) : state.listOfSetOfState != null) return false;
+            if (listOfSetOfMapOfIntegers != null ? !listOfSetOfMapOfIntegers.equals(state.listOfSetOfMapOfIntegers) : state.listOfSetOfMapOfIntegers != null) return false;
+
+            return true;
+    }
+
         @Override
         public String toString() {
             return "{id=" + id +
@@ -514,11 +551,7 @@ public class PersonState implements ImmutableState {
         public List<Set<Map<String,String>>> listOfSetOfMapOfIntegers;
 
         public PersonStringState() {
-            children = new ArrayList<PersonStringState>();
             oldAddresses = new LinkedHashSet<AddressStringState>();
-            groupedAddresses = new HashMap<String,AddressStringState>();
-            listOfSetOfState = new ArrayList<Set<AddressStringState>>();
-            listOfSetOfMapOfIntegers = new ArrayList<Set<Map<String,String>>>();
         }
 
         public PersonStringState(
@@ -574,16 +607,23 @@ public class PersonState implements ImmutableState {
         public PersonStringState withName(String name) { this.name = name; return this; }
         public PersonStringState withBirthday(String birthday) { this.birthday = birthday; return this; }
         public PersonStringState withHairColor(String hairColor) { this.hairColor = hairColor; return this; }
+        public PersonStringState withChildren() { this.children = new ArrayList<PersonStringState>(); return this; } // 1
         public PersonStringState withChildren(List<PersonStringState> children) { this.children = children; return this; }
         public PersonStringState withAddress(AddressStringState address) { this.address = address; return this; }
         public PersonStringState withOldAddress(AddressStringState oldAddress) { this.oldAddress = oldAddress; return this; }
+        public PersonStringState withOldAddresses() { this.oldAddresses = new HashSet<AddressStringState>(); return this; }
         public PersonStringState withOldAddresses(Set<AddressStringState> oldAddresses) { this.oldAddresses = oldAddresses; return this; }
+        public PersonStringState withGroupedAddresses() { this.groupedAddresses = new HashMap<String,AddressStringState>(); return this; }
         public PersonStringState withGroupedAddresses(Map<String,AddressStringState> groupedAddresses) { this.groupedAddresses = groupedAddresses; return this; }
         public PersonStringState withListOfSetOfState(List<Set<AddressStringState>> listOfSetOfState) { this.listOfSetOfState = listOfSetOfState; return this; }
         public PersonStringState withListOfSetOfMapOfIntegers(List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) { this.listOfSetOfMapOfIntegers = listOfSetOfMapOfIntegers; return this; }
 
         public PersonState asImmutable() {
             return asMutable().asImmutable();
+        }
+
+        public PersonState asImmutable(PersonStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
         }
 
         public PersonMutableState asMutable() {

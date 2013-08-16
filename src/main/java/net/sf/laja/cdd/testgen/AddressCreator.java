@@ -56,11 +56,11 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressBuilder();
     }
 
-    public static AddressBuilder buildAddress(Map address) {
+    public static AddressBuilder buildAddressFromMap(Map address) {
         return new AddressBuilder(new AddressMutableState(toAddressMutableState(address)));
     }
 
-    public static AddressStringBuilder buildStringAddress() {
+    public static AddressStringBuilder buildAddressFromStrings() {
         return new AddressStringBuilder();
     }
 
@@ -72,7 +72,7 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressSetBuilder(creators);
     }
 
-    public static AddressMapBuilder createAddressMap(AddressMapEntryBuilder... builders) {
+    public static AddressMapBuilder createAddressFromMap(AddressMapEntryBuilder... builders) {
         return new AddressMapBuilder(builders);
     }
 

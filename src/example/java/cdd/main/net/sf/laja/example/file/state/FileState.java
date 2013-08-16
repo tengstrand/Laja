@@ -215,6 +215,10 @@ public class FileState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public FileState asImmutable(FileStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public FileMutableState asMutable() {
             return asMutable(new FileStringStateConverter());
         }

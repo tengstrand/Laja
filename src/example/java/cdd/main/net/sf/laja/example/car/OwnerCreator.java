@@ -42,11 +42,11 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerBuilder();
     }
 
-    public static OwnerBuilder buildOwner(Map owner) {
+    public static OwnerBuilder buildOwnerFromMap(Map owner) {
         return new OwnerBuilder(new OwnerMutableState(toOwnerMutableState(owner)));
     }
 
-    public static OwnerStringBuilder buildStringOwner() {
+    public static OwnerStringBuilder buildOwnerFromStrings() {
         return new OwnerStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerSetBuilder(creators);
     }
 
-    public static OwnerMapBuilder createOwnerMap(OwnerMapEntryBuilder... builders) {
+    public static OwnerMapBuilder createOwnerFromMap(OwnerMapEntryBuilder... builders) {
         return new OwnerMapBuilder(builders);
     }
 

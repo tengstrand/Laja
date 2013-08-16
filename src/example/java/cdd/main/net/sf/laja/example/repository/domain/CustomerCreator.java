@@ -55,11 +55,11 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerBuilder();
     }
 
-    public static CustomerBuilder buildCustomer(Map customer) {
+    public static CustomerBuilder buildCustomerFromMap(Map customer) {
         return new CustomerBuilder(new CustomerMutableState(toCustomerMutableState(customer)));
     }
 
-    public static CustomerStringBuilder buildStringCustomer() {
+    public static CustomerStringBuilder buildCustomerFromStrings() {
         return new CustomerStringBuilder();
     }
 
@@ -71,7 +71,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerSetBuilder(creators);
     }
 
-    public static CustomerMapBuilder createCustomerMap(CustomerMapEntryBuilder... builders) {
+    public static CustomerMapBuilder createCustomerFromMap(CustomerMapEntryBuilder... builders) {
         return new CustomerMapBuilder(builders);
     }
 
@@ -296,6 +296,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         public CustomerBuilder withPet(String pet) { state.pet = pet; return this; }
         public CustomerBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
         public CustomerBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
+        public CustomerBuilder withOldAddresses() { state.oldAddresses = new ArrayList<AddressMutableState>(); return this; }
         public CustomerBuilder withOldAddresses(List<AddressMutableState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
         public CustomerBuilder withOldAddresses(AddressListBuilder oldAddresses) { state.oldAddresses = oldAddresses.asMutableStateList(); return this; }
 
@@ -379,6 +380,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         public CustomerStringBuilder withPet(String pet) { state.pet = pet; return this; }
         public CustomerStringBuilder withAddress(AddressStringState address) { state.address = address; return this; }
         public CustomerStringBuilder withAddress(AddressCreator.AddressStringBuilder address) { state.address = address.asStringState(); return this; }
+        public CustomerStringBuilder withOldAddresses() { state.oldAddresses = new ArrayList<AddressStringState>(); return this; }
         public CustomerStringBuilder withOldAddresses(List<AddressStringState> oldAddresses) { state.oldAddresses = oldAddresses; return this; }
 
         public Customer asCustomer() {

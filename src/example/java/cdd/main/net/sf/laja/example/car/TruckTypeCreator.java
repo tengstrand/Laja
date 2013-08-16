@@ -42,11 +42,11 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return new TruckTypeBuilder();
     }
 
-    public static TruckTypeBuilder buildTruckType(Map truckType) {
+    public static TruckTypeBuilder buildTruckTypeFromMap(Map truckType) {
         return new TruckTypeBuilder(new TruckTypeMutableState(toTruckTypeMutableState(truckType)));
     }
 
-    public static TruckTypeStringBuilder buildStringTruckType() {
+    public static TruckTypeStringBuilder buildTruckTypeFromStrings() {
         return new TruckTypeStringBuilder();
     }
 
@@ -58,7 +58,7 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return new TruckTypeSetBuilder(creators);
     }
 
-    public static TruckTypeMapBuilder createTruckTypeMap(TruckTypeMapEntryBuilder... builders) {
+    public static TruckTypeMapBuilder createTruckTypeFromMap(TruckTypeMapEntryBuilder... builders) {
         return new TruckTypeMapBuilder(builders);
     }
 

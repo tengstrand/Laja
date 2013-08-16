@@ -211,6 +211,10 @@ public class VehicleSizeState implements ImmutableState {
             return asMutable().asImmutable();
         }
 
+        public VehicleSizeState asImmutable(VehicleSizeStringStateConverter converter) {
+            return asMutable(converter).asImmutable();
+        }
+
         public VehicleSizeMutableState asMutable() {
             return asMutable(new VehicleSizeStringStateConverter());
         }
