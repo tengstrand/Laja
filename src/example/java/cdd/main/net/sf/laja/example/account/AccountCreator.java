@@ -45,11 +45,11 @@ public class AccountCreator implements AccountCreatorMaker {
         return new AccountBuilder();
     }
 
-    public static AccountBuilder buildAccount(Map account) {
+    public static AccountBuilder buildAccountFromMap(Map account) {
         return new AccountBuilder(new AccountMutableState(toAccountMutableState(account)));
     }
 
-    public static AccountStringBuilder buildStringAccount() {
+    public static AccountStringBuilder buildAccountFromStrings() {
         return new AccountStringBuilder();
     }
 
@@ -61,7 +61,7 @@ public class AccountCreator implements AccountCreatorMaker {
         return new AccountSetBuilder(creators);
     }
 
-    public static AccountMapBuilder createAccountMap(AccountMapEntryBuilder... builders) {
+    public static AccountMapBuilder createAccountFromMap(AccountMapEntryBuilder... builders) {
         return new AccountMapBuilder(builders);
     }
 
