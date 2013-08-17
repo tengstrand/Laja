@@ -16,6 +16,10 @@
 
   #$.putAll(parameters)
 
+  #if (_v != null)
+    #set (verbose = true)
+  #end
+
   #set (curlyBrace = "{")
   #set (dot = "{curlyBrace}.}")
 
