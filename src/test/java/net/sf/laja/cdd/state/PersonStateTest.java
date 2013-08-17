@@ -33,11 +33,11 @@ public class PersonStateTest {
 
         PersonState state = mutableState.asImmutable();
 
-        assertThat(mutableState.children.get(0).name, equalTo("Adam"));
+        assertThat(mutableState.children.iterator().next().name, equalTo("Adam"));
         assertThat(mutableState.groupedAddresses.get("aaa").streetName, equalTo("First street"));
         assertThat(mutableState.listOfSetOfMapOfIntegers.get(0).iterator().next().get("b"), equalTo(456));
 
-        assertThat(state.children.get(0).name, equalTo("Adam"));
+        assertThat(state.children.iterator().next().name, equalTo("Adam"));
         assertThat(state.groupedAddresses.get("aaa").streetName, equalTo("First street"));
         assertThat(state.listOfSetOfMapOfIntegers.get(0).iterator().next().get("b"), equalTo(456));
     }

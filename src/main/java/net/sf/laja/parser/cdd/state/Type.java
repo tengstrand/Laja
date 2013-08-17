@@ -155,6 +155,17 @@ public class Type implements StateParser.IType {
         throw new IllegalStateException("The type " + name + " is not a Set/List/Map");
     }
 
+    public String collectionOrMapConcreteType() {
+        if (isSet()) {
+            return "HashSet";
+        } else if (isList()) {
+            return "ArrayList";
+        } else if (isMap()) {
+            return "HashMap";
+        }
+        throw new IllegalStateException("The type " + name + " is not a Set/List/Map");
+    }
+
     public Type asMutable() {
         Type result = new Type();
         result.setName(typeConverter.asMutable(name));

@@ -89,7 +89,7 @@ public class PersonTest {
     @Test
     public void convertToMapAndBackAgain() {
         PersonBuilder person = defaultPerson()
-                .withChildren(createPersonList(createPerson().name("Anders").hairColor(BLACK).children().defaults()))
+                .withChildren(createPersonSet(createPerson().name("Anders").hairColor(BLACK).children().defaults()))
                 .withAddress(buildAddress().withId(2).withStreetName("Third street").withCity("Stockholm"))
                 .withOldAddress(buildAddress().withId(3))
                 .withOldAddresses(createAddressSet(defaultAddress(4)))

@@ -226,6 +226,10 @@ public class Attribute implements StateParser.IAttribute {
         return type.collectionOrMapType();
     }
 
+    public String collectionOrMapConcreteType() {
+        return type.collectionOrMapConcreteType();
+    }
+
     @Override
     public String toString() {
         return "Attribute{" +

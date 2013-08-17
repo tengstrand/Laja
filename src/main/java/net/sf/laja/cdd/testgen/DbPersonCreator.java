@@ -101,13 +101,13 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
 
         // children
         public class _Children {
-            public _Address children(List<PersonMutableState> children) {
+            public _Address children(Set<PersonMutableState> children) {
                 state.children = children;
                 return new _Address();
             }
 
             public _Address children(DbPersonCreator... creators) {
-                List<PersonMutableState> children = new ArrayList<PersonMutableState>();
+                Set<PersonMutableState> children = new HashSet<PersonMutableState>();
 
                 for (DbPersonCreator creator : creators) {
                     children.add(creator.asMutableState());
@@ -332,9 +332,9 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         public PersonBuilder withDateOfBirth(LocalDate dateOfBirth) { state.dateOfBirth = dateOfBirth; return this; }
         public PersonBuilder withDateOfBirth(int year, int monthOfYear, int dayOfMonth) { state.dateOfBirth = new LocalDate(year, monthOfYear, dayOfMonth); return this; }
         public PersonBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
-        public PersonBuilder withChildren() { state.children = new ArrayList<PersonMutableState>(); return this; }
-        public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
-        public PersonBuilder withChildren(PersonListBuilder children) { state.children = children.asMutableStateList(); return this; }
+        public PersonBuilder withChildren() { state.children = new HashSet<PersonMutableState>(); return this; }
+        public PersonBuilder withChildren(Set<PersonMutableState> children) { state.children = children; return this; }
+        public PersonBuilder withChildren(PersonSetBuilder children) { state.children = children.asMutableStateSet(); return this; }
         public PersonBuilder withAddress(AddressMutableState address) { state.address = address; return this; }
         public PersonBuilder withAddress(AddressCreator.AddressBuilder address) { state.address = address.asMutableState(); return this; }
         public PersonBuilder withOldAddress(AddressMutableState oldAddress) { state.oldAddress = oldAddress; return this; }
@@ -417,8 +417,8 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         public PersonStringBuilder withName(String name) { state.name = name; return this; }
         public PersonStringBuilder withDateOfBirth(String dateOfBirth) { state.dateOfBirth = dateOfBirth; return this; }
         public PersonStringBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
-        public PersonStringBuilder withChildren() { state.children = new ArrayList<PersonStringState>(); return this; }
-        public PersonStringBuilder withChildren(List<PersonStringState> children) { state.children = children; return this; }
+        public PersonStringBuilder withChildren() { state.children = new HashSet<PersonStringState>(); return this; }
+        public PersonStringBuilder withChildren(Set<PersonStringState> children) { state.children = children; return this; }
         public PersonStringBuilder withAddress(AddressStringState address) { state.address = address; return this; }
         public PersonStringBuilder withAddress(AddressCreator.AddressStringBuilder address) { state.address = address.asStringState(); return this; }
         public PersonStringBuilder withOldAddress(AddressStringState oldAddress) { state.oldAddress = oldAddress; return this; }

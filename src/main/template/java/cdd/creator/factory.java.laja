@@ -81,7 +81,7 @@
         #if (isFactory)
 {tab}    return new _{a.nameAsClass}().children(creators);
         #else
-{tab}    List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
+{tab}    {a.collectionOrMapType}<{mutableState}> {a.name} = new {a.collectionOrMapConcreteType}<{mutableState}>();
 
 {tab}    for ({creator} creator : creators) {
 {tab}        {a.name}.add(creator.asMutableState());
