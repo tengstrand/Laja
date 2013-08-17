@@ -6,6 +6,7 @@ public class Aparameter implements CreatorParser.IAparameter {
     public String value = "";
     public String method = "";
     public String methodSignature = "";
+    public boolean suppressOriginal;
 
     public void addParameterAttr(CreatorParser.IAparameterAttr iaparameterAttr) {
         AparameterAttr attr = (AparameterAttr)iaparameterAttr;
@@ -25,6 +26,8 @@ public class Aparameter implements CreatorParser.IAparameter {
             method = value;
         } else if (variable.equals("methodSignature")) {
             methodSignature = value;
+        } else if (variable.equals("suppressOriginal")) {
+            suppressOriginal = Boolean.valueOf(value);
         }
     }
 
@@ -79,6 +82,11 @@ public class Aparameter implements CreatorParser.IAparameter {
         return result;
     }
 
+    public boolean isSuppressed(String attribute) {
+        return suppressOriginal && this.attribute.equals(attribute);
+
+    }
+
     @Override
     public String toString() {
         return "Aparameter{" +
@@ -87,6 +95,7 @@ public class Aparameter implements CreatorParser.IAparameter {
                 ", value='" + value + '\'' +
                 ", method='" + method + '\'' +
                 ", methodSignature='" + methodSignature + '\'' +
+                ", suppressOriginal=" + suppressOriginal +
                 '}';
     }
 }

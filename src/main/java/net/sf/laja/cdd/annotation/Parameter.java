@@ -10,4 +10,5 @@ public @interface Parameter {
     public String method() default "";
     public String methodSignature() default "";
     public String value() default "";
+    public boolean suppressOriginal() default false;
 }

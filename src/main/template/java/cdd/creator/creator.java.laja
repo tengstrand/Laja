@@ -1,6 +1,7 @@
 #namespace creator
 
 #macro initializeCreator()
+  #set (theCreator = creator)
   #set (filename = creator.filename)
   #set (packagename = creator.packagename)
   #set (packageStatement = creator.packageStatement)

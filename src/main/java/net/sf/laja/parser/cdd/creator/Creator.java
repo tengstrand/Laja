@@ -19,6 +19,7 @@ public class Creator implements CreatorParser.ICreator{
     public List<AsMethod> asMethods;
     public Aparameters parameters;
     public List<ParameterClass> parameterClasses = new ArrayList<ParameterClass>();
+    public Aparameters newParameters = new Aparameters();
 
     public String filename;
     public String buildMethod;
@@ -39,6 +40,7 @@ public class Creator implements CreatorParser.ICreator{
         ParameterClass parameterClass = (ParameterClass)iparameterClass;
         if (!parameterClass.isEmpty()) {
             parameterClasses.add(parameterClass);
+            newParameters.addParameters(parameterClass.asAParameters());
         }
     }
 
@@ -72,15 +74,6 @@ public class Creator implements CreatorParser.ICreator{
         entryMethod = StringUtils.uncapitalize(name) + "Entry";
     }
 
-    public Aparameters getNewParameters() {
-        Aparameters result = new Aparameters();
-
-        for (ParameterClass parameterClass : parameterClasses) {
-            result.addParameters(parameterClass.asAParameters());
-        }
-        return result;
-    }
-
     public void setManualCode(String manualCode) {
         this.manualCode = manualCode;
     }
@@ -95,6 +88,15 @@ public class Creator implements CreatorParser.ICreator{
 
     public String getStringBuilder() {
         return state + "StringBuilder";
+    }
+
+    public boolean isSuppressed(String attribute) {
+        for (Aparameter parameter : parameters) {
+            if (parameter.isSuppressed(attribute)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

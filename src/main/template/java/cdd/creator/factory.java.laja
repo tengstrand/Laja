@@ -55,56 +55,62 @@
 
 #macro attributeMethod(a, returnClass, returnStatement, isFactory, tab)
   #if (!a.isCollectionOrMap)
+    #if (!theCreator.isSuppressed(a.name))
 {tab}public {returnClass} {a.name}({a.type.asMutable} {a.name}) {
-    #setState(a, isFactory, tab)
+      #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
-    #if (a.isState && a.creator != null)
+      #if (a.isState && a.creator != null)
 
 {tab}public {returnClass} {a.name}({a.creator.classname} {a.name}) {
-      #setMutableState(a, isFactory, tab)
+        #setMutableState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
+      #end
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else if (a.isCollection)
+    #if (!theCreator.isSuppressed(a.name))
 {tab}public {returnClass} {a.name}({a.type.asMutable} {a.name}) {
-    #setState(a, isFactory, tab)
+      #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
-    #if (a.isLeafState)
+      #if (a.isLeafState)
 
 {tab}public {returnClass} {a.name}({creator}... creators) {
-      #if (isFactory)
+        #if (isFactory)
 {tab}    return new _{a.nameAsClass}().children(creators);
-      #else
+        #else
 {tab}    List<{mutableState}> {a.name} = new ArrayList<{mutableState}>();
 
 {tab}    for ({creator} creator : creators) {
 {tab}        {a.name}.add(creator.asMutableState());
 {tab}    }
-    #setState(a, isFactory, tab)
+          #setState(a, isFactory, tab)
 {tab}    {returnStatement}
-      #end
+        #end
 {tab}}
+      #end
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #else
+    #if (!theCreator.isSuppressed(a.name))
 {tab}public {returnClass} {a.name}({a.type.asMutable} {a.name}) {
-    #setState(a, isFactory, tab)
+      #setState(a, isFactory, tab)
 {tab}    {returnStatement}
 {tab}}
-    #if (a.type.mapType.entry.isState)
-      #set (stateName = a.type.mapType.entry.state)
+      #if (a.type.mapType.entry.isState)
+        #set (stateName = a.type.mapType.entry.state)
 
 {tab}public {returnClass} {a.name}({stateName}MapBuilder mapBuilder) {
-      #if (isFactory)
+        #if (isFactory)
 {tab}    return new _{a.nameAsClass}().{a.name}(mapBuilder);
-      #else
+        #else
 {tab}    state.{a.name} = mapBuilder.asMutableStateMap();
 {tab}    {returnStatement}
-      #end
+        #end
 {tab}}
+      #end
     #end
     #parameterMethodSwitch(isFactory, a, returnClass, returnStatement)
   #end
