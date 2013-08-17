@@ -24,7 +24,7 @@ public class MapValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        mapValidator().validate(null, states, "", "persons", errors, 0);
+        mapValidator.validate(null, states, "", "persons", errors, 0);
 
         assertTrue(errors.isEmpty());
     }
@@ -39,7 +39,7 @@ public class MapValidatorTest {
 
         ValidationErrors.Builder errors = ValidationErrors.builder();
 
-        mapValidator().validate(null, states, "", "persons", errors, 0);
+        mapValidator.validate(null, states, "", "persons", errors, 0);
 
         ValidationErrors expectedErrors = ValidationErrors.builder()
                 .addIsNullError(person2.asMutableState(), "name", "persons").build();

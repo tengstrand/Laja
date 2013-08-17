@@ -299,7 +299,7 @@ public class CustomerState implements ImmutableState {
             if (address == null) errors.addIsNullError(rootElement, "address", parent);
 
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
-            if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
+            if (oldAddresses != null) collectionValidator.validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
         }
 
         public void assertIsValid() {

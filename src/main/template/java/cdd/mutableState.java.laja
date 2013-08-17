@@ -98,9 +98,9 @@
       #if (attribute.isState)
             if ({attribute.name} != null) {attribute.name}.validate(rootElement, concatenate(parent, "{attribute.name}"), errors);
       #else if (attribute.isCollection && attribute.isLeafState)
-            if ({attribute.name} != null) collectionValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
+            if ({attribute.name} != null) collectionValidator.validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
       #else if (attribute.isMap && attribute.isLeafState)
-            if ({attribute.name} != null) mapValidator().validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
+            if ({attribute.name} != null) mapValidator.validate(rootElement, {attribute.name}, parent, "{attribute.name}", errors, 0);
       #end
     #end
   #end

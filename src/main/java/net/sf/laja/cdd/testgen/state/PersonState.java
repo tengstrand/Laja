@@ -405,12 +405,12 @@ public class PersonState implements ImmutableState {
             if (groupedAddresses == null) errors.addIsNullError(rootElement, "groupedAddresses", parent);
             if (listOfSetOfMapOfIntegers == null) errors.addIsNullError(rootElement, "listOfSetOfMapOfIntegers", parent);
 
-            if (children != null) collectionValidator().validate(rootElement, children, parent, "children", errors, 0);
+            if (children != null) collectionValidator.validate(rootElement, children, parent, "children", errors, 0);
             if (address != null) address.validate(rootElement, concatenate(parent, "address"), errors);
             if (oldAddress != null) oldAddress.validate(rootElement, concatenate(parent, "oldAddress"), errors);
-            if (oldAddresses != null) collectionValidator().validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
-            if (groupedAddresses != null) mapValidator().validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
-            if (listOfSetOfState != null) collectionValidator().validate(rootElement, listOfSetOfState, parent, "listOfSetOfState", errors, 0);
+            if (oldAddresses != null) collectionValidator.validate(rootElement, oldAddresses, parent, "oldAddresses", errors, 0);
+            if (groupedAddresses != null) mapValidator.validate(rootElement, groupedAddresses, parent, "groupedAddresses", errors, 0);
+            if (listOfSetOfState != null) collectionValidator.validate(rootElement, listOfSetOfState, parent, "listOfSetOfState", errors, 0);
         }
 
         public void assertIsValid() {
