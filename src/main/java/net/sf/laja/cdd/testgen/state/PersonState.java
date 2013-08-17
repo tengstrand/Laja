@@ -35,7 +35,7 @@ public class PersonState implements ImmutableState {
     @Id public final int id;
     public final String name;
     @Optional
-    public final LocalDate birthday;
+    public final LocalDate dateOfBirth;
     public final String hairColor;
     public final ImmutableList<PersonState> children;
     public final AddressState address;
@@ -52,7 +52,7 @@ public class PersonState implements ImmutableState {
 
     public static final String ID = "id";
     public static final String NAME = "name";
-    public static final String BIRTHDAY = "birthday";
+    public static final String DATE_OF_BIRTH = "dateOfBirth";
     public static final String HAIR_COLOR = "hairColor";
     public static final String CHILDREN = "children";
     public static final String ADDRESS = "address";
@@ -65,7 +65,7 @@ public class PersonState implements ImmutableState {
     public PersonState(
             int id,
             String name,
-            LocalDate birthday,
+            LocalDate dateOfBirth,
             String hairColor,
             ImmutableList<PersonState> children,
             AddressState address,
@@ -76,7 +76,7 @@ public class PersonState implements ImmutableState {
             ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers) {
         this.id = id;
         this.name = name;
-        this.birthday = birthday;
+        this.dateOfBirth = dateOfBirth;
         this.hairColor = hairColor;
         this.children = children;
         this.address = address;
@@ -106,7 +106,7 @@ public class PersonState implements ImmutableState {
 
     public int getId() { return id; }
     public String getName() { return name; }
-    public LocalDate getBirthday() { return birthday; }
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
     public String getHairColor() { return hairColor; }
     public ImmutableList<PersonState> getChildren() { return children; }
     public AddressState getAddress() { return address; }
@@ -116,23 +116,23 @@ public class PersonState implements ImmutableState {
     public ImmutableList<ImmutableSet<AddressState>> getListOfSetOfState() { return listOfSetOfState; }
     public ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> getListOfSetOfMapOfIntegers() { return listOfSetOfMapOfIntegers; }
 
-    public PersonState withId(int id) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withName(String name) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withBirthday(LocalDate birthday) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withHairColor(String hairColor) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withChildren(ImmutableList<PersonState> children) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withAddress(AddressState address) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withOldAddress(AddressState oldAddress) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withListOfSetOfState(ImmutableList<ImmutableSet<AddressState>> listOfSetOfState) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
-    public PersonState withListOfSetOfMapOfIntegers(ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers) { return new PersonState(id, name, birthday, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withId(int id) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withName(String name) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withDateOfBirth(LocalDate dateOfBirth) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withHairColor(String hairColor) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withChildren(ImmutableList<PersonState> children) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withAddress(AddressState address) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withOldAddress(AddressState oldAddress) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withOldAddresses(ImmutableSet<AddressState> oldAddresses) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withGroupedAddresses(ImmutableMap<String,AddressState> groupedAddresses) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withListOfSetOfState(ImmutableList<ImmutableSet<AddressState>> listOfSetOfState) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
+    public PersonState withListOfSetOfMapOfIntegers(ImmutableList<ImmutableSet<ImmutableMap<String,Integer>>> listOfSetOfMapOfIntegers) { return new PersonState(id, name, dateOfBirth, hairColor, children, address, oldAddress, oldAddresses, groupedAddresses, listOfSetOfState, listOfSetOfMapOfIntegers); }
 
     public PersonMutableState asMutable() {
         return new PersonMutableState(
                 id,
                 name,
-                birthday,
+                dateOfBirth,
                 hairColor,
                 asMutableList(children, toMutable),
                 address != null ? address.asMutable() : null,
@@ -178,7 +178,7 @@ public class PersonState implements ImmutableState {
     public int hashCodeValue() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
         result = 31 * result + (hairColor != null ? hairColor.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
@@ -199,7 +199,7 @@ public class PersonState implements ImmutableState {
 
         if (id != state.id) return false;
         if (name != null ? !name.equals(state.name) : state.name != null) return false;
-        if (birthday != null ? !birthday.equals(state.birthday) : state.birthday != null) return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(state.dateOfBirth) : state.dateOfBirth != null) return false;
         if (hairColor != null ? !hairColor.equals(state.hairColor) : state.hairColor != null) return false;
         if (children != null ? !children.equals(state.children) : state.children != null) return false;
         if (address != null ? !address.equals(state.address) : state.address != null) return false;
@@ -216,7 +216,7 @@ public class PersonState implements ImmutableState {
     public String toString() {
         return "{id=" + id +
                 ", name=" + (name == null ? null : '\"' + name + '\"' ) +
-                ", birthday=" + birthday +
+                ", dateOfBirth=" + dateOfBirth +
                 ", hairColor=" + (hairColor == null ? null : '\"' + hairColor + '\"' ) +
                 ", children=" + children +
                 ", address=" + address +
@@ -232,7 +232,7 @@ public class PersonState implements ImmutableState {
         @Id public int id;
         public String name;
         @Optional
-        public LocalDate birthday;
+        public LocalDate dateOfBirth;
         public String hairColor;
         public List<PersonMutableState> children;
         public AddressMutableState address;
@@ -252,7 +252,7 @@ public class PersonState implements ImmutableState {
         public PersonMutableState(
                 int id,
                 String name,
-                LocalDate birthday,
+                LocalDate dateOfBirth,
                 String hairColor,
                 List<PersonMutableState> children,
                 AddressMutableState address,
@@ -263,7 +263,7 @@ public class PersonState implements ImmutableState {
                 List<Set<Map<String,Integer>>> listOfSetOfMapOfIntegers) {
             this.id = id;
             this.name = name;
-            this.birthday = birthday;
+            this.dateOfBirth = dateOfBirth;
             this.hairColor = hairColor;
             this.children = children;
             this.address = address;
@@ -277,7 +277,7 @@ public class PersonState implements ImmutableState {
         public PersonMutableState(PersonMutableState state) {
             id = state.id;
             name = state.name;
-            birthday = state.birthday;
+            dateOfBirth = state.dateOfBirth;
             hairColor = state.hairColor;
             children = state.children;
             address = state.address;
@@ -290,7 +290,7 @@ public class PersonState implements ImmutableState {
 
         public int getId() { return id; }
         public String getName() { return name; }
-        public LocalDate getBirthday() { return birthday; }
+        public LocalDate getDateOfBirth() { return dateOfBirth; }
         public String getHairColor() { return hairColor; }
         public List<PersonMutableState> getChildren() { return children; }
         public AddressMutableState getAddress() { return address; }
@@ -302,7 +302,7 @@ public class PersonState implements ImmutableState {
 
         public void setId(int id) { this.id = id; }
         public void setName(String name) { this.name = name; }
-        public void setBirthday(LocalDate birthday) { this.birthday = birthday; }
+        public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
         public void setHairColor(String hairColor) { this.hairColor = hairColor; }
         public void setChildren(List<PersonMutableState> children) { this.children = children; }
         public void setAddress(AddressMutableState address) { this.address = address; }
@@ -314,7 +314,7 @@ public class PersonState implements ImmutableState {
 
         public PersonMutableState withId(int id) { this.id = id; return this; }
         public PersonMutableState withName(String name) { this.name = name; return this; }
-        public PersonMutableState withBirthday(LocalDate birthday) { this.birthday = birthday; return this; }
+        public PersonMutableState withDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; return this; }
         public PersonMutableState withHairColor(String hairColor) { this.hairColor = hairColor; return this; }
         public PersonMutableState withChildren() { this.children = new ArrayList<PersonMutableState>(); return this; }
         public PersonMutableState withChildren(List<PersonMutableState> children) { this.children = children; return this; }
@@ -333,7 +333,7 @@ public class PersonState implements ImmutableState {
             return new PersonState(
                     id,
                     name,
-                    birthday,
+                    dateOfBirth,
                     hairColor,
                     asImmutableList(children, toImmutable),
                     address != null ? address.asImmutable() : null,
@@ -350,7 +350,7 @@ public class PersonState implements ImmutableState {
 
             result.put("id", id);
             result.put("name", name);
-            result.put("birthday", birthday);
+            result.put("dateOfBirth", dateOfBirth);
             result.put("hairColor", hairColor);
             result.put("children", asMutableList(children, toMap));
             result.put("address", address != null ? address.asMap() : null);
@@ -375,7 +375,7 @@ public class PersonState implements ImmutableState {
             return new PersonStringState(
                     converter.idToString(id),
                     converter.nameToString(name),
-                    converter.birthdayToString(birthday),
+                    converter.dateOfBirthToString(dateOfBirth),
                     converter.hairColorToString(hairColor),
                     converter.childrenToString(children),
                     converter.addressToString(address),
@@ -443,7 +443,7 @@ public class PersonState implements ImmutableState {
     public int hashCodeValue() {
             int result = id;
             result = 31 * result + (name != null ? name.hashCode() : 0);
-            result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+            result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
             result = 31 * result + (hairColor != null ? hairColor.hashCode() : 0);
             result = 31 * result + (children != null ? children.hashCode() : 0);
             result = 31 * result + (address != null ? address.hashCode() : 0);
@@ -464,7 +464,7 @@ public class PersonState implements ImmutableState {
 
             if (id != state.id) return false;
             if (name != null ? !name.equals(state.name) : state.name != null) return false;
-            if (birthday != null ? !birthday.equals(state.birthday) : state.birthday != null) return false;
+            if (dateOfBirth != null ? !dateOfBirth.equals(state.dateOfBirth) : state.dateOfBirth != null) return false;
             if (hairColor != null ? !hairColor.equals(state.hairColor) : state.hairColor != null) return false;
             if (children != null ? !children.equals(state.children) : state.children != null) return false;
             if (address != null ? !address.equals(state.address) : state.address != null) return false;
@@ -481,7 +481,7 @@ public class PersonState implements ImmutableState {
         public String toString() {
             return "{id=" + id +
                     ", name=" + (name == null ? null : '\"' + name + '\"' ) +
-                    ", birthday=" + birthday +
+                    ", dateOfBirth=" + dateOfBirth +
                     ", hairColor=" + (hairColor == null ? null : '\"' + hairColor + '\"' ) +
                     ", children=" + children +
                     ", address=" + address +
@@ -506,7 +506,7 @@ public class PersonState implements ImmutableState {
 
             int id = (Integer) map.get("id");
             String name = (String) map.get("name");
-            LocalDate birthday = (LocalDate) map.get("birthday");
+            LocalDate dateOfBirth = (LocalDate) map.get("dateOfBirth");
             String hairColor = (String) map.get("hairColor");
             List children = (List) map.get("children");
             Map address = (Map) map.get("address");
@@ -519,7 +519,7 @@ public class PersonState implements ImmutableState {
             return new PersonMutableState(
                     id,
                     name,
-                    birthday,
+                    dateOfBirth,
                     hairColor,
                     asMutableList(children, mapToPersonConverter),
                     address != null ? toAddressMutableState(address) : null,
@@ -537,7 +537,7 @@ public class PersonState implements ImmutableState {
         @Id public String id;
         public String name;
         @Optional
-        public String birthday;
+        public String dateOfBirth;
         public String hairColor;
         public List<PersonStringState> children;
         public AddressStringState address;
@@ -557,7 +557,7 @@ public class PersonState implements ImmutableState {
         public PersonStringState(
                 String id,
                 String name,
-                String birthday,
+                String dateOfBirth,
                 String hairColor,
                 List<PersonStringState> children,
                 AddressStringState address,
@@ -568,7 +568,7 @@ public class PersonState implements ImmutableState {
                 List<Set<Map<String,String>>> listOfSetOfMapOfIntegers) {
             this.id = id;
             this.name = name;
-            this.birthday = birthday;
+            this.dateOfBirth = dateOfBirth;
             this.hairColor = hairColor;
             this.children = children;
             this.address = address;
@@ -581,7 +581,7 @@ public class PersonState implements ImmutableState {
 
         public String getId() { return id; }
         public String getName() { return name; }
-        public String getBirthday() { return birthday; }
+        public String getDateOfBirth() { return dateOfBirth; }
         public String getHairColor() { return hairColor; }
         public List<PersonStringState> getChildren() { return children; }
         public AddressStringState getAddress() { return address; }
@@ -593,7 +593,7 @@ public class PersonState implements ImmutableState {
 
         public void setId(String id) { this.id = id; }
         public void setName(String name) { this.name = name; }
-        public void setBirthday(String birthday) { this.birthday = birthday; }
+        public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
         public void setHairColor(String hairColor) { this.hairColor = hairColor; }
         public void setChildren(List<PersonStringState> children) { this.children = children; }
         public void setAddress(AddressStringState address) { this.address = address; }
@@ -605,7 +605,7 @@ public class PersonState implements ImmutableState {
 
         public PersonStringState withId(String id) { this.id = id; return this; }
         public PersonStringState withName(String name) { this.name = name; return this; }
-        public PersonStringState withBirthday(String birthday) { this.birthday = birthday; return this; }
+        public PersonStringState withDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; return this; }
         public PersonStringState withHairColor(String hairColor) { this.hairColor = hairColor; return this; }
         public PersonStringState withChildren() { this.children = new ArrayList<PersonStringState>(); return this; } // 1
         public PersonStringState withChildren(List<PersonStringState> children) { this.children = children; return this; }
@@ -634,7 +634,7 @@ public class PersonState implements ImmutableState {
             return new PersonMutableState(
                     converter.toId(id),
                     converter.toName(name),
-                    converter.toBirthday(birthday),
+                    converter.toDateOfBirth(dateOfBirth),
                     converter.toHairColor(hairColor),
                     converter.toChildren(children),
                     converter.toAddress(address),
@@ -667,7 +667,7 @@ public class PersonState implements ImmutableState {
         public void validate(PersonStringStateValidator stateValidator, Object rootElement, String parent, ValidationErrors.Builder errors) {
             stateValidator.validateId(id, rootElement, parent, errors);
             stateValidator.validateName(name, rootElement, parent, errors);
-            stateValidator.validateBirthday(birthday, rootElement, parent, errors);
+            stateValidator.validateDateOfBirth(dateOfBirth, rootElement, parent, errors);
             stateValidator.validateHairColor(hairColor, rootElement, parent, errors);
             stateValidator.validateChildren(children, rootElement, parent, errors);
             stateValidator.validateAddress(address, rootElement, parent, errors);
@@ -715,7 +715,7 @@ public class PersonState implements ImmutableState {
         public String toString() {
             return "{id=" + (id == null ? null : '\"' + id + '\"' ) +
                     ", name=" + (name == null ? null : '\"' + name + '\"' ) +
-                    ", birthday=" + (birthday == null ? null : '\"' + birthday + '\"' ) +
+                    ", dateOfBirth=" + (dateOfBirth == null ? null : '\"' + dateOfBirth + '\"' ) +
                     ", hairColor=" + (hairColor == null ? null : '\"' + hairColor + '\"' ) +
                     ", children=" + children +
                     ", address=" + address +
@@ -735,7 +735,7 @@ public class PersonState implements ImmutableState {
 
         public String idToString(int id) { return converter.intToString(id); }
         public String nameToString(String name) { return name; }
-        public String birthdayToString(LocalDate birthday) { return converter.toString(birthday); }
+        public String dateOfBirthToString(LocalDate dateOfBirth) { return converter.toString(dateOfBirth); }
         public String hairColorToString(String hairColor) { return hairColor; }
         public List<PersonStringState> childrenToString(List<PersonMutableState> children) { return asMutableList(children, toMutableString); }
         public AddressStringState addressToString(AddressMutableState address) { return address != null ? address.asStringState(converter) : null; }
@@ -747,7 +747,7 @@ public class PersonState implements ImmutableState {
 
         public int toId(String id) { return converter.toInt(id); }
         public String toName(String name) { return name; }
-        public LocalDate toBirthday(String birthday) { return converter.toLocalDate(birthday); }
+        public LocalDate toDateOfBirth(String dateOfBirth) { return converter.toLocalDate(dateOfBirth); }
         public String toHairColor(String hairColor) { return hairColor; }
         public List<PersonMutableState> toChildren(List<PersonStringState> children) { return asMutableList(children, toMutable); }
         public AddressMutableState toAddress(AddressStringState address) { return address != null ? address.asMutable() : null; }
@@ -771,8 +771,8 @@ public class PersonState implements ImmutableState {
         public void validateName(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
         }
 
-        public void validateBirthday(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
-            try { converter.toBirthday(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "birthday", parent); }
+        public void validateDateOfBirth(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {
+            try { converter.toDateOfBirth(value); } catch (Exception e) { errors.addTypeConversionError(rootElement, "dateOfBirth", parent); }
         }
 
         public void validateHairColor(String value, Object rootElement, String parent, ValidationErrors.Builder errors) {

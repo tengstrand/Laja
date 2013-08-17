@@ -2,7 +2,6 @@ package net.sf.laja.cdd.testgen;
 
 import net.sf.laja.cdd.annotation.Behaviour;
 import net.sf.laja.cdd.testgen.state.PersonState;
-import org.joda.time.DateMidnight;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
@@ -37,7 +36,7 @@ public class Person extends PersonBehaviour {
     }
 
     public boolean isTeenager() {
-        int years = new Period(state.birthday, new LocalDate()).getYears();
+        int years = new Period(state.dateOfBirth, new LocalDate()).getYears();
         return years >= 13 && years <= 19;
     }
 }

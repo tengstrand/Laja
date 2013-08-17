@@ -274,13 +274,13 @@ public class PersonCreator implements PersonCreatorMaker {
         return this;
     }
 
-    public PersonCreator withBirthday(LocalDate birthday) {
-        state.birthday = birthday;
+    public PersonCreator withDateOfBirth(LocalDate dateOfBirth) {
+        state.dateOfBirth = dateOfBirth;
         return this;
     }
 
-    public PersonCreator withBirthday(int year, int monthOfYear, int dayOfMonth) {
-        state.birthday = new LocalDate(year, monthOfYear, dayOfMonth);
+    public PersonCreator withDateOfBirth(int year, int monthOfYear, int dayOfMonth) {
+        state.dateOfBirth = new LocalDate(year, monthOfYear, dayOfMonth);
         return this;
     }
 
@@ -418,8 +418,8 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonBuilder withId(int id) { state.id = id; return this; }
         public PersonBuilder withName(String name) { state.name = name; return this; }
-        public PersonBuilder withBirthday(LocalDate birthday) { state.birthday = birthday; return this; }
-        public PersonBuilder withBirthday(int year, int monthOfYear, int dayOfMonth) { state.birthday = new LocalDate(year, monthOfYear, dayOfMonth); return this; }
+        public PersonBuilder withDateOfBirth(LocalDate dateOfBirth) { state.dateOfBirth = dateOfBirth; return this; }
+        public PersonBuilder withDateOfBirth(int year, int monthOfYear, int dayOfMonth) { state.dateOfBirth = new LocalDate(year, monthOfYear, dayOfMonth); return this; }
         public PersonBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
         public PersonBuilder withChildren() { state.children = new ArrayList<PersonMutableState>(); return this; }
         public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
@@ -512,7 +512,7 @@ public class PersonCreator implements PersonCreatorMaker {
 
         public PersonStringBuilder withId(String id) { state.id = id; return this; }
         public PersonStringBuilder withName(String name) { state.name = name; return this; }
-        public PersonStringBuilder withBirthday(String birthday) { state.birthday = birthday; return this; }
+        public PersonStringBuilder withDateOfBirth(String dateOfBirth) { state.dateOfBirth = dateOfBirth; return this; }
         public PersonStringBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
         public PersonStringBuilder withChildren() { state.children = new ArrayList<PersonStringState>(); return this; }
         public PersonStringBuilder withChildren(List<PersonStringState> children) { state.children = children; return this; }

@@ -1,10 +1,8 @@
 package net.sf.laja.cdd.testgen;
 
-import org.joda.time.DateMidnight;
-import org.joda.time.LocalDate;
+import net.sf.laja.cdd.testgen.state.PersonState;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +51,7 @@ public class PersonTest {
 
         PersonMutableState mutableState = PersonCreator.buildPersonFromStrings()
                 .withName("Carl")
-                .withBirthday("1977-07-07")
+                .withDateOfBirth("1977-07-07")
                 .withListOfSetOfMapOfIntegers(list).asMutableState();
 
         Object value = mutableState.listOfSetOfMapOfIntegers.get(0).iterator().next().get("a");
@@ -66,8 +64,26 @@ public class PersonTest {
         defaultPerson().withAddress(buildAddress().withCity("Uppsala")).asPerson();
     }
 
-    private static Map mapOfIntegers() {
-        return createMap(createEntry("key1", 123), createEntry("key2", 456));
+    @Test
+    public void convertFromVersion2ToVersion1AndBackAgain() {
+        Map person1 = convertFromVersion2ToVersion1(defaultPerson());
+        PersonMutableState person2 = convertFromVersion1ToVersion2(person1);
+    }
+
+    private Map convertFromVersion2ToVersion1(PersonBuilder person) {
+        Map map = person.asMap();
+
+        map.put("birthday", map.get(PersonState.DATE_OF_BIRTH));
+        map.remove("dateOfBirth");
+
+        return map;
+    }
+
+    private PersonMutableState convertFromVersion1ToVersion2(Map person) {
+        person.put(PersonState.DATE_OF_BIRTH, person.get("birthday"));
+        person.remove("birthday");
+
+        return PersonCreator.createPersonFromMap(person).asMutableState();
     }
 
     @Test
@@ -87,7 +103,7 @@ public class PersonTest {
 
         assertThat(converted.id, equalTo(mutableState.id));
         assertThat(converted.name, equalTo(mutableState.name));
-        assertThat(converted.birthday, equalTo(mutableState.birthday));
+        assertThat(converted.dateOfBirth, equalTo(mutableState.dateOfBirth));
         assertThat(converted.hairColor, equalTo(mutableState.hairColor));
         assertThat(converted.children, equalTo(mutableState.children));
         assertThat(converted.address, equalTo(mutableState.address));
@@ -96,6 +112,10 @@ public class PersonTest {
         assertThat(converted.groupedAddresses, equalTo(mutableState.groupedAddresses));
         assertThat(converted.listOfSetOfState, equalTo(mutableState.listOfSetOfState));
         assertThat(converted.listOfSetOfMapOfIntegers, equalTo(mutableState.listOfSetOfMapOfIntegers));
+    }
+
+    private static Map mapOfIntegers() {
+        return createMap(createEntry("key1", 123), createEntry("key2", 456));
     }
 
     @Test
@@ -124,7 +144,7 @@ public class PersonTest {
                 .withId(99)
                 .withName("Carl")
                 .withHairColor("RED")
-                .withBirthday(1999, 10, 11)
+                .withDateOfBirth(1999, 10, 11)
                 .withAddress(buildAddress().withId(1).withStreetName("First street").withCity("Stockholm"))
                 .withChildren()
                 .withGroupedAddresses()
