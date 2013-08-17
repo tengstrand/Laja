@@ -34,7 +34,7 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeCreator(new VehicleSizeMutableState()).new VehicleSizeFactory();
     }
 
-    public static VehicleSizeCreator createVehicleSize(Map vehicleSize) {
+    public static VehicleSizeCreator createVehicleSizeFromMap(Map vehicleSize) {
         return new VehicleSizeCreator(new VehicleSizeMutableState(toVehicleSizeMutableState(vehicleSize)));
     }
 

@@ -37,7 +37,7 @@ public class AccountCreator implements AccountCreatorMaker {
         return new AccountCreator(new AccountMutableState()).new AccountFactory();
     }
 
-    public static AccountCreator createAccount(Map account) {
+    public static AccountCreator createAccountFromMap(Map account) {
         return new AccountCreator(new AccountMutableState(toAccountMutableState(account)));
     }
 

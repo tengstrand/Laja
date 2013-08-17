@@ -45,7 +45,7 @@ public class CarCreator implements CarCreatorMaker {
         return new CarCreator(new CarMutableState()).new CarFactory();
     }
 
-    public static CarCreator createCar(Map car) {
+    public static CarCreator createCarFromMap(Map car) {
         return new CarCreator(new CarMutableState(toCarMutableState(car)));
     }
 

@@ -39,7 +39,7 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return new DbPersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
-    public static DbPersonCreator createDbPerson(Map person) {
+    public static DbPersonCreator createDbPersonFromMap(Map person) {
         return new DbPersonCreator(new PersonMutableState(toPersonMutableState(person)));
     }
 

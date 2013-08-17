@@ -43,7 +43,7 @@ public class BusCreator implements BusCreatorMaker {
         return new BusCreator(new BusMutableState()).new BusFactory();
     }
 
-    public static BusCreator createBus(Map bus) {
+    public static BusCreator createBusFromMap(Map bus) {
         return new BusCreator(new BusMutableState(toBusMutableState(bus)));
     }
 

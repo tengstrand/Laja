@@ -40,7 +40,7 @@ public class TruckCreator implements TruckCreatorMaker {
         return new TruckCreator(new TruckMutableState()).new TruckFactory();
     }
 
-    public static TruckCreator createTruck(Map truck) {
+    public static TruckCreator createTruckFromMap(Map truck) {
         return new TruckCreator(new TruckMutableState(toTruckMutableState(truck)));
     }
 

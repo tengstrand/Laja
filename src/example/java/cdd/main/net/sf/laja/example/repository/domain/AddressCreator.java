@@ -43,7 +43,7 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressCreator(new AddressMutableState()).new AddressFactory();
     }
 
-    public static AddressCreator createAddress(Map address) {
+    public static AddressCreator createAddressFromMap(Map address) {
         return new AddressCreator(new AddressMutableState(toAddressMutableState(address)));
     }
 

@@ -34,7 +34,7 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectoryCreator(new DirectoryMutableState()).new DirectoryFactory();
     }
 
-    public static DirectoryCreator createDirectory(Map directory) {
+    public static DirectoryCreator createDirectoryFromMap(Map directory) {
         return new DirectoryCreator(new DirectoryMutableState(toDirectoryMutableState(directory)));
     }
 

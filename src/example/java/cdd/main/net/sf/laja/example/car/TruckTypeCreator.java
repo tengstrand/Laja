@@ -34,7 +34,7 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
         return new TruckTypeCreator(new TruckTypeMutableState()).new TruckTypeFactory();
     }
 
-    public static TruckTypeCreator createTruckType(Map truckType) {
+    public static TruckTypeCreator createTruckTypeFromMap(Map truckType) {
         return new TruckTypeCreator(new TruckTypeMutableState(toTruckTypeMutableState(truckType)));
     }
 

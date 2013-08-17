@@ -33,7 +33,7 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new TestAccountCreator(new AccountMutableState()).new AccountFactory();
     }
 
-    public static TestAccountCreator createTestAccount(Map account) {
+    public static TestAccountCreator createTestAccountFromMap(Map account) {
         return new TestAccountCreator(new AccountMutableState(toAccountMutableState(account)));
     }
 

@@ -34,7 +34,7 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerCreator(new OwnerMutableState()).new OwnerFactory();
     }
 
-    public static OwnerCreator createOwner(Map owner) {
+    public static OwnerCreator createOwnerFromMap(Map owner) {
         return new OwnerCreator(new OwnerMutableState(toOwnerMutableState(owner)));
     }
 

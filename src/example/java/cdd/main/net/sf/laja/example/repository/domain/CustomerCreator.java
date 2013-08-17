@@ -47,7 +47,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerCreator(new CustomerMutableState()).new CustomerFactory();
     }
 
-    public static CustomerCreator createCustomer(Map customer) {
+    public static CustomerCreator createCustomerFromMap(Map customer) {
         return new CustomerCreator(new CustomerMutableState(toCustomerMutableState(customer)));
     }
 

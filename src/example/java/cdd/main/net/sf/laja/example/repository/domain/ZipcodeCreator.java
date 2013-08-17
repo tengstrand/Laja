@@ -37,7 +37,7 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeCreator(new ZipcodeMutableState()).new ZipcodeFactory();
     }
 
-    public static ZipcodeCreator createZipcode(Map zipcode) {
+    public static ZipcodeCreator createZipcodeFromMap(Map zipcode) {
         return new ZipcodeCreator(new ZipcodeMutableState(toZipcodeMutableState(zipcode)));
     }
 

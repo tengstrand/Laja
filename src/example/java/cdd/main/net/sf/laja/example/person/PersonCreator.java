@@ -34,7 +34,7 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonCreator(new PersonMutableState()).new PersonFactory();
     }
 
-    public static PersonCreator createPerson(Map person) {
+    public static PersonCreator createPersonFromMap(Map person) {
         return new PersonCreator(new PersonMutableState(toPersonMutableState(person)));
     }
 

@@ -38,7 +38,7 @@ public class FileCreator implements FileCreatorMaker {
         return new FileCreator(new FileMutableState()).new FileFactory();
     }
 
-    public static FileCreator createFile(Map file) {
+    public static FileCreator createFileFromMap(Map file) {
         return new FileCreator(new FileMutableState(toFileMutableState(file)));
     }
 

@@ -34,7 +34,7 @@ public class SpecialAddressCreator implements SpecialAddressCreatorMaker {
         return new SpecialAddressCreator(new AddressMutableState());
     }
 
-    public static SpecialAddressCreator createSpecialAddress(Map address) {
+    public static SpecialAddressCreator createSpecialAddressFromMap(Map address) {
         return new SpecialAddressCreator(new AddressMutableState(toAddressMutableState(address)));
     }
 

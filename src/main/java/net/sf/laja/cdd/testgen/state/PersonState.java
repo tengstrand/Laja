@@ -30,7 +30,7 @@ import static net.sf.laja.cdd.validator.ValidationErrors.concatenate;
 import static net.sf.laja.cdd.validator.Validators.collectionValidator;
 import static net.sf.laja.cdd.validator.Validators.mapValidator;
 
-@State
+@State(version = 2)
 public class PersonState implements ImmutableState {
     @Id public final int id;
     public final String name;
@@ -227,7 +227,7 @@ public class PersonState implements ImmutableState {
                 ", listOfSetOfMapOfIntegers=" + listOfSetOfMapOfIntegers + '}';
     }
 
-    @State(type = "mutable")
+    @State(version = 2, type = "mutable")
     public static class PersonMutableState implements MutableState {
         @Id public int id;
         public String name;
@@ -532,7 +532,7 @@ public class PersonState implements ImmutableState {
         }
     }
 
-    @State(type = "string")
+    @State(version = 2, type = "string")
     public static class PersonStringState implements StringState {
         @Id public String id;
         public String name;

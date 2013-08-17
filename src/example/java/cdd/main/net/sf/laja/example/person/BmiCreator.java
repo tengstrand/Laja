@@ -34,7 +34,7 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiCreator(new BmiMutableState()).new BmiFactory();
     }
 
-    public static BmiCreator createBmi(Map bmi) {
+    public static BmiCreator createBmiFromMap(Map bmi) {
         return new BmiCreator(new BmiMutableState(toBmiMutableState(bmi)));
     }
 
