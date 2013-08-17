@@ -1,6 +1,7 @@
 package net.sf.laja.cdd.testgen;
 
 import org.joda.time.DateMidnight;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -128,7 +129,7 @@ public class PersonTest {
                 .withId(99)
                 .withName("Carl")
                 .withHairColor("RED")
-                .withBirthday(new DateMidnight(1999, 10, 11))
+                .withBirthday(1999, 10, 11)
                 .withAddress(buildAddress().withId(1).withStreetName("First street").withCity("Stockholm"))
                 .withChildren()
                 .withGroupedAddresses()

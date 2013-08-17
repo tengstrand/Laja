@@ -8,7 +8,7 @@ import net.sf.laja.cdd.state.converter.StringStateConverter;
 import net.sf.laja.cdd.testgen.state.AddressState.AddressMutableState;
 import net.sf.laja.cdd.testgen.state.PersonState;
 import net.sf.laja.cdd.validator.ValidationErrors;
-import org.joda.time.DateMidnight;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -185,13 +185,13 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return this;
     }
 
-    public DbPersonCreator withBirthday(DateMidnight birthday) {
+    public DbPersonCreator withBirthday(LocalDate birthday) {
         state.birthday = birthday;
         return this;
     }
 
     public DbPersonCreator withBirthday(int year, int monthOfYear, int dayOfMonth) {
-        state.birthday = new DateMidnight(year, monthOfYear, dayOfMonth);
+        state.birthday = new LocalDate(year, monthOfYear, dayOfMonth);
         return this;
     }
 
@@ -329,8 +329,8 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
 
         public PersonBuilder withId(int id) { state.id = id; return this; }
         public PersonBuilder withName(String name) { state.name = name; return this; }
-        public PersonBuilder withBirthday(DateMidnight birthday) { state.birthday = birthday; return this; }
-        public PersonBuilder withBirthday(int year, int monthOfYear, int dayOfMonth) { state.birthday = new DateMidnight(year, monthOfYear, dayOfMonth); return this; }
+        public PersonBuilder withBirthday(LocalDate birthday) { state.birthday = birthday; return this; }
+        public PersonBuilder withBirthday(int year, int monthOfYear, int dayOfMonth) { state.birthday = new LocalDate(year, monthOfYear, dayOfMonth); return this; }
         public PersonBuilder withHairColor(String hairColor) { state.hairColor = hairColor; return this; }
         public PersonBuilder withChildren() { state.children = new ArrayList<PersonMutableState>(); return this; }
         public PersonBuilder withChildren(List<PersonMutableState> children) { state.children = children; return this; }
