@@ -67,12 +67,7 @@ public class PersonTest {
     }
 
     private static Map mapOfIntegers() {
-        Map result = new HashMap();
-
-        result.put("key1", 123);
-        result.put("key2", 456);
-
-        return result;
+        return createMap(createEntry("key1", 123), createEntry("key2", 456));
     }
 
     @Test
