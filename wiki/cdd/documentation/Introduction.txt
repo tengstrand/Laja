@@ -49,7 +49,7 @@ The problem with this approach is that the class/object has too many responsibil
 # Manage state identity (hashCode / equals).
 # Merge state and behaviour.
 
-By separating ''state'' and ''behaviour'' and introducing the role ''creator'' will free the object to deliver behavior based on state!
+By separating ''state'' and ''behaviour'' and introducing the role ''creator'', will free the object to deliver behavior based on state!
 
 Joakim Tengstrand
 
