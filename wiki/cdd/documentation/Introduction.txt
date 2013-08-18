@@ -8,8 +8,7 @@ Having all of the CDD foundation classes generated automatically frees developer
 === Why CDD? ===
 
 CDD is about dividing classes/objects into smaller pieces, giving each piece a clear responsiblility and increased composability.
-
-Let's have an example by creating the Java class ''Person'':
+Let's have a look at an ordinary Java class:
 
 <source>
 public class Person {
@@ -25,7 +24,7 @@ public class Person {
         return age >= 13 && age <= 19;
     }
 
-    // To be implemented...
+    // Implement these...
     public int hashCode() { ... }
     public boolean equals(Object o) { ... }
     public String toString() { ... }
@@ -36,7 +35,7 @@ public class Person {
 An instance ''person'' can be created by calling the constructor:
 
 <source>
-Person person = new Person(25, "James")
+Person person = new Person(25, "James");
 </source>
 
 
@@ -46,12 +45,34 @@ What is happening here is that we merge data (''age'' and ''name'') with the fun
 
 The problem with this approach is that the class/object has too many responsibilities:
 # Build state.
-# Manage state identity (hashCode / equals).
+# Manage identity (hashCode / equals).
 # Merge state and behaviour.
 
-By separating ''state'' and ''behaviour'' and introducing the role ''creator'', will free the object to deliver behavior based on state!
+By intertwining state and behaviour we get rigid and inflexible systems. 
+The problem can be solved by dividing objects into three roles: ''state, behaviour'' and ''creator''. This will free objects to deliver behavior based on state, e.g.:
+<source>
+@Behaviour
+public class Person extends PersonBehaviour {
 
-Joakim Tengstrand
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    public boolean isTeenager() {
+        return state.age >= 13 && state.age <= 19;
+    }
+}
+</source>
+
+
+If we also create a ''state'' and a ''creator'' class (more on that later) we can create an instance like this:
+
+<source>
+Person person = createPerson().age(25).name("James").asPerson();
+</source>
+
+
+This is very readable and has some other advantages too!
 
 
 [[Code generation|Next >]]
