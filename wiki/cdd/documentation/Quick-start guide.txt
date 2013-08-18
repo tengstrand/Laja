@@ -1,156 +1,128 @@
+When finished with this example you should end up with the following file structure:
+<source lang="dos">
+C:/Projects/MyProject/myproject.laja
+C:/Projects/MyProject/src/main/java/com/myproject/Main.java
+C:/Projects/MyProject/src/main/java/com/myproject/Person.java
+C:/Projects/MyProject/src/main/java/com/myproject/PersonState.java
+C:/Projects/MyProject/src/main/java/com/myproject/PersonCreator.java
+</source>
+
+
 Let's get started with CDD:
 * Make sure Laja is [http://laja.tengstrand.nu/index.php/Install installed].
-* Create a project directory e.g. ''C:/Projects/MyProject''
-* Create the following directory structure in directory ''MyProject'' (package = ''com.myproject'' in this example).
+* Create a project directory e.g. ''C:/Projects/MyProject''.
+* Create the source directory and package structure in the project root, e.g. ''C:/Projects/MyProject/src/main/java/com/myproject''.
+
+Create the template file ''myproject.laja'' and put it in the project root directory:
 <source lang="dos">
-src/java/main/com/myproject/state
-src/java/main/com/myproject/behaviour
+#generateCdd({
+  srcDir: "{.}/src"
+})
 </source>
 
-Create the template file ''src/java/myproject.laja'' with the following content:
-<source lang="dos">
-#generateCdd([{
-  srcDir: "{.}/main"
-  outDir: "{..}/java-gen/main"
-  statePackage: "com.myproject.state"
-  behaviourPackage: "com.myproject.behaviour" }]
-)
-</source>
 
-Create the class ''src/java/main/com/myproject/state/PersonStateTemplate.java'':
+Create the class ''PersonState.java'':
 <source>
-package com.myproject.state;
+package com.myproject;
 
-public class PersonStateTemplate {
+public class PersonState {
     int age;
-    String givenName;
-    String surname;
+	String givenName;
+	String surname;
 }
 </source>
 
+
 Open a Unix shell or DOS prompt, go to the project root and enter ''laja myproject'':
 <source lang="dos">
-C:\Projects\MyProject\src\java>laja myproject
+C:\Projects\MyProject>laja myproject
 </source>
 
 Which gives the output:
 <source lang="dos">
 Reading file "myproject.laja"
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/Certificate.java" - OK
-  State: Person
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateImpl.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListImpl.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilder.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBuilderImpl.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateProjection.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateListBuilder.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonState.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateList.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonValue.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonElement.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/state/PersonStateBehaviourFactory.java" - OK
-  Behaviour: Person
-  Writing to file "C:/Projects/MyProject/src/java/main/com/myproject/behaviour/Person.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonFactory.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonValueFactory.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonBuilder.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonCreator.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonEncapsulator.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonList.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonArrayList.java" - OK
-  Writing to file "C:/Projects/MyProject/src/java-gen/main/com/myproject/behaviour/PersonListEncapsulator.java" - OK
-  Processed 21 classes: 21 new.
+  Writing to file "C:/MyProject/src/main/java/com/myproject/PersonState.java" - OK
+  Processed 1 classes: 1 changed.
 </source>
 
-If you are using an IDE like [http://www.eclipse.org Eclipse], [http://www.jetbrains.com/idea IDEA] or [http://netbeans.org NetBeans] you should now ensure that you have both ''java/main'' and ''java-gen/main'' in your source path.
 
-
-Let's add some behaviour by creating the method ''isAdult()'' to our newly generated "core domain" class ''Person'':
+Create the class ''PersonCreator.java'':
 <source>
-package com.myproject.behaviour;
+package com.myproject;
 
-import com.myproject.state.PersonState;
+public class PersonCreator {
+    PersonState state;
+}
+</source>
 
-public class Person extends PersonFactory {
+
+Regenerate:
+<source lang="dos">
+C:\Projects\MyProject>laja myproject
+</source>
+
+
+Create the class ''Person.java'':
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
+
     public Person(PersonState state) {
         super(state);
     }
 
-    // (factory)
+    public boolean isTeenager() {
+        return state.age >= 13 && state.age <= 19;
+    }
+}
+</source>
+
+
+Edit ''PersonCreator'' and add the method ''asPerson'':
+<source>
+public class PersonCreator implements PersonCreatorMaker {
+...
+    private final PersonMutableState state;
+
     public Person asPerson() {
-        return new Person(state);
+        return new Person(state.asImmutable());
     }
 
-    public boolean isAdult() {
-        return state.getAge() >= 18;
-    }
-}
-</source>
-
-Now create a "persistable" version in ''java/source/main'':
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-import com.myproject.state.PersonValue;
-
-public class PersistablePerson extends PersonValue {
-    public PersistablePerson(PersonState state) {
-        super(state);
-    }
-
-    public void save() {
-        System.out.println("The state was saved: " + state);
-    }
-}
-</source>
-
-Add the method ''asPersistable()'' to ''Person'':
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-public class Person extends PersonFactory {
-    public Person(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
-    }
-
-    public PersistablePerson asPersistable() {
-        return new PersistablePerson(state);
-    }
-
-    public boolean isAdult() {
-        return state.getAge() >= 18;
-    }
-}
+    // ===== Generated code =====
+...
 </source>
 
 
-The last step is to create a main class ''src/java/main/com/myproject/behaviour/Main.java'':
+Regenerate:
+<source lang="dos">
+C:\MyProject>laja myproject
+</source>
+
+
+Create the class ''Main.java'':
 <source>
-package com.myproject.behaviour;
+package com.myproject;
+
+import static com.myproject.PersonCreator.createPerson;
 
 public class Main {
 
     public static void main(String[] args) {
-        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
-        System.out.println("Is adult: " + person.isAdult());
+        Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").asPerson();
 
-        person.asPersistable().save();
+        System.out.println(person);
     }
 }
 </source>
 
+
 If executed you will get the output:
 <source>
-Is adult: false
-The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
+Is teenager: true
+Person{age=18, givenName="Ingmar", surname="Bergman"}
 </source>
 
 
