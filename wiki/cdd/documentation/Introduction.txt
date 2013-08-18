@@ -7,13 +7,49 @@ Having all of the CDD foundation classes generated automatically frees developer
 
 === Why CDD? ===
 
-There are a number of issues with standard object orientation:
+CDD is about dividing classes/objects into smaller pieces, giving each piece a clear responsiblility and increased composability.
 
-* The absence of the concept of ''context'' which makes it difficult to use objects in different contexts and which leads to non-object-oriented solutions that force you to break encapsulation and violate the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
-* There is no correlation between an objects attributes/properties and how the state is built (constructors) and how identity is implemented (''hashCode/equals'').
-* Poor flexibility at the object level when it comes to composing objects, switching context and code reuse.
+Let's have an example by creating the Java class ''Person'':
 
-Want to avoid these problems? - read on!
+<source>
+public class Person {
+    private int age;
+    private String name;
+
+    public Person(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+
+    public boolean isTeenager() {
+        return age >= 13 && age <= 19;
+    }
+
+    // To be implemented...
+    public int hashCode() { ... }
+    public boolean equals(Object o) { ... }
+    public String toString() { ... }
+}
+</source>
+
+
+An instance ''person'' can be created by calling the constructor:
+
+<source>
+Person person = new Person(25, "James")
+</source>
+
+
+What is happening here is that we merge data (''age'' and ''name'') with the function ''isTeenager'' to form an object. This process is called ''encapsulation'' and can be illustrated by this picture:
+
+[[File:CDD-new-instance.png|400px]]
+
+The problem with this approach is that the class/object has too many responsibilities:
+# Build state.
+# Manage state identity (hashCode / equals).
+# Merge state and behaviour.
+
+By separating ''state'' and ''behaviour'' and introducing the role ''creator'' will free the object to deliver behavior based on state!
 
 Joakim Tengstrand
 
