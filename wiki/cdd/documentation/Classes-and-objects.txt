@@ -24,9 +24,7 @@ public class Person {
                 '}';
     }
 }
-</source>
 
-<source>
 Person person = new Person(56, "Ingemar Stenmark");
 System.out.println(person);
 System.out.println("Is teenager: " + person.isTeenager());
@@ -39,7 +37,7 @@ Person{age=56, name='Ingemar Stenmark'}
 Is teenager: false
 </source>
 
-The ''state'' is here represented by the attributes ''age'' ande ''name'', and the ''behaviour'' is represented by the method ''isTeenager'',
+The ''state'' is here represented by the attributes ''age'' and ''name'', and the ''behaviour'' is represented by the method ''isTeenager'',
 which can be illustrated by this diagram:
 
 
@@ -47,51 +45,55 @@ which can be illustrated by this diagram:
 
 
 The merging of state and behavior makes it harder to reuse code and to work in different contexts.
-Languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] are able to compose classes in a powerful way, but once instantiated the objects become static.
+Object oriented languages with support for [http://en.wikipedia.org/wiki/Trait_%28computer_programming%29 traits] are able to compose classes in a powerful way, but once instantiated the objects become static.
 
 === Flexible objects ===
 
 CDD wants to bring the same level of flexibility to objects as we get for classes.
 The separation of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
-Let's see how the previous example would look like in CDD:
+Let's see how the previous example would look like in CDD (generated code after the comment has been removed):
 
 <source>
-package com.myproject.state;
+public class PersonState implements ImmutableState {
+    public final int age;
+    public final String name;
 
-public class PersonStateTemplate {
-    int age;
-    String name;
+    // ===== Generated code =====
 }
-</source>
 
-<source>
-package com.myproject.behaviour;
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
 
-import com.myproject.state.PersonState;
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
 
-public class Person extends PersonFactory {
+    // ===== Generated code =====
+}
+
+public class Person extends PersonBehaviour {
+
     public Person(PersonState state) {
         super(state);
     }
 
     public boolean isTeenager() {
-        return state.getAge() >= 13 && state.getAge() <= 19;
+        return state.age >= 13 && state.age <= 19;
     }
 }
-</source>
 
-<source>
-Person person = Person.age(56).name("Ingemar Stenmark").asPerson();
+Person person = createPerson.age(56).name("Ingemar Stenmark").asPerson();
 System.out.println(person);
 System.out.println("Is teenager: " + person.isTeenager());
 </source>
 
-...if generated and executed, we get:
+...when executed, we get:
 
 <source>
 Person{age=56, name='Ingemar Stenmark'}
 Is teenager: false
 </source>
+
 
 The cool thing with CDD is that we can have many behaviour representations (one per context), not just ''Person'' but
 also for example ''PersonRowInFile'' and ''PersistablePerson'':
@@ -110,14 +112,6 @@ If you want to compare the two you can have a look at the popular ''account'' ex
 Here is an alternative way of illustrating objects in CDD where we can think of them as building blocks:
 
 [[File:CDD-object-layering.png|600px]]
-
-
-The state is also very modular and can be constructed in several ways:
-
-[[File:CDD-state-layering.png|600px]]
-
-
-How state can be constructed will be described in more detail in the [[State|state]] section.
 
 
 [[Main_Page|< Back]]
