@@ -11,76 +11,78 @@ If we take a look at the [[Quick-start guide|Quick-start guide]], it has the fol
 
 [[File:project-directory-structure.png]]
 
-The directory ''java-gen'' contains a lot of code generated classes, but don't worry (be happy!) they are here to make your development experience more pleasant!
+Let's explain some of the basic concepts of CDD by looking at the classes from the [[Quick-start guide|Quick-start guide]] example
+(package statement, imports and generated code has been removed:
 
-Let's explain some of the basic concepts of CDD by looking at three of the classes from the [[Quick-start guide|Quick-start guide]] example:
-
+'''State'''
 <source>
-package com.myproject.state;
+public class PersonState implements ImmutableState {
+    public final int age;
+    public final String givenName;
+    public final String surname;
 
-public class PersonStateTemplate {
-    int age;
-    String givenName;
-    String surname;
+    // ===== Generated code =====
+    ...
 }
 </source>
 
+'''Creator'''
 <source>
-package com.myproject.behaviour;
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
 
-import com.myproject.state.PersonState;
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
 
-public class Person extends PersonFactory {
+    // ===== Generated code =====
+    ...
+}
+</source>
+
+'''Behaviour'''
+<source>
+public class Person extends PersonBehaviour {
+
     public Person(PersonState state) {
         super(state);
     }
 
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
-    }
-
-    public PersistablePerson asPersistable() {
-        return new PersistablePerson(state);
-    }
-
-    public boolean isAdult() {
-        return state.getAge() >= 18;
+    public boolean isTeenager() {
+        return state.age >= 13 && state.age <= 19;
     }
 }
 </source>
 
+'''Main'''
 <source>
-package com.myproject.behaviour;
+package com.myproject;
+
+import static com.myproject.PersonCreator.createPerson;
 
 public class Main {
 
     public static void main(String[] args) {
-        Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
-        System.out.println("Is adult: " + person.isAdult());
+        Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").asPerson();
 
-        person.asPersistable().save();
+        System.out.println(person);
     }
 }
 </source>
 
-output:
-<source>
-Is adult: false
-The state was saved: {age=15, givenName='Ingmar', surname='Bergman'}
+'''output'''
+<source lang=dos>
+Is teenager: true
+Person{age=18, givenName="Ingmar", surname="Bergman"}
 </source>
+
 
 If we take a closer look at the statement that creates an instance of ''Person'':
 <source>
-Person person = Person.age(15).givenName("Ingmar").surname("Bergman").asPerson();
+Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").asPerson();
 </source>
 
-...we can see that CDD starts by building ''state'' and ends with ''encapsulation'' by choosing a ''behaviour representation''. The statement:
-<source>
-person.asPersistable().save();
-</source>
-
-...switches context and persists the instance in one statement! This will be described in more detail later.
+...we can see that CDD starts by building ''state'' and ends with ''encapsulation'' by choosing a ''behaviour representation'' that can be used in a specific ''context''.
 
 
 [[Main_Page|< Back]]
