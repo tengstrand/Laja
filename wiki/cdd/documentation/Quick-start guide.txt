@@ -120,7 +120,7 @@ public class Main {
 
 
 If executed you will get the output:
-<source>
+<source lang=dos>
 Is teenager: true
 Person{age=18, givenName="Ingmar", surname="Bergman"}
 </source>
