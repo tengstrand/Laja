@@ -1,0 +1,12 @@
+__NOTOC__
+Traditional object orientation (OO), like Java, has two major problems:
+* Mutable state is default.
+* It does not separate data (state) and functions (methods).
+
+Of the two, it is the first one that causes the most problems by adding complexity, which is very well described
+in this excellent paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
+The second one is solved different in functional languages like [http://clojure.org/ Clojure].
+In functional languages, data and functions are separated which makes the code more composable and flexible.
+
+CDD tries to explore OO and see if these two problems could be fixed by encouraging immutable state and by separating state and behaviour.
+

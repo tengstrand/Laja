@@ -2,6 +2,7 @@
 ** mainpage|Introduction
 ** Code generation|Code generation
 ** Classes and objects|Classes and objects
+** New way of OO|New way of OO
 ** Encapsulation|Encapsulation
 ** Identity|Identity
 ** TDD|TDD
