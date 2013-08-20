@@ -9,136 +9,97 @@ In this example the interface is represented by ''Person'' and the concrete clas
 Which of the two implementations that should be used is decided by the factory using the ''context variable'' "userRole".
 
 
-Pretend we want to restrict access to phone numbers so that only admin users can see them. Add some code, start by ''UserRole'':
+Pretend we want to restrict access to phone numbers so that only admin users can see them. Add some code, start by ''UserRole''
+(put in an arbitrary package):
 
 <source>
-package com.myproject.behaviour;
-
 public enum UserRole {
     RESTRICTED, ADMIN
 }
 </source>
 
-...add a state definition for person:
+...add these interfaces and classes:
 
 <source>
-package com.myproject.state;
+public interface Person {
+    String getPhoneNumber();
+}
 
-public class PersonStateTemplate {
+public class PersonState {
     String name;
     String phoneNumber;
 }
-</source>
 
-...regenerate using the ''-i'' option:
-
-<source>
-laja -i myproject
-</source>
-
-...which will tell Laja to generate the interface ''Person'':
-
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-import com.myproject.state.PersonStateList;
-
-public interface Person {
-    PersonState getState(PersonStateList stateList);
+public class PersonCreator {
+    PersonState state;
 }
 </source>
 
-...and the class ''PersonImpl'':
-
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-// TODO: Rename PersonImpl to something more descriptive!
-public class PersonImpl extends PersonFactory implements Person {
-    public PersonImpl(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new PersonImpl(state);
-    }
-}
+...regenerate (see the [[Quick-start guide|Quick-start guide]] for instructions):
+<source lang="dos">
+C:\Projects\MyProject>laja myproject
 </source>
 
-...follow the recommendation and rename it to ''PersonAdmin'':
 
+...create the classes ''PersonRestricted'' and ''PersonAdmin'':
 <source>
-package com.myproject.behaviour;
+import static com.myproject.PersonCreator.PersonBehaviour;
 
-import com.myproject.state.PersonState;
-
-public class PersonAdmin extends PersonFactory implements Person {
-    public PersonAdmin(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new PersonAdmin(state);
-    }
-}
-</source>
-
-...add the class ''PersonRestricted'':
-
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-public class PersonRestricted extends PersonFactory implements Person {
+public class PersonRestricted extends PersonBehaviour implements Person {
     public PersonRestricted(PersonState state) {
         super(state);
     }
 
-    // (factory)
-    public PersonRestricted asPersonRestricted() {
-        return new PersonRestricted(state);
+    public String getPhoneNumber() {
+        return "???";
+    }
+}
+
+import static com.myproject.PersonCreator.PersonBehaviour;
+
+public class PersonAdmin extends PersonBehaviour implements Person {
+    public PersonAdmin(PersonState state) {
+        super(state);
     }
 
-    @Override
-    public String toString() {
-        return "PersonRestricted{name=" + (state.getName() == null ? null : '\'' + state.getName() + '\'' ) +
-                ", phoneNumber=???}";
+    public String getPhoneNumber() {
+        return state.getPhoneNumber();
     }
 }
 </source>
 
-...modify the method ''asPerson'' in ''PersonAdmin'':
+...add the method ''asPerson'' to ''PersonCreator'' between the ''state'' and the "Generated code" comment:
 
 <source>
-// (factory)
-public Person asPerson(UserRole role) {
-    if (role == UserRole.ADMIN) {
-        return new PersonAdmin(state);
-    } else if (role == UserRole.RESTRICTED) {
-        return new PersonRestricted(state);
+...
+
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
+
+    public Person asPerson(UserRole role) {
+        if (role == UserRole.ADMIN) {
+            return new PersonAdmin(state.asImmutable());
+        }
+        return new PersonRestricted(state.asImmutable());
     }
-    throw new IllegalArgumentException("Unsupported role: " + role);
-}
+
+    // ===== Generated code =====
+...
 </source>
 
-...regenerate and add ''Main'':
+...add ''Main'':
 
 <source>
-package com.myproject.behaviour;
+import static com.myproject.PersonCreator.createPerson;
 
 public class Main {
-    public static void main(String[] args) {
-        Person admin = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(UserRole.ADMIN);
-        Person restricted = PersonFactory.name("Richard").phoneNumber("022-22222222").asPerson(UserRole.RESTRICTED);
 
-        System.out.println(admin);
-        System.out.println(restricted);
+    public static void main(String[] args) {
+        Person adam = createPerson().name("Adam").phoneNumber("08-12345678").asPerson(UserRole.ADMIN);
+        Person bert = createPerson().name("Bert").phoneNumber("08-12345678").asPerson(UserRole.RESTRICTED);
+
+        System.out.println("Adams phone number: " + adam.getPhoneNumber());
+        System.out.println("Berts phone number: " + bert.getPhoneNumber());
     }
 }
 </source>
@@ -146,81 +107,8 @@ public class Main {
 ...execute and we get the output:
 
 <source>
-PersonAdmin{name='Anders', phoneNumber='011-11111111'}
-PersonRestricted{name='Richard', phoneNumber=???}
-</source>
-
-However, the idea is not to send hard coded value into ''asPerson'' (as in the example) but to use a ''context variable'' like this:
-
-<source>
-UserRole userRole; // Populated in some way.
-...
-Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
-</source>
-
-The decision which implementation to choose is delegated to the factory. This creates a loose coupling
-between the ''context variable'' (user role) and the factory so that the factory can be changed without affecting the calling code.
-
-=== A single representation ===
-
-An alternative to use one representation per context is to use a single representation, like this:
-
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-public class StandardPerson extends PersonFactory implements Person {
-    private final UserRole userRole;
-
-    public StandardPerson(PersonState state, UserRole userRole) {
-        super(state);
-        this.userRole = userRole;
-    }
-
-    // (factory)
-    public Person asPerson(UserRole userRole) {
-        return new StandardPerson(state, userRole);
-    }
-
-    @Override
-    public String toString() {
-        if (userRole == UserRole.ADMIN) {
-            return state.toString();
-        }
-        return "StandardPerson{name=" + (state.getName() == null ? null : '\'' + state.getName() + '\'' ) +
-                ", phoneNumber=???}";
-    }
-}
-</source>
-
-...execute the ''main'' method again to verify that the same result is produced:
-
-<source>
-PersonAdmin{name='Anders', phoneNumber='011-11111111'}
-PersonRestricted{name='Richard', phoneNumber=???}
-</source>
-
-With this alternative technique, the variation in behaviour is handled within the single representation ''StandardPerson''.
-In this example we used an enumeration to hold the context variable.
-It's also possible to use a class instead of an enumeration to represent a context variable.
-
-If you choose to use a standard class instead of an enumeration as context variable then make sure it is immutable
-to prevent unpredictable side effects. This is done by setting all class members to ''final'', e.g:
-
-<source>
-package com.myproject.behaviour;
-
-import java.util.Calendar;
-
-public class DayOfWeek {
-    public final boolean isWeekDay;
-
-    public DayOfWeek() {
-        int day = Calendar.getInstance().get(Calendar.DATE);
-        isWeekDay = day != Calendar.SATURDAY && day != Calendar.SUNDAY;
-    }
-}
+Adams phone number: 08-12345678
+Berts phone number: ???
 </source>
 
 
