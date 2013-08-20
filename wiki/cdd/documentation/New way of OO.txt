@@ -1,12 +1,29 @@
 __NOTOC__
-Traditional object orientation (OO), like Java, has two major problems:
+Traditional object orientation (OO), with languages like Java or C#, has two major problems:
 * Mutable state is default.
-* It does not separate data (state) and functions (methods).
+* It does not separate data and functions (state and methods/behaviour).
 
 Of the two, it is the first one that causes the most problems by adding complexity, which is very well described
-in this excellent paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
+in the excellent paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
 The second one is solved different in functional languages like [http://clojure.org/ Clojure].
 In functional languages, data and functions are separated which makes the code more composable and flexible.
 
-CDD tries to explore OO and see if these two problems could be fixed by encouraging immutable state and by separating state and behaviour.
+CDD tries to explore OO and see if these two problems could be addressed by encouraging immutable state and by separating state and behaviour.
 
+The hypothesis is that information hiding of immutable state is less important.
+CDD supports both immutable and mutable state, where immutable state is exposed and mutable state is hidden, e.g..
+
+'''Immutable state'''
+<source>
+Person person = createPerson.age(30).name("Carl").asPerson();
+// The immutable state is exposed which makes switching context easy.
+TextPerson textPerson = new TextPerson(person.state);
+</source>
+
+'''Mutable state'''
+<source>
+Person person = createPerson.age(30).name("Carl").asPerson();
+// The state is not exposed so the only way to switch context is by letting
+// the instance itself switch context or by using some trick like reflection.
+TextPerson textPerson = person.asTextPerson();
+</source>
