@@ -3,40 +3,67 @@ CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as
 [[File:CDD-state-composition.png|180px]]
 
 
-This is best explained by an example:
+This is best explained by an example.
+Create states for ''address'':
 <source>
-package com.myproject.state;
+package com.myproject;
 
-public class AddressStateTemplate {
+public class AddressState {
     String streetName;
     int streetNumber;
     int zipcode;
 }
 </source>
 
-...regenerate and add it to ''PersonState''. Note that the attribute ''address'' should be named ''address'' and not ''addressState'':
+...and ''person'' + generate:
 <source>
-package com.myproject.state;
+package com.myproject;
 
-public class PersonStateTemplate {
-    int ssn; // (key)
+import net.sf.laja.cdd.annotation.Key;
+
+public class PersonState {
+    @Key int ssn;
     String givenName;
     String surname;
     AddressState address;
 }
 </source>
 
+Note that the attribute ''address'' should be named ''address'' and not ''addressState''.
+
+...add creators for ''address'':
+<source>
+package com.myproject;
+
+public class AddressCreator {
+    AddressState state;
+}
+</source>
+
+...and ''person'':
+<source>
+package com.myproject;
+
+public class PersonCreator {
+    private PersonState state;
+}
+</source>
+
 ...regenerate and execute:
 <source>
-Person person = Person.ssn(112233).givenName("Ingmar").surname("Bergman").address(
-        Address.streetName("Main Street").streetNumber(123).zipcode(111222)).asPerson();
+PersonState person = createPerson()
+        .ssn(112233)
+        .givenName("Carl")
+        .surname("Carlson")
+        .address(createAddress().streetName("First street").streetNumber(123).zipcode(75432))
+        .asState();
 
 System.out.println(person);
 </source>
 
-...gives the output:
+'''output''':
 <source>
-Person{ssn=112233, givenName='Ingmar', surname='Bergman', address={streetName='Main Street', streetNumber=123, zipcode=111222}}
+{ssn=112233, givenName="Carl", surname="Carlson", address={streetName="First street", streetNumber=123, zipcode=75432}}
 </source>
 
 Substates can include other substates (including itself if representing a parent/child relationship). We could for example let ''AddressState'' include ''ZipcodeState'', but we leave that exercise to the reader!
