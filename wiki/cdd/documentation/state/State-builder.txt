@@ -4,17 +4,27 @@ In situations when you don't have control of in which order the attributes are g
 
 Let's start with an example:
 <source>
-Person person = Person.build().asPerson();
+PersonCreator.buildPerson().asPerson();
+</source>
+
+It's normally a good idea to cleanup the code with a static import:
+<source>
+import static com.myproject.PersonCreator.buildPerson;
+</source>
+
+...so that we can write:
+<source>
+buildPerson().asPerson();
 </source>
 
 output:
 <source>
-Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
-	at com.myproject.behaviour.PersonEntityFactory$PersonFactory_.create(PersonEntityFactory.java:35)
-	at com.myproject.state.PersonStateBuilderImpl.as(PersonStateBuilderImpl.java:51)
-	at com.myproject.behaviour.PersonBuilder.asPerson(PersonBuilder.java:37)
-	at com.myproject.behaviour.Main.main(Main.java:5)
-	...
+Exception in thread "main" com.myproject.PersonState$InvalidPersonStateException: [ValidationError{attribute='ssn', errorType='NULL', errorMessage='Attribute 'ssn' can not be NULL'}, ValidationError{attribute='givenName', errorType='NULL', errorMessage='Attribute 'givenName' can not be NULL'}]
+	at com.myproject.PersonState$PersonMutableState.assertIsValid(PersonState.java:244)
+	at com.myproject.PersonState$PersonMutableState.asImmutable(PersonState.java:184)
+	at com.myproject.PersonCreator$PersonBuilder.asState(PersonCreator.java:266)
+	at com.myproject.Main.main(Main.java:9)
+    ...
 </source>
 
 The state could not be encapsulated because the mandatory attributes ''ssn'' and ''givenName'' was not set.
@@ -25,24 +35,18 @@ and is the reason why chained creators is the preferable choice in most situatio
 The next example shows how a builder can be used:
 
 <source>
-PersonBuilder builder = Person.build();
+PersonBuilder builder = buildPerson();
 
 builder.withSsn(123); // Set one attribute at a time...
 builder.withGivenName("Ingmar").withSurname("Bergman"); // ...or use method chaining.
 
-Person person = builder.asPerson(); // Once encapsulated...
-System.out.println(person);
-
-builder.withSsn(222); //... the state can not be mutated by the builder.
+System.out.println(builder.asState());
 </source>
+
 output:
 <source>
-Person{ssn=11111, givenName='Ingmar', surname='Bergman'}
-Exception in thread "main" java.lang.IllegalStateException: The state can only be mutated by current instance of com.myproject.behaviour.Person
-...
+{ssn=123, givenName="Ingmar", surname="Bergman"}
 </source>
-
-Once encapsulated, the state can not be changed by the builder as shown by this example.
 
 
 [[Default values|< Back]]
