@@ -1,11 +1,12 @@
-The decision to separate ''state'', ''behavior'' and the ''creator'' role allow us to focus more on the state creation process.
-Instead of creating an object in ''one step'' by using a constructor, the state is first created, followed by encapsulation which gives a number of advantages:
+The decision to separate classes into the parts ''state'', ''behavior'' and ''creator'', allow us to focus more on the state creation process.
+Instead of creating an object in ''one step'' by using one ore more constructor, the state is first created, followed by encapsulation which gives a number of advantages:
+* The behaviour representation need only one constructor where the whole state is coming in.
 * The state can be defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
 * The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the usability'' compared to a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
 * The state can be explicitly validated before encapsulation takes place.
 * An InvalidXStateException (where X is the name of the state) is thrown if the state is invalid in the encapsulation step.
 * The encapsulation step can be postponed so that validation and encapsulation can be performed by the caller.
-* Support for switching between immutable/mutable/map and string state representations are supported out of the box.
+* Support for switching between immutable, mutable, map and string state representations.
 
 
 [[Context|< Back]]
