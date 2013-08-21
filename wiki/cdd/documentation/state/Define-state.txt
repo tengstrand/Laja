@@ -1,46 +1,67 @@
-Let's extend ''PersonState'' by modifying the template ''PersonStateTemplate'':
-<source>
-package com.myproject.state;
+Let's explain how state can be defined with an example.
 
-public class PersonStateTemplate {
-    int personId; // (id)
-    int length; // (hide)
-    long ssn; // (key)
+Create the class ''PersonState'':
+<source>
+package com.myproject;
+
+import net.sf.laja.cdd.annotation.Key;
+import net.sf.laja.cdd.annotation.Optional;
+
+public class PersonState {
+    @Key long ssn;
     String givenName;
-    String middleName; // (optional)
+    @Optional String middleName;
     String surname;
-    String occupation; // (exclude)
 }
 </source>
 
-...regenerate and modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
+Create the class ''PersonCreator'' + generate:
+<source>
+package com.myproject;
+
+public class PersonCreator {
+    PersonState state;
+}
+</source>
+
+Create the class ''Person'':
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+    }
+}
+</source>
+
+Add the method ''asPerson()'' to ''PersonCreator'' between the declaration of ''state'' and the ''Generated'' comment + regenerate:
+<source>
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+</source>
+
+Modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
 <source>
-// The 'chained creator' starts here...
-Person person = Person.ssn(12345678).givenName("Ingmar").surname("Bergman")
-        .withPersonId(1)                  // ...followed by builder methods
-        .withMiddleName("Ernst")
-        .withOccupation("Film director")
-        .asPerson();                      // ...and encapsulation
+PersonState person = createPerson()                              // The state creation starts here
+        .ssn(197501021234L).givenName("Carl").surname("Carlson") // ...followed by mandatory attributes
+        .withMiddleName("Adam")                                  // ...followed by optional attributes
+        .asState();                                              // ...and encapsulation.
 
 System.out.println(person);
 </source>
 
-...modify the constructor of ''Person'' (ensures that the hidden attribute ''length'' is set):
+'''output''':
 <source>
-public Person(PersonState state) {
-    super(state);
-    state.setLength(179, this);
-}
-</source>
-
-...gives the output:
-<source>
-Person{personId=1, length=179, ssn=12345678, givenName='Ingmar', middleName='Ernst', surname='Bergman', occupation='Film director'}
+{ssn=197501021234, givenName="Carl", middleName="Adam", surname="Carlson"}
 </source>
 
 
-Each attribute can have one or several properties by ending the line with a comment. None of them are mandatory:
+Each attribute can have one or more annotations. None of them are mandatory:
 
 {| class="wikitable"
 ! Keyword !! Example !! Description
@@ -48,44 +69,24 @@ Each attribute can have one or several properties by ending the line with a comm
 |
 (id)
 ||
-<span style="color:#008000">int</span>&nbsp;personId;&nbsp;// (id)
+<span style="color:#0000ff">@Id</span>&nbsp;<span style="color:#008000">int</span>&nbsp;id
 ||
-The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. Only one attribute can be marked as surrogate key.
+The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. Only one attribute should be marked as surrogate key. Should not be combined with @Key.
 |-
 |
 (key)
 ||
-<span style="color:#008000">long</span>&nbsp;ssn;&nbsp;//&nbsp;(key)
+<span style="color:#0000ff">@Key</span>&nbsp;<span style="color:#008000">long</span>&nbsp;key
 ||
-The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be included in the natural key.
+The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be included in the natural key. Should not be combined with @Id.
 |-
 |
 (optional)
 ||
-<span style="color:#008000">String</span>&nbsp;middleName;&nbsp;//&nbsp;(optional)
+<span style="color:#0000ff">@Optional</span>&nbsp;<span style="color:#008000">String</span>&nbsp;middleName
 ||
-The keywords ''(optional)'', ''(id)'' and ''(exclude)'' will exclude the attribute from the ''chained creator'' allowing them to be uninitialized (''null'').
-|-
-|
-(hide)
-||
-<span style="color:#008000">int</span> length; // (hide)
-||
-The ''hide'' keyword excludes the attribute from the ''chained creator'' but requires it to be initialized (''not null'') by the constructor of the ''behaviour'' class, if not combined with the ''(optional)'' keyword.
-|-
-|
-(exclude)
-||
-<span style="color:#008000">String</span> occupation; // (exclude)
-||
-Same as ''optional'' except that it's excluded from ''hashCode()'' and ''equals()''.
+The keywords ''@Optional'' and ''@Id'' will exclude the attribute from the ''chained creator'' allowing them to be uninitialized (''null'' or 0 if a primitive type).
 |}
-
-
-If all attributes are optional, then the chained creator can be accessed via the ''create()'' method, example:
-<source>
-Person person = Person.create().withAge(16).asPerson();
-</source>
 
 === Types ===
 
@@ -145,25 +146,104 @@ BigDecimal
 Arbitrary-precision signed decimal number (''java.math.BigDecimal'')
 |-
 |
+String
+||
+Standard Java string (''java.lang.String'')
+|-
+|
 DateTime
 ||
-Replacement for ''java.util.Date'' and ''java.util.Calendar'' (''org.joda.time.DateTime'')
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html org.joda.time.DateTime], alternative to ''java.util.Date''
 |-
 |
 DateMidnight
 ||
-Representing a date where the time is forced to midnight (''org.joda.time.DateMidnight'')
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/DateMidnight.html org.joda.time.DateMidnight], alternative to ''java.util.Date''
 |-
 |
-String
+LocalDate
 ||
-Standard Java character string (''java.lang.String'')
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/LocalDate.html org.joda.time.LocalDate], alternative to ''java.util.Date''
+|-
+|
+LocalTime
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/LocalTime.html org.joda.time.LocalDate], alternative to ''java.util.Date''
+|-
+|
+LocalDateTime
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/LocalDateTime.html org.joda.time.LocalDateTime], alternative to ''java.util.LocalDateTime''
+|-
+|
+Instant
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Instant.html org.joda.time.Instant]
+|-
+|
+YearMonth
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/YearMonth.html org.joda.time.YearMonth]
+|-
+|
+MonthDay
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/MonthDay.html org.joda.time.MonthDay]
+|-
+|
+Interval
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Interval.html org.joda.time.Interval]
+|-
+|
+Duration
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Duration.html org.joda.time.Duration]
+|-
+|
+Period
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Period.html org.joda.time.Period]
+|-
+|
+Years
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Years.html org.joda.time.Years]
+|-
+|
+Months
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Months.html org.joda.time.Months]
+|-
+|
+Weeks
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Weeks.html org.joda.time.Weeks]
+|-
+|
+Days
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Days.html org.joda.time.Days]
+|-
+|
+Hours
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Hours.html org.joda.time.Hours]
+|-
+|
+Minutes
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Minutes.html org.joda.time.Minutes]
+|-
+|
+Seconds
+||
+Immutable Joda time type [http://joda-time.sourceforge.net/apidocs/org/joda/time/Seconds.html org.joda.time.Seconds]
 |}
 
-All the supported types are [http://en.wikipedia.org/wiki/Immutable_object immutable]. The type ''java.util.Date'' is not supported and
-replaced by the two immutable types ''DateTime'' and ''DateMidnight'' from the [http://joda-time.sourceforge.net/quickstart.html Yoda Time] library.
-The reason is that mutable state is not suitable for building reliable and stable systems!
-Composite types are also supported in terms of sub states.
+All the supported types are [http://en.wikipedia.org/wiki/Immutable_object immutable].
+The type ''java.util.Date'' is not supported and replaced by the Joda times equivalents.
+The type ''Object'' is not supported either for the same reason, that it may be mutable.
 
 
 [[State|< Back]]
