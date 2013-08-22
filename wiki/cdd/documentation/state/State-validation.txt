@@ -1,169 +1,72 @@
-The state can be validated before the state is encapsulated:
+The state can be validated before the state is encapsulated.
+Assume the person state has the mandatory attributes ''ssn'' and ''name'', and we have this ''Main'' class:
 
 <source>
-PersonBuilder builder1 = Person.build().withSsn(11111).withGivenName("Carl");
-PersonBuilder builder2 = Person.build();
+package com.myproject;
 
-System.out.println("1. Is valid: " + builder1.isValid());
-System.out.println("2. Is valid: " + builder2.isValid());
+import static com.myproject.PersonCreator.PersonBuilder;
+import static com.myproject.PersonCreator.buildPerson;
 
-Person person1 = builder1.asPerson();
-System.out.println(person1);
-</source>
+public class Main {
 
-<source>
-1. Is valid: true
-2. Is valid: false
-Person{ssn=11111, givenName='Carl', surname='null'}
-</source>
+    public static void main(String[] args) {
+        PersonBuilder person1 = buildPerson().withSsn(11111).withName("Carl");
+        PersonBuilder person2 = buildPerson();
 
-=== Custom validation ===
+        print(person1);
+        print(person2);
+    }
 
-It is possible to add a custom validation by adding the method ''isValid()'':
-<source>
-package com.myproject.state;
-
-public class PersonStateTemplate {
-    int ssn; // (key)
-    String givenName;
-    String surname; // (optional)
-
-    public boolean isValid() {
-        return ssn > 1000000;
+    static void print(PersonBuilder person) {
+        System.out.println("=== " + person.asMutableState() + " ===");
+        System.out.println("  isValid(): " + person.isValid());
+        System.out.println("  validate(): " + person.validate());
     }
 }
 </source>
 
-...if we run the ''Main'' class again (don't forget to regenerate) we now get:
-<source>
-1. Is valid: false
-2. Is valid: false
-Exception in thread "main" java.lang.IllegalStateException: Illegal state, could not create behaviour class 'Person'
-...
+When executed, we get:
+
+<source lang="dos">
+=== {ssn=11111, name="Carl"} ===
+  isValid(): true
+  validate(): []
+=== {ssn=0, name=null} ===
+  isValid(): false
+  validate(): [ValidationError{attribute='name', errorType='NULL', errorMessage='Attribute 'name' can not be NULL'}]
 </source>
 
-The reason is that ''ssn'' doesn't meet the validation rule ''ssn > 1000000'' since ''ssn'' was set to ''11111''.
+Mandatory attributes are checked in the methods ''isValid'' and ''validate()''.
+Other validation rules need to be placed in the constructor of the behaviour class (e.g. ''Person''):
 
-
-Validations can also be performed for substates, e.g:
 <source>
-package com.myproject.state;
+package com.myproject;
 
-public class PersonStateTemplate {
-    int ssn; // (key)
-    String givenName;
-    String surname; // (optional)
-    AddressState address;
+import static com.myproject.PersonCreator.PersonBehaviour;
 
-    public boolean isValid() {
-        return address.getStreetName().startsWith("A") && ssn > 1000000;
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+
+        assertThat(state.getName().startsWith("A"), PersonState.NAME, "Name must start with an A, but was: " + state.getName());
     }
 }
 </source>
 
-In this case the state will only be valid, and possible to encapsulate, if the street name starts with an 'A':
+Add the following line at the end of the ''main'' method:
 <source>
-boolean isValid1 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("AStreet").streetNumber(1).zipcode(123)).isValid();
-boolean isValid2 = Person.ssn(10000000).givenName("Carl").address(Address.streetName("BStreet").streetNumber(1).zipcode(123)).isValid();
-
-System.out.println("isValid1: " + isValid1);
-System.out.println("isValid2: " + isValid2);
+person1.asPerson();
 </source>
 
-output:
-<source>
-isValid1: true
-isValid2: false
-</source>
-
-If the ''isValid()'' method operates on an expanded substate, the state template class need to extend the ''StateImpl'' class:
-<source>
-package com.myproject.state;
-
-public class PersonStateTemplate extends PersonStateImpl {
-    int ssn; // (key)
-    String givenName;
-    String surname; // (optional)
-    AddressState $address;
-
-    public boolean isValid() {
-        return streetName.startsWith("A") && ssn > 1000000;
-    }
-}
-</source>
-
-
-We could also have added validations on both ''PersonState'' and ''AddressState'':
-<source>
-package com.myproject.state;
-
-public class AddressStateTemplate {
-    String streetName;
-    int streetNumber;
-    int zipcode;
-
-    public boolean isValid() {
-        return streetName.startsWith("A");
-    }
-}
-</source>
-
-<source>
-package com.myproject.state;
-
-public class PersonStateTemplate {
-    int ssn; // (key)
-    String givenName;
-    String surname; // (optional)
-    AddressState $address;
-
-    public boolean isValid() {
-        return ssn > 1000000;
-    }
-}
-</source>
-
-<source>
-boolean isValid1 = Person.ssn(10000000).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
-boolean isValid2 = Person.ssn(1).givenName("Carl").streetName("AStreet").streetNumber(1).zipcode(123).isValid();
-boolean isValid3 = Person.ssn(10000000).givenName("Carl").streetName("BStreet").streetNumber(1).zipcode(123).isValid();
-
-System.out.println("isValid1: " + isValid1);
-System.out.println("isValid2: " + isValid2);
-System.out.println("isValid3: " + isValid3);
-</source>
-
-output:
-
-<source>
-isValid1: true
-isValid2: false
-isValid3: false
-</source>
-
-As we can see, both validation rules must be met, and if we take a look at the generated class ''PersonStateImpl'':
-<source>
-    ...
-
-    private boolean isValid(boolean encapsulated) {
-        if (givenName == null
-           || streetName == null) {
-            return false;
-        }
-        if (!isAddressValid()) {
-            return false;
-        }
-        return ssn > 1000000;
-    }
-
-    private boolean isAddressValid() {
-        return streetName.startsWith("A");
-    }
-
+When executed, we get:
+<source lang="dos">
+Exception in thread "main" com.myproject.PersonState$InvalidPersonStateException: [ValidationError{attribute='name', errorType='CUSTOM', errorMessage='Name must start with an A, but was: Carl'}]
+	at com.myproject.PersonCreator$PersonBehaviour.assertThat(PersonCreator.java:170)
+	at com.myproject.Person.<init>(Person.java:9)
+	at com.myproject.PersonCreator$PersonBuilder.asPerson(PersonCreator.java:244)
+	at com.myproject.Main.main(Main.java:15)
     ...
 </source>
-
-...both validation rules was performed as expected! Validation rules can be added in arbitrary number of levels.
 
 
 [[State builder|< Back]]
