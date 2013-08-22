@@ -9,6 +9,106 @@ Instead of creating an object in ''one step'' by using one ore more constructor,
 * Support for switching between immutable, mutable, map and string state representations.
 
 
+Let's create a state:
+<source>
+public class PersonState {
+    public int ssn;
+    public String name;
+}
+</source>
+
+Regenerate and the code will look something like this (some code has been replaced with ''...''):
+
+<source>
+...
+
+@State
+public class PersonState implements ImmutableState {
+    public final int ssn;
+    public final String name;
+
+    // ===== Generated code =====
+
+    public static final String SSN = "ssn";
+    public static final String NAME = "name";
+
+    public PersonState(
+            int ssn,
+            String name) {
+        this.ssn = ssn;
+        this.name = name;
+
+        if (name == null) throw new InvalidPersonStateException("'name' can not be null");
+    }
+
+    public static class InvalidPersonStateException extends InvalidStateException { ... }
+
+    // getters and setters
+
+    public PersonMutableState asMutable() { ... }
+    public PersonStringState asStringState() { ... }
+    public PersonStringState asStringState(StringStateConverter converter) { ... }
+    public PersonStringState asStringState(PersonStringStateConverter converter) { ... }
+
+    public int hashCode() { ... }
+    public boolean equals(Object that) { ... }
+    public String toString() { ... }
+
+    @State(type = "mutable")
+    public static class PersonMutableState implements MutableState {
+        public int ssn;
+        public String name;
+
+        // constructors
+        // getters and setters
+
+        public PersonState asImmutable() { ... }
+        public Map asMap() { ... }
+        public PersonStringState asStringState() { ... }
+        public PersonStringState asStringState(StringStateConverter converter) { ... }
+        public PersonStringState asStringState(PersonStringStateConverter converter) { ... }
+
+        public boolean isValid() { ... }
+        public ValidationErrors validate() { ... }
+        public void assertIsValid() { ... }
+
+        // hashCode/equals/toString
+    }
+
+    @State(type = "string")
+    public static class PersonStringState implements StringState {
+        public String ssn;
+        public String name;
+
+        // constructors
+        // getters and setters
+
+        public PersonState asImmutable() { ... }
+        public PersonState asImmutable(PersonStringStateConverter converter) { ... }
+        public PersonMutableState asMutable() { ... }
+        public PersonMutableState asMutable(PersonStringStateConverter converter) { ... }
+        public Map asMap() { ... }
+
+        public boolean isValid() { ... }
+        public ValidationErrors validate() { ... }
+        public ValidationErrors validate(PersonStringStateValidator stateValidator) { ... }
+        public void assertIsValid() { ... }
+        public void assertIsValid(PersonStringStateValidator stateValidator) { ... }
+
+        // hashCode/equals/toString
+    }
+}
+</source>
+
+As you can see, the original state definition has been changed/replaced by three state representations:
+# PersonState
+# PersonMutableState
+# PersonStringState
+
+A fourth state representation is also included but uses the standard ''java.util.Map''.
+It is possible to move between these four state representations just by calling the corresponding ''as-method'', like ''asMutableState()'', but more on that later.
+
+
 [[Context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Define state|Next >]]
