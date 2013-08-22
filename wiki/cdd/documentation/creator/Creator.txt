@@ -1,0 +1,118 @@
+CDD contains three roles: ''state'', ''behaviour'' and ''creator''. The latter is responsible for creating
+different behaviour representations by building the state and calling one or several behaviour constructor.
+
+Let's take an example. Create these classes and regenerate:
+<source>
+public class PersonState {
+    public int ssn;
+    public String name;
+}
+
+public class PersonCreator {
+    PersonState state;
+}
+</source>
+
+After generation, the code looks something like this (some code has been replaced with "..."):
+<source>
+@Creator
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
+
+    // ===== Generated code =====
+
+    public static PersonFactory createPerson() { ... }
+    public static PersonCreator createPersonFromMap(Map person) { ... }
+    public static PersonBuilder buildPerson() { ... }
+    public static PersonBuilder buildPersonFromMap(Map person) { ... }
+    public static PersonStringBuilder buildPersonFromStrings() { ... }
+    public static PersonListBuilder createPersonList(PersonCreator... creators) { ... }
+    public static PersonSetBuilder createPersonSet(PersonCreator... creators) { ... }
+    public static PersonMapBuilder createPersonFromMap(PersonMapEntryBuilder... builders) { ... }
+    public static PersonMapEntryBuilder createPersonEntry(Object key, PersonCreator creator) { ... }
+    public static PersonMapEntryBuilder createPersonEntry(Object key, PersonBuilder builder) { ... }
+
+    // --- Factory ----
+
+    public class PersonFactory { ... }
+
+    public PersonState asState() { ... }
+    public PersonMutableState asMutableState() { ... }
+    public Map asMap() { ... }
+    public PersonStringState asStringState() { ... }
+    public PersonStringState asStringState(StringStateConverter stateConverter) { ... }
+
+    public static class PersonBehaviour { ... }
+    public static class PersonMutableBehaviour { ... }
+    public static class PersonBuilder implements PersonCreatorMaker { ... }
+    public static class PersonStringBuilder { ... }
+    public static class PersonListBuilder implements Iterable<PersonCreator> { ... }
+    public static class PersonSetBuilder implements Iterable<PersonCreator> { ... }
+    public static class PersonMapEntryBuilder { ... }
+    public static class PersonMapBuilder { ... }
+}
+
+interface PersonCreatorMaker { ... }
+</source>
+
+
+As you can see, a lot of convenient methods has been generated, like methods that:
+# Creates and builds different representations of person state like immutable state, mutable state, map state and string state (a representation where all attributes are string).
+# Helper methods to create sets, lists and maps.
+
+If we add a couple of behaviour class like ''Person'' and ''TextPerson'' then these methods will also be added to all builders and creators, e.g.:
+<source>
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    public boolean isTheAuthor() {
+        return state.name.toLowerCase().equals("joakim tengstrand");
+    }
+}
+
+public class TextPerson extends PersonBehaviour {
+    public TextPerson(PersonState state) {
+        super(state);
+    }
+
+    public String text() {
+        return state.ssn + ";" + state.name + ";";
+    }
+}
+</source>
+
+
+Add two factory methods to the creator + regenerate:
+<source>
+@Creator
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+
+    public TextPerson asTextPerson() {
+        return new TextPerson(state.asImmutable());
+    }
+
+    // ===== Generated code =====
+</source>
+
+
+Execute this code:
+<source>
+Person person = buildPerson().withSsn(1234).withName("Joakim Tengstrand").asPerson();
+TextPerson textPerson = buildPerson().withSsn(5678).withName("Carl").asTextPerson();
+
+System.out.println("Is the author: " + person.isTheAuthor());
+System.out.println("Text: " + textPerson.text());
+</source>
+
+'''output:'''
+<source>
+Is the author: true
+Text: 5678;Carl;
+</source>
