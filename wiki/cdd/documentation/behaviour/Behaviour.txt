@@ -1,6 +1,6 @@
 Defining behaviour is an important part of CDD, just as it is in traditional OO. The difference is that with CDD we are free to compose objects in a way similar to building with toy bricks or Lego.
 
-Behaviour is something that allows a particular ''state'' to work in a certain ''context'' and we start by showing how it's [[Factories|created]].
+Behaviour is something that allows a particular ''state'' to work in a certain ''context'' and we start by showing how it's [[Creator|created]].
 
 [[State validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
