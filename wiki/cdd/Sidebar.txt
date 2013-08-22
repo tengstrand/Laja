@@ -31,6 +31,8 @@
 ** Populate substate|Populate substate
 ** Collections|Collections
 ** Composition|Composition
+* creator
+** Creator|Introduction
 * misc
 ** http://www.gnu.org/copyleft/gpl.html|License
 Sidebar
