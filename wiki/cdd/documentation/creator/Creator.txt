@@ -102,7 +102,7 @@ public class PersonCreator implements PersonCreatorMaker {
 </source>
 
 
-Execute this code:
+Execute this code (make sure the method ''PersonCreator.buildPerson'' is imported):
 <source>
 Person person = buildPerson().withSsn(1234).withName("Joakim Tengstrand").asPerson();
 TextPerson textPerson = buildPerson().withSsn(5678).withName("Carl").asTextPerson();
