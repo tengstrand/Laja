@@ -130,7 +130,7 @@ As you can see, a lot of convenient methods has been generated (and a lot of cod
 # Methods that creates and builds different representations of person state like immutable state, mutable state, map state and string state.
 # Validation methods.
 # Hash code, equals and to string.
-# Methods that create sets, lists and maps.
+# Methods for creating sets, lists and maps.
 
 
 Let's see how this can look like in practice:
