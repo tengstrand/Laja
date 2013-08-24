@@ -1,6 +1,11 @@
+CDD is an experiment to see if object orientation can be improved by splitting up classes/objects into smaller pieces.
+This is done by using parsing and code generation. Another possible solution would have been to create a compiler.
+It would have been a cleaner solution but would result in much more work.
+Code generation also has the advantage that the generated code is not hidden away and can therefore easily be read and debugged.
+
 Many developers have had bad experience with code generation.
 CDD tries to change that by not getting in the way of the developer.
-CDD generates the code needed to assemble the different building blocks, which is the type of code that is both tedious and difficult to maintain.
+CDD generates the code needed to assemble the different building blocks, which is the type of code that is often both tedious and difficult to maintain.
 The code that remains to be written is focused on defining ''state'' and adding ''behavior'' suitable for different ''contexts''.
 The hope is that CDD will make you a better developer and the work easier and more fun!
 
