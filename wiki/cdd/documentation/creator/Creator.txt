@@ -1,4 +1,6 @@
-CDD has three roles: ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example:
+CDD has three roles: ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
+
+Add these two classes:
 
 <source>
 public class PersonState {
@@ -65,7 +67,7 @@ public class PersonCreator implements PersonCreatorMaker {
 </source>
 
 
-After generation, the code looks something like this (some code has been removed and replaced with "..."):
+After regeneration, the code looks something like this (some code has been removed and replaced with "..."):
 <source>
 @Creator
 public class PersonCreator implements PersonCreatorMaker {
@@ -119,24 +121,109 @@ interface PersonCreatorMaker { ... }
 </source>
 
 
-As you can see, a lot of convenient methods has been generated, like:
+As you can see, a lot of convenient methods has been generated (and a lot of code that we rather would like to hide, but remember this is a compromise!), like:
 # Methods that creates and builds different representations of person state like immutable state, mutable state, map state and string state.
 # Validation methods.
-# Hash code, equals and to string methods.
+# Hash code, equals and to string.
 # Methods that create sets, lists and maps.
 
 
-Execute this code (make sure the method ''PersonCreator.buildPerson'' is imported):
-<source>
-Person person = buildPerson().withSsn(1234).withName("Joakim Tengstrand").asPerson();
-TextPerson textPerson = buildPerson().withSsn(5678).withName("Carl").asTextPerson();
+Let's see how this can look like in practice:
 
-System.out.println("Is the author: " + person.isTheAuthor());
-System.out.println("Text: " + textPerson.text());
+
+<source>
+package com.myproject;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+
+import java.util.Map;
+
+import static com.myproject.PersonCreator.*;
+import static com.myproject.PersonState.PersonMutableState;
+import static com.myproject.PersonState.PersonStringState;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // Four kind of states: immutable, mutable, string...
+        PersonState immutableState = createPerson().ssn(111).name("Adam").asState();
+        PersonMutableState mutableState = createPerson().ssn(222).name("Bert").asMutableState();
+        PersonStringState stringState = createPerson().ssn(333).name("Cecilia").asStringState();
+
+        // ...and map!
+        Map personMap = createPerson().ssn(444).name("David").asMap();
+        Person personFromMap = createPersonFromMap(personMap).asPerson();
+
+        // Two contexts "Person" and "TextPerson".
+        Person person = createPerson().ssn(555).name("Eric").asPerson();
+        TextPerson textPerson = createPerson().ssn(666).name("Fredric").asTextPerson();
+
+        // Support for builders:
+        Person personViaBuilder = buildPerson().withSsn(777).withName("Gustav").asPerson();
+        PersonState stateViaStringBuilder = buildPersonFromStrings().withSsn("888").withName("Henrik").asState();
+
+        // Support for sets, list and maps.
+        ImmutableSet<Person> setOfPersons = createPersonSet(
+                createPerson().ssn(1001).name("Ingvar"),
+                createPerson().ssn(1002).name("Jacob")
+        ).asPersonSet();
+
+        ImmutableList<TextPerson> listOfTextPersons = createPersonList(
+                createPerson().ssn(2001).name("Karl"),
+                createPerson().ssn(2002).name("Ludvig")
+        ).asTextPersonList();
+
+        Map<String,PersonMutableState> mapOfMutableStates = createPersonMap(
+                createPersonEntry("p1", createPerson().ssn(1).name("x")),
+                createPersonEntry("p2", createPerson().ssn(2).name("y")),
+                createPersonEntry("p3", createPerson().ssn(3).name("z"))
+        ).asMutableStateMap();
+
+        PersonMutableState person3 = mapOfMutableStates.get("p3");
+
+        System.out.println("immutableState: " + immutableState);
+        System.out.println("mutableState: " + mutableState);
+        System.out.println("stringState: " + stringState);
+
+        System.out.println("personMap: " + personMap);
+        System.out.println("personFromMap: " + personFromMap);
+
+        System.out.println("person: " + person);
+        System.out.println("textPerson: " + textPerson);
+
+        System.out.println("personViaBuilder: " + personViaBuilder);
+        System.out.println("stateViaStringBuilder: " + stateViaStringBuilder);
+
+        System.out.println("setOfPersons:" + setOfPersons);
+        System.out.println("listOfTextPersons:" + listOfTextPersons);
+        System.out.println("mapOfMutableStates:" + mapOfMutableStates);
+
+        System.out.println("person3: " + person3);
+    }
+}
 </source>
 
-'''output:'''
-<source>
-Is the author: true
-Text: 5678;Carl;
+
+If executed, we get:
+<source lang="dos">
+immutableState: {ssn=111, name="Adam"}
+mutableState: {ssn=222, name="Bert"}
+stringState: {ssn="333", name="Cecilia"}
+personMap: {ssn=444, name=David}
+personFromMap: Person{ssn=444, name="David"}
+person: Person{ssn=555, name="Eric"}
+textPerson: TextPerson{ssn=666, name="Fredric"}
+personViaBuilder: Person{ssn=777, name="Gustav"}
+stateViaStringBuilder: {ssn=888, name="Henrik"}
+setOfPersons:[Person{ssn=1001, name="Ingvar"}, Person{ssn=1002, name="Jacob"}]
+listOfTextPersons:[TextPerson{ssn=2001, name="Karl"}, TextPerson{ssn=2002, name="Ludvig"}]
+mapOfMutableStates:{p3={ssn=3, name="z"}, p2={ssn=2, name="y"}, p1={ssn=1, name="x"}}
+person3: {ssn=3, name="z"}
 </source>
+
+
+The whole idea is to add composability and I hope you agree that this code is very flexible, clean and readable!
+
