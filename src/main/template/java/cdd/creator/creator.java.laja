@@ -174,7 +174,7 @@ import net.sf.laja.cdd.annotation.Parameters;
 #end
 
 #macro createMap()
-    public static {mapBuilder} {createMethod}FromMap({mapEntryBuilder}... builders) {
+    public static {mapBuilder} {createMethod}Map({mapEntryBuilder}... builders) {
         return new {mapBuilder}(builders);
     }
 

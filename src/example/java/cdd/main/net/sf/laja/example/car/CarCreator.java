@@ -69,7 +69,7 @@ public class CarCreator implements CarCreatorMaker {
         return new CarSetBuilder(creators);
     }
 
-    public static CarMapBuilder createCarFromMap(CarMapEntryBuilder... builders) {
+    public static CarMapBuilder createCarMap(CarMapEntryBuilder... builders) {
         return new CarMapBuilder(builders);
     }
 

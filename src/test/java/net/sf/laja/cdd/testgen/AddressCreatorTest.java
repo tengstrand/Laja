@@ -3,8 +3,6 @@ package net.sf.laja.cdd.testgen;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import net.sf.laja.cdd.testgen.Address;
-import net.sf.laja.cdd.testgen.AddressCreator;
 import net.sf.laja.cdd.testgen.state.AddressState;
 import org.junit.Test;
 
@@ -108,7 +106,7 @@ public class AddressCreatorTest {
     }
 
     private AddressMapBuilder addressMapBuilder() {
-        return createAddressFromMap(
+        return createAddressMap(
                 createAddressEntry("a", createAddress().withId(1).withStreetName("First street").withCity("Uppsala")),
                 createAddressEntry("b", createAddress().withId(2).withStreetName("Second street").withCity("Stockholm"))
         );

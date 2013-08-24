@@ -72,7 +72,7 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return new CarSetBuilder(creators);
     }
 
-    public static CarMapBuilder createTestCarFromMap(CarMapEntryBuilder... builders) {
+    public static CarMapBuilder createTestCarMap(CarMapEntryBuilder... builders) {
         return new CarMapBuilder(builders);
     }
 

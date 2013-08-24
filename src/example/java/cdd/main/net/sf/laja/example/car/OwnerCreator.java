@@ -58,7 +58,7 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerSetBuilder(creators);
     }
 
-    public static OwnerMapBuilder createOwnerFromMap(OwnerMapEntryBuilder... builders) {
+    public static OwnerMapBuilder createOwnerMap(OwnerMapEntryBuilder... builders) {
         return new OwnerMapBuilder(builders);
     }
 

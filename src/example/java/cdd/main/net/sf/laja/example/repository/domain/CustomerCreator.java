@@ -71,7 +71,7 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerSetBuilder(creators);
     }
 
-    public static CustomerMapBuilder createCustomerFromMap(CustomerMapEntryBuilder... builders) {
+    public static CustomerMapBuilder createCustomerMap(CustomerMapEntryBuilder... builders) {
         return new CustomerMapBuilder(builders);
     }
 

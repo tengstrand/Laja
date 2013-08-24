@@ -17,7 +17,7 @@ public class MapValidatorTest {
 
     @Test
     public void validMapOfPersonsShouldNotReturnValidationErrors() {
-        Map<String,PersonMutableState> states = createPersonFromMap(
+        Map<String,PersonMutableState> states = createPersonMap(
                 createPersonEntry("a", createPerson().name("Carl").hairColor(BROWN).children().defaults()),
                 createPersonEntry("b", createPerson().name("Anna").hairColor(BROWN).children().defaults())
         ).asMutableStateMap();
@@ -34,7 +34,7 @@ public class MapValidatorTest {
         PersonCreator person1 = createPerson().name("Carl").hairColor(BROWN).children().defaults();
         PersonCreator person2 = createPerson().name(null).hairColor(BROWN).children().defaults();
 
-        Map<String,PersonMutableState> states = createPersonFromMap(
+        Map<String,PersonMutableState> states = createPersonMap(
                 createPersonEntry("a", person1), createPersonEntry("b", person2)).asMutableStateMap();
 
         ValidationErrors.Builder errors = ValidationErrors.builder();

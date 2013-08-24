@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.Assert.assertNull;
-import static net.sf.laja.cdd.state.converter.StateConverters.asImmutableMap;
-import static net.sf.laja.cdd.state.converter.StateConverters.toImmutable;
-import static net.sf.laja.cdd.state.converter.StateConverters.toImmutableMap;
+import static net.sf.laja.cdd.state.converter.StateConverters.*;
 import static net.sf.laja.cdd.testgen.AddressCreator.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -39,7 +37,7 @@ public class MutableToImmutableMapConverterTest {
 
     @Test
     public void shouldConvertFromMutableMapOfStateToImmutableStateMap() {
-        AddressMapBuilder builder = createAddressFromMap(
+        AddressMapBuilder builder = createAddressMap(
                 createAddressEntry("first", createAddress().withStreetName("First street")),
                 createAddressEntry("second", buildAddress().withStreetName("Second street")));
 

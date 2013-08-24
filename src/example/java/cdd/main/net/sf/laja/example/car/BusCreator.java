@@ -67,7 +67,7 @@ public class BusCreator implements BusCreatorMaker {
         return new BusSetBuilder(creators);
     }
 
-    public static BusMapBuilder createBusFromMap(BusMapEntryBuilder... builders) {
+    public static BusMapBuilder createBusMap(BusMapEntryBuilder... builders) {
         return new BusMapBuilder(builders);
     }
 

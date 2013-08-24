@@ -93,7 +93,7 @@ public class PersonTest {
                 .withAddress(buildAddress().withId(2).withStreetName("Third street").withCity("Stockholm"))
                 .withOldAddress(buildAddress().withId(3))
                 .withOldAddresses(createAddressSet(defaultAddress(4)))
-                .withGroupedAddresses(createAddressFromMap(createAddressEntry("abc", defaultAddress(5))))
+                .withGroupedAddresses(createAddressMap(createAddressEntry("abc", defaultAddress(5))))
                 .withListOfSetOfState(createList(createSet(defaultAddress(6).asMutableState())))
                 .withListOfSetOfMapOfIntegers(createList(createSet(mapOfIntegers())));
 

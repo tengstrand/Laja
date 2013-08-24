@@ -58,7 +58,7 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createPersonFromMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 

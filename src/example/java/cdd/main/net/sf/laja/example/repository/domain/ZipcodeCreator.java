@@ -61,7 +61,7 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeSetBuilder(creators);
     }
 
-    public static ZipcodeMapBuilder createZipcodeFromMap(ZipcodeMapEntryBuilder... builders) {
+    public static ZipcodeMapBuilder createZipcodeMap(ZipcodeMapEntryBuilder... builders) {
         return new ZipcodeMapBuilder(builders);
     }
 

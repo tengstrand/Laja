@@ -58,7 +58,7 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiSetBuilder(creators);
     }
 
-    public static BmiMapBuilder createBmiFromMap(BmiMapEntryBuilder... builders) {
+    public static BmiMapBuilder createBmiMap(BmiMapEntryBuilder... builders) {
         return new BmiMapBuilder(builders);
     }
 

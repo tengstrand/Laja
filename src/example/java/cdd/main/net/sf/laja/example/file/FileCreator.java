@@ -62,7 +62,7 @@ public class FileCreator implements FileCreatorMaker {
         return new FileSetBuilder(creators);
     }
 
-    public static FileMapBuilder createFileFromMap(FileMapEntryBuilder... builders) {
+    public static FileMapBuilder createFileMap(FileMapEntryBuilder... builders) {
         return new FileMapBuilder(builders);
     }
 

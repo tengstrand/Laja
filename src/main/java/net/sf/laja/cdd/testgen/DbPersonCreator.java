@@ -63,7 +63,7 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return new PersonSetBuilder(creators);
     }
 
-    public static PersonMapBuilder createDbPersonFromMap(PersonMapEntryBuilder... builders) {
+    public static PersonMapBuilder createDbPersonMap(PersonMapEntryBuilder... builders) {
         return new PersonMapBuilder(builders);
     }
 

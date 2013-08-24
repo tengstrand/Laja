@@ -67,7 +67,7 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressSetBuilder(creators);
     }
 
-    public static AddressMapBuilder createAddressFromMap(AddressMapEntryBuilder... builders) {
+    public static AddressMapBuilder createAddressMap(AddressMapEntryBuilder... builders) {
         return new AddressMapBuilder(builders);
     }
 

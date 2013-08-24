@@ -57,7 +57,7 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new AccountSetBuilder(creators);
     }
 
-    public static AccountMapBuilder createTestAccountFromMap(AccountMapEntryBuilder... builders) {
+    public static AccountMapBuilder createTestAccountMap(AccountMapEntryBuilder... builders) {
         return new AccountMapBuilder(builders);
     }
 

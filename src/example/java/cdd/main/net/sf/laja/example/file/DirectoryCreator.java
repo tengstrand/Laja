@@ -58,7 +58,7 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectorySetBuilder(creators);
     }
 
-    public static DirectoryMapBuilder createDirectoryFromMap(DirectoryMapEntryBuilder... builders) {
+    public static DirectoryMapBuilder createDirectoryMap(DirectoryMapEntryBuilder... builders) {
         return new DirectoryMapBuilder(builders);
     }
 

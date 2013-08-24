@@ -58,7 +58,7 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeSetBuilder(creators);
     }
 
-    public static VehicleSizeMapBuilder createVehicleSizeFromMap(VehicleSizeMapEntryBuilder... builders) {
+    public static VehicleSizeMapBuilder createVehicleSizeMap(VehicleSizeMapEntryBuilder... builders) {
         return new VehicleSizeMapBuilder(builders);
     }
 
