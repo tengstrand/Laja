@@ -8,12 +8,13 @@ C:/Projects/MyProject/src/main/java/com/myproject/PersonCreator.java
 </source>
 
 
-Let's get started with CDD:
+Now let's get started with CDD:
 * Make sure Laja is [http://laja.tengstrand.nu/index.php/Install installed].
 * Create a project directory e.g. ''C:/Projects/MyProject''.
 * Create the source directory and package structure in the project root, e.g. ''C:/Projects/MyProject/src/main/java/com/myproject''.
 
-Create the template file ''myproject.laja'' and put it in the project root directory:
+
+Create the Laja template file ''myproject.laja'' and put it in the project root directory:
 <source lang="dos">
 #generateCdd({
   srcDir: "{.}/src"
@@ -21,14 +22,25 @@ Create the template file ''myproject.laja'' and put it in the project root direc
 </source>
 
 
-Create the class ''PersonState.java'':
+Create the classes ''PersonState.java'':
 <source>
 package com.myproject;
 
 public class PersonState {
     int age;
-	String givenName;
-	String surname;
+    String givenName;
+    String surname;
+}
+</source>
+
+
+Create the class ''PersonCreator'':
+Create the class ''PersonCreator.java'':
+<source>
+package com.myproject;
+
+public class PersonCreator {
+    PersonState state;
 }
 </source>
 
@@ -42,23 +54,8 @@ Which gives the output:
 <source lang="dos">
 Reading file "myproject.laja"
   Writing to file "C:/MyProject/src/main/java/com/myproject/PersonState.java" - OK
-  Processed 1 classes: 1 changed.
-</source>
-
-
-Create the class ''PersonCreator.java'':
-<source>
-package com.myproject;
-
-public class PersonCreator {
-    PersonState state;
-}
-</source>
-
-
-Regenerate:
-<source lang="dos">
-C:\Projects\MyProject>laja myproject
+  Writing to file "C:/MyProject/src/main/java/com/myproject/PersonCreator.java" - OK
+  Processed 2 classes: 2 changed.
 </source>
 
 
@@ -113,6 +110,7 @@ public class Main {
     public static void main(String[] args) {
         Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").asPerson();
 
+        System.out.println("Is teenager: " + person.isTeenager());
         System.out.println(person);
     }
 }
