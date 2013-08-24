@@ -130,6 +130,6 @@ Here is an alternative way of illustrating objects in CDD where we can think of 
 [[File:CDD-object-layering.png|600px]]
 
 
-[[Main_Page|< Back]]
+[[Code generation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Encapsulation|Next >]]
+[[Context|Next >]]
