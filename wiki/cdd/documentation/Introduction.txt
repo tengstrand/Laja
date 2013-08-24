@@ -39,27 +39,25 @@ public class Person {
 </source>
 
 
-An instance ''person'' can now be created by calling the constructor:
+An instance ''person'' can now be created by calling the constructor of the class:
 
 <source>
 Person person = new Person(25, "James");
 </source>
 
 
-What happens here is that we merge data (''age'', ''name'') with the function ''isTeenager'' to form an object. This process is called ''encapsulation'':
+What happens here is that we merge data (''age'', ''name'') with the function/method ''isTeenager'' to form an object which is called ''encapsulation'':
 
 
 [[File:CDD-new-instance.png|700px]]
 
 
 If we look at the Java code again, there is a lot of things going there:
-# The object is responsible for building the state (the constructor).
+# The class is responsible for building the state (the constructor).
 # Identity is managed by the object (hashCode / equals).
 # The toString method is managed by the object.
-# State and behaviour are intertwined.
 
-
-By intertwining state and behaviour we get rigid and inflexible systems. 
+By intertwining all these activities we get rigid and inflexible systems.
 CDD solves the problem by breaking up classes/objects into three roles: ''creator'', ''state'' and ''behaviour''.
 
 [[File:CDD-roles.png|700px]]
