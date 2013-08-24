@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.1 "
    sodipodi:docname="CDD-new-instance.svg"
-   inkscape:export-filename="C:\Source\IDEA\Laja\wiki\cdd\graphics\CDD-roles.png"
+   inkscape:export-filename="C:\Source\IDEA\Laja\wiki\cdd\graphics\CDD-new-instance.png"
    inkscape:export-xdpi="180"
    inkscape:export-ydpi="180">
   <defs
@@ -326,7 +326,7 @@
          y="80.45372"
          x="112.56303"
          sodipodi:role="line"
-         id="tspan5269">Object</tspan></text>
+         id="tspan5269">Class</tspan></text>
     <path
        sodipodi:type="arc"
        style="color:#000000;fill:#adc383;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
