@@ -1,0 +1,47 @@
+In CDD, parameters in the ''chained creator'' and ''builders'' are generated based on the ''state definition''.
+The previous example in the [[Creator]] had, for example, this state definition:
+
+<source>
+public class PersonState {
+    public int ssn;
+    public String name;
+}
+</source>
+
+
+Scroll down in ''PersonCreator'' (in the same example) till you found the factory of the chained creator:
+
+<source>
+    // --- Factory ----
+
+    public class PersonFactory {
+
+        public _Name ssn(int ssn) {
+            return new _Ssn().ssn(ssn);
+        }
+
+        // ssn
+        public class _Ssn {
+            public _Name ssn(int ssn) {
+                state.ssn = ssn;
+                return new _Name();
+            }
+        }
+
+        // name
+        public class _Name {
+            public PersonCreator name(String name) {
+                state.name = name;
+                return new PersonCreator(state);
+            }
+        }
+    }
+</source>
+
+
+...the first method ''ssn(int ssn)'' is the start of the chained creator, followed by the classes ''_Ssn'' and ''_Name'' (one per attribute in the state definition).
+The call to ''PersonCreator.createPerson()'', or just ''createPerson()'' if you use static imports,
+is returning an instance of ''PersonFactory'' which enables you to write:
+<source>
+createPerson().ssn(123).name("Carl").asPerson()
+</source>
