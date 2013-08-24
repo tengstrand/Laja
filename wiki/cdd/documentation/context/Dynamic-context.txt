@@ -6,7 +6,7 @@ A dynamic context is something that can vary at runtime within a static context:
 
 Static context can use concrete classes directly but with dynamic context we have to go through an interface.
 In this example the interface is represented by ''Person'' and the concrete classes by ''PersonAdmin'' and ''PersonRestricted'' which both implements the interface ''Person''.
-Which of the two implementations that should be used is decided by the factory using the ''context variable'' "userRole".
+Which of the two implementations that should be used is decided by the ''creator'' using the ''context variable'' "userRole".
 
 
 Pretend we want to restrict access to phone numbers so that only admin users can see them. Add some code, start by ''UserRole''
@@ -68,26 +68,22 @@ public class PersonAdmin extends PersonBehaviour implements Person {
 }
 </source>
 
+
 ...add the method ''asPerson'' to ''PersonCreator'' between the ''state'' and the "Generated code" comment:
 
 <source>
 ...
-
-public class PersonCreator implements PersonCreatorMaker {
-    private final PersonMutableState state;
-
     public Person asPerson(UserRole role) {
         if (role == UserRole.ADMIN) {
             return new PersonAdmin(state.asImmutable());
         }
         return new PersonRestricted(state.asImmutable());
     }
-
-    // ===== Generated code =====
 ...
 </source>
 
-...add ''Main'':
+
+...regenerate and add ''Main'':
 
 <source>
 import static com.myproject.PersonCreator.createPerson;
@@ -114,4 +110,4 @@ Berts phone number: ???
 
 [[Static context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[State|Next >]]
+[[Creator|Next >]]
