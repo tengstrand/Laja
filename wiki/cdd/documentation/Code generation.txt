@@ -17,7 +17,7 @@ If we take a look at the [[Quick-start guide|Quick-start guide]], it has the fol
 [[File:project-directory-structure.png]]
 
 Let's explain some of the basic concepts of CDD by looking at the classes from the [[Quick-start guide|Quick-start guide]] example
-(package statement, imports and generated code has been removed:
+(package statement, imports and generated code has been removed):
 
 '''State'''
 <source>
@@ -87,7 +87,10 @@ If we take a closer look at the statement that creates an instance of ''Person''
 Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").asPerson();
 </source>
 
-...we can see that CDD starts by building ''state'' and ends with ''encapsulation'' by choosing a ''behaviour representation'' that can be used in a specific ''context''.
+...we can see that CDD starts by building ''state'' and ends with ''encapsulation'' by choosing a ''behaviour'' representation that can be used in a specific ''context''.
+
+All generated code is inserted at the end of the ''state'' and ''creator'' classes.
+This simplifies the implementation of CDD and makes it easier to refactor (rename/move) classes.
 
 
 [[Main_Page|< Back]]
