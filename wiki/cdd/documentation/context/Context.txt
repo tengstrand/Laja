@@ -1,6 +1,6 @@
 The site [http://dictionary.reference.com/browse/context?s=t dictionary.com] defines context as "the set of circumstances or facts that surround a particular event, situation, etc.".
 The snippet "a particular event, situation, etc" is very close to the definition of ''behaviour'' in CDD which is something that
-operates in a ''context'' and encloses ''state'' (state = data at a given point in time).
+operates in a ''context'' and encloses mutable or immutable ''state''.
 
 
 [[File:CDD-context.png|300px]]
@@ -13,17 +13,19 @@ What distinguishes static context from dynamic context is that ''static context'
 If we look at the [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd/main/net/sf/laja/example/account account] example,
 it has behaviour representations for the two contexts ''source'' and ''destination'':
 <source>
-SourceAccount sourceAccount = Account.balance(1000).asSourceAccount();
-DestinationAccount destinationAccount = Account.balance(100).asDestinationAccount();
+SourceAccount sourceAccount = createAccount().balance(1000).asSourceAccount();
+DestinationAccount destinationAccount = createAccount().balance(100).asDestinationAccount();
 </source>
 
+
 <source>
-public class SourceAccount extends AccountValue {
+public class SourceAccount extends AccountMutableBehaviour {
     ...
     public void transferTo(DestinationAccount destination, double amount) { ... }
     ...
 }
 </source>
+
 
 <source>
 public class DestinationAccount extends AccountValue {
@@ -33,20 +35,22 @@ public class DestinationAccount extends AccountValue {
 }
 </source>
 
+
 The two representations contains the relevant operations to be used in each context.
+
 
 === Dynamic context ===
 A dynamic context can vary at ''runtime'' within a static context.
 If we take a look at the [[Dynamic context|dynamic context]] code example:
 
 <source>
-Person person = PersonFactory.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
+Person person = createPerson.name("Anders").phoneNumber("011-11111111").asPerson(userRole);
 </source>
 
 ...the context variable ''userRole'' is used by the factory to choose a suitable representation
 which enables us to have different behaviour implementations for different contexts within the static context.
 
 
-[[Encapsulation|< Back]]
+[[Classes and objects|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Static context|Next >]]
