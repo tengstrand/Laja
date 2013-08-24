@@ -41,7 +41,89 @@ Scroll down in ''PersonCreator'' (in the same example) till you found the factor
 
 ...the first method ''ssn(int ssn)'' is the start of the chained creator, followed by the classes ''_Ssn'' and ''_Name'' (one per attribute in the state definition).
 The call to ''PersonCreator.createPerson()'', or just ''createPerson()'' if you use static imports,
-is returning an instance of ''PersonFactory'' which enables you to write:
+is returning an instance of ''PersonFactory'' and is the secret whey you to write:
 <source>
 createPerson().ssn(123).name("Carl").asPerson()
 </source>
+
+
+=== Overloaded parameters ===
+
+CDD supports overloading of parameters as a way to extend builders and the chained creator.
+Let's do that by adding a new method to the ''_Name'' class:
+<source>
+// name
+public class _Name {
+    public PersonCreator name(String name) {
+        state.name = name;
+        return new PersonCreator(state);
+    }
+
+    // add
+    public PersonCreator name(String firstName, String surname) {
+        state.name = firstName + " " + surname;
+        return new PersonCreator(state);
+    }
+}
+</source>
+
+
+Make sure you include the ''// add'' comment and regenerate.
+Look at the top of ''PersonCreator'' and you will fiund this comment:
+<source>
+    // ===== Generated code =====
+
+    /*
+import net.sf.laja.cdd.annotation.Parameter;
+import net.sf.laja.cdd.annotation.Parameters;
+
+    @Parameters({
+        @Parameter(attribute = "name", methodSignature = "String firstName, String surname", value = "firstName + " " + surname")
+    })
+    */
+</source>
+
+
+The ''// add'' comment was a directive to CDD telling it to generate this comment.
+
+Now insert the ''@Parameters'' statement at the top of the class, like this:
+<source>
+@Creator
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+
+    public TextPerson asTextPerson() {
+        return new TextPerson(state);
+    }
+
+    @Parameters({
+            @Parameter(attribute = "name", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
+    })
+
+    // ===== Generated code =====
+</source>
+
+
+Make sure you also add the imports.
+You also need to help CDD a little in this example (or just copy the code above) by inserting a backslash in front of the quotation marks.
+The next time we generate, our new overloaded ''name'' method will be generated based on the ''@Parameter'' definition:
+<source>
+// name
+public class _Name {
+    public PersonCreator name(String name) {
+        state.name = name;
+        return new PersonCreator(state);
+    }
+
+    public PersonCreator name(String firstName, String surname) {
+        state.name = firstName + " " + surname;
+        return new PersonCreator(state);
+    }
+}
+</source>
+
+
