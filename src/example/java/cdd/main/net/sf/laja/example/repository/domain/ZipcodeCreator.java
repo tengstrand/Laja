@@ -96,6 +96,7 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
             }
         }
     }
+
     public ZipcodeState asState() {
         return state.asImmutable();
     }

@@ -123,6 +123,7 @@ public class AddressCreator implements AddressCreatorMaker {
             }
         }
     }
+
     public AddressState asState() {
         return state.asImmutable();
     }

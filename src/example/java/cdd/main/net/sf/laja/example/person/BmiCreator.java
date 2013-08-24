@@ -101,6 +101,7 @@ public class BmiCreator implements BmiCreatorMaker {
             }
         }
     }
+
     public BmiState asState() {
         return state.asImmutable();
     }

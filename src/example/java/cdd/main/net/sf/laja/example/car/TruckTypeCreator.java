@@ -101,6 +101,7 @@ public class TruckTypeCreator implements TruckTypeCreatorMaker {
             }
         }
     }
+
     public TruckTypeState asState() {
         return state.asImmutable();
     }

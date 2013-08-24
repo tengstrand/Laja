@@ -120,6 +120,7 @@ public class BusCreator implements BusCreatorMaker {
             }
         }
     }
+
     public BusState asState() {
         return state.asImmutable();
     }

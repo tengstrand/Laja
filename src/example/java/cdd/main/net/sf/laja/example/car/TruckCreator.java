@@ -150,6 +150,7 @@ public class TruckCreator implements TruckCreatorMaker {
             }
         }
     }
+
     public TruckState asState() {
         return state.asImmutable();
     }

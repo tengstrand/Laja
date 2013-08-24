@@ -97,6 +97,7 @@ public class FileCreator implements FileCreatorMaker {
             }
         }
     }
+
     public FileState asState() {
         return state.asImmutable();
     }

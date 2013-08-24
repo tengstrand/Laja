@@ -93,6 +93,7 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             }
         }
     }
+
     public VehicleSizeState asState() {
         return state.asImmutable();
     }
