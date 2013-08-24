@@ -1,4 +1,4 @@
-CDD has three roles: ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
+CDD "classes" are divided into three "roles": ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
 
 Add these two classes:
 
@@ -14,11 +14,12 @@ public class PersonCreator {
 </source>
 
 
-...regenerate and add:
+...regenerate and add ''Person'':
 <source>
 import static com.myproject.PersonCreator.PersonBehaviour;
 
 public class Person extends PersonBehaviour {
+    // Immutable state
     public Person(PersonState state) {
         super(state);
     }
@@ -30,15 +31,20 @@ public class Person extends PersonBehaviour {
 </source>
 
 
-...and:
+...and ''TextPerson'':
 <source>
 package com.myproject;
 
-import static com.myproject.PersonCreator.PersonBehaviour;
+import static com.myproject.PersonCreator.PersonMutableBehaviour;
+import static com.myproject.PersonState.PersonMutableState;
 
-public class TextPerson extends PersonBehaviour {
-    public TextPerson(PersonState state) {
+public class TextPerson extends PersonMutableBehaviour {
+    private final PersonMutableState state;
+
+    // Mutable state
+    public TextPerson(PersonMutableState state) {
         super(state);
+        this.state = state;
     }
 
     public String text() {
@@ -51,15 +57,14 @@ public class TextPerson extends PersonBehaviour {
 ...and two methods to ''PersonCreator'':
 <source>
 
-public class PersonCreator implements PersonCreatorMaker {
-    private final PersonMutableState state;
+public class PersonCreator ...  {
+    ...
 
     public Person asPerson() {
         return new Person(state.asImmutable());
     }
-
     public Person asTextPerson() {
-        return new TextPerson(state.asImmutable());
+        return new TextPerson(state);
     }
 
     ...
@@ -89,9 +94,9 @@ public class PersonCreator implements PersonCreatorMaker {
     public static PersonMapEntryBuilder createPersonEntry(Object key, PersonCreator creator) { ... }
     public static PersonMapEntryBuilder createPersonEntry(Object key, PersonBuilder builder) { ... }
 
-    public class PersonFactory { ... }
-
     public PersonCreator(PersonMutableState state) { this.state = state; }
+
+    public class PersonFactory { ... }
 
     public PersonState asState() { ... }
     public PersonMutableState asMutableState() { ... }
