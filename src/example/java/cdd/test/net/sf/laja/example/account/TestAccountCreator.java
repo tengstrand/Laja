@@ -69,6 +69,13 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
         return new AccountMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public TestAccountCreator(AccountMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class AccountFactory {
@@ -85,13 +92,6 @@ public class TestAccountCreator implements TestAccountCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public TestAccountCreator(AccountMutableState state) {
-        this.state = state;
-    }
-
     public AccountState asState() {
         return state.asImmutable();
     }

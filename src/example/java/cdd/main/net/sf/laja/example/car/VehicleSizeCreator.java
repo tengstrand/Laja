@@ -70,6 +70,13 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
         return new VehicleSizeMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public VehicleSizeCreator(VehicleSizeMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class VehicleSizeFactory {
@@ -86,13 +93,6 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public VehicleSizeCreator(VehicleSizeMutableState state) {
-        this.state = state;
-    }
-
     public VehicleSizeState asState() {
         return state.asImmutable();
     }

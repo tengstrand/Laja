@@ -70,6 +70,13 @@ public class OwnerCreator implements OwnerCreatorMaker {
         return new OwnerMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public OwnerCreator(OwnerMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class OwnerFactory {
@@ -94,13 +101,6 @@ public class OwnerCreator implements OwnerCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public OwnerCreator(OwnerMutableState state) {
-        this.state = state;
-    }
-
     public OwnerState asState() {
         return state.asImmutable();
     }

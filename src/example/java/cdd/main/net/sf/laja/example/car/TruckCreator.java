@@ -76,6 +76,13 @@ public class TruckCreator implements TruckCreatorMaker {
         return new TruckMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public TruckCreator(TruckMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class TruckFactory {
@@ -143,13 +150,6 @@ public class TruckCreator implements TruckCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public TruckCreator(TruckMutableState state) {
-        this.state = state;
-    }
-
     public TruckState asState() {
         return state.asImmutable();
     }

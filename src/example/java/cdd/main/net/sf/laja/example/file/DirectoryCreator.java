@@ -70,6 +70,13 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
         return new DirectoryMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public DirectoryCreator(DirectoryMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class DirectoryFactory {
@@ -86,13 +93,6 @@ public class DirectoryCreator implements DirectoryCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public DirectoryCreator(DirectoryMutableState state) {
-        this.state = state;
-    }
-
     public DirectoryState asState() {
         return state.asImmutable();
     }

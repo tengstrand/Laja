@@ -74,6 +74,13 @@ public class FileCreator implements FileCreatorMaker {
         return new FileMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public FileCreator(FileMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class FileFactory {
@@ -90,13 +97,6 @@ public class FileCreator implements FileCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public FileCreator(FileMutableState state) {
-        this.state = state;
-    }
-
     public FileState asState() {
         return state.asImmutable();
     }

@@ -84,6 +84,13 @@ public class TestCarCreator implements TestCarCreatorMaker {
         return new CarMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public TestCarCreator(CarMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class CarFactory {
@@ -143,13 +150,6 @@ public class TestCarCreator implements TestCarCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public TestCarCreator(CarMutableState state) {
-        this.state = state;
-    }
-
     public CarState asState() {
         return state.asImmutable();
     }

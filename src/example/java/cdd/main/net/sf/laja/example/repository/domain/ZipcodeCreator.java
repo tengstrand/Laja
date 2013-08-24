@@ -73,6 +73,13 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
         return new ZipcodeMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public ZipcodeCreator(ZipcodeMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class ZipcodeFactory {
@@ -89,13 +96,6 @@ public class ZipcodeCreator implements ZipcodeCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public ZipcodeCreator(ZipcodeMutableState state) {
-        this.state = state;
-    }
-
     public ZipcodeState asState() {
         return state.asImmutable();
     }

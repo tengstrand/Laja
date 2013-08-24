@@ -121,6 +121,13 @@ public class PersonCreator implements PersonCreatorMaker {
         return new PersonMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public PersonCreator(PersonMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class PersonFactory {
@@ -235,13 +242,6 @@ public class PersonCreator implements PersonCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public PersonCreator(PersonMutableState state) {
-        this.state = state;
-    }
-
     public PersonState asState() {
         return state.asImmutable();
     }

@@ -70,6 +70,13 @@ public class BmiCreator implements BmiCreatorMaker {
         return new BmiMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public BmiCreator(BmiMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class BmiFactory {
@@ -94,13 +101,6 @@ public class BmiCreator implements BmiCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public BmiCreator(BmiMutableState state) {
-        this.state = state;
-    }
-
     public BmiState asState() {
         return state.asImmutable();
     }

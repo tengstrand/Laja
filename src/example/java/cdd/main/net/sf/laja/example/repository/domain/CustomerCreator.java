@@ -83,6 +83,13 @@ public class CustomerCreator implements CustomerCreatorMaker {
         return new CustomerMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public CustomerCreator(CustomerMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class CustomerFactory {
@@ -128,13 +135,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public CustomerCreator(CustomerMutableState state) {
-        this.state = state;
-    }
-
     public CustomerState asState() {
         return state.asImmutable();
     }

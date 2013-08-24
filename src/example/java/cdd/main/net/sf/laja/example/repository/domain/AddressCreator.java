@@ -79,6 +79,13 @@ public class AddressCreator implements AddressCreatorMaker {
         return new AddressMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public AddressCreator(AddressMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class AddressFactory {
@@ -116,13 +123,6 @@ public class AddressCreator implements AddressCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public AddressCreator(AddressMutableState state) {
-        this.state = state;
-    }
-
     public AddressState asState() {
         return state.asImmutable();
     }

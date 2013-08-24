@@ -75,6 +75,13 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return new PersonMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public DbPersonCreator(PersonMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class PersonFactory {
@@ -151,13 +158,6 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public DbPersonCreator(PersonMutableState state) {
-        this.state = state;
-    }
-
     public PersonState asState() {
         return state.asImmutable();
     }

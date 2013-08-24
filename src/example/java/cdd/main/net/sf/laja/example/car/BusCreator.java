@@ -79,6 +79,13 @@ public class BusCreator implements BusCreatorMaker {
         return new BusMapEntryBuilder(key, builder);
     }
 
+
+    // --- Constructor ---
+
+    public BusCreator(BusMutableState state) {
+        this.state = state;
+    }
+
     // --- Factory ----
 
     public class BusFactory {
@@ -113,13 +120,6 @@ public class BusCreator implements BusCreatorMaker {
             }
         }
     }
-
-    // --- Constructor ---
-
-    public BusCreator(BusMutableState state) {
-        this.state = state;
-    }
-
     public BusState asState() {
         return state.asImmutable();
     }
