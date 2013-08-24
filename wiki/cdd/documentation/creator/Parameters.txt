@@ -41,7 +41,7 @@ Scroll down in ''PersonCreator'' (in the same example) till you found the factor
 
 ...the first method ''ssn(int ssn)'' is the start of the chained creator, followed by the classes ''_Ssn'' and ''_Name'' (one per attribute in the state definition).
 The call to ''PersonCreator.createPerson()'', or just ''createPerson()'' if you use static imports,
-is returning an instance of ''PersonFactory'' and is the secret whey you to write:
+is returning an instance of ''PersonFactory'' and is the reason you can write:
 <source>
 createPerson().ssn(123).name("Carl").asPerson()
 </source>
@@ -105,6 +105,9 @@ public class PersonCreator implements PersonCreatorMaker {
     })
 
     // ===== Generated code =====
+
+    ...
+}
 </source>
 
 
@@ -127,3 +130,44 @@ public class _Name {
 </source>
 
 
+=== Suppressing original parameter methods ===
+
+It's possible to remove the original ''name'' parameter method by modifying the ''@Parameter'' statement and set ''suppressOriginal'' to ''true'':
+<source>
+@Parameter(attribute = "name", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname", suppressOriginal = true)
+</source>
+
+
+If we scroll down to the ''_Name'' class again, we can see that the original parameter method has been removed:
+<source>
+// name
+public class _Name {
+
+    public PersonCreator name(String firstName, String surname) {
+        state.name = firstName + " " + surname;
+        return new PersonCreator(state);
+    }
+}
+</source>
+
+=== Change method name ===
+
+It is possible to change the method name by setting the ''method'' paremeter, e.g.:
+<source>
+@Parameter(attribute = "name", method = "fullName", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
+</source>
+
+
+We can now create person objects like this:
+<source>
+Person lisa = createPerson().ssn(123).name("Lisa Simpsons").asPerson();
+Person bart = createPerson().ssn(456).fullName("Bart", "Simpsons").asPerson();
+System.out.println(lisa);
+System.out.println(bart);
+</source>
+
+'''output''':
+<source>
+Person{ssn=123, name="Lisa Simpsons"}
+Person{ssn=456, name="Bart Simpsons"}
+</source>
