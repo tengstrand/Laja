@@ -7,8 +7,15 @@ Having all of the CDD foundation classes generated automatically frees developer
 
 === Why CDD? ===
 
-CDD is about dividing classes/objects into smaller pieces, giving each piece a clear responsiblility and increased composability.
-Let's have a look at an ordinary Java class:
+There are a number of issues with "standard" object orientation like Java or C#:
+
+* The absence of the concept of ''context'' which makes it difficult to use objects in different contexts and which leads to non-object-oriented solutions that force you to break encapsulation and violate the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
+* There is no correlation between an objects attributes/properties and how the state is built (constructors) and how identity is implemented (''hashCode/equals'').
+* Poor flexibility at the object level when it comes to composing objects, switching context and code reuse.
+
+
+CDD tries to break down classes/objects into smaller pieces to tackle these problems.
+Let's explain the basic concepts by looking at this Java class:
 
 <source>
 public class Person {
@@ -24,7 +31,7 @@ public class Person {
         return age >= 13 && age <= 19;
     }
 
-    // Implement these...
+    // To be implemented!
     public int hashCode() { ... }
     public boolean equals(Object o) { ... }
     public String toString() { ... }
@@ -32,47 +39,42 @@ public class Person {
 </source>
 
 
-An instance ''person'' can be created by calling the constructor:
+An instance ''person'' can now be created by calling the constructor:
 
 <source>
 Person person = new Person(25, "James");
 </source>
 
 
-What is happening here is that we merge data (''age'' and ''name'') with the function ''isTeenager'' to form an object. This process is called ''encapsulation'' and can be illustrated by this picture:
+What happens here is that we merge data (''age'', ''name'') with the function ''isTeenager'' to form an object. This process is called ''encapsulation'':
 
-[[File:CDD-new-instance.png|400px]]
 
-The problem with this approach is that the class/object has too many responsibilities:
-# Build state.
-# Manage identity (hashCode / equals).
-# Merge state and behaviour.
+[[File:CDD-new-instance.png|700px]]
+
+
+If we look at the Java code again, there is a lot of things going there:
+# The object is responsible for building the state (the constructor).
+# Identity is managed by the object (hashCode / equals).
+# The toString method is managed by the object.
+# State and behaviour are intertwined.
+
 
 By intertwining state and behaviour we get rigid and inflexible systems. 
-The problem can be solved by dividing objects into three roles: ''state, behaviour'' and ''creator''. This will free objects to deliver behavior based on state, e.g.:
-<source>
-@Behaviour
-public class Person extends PersonBehaviour {
+CDD solves the problem by breaking up classes/objects into three roles: ''creator'', ''state'' and ''behaviour''.
 
-    public Person(PersonState state) {
-        super(state);
-    }
-
-    public boolean isTeenager() {
-        return state.age >= 13 && state.age <= 19;
-    }
-}
-</source>
+[[File:CDD-roles.png|700px]]
 
 
-If we also create a ''state'' and a ''creator'' class (more on that later) we can create an instance like this:
+With these roles we can now create a ''person'' like this:
 
 <source>
 Person person = createPerson().age(25).name("James").asPerson();
 </source>
 
 
-This is very readable and has some other advantages too!
+This is very readable and has some other advantages too! If you are curious about how, read on!
+
+/Joakim Tengstrand
 
 
 [[Code generation|Next >]]
