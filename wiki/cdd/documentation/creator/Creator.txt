@@ -232,3 +232,7 @@ person3: {ssn=3, name="z"}
 
 CDD is a very composable and powerful "tool" that "extends" object orientation (Java in this case) and simplifies writing clean code!
 
+
+[[Dynamic context|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Creator|Next >]]
