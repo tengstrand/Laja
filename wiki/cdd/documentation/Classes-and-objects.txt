@@ -1,8 +1,6 @@
 In traditional object oriented languages the ''state'' and ''behaviour'' are merged to form classes that can be instantiated to objects, like this:
 
 <source>
-package com.myproject.behaviour;
-
 public class Person {
     private int age;
     private String name;
@@ -14,6 +12,27 @@ public class Person {
 
     public boolean isTeenager() {
         return age >= 13 && age <= 19;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = ssn;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
+
+        PersonState state = (PersonState)that;
+
+        if (ssn != state.ssn) return false;
+        if (name != null ? !name.equals(state.name) : state.name != null) return false;
+
+        return true;
     }
 
     @Override
@@ -37,6 +56,7 @@ Person{age=56, name='Ingemar Stenmark'}
 Is teenager: false
 </source>
 
+
 The ''state'' is here represented by the attributes ''age'' and ''name'', and the ''behaviour'' is represented by the method ''isTeenager'',
 which can be illustrated by this diagram:
 
@@ -50,15 +70,13 @@ Object oriented languages with support for [http://en.wikipedia.org/wiki/Trait_%
 === Flexible objects ===
 
 CDD wants to bring the same level of flexibility to objects as we get for classes.
-The separation of ''state'' and ''behaviour'' enables powerful ways to build, validate and compose classes and objects.
-Let's see how the previous example would look like in CDD (generated code after the comment has been removed):
+The separation of ''creator'', ''state'' and ''behaviour'' enables powerful ways to build, validate and compose objects.
+Let's see how the previous example would look like in CDD (generated code has been removed):
 
 <source>
 public class PersonState implements ImmutableState {
     public final int age;
     public final String name;
-
-    // ===== Generated code =====
 }
 
 public class PersonCreator implements PersonCreatorMaker {
@@ -67,12 +85,9 @@ public class PersonCreator implements PersonCreatorMaker {
     public Person asPerson() {
         return new Person(state.asImmutable());
     }
-
-    // ===== Generated code =====
 }
 
 public class Person extends PersonBehaviour {
-
     public Person(PersonState state) {
         super(state);
     }
@@ -86,6 +101,7 @@ Person person = createPerson.age(56).name("Ingemar Stenmark").asPerson();
 System.out.println(person);
 System.out.println("Is teenager: " + person.isTeenager());
 </source>
+
 
 ...when executed, we get:
 
