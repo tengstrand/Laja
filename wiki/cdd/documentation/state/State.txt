@@ -112,6 +112,6 @@ A fourth state representation is stored in a ''java.util.Map''.
 It is possible to move between these four state representations just by calling the corresponding ''as-method'', but more on that later.
 
 
-[[Context|< Back]]
+[[Dynamic context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Define state|Next >]]
