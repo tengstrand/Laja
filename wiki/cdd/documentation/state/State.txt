@@ -1,7 +1,7 @@
-The decision to separate classes into the parts ''state'', ''behavior'' and ''creator'', allow us to focus more on the state creation process.
-Instead of creating an object in ''one step'' by using one ore more constructor, the state is first created, followed by encapsulation which gives a number of advantages:
-* The behaviour representation need only one constructor where the whole state is coming in.
-* The state can be defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''equals'', ''hashCode'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
+The decision to separate classes into ''state'', ''behavior'' and ''creator'', allow us to focus more on the state creation process.
+Instead of creating an object in ''one step'' by using one ore more constructors, the state is first created, followed by encapsulation which gives a number of advantages:
+* The behaviour representation need only one constructor.
+* The state can be defined in a [http://en.wikipedia.org/wiki/Declarative_programming declarative] way so that ''hashCode'', ''equals'' and ''toString'' can be generated, letting us focus on the properties of each attribute.
 * The [http://natureofcode.blogspot.se/2011/09/chained-creator-pattern.html chained creator] and/or [http://en.wikipedia.org/wiki/Builder_pattern builder pattern] is used to build state which ''improves the usability'' compared to a set of constructors (or even worse, an empty constructor with a bunch of [http://en.wikipedia.org/wiki/Mutator_method setters]!)
 * The state can be explicitly validated before encapsulation takes place.
 * An InvalidXStateException (where X is the name of the state) is thrown if the state is invalid in the encapsulation step.
@@ -12,8 +12,8 @@ Instead of creating an object in ''one step'' by using one ore more constructor,
 Let's create a state:
 <source>
 public class PersonState {
-    public int ssn;
-    public String name;
+    int ssn;
+    String name;
 }
 </source>
 
@@ -100,13 +100,16 @@ public class PersonState implements ImmutableState {
 }
 </source>
 
-As you can see, the original state definition has been changed/replaced by three state representations:
-# PersonState
-# PersonMutableState
-# PersonStringState
+CDD ensures that every attribute is proceded by "public final" and that all types are ''immutable''.
+Mutable collection types will be replaced by the corresponding ''Joda Time'' type, e.g. ''ImmutableMap'' if you write ''Map''.
 
-A fourth state representation is also included but uses the standard ''java.util.Map''.
-It is possible to move between these four state representations just by calling the corresponding ''as-method'', like ''asMutableState()'', but more on that later.
+The original state definition ''PersonState'' has been changed/replaced by three state representations:
+# PersonState.
+# PersonMutableState.
+# PersonStringState.
+
+A fourth state representation is stored in a ''java.util.Map''.
+It is possible to move between these four state representations just by calling the corresponding ''as-method'', but more on that later.
 
 
 [[Context|< Back]]
