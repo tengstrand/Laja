@@ -1,6 +1,7 @@
 __NOTOC__
+=== Override parameters ===
 In CDD, parameters in the ''chained creator'' and ''builders'' are generated based on the ''state definition''.
-The previous example in the [[Creator]] had, for example, this state definition:
+The previous example int the [[Creator]] section had this state definition:
 
 <source>
 public class PersonState {
@@ -63,6 +64,7 @@ returns an instance of ''PersonFactory'' and is the reason you can write:
 <source>
 createPerson().ssn(123).name("Carl").asPerson()
 </source>
+
 
 === Overloaded parameters ===
 
@@ -147,6 +149,7 @@ public class _Name {
 }
 </source>
 
+
 === Suppressing original parameter methods ===
 
 It's possible to remove the original ''name'' parameter method by modifying the ''@Parameter'' statement and set ''suppressOriginal'' to ''true'':
@@ -166,6 +169,7 @@ public class _Name {
     }
 }
 </source>
+
 
 === Change method name ===
 
@@ -189,6 +193,7 @@ Person{ssn=123, name="Lisa Simpsons"}
 Person{ssn=456, name="Bart Simpsons"}
 </source>
 
+
 === Skip parameters ===
 
 It's possible to skip one or several parameters. Let's show how we can skip the ''name'' parameter:
@@ -198,6 +203,8 @@ It's possible to skip one or several parameters. Let's show how we can skip the 
 })
 </source>
 
+
+...will produce this parameter class when generated:
 <source>
 // ssn
 public class _Ssn {
@@ -237,6 +244,7 @@ Name is the last parameter, so this statement will give the same result:
 nextAttribute = "name"
 </source>
 
+
 === Values with more than one statement ===
 
 It can be inconvenient to have all statements in one row as we did when we added ''onlySsn'':
@@ -245,7 +253,7 @@ value = "ssn; state.name = \"Anonymous\";"
 </source>
 
 
-A way to improve the situation is to assign the value via a method:
+A way to improve this is to assign the value via a method:
 <source>
 @Parameters({
     @Parameter(attribute = "ssn", method = "onlySsn", methodSignature = "int ssn", value = "getSsnAndSetName(ssn)", nextAttribute = "*")
