@@ -2,17 +2,7 @@ So far we have used ''chained creators'' to build state.
 In situations when you don't have control of in which order the attributes are going to be set, a ''builder'' can be more convenient.
 
 
-Let's start with an example:
-<source>
-PersonCreator.buildPerson().asPerson();
-</source>
-
-It's normally a good idea to cleanup the code with a static import:
-<source>
-import static com.myproject.PersonCreator.buildPerson;
-</source>
-
-...so that we can write:
+Let's start with an example (make sure you have made the static import of method ''PersonCreator.buildPerson''):
 <source>
 buildPerson().asPerson();
 </source>
@@ -28,8 +18,8 @@ Exception in thread "main" com.myproject.PersonState$InvalidPersonStateException
 </source>
 
 The state could not be encapsulated because the mandatory attributes ''ssn'' and ''givenName'' was not set.
-A ''chained creator'' force you to set all mandatory attributes but that is not the case with builders
-and is the reason why chained creators is the preferable choice in most situations.
+A ''chained creator'' helps you to set all mandatory attributes, but that is not the case with builders
+and is the reason why chained creators is the preferable choice in many situations.
 
 
 The next example shows how a builder can be used:
@@ -43,9 +33,89 @@ builder.withGivenName("Ingmar").withSurname("Bergman"); // ...or use method chai
 System.out.println(builder.asState());
 </source>
 
+
 output:
 <source>
 {ssn=123, givenName="Ingmar", surname="Bergman"}
+</source>
+
+
+=== Build object hierarchies ===
+
+Builders can also be used to create more complex objects. Create these four classes:
+
+<source>
+public class AddressState {
+    String streetName;
+    String city;
+}
+
+public class PersonState implements ImmutableState {
+    int ssn;
+    String name;
+    AddressState address;
+}
+
+public class AddressCreator {
+    AddressState state;
+
+    Address asAddress() {
+        return new Address(state.asImmutable());
+    }
+}
+
+public class PersonCreator {
+    PersonState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+}
+</source>
+
+
+...regenerate and create these two:
+<source>
+import static com.myproject.AddressCreator.AddressBehaviour;
+
+public class Address extends AddressBehaviour {
+    public Address(AddressState state) {
+        super(state);
+    }
+}
+
+import static com.myproject.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+    }
+}
+
+</source>
+
+
+...create and execute:
+<source>
+import static com.myproject.AddressCreator.buildAddress;
+import static com.myproject.PersonCreator.buildPerson;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Person person = buildPerson().withSsn(123).withName("Carl").withAddress(
+                buildAddress().withStreetName("Regent street").withCity("London")
+        ).asPerson();
+
+        System.out.println(person);
+    }
+}
+</source>
+
+
+output:
+<source lang="dos">
+Person{ssn=123, name="Carl", address={streetName="Regent street", city="London"}}
 </source>
 
 
