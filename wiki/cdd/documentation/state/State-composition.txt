@@ -1,4 +1,4 @@
-CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in [http://en.wikipedia.org/wiki/Domain-driven_design DDD], when building more complex objects:
+CDD uses [http://en.wikipedia.org/wiki/Object_composition composition], also known as [http://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks_of_DDD aggregate] in [http://en.wikipedia.org/wiki/Domain-driven_design DDD], when building more complex objects:
 
 [[File:CDD-state-composition.png|180px]]
 
@@ -15,6 +15,7 @@ public class AddressState {
 }
 </source>
 
+
 ...and ''person'' + generate:
 <source>
 package com.myproject;
@@ -29,7 +30,9 @@ public class PersonState {
 }
 </source>
 
+
 Note that the attribute ''address'' should be named ''address'' and not ''addressState''.
+
 
 ...add creators for ''address'':
 <source>
@@ -49,7 +52,8 @@ public class PersonCreator {
 }
 </source>
 
-...regenerate and execute:
+
+...regenerate and execute (make sure ''AddressCreator.createAddress'' and ''PersonCreator.createPerson'' are included):
 <source>
 PersonState person = createPerson()
         .ssn(112233)
@@ -61,10 +65,12 @@ PersonState person = createPerson()
 System.out.println(person);
 </source>
 
+
 '''output''':
 <source>
 {ssn=112233, givenName="Carl", surname="Carlson", address={streetName="First street", streetNumber=123, zipcode=75432}}
 </source>
+
 
 Substates can include other substates (including itself if representing a parent/child relationship). We could for example let ''AddressState'' include ''ZipcodeState'', but we leave that exercise to the reader!
 If you're curious about how to work with composition, you can go directly to the section [[Composition]].
