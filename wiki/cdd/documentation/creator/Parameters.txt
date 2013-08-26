@@ -9,7 +9,24 @@ public class PersonState {
 </source>
 
 
-Scroll down in ''PersonCreator'' (in the same example) till you found the factory of the chained creator:
+...and a ''creator'':
+<source>
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+
+    public TextPerson asTextPerson() {
+        return new TextPerson(state);
+    }
+    ...
+}
+</source>
+
+
+Scroll down the ''creator'' till you found the ''factory'':
 
 <source>
     // --- Factory ----
@@ -41,7 +58,7 @@ Scroll down in ''PersonCreator'' (in the same example) till you found the factor
 
 ...the first method ''ssn(int ssn)'' is the start of the chained creator, followed by the classes ''_Ssn'' and ''_Name'' (one per attribute in the state definition).
 The call to ''PersonCreator.createPerson()'', or just ''createPerson()'' if you use static imports,
-is returning an instance of ''PersonFactory'' and is the reason you can write:
+returns an instance of ''PersonFactory'' and is the reason you can write:
 <source>
 createPerson().ssn(123).name("Carl").asPerson()
 </source>
@@ -68,8 +85,8 @@ public class _Name {
 </source>
 
 
-Make sure you include the ''// add'' comment and regenerate.
-Look at the top of ''PersonCreator'' and you will fiund this comment:
+Make sure you include the "// add" comment and regenerate.
+Look at the top of ''PersonCreator'' and you will find this comment:
 <source>
     // ===== Generated code =====
 
@@ -84,9 +101,9 @@ import net.sf.laja.cdd.annotation.Parameters;
 </source>
 
 
-The ''// add'' comment was a directive to CDD telling it to generate this comment.
+The "// add" comment was a directive to tell CDD to generate the comment.
 
-Now insert the ''@Parameters'' statement at the top of the class, like this:
+Now insert the ''@Parameters'' statement at the top of the creator:
 <source>
 @Creator
 public class PersonCreator implements PersonCreatorMaker {
@@ -101,7 +118,7 @@ public class PersonCreator implements PersonCreatorMaker {
     }
 
     @Parameters({
-            @Parameter(attribute = "name", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
+        @Parameter(attribute = "name", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
     })
 
     // ===== Generated code =====
@@ -111,8 +128,9 @@ public class PersonCreator implements PersonCreatorMaker {
 </source>
 
 
-Make sure you also add the imports.
-You also need to help CDD a little in this example (or just copy the code above) by inserting a backslash in front of the quotation marks.
+You need to help CDD a little in this example (or just copy the code above) by inserting a backslash in front of the quotation marks.
+
+
 The next time we generate, our new overloaded ''name'' method will be generated based on the ''@Parameter'' definition:
 <source>
 // name
@@ -138,7 +156,7 @@ It's possible to remove the original ''name'' parameter method by modifying the 
 </source>
 
 
-If we scroll down to the ''_Name'' class again, we can see that the original parameter method has been removed:
+If we generate and scroll down to the ''_Name'' class, we can see that the original parameter method has been removed:
 <source>
 // name
 public class _Name {
@@ -154,14 +172,14 @@ public class _Name {
 
 It is possible to change the method name by setting the ''method'' paremeter, e.g.:
 <source>
-@Parameter(attribute = "name", method = "fullName", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
+@Parameter(attribute = "name", method = "names", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
 </source>
 
 
 We can now create person objects like this:
 <source>
 Person lisa = createPerson().ssn(123).name("Lisa Simpsons").asPerson();
-Person bart = createPerson().ssn(456).fullName("Bart", "Simpsons").asPerson();
+Person bart = createPerson().ssn(456).names("Bart", "Simpsons").asPerson();
 System.out.println(lisa);
 System.out.println(bart);
 </source>
