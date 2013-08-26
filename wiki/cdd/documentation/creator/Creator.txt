@@ -14,7 +14,7 @@ public class PersonCreator {
 </source>
 
 
-...regenerate and add ''Person'':
+...regenerate and add ''Person'' (extending ''PersonBehaviour'' will help us with the hashCode/equals/toString methods):
 <source>
 import static com.myproject.PersonCreator.PersonBehaviour;
 
@@ -90,7 +90,7 @@ public class PersonCreator implements PersonCreatorMaker {
     public static PersonStringBuilder buildPersonFromStrings() { ... }
     public static PersonListBuilder createPersonList(PersonCreator... creators) { ... }
     public static PersonSetBuilder createPersonSet(PersonCreator... creators) { ... }
-    public static PersonMapBuilder createPersonFromMap(PersonMapEntryBuilder... builders) { ... }
+    public static PersonMapBuilder createPersonMap(PersonMapEntryBuilder... builders) { ... }
     public static PersonMapEntryBuilder createPersonEntry(Object key, PersonCreator creator) { ... }
     public static PersonMapEntryBuilder createPersonEntry(Object key, PersonBuilder builder) { ... }
 
@@ -231,6 +231,66 @@ person3: {ssn=3, name="z"}
 
 
 CDD is a very composable and powerful "tool" that "extends" object orientation (Java in this case) and simplifies writing clean code!
+
+=== Remove dependencies to other contexts ===
+
+The definition of ''state'':
+
+<source>
+public class PersonState {
+    public int ssn;
+    public String name;
+}
+</source>
+
+
+...and the ''creator'':
+<source>
+public class PersonCreator implements PersonCreatorMaker {
+    private final PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+
+    public TextPerson asTextPerson() {
+        return new TextPerson(state);
+    }
+    ...
+}
+</source>
+
+
+...allows us to write:
+<source>
+Person person = createPerson().ssn(123).name("Carl").asPerson()
+TextPerson textPerson = createPerson().ssn(123).name("Carl").asTextPerson()
+</source>
+
+
+Assume that we don't want the "person" context know anything about the "text" context, then we need to remove the ''asTextPerson'' from ''PersonCreator''
+and instead add a separate ''creator'' for the "text" context:
+
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonState.PersonMutableState;
+
+public class TextPersonCreator {
+    PersonMutableState state;
+
+    public TextPerson asTextPerson() {
+        return new TextPerson(state);
+    }
+}
+</source>
+
+
+...regenerate and we can now write (remember to include a static import for ''TextPersonCreator.createTextPerson''):
+<source>
+TextPerson person = createTextPerson().ssn(123).name("Carl").asTextPerson();
+</source>
 
 
 [[Dynamic context|< Back]]
