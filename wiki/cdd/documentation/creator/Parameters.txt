@@ -1,3 +1,4 @@
+__NOTOC__
 In CDD, parameters in the ''chained creator'' and ''builders'' are generated based on the ''state definition''.
 The previous example in the [[Creator]] had, for example, this state definition:
 
@@ -62,7 +63,6 @@ returns an instance of ''PersonFactory'' and is the reason you can write:
 <source>
 createPerson().ssn(123).name("Carl").asPerson()
 </source>
-
 
 === Overloaded parameters ===
 
@@ -147,7 +147,6 @@ public class _Name {
 }
 </source>
 
-
 === Suppressing original parameter methods ===
 
 It's possible to remove the original ''name'' parameter method by modifying the ''@Parameter'' statement and set ''suppressOriginal'' to ''true'':
@@ -170,7 +169,7 @@ public class _Name {
 
 === Change method name ===
 
-It is possible to change the method name by setting the ''method'' paremeter, e.g.:
+It is possible to change the method name by adding the ''method'' parameter, e.g.:
 <source>
 @Parameter(attribute = "name", method = "names", methodSignature = "String firstName, String surname", value = "firstName + \" \" + surname")
 </source>
@@ -189,3 +188,73 @@ System.out.println(bart);
 Person{ssn=123, name="Lisa Simpsons"}
 Person{ssn=456, name="Bart Simpsons"}
 </source>
+
+=== Skip parameters ===
+
+It's possible to skip one or several parameters. Let's show how we can skip the ''name'' parameter:
+<source>
+@Parameters({
+    @Parameter(attribute = "ssn", method = "onlySsn", methodSignature = "int ssn", value = "ssn; state.name = \"Anonymous\";", nextAttribute = "*")
+})
+</source>
+
+<source>
+// ssn
+public class _Ssn {
+    public _Name ssn(int ssn) {
+        state.ssn = ssn;
+        return new _Name();
+    }
+
+    public PersonCreator onlySsn(int ssn) {
+        state.ssn = ssn; state.name = "Anonymous";;
+        return new PersonCreator(state);
+    }
+}
+</source>
+
+
+Now we can write:
+<source>
+Person lisa = createPerson().onlySsn(123).asPerson();
+System.out.println(lisa);
+</source>
+
+'''output''':
+<source>
+Person{ssn=123, name="Anonymous"}
+</source>
+
+
+The statement:
+<source>
+nextAttribute = "*"
+</source>
+
+...jumped to the last attribute but it's also possible to jump to a specific parameter.
+Name is the last parameter, so this statement will give the same result:
+<source>
+nextAttribute = "name"
+</source>
+
+=== Values with more than one statement ===
+
+It can be inconvenient to have all statements in one row as we did when we added ''onlySsn'':
+<source>
+value = "ssn; state.name = \"Anonymous\";"
+</source>
+
+
+A way to improve the situation is to assign the value via a method:
+<source>
+@Parameters({
+    @Parameter(attribute = "ssn", method = "onlySsn", methodSignature = "int ssn", value = "getSsnAndSetName(ssn)", nextAttribute = "*")
+})
+
+private int getSsnAndSetName(int ssn) {
+    state.name = "Anonymous";
+    return ssn;
+}
+</source>
+
+
