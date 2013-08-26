@@ -15,6 +15,7 @@ public class PersonState {
 }
 </source>
 
+
 Create the class ''PersonCreator'' + generate:
 <source>
 package com.myproject;
@@ -23,6 +24,7 @@ public class PersonCreator {
     PersonState state;
 }
 </source>
+
 
 Create the class ''Person'':
 <source>
@@ -37,12 +39,14 @@ public class Person extends PersonBehaviour {
 }
 </source>
 
+
 Add the method ''asPerson()'' to ''PersonCreator'' between the declaration of ''state'' and the ''Generated'' comment + regenerate:
 <source>
     public Person asPerson() {
         return new Person(state.asImmutable());
     }
 </source>
+
 
 Modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
@@ -67,21 +71,21 @@ Each attribute can have one or more annotations. None of them are mandatory:
 ! Keyword !! Example !! Description
 |-
 |
-(id)
+@Id
 ||
 <span style="color:#0000ff">@Id</span>&nbsp;<span style="color:#008000">int</span>&nbsp;id
 ||
 The [http://en.wikipedia.org/wiki/Surrogate_key surrogate key]. Only one attribute should be marked as surrogate key. Should not be combined with @Key.
 |-
 |
-(key)
+@Key
 ||
 <span style="color:#0000ff">@Key</span>&nbsp;<span style="color:#008000">long</span>&nbsp;key
 ||
 The [http://en.wikipedia.org/wiki/Natural_key natural key]. One or several attributes can be included in the natural key. Should not be combined with @Id.
 |-
 |
-(optional)
+@Optional
 ||
 <span style="color:#0000ff">@Optional</span>&nbsp;<span style="color:#008000">String</span>&nbsp;middleName
 ||
