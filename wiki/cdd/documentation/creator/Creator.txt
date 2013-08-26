@@ -1,4 +1,4 @@
-CDD "classes" are divided into three "roles": ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
+CDD "objects" are divided into three "roles": ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
 
 Add these two classes:
 
@@ -268,7 +268,7 @@ TextPerson textPerson = createPerson().ssn(123).name("Carl").asTextPerson()
 </source>
 
 
-Assume that we don't want the "person" context know anything about the "text" context, then we need to remove the ''asTextPerson'' from ''PersonCreator''
+Assume that we don't want the "person" context to know anything about the "text" context, then we need to remove the ''asTextPerson'' from ''PersonCreator''
 and instead add a separate ''creator'' for the "text" context:
 
 
