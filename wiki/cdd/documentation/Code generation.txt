@@ -1,7 +1,7 @@
-CDD is an experiment to see if object orientation can be improved by splitting up classes/objects into smaller pieces.
+CDD is a "proof of concept" to see if object orientation can be improved by splitting up classes/objects into smaller pieces.
 This is done by using parsing and code generation. Another possible solution would have been to create a compiler.
 It would have been a cleaner solution but would result in much more work.
-Code generation also has the advantage that the generated code is not hidden away and can therefore easily be read and debugged.
+Code generation also has the advantage that the generated code is not hidden and can therefore easily be read and debugged.
 
 Many developers have had bad experience with code generation.
 CDD tries to change that by not getting in the way of the developer.
@@ -11,6 +11,7 @@ The hope is that CDD will make you a better developer and the work easier and mo
 
 The code generation is performed by the combined code and parser generator [[Laja]].
 The targeting language is Java but there are no technical barriers to implement CDD in other languages such as C++, C#, Ruby or Scala, but at the moment only Java is supported.
+If you are lucky to work in a functional language, like [http://clojure.org Clojure], you have no need for CDD!
 
 If we take a look at the [[Quick-start guide|Quick-start guide]], it has the following structure in the IDE:
 
@@ -89,8 +90,12 @@ Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").as
 
 ...we can see that CDD starts by building ''state'' and ends with ''encapsulation'' by choosing a ''behaviour'' representation that can be used in a specific ''context''.
 
-All generated code is inserted at the end of the ''state'' and ''creator'' classes.
-This simplifies the implementation of CDD and makes it easier to refactor (rename/move) classes.
+All generated code is inserted at the end of the ''state'' and ''creator'' classes, after the comment ''// ===== Generated code =====''.
+All code before that comment is preserved, including the imports which is never touched by CDD if the "Generated code" comment exists.
+If CDD can't find the "Generated code" comment, the imports will be updated and the ''// ===== Generated code ====='' comment will be inserted at the end of the class followed by the generated code.
+
+Because CDD don't touch the imports, the only way to let CDD refresh them is to remove all the generated code including the "Generated code" comment and regenerate.
+The other alternative is to add them manually.
 
 
 [[Main_Page|< Back]]
