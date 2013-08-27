@@ -100,16 +100,48 @@ public class PersonState implements ImmutableState {
 }
 </source>
 
-CDD ensures that every attribute is proceded by "public final" and that all types are ''immutable''.
-Mutable collection types will be replaced by the corresponding ''Joda Time'' type, e.g. ''ImmutableMap'' if you write ''Map''.
 
-The original state definition ''PersonState'' has been changed/replaced by three state representations:
-# PersonState.
+The immutable state ''PersonState'' is complemented with support for three more state representations, ending up with these representations:
+# PersonState
 # PersonMutableState.
 # PersonStringState.
+# java.util.Map
 
-A fourth state representation is stored in a ''java.util.Map''.
-It is possible to move between these four state representations just by calling the corresponding ''as-method'', but more on that later.
+
+It is possible to move between these four state representations just by calling the corresponding ''as-method'', but more on that later!
+
+
+
+CDD ensures that every attribute is ''public final'' and that all types are ''immutable''. If you for example defines your (immutable) state like:
+<source>
+public class PersonState {
+    int ssn;
+    String name;
+    Map<String,AddressState> map;
+}
+</source>
+
+
+...CDD will help you make all attributes "public final" and ''immutable''. After generation the state will look like this:
+<source>
+public class PersonState {
+    public final int ssn;
+    public final String name;
+    public final ImmutableMap<String,AddressState> map;
+}
+</source>
+
+
+...but the class ''PersonState.PersonMutableState'' will of course be mutable:
+<source>
+public class PersonMutableState {
+    int ssn;
+    String name;
+    Map<String,AddressMutableState> map;
+
+    ...
+}
+</source>
 
 
 [[Dynamic context|< Back]]
