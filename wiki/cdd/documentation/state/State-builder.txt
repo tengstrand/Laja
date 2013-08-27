@@ -113,6 +113,9 @@ public class Main {
 </source>
 
 
+Note that you have to write ''buildAddress'' and not ''createAddress'' in this case.
+
+
 output:
 <source lang="dos">
 Person{ssn=123, name="Carl", address={streetName="Regent street", city="London"}}
