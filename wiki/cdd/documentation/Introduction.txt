@@ -46,7 +46,7 @@ Person person = new Person(25, "James");
 </source>
 
 
-What happens here is that we merge data (''age'', ''name'') with the function/method ''isTeenager'' to form an object which is called ''encapsulation'':
+What happens here is that we merge data (''age'', ''name'') with the function/method ''isTeenager'' to form an object, which is called ''encapsulation'':
 
 
 [[File:CDD-new-instance.png|700px]]
@@ -54,23 +54,24 @@ What happens here is that we merge data (''age'', ''name'') with the function/me
 
 If we look at the Java code again, there is a lot of things going there:
 # The class is responsible for building the state (the constructor).
-# Identity is managed by the object (hashCode / equals).
-# The toString method is managed by the object.
-
-By intertwining all these activities we get rigid and inflexible systems.
-CDD solves the problem by breaking up classes/objects into three roles: ''creator'', ''state'' and ''behaviour''.
-
-[[File:CDD-roles.png|700px]]
+# Identity is managed by the class/object (hashCode / equals).
+# The toString method is managed by the class/object.
 
 
-With these roles we can now create a ''person'' like this:
+By intertwining all these activities we get a rigid and inflexible system.
+CDD solves the problem by breaking down classes/objects into three pieces/roles, ''creator'', ''state'' and ''behaviour'':
+
+[[File:CDD-roles.png|800px]]
+
+
+With CDD (by defining a ''PersonState'', ''PersonCreator'' and ''Person'') we can now create an instance like this:
 
 <source>
-Person person = createPerson().age(25).name("James").asPerson();
+Person person = createPerson().age(37).name("James").asPerson();
 </source>
 
 
-This is very readable and has some other advantages too! If you are curious about how, read on!
+By breaking down classes/objects into smaller pieces we get a more flexible system where every piece is more focused on its task!
 
 /Joakim Tengstrand
 
