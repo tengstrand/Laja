@@ -1,0 +1,69 @@
+The use of ''mutable state'' is something that should be avoided if possible.
+The reason is that it makes the code harder to reason about and less stable.
+If you for example pass an instance of a mutable type to a method, e.g. a ''java.util.Data'',
+then you run the risk that the value will changing during the call.
+This is not a desired behaviour in most situations and adds a lot of complexity.
+The problems associated with ''mutable state'' is well described in the paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
+
+CDD supports mutable state but recommends ''immutable state''.
+If using mutable state, you need to encapsulate it well by making the state variable ''private'' and by not exposing it outside the behaviour representation!
+This is easies done by inheriting from the generated class ''XCreator.XMutableBehaviour'' (where X = e.g. Person) and can look like this:
+
+
+<source>
+public static class PersonMutableBehaviour {
+    private PersonMutableState state;
+
+    public PersonMutableBehaviour(PersonMutableState state) {
+        this.state = state;
+    }
+
+    public PersonState asState() {
+        return state.asImmutable();
+    }
+
+    public void assertThat(boolean condition, String attribute, String errorMessage) {
+        if (!condition) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            errors.addError(state, attribute, errorMessage);
+            throw new InvalidPersonStateException(errors.build());
+        }
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof PersonMutableBehaviour)) return false;
+
+        return state.equals(((PersonMutableBehaviour)that).state);
+    }
+
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public String toString() {
+        return getClass().getSimpleName() + state;
+    }
+}
+</source>
+
+
+The behaviour class can now be implemented like this:
+<source>
+import static com.myproject.PersonCreator.PersonMutableBehaviour;
+import static com.myproject.PersonState.PersonMutableState;
+
+public class Person extends PersonMutableBehaviour {
+    // Make sure the mutable state is private!
+    private PersonMutableState state;
+
+    public Person(PersonMutableState state) {
+        super(state);
+        this.state = state;
+    }
+
+    // methods...
+}
+</source>
+
+
