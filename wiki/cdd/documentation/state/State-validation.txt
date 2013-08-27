@@ -36,6 +36,7 @@ When executed, we get:
   validate(): [ValidationError{attribute='name', errorType='NULL', errorMessage='Attribute 'name' can not be NULL'}]
 </source>
 
+
 Mandatory attributes are checked in the methods ''isValid'' and ''validate()''.
 Other validation rules need to be placed in the constructor of the behaviour class (e.g. ''Person''):
 
@@ -53,10 +54,12 @@ public class Person extends PersonBehaviour {
 }
 </source>
 
-Add the following line at the end of the ''main'' method:
+
+If you add the following line at the end of the ''main'' method:
 <source>
 person1.asPerson();
 </source>
+
 
 When executed, we get:
 <source lang="dos">
@@ -66,6 +69,31 @@ Exception in thread "main" com.myproject.PersonState$InvalidPersonStateException
 	at com.myproject.PersonCreator$PersonBuilder.asPerson(PersonCreator.java:244)
 	at com.myproject.Main.main(Main.java:15)
     ...
+</source>
+
+
+Mutable state, like ''PersonState.PersonMutableState'' is allowed to be invalid but immutable state, like ''PersonState'' is not allowed to be invalid.
+The constructor of ''PersonState'' looks like this:
+
+<source>
+public PersonState(
+        int ssn,
+        String name) {
+    this.ssn = ssn;
+    this.name = name;
+
+    if (name == null) throw new InvalidPersonStateException("'name' can not be null");
+}
+</source>
+
+
+...which is the reason why an exception is thrown when we call ''person1.asPerson()'' then it in turn calls ''state.asImmutable()''
+
+The state check is performed by the generated method ''state.asImmutable()'' in the ''PersonCreator.asPerson()'' method.
+<source>
+public Person asPerson() {
+    return new Person(state.asImmutable());
+}
 </source>
 
 
