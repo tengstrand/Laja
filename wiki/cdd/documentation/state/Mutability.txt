@@ -1,13 +1,13 @@
 The use of ''mutable state'' is something that should be avoided if possible.
 The reason is that it makes the code harder to reason about and less stable.
-If you for example pass an instance of a mutable type to a method, e.g. a ''java.util.Data'',
-then you run the risk that the value will changing during the call.
-This is not a desired behaviour in most situations and adds a lot of complexity.
+If you for example pass an instance of a mutable type (e.g. ''java.util.Data'') to a method,
+you run the risk that the value will be changed/mutated during the call.
+This is not a desired behaviour in most situations.
 The problems associated with ''mutable state'' is well described in the paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
 
-CDD supports mutable state but recommends ''immutable state''.
-If using mutable state, you need to encapsulate it well by making the state variable ''private'' and by not exposing it outside the behaviour representation!
-This is easies done by inheriting from the generated class ''XCreator.XMutableBehaviour'' (where X = e.g. Person) and can look like this:
+CDD supports both ''mutable'' and ''immutable'' state but recommends the latter.
+If ýou nevertheless choose to work with mutable state, it will be a good idea to hide the state by making the state variable ''private'' and to not expose it outside the behaviour representation!
+This is easies done by inherit from the generated class ''XCreator.XMutableBehaviour'' (where X = e.g. Person) and can look like this:
 
 
 <source>
@@ -16,10 +16,6 @@ public static class PersonMutableBehaviour {
 
     public PersonMutableBehaviour(PersonMutableState state) {
         this.state = state;
-    }
-
-    public PersonState asState() {
-        return state.asImmutable();
     }
 
     public void assertThat(boolean condition, String attribute, String errorMessage) {
