@@ -249,10 +249,6 @@ public class CustomerCreator implements CustomerCreatorMaker {
             this.state = state;
         }
 
-        public CustomerState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();

@@ -244,10 +244,6 @@ public class TruckCreator implements TruckCreatorMaker {
             this.state = state;
         }
 
-        public TruckState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();

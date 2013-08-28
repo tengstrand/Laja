@@ -219,10 +219,6 @@ public class BusCreator implements BusCreatorMaker {
             this.state = state;
         }
 
-        public BusState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();

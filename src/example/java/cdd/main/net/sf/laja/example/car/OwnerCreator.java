@@ -195,10 +195,6 @@ public class OwnerCreator implements OwnerCreatorMaker {
             this.state = state;
         }
 
-        public OwnerState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();

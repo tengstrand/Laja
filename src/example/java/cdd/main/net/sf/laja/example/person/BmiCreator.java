@@ -195,10 +195,6 @@ public class BmiCreator implements BmiCreatorMaker {
             this.state = state;
         }
 
-        public BmiState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();

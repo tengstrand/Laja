@@ -187,10 +187,6 @@ public class VehicleSizeCreator implements VehicleSizeCreatorMaker {
             this.state = state;
         }
 
-        public VehicleSizeState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();

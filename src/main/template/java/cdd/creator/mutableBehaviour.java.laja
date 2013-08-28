@@ -10,10 +10,6 @@
             this.state = state;
         }
 
-        public {immutableState} asState() {
-            return state.asImmutable();
-        }
-
   #assertThat()
 
         @Override public boolean equals(Object that) {

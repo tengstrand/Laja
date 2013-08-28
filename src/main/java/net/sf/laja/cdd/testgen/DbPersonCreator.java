@@ -287,10 +287,6 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
             this.state = state;
         }
 
-        public PersonState asState() {
-            return state.asImmutable();
-        }
-
         public void assertThat(boolean condition, String attribute, String errorMessage) {
             if (!condition) {
                 ValidationErrors.Builder errors = ValidationErrors.builder();
