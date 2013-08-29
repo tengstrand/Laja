@@ -1,104 +1,136 @@
 CDD is very well suited for use with "test first" development (Test Driven Development).
-
-When writing unit tests we need to update the project file ''myproject.laja'' with the new test directory:
+Before we start we have to modify the project file (e.g. ''myproject.laja'') with the new test directory:
 
 <source>
-#generateCdd([{
-  srcDir: "{.}/main"
-  outDir: "{..}/java-gen/main"
-  statePackage: "com.myproject.state"
-  behaviourPackage: "com.myproject.behaviour" }, {
+#set (package = "com/myproject")
 
-  srcDir: "{.}/test"
-  outDir: "{..}/java-gen/test" } ]
-)
+#generateCdd({
+  srcDirs: [ "{.}/main/{package}", "{.}/test/{package}" ]
+})
 </source>
 
-...continue by creating the unit test ''PersonTest'' with the goal to verify the method ''moveToAddress'' in ''Person''.
+=== Test immutable state ===
+
+...
+
+=== Test mutable state ===
+
+Create state objects for ''address'' and ''person'' in (e.g.) package ''com.myproject'':
 
 <source>
-package com.myproject.state;
-
-public class AddressStateTemplate {
-    String streetName;
-    int streetNumber;
-    String city;
+public class AddressState {
+    public String streetName;
+    public int streetNumber;
+    public String city;
 }
-</source>
 
-<source>
-package com.myproject.state;
-
-public class PersonStateTemplate {
+public class PersonState {
     int age;
     String name;
     AddressState homeAddress;
 }
 </source>
 
+
+...regenerate and add:
+
+'''Address'''
 <source>
-package com.myproject.behaviour;
+import static com.myproject.AddressCreator.AddressMutableBehaviour;
+import static com.myproject.AddressState.AddressMutableState;
 
-import com.myproject.state.AddressState;
+public class Address extends AddressMutableBehaviour {
+    private final AddressMutableState state;
 
-public class Address extends AddressFactory {
-    public Address(AddressState state) {
+    public Address(AddressMutableState state) {
         super(state);
+        this.state = state;
     }
 
-    // (factory)
-    public Address asAddress() {
-        return new Address(state);
+    public AddressState state() {
+        return state.asImmutable();
     }
 }
 </source>
 
+'''Person'''
 <source>
-package com.myproject.behaviour;
+import static com.myproject.PersonCreator.PersonMutableBehaviour;
+import static com.myproject.PersonState.PersonMutableState;
 
-import com.myproject.state.PersonState;
+public class Person extends PersonMutableBehaviour {
+    private final PersonMutableState state;
 
-public class Person extends PersonFactory {
-    public Person(PersonState state) {
+    public Person(PersonMutableState state) {
         super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
+        this.state = state;
     }
 
     public void moveToAddress(Address address) {
-        state.setHomeAddress(address.getState(state.certificate()), this);
+         state.homeAddress = address.state().asMutable();
     }
 }
 </source>
 
+'''TestPerson'''
 <source>
-package com.myproject.behaviour;
+import static com.myproject.PersonCreator.PersonMutableBehaviour;
+import static com.myproject.PersonState.PersonMutableState;
 
-import com.myproject.state.PersonState;
+public class TestPerson extends PersonMutableBehaviour {
+    public final PersonMutableState state;
 
-public class TestPerson extends TestPersonFactory {
-    public TestPerson(PersonState state) {
+    public TestPerson(PersonMutableState state) {
         super(state);
-    }
-
-    // (factory)
-    public TestPerson asTestPerson() {
-        return new TestPerson(state);
+        this.state = state;
     }
 
     public Person asPerson() {
         return new Person(state);
     }
 
-    // Getter used by the test
-    public Address getAddress() {
-        return new Address(state.getHomeAddress());
+    public Address getHomeAddress() {
+        return new Address(state.homeAddress);
     }
 }
 </source>
+
+'''AddressCreator'''
+<source>
+public class AddressCreator {
+    AddressMutableState state;
+
+    public Address asAddress() {
+        return new Address(state.asImmutable());
+    }
+}
+</source>
+
+'''PerSonCreator'''
+<source>
+public class PersonCreator {
+    PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+}
+
+</source>
+
+'''TestPersonCreator'''
+
+<source>
+public class TestPersonCreator {
+    PersonMutableState state;
+
+    public TestPerson asTestPerson() {
+        return new TestPerson(state);
+    }
+</source>
+
+
+...regenerate and add the test:
 
 <source>
 package com.myproject.behaviour;
