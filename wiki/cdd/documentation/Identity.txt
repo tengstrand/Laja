@@ -1,17 +1,19 @@
 Identity is described as "''...the property of objects that distinguishes them from other objects''" in [http://en.wikipedia.org/wiki/Identity_%28object-oriented_programming%29 Wikipedia].
 CDD divides stateful objects into two groups, ''values'' and ''entities'' which is common in OO.
 The difference between the two is that values includes all attribute in the identity while entities only include the key column(s).
-The key columns is either a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key] annotated with an ''@Id''
-or one or more [http://en.wikipedia.org/wiki/Natural_key natural key]'s annotated with ''@Key''.
+The key columns is either a [http://en.wikipedia.org/wiki/Surrogate_key surrogate key] annotated with ''@Id''
+or a [http://en.wikipedia.org/wiki/Natural_key natural key]'s annotated with one or more ''@Key''.
 
 You can think of the natural key as the attribute(s) that would be the [http://en.wikipedia.org/wiki/Primary_key#Defining_primary_keys primary key] in a database table if not using a surrogate key (id/counter).
 
 Which attributes that should be part of the identity (be included in ''hashCode/equals'') follows these rules:
-# If an attribute is annotated with ''@Id'' then that attribute will be included in hashCode/equals.
+# If an attribute is annotated with ''@Id'' then that attribute will be included in hashCode/equals. Only one attribute should be marked as @Id.
 # If one ore more attributes is annotated with ''@Key'' then these attributes will be included in hashCode/equals.
 # If no columns are annotated with ''@Id'' or ''@Key'' then all columns will be included in hashCode/equals.
 
-If no attribute in the state is marked as ''@Id'' or ''@Key'' then all attributes will be included in hashCode/equals:
+
+All columns are included in ''hashCode/equals'':
+
 <source>
 @State
 public class PersonState implements ImmutableState {
@@ -48,14 +50,18 @@ public class PersonState implements ImmutableState {
 }
 </source>
 
+
 If we mark ''ssn'' as the [http://en.wikipedia.org/wiki/Natural_key natural key], only ''ssn'' will be included:
+
 <source>
 public class PersonState implements ImmutableState {
     @Key public final int ssn;
     public final String givenName;
     public final String surname;
 
+    // ===== Generated code =====
     ...
+
     @Override
     public int hashCode() {
         int result = ssn;
@@ -78,8 +84,46 @@ public class PersonState implements ImmutableState {
 }
 </source>
 
-For entities (with at least one ''@Id'' or ''@Key'' attribute) the methods ''valueHashCode'' and ''valueEquals'' is also generated
-which includes all attributes.
+
+For entities (with at least one ''@Id'' or ''@Key'' attribute) the methods ''hashCodeValue'' and ''equalsValue'' is also generated
+that include all attributes:
+
+<source>
+public class PersonState implements ImmutableState {
+    @Key public final int ssn;
+    public final String givenName;
+    public final String surname;
+
+    // ===== Generated code =====
+    ...
+
+    public int hashCodeValue() {
+        int result = ssn;
+        result = 31 * result + (givenName != null ? givenName.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+
+        return result;
+    }
+
+    public boolean equalsValue(Object that) {
+        if (this == that) return true;
+        if (that == null || getClass() != that.getClass()) return false;
+
+        PersonState state = (PersonState)that;
+
+        if (ssn != state.ssn) return false;
+        if (givenName != null ? !givenName.equals(state.givenName) : state.givenName != null) return false;
+        if (surname != null ? !surname.equals(state.surname) : state.surname != null) return false;
+
+        return true;
+    }
+    ...
+}
+</source>
+
+
+The ''hashCodeValue'' and ''equalsValue'' can be used in contexts where you need to compare two entities.
+Test contexts is situations where you often wants to do that.
 
 
 [[State validation|< Back]]
