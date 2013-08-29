@@ -123,7 +123,7 @@ public class PersonState implements ImmutableState {
 
 
 The ''hashCodeValue'' and ''equalsValue'' can be used in contexts where you need to compare two entities.
-Test contexts is situations where you often wants to do that.
+Test contexts is a type of context where you often wants to do that.
 
 
 [[State validation|< Back]]
