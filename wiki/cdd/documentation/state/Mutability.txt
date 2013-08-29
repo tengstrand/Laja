@@ -6,10 +6,28 @@ This is not a desired behaviour in most situations.
 The problems associated with ''mutable state'' is well described in the paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
 
 CDD supports both ''mutable'' and ''immutable'' state but recommends the latter.
-If ýou nevertheless choose to work with mutable state, it will be a good idea to hide the state by making the state variable ''private'' and to not expose it outside the behaviour representation!
-This is easies done by inherit from the generated class ''XCreator.XMutableBehaviour'' (where X = e.g. Person) and can look like this:
+If ýou nevertheless choose to work with mutable state, it will be a good idea to hide the state by making the state variable ''private'' and not expose it outside the behaviour representation!
+This is easies done by inherit from the generated class ''XCreator.XMutableBehaviour'' (where X = e.g. Person):
+
+<source>
+import static PersonCreator.PersonMutableBehaviour;
+import static PersonState.PersonMutableState;
+
+public class Person extends PersonMutableBehaviour {
+    // Make sure the mutable state is private!
+    private PersonMutableState state;
+
+    public Person(PersonMutableState state) {
+        super(state);
+        this.state = state;
+    }
+
+    // Business methods...
+}
+</source>
 
 
+...the generated code looks like this:
 <source>
 public static class PersonMutableBehaviour {
     private PersonMutableState state;
@@ -44,22 +62,71 @@ public static class PersonMutableBehaviour {
 </source>
 
 
-The behaviour class can now be implemented like this:
+If you choose to work with immutable state, you will instead inherit from ''XCreator.XBehaviour'' (where X = e.g. Person):
+
+
 <source>
-import static com.myproject.PersonCreator.PersonMutableBehaviour;
-import static com.myproject.PersonState.PersonMutableState;
+import static PersonCreator.PersonBehaviour;
 
-public class Person extends PersonMutableBehaviour {
-    // Make sure the mutable state is private!
-    private PersonMutableState state;
-
-    public Person(PersonMutableState state) {
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
         super(state);
+    }
+
+    // Business methods...
+}
+</source>
+
+
+...generated code:
+
+<source>
+public static class PersonBehaviour {
+    public final PersonState state;
+
+    public PersonBehaviour(PersonState state) {
         this.state = state;
     }
 
-    // methods...
+    public void assertThat(boolean condition, String attribute, String errorMessage) {
+        if (!condition) {
+            ValidationErrors.Builder errors = ValidationErrors.builder();
+            errors.addError(state, attribute, errorMessage);
+            throw new InvalidPersonStateException(errors.build());
+        }
+    }
+
+    @Override public boolean equals(Object that) {
+        if (this == that) return true;
+        if (that == null || !(that instanceof PersonBehaviour)) return false;
+
+        return state.equals(((PersonBehaviour)that).state);
+    }
+
+    @Override public int hashCode() {
+        return state.hashCode();
+    }
+
+    @Override public String toString() {
+        return getClass().getSimpleName() + state;
+    }
 }
+</source>
+
+
+A bonus you get when inheriting from ''XBehaviour'' or ''XMutableBehaviour'' is that you can compare objects from different context:
+
+<source>
+Person person = createPerson().ssn(123).name("Carl").asPerson();
+TextPerson textPerson = createPerson().ssn(123).name("Carl").asTextPerson();
+
+System.out.println("Equals?: " + person.equals(textPerson));
+</source>
+
+
+output:
+<source>
+Equals: true
 </source>
 
 
