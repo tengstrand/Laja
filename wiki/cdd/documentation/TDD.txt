@@ -9,13 +9,14 @@ Before we start we have to modify the project file (e.g. ''myproject.laja'') wit
 })
 </source>
 
-=== Test immutable state ===
-
-...
-
 === Test mutable state ===
 
+When working with mutable state, and if you do not expose the state to the outside world (which is a good idea), you have to make a little trick
+to get access to the inner state. The trick is to create a test representation and the switch context from there.
+
 Create state objects for ''address'' and ''person'' in (e.g.) package ''com.myproject'':
+
+'''AddressState'''
 
 <source>
 public class AddressState {
@@ -23,7 +24,11 @@ public class AddressState {
     public int streetNumber;
     public String city;
 }
+</source>
 
+'''PersonState'''
+
+<source>
 public class PersonState {
     int age;
     String name;
@@ -31,8 +36,7 @@ public class PersonState {
 }
 </source>
 
-
-...regenerate and add:
+...regenerate and add six more classes:
 
 '''Address'''
 <source>
@@ -106,7 +110,7 @@ public class AddressCreator {
 }
 </source>
 
-'''PerSonCreator'''
+'''PersonCreator'''
 <source>
 public class PersonCreator {
     PersonMutableState state;
@@ -127,17 +131,21 @@ public class TestPersonCreator {
     public TestPerson asTestPerson() {
         return new TestPerson(state);
     }
+}
 </source>
 
 
 ...regenerate and add the test:
 
+'''PersonTest'''
+
 <source>
-package com.myproject.behaviour;
+package com.myproject;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static com.myproject.AddressCreator.createAddress;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class PersonTest {
 
@@ -145,27 +153,111 @@ public class PersonTest {
     public void shouldChangeAddressWhenMovingToNewAddress() {
 
         // 1. Create a person
-        TestPerson person = TestPerson.age(10).name("Carl").homeAddress(
-                Address.streetName("First street").streetNumber(1).city("Stockholm")).asTestPerson();
+        TestPerson person = TestPersonCreator.createTestPerson().age(10).name("Carl").homeAddress(
+                createAddress().streetName("First street").streetNumber(1).city("Stockholm")).asTestPerson();
 
         // 2. Move to a new address
-        Address newAddress = Address.streetName("Second street").streetNumber(2).city("Uppsala").asAddress();
+        Address newAddress = createAddress().streetName("Second street").streetNumber(2).city("Uppsala").asAddress();
         person.asPerson().moveToAddress(newAddress);
 
         // 3. Check that the address has been changed
-        assertEquals(newAddress, person.getAddress());
+        assertEquals(newAddress, person.getHomeAddress());
     }
 }
 </source>
 
 ''PersonTest'' is our test class that is executed by JUnit.
-''TestPerson'' is the test context of "person" and used to verify that ''moveToAddress'' is working as expected.
+''TestPerson'' is the test context of "person" and used to verify that ''moveToAddress'' works as expected.
 We can allow us to break encapsulation by adding the getter ''getAddress'' because it's only used by test code.
 We don't have any switcher methods from ''Person'' or other contexts to ''TestPerson'' which make it safe to add the getter.
 If we do, we mix production code with test code and run the risk that the state is changed in an uncontrolled manner.
 
 A good thing is that we can take advantage of the fact that we have a test context behaviour representation ''TestPerson''
 and put code that naturally belongs there and thus making the code more readable.
+This example was using ''mutable state'' and that was the reason we had to create ''TestPerson'' as a way to expose the inner state of ''Person''.
+
+=== Test immutable state ===
+
+If we had used ''immutable state'' by letting ''Person'' inherit from ''PersonBehaviour'' instead, then the state would have been
+exposed directly (and safe because it's immutable) via the ''person'' object:
+
+'''Address'''
+
+<source>
+package com.myproject;
+
+import static com.myproject.AddressCreator.AddressBehaviour;
+import static com.myproject.AddressCreator.AddressMutableBehaviour;
+import static com.myproject.AddressState.AddressMutableState;
+
+public class Address extends AddressBehaviour {
+    public Address(AddressState state) {
+        super(state);
+    }
+}
+</source>
+
+'''Person'''
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+    }
+
+    public Person withAddress(Address address) {
+         return new Person(state.withHomeAddress(address.state));
+    }
+}
+</source>
+
+'''PersonCreator'''
+<source>
+public class PersonCreator {
+    PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+}
+</source>
+
+
+'''PersonTest'''
+
+<source>
+package com.myproject;
+
+import org.testng.annotations.Test;
+
+import static com.myproject.AddressCreator.createAddress;
+import static org.testng.AssertJUnit.assertEquals;
+
+public class PersonTest {
+
+    @Test
+    public void shouldChangeAddressWhenMovingToNewAddress() {
+
+        // 1. Create a person
+        Person person = PersonCreator.createPerson().age(10).name("Carl").homeAddress(
+                createAddress().streetName("First street").streetNumber(1).city("Stockholm")).asPerson();
+
+        // 2. Move to a new address
+        Address newAddress = createAddress().streetName("Second street").streetNumber(2).city("Uppsala").asAddress();
+        Person personWithNewAddress = person.withAddress(newAddress);
+
+        // 3. Check that the address has been changed
+        assertEquals(newAddress, personWithNewAddress.state.homeAddress);
+    }
+}
+</source>
+
+
+In this example we create a new instance ''personWithNewAddress'' and verifies that ''withAddress'' change the address.
 
 
 [[Composition|< Back]]
