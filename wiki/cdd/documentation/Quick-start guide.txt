@@ -35,7 +35,6 @@ public class PersonState {
 
 
 Create the class ''PersonCreator'':
-Create the class ''PersonCreator.java'':
 <source>
 package com.myproject;
 
