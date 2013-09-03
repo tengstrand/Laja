@@ -1,0 +1,41 @@
+A state can be converted back and forth to a ''java.util.Map''.
+The idea with this is to use the Map as a transport objects when integrating between different systems.
+
+Let's say we have a state object:
+
+<source>
+public class PersonState {
+    int ssn;
+    String name;
+}
+</source>
+
+
+If generated and executed:
+
+<source>
+package com.myproject;
+
+import java.util.Map;
+
+import static com.myproject.PersonCreator.createPerson;
+import static com.myproject.PersonCreator.createPersonFromMap;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Map map = createPerson().ssn(1111).name("Bart").asMap();
+        PersonState state = createPersonFromMap(map).asState();
+
+        System.out.println(map);
+        System.out.println(state);
+    }
+}
+</source>
+
+
+...we get the output:
+<source>
+{ssn=1111, name=Bert}
+{ssn=1111, name="Bert"}
+</source>
