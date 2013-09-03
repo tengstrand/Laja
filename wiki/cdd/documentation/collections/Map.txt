@@ -1,0 +1,61 @@
+You can work with maps in a similar way as you do with lists and sets.
+The definition of ''PersonState'', ''PersonCreator'' and ''Person'' can be found in [[List-and-set|List and set]]:
+
+<source>
+package com.myproject;
+
+import com.google.common.collect.ImmutableMap;
+
+import static com.myproject.PersonCreator.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ImmutableMap<String,Person> personMap = createPersonMap(
+                createPersonEntry("b", createPerson().ssn(1111).name("Bert")),
+                createPersonEntry("c", createPerson().ssn(2222).name("Carl"))).asPersonMap();
+
+        Person person = personMap.get("c");
+
+        System.out.println(person);
+        System.out.println(personMap);
+    }
+}
+</source>
+
+'''output''':
+<source>
+Person{ssn=2222, name="Carl"}
+{b=Person{ssn=1111, name="Bert"}, c=Person{ssn=2222, name="Carl"}}
+</source>
+
+
+You also have a couple of other options to wrap the map:
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        PersonMapBuilder mapBuilder = createPersonMap(
+                createPersonEntry("b", createPerson().ssn(1111).name("Bert")),
+                createPersonEntry("c", createPerson().ssn(2222).name("Carl")));
+
+        System.out.println("StateMap (ImmutableMap<PersonState>): " + mapBuilder.asStateMap());
+        System.out.println("MutableStateMap (Map<PersonMutableState>): " + mapBuilder.asMutableStateMap());
+        System.out.println("PersonMap (ImmutableMap<Person>): " + mapBuilder.asPersonMap());
+        System.out.println("PersonMutableMap (Map<Person>): " + mapBuilder.asPersonMutableMap());
+    }
+}
+</source>
+
+'''output''':
+<source>
+StateMap (ImmutableMap<PersonState>): {b={ssn=1111, name="Bert"}, c={ssn=2222, name="Carl"}}
+MutableStateMap (Map<PersonMutableState>): {b={ssn=1111, name="Bert"}, c={ssn=2222, name="Carl"}}
+PersonMap (ImmutableMap<Person>): {b=Person{ssn=1111, name="Bert"}, c=Person{ssn=2222, name="Carl"}}
+PersonMutableMap (Map<Person>): {b=Person{ssn=1111, name="Bert"}, c=Person{ssn=2222, name="Carl"}}
+</source>
