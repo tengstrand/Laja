@@ -1,0 +1,116 @@
+One of the main goals of CDD is to facilitate work in different contexts, and collections are no exception from this goal.
+
+CDD has full support for working with lists, sets and maps and the goal is to make the code as clean and flexible as possible.
+
+=== Working with lists ===
+
+Let's say we have the following classes in package ''com.myproject'':
+
+<source>
+public class PersonState {
+    public final int ssn;
+    public final String name;
+}
+
+public class PersonCreator {
+    private final PersonMutableState state;
+
+    public Person asPerson() {
+        return new Person(state.asImmutable());
+    }
+}
+
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+    }
+}
+</source>
+
+
+Generate and execute:
+
+<source>
+package com.myproject;
+
+import com.google.common.collect.ImmutableList;
+
+import static com.myproject.PersonCreator.createPerson;
+import static com.myproject.PersonCreator.createPersonList;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ImmutableList<Person> persons = createPersonList(
+                createPerson().ssn(1111).name("Bert"),
+                createPerson().ssn(2222).name("Carl")
+        ).asPersonList();
+
+        System.out.println("Persons: " + persons);
+    }
+}
+</source>
+
+'''output''':
+<source>
+[Person{ssn=1111, name="Bert"}, Person{ssn=2222, name="Carl"}]
+</source>
+
+
+The list can also be wrapped in other ways:
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        PersonListBuilder listBuilder = createPersonList(
+                createPerson().ssn(1111).name("Bert"),
+                createPerson().ssn(2222).name("Carl")
+        );
+
+        System.out.println("StateList (ImmutableList<PersonState>): " + listBuilder.asStateList());
+        System.out.println("MutableStateList (List<PersonMutableState>): " + listBuilder.asMutableStateList());
+        System.out.println("PersonList (ImmutableList<Person>): " + listBuilder.asPersonList());
+        System.out.println("PersonMutableList (List<Person>): " + listBuilder.asPersonMutableList());
+    }
+}
+</source>
+
+'''output''':
+<source>
+StateList (ImmutableList<PersonState>): [{ssn=1111, name="Bert"}, {ssn=2222, name="Carl"}]
+MutableStateList (List<PersonMutableState>): [{ssn=1111, name="Bert"}, {ssn=2222, name="Carl"}]
+PersonList (ImmutableList<Person>): [Person{ssn=1111, name="Bert"}, Person{ssn=2222, name="Carl"}]
+PersonMutableList (List<Person>): [Person{ssn=1111, name="Bert"}, Person{ssn=2222, name="Carl"}]
+</source>
+
+
+=== Working with sets ===
+
+Sets look similar:
+
+<source>
+PersonSetBuilder setBuilder = createPersonSet(
+        createPerson().ssn(1111).name("Bert"),
+        createPerson().ssn(2222).name("Carl")
+);
+
+System.out.println("StateSet (ImmutableSet<PersonState>): " + setBuilder.asStateSet());
+System.out.println("MutableStateSet (Set<PersonMutableState>): " + setBuilder.asMutableStateSet());
+System.out.println("PersonSet (ImmutableSet<Person>): " + setBuilder.asPersonSet());
+System.out.println("PersonMutableSet (Set<Person>): " + setBuilder.asPersonMutableSet());
+</source>
+
+'''output''':
+<source>
+StateSet (ImmutableSet<PersonState>): [{ssn=1111, name="Bert"}, {ssn=2222, name="Carl"}]
+MutableStateSet (Set<PersonMutableState>): [{ssn=2222, name="Carl"}, {ssn=1111, name="Bert"}]
+PersonSet (ImmutableSet<Person>): [Person{ssn=1111, name="Bert"}, Person{ssn=2222, name="Carl"}]
+PersonMutableSet (Set<Person>): [Person{ssn=2222, name="Carl"}, Person{ssn=1111, name="Bert"}]
+</source>
+
+
