@@ -10,7 +10,7 @@ In functional languages, data and functions are separated which makes the code m
 
 CDD tries to explore OO and see if these two problems could be addressed by encouraging immutable state and by separating state and behaviour.
 
-The hypothesis is that information hiding of immutable state is less important.
+The hypothesis is that information hiding of mutable state is important but less important for immutable state.
 CDD supports both immutable and mutable state, where immutable state is exposed and mutable state is hidden, e.g..
 
 '''Immutable state'''
