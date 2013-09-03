@@ -1,121 +1,17 @@
 
-This documentation contains a lot of examples and you can find even more [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd here].
+[https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/account/AccountExample.java Account example]
 
-=== Building a repository ===
+[https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/car/CarExample.java Car example]
 
-Here is an example of how the encapsulation decision can be postponed and made by the calling code when building a repository.
-By letting the repository return a ''PersonListEncapsulator'' will enable both ''validation'' and selection of ''behavior representation'' from the calling code.
-Let's illustrate this by writing some code, start by modifying ''Person'':
+[https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/file/FileExample.java File example]
 
-<source>
-package com.myproject.behaviour;
+[https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/person/PersonExample.java Person example]
 
-import com.myproject.state.PersonState;
-
-public class Person extends PersonFactory {
-    public Person(PersonState state) {
-        super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
-    }
-
-    // (factory)
-    public PersonMatcher asPersonMatcher() {
-        return new PersonMatcher(state);
-    }
-
-    public boolean isTeenager() {
-        return state.getAge() >= 13 && state.getAge() <= 19;
-    }
-}
-</source>
-
-...add ''PersonMatcher'', ''PersonRepository'' and ''Main'':
-
-<source>
-package com.myproject.behaviour;
-
-import com.myproject.state.PersonState;
-
-public class PersonMatcher extends PersonFactory {
-    public PersonMatcher(PersonState state) {
-        super(state);
-    }
-
-    public boolean isNameContaining(String searchFor) {
-        return state.getName().contains(searchFor);
-    }
-}
-</source>
-
-<source>
-package com.myproject.behaviour;
-
-public class PersonRepository {
-    private PersonListEncapsulator encapsulators = Person.createList(
-            Person.age(20).name("Anders"),
-            Person.age(30).name("Bert"),
-            Person.age(40).name("Cecilia"),
-            Person.age(50).name("David"),
-            Person.age(60).name("Eric")
-    );
-
-    public PersonListEncapsulator findByName(String searchFor) {
-        PersonListEncapsulator result = Person.createList();
-
-        for (PersonEncapsulator encapsulator : encapsulators) {
-            if (encapsulator.asPersonMatcher().isNameContaining(searchFor)) {
-                result.add(encapsulator);
-            }
-        }
-        return result;
-    }
-}
-</source>
-
-<source>
-package com.myproject.behaviour;
-
-public class Main {
-    public static void main(String[] args) {
-        PersonRepository repository = new PersonRepository();
-
-        System.out.println("Is valid: " + repository.findByName("c").isValid());
-        System.out.println("Result: " + repository.findByName("c").asPersonList());
-    }
-}
-</source>
-
-...if executing ''main()'' we get:
-
-<source>
-Is valid: true
-Result: PersonArrayList{[Person{age=40, name='Cecilia'}, Person{age=60, name='Eric'}]}
-</source>
-
-...which is all persons with a name containing the letter "c".
+[https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/repository/RepositoryExample.java Repository example]
 
 
-Another advantage of writing a repository in this way is that the decision of which context to work in is made by the calling code,
-allowing us to write:
+The template files of these examples can be found [https://github.com/tengstrand/Laja/tree/master/src/example/java/cdd here].
 
-<source>
-...
-System.out.println("Result: " + repository.findByName("c").asPersonMatcherList());
-...
-</source>
-
-...and if executed, we get:
-
-<source>
-Is valid: true
-Result: PersonMatcherArrayList{[PersonMatcher{age=40, name='Cecilia'}, PersonMatcher{age=60, name='Eric'}]}
-</source>
-
-...which returns instances of ''PersonMatcher'' instead och instances of ''Person''.
 
 
 [[Laja|< Back]]
