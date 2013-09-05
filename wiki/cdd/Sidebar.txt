@@ -4,6 +4,7 @@
 ** Classes and objects|Classes and objects
 ** New way of OO|New way of OO
 ** Identity|Identity
+** Validation|Validation
 ** TDD|TDD
 ** Laja|Laja
 ** Quick-start guide|Quick-start guide
@@ -22,7 +23,6 @@
 ** State expansion|State expansion
 ** Default values|Default values
 ** State builder|State builder
-** State validation|State validation
 * behaviour
 ** Behaviour|Introduction
 ** Factories|Factories

@@ -1,0 +1,102 @@
+The state can be validated before the state is encapsulated.
+Assume the person state has the mandatory attributes ''ssn'' and ''name'', and we have this ''Main'' class:
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.PersonBuilder;
+import static com.myproject.PersonCreator.buildPerson;
+
+public class Main {
+
+    public static void main(String[] args) {
+        PersonBuilder person1 = buildPerson().withSsn(11111).withName("Carl");
+        PersonBuilder person2 = buildPerson();
+
+        print(person1);
+        print(person2);
+    }
+
+    static void print(PersonBuilder person) {
+        System.out.println("=== " + person.asMutableState() + " ===");
+        System.out.println("  isValid(): " + person.isValid());
+        System.out.println("  validate(): " + person.validate());
+    }
+}
+</source>
+
+When executed, we get:
+
+<source lang="dos">
+=== {ssn=11111, name="Carl"} ===
+  isValid(): true
+  validate(): []
+=== {ssn=0, name=null} ===
+  isValid(): false
+  validate(): [ValidationError{attribute='name', errorType='NULL', errorMessage='Attribute 'name' can not be NULL'}]
+</source>
+
+
+Mandatory attributes are checked in the methods ''isValid'' and ''validate()''.
+Other validation rules need to be placed in the constructor of the behaviour class (e.g. ''Person''):
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.PersonBehaviour;
+
+public class Person extends PersonBehaviour {
+    public Person(PersonState state) {
+        super(state);
+
+        assertThat(state.getName().startsWith("A"), PersonState.NAME, "Name must start with an A, but was: " + state.getName());
+    }
+}
+</source>
+
+
+If you add the following line at the end of the ''main'' method:
+<source>
+person1.asPerson();
+</source>
+
+
+When executed, we get:
+<source lang="dos">
+Exception in thread "main" com.myproject.PersonState$InvalidPersonStateException: [ValidationError{attribute='name', errorType='CUSTOM', errorMessage='Name must start with an A, but was: Carl'}]
+	at com.myproject.PersonCreator$PersonBehaviour.assertThat(PersonCreator.java:170)
+	at com.myproject.Person.<init>(Person.java:9)
+	at com.myproject.PersonCreator$PersonBuilder.asPerson(PersonCreator.java:244)
+	at com.myproject.Main.main(Main.java:15)
+    ...
+</source>
+
+
+Mutable state, like ''PersonState.PersonMutableState'' is allowed to be invalid but immutable state, like ''PersonState'' is not allowed to be invalid.
+The constructor of ''PersonState'' looks like this:
+
+<source>
+public PersonState(
+        int ssn,
+        String name) {
+    this.ssn = ssn;
+    this.name = name;
+
+    if (name == null) throw new InvalidPersonStateException("'name' can not be null");
+}
+</source>
+
+
+...which is the reason why an exception is thrown when we call ''person1.asPerson()'' then it in turn calls ''state.asImmutable()''
+
+The state check is performed by the generated method ''state.asImmutable()'' in the ''PersonCreator.asPerson()'' method.
+<source>
+public Person asPerson() {
+    return new Person(state.asImmutable());
+}
+</source>
+
+
+[[State builder|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Identity|Next >]]
