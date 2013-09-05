@@ -2,6 +2,7 @@ package net.sf.laja.example.repository;
 
 import com.google.common.collect.ImmutableList;
 import net.sf.laja.example.repository.domain.Customer;
+import net.sf.laja.example.repository.persistence.CustomerInDb;
 import net.sf.laja.example.repository.persistence.CustomerRepository;
 
 import static net.sf.laja.example.repository.state.CustomerState.CustomerStringState;
@@ -24,13 +25,9 @@ public class RepositoryExample {
         // 2. Take the first customer and edit it in the GUI.
         Customer customer = customers.get(0);
         CustomerStringState customerInGui = customer.state.asStringState();
-
-        customerInGui.setAge("-1");
-        System.out.println("Edit in GUI, is valid: " + customerInGui.isValid());
-        customerInGui.setAge("20");
-        System.out.println("Edit in GUI, is valid: " + customerInGui.isValid());
+        customerInGui.pet = "Cat";
 
         // 3. Save to database.
-        customer.save();
+        new CustomerInDb(customerInGui.asImmutable()).save();
     }
 }
