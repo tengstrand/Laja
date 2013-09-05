@@ -1,0 +1,42 @@
+In CDD you the state definitions has a version number, if not given, the version number is defaulted to 1:
+
+<source>
+import net.sf.laja.cdd.annotation.State;
+
+@State
+public class PersonState {
+    public final int ssn;
+    public final String name;
+</source>
+
+
+...this class definition is equivalent with the previous:
+
+<source>
+import net.sf.laja.cdd.annotation.State;
+
+@State(version = 1)
+public class PersonState {
+    public final int ssn;
+    public final String name;
+</source>
+
+
+The version number is propagated (when generated) to the state types ''mutable'' and ''string'', like this:
+
+<source>
+@State(version = 1)
+public class PersonState implements ImmutableState {
+    ...
+
+    @State(version = 1, type = "mutable")
+    public static class PersonMutableState implements MutableState {
+        ...
+    }
+
+    @State(version = 1, type = "string")
+    public static class PersonStringState implements StringState {
+        ...
+    }
+}
+</source>
