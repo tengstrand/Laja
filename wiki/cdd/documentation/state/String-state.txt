@@ -1,0 +1,96 @@
+CDD has support for String states which is a type of state where every attribute is represented by a ''java.util.String''
+or other string states (substates).
+
+
+String states can be used to handle string input, like input from a graphical user interface:
+
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.PersonStringBuilder;
+import static com.myproject.PersonCreator.buildPersonFromStrings;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // 1. Create a builder
+        PersonStringBuilder builder = buildPersonFromStrings();
+
+        // 2. Pretend this is used in a GUI...
+        // ...populate from the GUI
+        builder.withSsn("1111");
+
+        // ...validate
+        System.out.println(builder);
+        System.out.println("Is valid: " + builder.asMutableState().isValid());
+        System.out.println("Validate: " + builder.asMutableState().validate());
+
+        // ...populate som more attributes
+        builder.withName("Carl");
+
+        // ...now, the state is valid!
+        System.out.println("\n");
+        System.out.println(builder);
+        System.out.println("Is valid: " + builder.asMutableState().isValid());
+        System.out.println("Validate: " + builder.asMutableState().validate());
+
+        // ...and we can try to encapsulate it!
+        Person person = builder.asPerson();
+
+        System.out.println("\n");
+        System.out.println(builder);
+        System.out.println(person);
+    }
+}
+</source>
+
+'''output''':
+<source>
+PersonStringBuilder{ssn="1111", name=null}
+Is valid: false
+Validate: [ValidationError{attribute='name', errorType='NULL', errorMessage='Attribute 'name' can not be NULL'}]
+
+
+PersonStringBuilder{ssn="1111", name="Carl"}
+Is valid: true
+Validate: []
+
+
+PersonStringBuilder{ssn="1111", name="Carl"}
+Person{ssn=1111, name="Carl"}
+</source>
+
+
+Other state representations, like immutable state, can easily be converted to a ''string state'':
+
+<source>
+package com.myproject;
+
+import static com.myproject.PersonCreator.createPerson;
+import static com.myproject.PersonState.PersonStringState;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Person person1 = createPerson().ssn(1111).name("Carl").asPerson();
+
+        PersonStringState stringState = person1.state.asStringState();
+        stringState.withSsn("2222");
+
+        Person person2 = new Person(stringState.asImmutable());
+
+        System.out.println(person1);
+        System.out.println(person2);
+    }
+}
+</source>
+
+'''output''':
+<source>
+Person{ssn=1111, name="Carl"}
+Person{ssn=2222, name="Carl"}
+</source>
+
+
+Another example can be found in [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/repository/RepositoryExample.java RepositoryExample].
