@@ -247,6 +247,13 @@ import net.sf.laja.cdd.annotation.Parameters;
         return this;
     }
 
+    #if (attribute.isState)
+    public {creator} {attribute.withMethod}({attribute.creator.classname} {attribute.name}) {
+        state.{attribute.name} = {attribute.name}.asMutableState();
+        return this;
+    }
+
+    #end
     #if (attribute.isDate)
     public {creator} {attribute.withMethod}(int year, int monthOfYear, int dayOfMonth) {
         state.{attribute.name} = new {attribute.type}(year, monthOfYear, dayOfMonth);

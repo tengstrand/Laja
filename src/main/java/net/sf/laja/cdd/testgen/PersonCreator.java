@@ -290,6 +290,11 @@ public class PersonCreator implements PersonCreatorMaker {
         return this;
     }
 
+    public PersonCreator withOldAddress(AddressCreator oldAddress) {
+        state.oldAddress = oldAddress.asMutableState();
+        return this;
+    }
+
     public PersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
         state.oldAddresses = oldAddresses;
         return this;

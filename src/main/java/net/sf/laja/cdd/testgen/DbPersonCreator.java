@@ -201,6 +201,11 @@ public class DbPersonCreator implements DbPersonCreatorMaker {
         return this;
     }
 
+    public DbPersonCreator withOldAddress(AddressCreator oldAddress) {
+        state.oldAddress = oldAddress.asMutableState();
+        return this;
+    }
+
     public DbPersonCreator withOldAddresses(Set<AddressMutableState> oldAddresses) {
         state.oldAddresses = oldAddresses;
         return this;
