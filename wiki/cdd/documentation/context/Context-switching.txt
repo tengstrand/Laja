@@ -1,5 +1,12 @@
-Context switching as known here was invented in 2011 and first described in this [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html blog post]
-but have been improved since then in a way that state and behaviour now are completely separated.
+I came up with the idea of ''context switching'' in 2011 and blogged about it [http://natureofcode.blogspot.se/2011/08/exploring-nature-of-code.html here].
+The pattern has been improved since then in a way that state and behaviour now are completely separated.
+The first release of CDD (1.0) was built on top of ''mutable state'' which turned out to be a mistake.
+The new version, 2.0, can work with both ''immutable'' and ''mutable'' state.
+If you choose to work with immutable state, the default behaviour is to ''expose'' the state.
+With the state exposed, each object in a context does not need to know about other context which makes the code more decoupled.
+The extra coupling we add when letting a context know about another contexts makes the code more [http://martinfowler.com/bliki/FluentInterface.html fluent] and can increase the readability.
+
+
 The ability to have a set of different context representations is an effective way to reduce the amount of code needed to integrate different parts of the system.
 The switching is performed without affecting the state format or breaking the [http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29 encapsulation].
 It encourages putting ''behaviour'' inside objects close to its data so they can perform tasks themselves, which is good and follows the [http://c2.com/cgi/wiki?TellDontAsk Tell Don't Ask] principle.
@@ -24,14 +31,9 @@ package com.myproject.behaviour;
 
 import com.myproject.state.PersonState;
 
-public class Person extends PersonFactory {
+public class Person extends PersonBehaviour {
     public Person(PersonState state) {
         super(state);
-    }
-
-    // (factory)
-    public Person asPerson() {
-        return new Person(state);
     }
 
     public PersistablePerson asPersistable() {
@@ -40,10 +42,10 @@ public class Person extends PersonFactory {
 }
 </source>
 
+
 Context switching allows our objects to switch and perform well defined tasks in different parts of the system almost friction free.
 We don't need to convert between different state representations when crossing context borders because the state format never change.
 Conversion between state representations are a common source of errors that is almost eliminated in CDD.
-Support for letting objects cross physical context borders, by using a standardized text transport format, is not supported in this alpha version but may be added in the future.
 
 
 Let's take a slightly lager example to illustrate the concept ''context switching''.
@@ -66,8 +68,6 @@ person.asPersistable()
 ...we introduce a connection to ''PersistablePerson''.
 This will facilitate integration between the two contexts.
 The good thing is that ''Person'' and ''PersistablePerson'' can be changed independently without affecting each other.
-Even though ''Person'' has a direct knowledge of the existence of ''PersistablePerson'' the coupling is still very low.
-With this programming style we share what should be shared and keep the rest apart!
 
 
 [[Dynamic context|< Back]]
