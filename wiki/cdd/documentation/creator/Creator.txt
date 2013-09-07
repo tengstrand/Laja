@@ -1,6 +1,7 @@
-CDD "objects" are divided into three "roles": ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
+CDD "objects" are divided into three parts: ''creator'', ''state'' and ''behaviour''. Let's explain how the creator works with an example.
 
 Add these two classes:
+
 
 <source>
 public class PersonState {
@@ -31,7 +32,7 @@ public class Person extends PersonBehaviour {
 </source>
 
 
-...and ''TextPerson'':
+...add ''TextPerson'':
 <source>
 package com.myproject;
 
@@ -232,7 +233,7 @@ person3: {ssn=3, name="z"}
 
 CDD is a very composable and powerful "tool" that "extends" object orientation (Java in this case) and simplifies writing clean code!
 
-=== Remove dependencies to other contexts ===
+=== Dependency management between contexts ===
 
 The definition of ''state'':
 
