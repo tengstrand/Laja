@@ -113,4 +113,20 @@ PersonSet (ImmutableSet<Person>): [Person{ssn=1111, name="Bert"}, Person{ssn=222
 PersonMutableSet (Set<Person>): [Person{ssn=2222, name="Carl"}, Person{ssn=1111, name="Bert"}]
 </source>
 
+=== Collections of collections ===
+
+The class [https://github.com/tengstrand/Laja/blob/master/src/main/java/net/sf/laja/cdd/state/converter/CollectionCreator.java CollectionCreator] can be used to create list of lists, map of sets and so forth.
+
+An example is the methods ''stringAsMutableState'' and ''convertToMapAndBackAgain'' in [https://github.com/tengstrand/Laja/blob/master/src/test/java/net/sf/laja/cdd/testgen/PersonTest.java PersonTest] (with the state defined [https://github.com/tengstrand/Laja/blob/master/src/main/java/net/sf/laja/cdd/testgen/state/PersonState.java here]:
+
+<source>
+PersonBuilder person = defaultPerson()
+        .withChildren(createPersonSet(createPerson().name("Anders").hairColor(BLACK).children().defaults()))
+        .withAddress(buildAddress().withId(2).withStreetName("Third street").withCity("Stockholm"))
+        .withOldAddress(buildAddress().withId(3))
+        .withOldAddresses(createAddressSet(defaultAddress(4)))
+        .withGroupedAddresses(createAddressMap(createAddressEntry("abc", defaultAddress(5))))
+        .withListOfSetOfState(createList(createSet(defaultAddress(6).asMutableState())))
+        .withListOfSetOfMapOfIntegers(createList(createSet(mapOfIntegers())));
+</source>
 
