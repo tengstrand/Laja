@@ -15,7 +15,7 @@ If you are lucky to work in a functional language, like [http://clojure.org Cloj
 
 If we take a look at the [[Quick-start guide|Quick-start guide]], it has the following structure in the IDE:
 
-[[File:project-directory-structure.png]]
+[[File:project-directory-structure.png|164px]]
 
 Let's explain some of the basic concepts of CDD by looking at the classes from the [[Quick-start guide|Quick-start guide]] example
 (package statement, imports and generated code has been removed):
