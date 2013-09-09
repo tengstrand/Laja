@@ -50,7 +50,7 @@ The macro takes one argument, e.g:
 
 
 Curly braces is the Map syntax in Laja. Everything between { and } will be added to an instance of ''java.util.LinkedHashMap'' (ordered hash map),
-so we are actually sending in a list of maps as argument to the macro!
+so we are actually sending in a map as argument to the macro!
 
 
 The project file ''myproject.laja'' is an ordinary Laja template file. All valid Laja commands can be included, not just the call to ''generateCdd''.
@@ -103,6 +103,11 @@ srcDir
 Full path to the root of the Java source directory (''/projectroot/src/java'').
 |-
 |
+srcDirs
+||
+Comma separated list of paths to the root of the Java source directories.
+|-
+|
 verbose
 ||
 Set to ''true'' to show all affected files (default is ''false''), e.g.:
@@ -112,6 +117,8 @@ Set to ''true'' to show all affected files (default is ''false''), e.g.:
   srcDir: "{.}/main"
 })
 </source>
+
+An alternative is to send in the flag "-v", e.g.: laja -v myproject
 |}
 
 Strings can contain special elements:

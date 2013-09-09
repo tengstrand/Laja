@@ -1,4 +1,4 @@
-In CDD all state state definitions has a version number, if not given, the version number is defaulted to 1:
+In CDD all state definitions has a version number, if not given, the version number is defaulted to 1:
 
 <source>
 import net.sf.laja.cdd.annotation.State;
@@ -43,6 +43,9 @@ public class PersonState implements ImmutableState {
 </source>
 
 
-The idea of ??versioning state is to facilitate integration between systems!
+The idea of versioning state is to facilitate integration between systems!
 
 
+[[Map-state|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Creator|Next >]]

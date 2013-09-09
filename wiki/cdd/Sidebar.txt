@@ -19,19 +19,19 @@
 * state
 ** State|Introduction
 ** Define state|Define state
-** State composition|State composition
-** State expansion|State expansion
-** Default values|Default values
 ** State builder|State builder
-* behaviour
-** Behaviour|Introduction
-** Factories|Factories
-** Populate state|Populate state
-** Populate substate|Populate substate
-** Collections|Collections
-** Composition|Composition
+** Mutability
+** String-state|String state
+** Map-state|Map state
+** State composition|State composition
+** Versioning|Versioning
 * creator
 ** Creator|Introduction
+** Parameters|Parameters
+* collections
+** Collections|Introduction
+** List-and-set|List and set
+** Map|Map
 * misc
 ** http://www.gnu.org/copyleft/gpl.html|License
 Sidebar

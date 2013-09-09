@@ -4,7 +4,7 @@ The first release of CDD (1.0) was built on top of ''mutable state'' which turne
 The new version, 2.0, can work with both ''immutable'' and ''mutable'' state.
 If you choose to work with immutable state, the default behaviour is to ''expose'' the state.
 With the state exposed, each object in a context does not need to know about other context which makes the code more decoupled.
-The extra coupling we add when letting a context know about another contexts makes the code more [http://martinfowler.com/bliki/FluentInterface.html fluent] and can increase the readability.
+The upside of the extra coupling we add when letting a context know about another contexts makes the code more [http://martinfowler.com/bliki/FluentInterface.html fluent] and can increase the readability.
 
 
 The ability to have a set of different context representations is an effective way to reduce the amount of code needed to integrate different parts of the system.
@@ -67,7 +67,7 @@ person.asPersistable()
 
 ...we introduce a connection to ''PersistablePerson''.
 This will facilitate integration between the two contexts.
-The good thing is that ''Person'' and ''PersistablePerson'' can be changed independently without affecting each other.
+The good thing is that ''Person'' and ''PersistablePerson'' can be changed independently without affecting each other (a bad thing can be that we introduce a direct dependency).
 
 
 [[Dynamic context|< Back]]

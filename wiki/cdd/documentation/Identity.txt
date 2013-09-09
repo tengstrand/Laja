@@ -126,6 +126,6 @@ The ''hashCodeValue'' and ''equalsValue'' can be used in contexts where you need
 Test contexts is a type of context where you often wants to do that.
 
 
-[[State validation|< Back]]
+[[Validation|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Behaviour|Next >]]
+[[TDD|Next >]]
