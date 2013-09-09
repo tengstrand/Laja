@@ -122,6 +122,6 @@ Person{ssn=123, name="Carl", address={streetName="Regent street", city="London"}
 </source>
 
 
-[[Default values|< Back]]
+[[State composition|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State validation|Next >]]
