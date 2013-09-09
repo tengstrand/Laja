@@ -94,3 +94,8 @@ Person{ssn=2222, name="Carl"}
 
 
 Another example can be found in [https://github.com/tengstrand/Laja/blob/master/src/example/java/cdd/main/net/sf/laja/example/repository/RepositoryExample.java RepositoryExample].
+
+
+[[Mutability|< Back]]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[[Map-state|Next >]]
