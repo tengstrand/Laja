@@ -35,6 +35,9 @@ public class PersonMutableStateTest {
                 .addIsNullError(mutableState, "name", "")
                 .addIsNullError(mutableState, "hairColor", "")
                 .addIsNullError(mutableState, "address", "")
+                .addIsNullError(mutableState, "children", "")
+                .addIsNullError(mutableState, "groupedAddresses", "")
+                .addIsNullError(mutableState, "listOfSetOfMapOfIntegers", "")
                 .build();
 
         assertThat(errors, equalTo(expectedErrors));

@@ -203,6 +203,7 @@ public class PersonCreator implements PersonCreatorMaker {
 
             public PersonCreator defaults() {
                 state.address = getAddressDefaults(new _ListOfSetOfMapOfIntegers());
+                state.groupedAddresses = new HashMap<String,AddressMutableState>();
                 return new PersonCreator(state);
             }
 
