@@ -250,6 +250,6 @@ The type ''java.util.Date'' is not supported and replaced by the Joda times equi
 The type ''Object'' is not supported either for the same reason, that it may be mutable.
 
 
-[[State|< Back]]
+[[Mutability|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State composition|Next >]]

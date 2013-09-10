@@ -1,9 +1,30 @@
+Mutability is causing a lot of problems in the software industry, which are well described in this excellent paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
+
+CDD encourage immutable state and the hypothesis is that information hiding is important for mutable state but less important for immutable state.
+In a functional language like [http://clojure.org Clojure], immutability is default and data is exposed.
+CDD has borrowed this idea by exposing immutable state.
+
+'''Immutable state'''
+<source>
+Person person = createPerson.age(30).name("Carl").asPerson();
+// The immutable state is exposed which makes switching context easy.
+TextPerson textPerson = new TextPerson(person.state);
+</source>
+
+'''Mutable state'''
+<source>
+Person person = createPerson.age(30).name("Carl").asPerson();
+// The state is not exposed so the only way to switch context is by letting
+// the instance itself switch context or by using some trick like reflection.
+TextPerson textPerson = person.asTextPerson();
+</source>
+
+
 The use of ''mutable state'' is something that should be avoided if possible.
 The reason is that it makes the code harder to reason about and less stable.
 If you for example pass an instance of a mutable type (e.g. ''java.util.Data'') to a method,
 you run the risk that the value will be changed/mutated during the call.
 This is not a desired behaviour in most situations.
-The problems associated with ''mutable state'' is well described in the paper [http://shaffner.us/cs/papers/tarpit.pdf Out of the Tar Pit].
 
 CDD supports both ''mutable'' and ''immutable'' state but recommends the latter.
 If ýou nevertheless choose to work with mutable state, it will be a good idea to hide the state by making the state variable ''private'' and not expose it outside the behaviour representation!
@@ -130,6 +151,6 @@ Equals: true
 </source>
 
 
-[[State builder|< Back]]
+[[State|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[String-state|Next >]]
+[[Define state|Next >]]

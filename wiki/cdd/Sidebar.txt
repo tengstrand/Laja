@@ -2,7 +2,6 @@
 ** mainpage|Introduction
 ** Code generation|Code generation
 ** Classes and objects|Classes and objects
-** New way of OO|New way of OO
 ** Identity|Identity
 ** Validation|Validation
 ** TDD|TDD
@@ -18,9 +17,9 @@
 ** Context switching|Context switching
 * state
 ** State|Introduction
+** Mutability|Mutability
 ** Define state|Define state
 ** State builder|State builder
-** Mutability
 ** String-state|String state
 ** Map-state|Map state
 ** State composition|State composition
