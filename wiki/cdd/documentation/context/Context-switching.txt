@@ -70,6 +70,13 @@ This will facilitate integration between the two contexts.
 The good thing is that ''Person'' and ''PersistablePerson'' can be changed independently without affecting each other (a bad thing can be that we introduce a direct dependency).
 
 
+An alternative is to use ''immutable state'' and switch context outside the involved objects:
+<source>
+new TextPerson(person.state);
+</source>
+
+
+
 [[Dynamic context|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[State|Next >]]
