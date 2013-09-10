@@ -5,7 +5,7 @@
 	<artifactId>cdd</artifactId>
 	<name>CDD</name>
 	<url>http://cdd.tengstrand.nu</url>
-	<version>002-alpha</version>
+	<version>002-beta</version>
 	<packaging>jar</packaging>
 	<description>Helper classes needed to run CDD</description>
 
