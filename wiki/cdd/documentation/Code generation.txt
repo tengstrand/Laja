@@ -1,7 +1,7 @@
-CDD is a "proof of concept" to see if object orientation can be improved by splitting up classes/objects into smaller pieces.
+CDD is a "proof of concept" to see if object orientation can be improved by splitting up classes/objects into smaller pieces with well defined roles.
 This is done by using parsing and code generation. Another possible solution would have been to create a compiler.
-It would have been a cleaner solution but would result in much more work.
-Code generation also has the advantage that the generated code is not hidden and can therefore easily be read and debugged.
+The compiler alternative is a cleaner solution but results in much more work.
+Code generation also has the advantage that the generated code is clean and accessible and therefore easily to read and debug.
 
 Many developers have had bad experience with code generation.
 CDD tries to change that by not getting in the way of the developer.
@@ -71,6 +71,7 @@ public class Main {
     public static void main(String[] args) {
         Person person = createPerson().age(18).givenName("Ingmar").surname("Bergman").asPerson();
 
+        System.out.println("Is teenager: " + person.isTeenager());
         System.out.println(person);
     }
 }
