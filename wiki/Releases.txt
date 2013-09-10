@@ -1,33 +1,19 @@
-== Laja2-007-alpha ==
-Released: 2013-??-??
+== Laja2-007-beta ==
+Released: 2013-09-??
 
 Included in  Laja:
 * New macro: #stack().
 
-Included in CDD:
-* Removed support for state expansion. The idea of ??state expansion will perhaps emerge in a different form to facilitate building state.
-* Removed support for state projection. State projection seemed to be a good idea at the beginning, but sharing mutable state could lead to undesired effects. State projection for immutable state is still a good idea but is not supported at the moment!
-** Support for state expansion and state projection was also removed to reduce the complexity and to speed up the development time.
-* Removed the extra behaviour constructor (state, stateBuilder), leaving only the (state) constructor left. The new way to solve this is to "manually" create a builder an manipulate the state via the builder.
-* Added support for Set.
-* The interface ''XElement'' (where X is the behaviour class) has been removed and is no longer generated.
-* Entities and Values has been replaced by Behaviour. The new solution is much simpler and does not have problems keeping state and behavior in sync.
-** The generation of XValue and XEntity has been replaced by XBehaviour (where X is the behaviour class).
-** The generation of XValueFactory and XEntityFactory has been replaced by XBehaviourFactory (where X is the behaviour class).
-* Changed name of the generated class XStateBehaviourFactory to XBehaviourFactory (where X is the behaviour class).
-* Renamed XStateListImpl to XStateArrayList (where X is the state class).
-* Renamed state method valueEquals to equalsValue + removed valueHashCode.
-* Improved management of identity:
-** Added support for the state attribute "(include)".
-** If no columns are marked as natural key then collections are no longer included in hashCode and equals (earlier, all attributes except 'id' and 'exclude' was included if no natural key was given).
-** (id) is now included in method equalsValue, hashCodeValue has been removed.
-** If no attributes is included in hashCode and equals, then super.hashCode and super.equals is called.
-* The class Certificate is now final.
-* Fixed a bug in lists that occurred when having more than one as-method with extra parameters.
-* The problem that arose when mixed constructors in different behaviour representations (state) + (state, stateBuilder) can no longer be reproduced.
-* Added methods equals + hashCode to XBuilder (where X is the behaviour class).
-* Fixed a bug in the hashCode() method for attributes of type 'long'.
-* Fixed a bug that occurred if the first attribute in a state was a state.
+Included in CDD 2.0:
+This is a complete rewrite of CDD 1.0:
+* Support for different state representations:
+** Immutable state
+** Mutable state
+** String state
+** Map state (java.util.Map)
+* Cleaner separation of the roles: creator, state and behaviour
+* Full support for collections: List, Set and Map
+* Less code generation. In CDD 1.0, a bunch of classes was generated to a ''java-gen'' directory. In CDD 2.0, the generated code are added at the end of the ''state'' and ''creator'' class, which reduces the number of artifacts.
 
 == Laja2-006-alpha ==
 Released: 2013-01-04
