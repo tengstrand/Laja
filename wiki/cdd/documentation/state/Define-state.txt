@@ -26,28 +26,6 @@ public class PersonCreator {
 </source>
 
 
-Create the class ''Person'':
-<source>
-package com.myproject;
-
-import static com.myproject.PersonCreator.PersonBehaviour;
-
-public class Person extends PersonBehaviour {
-    public Person(PersonState state) {
-        super(state);
-    }
-}
-</source>
-
-
-Add the method ''asPerson()'' to ''PersonCreator'' between the declaration of ''state'' and the ''Generated'' comment + regenerate:
-<source>
-    public Person asPerson() {
-        return new Person(state.asImmutable());
-    }
-</source>
-
-
 Modify the ''Main'' class (from now on, we will only show the contents of the ''main'' method):
 
 <source>
