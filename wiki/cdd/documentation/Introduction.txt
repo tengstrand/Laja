@@ -52,7 +52,7 @@ What happens here is that we merge data (''age'', ''name'') with the function/me
 [[File:CDD-new-instance.png|700px]]
 
 
-If we look at the Java code again, there is a lot of things going there:
+If we look at the Java code again, there is a lot of things going on there:
 # The class is responsible for building the state (the constructor).
 # Identity is managed by the class/object (hashCode / equals).
 # The toString method is managed by the class/object.
