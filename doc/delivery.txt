@@ -14,3 +14,6 @@ If any jar files has been added:
 
 > cd laja-parser-engine
 > mvn clean install
+
+> cd laja-cdd
+> mvn clean install
