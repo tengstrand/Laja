@@ -1,8 +1,0 @@
-One of the main goals of CDD is to facilitate work in different contexts, and collections are no exception from this goal.
-
-CDD has full support for working with lists, sets and maps and the goal is to make the code as clean as possible.
-
-
-[[Populate substate|< Back]]
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[[Composition|Next >]]

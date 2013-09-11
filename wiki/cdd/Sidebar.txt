@@ -28,7 +28,6 @@
 ** Creator|Introduction
 ** Parameters|Parameters
 * collections
-** Collections|Introduction
 ** List-and-set|List and set
 ** Map|Map
 * misc

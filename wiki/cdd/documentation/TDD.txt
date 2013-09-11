@@ -260,6 +260,6 @@ public class PersonTest {
 In this example we create a new instance ''personWithNewAddress'' and verifies that ''withAddress'' change the address.
 
 
-[[Identity|< Back]]
+[[Map|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Laja|Next >]]
