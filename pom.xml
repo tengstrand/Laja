@@ -83,7 +83,6 @@
                         <configuration>
                             <sources>
                                 <source>src/test/java</source>
-                                <source>src/testgen/java/main</source>
                                 <source>src/testgen/java-gen/main</source>
                             </sources>
                         </configuration>
