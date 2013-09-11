@@ -2,7 +2,9 @@
 CDD is included in the combined code and parser generator [http://laja.tengstrand.nu Laja].
 
 Just [https://sourceforge.net/projects/laja download] it and follow the [http://laja.tengstrand.nu/index.php/Install installation] instructions.
-Support for CDD starts in release Laja2-006-alpha (click the green download button to get the latest version).
+Download Laja2-007-beta or later (click the green download button to get the latest version) to get a version with support for CDD 2.0.
+
+The file cdd-002-beta.jar (needs to be added to your Java/JVM project) can be downloaded from [https://sourceforge.net/projects/laja/files/Laja2/laja2-007-beta here].
 
 Some functionality is missing in the first alpha release and is described [http://laja.tengstrand.nu/index.php/Releases here].
 
