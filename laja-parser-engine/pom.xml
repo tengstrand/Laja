@@ -62,6 +62,16 @@
 			<artifactId>groovy-all-1.0-jsr</artifactId>
 			<version>05</version>
 		</dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r09</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
