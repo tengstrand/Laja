@@ -1,5 +1,5 @@
 == Laja2-007-beta ==
-Released: 2013-09-??
+Released: 2013-09-11
 
 Included in  Laja:
 * New macro: #stack().
@@ -18,7 +18,7 @@ This is a complete rewrite of CDD 1.0:
 == Laja2-006-alpha ==
 Released: 2013-01-04
 
-Includes:
+Included in CDD 1.0 (don't use this version of CDD!):
 * This release is backward compatible with version Laja2-005-beta and is marked as alpha as the support for CDD contains bugs and has some limitations:
 ** Lists are the only supported collection type, support for sets and maps will be added in the next version.
 ** State and behaviour classes has to be unique. Classes with same name in different packages are not supported.
