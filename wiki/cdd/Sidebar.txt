@@ -4,6 +4,7 @@
 ** Classes and objects|Classes and objects
 ** Identity|Identity
 ** Validation|Validation
+** Composition|Composition
 ** TDD|TDD
 ** Laja|Laja
 ** Quick-start guide|Quick-start guide
@@ -19,10 +20,10 @@
 ** State|Introduction
 ** Mutability|Mutability
 ** Define state|Define state
+** State composition|State composition
 ** State builder|State builder
 ** String-state|String state
 ** Map-state|Map state
-** State composition|State composition
 ** Versioning|Versioning
 * creator
 ** Creator|Introduction
