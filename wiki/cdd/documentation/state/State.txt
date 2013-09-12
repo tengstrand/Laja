@@ -144,6 +144,6 @@ public class PersonMutableState {
 </source>
 
 
-[[Dynamic context|< Back]]
+[[Context switching|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Mutability|Next >]]

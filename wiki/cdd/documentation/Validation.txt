@@ -97,6 +97,6 @@ public Person asPerson() {
 </source>
 
 
-[[State builder|< Back]]
+[[Composition|< Back]]
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [[Identity|Next >]]
